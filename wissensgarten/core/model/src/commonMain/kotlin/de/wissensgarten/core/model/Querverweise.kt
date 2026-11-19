@@ -80,5 +80,5 @@ object Querverweise {
 
     /** Eigener Deeplink, mit dem andere Apps auf ein Paket verweisen */
     fun paketLink(packId: String, test: Boolean = false) =
-        "https://wissensgarten${if (test) "-test" else ""}.mathenachhilfe-online.com/#paket=$packId"
+        "https://lernen${if (test) "-test" else ""}.mathenachhilfe-online.com/wissensgarten/#paket=$packId"
 }

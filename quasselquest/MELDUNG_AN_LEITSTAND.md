@@ -2,6 +2,54 @@
 
 Neueste oben.
 
+## 19.11.2026 – Version 0.3.3 vom 19.11.2026: Pflicht 2 Klassenarbeits-Generalprobe – fertig für den Test
+
+- **Kind:** Startseite je Sprache „📝 Mein Test ist am …“ → Datum (morgen bis 60 Tage) + Pakete/eigene Listen. Karte zeigt „Noch N Tage · Heute dran: …“ mit ▶ Üben; Tag gilt als geschafft nach einer Runde.
+- **Generalprobe:** 12 gemischte Aufgaben, Vokabeln getippt (P.pruefeTipp: Alternativen in Klammern/Schrägstrich zählen, Akzent/Groß-klein → „Fast!“ mit Erklärung), sonst Auswahl; keine Hilfe während der Probe, Auswertung mit Lösung + „Warum?“-Regel, Fehler zurück in Kasten 1. Keine Noten, freundliche Texte auch bei 0 richtig.
+- **Eltern:** 3–14 Tage vor dem Test Hinweis „Am <Tag> ist die Arbeit in <Sprache> … kostenlose Probestunde“ → `src=quasselquest-klassenarbeit&thema=<sprache>`, Zählung `nachhilfe_hinweis`/`probestunde_klick` mit ort `klassenarbeit`; ausblendbar je Test, Schalter „Nachhilfe-Hinweise“ gilt.
+- **Pro:** gehört zum Pro-Kern, ist aber bis Pro-Schlüssel + Shop-Produkt frei sichtbar; nirgends Kaufoberfläche.
+- **Prüfung:** 23 Inhaltstests (neu: Antwortprüfung über alle Paketkarten, Lernplan), Browser-Durchlauf Chromium Handy/PC + WebKit iPhone/iPad grün, Bildschirmfotos angesehen.
+
+## 19.11.2026 – Version 0.3.2 vom 19.11.2026: Pflicht 8 Datenschutz in Kindersprache + Datenblatt für Schulen – fertig für den Test
+
+- **Kindersprache:** Einstellungen → „🔒 Deine Daten – kurz erklärt“, sechs Sätze mit Ruby (bleibt auf dem Gerät, kein Konto, Mikrofon nur auf Knopfdruck, keine Werbung, Zählung ohne Person, eigene Listen, Eltern schalten Kopplung ein).
+- **Datenblatt für Schulen:** `datenblatt-schule.html` (zum Ausdrucken), verlinkt aus dem Elternbereich und der Datenschutzerklärung. Inhalt: Konten, Speicherort, Mikrofon, Netzverkehr, Server, AVV-Einschätzung, Käufe, Löschen, Urheberrecht, Barrierearmut, Empfehlungen für Schulgeräte.
+  ⚠️ Bitte prüfen: Angabe „eigene Server in Deutschland, keine Weitergabe an Dritte“ und die AVV-Einschätzung (keine Rechtsberatung).
+- Bei „reduzierter Bewegung“ des Systems kein Konfetti mehr (vorher nur CSS-Animationen abgeschaltet).
+- Tests: 21/21 Inhaltstests, Durchspielen in Chromium und WebKit grün; Bildschirmfotos angesehen.
+
+## 19.11.2026 – Version 0.3.1 vom 19.11.2026: Pflicht 7 Elternbereich (Lernstand in Worten, Nachhilfe-Hinweis, Zählung) – fertig für den Test
+
+- **Lernstand in Worten** für jede Sprache:
+  - diese Woche Antworten und Anteil beim ersten Versuch,
+  - „… kann jetzt“ aus den Kann-Sätzen der Episoden,
+  - „Sitzt schon“ je Paket und je eigener Liste.
+  - Die Antworten werden nur auf dem Gerät gezählt (Tagessummen je Sprache, 60 Tage).
+- **Nachhilfe-Hinweis (Auftrag C1):**
+  - Nur im Elternbereich. Auslöser: mindestens 10 Antworten und weniger als 60 % beim ersten Versuch in 14 Tagen, je Sprache.
+  - Text wie im RATGEBER. Knopf „Kostenlose Probestunde anfragen“ → `/probestunde/?src=quasselquest-elternbericht&thema=<englisch|deutsch|franzoesisch|spanisch|latein>&klasse=<k>` (Test: staging.).
+  - „Ausblenden“ gilt 14 Tage je Fach. Schalter „Hinweise auf unsere Nachhilfe zeigen“ (an).
+  - Getestet: im Kinderbereich nie ein Hinweis.
+- **Zählung (Auftrag A):**
+  - `POST trainer(-test)…/zaehler/v1/e`, text/plain, credentials omit, keepalive, no-cors; nur app, v, ev, ort, thema.
+  - Ereignisse: start, elternbereich, nachhilfe_hinweis, probestunde_klick.
+  - Schalter „Anonyme Nutzungszählung“ (an); aus = kein Aufruf (getestet in Chromium und WebKit).
+- Datenschutz ergänzt (Zählung, Nachhilfe-Hinweis).
+- Tests: 21/21 Inhaltstests, Durchspielen in Chromium und WebKit grün, Spracherkennungs-Beleg grün, Bildschirmfotos angesehen.
+
+## 19.11.2026 – Version 0.3.0 vom 19.11.2026: Pflicht 3 „Warum?“ + Pflicht 1 „Mein Schulbuch“ – fertig für den Test
+
+- **Warum?** (Pflicht 3):
+  - Bei einer falschen Ballon-Antwort wird die abweichende Stelle markiert (gemeinsamer Anfang und Ende bleiben, die Mitte ist rot unterstrichen; fehlende Buchstaben als „␣“).
+  - Dazu eine Regel in einem Kindersatz: Groß/klein, Akzent, Satzzeichen, falscher Artikel – sonst die Erklärung der Karte. Bei Vokabeln nur, wenn sie das gewählte Wort nennt, sonst „ein anderes Wort“.
+  - Die Lösung wird nicht verraten. Getestet für jede falsche Auswahl jeder Karte.
+- **Mein Schulbuch** (Pflicht 1):
+  - Je Sprache eigene Listen (Lektionen) mit „Deutsch = Fremdsprache“; als Trenner gehen auch „-“, „;“ und Tab. Für Deutsch Lernwörter, gespielt als Diktat (hören → bauen).
+  - Verständliche Meldungen je Zeile (Format, doppelt, zu lang, leer), mindestens 4 und höchstens 120 Wörter.
+  - Gespielt mit Ballon, Hör-Detektiv, Bauen und Memory, mit Wiederholung. Gespeichert nur im Gerät.
+  - Hinweis im Bildschirm: nur eigene Wörter, keine Buchseiten kopieren. Teilen per QR folgt (Di 1.12.).
+- Tests: 21/21 Inhaltstests. Durchspielen in Chromium und WebKit, inklusive Liste anlegen (erst mit Fehler, dann richtig) und Runde spielen in Englisch und Deutsch. Spracherkennungs-Beleg weiter grün. Bildschirmfotos angesehen.
+
 ## 19.11.2026 – Version 0.2.2 vom 19.11.2026: Beleg „Spracherkennung nur im Gerät“ + Fehlerbehebung Gerätestimme – fertig für den Test
 
 - **Beleg (Auftrag AppZentrale / „Geld verdienen“ Nr. 5):** `node tools/web-sprache.mjs` schleust in **Chromium und WebKit** Ersatz-Erkenner ein und prüft den echten Code der App:

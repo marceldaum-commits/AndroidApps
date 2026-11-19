@@ -54,6 +54,11 @@ object PrivacyText {
             "„Kopplung aufheben“ löscht ihn sofort; ohne Aktualisierung wird er nach 90 Tagen gelöscht. Ohne Kopplung wird nichts gesendet. " +
             "Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i). " +
             "Mit dem Kopplungs-Link lässt sie sich auf einem neuen Gerät wiederherstellen („Fortschritt wiederherstellen“).",
+        "Umzug auf die gemeinsame Adresse (einmalig)" to
+            "Alle unsere Lern-Apps liegen jetzt unter lernen.mathenachhilfe-online.com. Wer den Wissensgarten noch unter der alten Adresse öffnet, " +
+            "dessen Lernstand zieht einmal automatisch mit: Er wird auf diesem Gerät mit AES-256 verschlüsselt, kurz auf unserem Server trainer.mathenachhilfe-online.com abgelegt " +
+            "und von der neuen Adresse sofort abgeholt und dort gelöscht. Den Schlüssel enthält nur der Weiterleitungs-Link (der Teil nach „#“ wird nie an einen Server gesendet) – " +
+            "unser Server kann die Daten nicht lesen. Spätestens nach 30 Tagen wird eine nicht abgeholte Umzugs-Sicherung gelöscht. Auf der alten Adresse bleibt der Lernstand im Browser unverändert.",
         "Hinweise auf unsere Nachhilfe" to
             "Im Wochenbericht (nur hinter dem Eltern-Tor, nie im Kinderbereich) kann ein sachlicher Hinweis auf unsere Online-Nachhilfe erscheinen, wenn ein Thema länger schwerfällt oder eine Klassenarbeit ansteht. " +
             "Das wird nur auf dem Gerät berechnet; der Lernstand wird dafür nicht gesendet. Höchstens alle zwei Wochen je Thema, jederzeit ausblendbar oder ganz abschaltbar.",
@@ -67,7 +72,7 @@ object PrivacyText {
             "Das erledigt euer Browser; dabei werden keine Daten an uns gesendet.",
         "Updates" to
             "Die Web-App hält sich selbst aktuell: Beim Öffnen und ab und zu währenddessen fragt sie bei unserem Server " +
-            "(wissensgarten.mathenachhilfe-online.com), ob es eine neue Version gibt, und lädt sie in einem ruhigen Moment – nie mitten in einer Runde. " +
+            "(lernen.mathenachhilfe-online.com), ob es eine neue Version gibt, und lädt sie in einem ruhigen Moment – nie mitten in einer Runde. " +
             "Neue und verbesserte Wissenspakete kommen mit der neuen Version. Dabei wird nichts über euch oder euer Kind gesendet; " +
             "der Server sieht nur, wie bei jedem Webseitenaufruf, die IP-Adresse und den Zeitpunkt.",
         "Löschen" to

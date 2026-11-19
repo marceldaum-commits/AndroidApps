@@ -3,6 +3,7 @@
   "short_name": "Wissensgarten",
   "description": "Lernen wie Gärtnern: Jede Karte ist eine Pflanze. Ohne Werbung, ohne Konto.",
   "lang": "de",
+  "id": "./?app=wissensgarten",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

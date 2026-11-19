@@ -1,0 +1,3628 @@
+{
+ "format": 1,
+ "sprache": "fr",
+ "titel": "Französisch von Anfang an",
+ "figuren": {
+  "ruby": {
+   "name": "Ruby",
+   "emoji": "🦜",
+   "who": "fr"
+  },
+  "lea": {
+   "name": "Léa",
+   "emoji": "👧",
+   "who": "fr"
+  },
+  "hugo": {
+   "name": "Hugo",
+   "emoji": "👦",
+   "who": "fr"
+  },
+  "martin": {
+   "name": "Madame Martin",
+   "emoji": "🧑‍🏫",
+   "who": "fr"
+  }
+ },
+ "abschnitte": [
+  {
+   "id": "1",
+   "stufe": "Pre-A1",
+   "titel": "Erste Schritte",
+   "emoji": "🌱",
+   "ziel": "Ich kann Hallo sagen, mich vorstellen und viele Dinge auf Französisch benennen.",
+   "einheiten": [
+    {
+     "id": "fr-1-1",
+     "titel": "Bonjour !",
+     "emoji": "👋",
+     "ziel": "Ich kann Hallo und Tschüss sagen, bitte und danke.",
+     "woerter": [
+      [
+       "bonjour",
+       "guten Tag",
+       "👋",
+       "bonjour sagt man tagsüber zu allen, abends sagt man bonsoir."
+      ],
+      [
+       "salut",
+       "hallo (unter Freunden)",
+       "🙋",
+       "salut heißt hallo und tschüss – nur zu Freunden."
+      ],
+      [
+       "au revoir",
+       "auf Wiedersehen",
+       "🚶"
+      ],
+      [
+       "bonne nuit",
+       "gute Nacht",
+       "🌙"
+      ],
+      [
+       "s'il te plaît",
+       "bitte",
+       "🙏",
+       "Zu Erwachsenen sagt man: s'il vous plaît."
+      ],
+      [
+       "merci",
+       "danke",
+       "💐"
+      ],
+      [
+       "oui",
+       "ja",
+       "✅"
+      ],
+      [
+       "non",
+       "nein",
+       "❌"
+      ]
+     ],
+     "saetze": [
+      [
+       "Bonjour, je suis Ruby.",
+       "Hallo, ich bin Ruby.",
+       "🦜"
+      ],
+      [
+       "Comment ça va ?",
+       "Wie geht's?",
+       "🙂"
+      ],
+      [
+       "Ça va bien, merci.",
+       "Mir geht's gut, danke.",
+       "😊"
+      ],
+      [
+       "Au revoir, à bientôt !",
+       "Tschüss, bis bald!",
+       "👋"
+      ]
+     ],
+     "regel": {
+      "titel": "tu oder vous?",
+      "text": "Zu Kindern und Freunden sagt man tu (du), zu Erwachsenen vous (Sie). Darum gibt es zwei Arten, bitte zu sagen.",
+      "beispiele": [
+       [
+        "S'il te plaît, Léa !",
+        "Bitte, Léa!"
+       ],
+       [
+        "S'il vous plaît, Madame Martin !",
+        "Bitte, Frau Martin!"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Neu in der Straße",
+      "zeilen": [
+       [
+        "lea",
+        "Bonjour ! Je suis Léa.",
+        "Hallo! Ich bin Léa."
+       ],
+       [
+        "hugo",
+        "Salut, Léa ! Je suis Hugo.",
+        "Hi, Léa! Ich bin Hugo."
+       ],
+       [
+        "lea",
+        "Comment ça va, Hugo ?",
+        "Wie geht's, Hugo?"
+       ],
+       [
+        "hugo",
+        "Ça va bien, merci.",
+        "Mir geht's gut, danke."
+       ],
+       [
+        "lea",
+        "Au revoir, Hugo !",
+        "Tschüss, Hugo!"
+       ],
+       [
+        "hugo",
+        "Au revoir, à bientôt !",
+        "Tschüss, bis bald!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie heißt das Mädchen?",
+        "a": "Léa",
+        "choices": [
+         "Hugo",
+         "Ruby",
+         "Emma"
+        ]
+       },
+       {
+        "q": "Wie geht es Hugo?",
+        "a": "gut",
+        "choices": [
+         "schlecht",
+         "müde",
+         "traurig"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Dis bonjour à Hugo.",
+       "de": "Sag Hugo guten Tag.",
+       "ding": "👋",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Dis au revoir à Léa.",
+       "de": "Sag Léa auf Wiedersehen.",
+       "ding": "🚶",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Dis bonne nuit à Ruby.",
+       "de": "Sag Ruby gute Nacht.",
+       "ding": "🌙",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dis merci à Hugo.",
+       "de": "Sag Hugo danke.",
+       "ding": "💐",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Dis salut à Léa.",
+       "de": "Sag Léa hallo.",
+       "ding": "🙋",
+       "anzahl": 1,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Bonjour ! Moi, je es Ruby.",
+       "richtig": "Bonjour ! Moi, je suis Ruby.",
+       "wort": "es",
+       "korrektur": "suis",
+       "choices": [
+        "est",
+        "être"
+       ],
+       "tipp": "ich bin = je suis."
+      },
+      {
+       "falsch": "Ça va bon, merci.",
+       "richtig": "Ça va bien, merci.",
+       "wort": "bon",
+       "korrektur": "bien",
+       "choices": [
+        "bonne",
+        "beau"
+       ],
+       "tipp": "Wie es geht, sagt man mit bien."
+      },
+      {
+       "falsch": "Bon nuit, Léa ! Dors bien !",
+       "richtig": "Bonne nuit, Léa ! Dors bien !",
+       "wort": "Bon",
+       "korrektur": "Bonne",
+       "choices": [
+        "Bons",
+        "Beau"
+       ],
+       "tipp": "nuit ist weiblich – also bonne."
+      },
+      {
+       "falsch": "Madame Martin, s'il te plaît !",
+       "richtig": "Madame Martin, s'il vous plaît !",
+       "wort": "te",
+       "korrektur": "vous",
+       "choices": [
+        "tu",
+        "toi"
+       ],
+       "tipp": "Zu Lehrern und fremden Erwachsenen sagt man vous: s'il vous plaît."
+      }
+     ]
+    },
+    {
+     "id": "fr-1-2",
+     "titel": "Je m'appelle …",
+     "emoji": "🧒",
+     "ziel": "Ich kann sagen, wie ich heiße, und nach dem Namen fragen.",
+     "woerter": [
+      [
+       "je",
+       "ich",
+       "🙋"
+      ],
+      [
+       "tu",
+       "du",
+       "👉"
+      ],
+      [
+       "le garçon",
+       "der Junge",
+       "👦"
+      ],
+      [
+       "la fille",
+       "das Mädchen",
+       "👧",
+       "la fille heißt auch: die Tochter."
+      ],
+      [
+       "l'ami",
+       "der Freund",
+       "🤝",
+       "Die Freundin: l'amie – man hört keinen Unterschied."
+      ],
+      [
+       "le nom",
+       "der Name",
+       "🏷️"
+      ],
+      [
+       "l'homme",
+       "der Mann",
+       "👨",
+       "Das h spricht man im Französischen nicht."
+      ],
+      [
+       "la femme",
+       "die Frau",
+       "👩"
+      ]
+     ],
+     "saetze": [
+      [
+       "Je m'appelle Léa.",
+       "Ich heiße Léa.",
+       "👧"
+      ],
+      [
+       "Comment tu t'appelles ?",
+       "Wie heißt du?",
+       "🏷️"
+      ],
+      [
+       "Je suis une fille.",
+       "Ich bin ein Mädchen.",
+       "👧"
+      ],
+      [
+       "Tu es mon ami.",
+       "Du bist mein Freund.",
+       "🤝"
+      ]
+     ],
+     "regel": {
+      "titel": "je suis, tu es – und der Apostroph",
+      "text": "ich bin = je suis, du bist = tu es. Vor a, e, i, o, u und stummem h wird le oder la zu l' – das spricht sich leichter.",
+      "beispiele": [
+       [
+        "le ami → l'ami",
+        "der Freund"
+       ],
+       [
+        "la école → l'école",
+        "die Schule"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wer bist du?",
+      "zeilen": [
+       [
+        "hugo",
+        "Salut ! Comment tu t'appelles ?",
+        "Hi! Wie heißt du?"
+       ],
+       [
+        "lea",
+        "Je m'appelle Léa. Et toi ?",
+        "Ich heiße Léa. Und du?"
+       ],
+       [
+        "hugo",
+        "Je m'appelle Hugo.",
+        "Ich heiße Hugo."
+       ],
+       [
+        "lea",
+        "Tu es l'ami de Ruby ?",
+        "Bist du der Freund von Ruby?"
+       ],
+       [
+        "hugo",
+        "Oui ! Ruby est mon amie.",
+        "Ja! Ruby ist meine Freundin."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie heißt der Junge?",
+        "a": "Hugo",
+        "choices": [
+         "Léa",
+         "Paul",
+         "Tom"
+        ]
+       },
+       {
+        "q": "Wer ist Hugos Freundin?",
+        "a": "Ruby",
+        "choices": [
+         "Emma",
+         "Marie",
+         "Lisa"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Dis bonjour à la fille.",
+       "de": "Sag dem Mädchen guten Tag.",
+       "ding": "👋",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Dis au revoir au garçon.",
+       "de": "Sag dem Jungen auf Wiedersehen.",
+       "ding": "🚶",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Dis bonne nuit à ton amie Ruby.",
+       "de": "Sag deiner Freundin Ruby gute Nacht.",
+       "ding": "🌙",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dis merci à la fille.",
+       "de": "Sag dem Mädchen danke.",
+       "ding": "💐",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Dis merci au garçon.",
+       "de": "Sag dem Jungen danke.",
+       "ding": "💐",
+       "anzahl": 1,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Toi, tu est mon ami.",
+       "richtig": "Toi, tu es mon ami.",
+       "wort": "est",
+       "korrektur": "es",
+       "choices": [
+        "suis",
+        "être"
+       ],
+       "tipp": "du bist = tu es – ohne t. est gehört zu il und elle."
+      },
+      {
+       "falsch": "Je suis un petite fille.",
+       "richtig": "Je suis une petite fille.",
+       "wort": "un",
+       "korrektur": "une",
+       "choices": [
+        "le",
+        "des"
+       ],
+       "tipp": "fille ist weiblich – also une."
+      },
+      {
+       "falsch": "Je suis une petit garçon.",
+       "richtig": "Je suis un petit garçon.",
+       "wort": "une",
+       "korrektur": "un",
+       "choices": [
+        "la",
+        "ma"
+       ],
+       "tipp": "garçon ist männlich – also un."
+      },
+      {
+       "falsch": "Comment tu t'appelles ? Je appelle Léa.",
+       "richtig": "Comment tu t'appelles ? Je m'appelle Léa.",
+       "wort": "appelle",
+       "korrektur": "m'appelle",
+       "choices": [
+        "appeler",
+        "s'appelle"
+       ],
+       "tipp": "Man sagt: Je m'appelle – ich nenne mich."
+      }
+     ]
+    },
+    {
+     "id": "fr-1-3",
+     "titel": "Zahlen 1–10",
+     "emoji": "🔢",
+     "ziel": "Ich kann bis zehn zählen und sagen, wie alt ich bin.",
+     "woerter": [
+      [
+       "un",
+       "eins",
+       "1️⃣"
+      ],
+      [
+       "deux",
+       "zwei",
+       "2️⃣"
+      ],
+      [
+       "trois",
+       "drei",
+       "3️⃣"
+      ],
+      [
+       "quatre",
+       "vier",
+       "4️⃣"
+      ],
+      [
+       "cinq",
+       "fünf",
+       "5️⃣"
+      ],
+      [
+       "six",
+       "sechs",
+       "6️⃣"
+      ],
+      [
+       "sept",
+       "sieben",
+       "7️⃣",
+       "Das p in sept spricht man nicht: „sett“."
+      ],
+      [
+       "huit",
+       "acht",
+       "8️⃣"
+      ],
+      [
+       "neuf",
+       "neun",
+       "9️⃣"
+      ],
+      [
+       "dix",
+       "zehn",
+       "🔟"
+      ]
+     ],
+     "saetze": [
+      [
+       "Tu as quel âge ?",
+       "Wie alt bist du?",
+       "🎂"
+      ],
+      [
+       "J'ai huit ans.",
+       "Ich bin acht Jahre alt.",
+       "🎂"
+      ],
+      [
+       "J'ai dix doigts.",
+       "Ich habe zehn Finger.",
+       "🙌"
+      ],
+      [
+       "Un, deux, trois, compte avec moi !",
+       "Eins, zwei, drei, zähl mit mir!",
+       "🔢"
+      ]
+     ],
+     "regel": {
+      "titel": "Alter mit „haben“",
+      "text": "Im Französischen hat man sein Alter: J'ai huit ans heißt wörtlich „Ich habe acht Jahre“.",
+      "beispiele": [
+       [
+        "J'ai neuf ans.",
+        "Ich bin neun Jahre alt."
+       ],
+       [
+        "Tu as dix ans.",
+        "Du bist zehn Jahre alt."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wie alt bist du?",
+      "zeilen": [
+       [
+        "hugo",
+        "Léa, tu as quel âge ?",
+        "Léa, wie alt bist du?"
+       ],
+       [
+        "lea",
+        "J'ai neuf ans. Et toi ?",
+        "Ich bin neun. Und du?"
+       ],
+       [
+        "hugo",
+        "Moi, j'ai dix ans.",
+        "Ich bin zehn Jahre alt."
+       ],
+       [
+        "lea",
+        "Dix ans ? Super !",
+        "Zehn Jahre? Super!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie alt ist Léa?",
+        "a": "neun",
+        "choices": [
+         "acht",
+         "zehn",
+         "sieben"
+        ]
+       },
+       {
+        "q": "Wie alt ist Hugo?",
+        "a": "zehn",
+        "choices": [
+         "neun",
+         "zwei",
+         "sechs"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne le neuf à Léa.",
+       "de": "Gib Léa die Neun.",
+       "ding": "9️⃣",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne le trois à Hugo.",
+       "de": "Gib Hugo die Drei.",
+       "ding": "3️⃣",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne le dix à Ruby.",
+       "de": "Gib Ruby die Zehn.",
+       "ding": "🔟",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne le sept à Hugo.",
+       "de": "Gib Hugo die Sieben.",
+       "ding": "7️⃣",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne le huit à Léa.",
+       "de": "Gib Léa die Acht.",
+       "ding": "8️⃣",
+       "anzahl": 1,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Tu es dix ans.",
+       "richtig": "Tu as dix ans.",
+       "wort": "es",
+       "korrektur": "as",
+       "choices": [
+        "est",
+        "suis"
+       ],
+       "tipp": "Das Alter hat man: tu as dix ans."
+      },
+      {
+       "falsch": "J'ai deux mains et dix doigt.",
+       "richtig": "J'ai deux mains et dix doigts.",
+       "wort": "doigt",
+       "korrektur": "doigts",
+       "choices": [
+        "doigtes",
+        "doigtx"
+       ],
+       "tipp": "Mehr als einer: hinten ein -s."
+      },
+      {
+       "falsch": "Un, deux, trois, compte avec je !",
+       "richtig": "Un, deux, trois, compte avec moi !",
+       "wort": "je",
+       "korrektur": "moi",
+       "choices": [
+        "me",
+        "tu"
+       ],
+       "tipp": "Nach avec sagt man moi."
+      },
+      {
+       "falsch": "J'ai neuf ans. Et tu ?",
+       "richtig": "J'ai neuf ans. Et toi ?",
+       "wort": "tu",
+       "korrektur": "toi",
+       "choices": [
+        "te",
+        "ton"
+       ],
+       "tipp": "„Und du?“ heißt Et toi ?"
+      }
+     ]
+    },
+    {
+     "id": "fr-1-4",
+     "titel": "Farben",
+     "emoji": "🎨",
+     "ziel": "Ich kann Farben nennen und sagen, welche Farbe etwas hat.",
+     "woerter": [
+      [
+       "rouge",
+       "rot",
+       "🔴"
+      ],
+      [
+       "bleu",
+       "blau",
+       "🔵"
+      ],
+      [
+       "vert",
+       "grün",
+       "🟢"
+      ],
+      [
+       "jaune",
+       "gelb",
+       "🟡"
+      ],
+      [
+       "noir",
+       "schwarz",
+       "⚫"
+      ],
+      [
+       "blanc",
+       "weiß",
+       "⚪"
+      ],
+      [
+       "orange",
+       "orange",
+       "🟠"
+      ],
+      [
+       "rose",
+       "rosa",
+       "🌸"
+      ]
+     ],
+     "saetze": [
+      [
+       "Le ballon est rouge.",
+       "Der Ball ist rot.",
+       "🔴"
+      ],
+      [
+       "Le soleil est jaune.",
+       "Die Sonne ist gelb.",
+       "☀️"
+      ],
+      [
+       "J'aime le vert.",
+       "Ich mag Grün.",
+       "💚"
+      ],
+      [
+       "C'est de quelle couleur ?",
+       "Welche Farbe hat das?",
+       "🎨"
+      ]
+     ],
+     "regel": {
+      "titel": "Die Farbe kommt hinterher",
+      "text": "Im Französischen steht die Farbe meist hinter dem Ding: un ballon rouge. Bei weiblichen Wörtern bekommt sie oft ein -e: une voiture verte.",
+      "beispiele": [
+       [
+        "un ballon bleu",
+        "ein blauer Ball"
+       ],
+       [
+        "la mer bleue",
+        "das blaue Meer"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Das bunte Boot",
+      "zeilen": [
+       [
+        "lea",
+        "Regarde, Hugo ! Le bateau est rouge et blanc.",
+        "Schau, Hugo! Das Boot ist rot und weiß."
+       ],
+       [
+        "hugo",
+        "Et la mer ?",
+        "Und das Meer?"
+       ],
+       [
+        "lea",
+        "La mer est bleue !",
+        "Das Meer ist blau!"
+       ],
+       [
+        "hugo",
+        "J'aime le bleu.",
+        "Ich mag Blau."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Welche Farbe hat das Boot?",
+        "a": "rot und weiß",
+        "choices": [
+         "blau und gelb",
+         "grün",
+         "schwarz"
+        ]
+       },
+       {
+        "q": "Welche Farbe mag Hugo?",
+        "a": "Blau",
+        "choices": [
+         "Rot",
+         "Gelb",
+         "Rosa"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne le ballon rouge à Hugo.",
+       "de": "Gib Hugo den roten Ball.",
+       "ding": "🔴",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux ballons bleus à Léa.",
+       "de": "Gib Léa zwei blaue Bälle.",
+       "ding": "🔵",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne le ballon vert à Ruby.",
+       "de": "Gib Ruby den grünen Ball.",
+       "ding": "🟢",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne trois ballons jaunes à Hugo.",
+       "de": "Gib Hugo drei gelbe Bälle.",
+       "ding": "🟡",
+       "anzahl": 3,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne le ballon blanc à Léa.",
+       "de": "Gib Léa den weißen Ball.",
+       "ding": "⚪",
+       "anzahl": 1,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "La ballon est rouge et rond.",
+       "richtig": "Le ballon est rouge et rond.",
+       "wort": "La",
+       "korrektur": "Le",
+       "choices": [
+        "Les",
+        "Une"
+       ],
+       "tipp": "ballon ist männlich – also le."
+      },
+      {
+       "falsch": "La voiture est vert.",
+       "richtig": "La voiture est verte.",
+       "wort": "vert",
+       "korrektur": "verte",
+       "choices": [
+        "verts",
+        "vertes"
+       ],
+       "tipp": "voiture ist weiblich – die Farbe bekommt ein -e."
+      },
+      {
+       "falsch": "Le bateau est rouge et blanche.",
+       "richtig": "Le bateau est rouge et blanc.",
+       "wort": "blanche",
+       "korrektur": "blanc",
+       "choices": [
+        "blancs",
+        "blanches"
+       ],
+       "tipp": "bateau ist männlich – also blanc."
+      },
+      {
+       "falsch": "La vert est ma couleur préférée.",
+       "richtig": "Le vert est ma couleur préférée.",
+       "wort": "La",
+       "korrektur": "Le",
+       "choices": [
+        "Les",
+        "Une"
+       ],
+       "tipp": "Farben sind männlich: le vert."
+      }
+     ]
+    },
+    {
+     "id": "fr-1-5",
+     "titel": "Familie",
+     "emoji": "👪",
+     "ziel": "Ich kann meine Familie vorstellen.",
+     "woerter": [
+      [
+       "la mère",
+       "die Mutter",
+       "👩",
+       "Achtung: la mer (das Meer) klingt genauso!"
+      ],
+      [
+       "le père",
+       "der Vater",
+       "👨"
+      ],
+      [
+       "la sœur",
+       "die Schwester",
+       "👧"
+      ],
+      [
+       "le frère",
+       "der Bruder",
+       "👦"
+      ],
+      [
+       "la grand-mère",
+       "die Oma",
+       "👵"
+      ],
+      [
+       "le grand-père",
+       "der Opa",
+       "👴"
+      ],
+      [
+       "le bébé",
+       "das Baby",
+       "👶"
+      ],
+      [
+       "la famille",
+       "die Familie",
+       "👪"
+      ]
+     ],
+     "saetze": [
+      [
+       "C'est ma mère.",
+       "Das ist meine Mutter.",
+       "👩"
+      ],
+      [
+       "J'ai une sœur.",
+       "Ich habe eine Schwester.",
+       "👧"
+      ],
+      [
+       "Mon grand-père est drôle.",
+       "Mein Opa ist lustig.",
+       "👴"
+      ],
+      [
+       "J'aime ma famille.",
+       "Ich habe meine Familie lieb.",
+       "❤️"
+      ]
+     ],
+     "regel": {
+      "titel": "mon, ma, mes",
+      "text": "„mein“ hat drei Formen: mon bei männlichen Wörtern, ma bei weiblichen, mes bei mehreren. Vor a, e, i, o, u und stummem h nimmt man auch bei weiblichen Wörtern mon: mon amie, mon école.",
+      "beispiele": [
+       [
+        "mon frère",
+        "mein Bruder"
+       ],
+       [
+        "ma sœur",
+        "meine Schwester"
+       ],
+       [
+        "mes parents",
+        "meine Eltern"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Léas Familie",
+      "zeilen": [
+       [
+        "lea",
+        "Regarde, Hugo ! C'est ma famille.",
+        "Schau, Hugo! Das ist meine Familie."
+       ],
+       [
+        "hugo",
+        "C'est qui ?",
+        "Wer ist das?"
+       ],
+       [
+        "lea",
+        "C'est mon frère Théo. Il a six ans.",
+        "Das ist mein Bruder Théo. Er ist sechs."
+       ],
+       [
+        "hugo",
+        "Et elle ?",
+        "Und sie?"
+       ],
+       [
+        "lea",
+        "C'est ma grand-mère. Je l'aime beaucoup !",
+        "Das ist meine Oma. Ich habe sie sehr lieb!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie heißt Léas Bruder?",
+        "a": "Théo",
+        "choices": [
+         "Hugo",
+         "Paul",
+         "Max"
+        ]
+       },
+       {
+        "q": "Wie alt ist Théo?",
+        "a": "sechs",
+        "choices": [
+         "acht",
+         "drei",
+         "zehn"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne le bébé à Léa.",
+       "de": "Gib Léa das Baby.",
+       "ding": "👶",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne un bateau à Hugo.",
+       "de": "Gib Hugo ein Boot.",
+       "ding": "⛵",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne le ballon noir à Ruby.",
+       "de": "Gib Ruby den schwarzen Ball.",
+       "ding": "⚫",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne quatre ballons orange à Hugo.",
+       "de": "Gib Hugo vier orange Bälle.",
+       "ding": "🟠",
+       "anzahl": 4,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne cinq ballons verts à Léa.",
+       "de": "Gib Léa fünf grüne Bälle.",
+       "ding": "🟢",
+       "anzahl": 5,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "C'est ta maman ? Oui, c'est mon mère.",
+       "richtig": "C'est ta maman ? Oui, c'est ma mère.",
+       "wort": "mon",
+       "korrektur": "ma",
+       "choices": [
+        "mes",
+        "me"
+       ],
+       "tipp": "mère ist weiblich – also ma."
+      },
+      {
+       "falsch": "C'est ma frère Théo.",
+       "richtig": "C'est mon frère Théo.",
+       "wort": "ma",
+       "korrektur": "mon",
+       "choices": [
+        "mes",
+        "me"
+       ],
+       "tipp": "frère ist männlich – also mon."
+      },
+      {
+       "falsch": "J'ai un petite sœur.",
+       "richtig": "J'ai une petite sœur.",
+       "wort": "un",
+       "korrektur": "une",
+       "choices": [
+        "le",
+        "des"
+       ],
+       "tipp": "sœur ist weiblich – also une."
+      },
+      {
+       "falsch": "Il est six ans.",
+       "richtig": "Il a six ans.",
+       "wort": "est",
+       "korrektur": "a",
+       "choices": [
+        "es",
+        "suis"
+       ],
+       "tipp": "Das Alter hat man: il a six ans."
+      }
+     ]
+    },
+    {
+     "id": "fr-1-6",
+     "titel": "Tiere",
+     "emoji": "🐾",
+     "ziel": "Ich kann Tiere nennen und von meinem Haustier erzählen.",
+     "woerter": [
+      [
+       "le chien",
+       "der Hund",
+       "🐶"
+      ],
+      [
+       "le chat",
+       "die Katze",
+       "🐱",
+       "Im Französischen ist die Katze männlich: le chat."
+      ],
+      [
+       "l'oiseau",
+       "der Vogel",
+       "🐦"
+      ],
+      [
+       "le poisson",
+       "der Fisch",
+       "🐟"
+      ],
+      [
+       "le cheval",
+       "das Pferd",
+       "🐴",
+       "Zwei Pferde: deux chevaux."
+      ],
+      [
+       "le lapin",
+       "das Kaninchen",
+       "🐰"
+      ],
+      [
+       "la souris",
+       "die Maus",
+       "🐭"
+      ],
+      [
+       "la vache",
+       "die Kuh",
+       "🐮"
+      ]
+     ],
+     "saetze": [
+      [
+       "J'ai un chien.",
+       "Ich habe einen Hund.",
+       "🐶"
+      ],
+      [
+       "Tu as un animal ?",
+       "Hast du ein Haustier?",
+       "🐾"
+      ],
+      [
+       "Le chat est noir.",
+       "Die Katze ist schwarz.",
+       "🐈‍⬛"
+      ],
+      [
+       "J'ai deux lapins.",
+       "Ich habe zwei Kaninchen.",
+       "🐰"
+      ]
+     ],
+     "regel": {
+      "titel": "un oder une?",
+      "text": "„ein/eine“ heißt un bei männlichen und une bei weiblichen Wörtern. Für mehrere hängt man meist ein -s an – das hört man aber nicht. Wörter, die schon auf -s enden, bleiben gleich.",
+      "beispiele": [
+       [
+        "un chat → deux chats",
+        "eine Katze → zwei Katzen"
+       ],
+       [
+        "une souris → deux souris",
+        "eine Maus → zwei Mäuse"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Haustiere",
+      "zeilen": [
+       [
+        "hugo",
+        "Léa, tu as un animal ?",
+        "Léa, hast du ein Haustier?"
+       ],
+       [
+        "lea",
+        "Oui ! J'ai un chat. Il est noir.",
+        "Ja! Ich habe eine Katze. Sie ist schwarz."
+       ],
+       [
+        "hugo",
+        "Moi, j'ai deux chiens et un poisson.",
+        "Ich habe zwei Hunde und einen Fisch."
+       ],
+       [
+        "lea",
+        "Deux chiens ? Super !",
+        "Zwei Hunde? Super!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Welches Tier hat Léa?",
+        "a": "eine Katze",
+        "choices": [
+         "einen Hund",
+         "ein Pferd",
+         "einen Vogel"
+        ]
+       },
+       {
+        "q": "Wie viele Hunde hat Hugo?",
+        "a": "zwei",
+        "choices": [
+         "drei",
+         "einen",
+         "keinen"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne trois poissons à Léa.",
+       "de": "Gib Léa drei Fische.",
+       "ding": "🐟",
+       "anzahl": 3,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne un chien à Hugo.",
+       "de": "Gib Hugo einen Hund.",
+       "ding": "🐶",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux lapins à Ruby.",
+       "de": "Gib Ruby zwei Kaninchen.",
+       "ding": "🐰",
+       "anzahl": 2,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne une souris à Léa.",
+       "de": "Gib Léa eine Maus.",
+       "ding": "🐭",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne un chat à Hugo.",
+       "de": "Gib Hugo eine Katze.",
+       "ding": "🐱",
+       "anzahl": 1,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "J'ai une petit chien.",
+       "richtig": "J'ai un petit chien.",
+       "wort": "une",
+       "korrektur": "un",
+       "choices": [
+        "la",
+        "des"
+       ],
+       "tipp": "chien ist männlich – also un."
+      },
+      {
+       "falsch": "La chat est noir.",
+       "richtig": "Le chat est noir.",
+       "wort": "La",
+       "korrektur": "Le",
+       "choices": [
+        "Les",
+        "Une"
+       ],
+       "tipp": "Im Französischen ist die Katze männlich: le chat."
+      },
+      {
+       "falsch": "J'ai un petite souris.",
+       "richtig": "J'ai une petite souris.",
+       "wort": "un",
+       "korrektur": "une",
+       "choices": [
+        "le",
+        "des"
+       ],
+       "tipp": "souris ist weiblich – also une."
+      },
+      {
+       "falsch": "J'ai deux chevals.",
+       "richtig": "J'ai deux chevaux.",
+       "wort": "chevals",
+       "korrektur": "chevaux",
+       "choices": [
+        "chevales",
+        "cheval"
+       ],
+       "tipp": "Zwei Pferde: deux chevaux – mit -aux."
+      }
+     ]
+    },
+    {
+     "id": "fr-1-7",
+     "titel": "Essen",
+     "emoji": "🍎",
+     "ziel": "Ich kann sagen, was ich mag und was nicht, und um etwas bitten.",
+     "woerter": [
+      [
+       "la pomme",
+       "der Apfel",
+       "🍎"
+      ],
+      [
+       "la banane",
+       "die Banane",
+       "🍌"
+      ],
+      [
+       "le pain",
+       "das Brot",
+       "🍞"
+      ],
+      [
+       "le fromage",
+       "der Käse",
+       "🧀"
+      ],
+      [
+       "le lait",
+       "die Milch",
+       "🥛"
+      ],
+      [
+       "l'eau",
+       "das Wasser",
+       "💧"
+      ],
+      [
+       "le jus",
+       "der Saft",
+       "🧃"
+      ],
+      [
+       "la pizza",
+       "die Pizza",
+       "🍕"
+      ]
+     ],
+     "saetze": [
+      [
+       "J'aime les pommes.",
+       "Ich mag Äpfel.",
+       "🍎"
+      ],
+      [
+       "Je n'aime pas le lait.",
+       "Ich mag keine Milch.",
+       "🥛"
+      ],
+      [
+       "De l'eau, s'il te plaît.",
+       "Wasser, bitte.",
+       "💧"
+      ],
+      [
+       "J'ai faim.",
+       "Ich habe Hunger.",
+       "😋"
+      ]
+     ],
+     "regel": {
+      "titel": "Verneinung wie eine Klammer",
+      "text": "„nicht“ ist im Französischen eine Klammer um das Verb: ne … pas. Vor a, e, i, o, u und stummem h wird ne zu n'.",
+      "beispiele": [
+       [
+        "J'aime le fromage.",
+        "Ich mag Käse."
+       ],
+       [
+        "Je n'aime pas le fromage.",
+        "Ich mag keinen Käse."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Hunger!",
+      "zeilen": [
+       [
+        "hugo",
+        "J'ai faim !",
+        "Ich habe Hunger!"
+       ],
+       [
+        "ruby",
+        "Tu aimes la pizza ?",
+        "Magst du Pizza?"
+       ],
+       [
+        "hugo",
+        "Oui, j'aime la pizza ! Et du jus, s'il te plaît.",
+        "Ja, ich mag Pizza! Und Saft, bitte."
+       ],
+       [
+        "ruby",
+        "Voilà !",
+        "Bitte schön!"
+       ],
+       [
+        "hugo",
+        "Merci, Ruby !",
+        "Danke, Ruby!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was mag Hugo?",
+        "a": "Pizza",
+        "choices": [
+         "Käse",
+         "Brot",
+         "Bananen"
+        ]
+       },
+       {
+        "q": "Was möchte Hugo trinken?",
+        "a": "Saft",
+        "choices": [
+         "Wasser",
+         "Milch",
+         "Tee"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne une pizza à Hugo.",
+       "de": "Gib Hugo eine Pizza.",
+       "ding": "🍕",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux bananes à Léa.",
+       "de": "Gib Léa zwei Bananen.",
+       "ding": "🍌",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne trois pommes à Ruby.",
+       "de": "Gib Ruby drei Äpfel.",
+       "ding": "🍎",
+       "anzahl": 3,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne du fromage à Hugo.",
+       "de": "Gib Hugo etwas Käse.",
+       "ding": "🧀",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne du jus à Léa.",
+       "de": "Gib Léa etwas Saft.",
+       "ding": "🧃",
+       "anzahl": 1,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Je n'aime non le lait.",
+       "richtig": "Je n'aime pas le lait.",
+       "wort": "non",
+       "korrektur": "pas",
+       "choices": [
+        "ne",
+        "rien"
+       ],
+       "tipp": "Die Klammer heißt ne … pas."
+      },
+      {
+       "falsch": "Tu es faim et soif ?",
+       "richtig": "Tu as faim et soif ?",
+       "wort": "es",
+       "korrektur": "as",
+       "choices": [
+        "est",
+        "suis"
+       ],
+       "tipp": "Hunger hat man: tu as faim."
+      },
+      {
+       "falsch": "La fromage est bon.",
+       "richtig": "Le fromage est bon.",
+       "wort": "La",
+       "korrektur": "Le",
+       "choices": [
+        "Les",
+        "Une"
+       ],
+       "tipp": "fromage ist männlich – also le."
+      },
+      {
+       "falsch": "Le pizza est bonne.",
+       "richtig": "La pizza est bonne.",
+       "wort": "Le",
+       "korrektur": "La",
+       "choices": [
+        "Les",
+        "Un"
+       ],
+       "tipp": "pizza ist weiblich – also la."
+      }
+     ]
+    },
+    {
+     "id": "fr-1-8",
+     "titel": "Schule",
+     "emoji": "🏫",
+     "ziel": "Ich kann Schulsachen nennen und verstehe einfache Aufforderungen.",
+     "woerter": [
+      [
+       "l'école",
+       "die Schule",
+       "🏫"
+      ],
+      [
+       "le livre",
+       "das Buch",
+       "📕"
+      ],
+      [
+       "le stylo",
+       "der Kuli",
+       "🖊️",
+       "le stylo ist jeder Stift mit Tinte. Ein Füller heißt le stylo-plume."
+      ],
+      [
+       "le crayon",
+       "der Bleistift",
+       "✏️"
+      ],
+      [
+       "le sac",
+       "die Tasche",
+       "🎒"
+      ],
+      [
+       "la chaise",
+       "der Stuhl",
+       "🪑"
+      ],
+      [
+       "le professeur",
+       "der Lehrer",
+       "🧑‍🏫",
+       "Kurz sagt man le prof oder la prof."
+      ],
+      [
+       "la règle",
+       "das Lineal",
+       "📏",
+       "la règle heißt auch: die Regel."
+      ]
+     ],
+     "saetze": [
+      [
+       "Ouvre ton livre, s'il te plaît.",
+       "Öffne bitte dein Buch.",
+       "📖"
+      ],
+      [
+       "J'ai un crayon.",
+       "Ich habe einen Bleistift.",
+       "✏️"
+      ],
+      [
+       "Où est mon sac ?",
+       "Wo ist meine Tasche?",
+       "🎒"
+      ],
+      [
+       "Ma prof est sympa.",
+       "Meine Lehrerin ist nett.",
+       "🧑‍🏫"
+      ]
+     ],
+     "regel": {
+      "titel": "Aufforderungen",
+      "text": "Eine Aufforderung an eine Person ist die tu-Form ohne tu. Bei Verben auf -er (und bei ouvrir) fällt das -s weg: tu ouvres → Ouvre ! An mehrere oder an Erwachsene: Ouvrez !",
+      "beispiele": [
+       [
+        "Ouvre ton livre !",
+        "Öffne dein Buch!"
+       ],
+       [
+        "Ouvrez vos livres !",
+        "Öffnet eure Bücher!"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wo ist mein Buch?",
+      "zeilen": [
+       [
+        "martin",
+        "Bonjour, les enfants !",
+        "Guten Morgen, Kinder!"
+       ],
+       [
+        "lea",
+        "Bonjour, Madame !",
+        "Guten Morgen, Frau Martin!"
+       ],
+       [
+        "martin",
+        "Ouvrez vos livres, s'il vous plaît.",
+        "Öffnet bitte eure Bücher."
+       ],
+       [
+        "hugo",
+        "Oh non ! Où est mon livre ?",
+        "Oh nein! Wo ist mein Buch?"
+       ],
+       [
+        "lea",
+        "Regarde, Hugo ! Il est dans ton sac.",
+        "Schau, Hugo! Es ist in deiner Tasche."
+       ],
+       [
+        "hugo",
+        "Merci, Léa !",
+        "Danke, Léa!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was sucht Hugo?",
+        "a": "sein Buch",
+        "choices": [
+         "seinen Bleistift",
+         "seinen Stuhl",
+         "sein Lineal"
+        ]
+       },
+       {
+        "q": "Wo ist es?",
+        "a": "in seiner Tasche",
+        "choices": [
+         "auf dem Stuhl",
+         "bei Madame Martin",
+         "zu Hause"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne un crayon à Hugo.",
+       "de": "Gib Hugo einen Bleistift.",
+       "ding": "✏️",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux livres à Léa.",
+       "de": "Gib Léa zwei Bücher.",
+       "ding": "📕",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne une chaise à Ruby.",
+       "de": "Gib Ruby einen Stuhl.",
+       "ding": "🪑",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne un stylo à Léa.",
+       "de": "Gib Léa einen Kuli.",
+       "ding": "🖊️",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne un sac à Hugo.",
+       "de": "Gib Hugo eine Tasche.",
+       "ding": "🎒",
+       "anzahl": 1,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Ouvre ta livre à la page dix.",
+       "richtig": "Ouvre ton livre à la page dix.",
+       "wort": "ta",
+       "korrektur": "ton",
+       "choices": [
+        "tes",
+        "te"
+       ],
+       "tipp": "livre ist männlich – also ton."
+      },
+      {
+       "falsch": "J'ai une crayon noir.",
+       "richtig": "J'ai un crayon noir.",
+       "wort": "une",
+       "korrektur": "un",
+       "choices": [
+        "la",
+        "des"
+       ],
+       "tipp": "crayon ist männlich – also un."
+      },
+      {
+       "falsch": "Où est ma sac bleu ?",
+       "richtig": "Où est mon sac bleu ?",
+       "wort": "ma",
+       "korrektur": "mon",
+       "choices": [
+        "mes",
+        "me"
+       ],
+       "tipp": "sac ist männlich – also mon."
+      },
+      {
+       "falsch": "Ouvrir ton livre, s'il te plaît.",
+       "richtig": "Ouvre ton livre, s'il te plaît.",
+       "wort": "Ouvrir",
+       "korrektur": "Ouvre",
+       "choices": [
+        "Ouvert",
+        "Ouvrent"
+       ],
+       "tipp": "Eine Aufforderung ist die tu-Form ohne tu – und ohne -s: tu ouvres → Ouvre !"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2",
+   "stufe": "A1.1",
+   "titel": "Mon quotidien – Mein Alltag",
+   "emoji": "🏠",
+   "ziel": "Ich kann über mich und meinen Tag erzählen.",
+   "einheiten": [
+    {
+     "id": "fr-2-1",
+     "titel": "Le corps",
+     "emoji": "🙆",
+     "ziel": "Ich kann Körperteile nennen und sagen, was mir wehtut.",
+     "woerter": [
+      [
+       "la tête",
+       "der Kopf",
+       "🙂"
+      ],
+      [
+       "l'œil",
+       "das Auge",
+       "👁️",
+       "Zwei Augen: les yeux."
+      ],
+      [
+       "le nez",
+       "die Nase",
+       "👃",
+       "Das z spricht man nicht."
+      ],
+      [
+       "la bouche",
+       "der Mund",
+       "👄"
+      ],
+      [
+       "l'oreille",
+       "das Ohr",
+       "👂",
+       "l'oreille ist weiblich: une oreille."
+      ],
+      [
+       "la main",
+       "die Hand",
+       "✋"
+      ],
+      [
+       "le bras",
+       "der Arm",
+       "💪",
+       "Das s spricht man nicht."
+      ],
+      [
+       "le pied",
+       "der Fuß",
+       "🦶"
+      ]
+     ],
+     "saetze": [
+      [
+       "J'ai mal à la tête.",
+       "Mir tut der Kopf weh.",
+       "🤕"
+      ],
+      [
+       "Je me lave les mains.",
+       "Ich wasche mir die Hände.",
+       "🧼"
+      ],
+      [
+       "Tu as les yeux bleus.",
+       "Du hast blaue Augen.",
+       "👀"
+      ],
+      [
+       "Je lève la main.",
+       "Ich hebe die Hand.",
+       "🙋"
+      ]
+     ],
+     "regel": {
+      "titel": "Verben auf -er",
+      "text": "Viele Verben enden auf -er, zum Beispiel jouer (spielen) und toucher (anfassen). Statt -er hängt man an: bei je ein -e, bei tu ein -es, bei il und elle ein -e. Das Tolle: Alle drei Formen klingen gleich!",
+      "beispiele": [
+       [
+        "je joue, tu joues, il joue",
+        "ich spiele, du spielst, er spielt"
+       ],
+       [
+        "Je touche mon nez.",
+        "Ich fasse meine Nase an."
+       ],
+       [
+        "Ruby touche le nez de Léa.",
+        "Ruby fasst Léas Nase an."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Jacques a dit",
+      "zeilen": [
+       [
+        "lea",
+        "Ruby, on joue à « Jacques a dit » ?",
+        "Ruby, spielen wir „Jacques a dit“ (Simon sagt)?"
+       ],
+       [
+        "ruby",
+        "Oui ! Jacques a dit : touche ton nez, Hugo !",
+        "Ja! Jacques sagt: Fass deine Nase an, Hugo!"
+       ],
+       [
+        "hugo",
+        "Voilà, je touche mon nez.",
+        "Schau, ich fasse meine Nase an."
+       ],
+       [
+        "ruby",
+        "Jacques a dit : lève un pied !",
+        "Jacques sagt: Heb einen Fuß!"
+       ],
+       [
+        "hugo",
+        "Je lève un pied… oh là là, je tombe !",
+        "Ich hebe einen Fuß … oje, ich falle um!"
+       ],
+       [
+        "lea",
+        "Ha ha ! Ça va, Hugo ?",
+        "Haha! Alles okay, Hugo?"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was fasst Hugo zuerst an?",
+        "a": "seine Nase",
+        "choices": [
+         "sein Ohr",
+         "seinen Kopf",
+         "seine Hand"
+        ]
+       },
+       {
+        "q": "Was passiert, als Hugo einen Fuß hebt?",
+        "a": "Er fällt um.",
+        "choices": [
+         "Er lacht.",
+         "Er singt.",
+         "Er schläft ein."
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne un nez à Hugo.",
+       "de": "Gib Hugo eine Nase.",
+       "ding": "👃",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux yeux à Ruby.",
+       "de": "Gib Ruby zwei Augen.",
+       "ding": "👁️",
+       "anzahl": 2,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne une bouche à Léa.",
+       "de": "Gib Léa einen Mund.",
+       "ding": "👄",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne deux oreilles à Hugo.",
+       "de": "Gib Hugo zwei Ohren.",
+       "ding": "👂",
+       "anzahl": 2,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne trois mains à Ruby.",
+       "de": "Gib Ruby drei Hände.",
+       "ding": "✋",
+       "anzahl": 3,
+       "an": "ruby"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Moi, je touches mon nez.",
+       "richtig": "Moi, je touche mon nez.",
+       "wort": "touches",
+       "korrektur": "touche",
+       "choices": [
+        "touchent",
+        "toucher"
+       ],
+       "tipp": "Nach je endet das Verb auf -e, ohne s: je touche."
+      },
+      {
+       "falsch": "J'ai mal à le tête.",
+       "richtig": "J'ai mal à la tête.",
+       "wort": "le",
+       "korrektur": "la",
+       "choices": [
+        "les",
+        "l'"
+       ],
+       "tipp": "la tête ist weiblich – also la."
+      },
+      {
+       "falsch": "Ruby a une nez rond.",
+       "richtig": "Ruby a un nez rond.",
+       "wort": "une",
+       "korrektur": "un",
+       "choices": [
+        "la",
+        "des"
+       ],
+       "tipp": "le nez ist männlich – also un nez."
+      },
+      {
+       "falsch": "Léa joues et rit avec Ruby.",
+       "richtig": "Léa joue et rit avec Ruby.",
+       "wort": "joues",
+       "korrektur": "joue",
+       "choices": [
+        "jouer",
+        "jouons"
+       ],
+       "tipp": "Bei Léa (sie) endet das Verb auf -e, ohne s."
+      }
+     ]
+    },
+    {
+     "id": "fr-2-2",
+     "titel": "Les vêtements",
+     "emoji": "👚",
+     "ziel": "Ich kann sagen, was ich anhabe und welche Farbe es hat.",
+     "woerter": [
+      [
+       "le tee-shirt",
+       "das T-Shirt",
+       "👕"
+      ],
+      [
+       "le pantalon",
+       "die Hose",
+       "👖",
+       "le pantalon ist männlich: un pantalon, mon pantalon."
+      ],
+      [
+       "la robe",
+       "das Kleid",
+       "👗"
+      ],
+      [
+       "le manteau",
+       "der Mantel",
+       "🧥",
+       "Mehrere Mäntel: les manteaux."
+      ],
+      [
+       "la chaussette",
+       "die Socke",
+       "🧦"
+      ],
+      [
+       "la chaussure",
+       "der Schuh",
+       "👞"
+      ],
+      [
+       "la casquette",
+       "die Kappe",
+       "🧢"
+      ],
+      [
+       "l'écharpe",
+       "der Schal",
+       "🧣",
+       "l'écharpe ist weiblich: une écharpe."
+      ]
+     ],
+     "saetze": [
+      [
+       "J'ai froid !",
+       "Mir ist kalt!",
+       "🥶"
+      ],
+      [
+       "Je mets mon écharpe.",
+       "Ich ziehe meinen Schal an.",
+       "🧣"
+      ],
+      [
+       "Où est ma chaussette ?",
+       "Wo ist meine Socke?",
+       "🔍"
+      ],
+      [
+       "Ta robe est très belle !",
+       "Dein Kleid ist sehr schön!",
+       "🤩"
+      ]
+     ],
+     "regel": {
+      "titel": "avoir und être",
+      "text": "avoir (haben) und être (sein) sind die wichtigsten Verben – und sie tanzen aus der Reihe. Lern sie wie ein Gedicht: j'ai, tu as, il a – je suis, tu es, il est. Achtung: J'ai froid heißt „Mir ist kalt“ (wörtlich: Ich habe Kälte).",
+      "beispiele": [
+       [
+        "J'ai un manteau. Il est noir.",
+        "Ich habe einen Mantel. Er ist schwarz."
+       ],
+       [
+        "Tu as une robe ? Elle est belle !",
+        "Hast du ein Kleid? Es ist schön!"
+       ],
+       [
+        "Hugo a froid.",
+        "Hugo friert."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Brrr, ist das kalt!",
+      "zeilen": [
+       [
+        "hugo",
+        "Brrr ! J'ai froid.",
+        "Brrr! Mir ist kalt."
+       ],
+       [
+        "lea",
+        "Tu as une écharpe ?",
+        "Hast du einen Schal?"
+       ],
+       [
+        "hugo",
+        "Non, j'ai un tee-shirt, c'est tout.",
+        "Nein, ich habe ein T-Shirt an, das ist alles."
+       ],
+       [
+        "lea",
+        "Voilà mon écharpe rose et ma casquette.",
+        "Hier, mein rosa Schal und meine Kappe."
+       ],
+       [
+        "hugo",
+        "Merci, Léa ! Maintenant, j'ai chaud !",
+        "Danke, Léa! Jetzt ist mir warm!"
+       ],
+       [
+        "ruby",
+        "Et moi ? Je suis un oiseau, j'ai mes plumes !",
+        "Und ich? Ich bin ein Vogel, ich habe meine Federn!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was gibt Léa Hugo?",
+        "a": "einen Schal und eine Kappe",
+        "choices": [
+         "einen Mantel und Socken",
+         "ein Kleid",
+         "zwei Schuhe"
+        ]
+       },
+       {
+        "q": "Welche Farbe hat Léas Schal?",
+        "a": "rosa",
+        "choices": [
+         "blau",
+         "schwarz",
+         "grün"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne une écharpe à Hugo.",
+       "de": "Gib Hugo einen Schal.",
+       "ding": "🧣",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux chaussettes à Léa.",
+       "de": "Gib Léa zwei Socken.",
+       "ding": "🧦",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne une casquette à Ruby.",
+       "de": "Gib Ruby eine Kappe.",
+       "ding": "🧢",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne un manteau à Léa.",
+       "de": "Gib Léa einen Mantel.",
+       "ding": "🧥",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne trois tee-shirts à Hugo.",
+       "de": "Gib Hugo drei T-Shirts.",
+       "ding": "👕",
+       "anzahl": 3,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Léa ai une robe rouge.",
+       "richtig": "Léa a une robe rouge.",
+       "wort": "ai",
+       "korrektur": "a",
+       "choices": [
+        "as",
+        "es"
+       ],
+       "tipp": "j'ai, tu as, il/elle a – bei Léa also a."
+      },
+      {
+       "falsch": "J'ai une manteau noir.",
+       "richtig": "J'ai un manteau noir.",
+       "wort": "une",
+       "korrektur": "un",
+       "choices": [
+        "la",
+        "des"
+       ],
+       "tipp": "le manteau ist männlich – also un manteau."
+      },
+      {
+       "falsch": "Ma pantalon est bleu.",
+       "richtig": "Mon pantalon est bleu.",
+       "wort": "Ma",
+       "korrektur": "Mon",
+       "choices": [
+        "Mes",
+        "Ta"
+       ],
+       "tipp": "le pantalon ist männlich – also mon pantalon."
+      },
+      {
+       "falsch": "La robe est vert.",
+       "richtig": "La robe est verte.",
+       "wort": "vert",
+       "korrektur": "verte",
+       "choices": [
+        "verts",
+        "vertes"
+       ],
+       "tipp": "la robe ist weiblich und Einzahl – die Farbe bekommt ein -e: verte."
+      }
+     ]
+    },
+    {
+     "id": "fr-2-3",
+     "titel": "La maison",
+     "emoji": "🏡",
+     "ziel": "Ich kann mein Zuhause beschreiben und sagen, wo etwas ist.",
+     "woerter": [
+      [
+       "la maison",
+       "das Haus",
+       "🏠"
+      ],
+      [
+       "la cuisine",
+       "die Küche",
+       "🍳"
+      ],
+      [
+       "la salle de bain",
+       "das Badezimmer",
+       "🛁",
+       "Man sagt auch: la salle de bains."
+      ],
+      [
+       "le lit",
+       "das Bett",
+       "🛏️",
+       "Das t spricht man nicht."
+      ],
+      [
+       "le canapé",
+       "das Sofa",
+       "🛋️"
+      ],
+      [
+       "la porte",
+       "die Tür",
+       "🚪"
+      ],
+      [
+       "la fenêtre",
+       "das Fenster",
+       "🪟"
+      ],
+      [
+       "la clé",
+       "der Schlüssel",
+       "🔑",
+       "Man darf auch la clef schreiben – es klingt gleich."
+      ]
+     ],
+     "saetze": [
+      [
+       "Bienvenue chez moi !",
+       "Willkommen bei mir!",
+       "🏡"
+      ],
+      [
+       "Ma chambre est petite.",
+       "Mein Zimmer ist klein.",
+       "🧸"
+      ],
+      [
+       "La clé est sur la table.",
+       "Der Schlüssel liegt auf dem Tisch.",
+       "🔑"
+      ],
+      [
+       "Je suis dans la salle de bain.",
+       "Ich bin im Badezimmer.",
+       "🫧"
+      ]
+     ],
+     "regel": {
+      "titel": "dans, sur, sous",
+      "text": "dans heißt in, sur heißt auf, sous heißt unter. Danach kommt einfach le, la oder l' – viel leichter als im Deutschen mit „in dem, in der, auf dem …“!",
+      "beispiele": [
+       [
+        "Le chat est sur le lit.",
+        "Die Katze ist auf dem Bett."
+       ],
+       [
+        "La clé est sous le canapé.",
+        "Der Schlüssel ist unter dem Sofa."
+       ],
+       [
+        "Hugo est dans la cuisine.",
+        "Hugo ist in der Küche."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wo ist der Schlüssel?",
+      "zeilen": [
+       [
+        "lea",
+        "Oh non ! Où est la clé de la maison ?",
+        "Oh nein! Wo ist der Hausschlüssel?"
+       ],
+       [
+        "hugo",
+        "Elle est dans la cuisine ?",
+        "Ist er in der Küche?"
+       ],
+       [
+        "lea",
+        "Non, elle n'est pas sur la table de la cuisine.",
+        "Nein, auf dem Küchentisch ist er nicht."
+       ],
+       [
+        "ruby",
+        "Regarde sous le canapé !",
+        "Schau unter dem Sofa nach!"
+       ],
+       [
+        "hugo",
+        "Voilà la clé ! Elle est sous le canapé.",
+        "Da ist der Schlüssel! Er ist unter dem Sofa."
+       ],
+       [
+        "lea",
+        "Merci, Ruby ! Tu es super !",
+        "Danke, Ruby! Du bist super!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was sucht Léa?",
+        "a": "den Hausschlüssel",
+        "choices": [
+         "ihr Buch",
+         "ihre Socke",
+         "die Katze"
+        ]
+       },
+       {
+        "q": "Wo ist der Schlüssel?",
+        "a": "unter dem Sofa",
+        "choices": [
+         "auf dem Tisch",
+         "im Bett",
+         "an der Tür"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne une clé à Hugo.",
+       "de": "Gib Hugo einen Schlüssel.",
+       "ding": "🔑",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne un lit à Léa.",
+       "de": "Gib Léa ein Bett.",
+       "ding": "🛏️",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne trois clés à Ruby.",
+       "de": "Gib Ruby drei Schlüssel.",
+       "ding": "🔑",
+       "anzahl": 3,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne deux canapés à Hugo.",
+       "de": "Gib Hugo zwei Sofas.",
+       "ding": "🛋️",
+       "anzahl": 2,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux fenêtres à Léa.",
+       "de": "Gib Léa zwei Fenster.",
+       "ding": "🪟",
+       "anzahl": 2,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Le chat est sur la lit bleu.",
+       "richtig": "Le chat est sur le lit bleu.",
+       "wort": "la",
+       "korrektur": "le",
+       "choices": [
+        "les",
+        "l'"
+       ],
+       "tipp": "le lit ist männlich – also sur le lit."
+      },
+      {
+       "falsch": "J'ai un petite clé.",
+       "richtig": "J'ai une petite clé.",
+       "wort": "un",
+       "korrektur": "une",
+       "choices": [
+        "le",
+        "mon"
+       ],
+       "tipp": "la clé ist weiblich – also une clé."
+      },
+      {
+       "falsch": "La fenêtre est grand.",
+       "richtig": "La fenêtre est grande.",
+       "wort": "grand",
+       "korrektur": "grande",
+       "choices": [
+        "grands",
+        "grandes"
+       ],
+       "tipp": "la fenêtre ist weiblich und Einzahl – grand bekommt ein -e: grande."
+      },
+      {
+       "falsch": "Où est Hugo ? Il es dans la cuisine.",
+       "richtig": "Où est Hugo ? Il est dans la cuisine.",
+       "wort": "es",
+       "korrektur": "est",
+       "choices": [
+        "suis",
+        "ai"
+       ],
+       "tipp": "es gehört zu tu. Bei Hugo (il) heißt es: il est."
+      }
+     ]
+    },
+    {
+     "id": "fr-2-4",
+     "titel": "La journée et l'heure",
+     "emoji": "🌞",
+     "ziel": "Ich kann von meinem Tag erzählen und volle Uhrzeiten sagen.",
+     "woerter": [
+      [
+       "le réveil",
+       "der Wecker",
+       "⏰"
+      ],
+      [
+       "l'heure",
+       "die Stunde",
+       "🕐",
+       "l'heure ist weiblich. Volle Stunde: Il est huit heures. Aber: Il est une heure."
+      ],
+      [
+       "le matin",
+       "der Morgen",
+       "🌅"
+      ],
+      [
+       "le petit-déjeuner",
+       "das Frühstück",
+       "🥐",
+       "Wörtlich: das kleine Mittagessen."
+      ],
+      [
+       "le déjeuner",
+       "das Mittagessen",
+       "🍝"
+      ],
+      [
+       "les devoirs",
+       "die Hausaufgaben",
+       "📝",
+       "Hausaufgaben stehen immer in der Mehrzahl: les devoirs."
+      ],
+      [
+       "le soir",
+       "der Abend",
+       "🌆"
+      ],
+      [
+       "le dîner",
+       "das Abendessen",
+       "🍲",
+       "In Frankreich isst man oft erst um 19 oder 20 Uhr zu Abend."
+      ]
+     ],
+     "saetze": [
+      [
+       "Quelle heure est-il ?",
+       "Wie spät ist es?",
+       "🕰️"
+      ],
+      [
+       "Il est huit heures.",
+       "Es ist acht Uhr.",
+       "🕗"
+      ],
+      [
+       "Je me lève à sept heures.",
+       "Ich stehe um sieben Uhr auf.",
+       "🥱"
+      ],
+      [
+       "Je fais mes devoirs à cinq heures.",
+       "Ich mache um fünf Uhr meine Hausaufgaben.",
+       "📚"
+      ]
+     ],
+     "regel": {
+      "titel": "son, sa, ses",
+      "text": "son, sa und ses heißen „sein“ ODER „ihr“. Es kommt nur auf das Ding an: son bei männlichen Wörtern, sa bei weiblichen, ses bei mehreren. Trick: Fängt ein weibliches Wort mit a, e, i, o, u an, nimmt man trotzdem son – das klingt schöner: son école.",
+      "beispiele": [
+       [
+        "Hugo cherche son réveil.",
+        "Hugo sucht seinen Wecker."
+       ],
+       [
+        "Ruby mange sa pomme.",
+        "Ruby isst ihren Apfel."
+       ],
+       [
+        "Léa fait ses devoirs.",
+        "Léa macht ihre Hausaufgaben."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Verschlafen!",
+      "zeilen": [
+       [
+        "lea",
+        "Hugo ! Il est huit heures !",
+        "Hugo! Es ist acht Uhr!"
+       ],
+       [
+        "hugo",
+        "Quoi ? Huit heures ? Où est mon réveil ?",
+        "Was? Acht Uhr? Wo ist mein Wecker?"
+       ],
+       [
+        "ruby",
+        "Ha ha ! Hugo cherche son réveil… Il est sous ton lit !",
+        "Haha! Hugo sucht seinen Wecker … Er ist unter deinem Bett!"
+       ],
+       [
+        "hugo",
+        "Oh non ! Et mon petit-déjeuner ?",
+        "Oh nein! Und mein Frühstück?"
+       ],
+       [
+        "lea",
+        "Voilà une pomme. Vite, à l'école !",
+        "Hier, ein Apfel. Schnell, ab in die Schule!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie spät ist es?",
+        "a": "acht Uhr",
+        "choices": [
+         "sieben Uhr",
+         "neun Uhr",
+         "zwölf Uhr"
+        ]
+       },
+       {
+        "q": "Wo ist Hugos Wecker?",
+        "a": "unter seinem Bett",
+        "choices": [
+         "auf dem Tisch",
+         "in der Küche",
+         "in seiner Tasche"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne son réveil à Hugo.",
+       "de": "Gib Hugo seinen Wecker.",
+       "ding": "⏰",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne son petit-déjeuner à Léa.",
+       "de": "Gib Léa ihr Frühstück.",
+       "ding": "🥐",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne son dîner à Ruby.",
+       "de": "Gib Ruby ihr Abendessen.",
+       "ding": "🍲",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne trois réveils à Léa.",
+       "de": "Gib Léa drei Wecker.",
+       "ding": "⏰",
+       "anzahl": 3,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne deux crayons à Hugo.",
+       "de": "Gib Hugo zwei Bleistifte.",
+       "ding": "✏️",
+       "anzahl": 2,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Léa fait son devoirs. Ils sont faciles.",
+       "richtig": "Léa fait ses devoirs. Ils sont faciles.",
+       "wort": "son",
+       "korrektur": "ses",
+       "choices": [
+        "sa",
+        "mon"
+       ],
+       "tipp": "les devoirs sind mehrere – also ses."
+      },
+      {
+       "falsch": "Hugo cherche sa petit réveil.",
+       "richtig": "Hugo cherche son petit réveil.",
+       "wort": "sa",
+       "korrektur": "son",
+       "choices": [
+        "ses",
+        "ma"
+       ],
+       "tipp": "le réveil ist männlich – also son réveil."
+      },
+      {
+       "falsch": "Il est huit heure, je prends mon petit-déjeuner.",
+       "richtig": "Il est huit heures, je prends mon petit-déjeuner.",
+       "wort": "heure",
+       "korrektur": "heures",
+       "choices": [
+        "heurs",
+        "l'heure"
+       ],
+       "tipp": "Acht Stunden sind mehrere – heures mit -s."
+      },
+      {
+       "falsch": "Toi, tu mange ton petit-déjeuner.",
+       "richtig": "Toi, tu manges ton petit-déjeuner.",
+       "wort": "mange",
+       "korrektur": "manges",
+       "choices": [
+        "mangent",
+        "manger"
+       ],
+       "tipp": "Nach tu bekommt das Verb ein -s: tu manges."
+      }
+     ]
+    },
+    {
+     "id": "fr-2-5",
+     "titel": "Les jours",
+     "emoji": "🗓️",
+     "ziel": "Ich kann die Wochentage nennen und Ja/Nein-Fragen stellen.",
+     "woerter": [
+      [
+       "le lundi",
+       "der Montag",
+       "🌕",
+       "lundi kommt von la lune (der Mond) – wie Montag! Ohne le: lundi = am Montag. Mit le: le lundi = montags (jeden Montag)."
+      ],
+      [
+       "le mardi",
+       "der Dienstag",
+       "🔴",
+       "mardi kommt von Mars, dem roten Planeten."
+      ],
+      [
+       "le mercredi",
+       "der Mittwoch",
+       "🤸",
+       "Mittwochs haben viele Kinder in Frankreich keine Schule oder nur am Vormittag."
+      ],
+      [
+       "le jeudi",
+       "der Donnerstag",
+       "⚡",
+       "jeudi kommt von Jupiter, dem Gott des Donners – wie Donnerstag!"
+      ],
+      [
+       "le vendredi",
+       "der Freitag",
+       "💖",
+       "vendredi kommt von Venus, der Göttin der Liebe."
+      ],
+      [
+       "le samedi",
+       "der Samstag",
+       "🎉"
+      ],
+      [
+       "le dimanche",
+       "der Sonntag",
+       "🥞"
+      ],
+      [
+       "la semaine",
+       "die Woche",
+       "📅",
+       "Wochentage schreibt man im Französischen klein."
+      ]
+     ],
+     "saetze": [
+      [
+       "On est quel jour aujourd'hui ?",
+       "Welcher Tag ist heute?",
+       "🤔"
+      ],
+      [
+       "Aujourd'hui, c'est mercredi.",
+       "Heute ist Mittwoch.",
+       "😃"
+      ],
+      [
+       "Le samedi, je joue au foot.",
+       "Samstags spiele ich Fußball.",
+       "⚽"
+      ],
+      [
+       "À lundi !",
+       "Bis Montag!",
+       "👋"
+      ]
+     ],
+     "regel": {
+      "titel": "Fragen mit est-ce que",
+      "text": "Setz Est-ce que vor einen Satz – schon ist es eine Ja/Nein-Frage! Der Rest bleibt genau gleich. Vor a, e, i, o, u wird que zu qu': Est-ce qu'il …",
+      "beispiele": [
+       [
+        "Tu as sport le lundi.",
+        "Du hast montags Sport."
+       ],
+       [
+        "Est-ce que tu as sport le lundi ?",
+        "Hast du montags Sport?"
+       ],
+       [
+        "Est-ce qu'il joue le samedi ?",
+        "Spielt er samstags?"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wann spielen wir?",
+      "zeilen": [
+       [
+        "hugo",
+        "Léa, est-ce que tu joues au foot samedi ?",
+        "Léa, spielst du am Samstag Fußball?"
+       ],
+       [
+        "lea",
+        "Non, le samedi, je suis chez ma grand-mère.",
+        "Nein, samstags bin ich bei meiner Oma."
+       ],
+       [
+        "hugo",
+        "Et dimanche ?",
+        "Und am Sonntag?"
+       ],
+       [
+        "lea",
+        "Dimanche, oui ! Est-ce que Ruby joue aussi ?",
+        "Am Sonntag, ja! Spielt Ruby auch mit?"
+       ],
+       [
+        "ruby",
+        "Oui ! Moi, je suis dans les buts !",
+        "Ja! Ich stehe im Tor!"
+       ],
+       [
+        "hugo",
+        "Super ! À dimanche !",
+        "Super! Bis Sonntag!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wo ist Léa samstags?",
+        "a": "bei ihrer Oma",
+        "choices": [
+         "in der Schule",
+         "beim Fußball",
+         "im Schwimmbad"
+        ]
+       },
+       {
+        "q": "An welchem Tag spielen sie Fußball?",
+        "a": "am Sonntag",
+        "choices": [
+         "am Samstag",
+         "am Montag",
+         "am Mittwoch"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne un calendrier à Léa.",
+       "de": "Gib Léa einen Kalender.",
+       "ding": "📅",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne deux lunes à Ruby.",
+       "de": "Gib Ruby zwei Monde.",
+       "ding": "🌕",
+       "anzahl": 2,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne un ballon à Hugo.",
+       "de": "Gib Hugo einen Ball.",
+       "ding": "⚽",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne trois crêpes à Léa.",
+       "de": "Gib Léa drei Crêpes.",
+       "ding": "🥞",
+       "anzahl": 3,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne quatre cœurs à Hugo.",
+       "de": "Gib Hugo vier Herzen.",
+       "ding": "💖",
+       "anzahl": 4,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Et toi, est-ce que tu joue le samedi ?",
+       "richtig": "Et toi, est-ce que tu joues le samedi ?",
+       "wort": "joue",
+       "korrektur": "joues",
+       "choices": [
+        "jouent",
+        "jouer"
+       ],
+       "tipp": "Nach tu bekommt das Verb ein -s: tu joues."
+      },
+      {
+       "falsch": "La maman de ma maman, c'est mon grand-mère.",
+       "richtig": "La maman de ma maman, c'est ma grand-mère.",
+       "wort": "mon",
+       "korrektur": "ma",
+       "choices": [
+        "mes",
+        "son"
+       ],
+       "tipp": "la grand-mère ist weiblich – also ma grand-mère."
+      },
+      {
+       "falsch": "La semaine a sept jour.",
+       "richtig": "La semaine a sept jours.",
+       "wort": "jour",
+       "korrektur": "jours",
+       "choices": [
+        "journée",
+        "jouer"
+       ],
+       "tipp": "Sieben Tage sind mehrere – jours mit -s."
+      },
+      {
+       "falsch": "Est-ce que tu es sport et musique le lundi ?",
+       "richtig": "Est-ce que tu as sport et musique le lundi ?",
+       "wort": "es",
+       "korrektur": "as",
+       "choices": [
+        "a",
+        "ai"
+       ],
+       "tipp": "Sport haben = avoir sport. Bei tu: tu as."
+      }
+     ]
+    },
+    {
+     "id": "fr-2-6",
+     "titel": "Les loisirs",
+     "emoji": "🎨",
+     "ziel": "Ich kann sagen, was ich gern mache und was nicht.",
+     "woerter": [
+      [
+       "le foot",
+       "der Fußball",
+       "⚽",
+       "Kurz für le football."
+      ],
+      [
+       "la musique",
+       "die Musik",
+       "🎵"
+      ],
+      [
+       "le dessin",
+       "das Zeichnen",
+       "🖍️"
+      ],
+      [
+       "le vélo",
+       "das Fahrrad",
+       "🚲",
+       "Rad fahren = faire du vélo."
+      ],
+      [
+       "la natation",
+       "das Schwimmen",
+       "🏊",
+       "schwimmen = nager."
+      ],
+      [
+       "la danse",
+       "das Tanzen",
+       "💃"
+      ],
+      [
+       "le jeu vidéo",
+       "das Videospiel",
+       "🎮",
+       "Mehrere: les jeux vidéo."
+      ],
+      [
+       "la guitare",
+       "die Gitarre",
+       "🎸"
+      ]
+     ],
+     "saetze": [
+      [
+       "J'aime jouer au foot.",
+       "Ich spiele gern Fußball.",
+       "🥅"
+      ],
+      [
+       "Tu aimes faire du vélo ?",
+       "Fährst du gern Rad?",
+       "🚴"
+      ],
+      [
+       "Je joue de la guitare.",
+       "Ich spiele Gitarre.",
+       "🎶"
+      ],
+      [
+       "Je n'aime pas nager.",
+       "Ich schwimme nicht gern.",
+       "🙅"
+      ]
+     ],
+     "regel": {
+      "titel": "aimer + Grundform",
+      "text": "Was du gern tust, sagst du mit aimer und einem zweiten Verb in der Grundform (oft mit -er am Ende). Nur aimer verändert sich, das zweite Verb bleibt immer gleich!",
+      "beispiele": [
+       [
+        "J'aime danser.",
+        "Ich tanze gern."
+       ],
+       [
+        "Tu aimes nager ?",
+        "Schwimmst du gern?"
+       ],
+       [
+        "Hugo n'aime pas dessiner.",
+        "Hugo zeichnet nicht gern."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Was macht ihr gern?",
+      "zeilen": [
+       [
+        "martin",
+        "Les enfants, qu'est-ce que vous aimez faire ?",
+        "Kinder, was macht ihr gern?"
+       ],
+       [
+        "lea",
+        "Moi, j'aime danser et dessiner.",
+        "Ich tanze und zeichne gern."
+       ],
+       [
+        "hugo",
+        "J'aime jouer au foot. Et j'adore les jeux vidéo !",
+        "Ich spiele gern Fußball. Und ich liebe Videospiele!"
+       ],
+       [
+        "martin",
+        "Et toi, Ruby ?",
+        "Und du, Ruby?"
+       ],
+       [
+        "ruby",
+        "Moi, j'aime chanter ! La la la !",
+        "Ich singe gern! La la la!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was macht Léa gern?",
+        "a": "tanzen und zeichnen",
+        "choices": [
+         "Fußball spielen",
+         "singen",
+         "schwimmen"
+        ]
+       },
+       {
+        "q": "Was macht Ruby gern?",
+        "a": "singen",
+        "choices": [
+         "tanzen",
+         "Rad fahren",
+         "Videospiele spielen"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne un ballon à Hugo.",
+       "de": "Gib Hugo einen Ball.",
+       "ding": "⚽",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne une guitare à Léa.",
+       "de": "Gib Léa eine Gitarre.",
+       "ding": "🎸",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne deux vélos à Ruby.",
+       "de": "Gib Ruby zwei Fahrräder.",
+       "ding": "🚲",
+       "anzahl": 2,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne trois ballons à Léa.",
+       "de": "Gib Léa drei Bälle.",
+       "ding": "⚽",
+       "anzahl": 3,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne un jeu vidéo à Hugo.",
+       "de": "Gib Hugo ein Videospiel.",
+       "ding": "🎮",
+       "anzahl": 1,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "J'aime danse et chanter.",
+       "richtig": "J'aime danser et chanter.",
+       "wort": "danse",
+       "korrektur": "danser",
+       "choices": [
+        "dansent",
+        "danses"
+       ],
+       "tipp": "Nach aimer kommt die Grundform: danser."
+      },
+      {
+       "falsch": "Et toi, tu aime nager ?",
+       "richtig": "Et toi, tu aimes nager ?",
+       "wort": "aime",
+       "korrektur": "aimes",
+       "choices": [
+        "aimer",
+        "aiment"
+       ],
+       "tipp": "Nach tu bekommt das Verb ein -s: tu aimes."
+      },
+      {
+       "falsch": "La foot est génial.",
+       "richtig": "Le foot est génial.",
+       "wort": "La",
+       "korrektur": "Le",
+       "choices": [
+        "Les",
+        "Une"
+       ],
+       "tipp": "le foot ist männlich – also le foot."
+      },
+      {
+       "falsch": "La musique est génial.",
+       "richtig": "La musique est géniale.",
+       "wort": "génial",
+       "korrektur": "géniale",
+       "choices": [
+        "géniaux",
+        "géniales"
+       ],
+       "tipp": "la musique ist weiblich und Einzahl – génial bekommt ein -e: géniale."
+      }
+     ]
+    },
+    {
+     "id": "fr-2-7",
+     "titel": "La météo",
+     "emoji": "🌦️",
+     "ziel": "Ich kann sagen, wie das Wetter ist.",
+     "woerter": [
+      [
+       "le soleil",
+       "die Sonne",
+       "☀️"
+      ],
+      [
+       "la pluie",
+       "der Regen",
+       "🌧️"
+      ],
+      [
+       "la neige",
+       "der Schnee",
+       "❄️"
+      ],
+      [
+       "le vent",
+       "der Wind",
+       "🌬️"
+      ],
+      [
+       "le nuage",
+       "die Wolke",
+       "☁️"
+      ],
+      [
+       "l'orage",
+       "das Gewitter",
+       "⛈️",
+       "l'orage ist männlich: un orage."
+      ],
+      [
+       "l'arc-en-ciel",
+       "der Regenbogen",
+       "🌈",
+       "Wörtlich: der Bogen im Himmel."
+      ],
+      [
+       "le parapluie",
+       "der Regenschirm",
+       "☂️",
+       "para = gegen, pluie = Regen."
+      ]
+     ],
+     "saetze": [
+      [
+       "Quel temps fait-il ?",
+       "Wie ist das Wetter?",
+       "🌤️"
+      ],
+      [
+       "Il fait chaud !",
+       "Es ist heiß!",
+       "🥵"
+      ],
+      [
+       "Il pleut, prends ton parapluie !",
+       "Es regnet, nimm deinen Regenschirm!",
+       "☔"
+      ],
+      [
+       "Il neige, on fait un bonhomme de neige ?",
+       "Es schneit, bauen wir einen Schneemann?",
+       "⛄"
+      ]
+     ],
+     "regel": {
+      "titel": "Wetter mit faire",
+      "text": "Beim Wetter sagt man il fait … – wörtlich „es macht“: Il fait beau, il fait chaud, il fait froid. faire geht so: je fais, tu fais, il fait. Regen und Schnee haben eigene Verben: Il pleut. Il neige.",
+      "beispiele": [
+       [
+        "Il fait beau aujourd'hui.",
+        "Heute ist schönes Wetter."
+       ],
+       [
+        "Il fait froid en hiver.",
+        "Im Winter ist es kalt."
+       ],
+       [
+        "Il pleut !",
+        "Es regnet!"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Picknick im Regen",
+      "zeilen": [
+       [
+        "lea",
+        "Il fait beau ! On fait un pique-nique ?",
+        "Schönes Wetter! Machen wir ein Picknick?"
+       ],
+       [
+        "hugo",
+        "Oui ! J'aime manger dehors.",
+        "Ja! Ich esse gern draußen."
+       ],
+       [
+        "ruby",
+        "Attention ! Regardez le gros nuage noir !",
+        "Achtung! Schaut mal, die dicke schwarze Wolke!"
+       ],
+       [
+        "lea",
+        "Oh non, il pleut !",
+        "Oh nein, es regnet!"
+       ],
+       [
+        "hugo",
+        "Pas de problème, j'ai mon parapluie !",
+        "Kein Problem, ich habe meinen Regenschirm dabei!"
+       ],
+       [
+        "ruby",
+        "Et regardez : un arc-en-ciel !",
+        "Und schaut mal: ein Regenbogen!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was hat Hugo dabei?",
+        "a": "seinen Regenschirm",
+        "choices": [
+         "seine Kappe",
+         "einen Ball",
+         "seinen Schal"
+        ]
+       },
+       {
+        "q": "Was sehen die Kinder am Ende?",
+        "a": "einen Regenbogen",
+        "choices": [
+         "Schnee",
+         "ein Gewitter",
+         "einen Vogel"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Il pleut : donne un parapluie à Léa.",
+       "de": "Es regnet: Gib Léa einen Regenschirm.",
+       "ding": "☂️",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Il fait froid : donne une écharpe à Hugo.",
+       "de": "Es ist kalt: Gib Hugo einen Schal.",
+       "ding": "🧣",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Il fait chaud : donne deux glaces à Ruby.",
+       "de": "Es ist heiß: Gib Ruby zwei Eis.",
+       "ding": "🍦",
+       "anzahl": 2,
+       "an": "ruby"
+      },
+      {
+       "sag": "Il pleut : donne trois parapluies à Hugo.",
+       "de": "Es regnet: Gib Hugo drei Regenschirme.",
+       "ding": "☂️",
+       "anzahl": 3,
+       "an": "hugo"
+      },
+      {
+       "sag": "Il fait froid : donne deux chaussettes à Léa.",
+       "de": "Es ist kalt: Gib Léa zwei Socken.",
+       "ding": "🧦",
+       "anzahl": 2,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Il fais beau.",
+       "richtig": "Il fait beau.",
+       "wort": "fais",
+       "korrektur": "fait",
+       "choices": [
+        "faire",
+        "font"
+       ],
+       "tipp": "je fais, tu fais, il fait – beim Wetter also il fait."
+      },
+      {
+       "falsch": "Moi, je fait du vélo.",
+       "richtig": "Moi, je fais du vélo.",
+       "wort": "fait",
+       "korrektur": "fais",
+       "choices": [
+        "faire",
+        "font"
+       ],
+       "tipp": "Nach je heißt es: je fais."
+      },
+      {
+       "falsch": "Je vois une grand arc-en-ciel.",
+       "richtig": "Je vois un grand arc-en-ciel.",
+       "wort": "une",
+       "korrektur": "un",
+       "choices": [
+        "la",
+        "le"
+       ],
+       "tipp": "l'arc-en-ciel ist männlich – also un arc-en-ciel."
+      },
+      {
+       "falsch": "La neige est blanc.",
+       "richtig": "La neige est blanche.",
+       "wort": "blanc",
+       "korrektur": "blanche",
+       "choices": [
+        "blancs",
+        "blanches"
+       ],
+       "tipp": "Bei weiblichen Wörtern wird blanc zu blanche."
+      }
+     ]
+    },
+    {
+     "id": "fr-2-8",
+     "titel": "Les nombres jusqu'à 20",
+     "emoji": "🔢",
+     "ziel": "Ich kann bis zwanzig zählen und sagen, wie viele es gibt.",
+     "woerter": [
+      [
+       "onze",
+       "elf",
+       "1️⃣1️⃣"
+      ],
+      [
+       "douze",
+       "zwölf",
+       "1️⃣2️⃣"
+      ],
+      [
+       "treize",
+       "dreizehn",
+       "1️⃣3️⃣"
+      ],
+      [
+       "quatorze",
+       "vierzehn",
+       "1️⃣4️⃣"
+      ],
+      [
+       "quinze",
+       "fünfzehn",
+       "1️⃣5️⃣",
+       "Das qu spricht man wie k."
+      ],
+      [
+       "seize",
+       "sechzehn",
+       "1️⃣6️⃣"
+      ],
+      [
+       "dix-sept",
+       "siebzehn",
+       "1️⃣7️⃣",
+       "dix-sept = 10 + 7. Genauso: dix-huit (18) und dix-neuf (19)."
+      ],
+      [
+       "vingt",
+       "zwanzig",
+       "2️⃣0️⃣",
+       "g und t spricht man nicht."
+      ]
+     ],
+     "saetze": [
+      [
+       "Il y a combien de chats ?",
+       "Wie viele Katzen sind da?",
+       "🐈"
+      ],
+      [
+       "Il y a quinze bonbons !",
+       "Da sind fünfzehn Bonbons!",
+       "🍬"
+      ],
+      [
+       "J'ai douze ans.",
+       "Ich bin zwölf Jahre alt.",
+       "🎂"
+      ],
+      [
+       "Compte jusqu'à vingt !",
+       "Zähl bis zwanzig!",
+       "🧮"
+      ]
+     ],
+     "regel": {
+      "titel": "il y a – es gibt",
+      "text": "il y a heißt „es gibt“ oder „da ist / da sind“. Es bleibt immer gleich – egal, ob es ein Ding ist oder zwanzig!",
+      "beispiele": [
+       [
+        "Il y a douze œufs dans la boîte.",
+        "In der Schachtel sind zwölf Eier."
+       ],
+       [
+        "Il y a vingt enfants dans la classe.",
+        "In der Klasse sind zwanzig Kinder."
+       ],
+       [
+        "Est-ce qu'il y a un chat ici ?",
+        "Gibt es hier eine Katze?"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wie viele Bonbons?",
+      "zeilen": [
+       [
+        "hugo",
+        "Regarde, Léa ! Il y a des bonbons sur la table.",
+        "Schau, Léa! Auf dem Tisch liegen Bonbons."
+       ],
+       [
+        "lea",
+        "Il y a combien de bonbons ?",
+        "Wie viele Bonbons sind es?"
+       ],
+       [
+        "hugo",
+        "Un, deux, trois… Il y a seize bonbons !",
+        "Eins, zwei, drei … Es sind sechzehn Bonbons!"
+       ],
+       [
+        "ruby",
+        "Et moi, j'ai quatre bonbons. Ça fait vingt !",
+        "Und ich habe vier Bonbons. Das macht zwanzig!"
+       ],
+       [
+        "lea",
+        "Super ! On partage : un pour toi, un pour moi…",
+        "Super! Wir teilen: eins für dich, eins für mich …"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie viele Bonbons liegen auf dem Tisch?",
+        "a": "sechzehn",
+        "choices": [
+         "sechs",
+         "zwanzig",
+         "vierzehn"
+        ]
+       },
+       {
+        "q": "Wie viele sind es mit Rubys Bonbons?",
+        "a": "zwanzig",
+        "choices": [
+         "sechzehn",
+         "zwölf",
+         "zehn"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne cinq bonbons à Léa.",
+       "de": "Gib Léa fünf Bonbons.",
+       "ding": "🍬",
+       "anzahl": 5,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne quatre pommes à Hugo.",
+       "de": "Gib Hugo vier Äpfel.",
+       "ding": "🍎",
+       "anzahl": 4,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne trois œufs à Ruby.",
+       "de": "Gib Ruby drei Eier.",
+       "ding": "🥚",
+       "anzahl": 3,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne deux crayons à Léa.",
+       "de": "Gib Léa zwei Bleistifte.",
+       "ding": "✏️",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne un livre à Hugo.",
+       "de": "Gib Hugo ein Buch.",
+       "ding": "📕",
+       "anzahl": 1,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Il y as douze œufs dans la boîte.",
+       "richtig": "Il y a douze œufs dans la boîte.",
+       "wort": "as",
+       "korrektur": "a",
+       "choices": [
+        "es",
+        "ai"
+       ],
+       "tipp": "il y a bleibt immer gleich – egal, wie viele Dinge es sind."
+      },
+      {
+       "falsch": "Il y a seize chats sur la canapé bleu.",
+       "richtig": "Il y a seize chats sur le canapé bleu.",
+       "wort": "la",
+       "korrektur": "le",
+       "choices": [
+        "les",
+        "une"
+       ],
+       "tipp": "le canapé ist männlich – also sur le canapé."
+      },
+      {
+       "falsch": "Ma sœur est quinze ans.",
+       "richtig": "Ma sœur a quinze ans.",
+       "wort": "est",
+       "korrektur": "a",
+       "choices": [
+        "es",
+        "ai"
+       ],
+       "tipp": "Das Alter hat man: Elle a quinze ans."
+      },
+      {
+       "falsch": "Il y a une crayon vert dans mon sac.",
+       "richtig": "Il y a un crayon vert dans mon sac.",
+       "wort": "une",
+       "korrektur": "un",
+       "choices": [
+        "la",
+        "des"
+       ],
+       "tipp": "le crayon ist männlich – also un crayon."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

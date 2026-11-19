@@ -253,3 +253,32 @@ Quellen: [ISB Bayern – Fachlehrplan Englisch 3/4](https://www.isb.bayern.de/fi
 [Chromium blink-dev – Intent to Ship: On-device Web Speech API](https://groups.google.com/a/chromium.org/g/blink-dev/c/VNOok2dbmHM/m/cz7ZnL59AAAJ) ·
 [podcastrepublic – Hörspielplatz](https://podcastrepublic.net/podcast/1533967463) ·
 [coddykit – Wordzy](https://www.coddykit.com/de/apps/english-for-kids)
+
+## Quasselquest, 19.11.2026 – Lernpfad „Neu lernen“ (Auftrag Marcel: „eine Sprache neu lernen wie in Duolingo, Aufbau ist dein Job“)
+
+**Gefunden**
+- Duolingo richtet seine Einheiten am Gemeinsamen Europäischen Referenzrahmen aus (Pre-A1 bis B1/B2), Aufbau Abschnitt → Einheit → Lektion, Wiederholung in wachsenden Abständen ([Duolingo-Whitepaper 2021](https://duolingo-papers.s3.amazonaws.com/reports/Duolingo_whitepaper_language_read_listen_2021.pdf), [Duolingo-Blog](https://blog.duolingo.com/how-to-review-lessons-on-duolingo)).
+- Wortschatzforschung (Nation): die häufigsten ~2000 Wortfamilien decken rund 80 % eines Textes ab; etwa 7 bewusste Begegnungen pro Wort sind ein guter Richtwert; Listen aus Erwachsenen-Texten passen für Kinder nur bedingt ([Nation & Waring](https://www.lextutor.ca/research/nation_waring_97.html), [JALT: kindgerechte Wortlisten](https://jalt-publications.org/articles/29624-young-learner-friendly-wordlists)).
+- Lehrpläne Englisch Grundschule (Hamburg, Sachsen-Anhalt, Sachsen, Bayern): Alltagsthemen aus der Lebenswelt, bekannter Wortschatz, einfache Satzmuster, „lexical recycling“ (gelernte Wörter regelmäßig wieder aufgreifen und mit neuen verknüpfen).
+- Freie Wortlisten: GER-gestufte Listen sind meist **nicht** kommerziell nutzbar (FLELex: CC BY-NC-SA; English Profile: eigene Nutzungsbedingungen). Häufigkeitslisten aus Untertiteln (FrequencyWords) sind CC BY-SA 4.0 – würden die Weitergabebedingungen auf die Paketdateien übertragen.
+
+**Entscheidung**
+- Wortschatz und Sätze **selbst geschrieben**, Auswahl nach Kinderalltag und Häufigkeit (Allgemeinwissen), keine fremde Liste übernommen → keine Lizenzpflichten, keine Schulbuch-Inhalte.
+- Aufbau: 4 Abschnitte (Pre-A1 bis A2), je 8 Einheiten, je 5 Lektionen à 3–5 Minuten (Kennenlernen → Abruf → Regel entdecken + Satz-Zug → Hören & Sprechen → Geschichte). Jedes Wort kommt in mindestens 5 Lektionen vor, danach in der Wiederholung und gemischt in späteren Einheiten.
+- Regeln werden entdeckt (Beispiele zuerst, dann der Kindersatz), Chunks werden als Ganzes gelernt, keine Leben/Herzen, keine Strafen.
+- Inhalte durch zweiten Durchgang lektoriert (19 Hinweise übernommen). Details: `quasselquest/LERNPFAD.md`.
+
+## Quasselquest, 19.11.2026 – „Neue Wege statt Karten umdrehen“ (Auftrag Marcel)
+
+**Gefunden**
+- **Lernen durch Lehren (Protégé-Effekt):** Kinder, die einer Figur etwas beibringen, strengen sich mehr an und lernen mehr als beim Lernen für sich selbst – besonders schwächere Kinder ([Stanford: Teachable Agents](https://purl.stanford.edu/zm369yx3532)). Eine Studie von 2025 mit 58 Grundschulkindern und französischen Vokabeln bestätigt das, wieder mit dem größten Nutzen für Kinder mit wenig Vorwissen ([arXiv 2506.18365](https://arxiv.org/html/2506.18365v1)).
+- **Total Physical Response (Befehle ausführen):** Für Kinder in vielen kleinen Studien wirksamer und motivierender als klassischer Unterricht ([Beispielstudie](https://www.degruyterbrill.com/document/doi/10.1515/eujal-2023-0014/html)); digitale Umsetzungen sind kaum untersucht → Chance.
+- **Kritik an Duolingo für Kinder:** viele Aufgaben lassen sich durch Raten lösen, wenig Grammatik-Erklärung, emotionaler Druck (Serien, „Erpressung“), lange Spielzeiten ([Internet Matters](https://www.internetmatters.org/advice/apps-and-platforms/skills-building/duolingo), [Opened](https://opened.co/tools/duolingo), [Common Sense Media](https://www.commonsensemedia.org/website-reviews/duolingo/user-reviews/child)).
+- **Was Kinder 2026 lieben:** offene Spielwelten zum Bauen und Rollenspiel (Toca Boca World, Sago Mini) statt endloser Level; geführte Varianten helfen gegen „Wahl-Lähmung“ ([Screenwise](https://screenwiseapp.com/guides/creative-apps-for-young-kids)).
+
+**Entscheidung (Konzept in `quasselquest/LERNPFAD.md`, Abschnitt „Neue Wege“)**
+1. **Wimmelbild statt Karten umdrehen:** neue Wörter entdeckt man in einer Szene.
+2. **„Mach, was ich sage!“:** Befehle hören und ausführen (Dinge ziehen) – Verstehen durch Tun.
+3. **„Ruby lernt von dir“:** Ruby baut Sätze mit typischen Fehlern, das Kind ist Lehrer und korrigiert.
+4. **Meine Insel:** jedes gelernte Wort wird ein Ding auf der eigenen Insel – frei anordnen, antippen, hören. Der Wortschatz ist die Spielwelt.
+5. Raten verhindern: weniger Auswahl, mehr Bauen, Ziehen, Sprechen, Korrigieren.

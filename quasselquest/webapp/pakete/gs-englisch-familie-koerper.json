@@ -67,7 +67,7 @@
         "uncle"
       ],
       "info": "„son“ (Sohn) und „sun“ (Sonne) klingen genau gleich!",
-      "img": "👦☀️"
+      "img": "👨‍👦"
     },
     {
       "id": "004",
@@ -211,7 +211,7 @@
         "elbow"
       ],
       "info": "Schulter = shoulder – fast gleich, oder?",
-      "img": "💪"
+      "img": "🤷"
     },
     {
       "id": "016",
@@ -252,13 +252,13 @@
     {
       "id": "019",
       "q": "Was heißt „lange Hose“ auf Englisch?",
-      "a": "trousers (pants)",
+      "a": "trousers",
       "choices": [
         "shorts",
         "socks",
         "shirts"
       ],
-      "info": "Lange Hose = trousers. In Amerika sagt man „pants“.",
+      "info": "Lange Hose = trousers. In Amerika sagt man „pants“ – aber Achtung: In England sind „pants“ Unterhosen!",
       "img": "👖"
     },
     {
@@ -307,7 +307,7 @@
         "sock"
       ],
       "info": "Achtung: Rock = skirt. „rock“ heißt auf Englisch Felsen!",
-      "img": "👚🎸"
+      "img": "👧🎸"
     },
     {
       "id": "024",

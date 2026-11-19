@@ -371,6 +371,11 @@
         pending = true; maybeReload();
       });
       document.addEventListener('visibilitychange', maybeReload);
+      // Nach dem Umzug auf die gemeinsame Adresse: kurzer Hinweis
+      window.addEventListener('wg-ready', () => {
+        let t = null; try { t = sessionStorage.getItem('wg.umzug.text'); sessionStorage.removeItem('wg.umzug.text'); } catch (e) {}
+        if (t) setTimeout(() => window.wg && window.wg.toast && window.wg.toast(t), 1200);
+      });
       // Nach dem Neuladen: kurzer Hinweis mit der neuen Versionsnummer
       window.addEventListener('wg-ready', () => {
         let was = null; try { was = sessionStorage.getItem('wg.update'); sessionStorage.removeItem('wg.update'); } catch (e) {}
@@ -405,6 +410,163 @@
     }
   </script>
   <script>
+    // Umzug auf die gemeinsame Adresse aller Lern-Apps (Marcel, 19.11.2026; Standard UMZUG-LERNEN.md).
+    // ALT (wissensgarten[-test].mathenachhilfe-online.com): beim Start, bevor die App lädt, alle eigenen Schlüssel („wg.“) einsammeln
+    //   – auch die ausgeblendeten Sprach-Beete –, mit AES-GCM-256 verschlüsseln (Schlüssel entsteht hier und steht nur im Link nach „#“),
+    //   als Einmal-Sicherung zu trainer[-test].…/eltern/v1/s/<id> schicken und nach lernen[-test].…/wissensgarten/#umzug=<id>.<key>.<schreib>
+    //   weiterleiten. Andere Hash-Werte (#paket=, #pro=) bleiben erhalten. Bei einem Fehler wird NICHT weitergeleitet: Die App startet
+    //   wie bisher, und beim nächsten Start wird es erneut versucht. Die Daten auf der alten Adresse werden nie gelöscht.
+    // NEU (lernen[-test].…/wissensgarten/): #umzug= lesen und sofort aus der Adresse entfernen, Sicherung holen, entschlüsseln,
+    //   nur schreiben, wenn hier noch kein Garten ist, danach auf dem Server löschen (DELETE mit X-Schreib).
+    // ES5, weil auch sehr alte Browser hier vorbeikommen. Ergebnis: window.wgUmzug (Promise), auf das der Lader wartet.
+    (function () {
+      var h = location.hostname, q = location.search;
+      // Nur für den Browser-Test auf dem eigenen Rechner (webApp/tools/web-umzug.cjs): Rolle „alt“ oder „neu“ vorgeben
+      var probe = (h === '127.0.0.1' || h === 'localhost') && /^(alt|neu)$/.test(window.wgUmzugProbe || '') && [0, window.wgUmzugProbe];
+      var ZIEL = {
+        'wissensgarten.mathenachhilfe-online.com': 'https://lernen.mathenachhilfe-online.com/wissensgarten/',
+        'wissensgarten-test.mathenachhilfe-online.com': 'https://lernen-test.mathenachhilfe-online.com/wissensgarten/'
+      };
+      var alt = probe ? probe[1] === 'alt' : !!ZIEL[h];
+      var neu = probe ? probe[1] === 'neu' : /^lernen(-test)?\.mathenachhilfe-online\.com$/.test(h);
+      var test = h.indexOf('-test') >= 0 || !!probe;
+      var SERVER = 'https://trainer' + (test ? '-test' : '') + '.mathenachhilfe-online.com/eltern/v1/s/';
+      var MAX = 500 * 1024;   // Server-Grenze 512 KB je Sicherung (verschlüsselt, Base64)
+      var diag = function (t) { try { window.wgDiag && window.wgDiag('Umzug: ' + t); } catch (e) {} };
+      var hint = function (t) { try { var e = document.getElementById('hint'); if (e) e.textContent = t; } catch (x) {} };
+      var enc = function (a) { var s = ''; for (var i = 0; i < a.length; i++) s += String.fromCharCode(a[i]); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+      var dec = function (t) { t = t.replace(/-/g, '+').replace(/_/g, '/'); while (t.length % 4) t += '='; var b = atob(t), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; };
+      var zufall = function (n) { var a = new Uint8Array(n); crypto.getRandomValues(a); return enc(a); };
+      var mitZeit = function (p, ms) { return new Promise(function (ok, no) { var t = setTimeout(function () { no(new Error('Zeitlimit')); }, ms); p.then(function (v) { clearTimeout(t); ok(v); }, function (e) { clearTimeout(t); no(e); }); }); };
+      // gzip, wenn der Browser es kann (Safari ab 16.4) – erkennbar an den Bytes 1f 8b
+      var packen = function (bytes) {
+        if (typeof CompressionStream === 'undefined') return Promise.resolve(bytes);
+        return new Response(new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer().then(function (b) { return new Uint8Array(b); }, function () { return bytes; });
+      };
+      var entpacken = function (bytes) {
+        if (!(bytes[0] === 0x1f && bytes[1] === 0x8b)) return Promise.resolve(bytes);
+        return new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer().then(function (b) { return new Uint8Array(b); });
+      };
+      // Hash-Teile lesen bzw. ohne einen Schlüssel neu zusammensetzen (#paket=…&pro=…)
+      var hashTeile = function () { return (location.hash || '').replace(/^#/, '').split('&').filter(function (x) { return x; }); };
+      var ohne = function (teile, name) { return teile.filter(function (x) { return x.split('=')[0] !== name; }); };
+      var hashAus = function (teile) { return teile.length ? '#' + teile.join('&') : ''; };
+
+      var einsammeln = function (mitBildern) {
+        var daten = {}, n = 0;
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (!k || k.indexOf('wg.') !== 0) continue;
+          // nicht nötig bzw. wird neu geladen: Plus-Inhalte (kommen mit dem Code wieder), Start-Protokoll, Umzugs-Merker
+          if (k === 'wg.plusPakete' || k.indexOf('wg.diag') === 0 || k.indexOf('wg.umzug') === 0 || k === 'wg.wasmKaputt') continue;
+          if (!mitBildern && k.indexOf('wg.bild.') === 0) continue;
+          daten[k] = localStorage.getItem(k); n++;
+        }
+        return { daten: daten, n: n };
+      };
+
+      var altSeite = function () {
+        var ziel = probe ? (window.wgUmzugProbeZiel || '') : ZIEL[h];
+        // Pflicht-Schutz (UMZUG-LERNEN.md): Das eigene App-Bild muss unter der neuen Adresse laden. 404, 503 oder ein Zertifikatsfehler
+        // lassen das Bild scheitern → kein Umzug, die App läuft hier weiter.
+        var zielDa = function () {
+          return mitZeit(new Promise(function (ok, no) {
+            var img = new Image();
+            img.onload = function () { if (img.naturalWidth > 0) ok(); else no(new Error('Bild leer')); };
+            img.onerror = function () { no(new Error('neue Adresse liefert den Wissensgarten nicht')); };
+            img.src = ziel + 'icons/icon-192.png?nc=' + Date.now();
+          }), 10000);
+        };
+        var weiter = function (extra) {
+          var teile = ohne(hashTeile(), 'umzug');
+          if (extra) teile.unshift(extra);
+          location.replace(ziel + q + hashAus(teile));
+          return new Promise(function () {});   // Seite wird verlassen – App nicht mehr starten
+        };
+        var gibt = false;
+        try { gibt = !!(localStorage.getItem('wg.garten') || localStorage.getItem('wg.prefs.einstellungen')); } catch (e) {}
+        var fertig = null; try { fertig = localStorage.getItem('wg.umzug.fertig'); } catch (e) {}
+        if (!gibt || fertig) {
+          return zielDa()
+            .then(function () { diag(gibt ? 'schon umgezogen → weiter' : 'kein Lernstand → weiter'); return weiter(null); },
+                  function () { diag('neue Adresse nicht erreichbar → bleibt hier'); });
+        }
+        if (!window.crypto || !crypto.subtle || !window.fetch) { diag('Browser kann nicht verschlüsseln → bleibt hier'); return Promise.resolve(); }
+        hint('Wir ziehen um … Brummi packt deinen Garten ein 🐝📦');
+        // Erst prüfen, ob die neue Adresse wirklich den Wissensgarten liefert – sonst nie weiterleiten
+        var erreichbar = zielDa();
+        var id = zufall(16), schreib = zufall(16), key = zufall(32), iv = new Uint8Array(12); crypto.getRandomValues(iv);
+        var versuch = function (mitBildern) {
+          var s = einsammeln(mitBildern);
+          var klar = new TextEncoder().encode(JSON.stringify({ app: 'wissensgarten', v: 1, umzug: true, stand: new Date().toISOString(), daten: s.daten }));
+          return packen(klar).then(function (gepackt) {
+            return crypto.subtle.importKey('raw', dec(key), { name: 'AES-GCM' }, false, ['encrypt'])
+              .then(function (k) { return crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, gepackt); })
+              .then(function (ct) { return { body: enc(iv) + '.' + enc(new Uint8Array(ct)), n: s.n }; });
+          });
+        };
+        return erreichbar.then(function () { return versuch(true); }).then(function (r) { return r.body.length <= MAX ? r : versuch(false); }).then(function (r) {
+          if (r.body.length > MAX) throw new Error('zu groß (' + Math.round(r.body.length / 1024) + ' KB)');
+          diag(r.n + ' Einträge, ' + Math.round(r.body.length / 1024) + ' KB verschlüsselt → senden');
+          return mitZeit(fetch(SERVER + id, { method: 'PUT', headers: { 'X-Schreib': schreib, 'Content-Type': 'text/plain' }, body: r.body, credentials: 'omit', cache: 'no-store' }), 20000);
+        }).then(function (res) {
+          if (!res.ok) throw new Error('Server ' + res.status);
+          try { localStorage.setItem('wg.umzug.fertig', new Date().toISOString()); } catch (e) {}
+          diag('gesendet → weiterleiten');
+          return weiter('umzug=' + id + '.' + key + '.' + schreib);
+        }).catch(function (e) {
+          diag('nicht möglich (' + (e && e.message || e) + ') → App startet hier, nächster Versuch beim nächsten Start');
+          hint('');
+        });
+      };
+
+      var neuSeite = function () {
+        var teile = hashTeile(), m = null;
+        teile.forEach(function (x) { var p = x.split('='); if (p[0] === 'umzug') m = /^([A-Za-z0-9_-]{22})\.([A-Za-z0-9_-]{43})\.([A-Za-z0-9_-]{22})$/.exec(p[1] || ''); });
+        var offen = null;
+        if (m) {
+          // sofort aus der Adresse (Verlauf, Lesezeichen), bis zum Abschluss im Speicher merken
+          try { history.replaceState(null, '', location.pathname + location.search + hashAus(ohne(teile, 'umzug'))); } catch (e) {}
+          offen = m[1] + '.' + m[2] + '.' + m[3];
+          try { localStorage.setItem('wg.umzug.offen', offen); } catch (e) {}
+        } else { try { offen = localStorage.getItem('wg.umzug.offen'); } catch (e) {} }
+        if (!offen) return Promise.resolve();
+        var t = offen.split('.'), id = t[0], key = t[1], schreib = t[2];
+        var abschluss = function (text) { try { localStorage.removeItem('wg.umzug.offen'); if (text) sessionStorage.setItem('wg.umzug.text', text); } catch (e) {} };
+        hint('Brummi packt deinen Garten aus … 🌱');
+        return mitZeit(fetch(SERVER + id, { credentials: 'omit', cache: 'no-store' }), 20000).then(function (res) {
+          if (res.status === 404) { abschluss(null); throw new Error('Sicherung nicht (mehr) da'); }
+          if (!res.ok) throw new Error('Server ' + res.status);
+          return res.json();
+        }).then(function (j) {
+          var p = String(j.d || '').split('.');
+          return crypto.subtle.importKey('raw', dec(key), { name: 'AES-GCM' }, false, ['decrypt'])
+            .then(function (k) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: dec(p[0]) }, k, dec(p[1])); })
+            .then(function (pt) { return entpacken(new Uint8Array(pt)); });
+        }).then(function (bytes) {
+          var o = JSON.parse(new TextDecoder().decode(bytes));
+          if (!o || o.app !== 'wissensgarten' || !o.daten) throw new Error('falsches Format');
+          var leer = true; try { leer = !localStorage.getItem('wg.garten'); } catch (e) {}
+          var text;
+          if (leer) {
+            var n = 0;
+            Object.keys(o.daten).forEach(function (k) { if (k.indexOf('wg.') === 0) { try { localStorage.setItem(k, o.daten[k]); n++; } catch (e) {} } });
+            diag(n + ' Einträge übernommen');
+            text = '🌱 Dein Garten ist umgezogen – alles ist mitgekommen!';
+          } else { diag('hier gibt es schon einen Garten → nichts überschrieben'); text = 'Auf diesem Gerät gab es hier schon einen Garten. Er bleibt, wie er ist.'; }
+          // Einmal-Sicherung auf dem Server löschen
+          return fetch(SERVER + id, { method: 'DELETE', headers: { 'X-Schreib': schreib }, credentials: 'omit', cache: 'no-store' })
+            .then(function () {}, function () {}).then(function () { abschluss(text); });
+        }).catch(function (e) {
+          diag('Abschluss nicht möglich (' + (e && e.message || e) + ') → nächster Versuch beim nächsten Start');
+        }).then(function () { hint(''); });
+      };
+
+      try { window.wgUmzug = alt ? altSeite() : neu ? neuSeite() : Promise.resolve(); }
+      catch (e) { diag('Fehler ' + e); window.wgUmzug = Promise.resolve(); }
+    })();
+  </script>
+  <script>
     // Erst das Startbild malen, dann die Skripte holen (nacheinander): So sieht man nie eine leere weiße Seite,
     // auch wenn das Laden oder Starten später scheitert.
     (function () {
@@ -429,7 +591,8 @@
           s.onerror = function () { window.wgStartFailed('Datei konnte nicht geladen werden: ' + list[i]); };
           document.body.appendChild(s);
         };
-        next(0);
+        // Umzug auf die gemeinsame Adresse zuerst (wg-umzug, oben): erst danach liest die App den Speicher
+        (window.wgUmzug || Promise.resolve()).then(function () { next(0); }, function () { next(0); });
       };
       requestAnimationFrame(function () { requestAnimationFrame(function () { setTimeout(function () { start('Bild'); }, 20); }); });
       setTimeout(function () { start('Zeit'); }, 500);   // im Hintergrund-Tab ruht requestAnimationFrame

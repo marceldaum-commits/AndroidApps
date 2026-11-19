@@ -313,3 +313,125 @@ h1, h2, h3 { margin: 0; }
 @keyframes balloonpop { 0% { transform: scale(1); } 40% { transform: scale(1.25); } 100% { transform: scale(0); opacity: 0; } }
 @media (min-width: 700px) { .balloons { grid-template-columns: repeat(4, 1fr); } .memory { grid-template-columns: repeat(6, 1fr); } }
 @media (max-width: 380px) { .slot { width: 34px; height: 46px; font-size: 22px; } .tile { width: 46px; height: 50px; } }
+
+mark.fehl { background: #ffd6d4; color: #b3261e; border-radius: 6px; padding: 0 3px; text-decoration: underline wavy #e53935; }
+
+.lern { border-top: 1px solid var(--line); padding-top: 8px; margin-top: 8px; }
+.lern h3 { font-size: 18px; }
+.lern p, .lern li { font-weight: 600; line-height: 1.45; }
+.hint-card { background: #fff7e0; border: 2px solid #ffd27a; margin-bottom: 14px; }
+a.btn { text-decoration: none; }
+
+.testcard { display: flex; flex-direction: column; gap: 4px; width: 100%; text-align: left; background: #fff; border-radius: 20px; padding: 14px 16px; box-shadow: 0 4px 0 #c7d6e3; margin-top: 14px; font-size: 18px; }
+.testcard small { color: var(--muted); font-weight: 600; font-size: 15px; display: block; }
+.testcard.on { background: #eef8ff; border: 2px solid #9fd0f5; gap: 10px; }
+.checklist { max-height: 46vh; overflow: auto; border: 2px solid #e3eef7; border-radius: 14px; padding: 4px 10px; }
+.probe-row { padding: 10px 0; border-bottom: 1px solid var(--line); line-height: 1.45; }
+.probe-row:last-child { border-bottom: 0; }
+.probe-row.no s { color: #b3261e; }
+
+/* ---------- Lernpfad „Neu lernen“ ---------- */
+.lp-abschnitt { margin-top: 8px; }
+.lp-kopf { display: flex; gap: 12px; align-items: center; background: linear-gradient(135deg, #5bbf6a, #3e9e5b); color: #fff; border-radius: 20px; padding: 12px 16px; box-shadow: 0 4px 0 #2f7c45; }
+.lp-kopf .e { font-size: 34px; }
+.lp-kopf small { display: block; font-weight: 600; opacity: .95; font-size: 14px; line-height: 1.35; }
+.lp-weg { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 18px 0 8px; }
+.lp-knoten { position: relative; display: flex; flex-direction: column; align-items: center; transform: translateX(calc(var(--x) * 64px)); background: none; }
+.lp-knoten .ring { width: 86px; height: 86px; border-radius: 50%; display: grid; place-items: center;
+  background: conic-gradient(#ffc83d calc(var(--p) * 360deg), #dfe9f1 0); box-shadow: 0 6px 0 #c7d6e3; transition: transform .15s; }
+.lp-knoten .kern { width: 68px; height: 68px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 34px; }
+.lp-knoten.jetzt .kern { background: #2b8fd6; }
+.lp-knoten.jetzt .ring { animation: hupf 1.4s ease-in-out infinite; }
+.lp-knoten.fertig .ring { background: #ffc83d; box-shadow: 0 6px 0 #c99410; }
+.lp-knoten.zu { opacity: .55; }
+.lp-knoten:active .ring { transform: translateY(4px); }
+.lp-knoten .krone { position: absolute; top: -14px; right: -6px; font-size: 26px; animation: popbig .5s both; }
+.lp-knoten .lbl { font-weight: 800; margin-top: 6px; font-size: 15px; }
+.lp-knoten .los { position: absolute; top: -26px; background: #fff; color: #2b8fd6; font-weight: 900; border-radius: 12px; padding: 2px 10px; box-shadow: 0 3px 0 #c7d6e3; font-size: 14px; }
+.lp-mehr { text-align: center; font-size: 14px; }
+@keyframes hupf { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+.lp-lektionen { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.lp-lektion { display: flex; align-items: center; gap: 12px; text-align: left; background: #fff; border-radius: 18px; padding: 12px 14px; box-shadow: 0 4px 0 #c7d6e3; font-size: 17px; }
+.lp-lektion .e { font-size: 30px; width: 40px; text-align: center; }
+.lp-lektion .t { flex: 1; }
+.lp-lektion small { display: block; color: var(--muted); font-weight: 600; font-size: 14px; }
+.lp-lektion.jetzt { background: #eef8ff; border: 2px solid #9fd0f5; }
+.lp-lektion.jetzt .go { font-size: 24px; color: #2b8fd6; animation: hupf 1.2s infinite; }
+.lp-lektion.zu { opacity: .5; }
+.lp-woerter { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.lp-wort { background: #fff; border-radius: 16px; padding: 10px; box-shadow: 0 3px 0 #c7d6e3; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.lp-wort .b { font-size: 30px; }
+.lp-wort small { color: var(--muted); font-weight: 600; }
+.neu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
+@media (min-width: 640px) { .neu-grid { grid-template-columns: repeat(4, 1fr); } }
+.neu-karte { position: relative; height: 104px; perspective: 600px; background: none; animation: popbig .4s var(--d) both; }
+.neu-karte > span { position: absolute; inset: 0; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  backface-visibility: hidden; transition: transform .45s; font-size: 18px; }
+.neu-karte .vorn { background: #fff; box-shadow: 0 4px 0 #c7d6e3; }
+.neu-karte .hinten { background: #fff3c4; box-shadow: 0 4px 0 #e0c060; transform: rotateY(180deg); }
+.neu-karte.um .vorn { transform: rotateY(180deg); }
+.neu-karte.um .hinten { transform: rotateY(360deg); }
+.neu-karte .bild { font-size: 34px; }
+.regel-bsp { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.regel-zeile { background: #fff; border-radius: 16px; padding: 12px 14px; box-shadow: 0 4px 0 #c7d6e3; text-align: left; font-size: 20px; animation: popbig .4s var(--d) both; }
+.regel-zeile small { display: block; color: var(--muted); font-weight: 600; font-size: 15px; }
+.regel-text { background: #fff3c4; border-radius: 16px; padding: 12px 14px; font-weight: 700; font-size: 18px; line-height: 1.45; animation: popbig .45s both; }
+.zug { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-height: 58px; width: 100%; padding: 6px 0; border-bottom: 4px dashed #b7c9d8; }
+.zug .lok { font-size: 34px; }
+.zug .waggon { background: #2b8fd6; color: #fff; font-weight: 800; border-radius: 10px; padding: 8px 10px; box-shadow: 0 4px 0 #1d6aa3; animation: popbig .3s both; }
+.zug.fahrt { animation: drive 1.6s cubic-bezier(.5, 0, .9, .4) .5s forwards; }
+.tile.wort { width: auto; min-width: 52px; padding: 0 12px; font-size: 20px; }
+.chat { display: flex; flex-direction: column; gap: 10px; width: 100%; max-height: 52vh; overflow: auto; padding: 4px; }
+.chat-zeile { display: flex; gap: 8px; align-items: flex-end; animation: popbig .35s both; }
+.chat-zeile.rechts { flex-direction: row-reverse; }
+.chat-zeile .wer { font-size: 34px; }
+.chat-zeile .blase { background: #fff; border-radius: 18px; padding: 8px 14px; box-shadow: 0 3px 0 #c7d6e3; text-align: left; max-width: 78%; font-size: 18px; }
+.chat-zeile.rechts .blase { background: #e5f4ff; }
+.chat-zeile .blase small { display: block; color: var(--muted); font-weight: 700; font-size: 13px; }
+.chat-zeile .blase .de { display: block; color: #3e6a3e; font-weight: 600; font-size: 15px; margin-top: 4px; }
+@media (prefers-reduced-motion: reduce) { .lp-knoten.jetzt .ring, .lp-lektion.jetzt .go, .zug.fahrt { animation: none; } }
+.lp-knoten.wiggle .ring, .lp-wort.wiggle, .btn.wiggle { animation: wiggle .5s; }
+
+/* ---------- Wimmelbild, Mach was ich sage, Ruby lernt, Insel ---------- */
+.wimmel, .insel { position: relative; width: 100%; height: min(58vh, 460px); border-radius: 24px; overflow: hidden;
+  background: radial-gradient(circle at 30% 20%, #fff8 0 8%, transparent 9%), linear-gradient(#bfe6ff 0 35%, #9be08f 35% 100%); box-shadow: inset 0 -12px 0 #7cc471; }
+.insel { background: radial-gradient(ellipse at 50% 60%, #f6e3a1 0 52%, #8fd3f5 53% 100%); box-shadow: inset 0 0 0 6px #6cc3ef; touch-action: none; }
+.wimmel .deko { position: absolute; font-size: 28px; opacity: .55; pointer-events: none; }
+.wding, .iding { position: absolute; transform: translate(-50%, -50%); font-size: 44px; background: none; line-height: 1; animation: popbig .4s var(--d, 0s) both; touch-action: none; }
+.wding.gefunden::after { content: '✓'; position: absolute; right: -6px; top: -6px; font-size: 14px; background: #3bb54a; color: #fff; border-radius: 50%; width: 18px; height: 18px; line-height: 18px; text-align: center; font-weight: 900; }
+.wding.hupf, .iding.hupf { animation: hupf .5s; }
+.wding.shake { animation: shake .4s; }
+.wlabel { position: absolute; left: 50%; bottom: 105%; transform: translateX(-50%); background: #fff; border-radius: 12px; padding: 4px 10px; box-shadow: 0 3px 0 #c7d6e3; white-space: nowrap; font-size: 16px; z-index: 3; }
+.wlabel small { display: block; color: var(--muted); font-weight: 600; font-size: 13px; }
+.wimmel-stand { text-align: center; font-weight: 800; color: var(--muted); }
+.tpr-befehl { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.tpr-text { font-size: 20px; font-weight: 800; background: #fff; border-radius: 14px; padding: 6px 12px; }
+.tpr-leute { display: flex; justify-content: space-around; gap: 8px; width: 100%; }
+.tpr-person { flex: 1; max-width: 140px; min-height: 120px; background: #fff; border: 3px dashed #9fd0f5; border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 8px; }
+.tpr-person .e { font-size: 44px; }
+.tpr-person .hand { font-size: 26px; min-height: 30px; }
+.tpr-person .hand.popbig { animation: popbig .4s; }
+.tpr-dinge { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.tpr-ding { font-size: 42px; width: 70px; height: 70px; border-radius: 18px; background: #fff3c4; box-shadow: 0 5px 0 #e0c060; touch-action: none; }
+.tpr-ding.gewaehlt { outline: 4px solid #2b8fd6; }
+.tpr-ding.weg { visibility: hidden; }
+.tpr-ding.shake { animation: shake .4s; }
+.tpr-ding.ghost { position: fixed; z-index: 50; pointer-events: none; opacity: .9; transform: scale(1.15); }
+.lehrer-tafel { width: 100%; background: #2f5d3a; border: 8px solid #a0703c; border-radius: 16px; padding: 18px 12px; position: relative; }
+.tafel-ruby { position: absolute; top: -26px; right: 8px; font-size: 40px; }
+.tafel-satz { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.tafel-wort { background: none; color: #fff; font-size: 26px; font-weight: 800; border-bottom: 3px dashed #ffffff55; padding: 2px 4px; font-family: inherit; }
+.tafel-wort.falsch { color: #ffb4a8; text-decoration: line-through; }
+.tafel-wort.richtig { color: #b9f6b0; border-bottom-color: #b9f6b0; animation: popbig .4s; }
+.tafel-wort.shake { animation: shake .4s; }
+.inselknopf { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 14px; background: linear-gradient(135deg, #8fd3f5, #f6e3a1); border-radius: 20px; padding: 14px; box-shadow: 0 4px 0 #6cb2d6; font-size: 20px; }
+.inselknopf small { font-weight: 600; color: #3b5568; font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .wding, .iding, .tpr-person .hand.popbig { animation: none; } }
+.wding.rechts .wlabel, .iding.rechts .wlabel { left: auto; right: -6px; transform: none; }
+.wding.links .wlabel, .iding.links .wlabel { left: -6px; transform: none; }
+.mini-ruby { display: inline-block; width: 52px; height: 52px; }
+.mini-ruby svg { width: 100%; height: 100%; }
+.tafel-ruby.mini-ruby { width: 48px; height: 48px; top: -30px; }
+.chat-zeile .wer .mini-ruby { width: 40px; height: 40px; }
+.insel .iding { font-size: 36px; }
+.insel { background: radial-gradient(ellipse at 50% 50%, #f6e3a1 0 62%, #8fd3f5 63% 100%); }

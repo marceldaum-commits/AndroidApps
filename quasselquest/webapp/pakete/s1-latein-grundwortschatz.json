@@ -259,7 +259,7 @@
     },
     {
       "id": "021",
-      "q": "Was bedeutet „servus“?",
+      "q": "Was bedeutet „servus, -i m.“?",
       "a": "Sklave (Diener)",
       "choices": [
         "Herr",
@@ -270,7 +270,7 @@
     },
     {
       "id": "022",
-      "q": "Was bedeutet „dominus“?",
+      "q": "Was bedeutet „dominus, -i m.“?",
       "a": "Herr",
       "choices": [
         "Sklave",
@@ -281,7 +281,7 @@
     },
     {
       "id": "023",
-      "q": "Was bedeutet „amicus“?",
+      "q": "Was bedeutet „amicus, -i m.“?",
       "a": "Freund",
       "choices": [
         "Feind",
@@ -293,7 +293,7 @@
     },
     {
       "id": "024",
-      "q": "Was bedeutet „puella“?",
+      "q": "Was bedeutet „puella, -ae f.“?",
       "a": "Mädchen",
       "choices": [
         "Junge",
@@ -304,7 +304,7 @@
     },
     {
       "id": "025",
-      "q": "Was bedeutet „puer“?",
+      "q": "Was bedeutet „puer, pueri m.“?",
       "a": "Junge (Knabe)",
       "choices": [
         "Mädchen",
@@ -315,7 +315,7 @@
     },
     {
       "id": "026",
-      "q": "Was bedeutet „forum“?",
+      "q": "Was bedeutet „forum, -i n.“?",
       "a": "Marktplatz",
       "choices": [
         "Wald",
@@ -326,7 +326,7 @@
     },
     {
       "id": "027",
-      "q": "Was bedeutet „villa“?",
+      "q": "Was bedeutet „villa, -ae f.“?",
       "a": "Landhaus",
       "choices": [
         "Dorf",
@@ -337,7 +337,7 @@
     },
     {
       "id": "028",
-      "q": "Was bedeutet „aqua“?",
+      "q": "Was bedeutet „aqua, -ae f.“?",
       "a": "Wasser",
       "choices": [
         "Luft",
@@ -348,7 +348,7 @@
     },
     {
       "id": "029",
-      "q": "Was bedeutet „terra“?",
+      "q": "Was bedeutet „terra, -ae f.“?",
       "a": "Land (Erde)",
       "choices": [
         "Meer",
@@ -359,7 +359,7 @@
     },
     {
       "id": "030",
-      "q": "Was bedeutet „via“?",
+      "q": "Was bedeutet „via, -ae f.“?",
       "a": "Weg (Straße)",
       "choices": [
         "Leben",
@@ -371,7 +371,7 @@
     },
     {
       "id": "031",
-      "q": "Was bedeutet „urbs“?",
+      "q": "Was bedeutet „urbs, urbis f.“?",
       "a": "Stadt",
       "choices": [
         "Land",
@@ -382,7 +382,7 @@
     },
     {
       "id": "032",
-      "q": "Was bedeutet „deus“?",
+      "q": "Was bedeutet „deus, -i m.“?",
       "a": "Gott",
       "choices": [
         "Tag",
@@ -394,7 +394,7 @@
     },
     {
       "id": "033",
-      "q": "Was bedeutet „pater“?",
+      "q": "Was bedeutet „pater, patris m.“?",
       "a": "Vater",
       "choices": [
         "Mutter",
@@ -405,7 +405,7 @@
     },
     {
       "id": "034",
-      "q": "Was bedeutet „mater“?",
+      "q": "Was bedeutet „mater, matris f.“?",
       "a": "Mutter",
       "choices": [
         "Vater",

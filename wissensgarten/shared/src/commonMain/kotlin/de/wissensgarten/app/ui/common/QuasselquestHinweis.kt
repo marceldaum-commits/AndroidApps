@@ -32,7 +32,7 @@ fun QuasselquestHinweis(beete: Int, modifier: Modifier = Modifier.padding(horizo
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text("Sprachen sind umgezogen!", fontWeight = FontWeight.Bold, color = Color(0xFF0D47A1))
                 Text(
-                    if (beete > 0) "Deine ${if (beete == 1) "Sprach-Beet ist" else "$beete Sprach-Beete sind"} jetzt in Quasselquest – dort sprichst, hörst und spielst du Englisch, Deutsch und mehr. Brummi passt hier auf alle anderen Fächer auf. 🐝"
+                    if (beete > 0) "${if (beete == 1) "Dein Sprach-Beet ist" else "Deine $beete Sprach-Beete sind"} jetzt in Quasselquest – dort sprichst, hörst und spielst du Englisch, Deutsch und mehr. Brummi passt hier auf alle anderen Fächer auf. 🐝"
                     else "Englisch, Französisch, Latein, Spanisch und Rechtschreibung & Grammatik lernst du jetzt in Quasselquest.",
                     style = MaterialTheme.typography.bodyMedium, color = Color(0xFF263238),
                 )

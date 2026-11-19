@@ -9,6 +9,49 @@
 
 
 
+## 2.3.0 – Umzug auf lernen(-test).mathenachhilfe-online.com/wissensgarten/ (19.11.2026, Standard UMZUG-LERNEN.md)
+- **Alte Adresse** (wissensgarten[-test].…, am Hostnamen erkannt). Beim Start, bevor die App lädt (Startbild: „Wir ziehen um … Brummi packt deinen Garten ein“):
+  1. Pflicht-Schutz: `lernen…/wissensgarten/icons/icon-192.png` muss als Bild laden (10 s). Bei 404, 503 oder Zertifikatsfehler wird nicht weitergeleitet und die App startet wie bisher.
+  2. Alle eigenen Schlüssel `wg.*` einsammeln, auch die ausgeblendeten Sprach-Beete und die Merkbilder `wg.bild.*`. Nicht mitgenommen werden `wg.plusPakete` (kommt mit dem Code neu), `wg.diag*` und `wg.wasmKaputt`.
+  3. Klartext `{"app":"wissensgarten","v":1,"umzug":true,"stand":…,"daten":{…}}`, mit gzip gepackt, wenn der Browser es kann (erkennbar an 1f 8b).
+  4. Verschlüsseln mit AES-GCM-256 und 12-Byte-IV; id, schreib und key werden auf dem Gerät erzeugt.
+  5. `PUT trainer[-test].…/eltern/v1/s/<id>`, text/plain `<iv>.<ct>`, höchstens 500 KB. Ist es größer, ein zweiter Versuch ohne Merkbilder; bleibt es zu groß, keine Weiterleitung.
+  6. Bei 2xx: `wg.umzug.fertig` setzen und weiterleiten auf `lernen…/wissensgarten/` mit Query und `#umzug=<id>.<key>.<schreib>`, andere Hash-Werte (`paket=`, `pro=`) mit `&` angehängt.
+  - **Fehler** (offline, Server, Zeitlimit 20 s): keine Weiterleitung, die App startet hier, nächster Versuch beim nächsten Start.
+  - **Ohne Lernstand** oder schon umgezogen: direkt weiter, ohne `#umzug`, aber nur wenn das Ziel erreichbar ist.
+  - **Die alte Adresse löscht nie Daten.**
+- **Neue Adresse** (lernen[-test].…). Unter lernen. leitet nichts weiter.
+  - `#umzug=` wird sofort aus der Adresse entfernt (replaceState) und bis zum Abschluss in `wg.umzug.offen` gemerkt.
+  - Dann GET, entschlüsseln, gegebenenfalls entpacken. Geschrieben wird nur, wenn hier noch kein `wg.garten` ist; sonst bleibt der vorhandene Garten.
+  - Danach `DELETE` mit X-Schreib und ein Hinweis („Dein Garten ist umgezogen …“).
+  - Bei 404: erledigt. Bei anderen Fehlern: nächster Versuch beim nächsten Start.
+- **Gemeinsame Adresse, Pflichtpunkte:**
+  1. `sw.js`: Beim Aktivieren werden nur noch eigene Caches (`wissensgarten-…`) gelöscht. Vorher waren es alle fremden (Fundstelle `webApp/src/webMain/resources/sw.js:11`).
+  2. Kein `unregister` im Code.
+  3. Kein `clear()`. „Alle Daten löschen“ entfernt nur `wg.*` (`WebPlatform.kt:294`).
+  4. Präfixe: localStorage bzw. sessionStorage nur `wg.*`; Caches `wissensgarten-<version>` und `wissensgarten-nova*` (`wg-stimme.js:41–44`).
+  5. `caches.open(eigener).match` überall (`sw.js:22–25`).
+  6. Manifest: `start_url` und `scope` sind „./“, neu `"id": "./?app=wissensgarten"`.
+  7. Kein Mikrofon in der Web-App.
+  - Test oder live über `-test` im Hostnamen (`WebPlatform.kt:51`); `lernen-test.` passt.
+  - Vorlese-Stimme: Der Name für die Liste beim Stimmen-Server bleibt auch unter lernen. bei `wissensgarten[-test].mathenachhilfe-online.com` (`WebVoice.kt`), sonst würden sich alle Apps eine Liste teilen.
+  - Pfade sind alle relativ.
+  - Plus-Endpunkt bleibt absolut `https://wissensgarten.mathenachhilfe-online.com/wg-api/plus/` und braucht CORS für lernen(-test). Bitte bestätigen.
+- **Eigener Deeplink** jetzt `https://lernen.mathenachhilfe-online.com/wissensgarten/#paket=<ID>`. Die alte Form leitet mit `#paket=` weiter.
+- **Datenschutz-Text** in der App: neuer Abschnitt „Umzug auf die gemeinsame Adresse“. Bitte auch die Datenschutzerklärung auf der Website ergänzen.
+- **Belege, alle grün:**
+  - `webApp/tools/web-umzug.cjs` mit zwei getrennten Ursprüngen (alt :8812, neu :8813) und nachgebildetem Sicherungs-Server, 5 Fälle:
+    1. Gelingt: Profil, Beete inklusive ausgeblendetem Sprach-Beet, Karten, Lernprotokoll und Merkbild kommen an. `#paket=` wird danach auf der neuen Adresse ausgeführt. Ablauf PUT → GET → DELETE, danach liegt nichts mehr auf dem Server. Die alte Adresse behält ihre Daten.
+    2. Offline: keine Weiterleitung, die App startet, kein Merker gesetzt.
+    3. Ziel hat schon einen Garten: Er bleibt unverändert, die Sicherung wird trotzdem gelöscht.
+    4. Ohne Lernstand: direkt weiter, nichts gesendet.
+    5. Ziel nicht erreichbar: keine Weiterleitung, nichts gesendet.
+  - Außerdem grün: `web-sprachen.cjs`, `web-paket.cjs`, core:model und content.
+  - Safari-Abhilfe: 937 abgesichert, 0 Endaufrufe.
+  - **Echter Rundlauf auf der Test-Stufe (19.11., ohne echte Kinderdaten, Testprofil „Testkind“):** wissensgarten-test.… mit Lernstand und `#paket=gs-tiere` → lernen-test.…/wissensgarten/. Server: PUT 204, GET 200, DELETE 204. Profil und ausgeblendetes Sprach-Beet sind angekommen, gs-tiere wurde gepflanzt, `wg.umzug.offen` ist leer, die Wasm-Bildprüfung unter dem Pfad /wissensgarten/ meldet „Garten sichtbar ✓“. Die Testdaten auf lernen-test sind danach gelöscht.
+  - „Zu Quasselquest“: lernen-test.…/quasselquest/ und lernen.…/quasselquest/ antworten mit 200.
+- **Rückweg:** 2.2.19 (Commit 40c6926). Die Umzugs-Logik steckt nur in `index.html` (Skript vor dem Lader); ohne sie läuft alles wie vorher.
+
 ## 2.2.19 – Sprachen an Quasselquest (19.11.2026, Entscheidungen Marcel über die AppZentrale)
 - **Ausgeblendet:** 19 freie Pakete und 2 Plus-Pakete, Liste in `core/model/.../Angebot.kt`, Test `AngebotTest`.
   - Englisch (7), Französisch (2), Latein (1), Spanisch (1).

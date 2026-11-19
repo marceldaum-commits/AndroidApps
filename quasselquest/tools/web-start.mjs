@@ -62,7 +62,7 @@ async function playEpisode(page, id, shot) {
 }
 
 async function playPackRound(page, packId, shot) {
-  await page.click(`[data-pack="${packId}"]`);
+  if (packId) await page.click(`[data-pack="${packId}"]`);
   for (let guard = 0; guard < 80; guard++) {
     await wait(250);
     if (await page.$('.reward')) break;
@@ -71,9 +71,21 @@ async function playPackRound(page, packId, shot) {
     if (shot && !shotDone.has(shot + title.slice(0, 5))) { shotDone.add(shot + title.slice(0, 5)); await snap(page, shot + '_' + title.replace(/[^A-Za-zÄÖÜäöü]+/g, '').slice(0, 12).toLowerCase()); }
     const b = await page.$('.balloon[data-ok]:not([disabled])'); if (b) { await b.click({ force: true }); await wait(1500); continue; }
     const o = await page.$('.opt[data-ok]:not([disabled])'); if (o) { await o.click(); await wait(1500); continue; }
+    // Wimmelbild: alles entdecken, dann gesuchtes Wort antippen
+    const wd = await page.$$('.wding:not(.gefunden)'); if (wd.length) { for (const d of wd) await d.click({ force: true }); await wait(300); }
+    const wz = await page.$('[data-w][data-ziel]'); if (wz) { const z = await wz.getAttribute('data-ziel'); await page.click(`.wding[data-i="${z}"]`, { force: true }); await wait(1500); continue; }
+    // Mach, was ich sage: richtiges Ding antippen, dann richtige Person
+    const td = await page.$('.tpr-ding[data-ok]:not([disabled])'); if (td) { await td.click(); await page.click('.tpr-person[data-ziel]'); await wait(400); continue; }
+    // Ruby lernt von dir: falsches Wort antippen (Korrektur dann über .opt[data-ok])
+    const tw = await page.$('.tafel-wort[data-ok]:not(.falsch):not(.richtig)'); if (tw && !(await page.$('.opt'))) { await tw.click(); await wait(300); continue; }
+    // Lernpfad-Spielarten ohne Wertung: Kennenlernen, Regel, Nachsprechen, Geschichte
+    const neu = await page.$$('.neu-karte'); if (neu.length && await page.$('[data-weiter][disabled]')) { for (const k of neu) await k.click(); await wait(300); }
+    const zeig = await page.$('[data-zeig]:not([hidden])'); if (zeig) { await zeig.click(); await wait(300); }
+    const quiet = await page.$('[data-quiet]:not([hidden])'); if (quiet) { await quiet.click(); await wait(300); }
+    const weiter = await page.$('[data-weiter]:not([hidden]):not([disabled])'); if (weiter) { await weiter.click(); await wait(400); continue; }
     const tiles = await page.$$('.tile[data-pos]:not([disabled])');
     if (tiles.length) {
-      const n = await page.$$eval('.slot', (x) => x.length);
+      const n = (await page.$$eval('.slot', (x) => x.length)) || (await page.$$eval('.tile[data-pos]', (x) => x.filter((e) => e.dataset.pos !== '-1').length));
       for (let p = 0; p < n; p++) { const t = await page.$(`.tile[data-pos="${p}"]:not([disabled])`); if (t) await t.click(); }
       await wait(1600); continue;
     }
@@ -143,13 +155,91 @@ for (const [name, type, opts] of [
       ok(await playPackRound(page, pack, FOTOS && name === 'chromium_handy' && (lang === 'fr' || lang === 'de') ? 'paket_' + lang : null), `Paket-Runde ${lang} (${pack}) durchgespielt`);
       await page.click('[data-home]'); await page.waitForSelector('.langbar');
     }
+    // Mein Schulbuch: eigene Liste anlegen (erst mit Fehler), spielen – Englisch und Deutsch (Diktat)
+    for (const [lang, bad, good] of [['en', 'Hund dog\nKatze = cat', 'Hund = dog\nKatze = cat\nMaus = mouse\nBaum = tree\nHaus = house'], ['de', 'Hund = dog', 'Fahrrad\nVogel\nStraße\nBlume']]) {
+      await page.click(`[data-lang="${lang}"]`); await page.waitForSelector('[data-mine]'); await page.click('[data-mine]');
+      await page.click('[data-new]'); await page.fill('[data-name]', 'Lektion 1'); await page.fill('[data-text]', bad); await page.click('[data-save]');
+      ok((await page.textContent('[data-err]')).length > 5, `Mein Schulbuch ${lang}: falsche Zeile → Meldung „${(await page.textContent('[data-err]')).slice(0, 50)}“`);
+      await page.fill('[data-text]', good); await page.click('[data-save]'); await page.waitForSelector('[data-play]');
+      if (FOTOS && name === 'chromium_handy') await snap(page, 'schulbuch_' + lang);
+      await page.click('[data-play]');
+      ok(await playPackRound(page, null, FOTOS && name === 'chromium_handy' && lang === 'de' ? 'schulbuch_runde_de' : null), `Mein Schulbuch ${lang}: Runde gespielt`);
+      await page.click('[data-home]'); await page.waitForSelector('[data-new]'); await page.click('[data-back]'); await page.waitForSelector('.langbar');
+    }
+    // Lernpfad „Neu lernen“: Französisch Einheit 1 komplett (5 Lektionen → Krone), Englisch Lektion 1
+    await page.click('[data-lang="fr"]'); await page.waitForSelector('[data-lp-e="fr-1-1"]');
+    ok(await page.$eval('[data-lp-e="fr-1-1"]', (e) => e.classList.contains('jetzt')) && await page.$eval('[data-lp-e="fr-1-2"]', (e) => e.classList.contains('zu')), 'Lernpfad Französisch: Einheit 1 offen, Einheit 2 noch zu');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'lernpfad_fr');
+    await page.click('[data-lp-e="fr-1-1"]'); await page.waitForSelector('.lp-lektion.jetzt');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'lernpfad_einheit');
+    for (let l = 0; l < 5; l++) {
+      await page.click('.lp-lektion.jetzt');
+      const gut = await playPackRound(page, null, FOTOS && name === 'chromium_handy' ? 'lp' + (l + 1) : null);
+      ok(gut, `Lernpfad fr-1-1 Lektion ${l + 1} durchgespielt`);
+      if (!gut) break;
+      if (l === 4 && FOTOS && name === 'chromium_handy') await snap(page, 'lernpfad_krone');
+      await page.click('[data-unit]'); await page.waitForSelector('.lp-lektionen');
+    }
+    const lpSt = await page.evaluate(() => window.quasselTest.state().lp);
+    ok(lpSt['fr-1-1'] === 5, 'Einheit fr-1-1 fertig gespeichert (' + JSON.stringify(lpSt) + ')');
+    await page.click('[data-back]'); await page.waitForSelector('[data-lp-e="fr-1-2"]');
+    ok(await page.$eval('[data-lp-e="fr-1-1"]', (e) => e.classList.contains('fertig')) && await page.$eval('[data-lp-e="fr-1-2"]', (e) => e.classList.contains('jetzt')), 'Krone für Einheit 1, Einheit 2 jetzt offen');
+    await page.click('[data-lang="en"]'); await page.waitForSelector('[data-lp-e="en-1-1"]');
+    await page.click('[data-lp-e="en-1-1"]'); await page.waitForSelector('.lp-lektion.jetzt'); await page.click('.lp-lektion.jetzt');
+    ok(await playPackRound(page, null, null), 'Lernpfad Englisch Lektion 1 durchgespielt');
+    await page.click('[data-unit]'); await page.click('[data-back]'); await page.waitForSelector('.world');
+    // Klassenarbeits-Generalprobe: Test eintragen (erst mit Fehler), Lernplan, Generalprobe mit Auswertung
+    await page.click('[data-lang="en"]'); await page.waitForSelector('[data-test-new]'); await page.click('[data-test-new]');
+    await page.click('[data-save]');
+    ok((await page.textContent('[data-err]')).includes('Datum'), 'Test ohne Datum → Meldung „' + (await page.textContent('[data-err]')) + '“');
+    const in5 = await page.evaluate(() => new Date((window.PAKETE.today() + 5) * 864e5).toISOString().slice(0, 10));
+    await page.fill('[data-date]', in5); await page.click('.checklist input[value="gs-englisch-basics"]');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'test_eintragen');
+    await page.click('[data-save]'); await page.waitForSelector('.testcard.on');
+    ok((await page.textContent('.testcard.on')).includes('Noch 5 Tage') && (await page.textContent('.testcard.on')).includes('Heute dran'), 'Lernplan: „' + (await page.textContent('.testcard.on small')).trim() + '“');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'test_plan');
+    await page.click('[data-test-probe]');
+    let fragen = 0;
+    for (; fragen < 20; fragen++) {
+      const s = await Promise.race([page.waitForSelector('[data-in], .opt', { timeout: 4000 }).then(() => 'q'), page.waitForSelector('.probe-row', { timeout: 4000 }).then(() => 'end')]).catch(() => 'x');
+      if (s !== 'q') break;
+      if (FOTOS && name === 'chromium_handy' && fragen === 0) await snap(page, 'generalprobe');
+      if (await page.$('[data-in]')) { await page.fill('[data-in]', fragen % 2 ? 'xyz' : ''); await page.click('[data-ok]'); }
+      else await page.click('.opt >> nth=0', { force: true });
+      await wait(120);
+    }
+    ok(fragen >= 10 && (await page.$$('.probe-row')).length === fragen, `Generalprobe: ${fragen} Aufgaben, Auswertung mit ${(await page.$$('.probe-row')).length} Zeilen`);
+    ok((await page.textContent('#app')).includes('Richtig:'), 'Auswertung zeigt die richtige Lösung');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'generalprobe_auswertung');
+    await page.click('[data-home]'); await page.waitForSelector('.testcard.on');
     const st2 = await page.evaluate(() => window.quasselTest.state());
     ok(Object.keys(st2.karten).length >= 20, `Wiederholung gespeichert (${Object.keys(st2.karten).length} Karten)`);
     await page.click('[data-lang="en"]'); await page.waitForSelector('.world');
+    // Zählung + Nachhilfe-Hinweis (nur Elternbereich)
+    const calls = [];
+    page.on('request', (r) => { if (r.url().includes('/zaehler/v1/e')) try { calls.push(JSON.parse(r.postData())); } catch (e) {} });
+    await page.route('**/zaehler/v1/e', (r) => r.fulfill({ status: 204, body: '' }));   // in WebKit nicht immer wirksam – gezählt wird über 'request'
+    await page.evaluate(() => { const st = window.quasselTest.state(); const d = window.PAKETE.today(); st.tage.fr = { [d]: [12, 4] }; });
+    ok(!(await page.$('.hint-card')), 'Kein Nachhilfe-Hinweis im Kinderbereich');
     await page.click('[data-settings]'); await snap(page, 'einstellungen');
+    await page.click('[data-kids]'); ok((await page.textContent('#app')).includes('kein Konto'), 'Datenschutz in Kindersprache erreichbar');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'daten_kinder');
+    await page.click('[data-back]'); await page.waitForSelector('[data-parents]');
     await page.click('[data-parents]'); await page.fill('.modal input', '2015'); await page.click('.modal [data-ok]');
     ok((await page.textContent('.modal .err')).includes('Erwachsene'), 'Eltern-Tor hält Kinder ab');
     await page.fill('.modal input', '1985'); await page.click('.modal [data-ok]'); await page.waitForSelector('input[name=rec]');
+    ok((await page.getAttribute('[data-probe-ka]', 'href') || '').includes('src=quasselquest-klassenarbeit&thema=englisch'), 'Hinweis „Arbeit in 5 Tagen“ im Elternbereich, Link mit src=klassenarbeit');
+    ok(!!(await page.$('.hint-card')) && (await page.getAttribute('[data-probe]', 'href')).includes('src=quasselquest-elternbericht&thema=franzoesisch'), 'Nachhilfe-Hinweis im Elternbereich (Französisch hakt), Link mit src/thema/klasse');
+    for (let w = 0; w < 30 && !(calls.some((c) => c.ev === 'elternbereich') && calls.some((c) => c.ev === 'nachhilfe_hinweis' && c.thema === 'franzoesisch') && calls.some((c) => c.ort === 'klassenarbeit')); w++) await page.waitForTimeout(200);   // WebKit meldet Anfragen verzögert
+    ok(calls.some((c) => c.ev === 'elternbereich') && calls.some((c) => c.ev === 'nachhilfe_hinweis' && c.thema === 'franzoesisch') && calls.some((c) => c.ev === 'nachhilfe_hinweis' && c.ort === 'klassenarbeit') && calls.every((c) => Object.keys(c).every((k) => ['app', 'v', 'ev', 'ort', 'thema'].includes(k)) && c.app === 'quasselquest'), 'Zählung: nur erlaubte Felder (' + calls.map((c) => c.ev).join(', ') + ')');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'eltern_hinweis');
+    await page.click('[data-hide]'); await page.waitForSelector('input[name=rec]');
+    await page.click('[data-hide-ka]'); await page.waitForSelector('input[name=rec]');
+    ok(!(await page.$('.hint-card')), 'Hinweise ausgeblendet');
+    await page.click('[data-sw="zaehlung"]'); await page.waitForTimeout(1500); const n0 = calls.length;
+    await page.click('[data-back]'); await page.click('[data-parents]'); await page.fill('.modal input', '1985'); await page.click('.modal [data-ok]'); await page.waitForSelector('input[name=rec]'); await page.waitForTimeout(1500);
+    ok(calls.length === n0, 'Zählung aus → kein Aufruf');
+    await page.click('[data-sw="zaehlung"]');
     await snap(page, 'eltern');
     await page.click('[data-back]'); await page.click('[data-back]'); await page.waitForSelector('.world');
     await page.click('[data-allapps]').catch(() => {});

@@ -8,7 +8,8 @@ self.addEventListener('install', (e) => {
 });
 self.addEventListener('activate', (e) => {
   // Gespeicherte Nova-Sätze (wissensgarten-nova, -offline, -original) bleiben bei Updates stehen; alles andere (auch die frühere Offline-Stimme) wird gelöscht
-  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE && !k.startsWith('wissensgarten-nova')).map((k) => caches.delete(k)))).then(() => self.clients.claim()));
+  // Gemeinsame Adresse aller Lern-Apps: NUR eigene Caches („wissensgarten-…“) anfassen, nie die der anderen Apps
+  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k.startsWith('wissensgarten-') && k !== CACHE && !k.startsWith('wissensgarten-nova')).map((k) => caches.delete(k)))).then(() => self.clients.claim()));
 });
 // Erst Zwischenspeicher, sonst Netz (und dann merken) – so läuft alles auch ohne Internet weiter
 self.addEventListener('fetch', (e) => {
