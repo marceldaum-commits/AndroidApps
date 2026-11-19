@@ -48,7 +48,7 @@ Die App wertet in beiden Wegen gleich: ★★★ ab 90 %, ★★ ab 70 %, ★ ab
 | 5xx / Zeitüberschreitung | Server nicht erreichbar | **Rückfall auf Weg 1** (wenn das Gerät es kann), sonst ohne Sterne |
 
 Zeitgrenze: bis etwa 5 s zeigt die App einen Ladekreis („Ruby hört genau hin …“). Nach **8 s** bricht sie ab (Rückfall auf Weg 1, wenn das Gerät es kann, sonst ohne Sterne).
-Modelle laut Messung des Leitstands (Marcel: „small + echt nachmessen“): Whisper small für EN/ES (ca. 1 s, 90–96 %), FR wird mit echten Aufnahmen nachgemessen (ggf. large-v3-turbo nur für FR, ca. 4 s). **Latein: keine Auswertung** (Server lehnt `la` ab, die App fragt nie an).
+Modell nach Nachmessung mit echten Aufnahmen (Marcel: „turbo für alles“): Whisper large-v3-turbo (MIT, OpenAI) für EN, FR und ES, ca. 3–4 s pro Satz, mit Warteschlange. **Latein: keine Auswertung** (Server lehnt `la` ab, die App fragt nie an).
 
 ## Pflichten des Servers (Recht V12)
 - Server in Deutschland; Aufnahme **nur im Arbeitsspeicher**, nach der Auswertung **sofort gelöscht**, nie auf Platte, nie in Logs.
