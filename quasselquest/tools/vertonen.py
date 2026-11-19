@@ -81,7 +81,7 @@ def sprich(voice, text, tempo, ton, ziel):
 
 
 # ---------------------------------------------------------------- Hörprüfung (Whisper, nur beim Bauen)
-ZIFFERN = {str(i): w for i, w in enumerate('zero one two three four five six seven eight nine ten'.split())}
+ZIFFERN = {str(i): w for i, w in enumerate('zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty'.split())}
 # Gleich klingende Wörter zählen als richtig erkannt (die Erkennung kann sie nicht unterscheiden)
 GLEICHKLANG = {'two': {'to', 'too'}, 'four': {'for'}, 'eight': {'ate'}, 'one': {'won'}, 'meet': {'meat'}, 'see': {'sea', 'c'},
                'red': {'read'}, 'colour': {'color'}, 'hi': {'high'}, 'i': {'eye', 'aye'}, 'here': {'hear'}, 'you': {'u'},
@@ -96,9 +96,10 @@ def woerter(t):
 
 
 def treffer(soll, ist):
-    ist = set(woerter(ist)); w = woerter(sprechtext(soll))
+    iw = woerter(ist); ist_s = set(iw); w = woerter(sprechtext(soll))
     if not w: return 1.0
-    return sum(1 for x in w if x in ist or (GLEICHKLANG.get(x, set()) & ist)) / len(w)
+    if ''.join(w) == ''.join(iw): return 1.0          # zusammengesetzte Wörter: „Ausrufe Satz“ = „Ausrufesatz“
+    return sum(1 for x in w if x in ist_s or (GLEICHKLANG.get(x, set()) & ist_s)) / len(w)
 
 
 class Pruefer:

@@ -140,7 +140,7 @@ test('Nova ist vorbereitet, aber nicht freigeschaltet (erst nach Marcels Go)', (
   assert.match(readFileSync(new URL('version.js', dir), 'utf8'), /NOVA_FREIGEGEBEN = false/);
   const t = JSON.parse(readFileSync(new URL('vorlesen/texte.json', dir), 'utf8'));
   assert.equal(t.app, 'quasselquest');
-  assert.ok(t.texte.length >= 100 && t.texte.every((x) => x.sprache === 'en' && /^[0-9a-f]{32}$/.test(x.nova)));
+  assert.ok(t.texte.length >= 100 && t.texte.every((x) => ['en', 'de', 'fr', 'es'].includes(x.sprache) && /^[0-9a-f]{32}$/.test(x.nova)));
 });
 
 test('Pakete: alle 5 Sprachen vorhanden, jede Karte hat Frage, Antwort und Merkbild', () => {
@@ -180,4 +180,11 @@ test('Wiederholung: richtig → längerer Abstand, falsch → morgen wieder; fä
   const pick = P.pick(store, p, 8, 5, day + 8);
   assert.equal(pick[0], c, 'fällige Karte kommt zuerst');
   assert.equal(pick.length, 6, '1 fällige + höchstens 5 neue');
+});
+
+test('Unsichere Aufnahmen sind markiert und bleiben die Ausnahme (unter 15 %)', () => {
+  const idx = JSON.parse(readFileSync(new URL('audio/index.json', dir), 'utf8')).saetze;
+  const all = Object.values(idx); const uns = all.filter((e) => e.unsicher);
+  assert.ok(uns.length / all.length < 0.15, `${uns.length} von ${all.length} unsicher`);
+  assert.match(readFileSync(new URL('audio.js', dir), 'utf8'), /!e\.unsicher/);
 });
