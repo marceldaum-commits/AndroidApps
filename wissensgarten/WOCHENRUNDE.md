@@ -201,3 +201,28 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
 
 **Raumlicht:** keine Überschneidung. Raumlicht verlinkt „Formeln wiederholen“ auf `#paket=s1-mathe-geometrie-formeln`, `#paket=s1-mathe-pythagoras-trigo` und, mit Plus, auf `ob-mathe-analysis`. Format bei Raumlicht: `https://raumlicht.mathenachhilfe-online.com/?ziel=level/<Kapitel>-<Nr>` bzw. `?ziel=galton|binomial|abi`. Updates bei Raumlicht: Fr 20.11. Lineare Gleichungssysteme & Gauß, Di 24.11. Zufallsgrößen und Normalverteilung.
 
+
+## Beitrag Wissensgarten zur Wochenrunde Mo 23.11.2026 (Familien-Speicher, Plus, Codes; vorbereitet am 19.11.)
+- **Lernstand (Web, localStorage, alles mit Präfix `wg.`):**
+  - `wg.garten`: ein JSON (StoreState) mit `profiles`, `beds`, `cards` (mit Gedächtniswerten), `logs` (Antwort-Protokoll) und `nextLogId`. Das Protokoll wird ab 20 000 Einträgen auf ein Jahr gekürzt.
+  - `wg.prefs.einstellungen`: Einstellungen, Plus-Code, Kopplung, Monatsverlauf. Dazu `wg.prefs.duelle` und `wg.prefs.sync_geloescht`.
+  - `wg.bild.<karte>`: selbst gemalte Merkbilder als PNG (Base64).
+  - `wg.plusPakete`: geladene Plus-Inhalte. Die müssen nicht gesichert werden, sie kommen mit dem Code wieder.
+  - Dazu technische Werte: `wg.diag*`, `wg.modus`, `wg.wasmKaputt`, `wg.schaerfe`, `wg.umzug.*`.
+  - **Größe:** Ein typischer Garten mit 3–10 Beeten, einigen hundert Karten und einigen Wochen Protokoll hat etwa 50–300 KB. Mit Jahres-Protokoll und Merkbildern sind 1–3 MB möglich. gzip verkleinert das JSON etwa auf ein Fünftel bis ein Zehntel.
+  - Die heutige Sicherung über die Kopplung (`/eltern/v1/s/`) nutzt das Sync-Format (`SnapshotIO`), gzip-frei, höchstens 512 KB. Für den Familien-Speicher wäre gzip plus eine höhere Grenze (z. B. 2 MB) sinnvoll.
+- **Plus-Codes heute:**
+  - Format `WG-…`, Crockford-Base32, 9 Byte Inhalt: Version, App 3, Produkt (1 = Jahr, 3 = für immer), laufende Nummer, Kauftag. Dazu eine Ed25519-Unterschrift (64 Byte).
+  - Offline in der App geprüft (`License.kt`). Öffentlicher Schlüssel in `pro/plus.properties`; der geheime liegt nur beim Lizenz-Dienst bzw. in Bitwarden.
+  - Probe: 7-Tage-Test, nur auf dem Gerät vermerkt, ohne Code. Geschenk: derselbe Code wie ein Kauf.
+- **Plus-Endpunkt `wissensgarten.…/wg-api/plus/` heute:**
+  - `versions.json` ist frei.
+  - Paket-Dateien gibt es nur mit Header `X-Lizenz: <Code>`. Der Server prüft genauso wie die App: Unterschrift, App-Byte und beim Jahres-Plus Kauftag + 364.
+  - Antworten: 403 `lizenz` oder `abgelaufen`, 404 bei unbekannten Dateien.
+  - Kein Klartext-Logging des Codes, keine Cookies, Rate-Limit.
+  - Übergang in die Familien-Berechtigungen: Der Server kann statt `X-Lizenz` künftig die Familien-Berechtigung „wissensgarten-plus“ prüfen. Der Code bleibt als Nachweis gültig.
+- **Frage an Marcel:** Entscheidung 1 sagt, gekauftes Pro läuft nie ab. Wissensgarten Plus gibt es heute aber als Jahres-Plus (19,99 € für 12 Monate, Produkt 1, läuft nach 365 Tagen ab) und als „für immer“ (49,99 €). Bleibt das Jahres-Plus so?
+- **Bedenken:**
+  - Familien-Speicher bitte wie die Kopplung: Schlüssel nur im Link bzw. QR. Der Notfall-Code muss den Schlüssel enthalten, sonst kann niemand wiederherstellen.
+  - Der Generalschlüssel braucht eine eigene, auf Papier dokumentierte Freigabe-Regel.
+  - WebKit: Safari löscht localStorage nach 7 Tagen ohne Besuch, wenn die Web-App nicht auf dem Home-Bildschirm liegt. Die automatische Sicherung ist deshalb dort besonders wichtig.
