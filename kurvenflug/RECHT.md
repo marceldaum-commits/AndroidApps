@@ -27,7 +27,9 @@ Dazu neutral „← Zurück“ und „Elternbereich (für Erwachsene)“ (→ El
 - Nicht in Kinderansichten: Kaufsprache („Pro holen“, „Shop“, „Angebote entdecken“, „Rabatt“, „Jetzt freischalten“, „Mehr bekommen“),
   Figuren, die auf den Link zeigen, Link als Belohnung.
 - WEITER HINTER DEM TOR: Kauf-/Shop-Knöpfe, Elternbereich, **Einstellungen**, Kopplung/Familie, Löschen, Kamera/Klassen-Code.
-  → KurvenFlug-Einstellungen sind heute ohne Tor (Ton, Musik, Lautstärke). Klären: ganz hinter das Tor oder Ton/Musik als Schnell-Schalter ohne Tor lassen.
+  → GEKLÄRT 19.11. (gilt für alle Apps): OHNE Tor als Schnell-Schalter: Ton, Musik, Lautstärke, Vorlesen an/aus + Tempo, Schriftgröße, Hell/Dunkel.
+    HINTER dem Tor: Pro, Update, Daten zurücksetzen, Profile löschen, Datenschutz- und Zähl-Schalter, Familie, Online-Erkennung,
+    Hinweise auf Nachhilfe, Klassen-Code/Kamera, Teilen. KurvenFlug-Einstellungen am Di entsprechend aufteilen.
 - App-zu-App (V10b): unter Kl. 9 zu Raumlicht nur galton, zufall, rotation, raumflug oder freie Aufgaben (umgesetzt: `?ziel=level/3-1`, fb26aa5). Mathe-Trainer hat ab Di selbst ein Tor.
 
 ## C) Eltern-Tor-Standard
