@@ -54,6 +54,10 @@ function loadRoot() {
     ROOT = { v: 3, cur: 'p1', profiles: { p1: { id: 'p1', name: 'Ich', emoji: '🦊', data: p } }, outbox, reporter, lastReportAt: 0 };
   }
   ROOT.outbox ||= []; ROOT.reporter ||= { name: '', email: '' };
+  // Unvollständiger Speicher (z. B. nach einem Umzug ohne Profile oder von Hand angelegt): fehlende Profile ergänzen statt abzustürzen
+  if (!ROOT.profiles || typeof ROOT.profiles !== 'object') ROOT.profiles = {};
+  for (const [k, v] of Object.entries(ROOT.profiles)) if (!v || typeof v !== 'object') delete ROOT.profiles[k]; else v.id ||= k;
+  if (!Object.keys(ROOT.profiles).length) ROOT.profiles.p1 = { id: 'p1', name: 'Ich', emoji: '🦊', data: PROFILE_DEFAULT() };
   useProfile(ROOT.profiles[ROOT.cur] ? ROOT.cur : Object.keys(ROOT.profiles)[0]);
 }
 function useProfile(id) {

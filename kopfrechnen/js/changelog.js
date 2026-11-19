@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.28.0';
+const APP_VERSION = '3.28.1';
 const APP_DATE = '2026-11-19';
 const CHANGELOG = [
+  ['3.28.1', '2026-11-19', ['Fehlerbehebung: Die App startet jetzt auch, wenn im Speicher kein Profil liegt']],
   ['3.28.0', '2026-11-19', ['Vorbereitet für den Umzug auf die gemeinsame Adresse aller Lern-Apps: Der Lernstand zieht verschlüsselt mit um', 'Speicher und Offline-Dateien tragen jetzt eindeutig den Namen Rechenblitz']],
   ['3.27.0', '2026-11-19', ['Neues Thema „Gleichungssysteme“ (Klasse 8–10): Additions-, Gleichsetzungs- und Einsetzungsverfahren in 6 Stufen, jeder Lösungsweg mit allen Schritten und Probe', 'Theorie zu jedem Verfahren mit durchgerechnetem Beispiel und Links zum Mathe-Trainer und zu KurvenFlug', 'Lösungswege bei Nebenwinkeln und Minuten-Zeitspannen nennen jetzt die Regel']],
   ['3.26.16', '2026-11-18', ['Neu oben auf dem Start: „← Alle Apps“ führt zurück zur Auswahl aller Lern-Apps auf unserer Website', 'Im Dunkel-Modus ist das Rechenblitz-Zeichen oben wieder orange']],

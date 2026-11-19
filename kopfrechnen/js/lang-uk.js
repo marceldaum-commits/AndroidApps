@@ -2548,4 +2548,5 @@ I18N.add('uk', {"% sind":"% — це",
 "Dein Lernstand ist schon unterwegs. Öffne die neue Adresse und installiere die App dort bitte neu auf dem Startbildschirm. Diese alte App kannst du danach löschen.":"Твій прогрес уже в дорозі. Відкрий нову адресу й, будь ласка, знову встанови там застосунок на головний екран. Цей старий застосунок потім можна видалити.",
 "Zur neuen Adresse":"До нової адреси",
 "Vorbereitet für den Umzug auf die gemeinsame Adresse aller Lern-Apps: Der Lernstand zieht verschlüsselt mit um":"Підготовлено до переїзду на спільну адресу всіх навчальних застосунків: прогрес переїжджає зашифрованим",
-"Speicher und Offline-Dateien tragen jetzt eindeutig den Namen Rechenblitz":"Сховище й офлайн-файли тепер чітко мають назву Rechenblitz"});
+"Speicher und Offline-Dateien tragen jetzt eindeutig den Namen Rechenblitz":"Сховище й офлайн-файли тепер чітко мають назву Rechenblitz",
+"Fehlerbehebung: Die App startet jetzt auch, wenn im Speicher kein Profil liegt":"Виправлення: застосунок тепер запускається, навіть якщо в сховищі немає профілю"});
