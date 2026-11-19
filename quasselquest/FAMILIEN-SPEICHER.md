@@ -45,3 +45,6 @@ Insel-Positionen, Einstellungen, Name → fragen (Elternbereich), sonst Gerätes
 - Sperrliste: `sperrlisteLaden({basis, f, speicher, schluessel:'quasselquest.sperrliste'})`, `codeGesperrt(code, …)` vor jeder Offline-Pro-Prüfung.
 - Datei-Weg folgt vom Mathe-Trainer; Server vom Leitstand steht noch aus.
 - Öffentlicher Wiederherstellungs-Schlüssel (privater Teil nur bei Marcel): `REC_PUB = vMrORj9yObM3Ijd9sGStjUB9I3f6ot9E8M-70yGeQ0M` – fest in familie.js, gilt auch auf lernen-test.
+- **familie.js @ ffcfe39** (sha256 `a67bc3a8939e5e72800e7b28a53ddecfc9bf71d98869f59baffe040ef6750b6f`) kam als Text vom Mathe-Trainer (19.11., 14:23 UTC).
+  Einbinden: unverändert als `webapp/js/familie.js`, oben Kommentar „familie.js @ ffcfe39 (Quelle mathe-trainer)“, nichts nachladen.
+  Tests: `tests/familie.mjs` (Pfad in Zeile 5 anpassen) → „familie: 41 Prüfungen bestanden“. Prüfsumme vor dem Kommentar vergleichen.
