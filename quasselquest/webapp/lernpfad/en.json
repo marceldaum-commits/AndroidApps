@@ -1968,15 +1968,15 @@
        "an": "mia"
       },
       {
-       "sag": "Give Ruby four teeth.",
-       "de": "Gib Ruby vier Zähne.",
+       "sag": "Give Ruby four teeth for her monster.",
+       "de": "Gib Ruby vier Zähne für ihr Monster.",
        "ding": "🦷",
        "anzahl": 4,
        "an": "ruby"
       },
       {
-       "sag": "Give Sam five feet.",
-       "de": "Gib Sam fünf Füße.",
+       "sag": "Give Sam five feet for his monster.",
+       "de": "Gib Sam fünf Füße für sein Monster.",
        "ding": "🦶",
        "anzahl": 5,
        "an": "sam"
@@ -2320,8 +2320,8 @@
        "🐱"
       ],
       [
-       "It's under the bed.",
-       "Sie ist unter dem Bett.",
+       "The cat is under the bed.",
+       "Die Katze ist unter dem Bett.",
        "🛏️"
       ],
       [
@@ -2332,7 +2332,7 @@
      ],
      "regel": {
       "titel": "in, on, under",
-      "text": "Wo ist etwas? in = in, on = auf, under = unter. Davor steht meistens the: in the box, on the bed, under the sofa.",
+      "text": "Wo ist etwas? in = in, on = auf, under = unter. Danach kommt meistens the: in the box, on the bed, under the sofa.",
       "beispiele": [
        [
         "The key is in the box.",
@@ -2459,15 +2459,15 @@
        "tipp": "Es ist ein Schlüssel – also is."
       },
       {
-       "falsch": "Sam's cat is on her bed.",
-       "richtig": "Sam's cat is on his bed.",
-       "wort": "her",
-       "korrektur": "his",
+       "falsch": "Sam has got a key. Her key is in the box.",
+       "richtig": "Sam has got a key. His key is in the box.",
+       "wort": "Her",
+       "korrektur": "His",
        "choices": [
-        "he",
-        "him"
+        "He",
+        "Him"
        ],
-       "tipp": "Sam ist ein Junge – sein Bett = his bed."
+       "tipp": "Sam ist ein Junge – sein Schlüssel = his key."
       },
       {
        "falsch": "Mia has got a orange sofa.",
@@ -2491,7 +2491,7 @@
       [
        "get up",
        "aufstehen",
-       "⏰"
+       "🌅"
       ],
       [
        "breakfast",
@@ -2596,8 +2596,8 @@
        ],
        [
         "ruby",
-        "Six? I'm in bed at six!",
-        "Um sechs? Da bin ich im Bett!"
+        "Six? I'm still in bed at six!",
+        "Um sechs? Da bin ich noch im Bett!"
        ],
        [
         "sam",
@@ -2726,7 +2726,7 @@
        "Tuesday",
        "Dienstag",
        "🛡️",
-       "Tuesday gehört zu Tyr, einem alten Kriegsgott mit Schild."
+       "Tuesday ist der Tag von Tiw (im Norden Tyr genannt), einem alten Kriegsgott."
       ],
       [
        "Wednesday",
@@ -2744,7 +2744,7 @@
        "Friday",
        "Freitag",
        "🎉",
-       "Juhu, bald ist Wochenende!"
+       "Friday ist der Tag der Göttin Frigg. Juhu, bald ist Wochenende!"
       ],
       [
        "Saturday",
@@ -2830,8 +2830,8 @@
        ],
        [
         "ted",
-        "I go to the sea on Sunday!",
-        "Ich gehe am Sonntag ans Meer!"
+        "I go to the sea on Sundays!",
+        "Sonntags fahre ich ans Meer!"
        ],
        [
         "mia",
@@ -3064,21 +3064,21 @@
       ],
       "fragen": [
        {
-        "q": "Was kann Mia?",
+        "q": "Was sagt Mia: Was kann sie?",
         "a": "tanzen",
         "choices": [
          "Fußball spielen",
-         "Rad fahren",
-         "malen"
+         "singen",
+         "schwimmen"
         ]
        },
        {
-        "q": "Was kann Ruby?",
+        "q": "Was sagt Ruby: Was kann sie?",
         "a": "singen",
         "choices": [
+         "tanzen",
          "schwimmen",
-         "Fußball spielen",
-         "lesen"
+         "Fußball spielen"
         ]
        }
       ]
@@ -3176,7 +3176,7 @@
       [
        "rain",
        "Regen",
-       "🌧️",
+       "💧",
        "Es regnet: It's raining."
       ],
       [
@@ -3287,8 +3287,8 @@
        ],
        [
         "ruby",
-        "Red, yellow, green, blue … I love rainbows!",
-        "Rot, Gelb, Grün, Blau … Ich liebe Regenbögen!"
+        "Red, orange, yellow, green, blue … I love rainbows!",
+        "Rot, Orange, Gelb, Grün, Blau … Ich liebe Regenbögen!"
        ]
       ],
       "fragen": [
@@ -3416,7 +3416,7 @@
        "thirteen",
        "dreizehn",
        "1️⃣3️⃣",
-       "Ab 13 hängt man -teen an: thirteen, fourteen … nineteen. Betonung hinten: thir-TEEN."
+       "Ab 13 enden die Zahlen auf -teen: thirteen, fourteen … nineteen. Achtung: thirteen, nicht threeteen! Betonung hinten: thir-TEEN."
       ],
       [
        "fourteen",
@@ -3433,7 +3433,7 @@
        "sixteen",
        "sechzehn",
        "1️⃣6️⃣",
-       "Dazu gehören auch seventeen (17) und nineteen (19)."
+       "Genauso einfach geht es bei seventeen (17) und nineteen (19)."
       ],
       [
        "eighteen",
@@ -3445,7 +3445,7 @@
        "twenty",
        "zwanzig",
        "2️⃣0️⃣",
-       "Die Zehner enden auf -ty: twenty, thirty, forty, fifty … bis one hundred."
+       "Die Zehner enden auf -ty: twenty, thirty, forty, fifty … bis ninety (90)."
       ]
      ],
      "saetze": [
@@ -3472,7 +3472,7 @@
      ],
      "regel": {
       "titel": "Besondere Mehrzahl",
-      "text": "Die meisten Wörter bekommen in der Mehrzahl ein -s. Ein paar sind besonders und ändern sich in der Mitte: man → men, woman → women, child → children, foot → feet, tooth → teeth, mouse → mice. Und ein paar bleiben gleich: one sheep, two sheep.",
+      "text": "Die meisten Wörter bekommen in der Mehrzahl ein -s. Ein paar sind besonders und ändern sich ganz anders: man → men, woman → women, child → children, foot → feet, tooth → teeth, mouse → mice. Und ein paar bleiben gleich: one sheep, two sheep.",
       "beispiele": [
        [
         "twelve children",
