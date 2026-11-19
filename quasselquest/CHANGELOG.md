@@ -1,5 +1,8 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.2.1 – Bereit für die gemeinsame Adresse (19.11.2026)
+- Quasselquest läuft unter lernen.mathenachhilfe-online.com/quasselquest/ (Test: lernen-test.…). Technisch: eindeutige App-Kennung im Manifest.
+
 ## 0.2.0 – Fünf Sprachen und Wörter-Spiele (19.11.2026)
 - Quasselquest wird die Sprachen-App: oben wählt euer Kind **Englisch, Deutsch, Französisch, Spanisch oder Latein** und kann jederzeit wechseln.
 - **19 Pakete mit 658 Karten** aus dem Wissensgarten sind umgezogen (Wortschatz, Rechtschreibung, Grammatik, Verbformen). Sie werden nicht als Karteikarten gespielt, sondern als Spiele: Ballon-Jagd, Hör-Detektiv, Buchstaben-Bau und Memory.
