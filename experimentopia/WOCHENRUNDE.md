@@ -177,3 +177,8 @@ Gestrichen: Prozent → zellen, Wachstum → saeure, Zuordnung → hebel. Je The
 - lernen(-test).…/experimentopia/ = derselbe Ordner wie experimentopia(-test).…; CORS *.mathenachhilfe-online.com für eltern/zaehler.
 - Ordnernamen der anderen Apps: /rechenblitz/, /kurvenflug/, /mathetrainer/, /raumlicht/, /wissensgarten/, /quasselquest/. Querverweise erst umstellen, wenn die AppZentrale die Ziel-App unter lernen. als live meldet.
 - Experimentopia 2.13.0: echter Rundlauf auf lernen-test bestanden; Live-Meldung (216aafcc) an die AppZentrale, Live-Schalten durch den Leitstand.
+
+### Do 19.11.2026 nachmittags – Entscheidungen Marcel (über die AppZentrale)
+- Pro: Gekauftes Pro läuft nie ab; nur Probe- und Geschenk-Codes laufen ab (Ablaufdatum signiert, offline geprüft, Schutz gegen eine zurückgedrehte Uhr).
+- Familien-Speicher ohne Google auf unserem Server (eltern/v1), auf dem Gerät verschlüsselt, Familien-Code/QR, Notfall-Code + Generalschlüssel Marcel. Noch NICHTS serverseitig bauen; Feinplanung in der Wochenrunde 23.11.
+- Gemeldet: Lernstand-Schlüssel und Größe (typisch < 10 KB, höchstens ~120 KB), Aufbau der Pro-Codes; Vorschlag Produkt 3 = Probe, 4 = Geschenk. Rückfrage: Pro ist seit 17.11. scharf (Schlüssel + Kasse eingetragen), Schlösser ab Versuch 6 – gewollt?
