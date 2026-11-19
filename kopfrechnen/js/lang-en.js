@@ -2549,4 +2549,9 @@ I18N.add('en', {"% sind":"% are",
 "Zur neuen Adresse":"To the new address",
 "Vorbereitet für den Umzug auf die gemeinsame Adresse aller Lern-Apps: Der Lernstand zieht verschlüsselt mit um":"Prepared for the move to the shared address of all learning apps: your progress moves along, encrypted",
 "Speicher und Offline-Dateien tragen jetzt eindeutig den Namen Rechenblitz":"Storage and offline files now clearly carry the name Rechenblitz",
-"Fehlerbehebung: Die App startet jetzt auch, wenn im Speicher kein Profil liegt":"Bug fix: the app now also starts when no profile is stored"});
+"Fehlerbehebung: Die App startet jetzt auch, wenn im Speicher kein Profil liegt":"Bug fix: the app now also starts when no profile is stored",
+"Dieser Bereich ist für Erwachsene.":"This area is for adults.",
+"Das gehört zu Rechenblitz Pro. Deine Eltern können im Elternbereich nachsehen.":"This is part of Rechenblitz Pro. Your parents can have a look in the parents’ area.",
+"🔒 Für Eltern":"🔒 For parents",
+"Was Pro enthält · Code einlösen":"What Pro includes · redeem a code",
+"Pro-Hinweise für Kinder ohne Preis und ohne Kauf-Knopf – Kaufen nur im Bereich für Erwachsene":"Pro notes for children without price or buy button – buying only in the area for adults"});

@@ -26,11 +26,11 @@ function gateWords(n, lang) {
 }
 const gateNumber = () => rnd(1, 9) * 100 + rnd(2, 9) * 10 + rnd(1, 9);   // immer dreistellig mit Zehner ≥ 2 und Einer ≥ 1
 
-PANELS.elternGate = ({ href }) => {
+PANELS.elternGate = ({ href, next }) => {   // next: [Panel, Optionen] – statt eines Links einen Bereich für Erwachsene öffnen (z. B. Pro-Kauf)
   let n = gateNumber();
   const lang = (typeof I18N !== 'undefined' && I18N.lang) || 'de';
   return { title: '<span>🔒</span> <span>Nur für Erwachsene</span>', html: `<form class="gate" id="gateForm" autocomplete="off">
-    <p style="margin:0">Dieser Link führt aus der App zur Website von Nachhilfe – online.</p>
+    <p style="margin:0">${next ? 'Dieser Bereich ist für Erwachsene.' : 'Dieser Link führt aus der App zur Website von Nachhilfe – online.'}</p>
     <p class="small muted" style="margin:0">Bitte gib die Zahl in Ziffern ein:</p>
     <div class="gate-word" id="gateWord" translate="no">${esc(gateWords(n, lang))}</div>
     <input id="gateIn" inputmode="numeric" pattern="[0-9]*" maxlength="3" aria-label="Zahl in Ziffern" required>
@@ -40,7 +40,7 @@ PANELS.elternGate = ({ href }) => {
       $('gateCancel').onclick = closeSheet;
       $('gateForm').onsubmit = e => {
         e.preventDefault();
-        if (+$('gateIn').value.trim() === n) { GATE.okUntil = Date.now() + GATE.minutes * 60000; closeSheet(); gateOpen(href); return; }
+        if (+$('gateIn').value.trim() === n) { GATE.okUntil = Date.now() + GATE.minutes * 60000; if (next) { showPanel(next[0], next[1] || {}, false); return; } closeSheet(); gateOpen(href); return; }
         n = gateNumber(); $('gateWord').textContent = gateWords(n, lang); $('gateIn').value = ''; $('gateIn').focus();
         toast('Das war nicht richtig – bitte einen Erwachsenen fragen.', 2200);
       };

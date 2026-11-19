@@ -2549,4 +2549,9 @@ I18N.add('uk', {"% sind":"% — це",
 "Zur neuen Adresse":"До нової адреси",
 "Vorbereitet für den Umzug auf die gemeinsame Adresse aller Lern-Apps: Der Lernstand zieht verschlüsselt mit um":"Підготовлено до переїзду на спільну адресу всіх навчальних застосунків: прогрес переїжджає зашифрованим",
 "Speicher und Offline-Dateien tragen jetzt eindeutig den Namen Rechenblitz":"Сховище й офлайн-файли тепер чітко мають назву Rechenblitz",
-"Fehlerbehebung: Die App startet jetzt auch, wenn im Speicher kein Profil liegt":"Виправлення: застосунок тепер запускається, навіть якщо в сховищі немає профілю"});
+"Fehlerbehebung: Die App startet jetzt auch, wenn im Speicher kein Profil liegt":"Виправлення: застосунок тепер запускається, навіть якщо в сховищі немає профілю",
+"Dieser Bereich ist für Erwachsene.":"Цей розділ для дорослих.",
+"Das gehört zu Rechenblitz Pro. Deine Eltern können im Elternbereich nachsehen.":"Це входить до Rechenblitz Pro. Твої батьки можуть подивитися в розділі для батьків.",
+"🔒 Für Eltern":"🔒 Для батьків",
+"Was Pro enthält · Code einlösen":"Що містить Pro · активувати код",
+"Pro-Hinweise für Kinder ohne Preis und ohne Kauf-Knopf – Kaufen nur im Bereich für Erwachsene":"Підказки про Pro для дітей без ціни й кнопки купівлі — купівля лише в розділі для дорослих"});

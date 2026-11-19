@@ -96,8 +96,11 @@ function needPro(what) {
 }
 const proBadge = () => proLocks() && !RBPRO.ok ? ' <span class="probadge">Pro</span>' : '';
 
-PANELS.pro = ({ what } = {}) => {
+const elternFrei = () => typeof GATE === 'object' && Date.now() < GATE.okUntil;   // Eltern-Tor in den letzten 10 Minuten bestanden
+PANELS.pro = ({ what, eltern } = {}) => {
   const own = RBPRO.ok, locks = proLocks();
+  // UWG Anh. Nr. 28: In der Ansicht für Kinder kein Preis, kein Kauf-Knopf, keine Aufforderung – nur sachlich, Weg über das Eltern-Tor
+  const kind = !own && locks && !eltern && !elternFrei();
   const feats = [['🏔️', 'Profi-Stufe in allen 29 Themen', 'Für richtig gute Rechner – große Zahlen, viele Schritte'],
     ['👨‍👩‍👧', 'Unbegrenzt Profile', `Frei sind ${RBPRO.freeProfiles} Profile – mit Pro für alle Geschwister`],
     ['📈', 'Elternbericht', 'Verlauf über 10 Wochen, Stärken und Schwächen je Thema, zum Ausdrucken'],
@@ -108,11 +111,13 @@ PANELS.pro = ({ what } = {}) => {
       : `${what && WHAT[what] ? `<p class="pro-what">${WHAT[what]}</p>` : ''}${!locks ? '<p class="small muted">Zurzeit sind alle Pro-Funktionen kostenlos freigeschaltet.</p>' : ''}`}
     <div class="menu">${feats.map(([i, t, s]) => `<div class="mi static"><div class="ico">${i}</div><div><b>${t}</b><span>${s}</span></div></div>`).join('')}</div>
     <p class="small muted">Kostenlos bleiben alle 29 Themen in Stufe 1–5, alle Spiele, Lösungswege, Reise und Garten – ohne Werbung.</p>
-    ${!own && locks && !proPlay() ? `<button class="btn primary big" id="proBuy">Pro kaufen – ${RBPRO.price} einmalig</button><p class="small muted" style="text-align:center;margin:4px 0 0">inkl. MwSt. · kein Abo · Kauf auf unserer Website, der Code kommt per E-Mail · gilt in der Web-App</p>` : ''}
+    ${kind ? `<p class="pro-kind">Das gehört zu Rechenblitz Pro. Deine Eltern können im Elternbereich nachsehen.</p><button class="btn block" id="proEltern">🔒 Für Eltern</button>` : ''}
+    ${!kind && !own && locks && !proPlay() ? `<button class="btn primary big" id="proBuy">Pro kaufen – ${RBPRO.price} einmalig</button><p class="small muted" style="text-align:center;margin:4px 0 0">inkl. MwSt. · kein Abo · Kauf auf unserer Website, der Code kommt per E-Mail · gilt in der Web-App</p>` : ''}
     ${own ? '' : `<form class="pro-code" id="proForm" autocomplete="off"><label class="field"><span>Code schon gekauft? Hier einfügen:</span>
       <input id="proIn" placeholder="RB-…" autocapitalize="characters" spellcheck="false" translate="no"></label><button class="btn" type="submit">Einlösen</button></form>`}
   </div>`, init() {
-    if ($('proBuy')) $('proBuy').onclick = () => openSheet('elternGate', { href: CONFIG.proCheckout, kind: 'kauf' });
+    if ($('proEltern')) $('proEltern').onclick = () => showPanel('elternGate', { next: ['pro', { what, eltern: true }] }, true);
+    if ($('proBuy')) $('proBuy').onclick = () => elternFrei() ? gateOpen(CONFIG.proCheckout) : openSheet('elternGate', { href: CONFIG.proCheckout, kind: 'kauf' });
     if ($('proForm')) $('proForm').onsubmit = async e => { e.preventDefault(); const v = $('proIn').value.trim(); if (!v) return $('proIn').focus(); if (await proRedeem(v)) closeSheet(); };
   } };
 };
