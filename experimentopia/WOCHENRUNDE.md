@@ -168,3 +168,5 @@ Gestrichen: Prozent → zellen, Wachstum → saeure, Zuordnung → hebel. Je The
 - Eltern-Kopplung einmal je Familie mit abgeleiteter Kennung je App (Format am Mo).
 - Reihenfolge: 1. Themenverzeichnis, Link-Wächter, einheitlicher Rahmen; 2. Link-Mix, Klassenarbeits-Paket; 3. Familienpass (Januar); 4. Elternbericht über alle Apps, Album; 5. Thema der Woche.
 - Quasselquest = Sprach-App bis Kl. 13; Wissensgarten = Kompendium übrige Fächer bis Kl. 13.
+- Raumlicht-Korrektur (19.11.): `?ziel=baumeister` ist Pro (zeigt ohne Code die Pro-Seite) → NICHT verlinken. Frei: `?ziel=erleben`, `rotation`, `galton`, `zufall`, `level/5-6`. Für die spätere Energie-Achterbahn: `?ziel=erleben`. Raumlicht 2.18.32 auf test: nur Geometrie im Raum als Aufgaben, Analysis/Zufall zum Erleben.
+- KurvenFlug 2.6.0 auf test: `#kapitel=<name>` funktioniert (lichtbrechung, beschleunigung, wurf enthalten).
