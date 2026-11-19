@@ -20,6 +20,11 @@
 - Jede neue Einheit läuft durch die **automatischen Prüfungen** (Abschnitt 3). Sie wird außerdem im nächsten Monats-Check als „Neu-Content“ von Hand geprüft.
 - Die Liste steht unten in Abschnitt 5 („Neu-Content-Protokoll“). So weiß der Monats-Check genau, was neu dazugekommen ist.
 
+### Rechtsprüfung vor jedem Live-Gang (AppZentrale 19.11.2026)
+- Jede Live-Meldung enthält die Zeile **„Rechtsbezug: ja/nein (was)“**.
+- Rechtsbezug haben: Preise und Kauf, Codes, Texte für Eltern und Kinder, Datenschutz, Werbung, Bewertungen, KI, Mikrofon.
+- Punkte mit Rechtsbezug prüft der Raum „Recht“ vor dem Live-Gang; die AppZentrale gibt die Live-Bitte erst nach dessen Freigabe weiter.
+
 ## 2. Monatlich in der letzten Woche: rollierender Prüfplan
 
 Der Inhalt ist in **4 Blöcke** geteilt. Jeden Monat wird **ein Block gründlich** geprüft. Dazu kommen jeden Monat **der Neu-Content des Monats** und die **Rundum-Prüfung**. So ist nach 4 Monaten alles einmal gründlich geprüft, ohne dass jeden Monat alles neu geprüft werden muss.
@@ -84,8 +89,8 @@ Der Inhalt ist in **4 Blöcke** geteilt. Jeden Monat wird **ein Block gründlich
 |---|---|---|---|
 | 18.11.2026 (Mi) | – | Betriebstest-Woche: nur Fehlerbehebungen, kein neuer Inhalt | – |
 | Do 19.11.2026 (vorgezogen, Marcel) | 3.27.0 | Gleichungssysteme (lgs, 6 Stufen, Kl. 8–10) + Theorie-Querverweise + 2 Lösungswege ergänzt | Nov. |
-| **Fr 20.11.2026** | (geplant) | Zehnerpotenzen ausbauen: wissenschaftliche Schreibweise mit vollständigem Lösungsweg (Komma verschieben, Exponent zählen), übernommen von KurvenFlug/Mathe-Trainer; dazu Elternbericht gratis (Marcel 19.11.) mit Probestunde hinter dem Eltern-Tor, Store-Text angepasst | Nov. |
-| Di 24.11.2026 | (geplant) | großes Inhaltsupdate | Nov. |
+| **Fr 20.11.2026** | (geplant) | Zehnerpotenzen ausbauen: wissenschaftliche Schreibweise mit vollständigem Lösungsweg (Komma verschieben, Exponent zählen), übernommen von KurvenFlug/Mathe-Trainer; dazu Elternbericht gratis (Marcel 19.11.), Eltern-Tor nach Standard ELTERN-TOR.md (Malaufgabe in Worten, eigene Ziffern-Tastatur, 1 Fehler = neue Aufgabe) auch im Web für alle Außen-Links und vor Elternbereich/Einstellungen/Kopplung/Löschen/Teilen, Werbekarte nur im Elternbereich, Zählung „elternbereich“, Store-Text | Nov. |
+| Di 24.11.2026 | (geplant) | Umbenennung in „Zahlensprint“ (Anzeige + Adresse /zahlensprint/, intern bleibt „rechenblitz“; live erst nach Markenprüfung) + Quadratische Gleichungen im Kopf + PC-Ansicht verbessern (Marcel 19.11.: „alle prüfen“; Fotos vorher in docs/bilder/pc-vorher/) | Nov. |
 | Fr 27.11.2026 | (geplant) | großes Inhaltsupdate | Nov. |
 
 ## 6. Prüf-Protokoll
