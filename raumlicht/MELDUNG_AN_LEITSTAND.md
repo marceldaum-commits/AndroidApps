@@ -5,7 +5,9 @@ Neueste oben.
 ## 19.11.2026 – 2.18.37 auf test: familie.js @ e9993ec übernommen (Marcel hat hier direkt „ja“ gesagt – auch dazu, künftige Baustein-Fassungen nach Lesen, Prüfsumme und Test ohne Rückfrage zu übernehmen, solange es bei der Teststufe bleibt)
 
 - `web/src/wasmJsMain/resources/familie.js` = e9993ec, sha256 3f7ec567…f5f9, `node familie/tests/familie.mjs` → 51 Prüfungen. Brücke: `familie-weg` → „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“; der Umweg über `/liste` ist entfernt. Beim Beitreten mit einem Link zu einer gelöschten Familie: „Diese Familie gibt es nicht (mehr). Stimmt der Link?“.
-- Nachgebauter Server in `web-familie.mjs` liefert jetzt dieselben Fehlertexte wie der echte (`leer` / `unbekannt`). Zahlen: siehe Nachtrag.
+- Nachgebauter Server in `web-familie.mjs` liefert jetzt dieselben Fehlertexte wie der echte (`leer` / `unbekannt`).
+- **Geprüft:** 204 Logik-Tests, 153 Oberflächen-Tests, Lint, `web-familie.mjs` 32 von 32. Die übrigen Browser-Prüfungen sind für 2.18.37 nicht erneut gelaufen (geändert wurden nur der Baustein und die Brücke); Stand 2.18.36 siehe unten.
+- **Rechtsbezug: ja** (Familien-Speicher: Speicherung von Lernständen Minderjähriger, Notfall-Kopie, Einwilligungstext) – nur Teststufe, kein Live-Gang erbeten.
 
 ## 19.11.2026 – 2.18.36 auf test: Familien-Speicher nach FAMILIEN-SPEICHER.md v1.5 (von Marcel hier direkt bestätigt)
 
