@@ -24,3 +24,7 @@
 - **Vorlesen (Nova, derzeit aus)**: Beim Wiedereinschalten den Zählstand-Pfad für die gemeinsame Adresse klären (`Audio.kt` nimmt den Seiten-Host, an der neuen Adresse wäre das `stand-lernen.….json`). Der Stimmen-Server erlaubt lernen(-test).… schon (CORS geprüft am 19.11.).
 
 - **Fr 20.11. mit dem großen Update (Pflicht, Marcel auf Empfehlung von Recht, 19.11.)**: Schloss-Text in der Kinderansicht NUR „„<Versuch>“ gehört zum Forscher-Pass.“ – Zusatz „Deine Eltern können im Elternbereich nachsehen.“ entfällt (auch in `Say.PRO_ALL`). „🔐 Für Eltern“ zum Tor bleibt. `KinderTextTest` um „Deine Eltern können“ ergänzen, `proKind` anpassen. Live-Meldung mit „Rechtsbezug: ja (Kindertext am Schloss)“.
+
+- **Fr 20.11. Pflicht-Korrektur Recht V10 (Marcel: „Erst Tor, dann Übersicht“)**:
+  (a) „← Alle Apps“ (…/lern-apps/ auf der Website, dort Preise/Shop) HINTER das Eltern-Tor, Grund im Tor: „Hier geht es zur Website.“ Ab Di 24.11. neue Übersicht ohne Preise auf lernen.… (Adresse kommt von der AppZentrale) → dann wieder ohne Tor.
+  (b) Querverweise: ohne Tor ok, wenn die Ziel-App dem Tor-Standard folgt. Mathe-Trainer (und Raumlicht) zeigen in der Oberstufe Preise ohne Tor → unsere 3 Mathe-Trainer-Ziele (k9-aehnlich, k7-zuordnung, k8-zufall) prüfen: zeigt die Zielseite Preise? Wenn ja oder unklar: über das Eltern-Tor führen (bzw. nur ab Kl. 9 direkt, wenn die Zielseite keine Preise zeigt). Meldung: „Rechtsbezug: ja (V10)“.
