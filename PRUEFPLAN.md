@@ -84,7 +84,7 @@ Der Inhalt ist in **4 Blöcke** geteilt. Jeden Monat wird **ein Block gründlich
 |---|---|---|---|
 | 18.11.2026 (Mi) | – | Betriebstest-Woche: nur Fehlerbehebungen, kein neuer Inhalt | – |
 | Do 19.11.2026 (vorgezogen, Marcel) | 3.27.0 | Gleichungssysteme (lgs, 6 Stufen, Kl. 8–10) + Theorie-Querverweise + 2 Lösungswege ergänzt | Nov. |
-| **Fr 20.11.2026** | (geplant) | Zehnerpotenzen ausbauen: wissenschaftliche Schreibweise mit vollständigem Lösungsweg (Komma verschieben, Exponent zählen), übernommen von KurvenFlug/Mathe-Trainer; dazu Elternbericht gratis (Marcel 19.11.) mit Probestunde hinter dem Eltern-Tor, Store-Text angepasst | Nov. |
+| **Fr 20.11.2026** | (geplant) | Zehnerpotenzen ausbauen: wissenschaftliche Schreibweise mit vollständigem Lösungsweg (Komma verschieben, Exponent zählen), übernommen von KurvenFlug/Mathe-Trainer; dazu Elternbericht gratis (Marcel 19.11.), Eltern-Tor nach Standard ELTERN-TOR.md (Malaufgabe in Worten, eigene Ziffern-Tastatur, 1 Fehler = neue Aufgabe) auch im Web für alle Außen-Links und vor Elternbereich/Einstellungen/Kopplung/Löschen/Teilen, Werbekarte nur im Elternbereich, Zählung „elternbereich“, Store-Text | Nov. |
 | Di 24.11.2026 | (geplant) | großes Inhaltsupdate | Nov. |
 | Fr 27.11.2026 | (geplant) | großes Inhaltsupdate | Nov. |
 
