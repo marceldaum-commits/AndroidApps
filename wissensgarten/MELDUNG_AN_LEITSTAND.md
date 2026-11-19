@@ -9,6 +9,20 @@
 
 
 
+## 2.2.19 – Sprachpakete aus dem Angebot (19.11.2026, Entscheidung Marcel über die AppZentrale)
+- **Neues Profil:** Kompendium für alle Fächer außer Sprachen, Klasse 1–13. Sprachen übernimmt Quasselquest.
+- **Nicht mehr pflanzbar (19 freie Pakete):**
+  - Englisch (7), Französisch (2), Latein (1), Spanisch (1).
+  - Deutsch-Sprachteil: gs-lesestart, gs-rechtschreibung, gs-satzzeichen-satzarten, gs-wortarten, s1-deutsch-grammatik, s1-deutsch-zeichensetzung, s1-deutsch-fremdwoerter, aw-redewendungen.
+  - Die Liste steht in `core/model/.../Angebot.kt`, Test `AngebotTest`.
+- **Wo gefiltert wird:** Samenhandlung, Einrichtung bzw. neues Profil, Duell-Paketwahl, Zu-zweit-Duell (Zufallsthema) und der Deeplink `#paket=` (führt bei Sprachpaketen zur Paketübersicht, außer das Beet ist schon da).
+- **Bleibt erhalten:**
+  - Bereits gepflanzte Sprach-Beete samt Lernstand, mit weiteren Inhalts-Updates.
+  - Ein empfangener Duell-Code zu einem Sprachpaket funktioniert weiter.
+  - Alle Plus-Pakete, auch ob-englisch-abi-vokabeln und aw-experte-sprache: Die Entscheidung liegt bei Marcel und ist über die AppZentrale gemeldet.
+  - Die Inhalte im Repo werden nicht gelöscht; Quasselquest hat Pfad und Format bekommen.
+- **Hinweis auf Quasselquest** in der Samenhandlung, sobald es dort Inhalte und einen Link gibt.
+
 ## 2.2.18 – Großes Inhaltsupdate „Aufräum-Tag“ (19.11.2026, einen Tag vor dem Termin Fr 20.11.)
 - **Abgleich umgesetzt (Wochenrunde 18.11., von Marcel bestätigt):**
   - `s1-mathe-gleichungen` v2: Die Rechenaufgaben ohne Rechenweg (001–004, 009–016, 024–026, 031–035) sind zu Merkwissen umgeschrieben: Regel bzw. Verfahren als Frage, im `info` ein vollständig durchgerechnetes Beispiel mit allen Umformungsschritten (`| − 3 → …`) und Probe. Alle 35 übrigen Karten wurden ebenfalls vervollständigt; neue Karte 036 „Textaufgabe: erster Schritt“ (4-Schritte-Verfahren). Die Erklär-Szenen enthalten jetzt die Lösungs-Reihenfolge und die Schreibweise mit Umformungsstrich. 36 Karten.

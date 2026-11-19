@@ -863,6 +863,7 @@ class AppViewModel(
     fun paketZiel(id: String): PaketZiel {
         val pack = packs.value.firstOrNull { it.id == id } ?: return PaketZiel.Unbekannt
         beds.value.firstOrNull { it.bed.packId == id }?.let { return PaketZiel.Beet(it.bed.id, pack.title) }
+        if (!de.wissensgarten.core.model.Angebot.angeboten(pack)) return PaketZiel.Unbekannt
         return if (entitlements.canUse(pack)) PaketZiel.Pflanzen(pack) else PaketZiel.Plus
     }
 

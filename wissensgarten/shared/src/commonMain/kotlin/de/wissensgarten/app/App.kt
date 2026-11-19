@@ -245,6 +245,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         val profiles by vm.profiles.collectAsStateWithLifecycle()
         val beds by vm.beds.collectAsStateWithLifecycle()
         val packs by vm.packs.collectAsStateWithLifecycle()
+        // Neu pflanzen lassen sich nur Pakete im Profil (Sprachen → Quasselquest); vorhandene Beete bleiben
+        val angebot = remember(packs) { packs.filter(de.wissensgarten.core.model.Angebot::angeboten) }
         val now by vm.now.collectAsStateWithLifecycle()
         val backStack by nav.currentBackStackEntryAsState()
         val route = backStack?.destination?.route
@@ -319,7 +321,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         ) { pad ->
             NavHost(nav, startDestination = startRoute, modifier = Modifier.padding(pad)) {
                 composable(Routes.ONBOARDING) {
-                    OnboardingScreen(packs, addingProfile = false, onCancel = {}, onFinish = { name, avatar, level, ids, own ->
+                    OnboardingScreen(angebot, addingProfile = false, onCancel = {}, onFinish = { name, avatar, level, ids, own ->
                         vm.finishOnboarding(name, avatar, level, ids, own)
                         nav.navigate(Routes.tutorial(true)) { popUpTo(Routes.ONBOARDING) { inclusive = true } }
                     }, welcomeExtra = {
@@ -330,7 +332,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                     })
                 }
                 composable(Routes.ADD_PROFILE) {
-                    OnboardingScreen(packs, addingProfile = true, onCancel = { nav.popSafe() }) { name, avatar, level, ids, own ->
+                    OnboardingScreen(angebot, addingProfile = true, onCancel = { nav.popSafe() }) { name, avatar, level, ids, own ->
                         vm.addProfile(name, avatar, level, ids, own)
                         nav.popSafe(); goTab(Routes.GARDEN)
                     }
@@ -440,7 +442,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                 composable(Routes.SHOP) {
                     WithProfile(profile) { p ->
                         ShopScreen(
-                            profile = p, packs = packs + vm.plusPreviews.collectAsStateWithLifecycle().value, beds = beds, canUse = vm.entitlements::canUse,
+                            profile = p, packs = angebot + vm.plusPreviews.collectAsStateWithLifecycle().value, beds = beds, canUse = vm.entitlements::canUse,
                             onLocked = {
                                 if (vm.entitlements.code != null) { host.toast("🐝 Brummi holt die Plus-Pakete … gleich noch einmal antippen."); vm.refreshPlusPacksIfDue(force = true) }
                                 else gate("Dieses Paket gehört zu Wissensgarten Plus.") { nav.navigate(Routes.PLUS) }
@@ -486,7 +488,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                     // Thema: ein Paket aus dem Garten des aktiven Profils (sonst ein passendes für die Stufe)
                     val pack = remember {
                         val mine = beds.mapNotNull { b -> b.bed.packId?.let { pid -> packs.firstOrNull { it.id == pid } } }
-                        (mine.ifEmpty { packs.filter { (profile?.level ?: 0) in it.grades }.ifEmpty { packs } }).randomOrNull()
+                        (mine.ifEmpty { angebot.filter { (profile?.level ?: 0) in it.grades }.ifEmpty { angebot } }).randomOrNull()
                     }
                     // Pakete noch nicht geladen (z. B. nach Neustart der App) → zurück statt Absturz
                     if (pack == null) { LaunchedEffect(Unit) { nav.popBackStack() }; return@composable }
@@ -565,7 +567,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                 composable(Routes.DUEL_PACK) {
                     Column(Modifier.fillMaxSize()) {
                         PackBrowser(
-                            packs = packs, level = profile?.level ?: 0,
+                            packs = angebot, level = profile?.level ?: 0,
                             isChosen = { false },
                             onToggle = { p -> vm.newDuel(p); nav.navigate(Routes.DUEL_PLAY) { popUpTo(Routes.DUEL) } },
                             chosenLabel = "", chooseLabel = "Duell",

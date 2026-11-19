@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.19 – Der Wissensgarten wird zum großen Kompendium (19.11.2026)
+- **Neue Aufgabenteilung unserer Lern-Apps:** Der Wissensgarten wird das große Lernkarten-Kompendium für alle Fächer von Klasse 1 bis 13 – außer Sprachen. Englisch, Französisch, Latein, Spanisch und der Sprach-Teil von Deutsch (Rechtschreibung, Grammatik, Wortschatz) ziehen in unsere Sprach-App Quasselquest um.
+- Diese Sprachpakete lassen sich deshalb hier nicht mehr neu pflanzen. **Wer schon ein Sprach-Beet im Garten hat, behält es** – mit allen Karten und dem ganzen Lernfortschritt.
+- Literatur und Stilmittel bleiben im Wissensgarten, ebenso alle Plus-Pakete.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.18 – Aufräum-Tag: Merken statt Rechnen, Wege zu den anderen Lern-Apps (19.11.2026)
 - **„Gleichungen lösen“ ist jetzt Merkwissen:** Statt Rechenaufgaben ohne Rechenweg gibt es Regeln und Verfahren zum Merken – Waage-Prinzip, Äquivalenzumformungen, Klammern, Textaufgaben aufstellen. Jede Karte erklärt ein vollständig durchgerechnetes Beispiel mit allen Schritten und Probe. Neu: „Was ist bei einer Textaufgabe der erste Schritt?“ (36 Karten).
 - **„Kopfrechen-Tricks“ zeigt jetzt jeden Trick mit Begründung:** Die reinen Tempo-Aufgaben sind zu Tricks mit Erklärung umgeschrieben (z. B. warum 8 · 99 = 800 − 8 ist). Tempo trainiert man im Rechenblitz.
