@@ -435,3 +435,9 @@ a.btn { text-decoration: none; }
 .chat-zeile .wer .mini-ruby { width: 40px; height: 40px; }
 .insel .iding { font-size: 36px; }
 .insel { background: radial-gradient(ellipse at 50% 50%, #f6e3a1 0 62%, #8fd3f5 63% 100%); }
+.tor-aufgabe { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 22px; margin: 6px 0; }
+.tor-eingabe { text-align: center; font-size: 30px; font-weight: 900; letter-spacing: 4px; background: #f3f8fc; border-radius: 14px; padding: 6px; min-height: 48px; }
+.tor-tasten { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+.tor-taste { font-size: 24px; font-weight: 800; padding: 12px 0; border-radius: 14px; background: #fff; box-shadow: 0 4px 0 #c7d6e3; }
+.tor-taste.ok { background: #2b8fd6; color: #fff; box-shadow: 0 4px 0 #1d6aa3; }
+.linkbtn { background: none; color: inherit; text-decoration: underline; font: inherit; padding: 0; }
