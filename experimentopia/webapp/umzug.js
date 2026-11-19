@@ -4,7 +4,7 @@
 // Der Lernstand liegt im Speicher des Browsers und gehört zur Adresse – darum zieht er einmal mit:
 //   ALT: alles „experimentopia.*“ (+ alte Eltern-Kopplung „exEltern“) einsammeln, auf dem Gerät mit AES-256-GCM verschlüsseln,
 //        als Einmal-Sicherung zum Server (…/eltern/v1/s/<id>; der Server sieht nur Zufallszeichen) und weiter zur neuen Adresse
-//        mit „#umzug=<id>.<schlüssel>“. Der Schlüssel steht nur in der Adresse hinter „#“ – die geht nie an einen Server.
+//        mit „#umzug=<id>.<schlüssel>.<schreib>“ (Format der AppZentrale, UMZUG-LERNEN). Der Schlüssel steht nur in der Adresse hinter „#“ – die geht nie an einen Server.
 //   NEU: holen, entschlüsseln, nur übernehmen, wenn hier noch kein Lernstand ist, danach die Sicherung am Server löschen.
 // Klappt etwas nicht (kein Netz, Server weg, neue Adresse noch nicht erreichbar), bleibt alles, wie es ist: Die App startet am alten Ort,
 // beim nächsten Öffnen wird es noch einmal versucht. Nichts wird gelöscht.
@@ -41,10 +41,10 @@
       return U.schluessel(keyB, 'decrypt').then(function (k) { return w.crypto.subtle.decrypt({ name: 'AES-GCM', iv: U.unb64u(t[0]) }, k, U.unb64u(t[1])); })
         .then(function (pt) { return new TextDecoder().decode(pt); });
     },
-    /** „#umzug=<id>.<key>&thema=…“ → { id, key, rest: „thema=…“ } */
+    /** „#umzug=<id>.<key>.<schreib>&thema=…“ → { id, key, schreib, rest: „thema=…“ } (ältere Form ohne schreib wird auch gelesen) */
     lesen: function (hash) {
       var h = String(hash || '').replace(/^#/, ''), teile = h.split('&'), r = null, rest = [];
-      for (var i = 0; i < teile.length; i++) { var m = /^umzug=([A-Za-z0-9_-]{22})\.([A-Za-z0-9_-]{43})$/.exec(teile[i]); if (m) r = { id: m[1], key: m[2] }; else if (teile[i]) rest.push(teile[i]); }
+      for (var i = 0; i < teile.length; i++) { var m = /^umzug=([A-Za-z0-9_-]{22})\.([A-Za-z0-9_-]{43})(?:\.([A-Za-z0-9_-]{22}))?$/.exec(teile[i]); if (m) r = { id: m[1], key: m[2], schreib: m[3] || '' }; else if (teile[i]) rest.push(teile[i]); }
       if (r) r.rest = rest.join('&');
       return r;
     },
@@ -59,15 +59,15 @@
         var daten = U.einsammeln(ls);
         if (!daten) return hin('');                      // nichts zu tragen
         var schon = ls.getItem(P + 'umzug');             // schon einmal hochgeladen → dieselbe Sicherung wiederverwenden
-        if (schon && /^[A-Za-z0-9_-]{22}\.[A-Za-z0-9_-]{43}\.\d+$/.test(schon) && Date.now() - +schon.split('.')[2] < 6 * 86400000) return hin('umzug=' + schon.split('.').slice(0, 2).join('.'));
+        if (schon && /^[A-Za-z0-9_-]{22}\.[A-Za-z0-9_-]{43}\.[A-Za-z0-9_-]{22}\.\d+$/.test(schon) && Date.now() - +schon.split('.')[3] < 6 * 86400000) return hin('umzug=' + schon.split('.').slice(0, 3).join('.'));
         var id = U.b64u(U.zufall(16)), schreib = U.b64u(U.zufall(16)), keyB = U.zufall(32);
-        var text = JSON.stringify({ format: 1, app: 'experimentopia', umzug: 1, stand: new Date().toISOString(), schreib: schreib, daten: { speicher: daten } });
+        var text = JSON.stringify({ app: 'experimentopia', v: 1, umzug: true, daten: daten });
         if (text.length > U.MAX) return Promise.reject(new Error('zu groß: ' + text.length));
         return U.verschluesseln(text, keyB, U.zufall(12)).then(function (body) {
           return fetchFn(U.server(loc.hostname) + '/eltern/v1/s/' + id, { method: 'PUT', headers: { 'X-Schreib': schreib, 'Content-Type': 'text/plain' }, body: body, cache: 'no-store' });
         }).then(function (r) {
           if (!r.ok) throw new Error('Server ' + r.status);
-          var marke = id + '.' + U.b64u(keyB);
+          var marke = id + '.' + U.b64u(keyB) + '.' + schreib;
           try { ls.setItem(P + 'umzug', marke + '.' + Date.now()); } catch (e) {}
           return hin('umzug=' + marke);
         });
@@ -80,10 +80,10 @@
         if (r.status === 404) return 'weg';
         if (!r.ok) throw new Error('Server ' + r.status);
         return r.text().then(function (t) { return U.entschluesseln(t, U.unb64u(u.key)); }).then(function (text) {
-          var j = JSON.parse(text), sp = (j && j.daten && j.daten.speicher) || {}, ergebnis = 'schon da';
+          var j = JSON.parse(text), sp = (j && j.daten && (j.daten.speicher || j.daten)) || {}, ergebnis = 'schon da';
           if (j.app !== 'experimentopia') throw new Error('fremde Daten');
           if (U.leer(ls)) { for (var k in sp) if (k.indexOf(P) === 0 && !technisch(k) && typeof sp[k] === 'string') ls.setItem(k, sp[k]); ergebnis = 'übernommen'; }
-          return fetchFn(url, { method: 'DELETE', headers: { 'X-Schreib': j.schreib }, cache: 'no-store' }).then(function () { return ergebnis; }, function () { return ergebnis; });
+          return fetchFn(url, { method: 'DELETE', headers: { 'X-Schreib': u.schreib || j.schreib || '' }, cache: 'no-store' }).then(function () { return ergebnis; }, function () { return ergebnis; });
         });
       });
     }
@@ -99,9 +99,10 @@
     for (var i = ls.length - 1; i >= 0; i--) { var k = ls.key(i); if (k && /^exModus/.test(k)) ls.removeItem(k); }
   } catch (e) {}
 
-  var setText = function (t) { var s = document.getElementById('start-text'); if (s) s.textContent = t; };
+  var setText = function (t) { var s = document.getElementById('start-text'); if (s) s.textContent = t; else document.addEventListener('DOMContentLoaded', function () { setText(t); }); };
   if (U.ziel(location.hostname) && !/[?&]umzug=nein/.test(location.search)) {
     // ALT: App gar nicht erst starten, solange der Umzug läuft; klappt er nicht, normal weiter
+    setText('🚚 Wir ziehen um …');
     w.__exUmzugWarte = U.weg(location, ls, w.fetch.bind(w)).then(function (neu) {
       if (!neu) return;
       if (w.exStep) w.exStep('Umzug → ' + neu.split('#')[0]);

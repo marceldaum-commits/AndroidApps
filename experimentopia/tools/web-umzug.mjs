@@ -44,6 +44,7 @@ async function lauf({ alt = {}, neu = {}, neuWeg = false, start = ALT + '#thema=
     await rt.fulfill({ status: res.status, body, headers: { 'access-control-allow-origin': res.headers.get('access-control-allow-origin') || '', 'content-type': res.headers.get('content-type') || 'text/plain' } });
   });
   const p = await ctx.newPage();
+  p.on('framenavigated', (f) => { if (f === p.mainFrame() && f.url().includes('#umzug=')) log.weiter = f.url(); });
   await p.goto(start);
   await p.waitForFunction(() => document.getElementById('start') && document.getElementById('start').dataset.fertig === '1', null, { timeout: 120000 });
   await p.waitForTimeout(1500);
@@ -64,6 +65,7 @@ try {
     ok(log.put.length === 1 && log.put[0].status < 300 && log.put[0].origin === ALT.slice(0, -1), `Einmal-Sicherung hochgeladen (${log.put.map((x) => x.status)}) von ${log.put[0]?.origin}`);
     ok(log.get.length === 1 && log.get[0].status === 200 && log.get[0].origin === NEU.replace('/experimentopia/', ''), `am neuen Ort geholt (${log.get.map((x) => x.status)})`);
     ok(log.del.length === 1 && log.del[0].status < 300, `danach am Server gelöscht (${log.del.map((x) => x.status)})`);
+    ok(/#umzug=[\w-]{22}\.[\w-]{43}\.[\w-]{22}&thema=optik$/.test(log.weiter || ''), `Format #umzug=<id>.<key>.<schreib>&thema=… (${(log.weiter || '').replace(/umzug=[^&]+/, 'umzug=…')})`);
     const nach = await fetch(log.put[0].url); ok(nach.status === 404, `Server hat nichts mehr (${nach.status})`);
     const body = await (await fetch(log.put[0].url.replace('/s/', '/s/'), { method: 'GET' })).status;
     ok(body === 404, 'nichts Lesbares bleibt zurück');
