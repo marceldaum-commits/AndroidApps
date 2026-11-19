@@ -43,6 +43,7 @@ Wer weiterarbeitet, liest zuerst diese Datei, dann `MELDUNG_RECHENBLITZ.md` (obe
      - Gilt auch im Web für **alle** Außen-Links außer Impressum und Datenschutz (`elterntor.js:54`, heute `if (!IS_NATIVE …) return`), außerdem vor Elternbereich, Einstellungen, Kopplung, Löschen und Teilen.
      - Zählung „elternbereich“ beim gelösten Tor (steht in der Positivliste).
    - **Werbekarte und Probestunden-Hinweise nur im Elternbereich** (`panels.js` PROMOS/`renderPromo`, Ergebnis-Hinweis `extras.js:207`, Menü-Probestunde, Wochenbericht). „Lern-Geschenk“ ebenfalls hinter das Tor.
+   - **Schloss-Text kürzen (Marcel/Recht 19.11.):** In der Kinderansicht nur „Das gehört zu Rechenblitz Pro.“ (`pro.js`, `.pro-kind`; Übersetzungen anpassen). Der Zusatz „Deine Eltern können im Elternbereich nachsehen.“ entfällt. Der Knopf „🔒 Für Eltern“ bleibt.
    - **Advents-Gutschein (Befund Recht, UWG):** Alle Gutschein-Hinweise aus den Kinderansichten entfernen (`extras.js` Z. 256, 267, 402, 406). Den fertigen Gutschein (`voucherHtml`, Z. 124–136, mit Code, Bedingungen und Link „Zu den Stundenpaketen“) nur im Elternbereich hinter dem Tor zeigen. Die Kinderansicht nach 24 Türchen sagt nur „Geschafft! Alle 24 Türchen.“ Notfalls sofort: `config.js adventVoucher: null`.
    - **Zehnerpotenzen ausbauen:** wissenschaftliche Schreibweise mit vollständigem Lösungsweg (Komma verschieben, Stellen zählen, Exponent), Theorie mit Regel und Beispiel. Danach den unabhängigen Prüfer laufen lassen (Abschnitt 6).
    - Meldung mit „Rechtsbezug: ja (Eltern-Tor, Werbung, Elternbericht)“.
