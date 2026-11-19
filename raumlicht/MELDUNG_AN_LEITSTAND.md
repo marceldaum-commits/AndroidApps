@@ -8,7 +8,8 @@ Neueste oben.
 - **Familien-Speicher (nur Teststufe):** nur der Pflichttext, darunter Link „Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)“; Knöpfe „Einverstanden – Familie anlegen“ / „Einverstanden – Familie beitreten“ (kein Haken, nichts vorausgewählt; der Zwischenschritt „Einverstanden“ ist entfallen). Mit `#familie=…` geöffnet wird bis zum Knopf nichts abgefragt. Zusatzabsatz aus dem Einwilligungs-Block entfernt.
 - **Sicherheitshinweis v1.7** wörtlich (`Familie.SECURITY`): dauerhaft auf der Familien-Seite direkt unter dem QR-Code und über „Notfall-Blatt teilen“, außerdem im Text des Notfall-Blatts.
 - Der Link führt derzeit auf `https://www.mathenachhilfe-online.com/datenschutz/` (ohne Sprungmarke) – **bitte die Adresse/Sprungmarke von Abschnitt 10m nennen**, sobald er online ist.
-- **Rechtsbezug: ja (V8)** – Einwilligungstext, Sicherheitshinweis, KI-Kennzeichnung. Zahlen: siehe Nachtrag.
+- **Rechtsbezug: ja (V8)** – Einwilligungstext, Sicherheitshinweis, KI-Kennzeichnung.
+- **Geprüft:** 204 Logik-Tests, 153 Oberflächen-Tests, Lint, alle Browser-Prüfungen bestanden (166 bisherige, davon `web-vorversion` diesmal 6 von 6, plus `web-familie.mjs` 32 von 32). `web-familie.mjs` war im ersten Lauf an vier Stellen rot, weil die Prüfung nach dem Klick nur drei Sekunden wartete; sie wartet jetzt auf die Server-Antwort. Echter Rundlauf auf lernen-test: siehe Nachtrag der AppZentrale-Meldung.
 
 ## 19.11.2026 – 2.18.37 auf test: familie.js @ e9993ec übernommen (Marcel hat hier direkt „ja“ gesagt – auch dazu, künftige Baustein-Fassungen nach Lesen, Prüfsumme und Test ohne Rückfrage zu übernehmen, solange es bei der Teststufe bleibt)
 
