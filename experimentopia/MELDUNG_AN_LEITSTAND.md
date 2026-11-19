@@ -2,6 +2,13 @@
 
 Neueste oben.
 
+## 19.11.2026 – LIVE-MELDUNG Version 2.12.0 vom 19.11.2026 (Anfrage AppZentrale: heute live)
+
+- **Live gehen soll:** 2.12.0, Branch `ccr-2ccbaa44-nkkmyu`, App-Commit `99b7e118` (spätere Commits nur Doku). experimentopia-test zeigt 2.12.0.
+- **Prüfungen:** Modell- und App-Tests, Lint und Webapp grün. `web-start.mjs` am 19.11. erneut grün (11 Prüfungen). WebKit fehlt in dieser Umgebung: iPhone-Pfade in Chromium nachgestellt, echtes iPhone bitte mit `?diag=1` prüfen.
+- **Zusätzlich zu tun:** nichts (keine Server- oder Datenbank-Änderung, keine neuen Berechtigungen).
+- **Rückweg:** 2.11.1 = `experimentopia-live` @ `1d1362b7` wieder ausliefern. Spielstände bleiben erhalten (kein neues Speicherformat).
+
 ## 19.11.2026 – Version 2.12.0 vom 19.11.2026: Aufräum-Tag (auf heute vorgezogen) – fertig für den Betriebstest
 
 Marcel hat Spezialisierung + Aufräumen auf Do 19.11. vorgezogen (über die AppZentrale; der Vorschlag „Aufräum-Tag“ kam von Marcel selbst am 18.11.).
