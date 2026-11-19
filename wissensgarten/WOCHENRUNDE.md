@@ -278,7 +278,13 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
 - Kennzeichnung „🤖 KI-generierte Stimme“ (statt „Nova – …“), Lizenzliste nach V13 (Wortlaut von der AppZentrale). Nova entfällt.
 
 ## Merkzettel für Di 24.11./Mi 25.11. – Weg zur Probestunde (Recht V15)
-Wortlaut verbindlich aus docs/plattform/appzentrale/PROBESTUNDE.md (Branch appzentrale, d672374, nicht in diesem Repo – Datei vor dem Einbau holen bzw. von der AppZentrale erbitten).
+Wortlaut (AppZentrale 19.11., aus PROBESTUNDE.md @ d672374):
+- Auslöser objektiv (z. B. Thema über 2 Wochen unter 50 % richtig), nur auf dem Gerät berechnet.
+- Elterntext: „Hinweis: In <Thema> hat <Spitzname> in den letzten Wochen öfter Schwierigkeiten. Das ist normal und lässt sich üben – die App zeigt dazu passende Übungen. Wenn ihr persönliche Unterstützung möchtet: Unser Angebot – eine kostenlose, unverbindliche Probestunde Online-Nachhilfe. [Probestunde anfragen] · [Solche Hinweise ausblenden]“
+- [Probestunde anfragen] → https://www.mathenachhilfe-online.com/probestunde/?src=wissensgarten (Zählung „Probestunden-Link angetippt“ nur anonym, ohne Thema/Lernstand).
+- Kinderansicht: kein Bezug auf Probestunde oder Elternbereich.
+- Nie „gratis Nachhilfe“ ohne „Probestunde“.
+- Website-Link ohne Tor (V10 neu): Ziel nur Startseite oder /lern-apps/, nie Shop/Kasse; in Kinderansichten keine Kaufsprache, Brummi zeigt nicht auf den Link, Link nie als Belohnung.
 - Elternbereich/Elternbericht (hinter dem Tor): Hinweis bei objektiven Schwierigkeiten, Berechnung NUR auf dem Gerät, höchstens 1× in 4 Wochen je Thema, wegklickbar, Schalter „Hinweise auf Nachhilfe ausblenden“.
 - Kinderansicht nur: „Du kommst hier gerade nicht weiter? Das ist okay. Probier eine leichtere Stufe oder schau dir die Erklärung noch einmal an. Und du kannst jederzeit deine Eltern oder deine Lehrkraft fragen.“ Knöpfe [Leichter üben] [Erklärung ansehen], kein Außenlink.
 - Kein Kl.-9–10-Hinweis; Probestunde nur hinter dem Tor. Zählung nur anonym. Meldung mit „Rechtsbezug: ja (V15)“.
