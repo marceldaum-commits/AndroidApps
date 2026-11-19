@@ -22,3 +22,8 @@ Zusammenführen bei Konflikten: `core/model/FamilyMerge.kt`.
 Bei 404 auf anderen Geräten: „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“ Einzelnes Kind entfernen: noch nicht anbieten.
 
 **Auflage A6 (Recht, v1.6):** genau EIN Einwilligungstext = der Pflichttext; darunter Link „Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)“ und Knopf „Einverstanden – Familie anlegen“; nichts vorausgewählt. Anlegen/Beitreten nur hinter dem Eltern-Tor. Einzelnes Kind löschen: Roadmap, noch nicht bauen.
+
+**V8 (Recht, v1.7):** Beitreten per Familien-Link/QR: derselbe Pflichttext hinter dem Eltern-Tor, Knopf „Einverstanden – Familie beitreten“ (nicht vorausgewählt); Abbrechen lädt nichts hoch.
+Sicherheitshinweis (NICHT im Pflichttext; dauerhaft auf der Familien-Seite und direkt bei „Link teilen“, QR-Code und Notfall-Blatt):
+„Wer den Familien-Link oder den QR-Code hat, kann die Lernstände eurer Familie öffnen, ändern und löschen. Teilt ihn nur mit Personen, denen ihr vertraut, und bewahrt das Notfall-Blatt sicher auf.“
+Meldung bei Umsetzung: Commit + „Rechtsbezug: ja (V8)“.
