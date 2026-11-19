@@ -11,7 +11,7 @@ object Zaehler {
     const val URL = "https://trainer.mathenachhilfe-online.com/zaehler/v1/e"
     const val APP = "raumlicht"
     /** Ereignisse, die es in Raumlicht gibt (aus der gemeinsamen, abschließenden Liste) */
-    val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "nachhilfe_hinweis", "geschenk_klick")
+    val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "elternbereich", "nachhilfe_hinweis", "geschenk_klick")
     val PLACES = setOf("gesperrt", "einstellungen", "link", "eingabe", "lernstand", "klassenarbeit", "geschenk", "fusszeile")
     val TOPICS = setOf("vektoren", "analysis", "stochastik")
     const val SWITCH = "Anonyme Nutzungszählung"

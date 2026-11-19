@@ -169,6 +169,10 @@ Freiwilliger, Ende-zu-Ende verschlüsselter Eltern-Bericht (`core/model/…/Elte
 
 ![](screenshots/90_startseite_pc.png)
 
+**Eltern-Tor (seit 2.18.34):** Vor „Zum Shop“ steht eine Malaufgabe in Worten mit eigener Ziffern-Tastatur (`ElternTor`, `ElternTorDialog`); zehn Minuten offen, nichts wird gespeichert.
+
+![](screenshots/94_eltern_tor.png)
+
 **„← Alle Apps“ (seit 2.18.31):** oben auf der Startseite, zurück zur App-Auswahl der Website.
 
 ![](screenshots/91_alle_apps.png)

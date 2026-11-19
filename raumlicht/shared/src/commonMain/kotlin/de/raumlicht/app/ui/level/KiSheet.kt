@@ -126,9 +126,8 @@ fun KiSheet(open: Boolean, level: Level, attempt: Pair<Values, String>?, accent:
                             Lux(LuxMood.SAD, size = 44.dp)
                             Text(Ki.problem(p, ki.hasCode), Modifier.padding(start = 8.dp).weight(1f).testTag("ki-problem").background(Q.Panel, RoundedCornerShape(4.dp, 16.dp, 16.dp, 16.dp)).padding(12.dp), style = MaterialTheme.typography.bodyMedium, color = Q.Text)
                         }
-                        // Proben oder Pass aufgebraucht → zur Seite mit dem KI-Abi-Pass; sonst einfach noch einmal versuchen
-                        if (p == 402 || (p == 429 && !ki.hasCode)) NeonButton(ki.open, Modifier.fillMaxWidth().testTag("ki-dazubuchen"), color = Q.Yellow) { Text("KI dazubuchen", fontWeight = FontWeight.Bold) }
-                        else if (p != 429) NeonButton({ if (turns.isEmpty()) ask(Ki.Kind.EXPLAIN, "") else problem = null }, Modifier.fillMaxWidth().testTag("ki-nochmal"), color = accent) { Text("Noch einmal versuchen", fontWeight = FontWeight.Bold) }
+                        // Proben oder Pass aufgebraucht: nur die sachliche Auskunft – kein Hinweis auf den Pass, kein Sprung zur Kaufseite (die KI-Seite bleibt in den Einstellungen)
+                        if (p != 402 && p != 429) NeonButton({ if (turns.isEmpty()) ask(Ki.Kind.EXPLAIN, "") else problem = null }, Modifier.fillMaxWidth().testTag("ki-nochmal"), color = accent) { Text("Noch einmal versuchen", fontWeight = FontWeight.Bold) }
                     }
                 }
                 // Rückfrage stellen oder noch einmal anders erklären lassen

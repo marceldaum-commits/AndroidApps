@@ -95,7 +95,7 @@ object Ki {
     }
     /** Was Lux sagt, wenn es keine Antwort gibt */
     fun problem(status: Int, hasCode: Boolean): String = when (status) {
-        402 -> if (hasCode) "Dein KI-Code gilt nicht mehr." else "Deine $TRIALS Proben sind aufgebraucht. Mit dem KI-Abi-Pass kann ich dir jeden Tag $DAILY-mal weiterhelfen."
+        402 -> if (hasCode) "Dein KI-Code gilt nicht mehr." else "Deine $TRIALS Proben sind aufgebraucht."
         429 -> "Für heute sind deine KI-Punkte aufgebraucht. Morgen gibt es neue – bis dahin helfen Tipp und Theorie."
         0 -> "Ich erreiche den KI-Tutor gerade nicht. Prüf deine Internetverbindung und versuch es noch einmal."
         else -> "Der KI-Tutor ist gerade nicht erreichbar. Versuch es später noch einmal – Tipp und Theorie helfen auch ohne ihn."

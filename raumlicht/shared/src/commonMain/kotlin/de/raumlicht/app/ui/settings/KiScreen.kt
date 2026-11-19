@@ -79,9 +79,10 @@ fun KiScreen(lastDay: Long?, today: Long, onCode: (String) -> Boolean, onBack: (
             }
             if (!active) {
                 if (checkout.isNotEmpty()) {
-                    NeonButton({ runCatching { uri.openUri(de.raumlicht.core.model.Zaehler.link(checkout, "einstellungen")) } }, Modifier.fillMaxWidth().testTag("ki-kaufen"), color = Q.Yellow) { Text("Zum Shop: KI-Abi-Pass · ${Ki.PRICE}", fontWeight = FontWeight.Bold) }
+                    val gate = LocalElternTor.current
+                    NeonButton({ gate { runCatching { uri.openUri(de.raumlicht.core.model.Zaehler.link(checkout, "einstellungen")) } } }, Modifier.fillMaxWidth().testTag("ki-kaufen"), color = Q.Yellow) { Text("Zum Shop: KI-Abi-Pass · ${Ki.PRICE}", fontWeight = FontWeight.Bold) }
                     Text("Einmalig ${Ki.PRICE} (inkl. MwSt.), kein Abo – der Pass endet von selbst am 31. Juli deines Abi-Jahres (2027, 2028 oder 2029, wählst du im Shop). " +
-                        "Gekauft wird im Shop auf mathenachhilfe-online.com. Bist du noch nicht 18, schließen deine Eltern den Kauf ab. Danach kommt eine E-Mail mit Link und Code. " +
+                        "Gekauft wird im Shop auf mathenachhilfe-online.com. Wer unter 18 ist, kauft nicht selbst – das machen die Eltern. Danach kommt eine E-Mail mit Link und Code. " +
                         "Raumlicht Pro brauchst du dafür nicht. Der Pass gilt in der Web-App.", Modifier.testTag("ki-status"), color = Q.Muted, fontSize = 13.sp)
                 } else Text("Den KI-Abi-Pass gibt es bald im Shop. Bis dahin kannst du den KI-Tutor mit den Proben ausprobieren. Der Pass gilt in der Web-App.", Modifier.testTag("ki-status"), color = Q.Muted, fontSize = 13.sp)
                 Column(Modifier.fillMaxWidth().background(Q.Deep, RoundedCornerShape(18.dp)).border(1.dp, Q.Cyan.copy(alpha = 0.6f), RoundedCornerShape(18.dp)).padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {

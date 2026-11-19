@@ -208,6 +208,10 @@ fun AppRoot(
     LaunchedEffect(keys) { (known - keys.toSet()).forEach { holder.removeState(it) }; known = keys.toSet() }
 
     val strictVectors by prefs.strictVectors.collectAsState()
+    // Eltern-Tor: steht vor dem Weg zum Shop. Einmal gelöst bleibt es zehn Minuten offen – nur im Arbeitsspeicher, nichts wird gespeichert.
+    var gateOpenedAt by remember { mutableStateOf(0L) }
+    var gatePending by remember { mutableStateOf<(() -> Unit)?>(null) }
+    val gate: (() -> Unit) -> Unit = { action -> if (de.raumlicht.core.model.ElternTor.open(gateOpenedAt, de.raumlicht.app.ui.fx.nowMillis())) action() else gatePending = action }
     CompositionLocalProvider(LocalLuxSkin provides skin, LocalLuxLook provides look,
         de.raumlicht.app.ui.settings.LocalMix provides de.raumlicht.app.ui.settings.MixChoice(prefs.musicLevel.collectAsState().value, prefs::setMusicLevel, prefs.soundLevel.collectAsState().value, prefs::setSoundLevel),
         de.raumlicht.app.ui.settings.LocalSpeech provides de.raumlicht.app.ui.settings.SpeechChoice(prefs.speechRate.collectAsState().value, prefs::setSpeechRate),
@@ -217,6 +221,7 @@ fun AppRoot(
         de.raumlicht.app.ui.level.LocalKi provides kiTutor,
         de.raumlicht.app.ui.settings.LocalKiEntry provides (if (kiShown) de.raumlicht.app.ui.settings.KiEntryState({ nav.go(Routes.KI) }, kiLast, today()) else null),
         de.raumlicht.app.ui.fx.LocalCount provides count,
+        de.raumlicht.app.ui.settings.LocalElternTor provides gate,
         de.raumlicht.app.ui.settings.LocalOffers provides (if (offers) de.raumlicht.app.ui.settings.OffersChoice(countOn, prefs::setCountUsage, hintsOn, prefs::setTutorHints) else null),
         de.raumlicht.app.ui.settings.LocalElternEntry provides (if (eltern != null) de.raumlicht.app.ui.settings.ElternEntryState({ nav.go(Routes.PARENTS) }, pairing != null) else null),
         LocalMistakeSink provides { id, msg -> prefs.setDiary(DiaryEntry.add(prefs.diary.value, id, msg)) }) {
@@ -383,6 +388,8 @@ fun AppRoot(
         } }
         // dezente Hinweise zur Stimme (lädt … / gerade nicht erreichbar)
         de.raumlicht.app.ui.fx.VoiceHints(androidx.compose.ui.Modifier.align(androidx.compose.ui.Alignment.TopCenter).systemBarsPadding())
+        gatePending?.let { action -> de.raumlicht.app.ui.settings.ElternTorDialog(
+            onSolved = { gateOpenedAt = de.raumlicht.app.ui.fx.nowMillis(); gatePending = null; count("elternbereich", null, null); action() }, onCancel = { gatePending = null }) }
         }
     }
 }

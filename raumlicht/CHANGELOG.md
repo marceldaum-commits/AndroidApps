@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.34 – Der Weg zum Shop führt über ein Eltern-Tor (19.11.2026)
+- **Eltern-Tor vor dem Shop:** Wer auf „Zum Shop“ tippt (Raumlicht Pro oder KI-Abi-Pass), löst zuerst eine kleine Rechenaufgabe. Wer unter 18 ist, kauft nicht selbst – das machen die Eltern. Einmal gelöst, bleibt das Tor zehn Minuten offen.
+- **Lux wirbt nicht mehr:** Sind die drei KI-Proben aufgebraucht, sagt Lux nur noch genau das. Tipp und Theorie helfen wie immer weiter.
+- Preise und die sachliche Beschreibung von Raumlicht Pro und KI-Abi-Pass bleiben sichtbar.
+- **Für Eltern:** Das Tor merkt sich nichts und speichert nichts. Gezählt wird nur anonym, dass es geöffnet wurde (abschaltbar wie alle Zählungen).
+
 ## 2.18.33 – Raumlicht zieht um: eine Adresse für alle Lern-Apps (19.11.2026)
 - **Neue Adresse:** Raumlicht läuft künftig unter `lernen.mathenachhilfe-online.com/raumlicht/` – dort wohnen alle unsere Lern-Apps zusammen.
 - **Dein Lernstand kommt mit.** Öffnest du Raumlicht unter der alten Adresse, wirst du von selbst zur neuen gebracht – mit Sternen, Rekorden, Einstellungen und Freischalt-Codes. Du musst nichts tun.
