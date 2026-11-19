@@ -288,3 +288,8 @@ Wortlaut (AppZentrale 19.11., aus PROBESTUNDE.md @ d672374):
 - Elternbereich/Elternbericht (hinter dem Tor): Hinweis bei objektiven Schwierigkeiten, Berechnung NUR auf dem Gerät, höchstens 1× in 4 Wochen je Thema, wegklickbar, Schalter „Hinweise auf Nachhilfe ausblenden“.
 - Kinderansicht nur: „Du kommst hier gerade nicht weiter? Das ist okay. Probier eine leichtere Stufe oder schau dir die Erklärung noch einmal an. Und du kannst jederzeit deine Eltern oder deine Lehrkraft fragen.“ Knöpfe [Leichter üben] [Erklärung ansehen], kein Außenlink.
 - Kein Kl.-9–10-Hinweis; Probestunde nur hinter dem Tor. Zählung nur anonym. Meldung mit „Rechtsbezug: ja (V15)“.
+
+## Merkzettel ab Di 24.11. – Einstellungen und Tor (Präzisierung AppZentrale 19.11.)
+- Ohne Tor erlaubt: Ton, Musik, Lautstärke, Vorlesen an/aus + Tempo, Schriftgröße, Hell/Dunkel.
+- Hinter das Tor: Pro/Plus, KI, Updates, Daten zurücksetzen, Profile löschen, Datenschutz-/Zähl-Schalter, Familie/Kopplung, Online-Erkennung/Aussprache, Nachhilfe-Hinweise, Klassen-Code/Kamera, Teilen nach außen.
+- Am Di prüfen: Einstellungs-Bildschirm aufteilen (Schnell-Schalter oben frei, Rest hinter das Tor).
