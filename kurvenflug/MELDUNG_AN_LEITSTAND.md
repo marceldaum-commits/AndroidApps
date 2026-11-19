@@ -1,5 +1,8 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+> **Ablauf seit 19.11. (AppZentrale):** Jede Live-Meldung enthält die Zeile **„Rechtsbezug: ja/nein (was)“**. Alles mit Rechtsbezug
+> (Preise/Kauf, Codes, Texte für Eltern/Kinder, Datenschutz, Werbung, Bewertungen, KI, Mikrofon) prüft der Raum „Recht“ vor dem Live-Gang.
+
 ## ✅ 2.7.1 – Korrektur Pro-Schloss ohne Kaufaufforderung an Kinder (UWG Anh. Nr. 28), Basis 2.7.0
 - Gesperrtes Level: nur „Das gehört zu KurvenFlug Pro. Deine Eltern können im Elternbereich nachsehen.“ + „← Zurück“ + „Elternbereich (für Erwachsene)“ → Eltern-Tor.
   Vorher: Pro-Seite mit Preis, Kaufknopf und „Frag deine Eltern!“.
