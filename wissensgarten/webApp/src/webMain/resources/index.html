@@ -467,6 +467,16 @@
 
       var altSeite = function () {
         var ziel = probe ? (window.wgUmzugProbeZiel || '') : ZIEL[h];
+        // Pflicht-Schutz (UMZUG-LERNEN.md): Das eigene App-Bild muss unter der neuen Adresse laden. 404, 503 oder ein Zertifikatsfehler
+        // lassen das Bild scheitern → kein Umzug, die App läuft hier weiter.
+        var zielDa = function () {
+          return mitZeit(new Promise(function (ok, no) {
+            var img = new Image();
+            img.onload = function () { if (img.naturalWidth > 0) ok(); else no(new Error('Bild leer')); };
+            img.onerror = function () { no(new Error('neue Adresse liefert den Wissensgarten nicht')); };
+            img.src = ziel + 'icons/icon-192.png?nc=' + Date.now();
+          }), 10000);
+        };
         var weiter = function (extra) {
           var teile = ohne(hashTeile(), 'umzug');
           if (extra) teile.unshift(extra);
@@ -477,14 +487,14 @@
         try { gibt = !!(localStorage.getItem('wg.garten') || localStorage.getItem('wg.prefs.einstellungen')); } catch (e) {}
         var fertig = null; try { fertig = localStorage.getItem('wg.umzug.fertig'); } catch (e) {}
         if (!gibt || fertig) {
-          return mitZeit(fetch(ziel + 'version.json?nc=' + Date.now(), { mode: 'no-cors', cache: 'no-store', credentials: 'omit' }), 8000)
+          return zielDa()
             .then(function () { diag(gibt ? 'schon umgezogen → weiter' : 'kein Lernstand → weiter'); return weiter(null); },
                   function () { diag('neue Adresse nicht erreichbar → bleibt hier'); });
         }
         if (!window.crypto || !crypto.subtle || !window.fetch) { diag('Browser kann nicht verschlüsseln → bleibt hier'); return Promise.resolve(); }
         hint('Wir ziehen um … Brummi packt deinen Garten ein 🐝📦');
-        // Erst prüfen, ob die neue Adresse erreichbar ist – sonst nie weiterleiten (no-cors: nur Netz- bzw. DNS-Fehler erkennbar)
-        var erreichbar = mitZeit(fetch(ziel + 'version.json?nc=' + Date.now(), { mode: 'no-cors', cache: 'no-store', credentials: 'omit' }), 10000);
+        // Erst prüfen, ob die neue Adresse wirklich den Wissensgarten liefert – sonst nie weiterleiten
+        var erreichbar = zielDa();
         var id = zufall(16), schreib = zufall(16), key = zufall(32), iv = new Uint8Array(12); crypto.getRandomValues(iv);
         var versuch = function (mitBildern) {
           var s = einsammeln(mitBildern);

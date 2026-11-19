@@ -45,7 +45,7 @@ async function fall(b, name, { altDaten, neuDaten, offline, ziel = NEU, hash = '
   const p = await ctx.newPage();
   await p.goto(ALT + '?modus=wasm' + hash);
   await p.waitForFunction(() => window.wgReady, null, { timeout: 120000 });
-  await p.waitForTimeout(3000);
+  await p.waitForTimeout(6000);
   const url = p.url();
   const speicher = await p.evaluate(() => { const o = {}; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); o[k] = localStorage.getItem(k); } return o; });
   // alter Ursprung: Daten müssen dort immer bleiben

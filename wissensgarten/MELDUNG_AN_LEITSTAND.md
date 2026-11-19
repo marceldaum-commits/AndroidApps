@@ -11,7 +11,7 @@
 
 ## 2.3.0 – Umzug auf lernen(-test).mathenachhilfe-online.com/wissensgarten/ (19.11.2026, Standard UMZUG-LERNEN.md)
 - **Alte Adresse** (wissensgarten[-test].…, am Hostnamen erkannt). Beim Start, bevor die App lädt (Startbild: „Wir ziehen um … Brummi packt deinen Garten ein“):
-  1. Prüfen, ob `lernen…/wissensgarten/version.json` erreichbar ist (no-cors, 10 s). Wenn nicht, wird nicht weitergeleitet und die App startet wie bisher.
+  1. Pflicht-Schutz: `lernen…/wissensgarten/icons/icon-192.png` muss als Bild laden (10 s). Bei 404, 503 oder Zertifikatsfehler wird nicht weitergeleitet und die App startet wie bisher.
   2. Alle eigenen Schlüssel `wg.*` einsammeln, auch die ausgeblendeten Sprach-Beete und die Merkbilder `wg.bild.*`. Nicht mitgenommen werden `wg.plusPakete` (kommt mit dem Code neu), `wg.diag*` und `wg.wasmKaputt`.
   3. Klartext `{"app":"wissensgarten","v":1,"umzug":true,"stand":…,"daten":{…}}`, mit gzip gepackt, wenn der Browser es kann (erkennbar an 1f 8b).
   4. Verschlüsseln mit AES-GCM-256 und 12-Byte-IV; id, schreib und key werden auf dem Gerät erzeugt.
