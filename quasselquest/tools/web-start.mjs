@@ -19,7 +19,9 @@ const server = createServer(async (req, res) => {
   catch { res.writeHead(404); res.end('nicht da'); }
 });
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
-const base = `http://127.0.0.1:${server.address().port}/`;
+const URL_ARG = (process.argv.find((x) => x.startsWith('--url=')) || '').slice(6);
+const base = URL_ARG ? (URL_ARG.endsWith('/') ? URL_ARG : URL_ARG + '/') : `http://127.0.0.1:${server.address().port}/`;
+if (URL_ARG) console.log('Prüfe gegen ' + base);
 if (FOTOS) await mkdir(shots, { recursive: true });
 
 let failed = 0;

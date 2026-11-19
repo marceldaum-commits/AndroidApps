@@ -2,6 +2,19 @@
 
 Neueste oben.
 
+## 19.11.2026 – LIVE-MELDUNG: Version 0.2.1 vom 19.11.2026, Commit 216388f für `quasselquest-live`
+
+- **Inhalt:** Sprach-Umschalter (Englisch, Deutsch, Französisch, Spanisch, Latein) und 19 Sprachpakete (658 Karten) als Spiele mit Wiederholung, dazu Englisch Welt 1 (3 Episoden). 0.2.1 enthält nur die eindeutige Manifest-id (`"id": "./"`) für die gemeinsame Adresse.
+- **Geprüft auf dem echten Test-Server** `https://quasselquest-test.mathenachhilfe-online.com` (version.json = 0.2.1) mit `node tools/web-start.mjs --url=…`:
+  - Chromium Handy und PC, **WebKit iPhone 13 und iPad**: Start, alle 3 Episoden, je eine Paket-Runde in allen 5 Sprachen.
+  - Vorlesen: 76 vertonte Sätze wirklich abgespielt. Fortschritt nach Neuladen, Eltern-Tor, „← Alle Apps“ (Test: staging.), **Offline-Start mit echtem Service Worker**, keine Konsolenfehler – alles grün. 20/20 Inhaltstests.
+- **Kinderschutz:** nichts Kaufbares, keine Preise, kein Pro-Knopf (Pro-Code QQ-/App 7 vorbereitet, ohne Schlüssel unsichtbar). Mikrofon nur auf Knopfdruck, Erkennung nur im Gerät.
+- **Gemeinsame Adresse:** Pfade relativ, `register('sw.js')`, Manifest `./` mit id `./`, Speicher `quasselquest.v1`, Cache `quasselquest-<Version>` (der Service Worker löscht nur eigene). Die Test-Stufe wird über „lernen-test.“ bzw. „-test.“ im Hostnamen erkannt. Unter `lernen.` wird nichts weitergeleitet.
+  `lernen-test.mathenachhilfe-online.com/quasselquest/` war beim Prüfen noch nicht erreichbar; bitte nach dem Einrichten einmal `version.json` aufrufen (erwartet 0.2.1).
+- **Größe:** 13 MB. Beim ersten Start speichert der Service Worker alle Aufnahmen für offline (Hinweis für mobiles Datenvolumen).
+- **Rückweg:** Es ist die erste Live-Version. Zurück geht es, indem `quasselquest-live` wieder auf den Platzhalter gestellt wird (bisheriger Stand vor dem Live-Schalten). Bei späteren Versionen auf den vorherigen Live-Commit. Daten gehen dabei nicht verloren (nur im Browser, Schlüssel `quasselquest.v1`).
+- **Für den Leitstand außer Live-Schalten:** nichts Weiteres nötig. Optional: Website-Datenschutzerklärung um Quasselquest ergänzen (Text in `webapp/datenschutz.html`) und die App auf `/lern-apps/` aufnehmen.
+
 ## 19.11.2026 – Version 0.2.0 vom 19.11.2026: Sprach-Umschalter + 19 Sprachpakete als Spiele – fertig für den Test
 
 Auftrag Marcel (über die AppZentrale): heute Sprachen und Sprachpakete, danach live; den Wissensgarten erst danach ohne Sprachpakete live schalten.
