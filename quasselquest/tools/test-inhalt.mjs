@@ -235,3 +235,32 @@ test('Buchstaben-Bau nur, wenn das Wort eindeutig aus der Aufgabe folgt (keine A
     if (k.kind === 'diktat') assert.ok(k.vorher);
   }
 });
+
+const LP = P.LERNPFAD.map((l) => JSON.parse(readFileSync(new URL('lernpfad/' + l + '.json', dir), 'utf8')));
+test('Lernpfad: jede Einheit vollständig, Bedeutungen eindeutig, Figuren vorhanden, Lektionen spielbar', () => {
+  for (const lp of LP) for (const a of lp.abschnitte) for (const e of a.einheiten) {
+    const wo = `${lp.sprache} ${e.id}`;
+    assert.ok(e.woerter.length >= 6 && e.saetze.length >= 3 && e.regel.beispiele.length >= 2 && e.geschichte.zeilen.length >= 3, wo + ' unvollständig');
+    for (const w of e.woerter) assert.ok(w[0] && w[1] && w[2], wo + ' Wort ohne Bild/Übersetzung: ' + w[0]);
+    const de = e.woerter.map((w) => w[1].toLowerCase()); assert.equal(new Set(de).size, de.length, wo + ': zwei Wörter mit gleicher Bedeutung');
+    const zi = e.woerter.map((w) => w[0].toLowerCase()); assert.equal(new Set(zi).size, zi.length, wo + ': Wort doppelt');
+    for (const [f] of e.geschichte.zeilen) assert.ok(lp.figuren[f], wo + ': unbekannte Figur ' + f);
+    for (const q of e.geschichte.fragen) assert.ok(!q.choices.includes(q.a) && q.choices.length >= 2, wo + ': Frage ' + q.q);
+    for (const x of e.aktionen || []) {
+      assert.ok(x.sag && x.de && x.ding && lp.figuren[x.an] && x.anzahl >= 1 && x.anzahl <= 5, wo + ': Aktion ' + JSON.stringify(x));
+    }
+    for (const f of e.fehler || []) {
+      const t = P.fehlerTeile(f); assert.equal(t.filter((x) => x.falsch).length, 1, wo + ': genau ein falsches Wort in „' + f.falsch + '“');
+      const idx = t.findIndex((x) => x.falsch); const r = t.map((x, i) => (i === idx ? x.t.replace(f.wort, f.korrektur) : x.t)).join(' ');
+      assert.equal(r, f.richtig, wo + ': Korrektur ergibt nicht den richtigen Satz');
+      assert.ok(!f.choices.includes(f.korrektur) && f.korrektur !== f.wort, wo + ': Auswahl bei „' + f.falsch + '“');
+    }
+    const pk = P.lernPack(e, lp.sprache);
+    for (const l of P.lektionenFuer(lp.sprache)) {
+      const st = P.lektion(pk, l.nr, () => 0.42);
+      assert.ok(st.length >= 4, wo + ' Lektion ' + l.nr + ' zu kurz');
+      for (const s of st) if (s.card) assert.ok(s.card.a, wo + ' leere Karte');
+    }
+    for (const c of pk.cards) for (const w of P.wrongs(c, pk, 3)) assert.notEqual(w, c.a, wo + ': falsche Antwort = richtige');
+  }
+});

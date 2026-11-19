@@ -335,7 +335,7 @@
     const cols = Math.ceil(Math.sqrt(n * 1.4)); const rows = Math.ceil(n / cols); const out = [];
     for (let i = 0; i < n; i++) {
       const c = i % cols; const r = Math.floor(i / cols);
-      out.push({ x: Math.round((c + 0.5) / cols * 84 + 8 + (rnd() - 0.5) * (60 / cols)), y: Math.round((r + 0.5) / rows * 70 + 18 + (rnd() - 0.5) * (40 / rows)) });
+      out.push({ x: Math.round(Math.min(86, Math.max(14, (c + 0.5) / cols * 76 + 12 + (rnd() - 0.5) * (50 / cols)))), y: Math.round((r + 0.5) / rows * 70 + 18 + (rnd() - 0.5) * (40 / rows)) });
     }
     return mischen(out, rnd);
   };

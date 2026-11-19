@@ -1237,7 +1237,7 @@
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:24px">🏝️ Meine Insel</div><div class="spacer"></div>${dinge.length >= 4 ? '<button class="btn small blue" data-such>🔍 Ruby fragt</button>' : ''}</div>
       ${ruby(dinge.length ? 'Das ist deine Insel! Jedes Wort, das du gelernt hast, wohnt hier. Zieh die Dinge, wohin du willst – und tipp sie an!' : 'Deine Insel ist noch leer. Schaff deine erste Einheit im Lernpfad – dann ziehen die Wörter hier ein! 🌱')}
-      <div class="insel" data-insel>${dinge.map((d) => `<button class="iding" data-id="${esc(d.id)}" style="left:${pos[d.id].x}%;top:${pos[d.id].y}%">${esc(d.img)}<span class="wlabel" hidden><b>${esc(d.z)}</b><small>${esc(d.de)}</small></span></button>`).join('')}</div></div>`);
+      <div class="insel" data-insel>${dinge.map((d) => `<button class="iding${pos[d.id].x > 66 ? ' rechts' : (pos[d.id].x < 34 ? ' links' : '')}" data-id="${esc(d.id)}" style="left:${pos[d.id].x}%;top:${pos[d.id].y}%">${esc(d.img)}<span class="wlabel" hidden><b>${esc(d.z)}</b><small>${esc(d.de)}</small></span></button>`).join('')}</div></div>`);
     el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); save(); home(); };
     const feld = el.querySelector('[data-insel]'); let suche = null;
     el.querySelectorAll('.iding').forEach((b) => {
@@ -1252,7 +1252,7 @@
           if (moved) { A.sfx('pop'); save(); return; }
           if (suche) { if (d.id === suche.id) { A.sfx('right'); confetti(25); rubySay(el, `Super! <b>${esc(d.z)}</b> 🎉`, 'dance'); suche = null; setTimeout(() => { if (alive(tok)) frage(); }, 1300); } else { A.sfx('soft'); rubySay(el, 'Nein, such weiter! 👀', 'talk'); if (L.who) speak(PK.sprechbar(suche.z), L.who); } return; }
           A.sfx('tap'); b.classList.remove('hupf'); void b.offsetWidth; b.classList.add('hupf');
-          const lab = b.querySelector('.wlabel'); lab.hidden = false; setTimeout(() => { if (alive(tok)) lab.hidden = true; }, 2000);
+          el.querySelectorAll('.iding .wlabel').forEach((x) => x.hidden = true); const lab = b.querySelector('.wlabel'); lab.hidden = false; setTimeout(() => { if (alive(tok)) lab.hidden = true; }, 2000);
           if (L.who) speak(PK.sprechbar(d.z), L.who);
         };
         window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up);
@@ -1331,15 +1331,15 @@
       const plaetze = PK.wimmelPlaetze(e.woerter.length, e.id.split('').reduce((a, ch) => a + ch.charCodeAt(0), 0));
       const deko = ['🌳', '🌼', '☁️', '🪨', '🌿', '🍄'];
       body.innerHTML = `<div class="wimmel" data-w>${deko.map((d, i) => `<span class="deko" style="left:${(i * 17 + 5) % 92}%;top:${i % 2 ? 6 : 88}%">${d}</span>`).join('')}
-        ${e.woerter.map(([z, de, img], i) => `<button class="wding" data-i="${i}" style="left:${plaetze[i].x}%;top:${plaetze[i].y}%;--d:${(i * 0.08).toFixed(2)}s" aria-label="Ding ${i + 1}">${esc(img)}<span class="wlabel" hidden><b>${esc(z)}</b><small>${esc(de)}</small></span></button>`).join('')}</div>
+        ${e.woerter.map(([z, de, img], i) => `<button class="wding${plaetze[i].x > 66 ? ' rechts' : (plaetze[i].x < 34 ? ' links' : '')}" data-i="${i}" style="left:${plaetze[i].x}%;top:${plaetze[i].y}%;--d:${(i * 0.08).toFixed(2)}s" aria-label="Ding ${i + 1}">${esc(img)}<span class="wlabel" hidden><b>${esc(z)}</b><small>${esc(de)}</small></span></button>`).join('')}</div>
         <div class="wimmel-stand" data-stand>0 von ${e.woerter.length} entdeckt</div>${weiterKnopf('Spiel starten ➜', true)}`;
       const gefunden = new Set(); let phase = 'entdecken'; let ziel = -1; let runde = 0; let erster = true;
       const ziele = shuffle(e.woerter.map((_, i) => i)).slice(0, Math.min(5, e.woerter.length));
-      const frage = () => { ziel = ziele[runde]; erster = true; rubySay(el, `Find … 🔊`); say(PK.sprechbar(e.woerter[ziel][0])); };
+      const frage = () => { ziel = ziele[runde]; erster = true; if (DIAG) body.querySelector('[data-w]').dataset.ziel = ziel; rubySay(el, `Find … 🔊`); say(PK.sprechbar(e.woerter[ziel][0])); };
       body.querySelectorAll('.wding').forEach((b) => b.onclick = async () => {
         const i = +b.dataset.i; const [z] = e.woerter[i];
         if (phase === 'entdecken') {
-          A.sfx('pop'); A.vibrate(10); b.classList.add('gefunden'); b.querySelector('.wlabel').hidden = false;
+          A.sfx('pop'); A.vibrate(10); b.classList.add('gefunden'); body.querySelectorAll('.wlabel').forEach((x) => x.hidden = true); b.querySelector('.wlabel').hidden = false;
           setTimeout(() => { if (alive(tk)) b.querySelector('.wlabel').hidden = true; }, 2200);
           say(PK.sprechbar(z));
           if (!gefunden.has(i)) {
@@ -1371,7 +1371,7 @@
       const andere = shuffle([...new Set((e.aktionen || []).map((x) => x.ding).concat(e.woerter.map((w) => w[2])).filter((d) => d !== a.ding))]).slice(0, 3);
       const dinge = shuffle(Array.from({ length: n + (n > 1 ? 1 : 0) }, () => a.ding).concat(andere));
       body.innerHTML = `<div class="tpr-befehl"><button class="speaker" data-play aria-label="Anhören">🔊</button><button class="slowbtn" data-slow aria-label="Langsam">🐢</button><span data-text class="tpr-text" hidden>${esc(a.sag)}</span></div>
-        <div class="tpr-leute">${zielLeute.map(([id, F]) => `<div class="tpr-person" data-an="${esc(id)}"><span class="e">${esc(F.emoji)}</span><b>${esc(F.name)}</b><span class="hand" data-hand></span></div>`).join('')}</div>
+        <div class="tpr-leute">${zielLeute.map(([id, F]) => `<div class="tpr-person" data-an="${esc(id)}"${DIAG && id === a.an ? ' data-ziel' : ''}><span class="e">${esc(F.emoji)}</span><b>${esc(F.name)}</b><span class="hand" data-hand></span></div>`).join('')}</div>
         <div class="tpr-dinge">${dinge.map((d, i) => `<button class="tpr-ding" data-i="${i}" data-d="${esc(d)}"${DIAG && d === a.ding ? ' data-ok' : ''}>${esc(d)}</button>`).join('')}</div>
         <button class="quiet" data-zeig>Ich habe es nicht verstanden – zeig mir den Satz</button>`;
       const play = async (slow) => { const b = body.querySelector('[data-play]'); b.classList.add('playing'); await speak(a.sag, L.who, slow ? { slow: true } : null); if (alive(tk)) b.classList.remove('playing'); };

@@ -71,6 +71,13 @@ async function playPackRound(page, packId, shot) {
     if (shot && !shotDone.has(shot + title.slice(0, 5))) { shotDone.add(shot + title.slice(0, 5)); await snap(page, shot + '_' + title.replace(/[^A-Za-zÄÖÜäöü]+/g, '').slice(0, 12).toLowerCase()); }
     const b = await page.$('.balloon[data-ok]:not([disabled])'); if (b) { await b.click({ force: true }); await wait(1500); continue; }
     const o = await page.$('.opt[data-ok]:not([disabled])'); if (o) { await o.click(); await wait(1500); continue; }
+    // Wimmelbild: alles entdecken, dann gesuchtes Wort antippen
+    const wd = await page.$$('.wding:not(.gefunden)'); if (wd.length) { for (const d of wd) await d.click({ force: true }); await wait(300); }
+    const wz = await page.$('[data-w][data-ziel]'); if (wz) { const z = await wz.getAttribute('data-ziel'); await page.click(`.wding[data-i="${z}"]`, { force: true }); await wait(1500); continue; }
+    // Mach, was ich sage: richtiges Ding antippen, dann richtige Person
+    const td = await page.$('.tpr-ding[data-ok]:not([disabled])'); if (td) { await td.click(); await page.click('.tpr-person[data-ziel]'); await wait(400); continue; }
+    // Ruby lernt von dir: falsches Wort antippen (Korrektur dann über .opt[data-ok])
+    const tw = await page.$('.tafel-wort[data-ok]:not(.falsch):not(.richtig)'); if (tw && !(await page.$('.opt'))) { await tw.click(); await wait(300); continue; }
     // Lernpfad-Spielarten ohne Wertung: Kennenlernen, Regel, Nachsprechen, Geschichte
     const neu = await page.$$('.neu-karte'); if (neu.length && await page.$('[data-weiter][disabled]')) { for (const k of neu) await k.click(); await wait(300); }
     const zeig = await page.$('[data-zeig]:not([hidden])'); if (zeig) { await zeig.click(); await wait(300); }

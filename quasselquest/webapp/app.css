@@ -427,3 +427,5 @@ a.btn { text-decoration: none; }
 .inselknopf { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 14px; background: linear-gradient(135deg, #8fd3f5, #f6e3a1); border-radius: 20px; padding: 14px; box-shadow: 0 4px 0 #6cb2d6; font-size: 20px; }
 .inselknopf small { font-weight: 600; color: #3b5568; font-size: 14px; }
 @media (prefers-reduced-motion: reduce) { .wding, .iding, .tpr-person .hand.popbig { animation: none; } }
+.wding.rechts .wlabel, .iding.rechts .wlabel { left: auto; right: -6px; transform: none; }
+.wding.links .wlabel, .iding.links .wlabel { left: -6px; transform: none; }
