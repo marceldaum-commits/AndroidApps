@@ -86,7 +86,7 @@
               { who: 'sam', en: 'Hello! I have to go now. Goodbye!', de: 'Hallo! Ich muss jetzt gehen. Auf Wiedersehen!',
                 options: [
                   { en: 'Goodbye, Sam!', de: 'Auf Wiedersehen, Sam!', ok: true },
-                  { en: 'Good morning, Sam!', de: 'Guten Morgen, Sam!', reply: { en: 'Morning? I am leaving! 👋', de: 'Morgen? Ich gehe doch! 👋' } },
+                  { en: 'Good morning, Sam!', de: 'Guten Morgen, Sam!', reply: { en: 'Morning? I am leaving! 👋', de: 'Guten Morgen? Ich gehe doch! 👋' } },
                 ] },
             ],
             end: { who: 'mia', en: 'See you soon!', de: 'Bis bald!' },
@@ -150,7 +150,7 @@
                   { en: 'Hello!', de: 'Hallo!', reply: { en: 'Hello again! 😄 But now: goodbye!', de: 'Hallo nochmal! 😄 Aber jetzt: Tschüss!' } },
                 ] },
             ],
-            end: { who: 'ted', en: 'Enjoy your fish!', de: 'Lass dir die Fische schmecken!' },
+            end: { who: 'ted', en: 'Enjoy your fish!', de: 'Lass es dir schmecken!' },
           },
           explain: {
             title: 'Ruby erklärt: Zahlen und Mehrzahl',

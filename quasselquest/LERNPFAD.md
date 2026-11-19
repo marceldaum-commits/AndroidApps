@@ -74,3 +74,19 @@ Je Sprache angepasst:
 ```
 Karten entstehen daraus automatisch (`PAKETE.lernPack`), Lektionen ebenso (`PAKETE.lektion`) – die Spiele sind dieselben
 wie bei den Wissenspaketen, dazu neu: Kennenlernen, Satz-Zug für Sätze, Nachsprechen, Geschichte, Regel entdecken.
+
+## Neue Wege (19.11.2026) – warum Quasselquest anders ist als Karteikarten-Apps
+
+Kritik an den bekannten Apps: Vieles lässt sich durch Raten lösen, Kinder lesen und tippen nur an. Quasselquest setzt auf
+**Tun, Lehren und Bauen** (Belege in `docs/RECHERCHE.md`):
+
+| Spielart | Was das Kind tut | Warum |
+|---|---|---|
+| 🔍 **Wimmelbild** (ersetzt „Karten umdrehen“) | Die neuen Wörter verstecken sich in einer Szene. Antippen = hören + deutsches Wort. Danach ruft Ruby: „Find the cat!“ | Entdecken statt Vorgesetztbekommen, Hören zuerst |
+| 🖐️ **Mach, was ich sage!** | „Give Ruby an apple.“ – Apfel zu Ruby ziehen. „Put two fish in the bowl.“ | Total Physical Response: Verstehen durch Handeln, kein Raten |
+| 🎓 **Ruby lernt von dir** | Ruby sagt/baut einen Satz mit typischem Fehler („I has a dog.“). Das Kind tippt den Fehler an und bringt Ruby das richtige Wort bei. | Lernen durch Lehren – wirkt besonders bei schwächeren Kindern |
+| 🏝️ **Meine Insel** | Jedes geschaffte Wort wird ein Ding auf der eigenen Insel. Frei verschieben, antippen, hören. Ruby besucht die Insel und fragt: „Where is the red boat?“ | Der Wortschatz *ist* die Spielwelt; Sammeln und Bauen wie in Sandbox-Spielen, ganz ohne Druck |
+| 🚂 Satz-Zug, 🎤 Sprechen, 📖 Geschichte | bleiben | Sätze selbst bauen, sprechen, verstehen |
+
+Lektionen einer Einheit (neu): 1 🔍 Wimmelbild → 2 🖐️ Mach, was ich sage + Wörter bauen → 3 💡 Regel entdecken + 🚂 Satz-Zug
+→ 4 🎓 Ruby lernt von dir + 🎤 Sprechen → 5 📖 Geschichte. Danach wandern die Wörter auf die Insel.

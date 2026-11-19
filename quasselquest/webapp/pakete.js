@@ -237,10 +237,10 @@
   // ------------------------------------------------------------------ Lernpfad „Neu lernen“ (siehe LERNPFAD.md)
   P.LERNPFAD = ['en', 'fr', 'es'];
   P.LEKTIONEN = [
-    { t: 'Neue Wörter', e: '🌱', sub: 'Anschauen, hören, erkennen' },
-    { t: 'Wörter üben', e: '🎯', sub: 'Selbst sagen und bauen' },
+    { t: 'Entdecken', e: '🔍', sub: 'Wimmelbild: Wörter finden und hören' },
+    { t: 'Mach, was ich sage!', e: '🖐️', sub: 'Befehle verstehen, Wörter bauen' },
     { t: 'Sätze bauen', e: '🚂', sub: 'Regel entdecken, Sätze legen' },
-    { t: 'Hören & Sprechen', e: '🎤', sub: 'Zuhören und nachsprechen', stimme: true },
+    { t: 'Ruby lernt von dir', e: '🎓', sub: 'Fehler finden, nachsprechen', stimme: true },
     { t: 'Geschichte', e: '📖', sub: 'Eine kleine Geschichte verstehen' },
   ];
   /** Lektionen einer Einheit (ohne Stimme fällt „Hören & Sprechen“ weg). */
@@ -283,7 +283,25 @@
       const pick = ok.filter((m) => m !== last); const m = (pick.length ? pick : ok)[Math.floor(rnd() * (pick.length ? pick.length : ok.length))] || 'ballon';
       last = m; steps.push({ mode: m, card: c });
     } };
-    if (nr === 0) {
+    const akt = mischen(e.aktionen || [], rnd); const feh = mischen(e.fehler || [], rnd);
+    if (nr === 0 && stimme) {
+      steps.push({ mode: 'wimmel' });
+      const ws = mischen(W, rnd);
+      steps.push({ mode: 'memory', cards: ws.slice(0, 3).map((i) => C('w' + i + 'v')) });
+      abwechselnd(ws.slice(3, 7).map((i) => C('w' + i + 'v')), ['hoeren', 'ballon']);
+    } else if (nr === 1 && akt.length) {
+      const ws = mischen(W, rnd);
+      akt.slice(0, 3).forEach((a, k) => { steps.push({ mode: 'tpr', aktion: a }); steps.push({ mode: k === 1 ? 'ballon' : 'bauen', card: C('w' + ws[k] + 'z') }); });
+      abwechselnd(ws.slice(3, 6).map((i) => C('w' + i + 'z')), stimme ? ['hoeren', 'bauen', 'ballon'] : ['bauen', 'ballon']);
+      akt.slice(3, 5).forEach((a) => steps.push({ mode: 'tpr', aktion: a }));
+      for (let k = 0; k < steps.length; k++) if (steps[k].mode === 'bauen' && !P.bauteile(steps[k].card, pack.lang)) steps[k] = { mode: 'ballon', card: steps[k].card };
+    } else if (nr === 3 && feh.length) {
+      const ss = mischen(S, rnd);
+      feh.forEach((f, k) => {
+        steps.push({ mode: 'lehrer', fehler: f });
+        if (k < ss.length) steps.push({ mode: 'sprechen', text: e.saetze[ss[k]][0], de: e.saetze[ss[k]][1], img: e.saetze[ss[k]][2] });
+      });
+    } else if (nr === 0) {
       steps.push({ mode: 'neu' });
       const ws = mischen(W, rnd); const memo = ws.slice(0, 3); const rest = ws.slice(3);
       abwechselnd(rest.slice(0, Math.ceil(rest.length / 2)).map((i) => C('w' + i + 'v')), stimme ? ['ballon', 'hoeren'] : ['ballon']);
@@ -311,6 +329,22 @@
     }
     return steps;
   };
+  /** Wimmelbild: feste, gut verteilte Plätze (in %) für n Dinge – überlappen sich nicht, gleiche Einheit = gleiches Bild. */
+  P.wimmelPlaetze = (n, seed) => {
+    let x = seed || 1; const rnd = () => { x = (x * 16807) % 2147483647; return x / 2147483647; };
+    const cols = Math.ceil(Math.sqrt(n * 1.4)); const rows = Math.ceil(n / cols); const out = [];
+    for (let i = 0; i < n; i++) {
+      const c = i % cols; const r = Math.floor(i / cols);
+      out.push({ x: Math.round((c + 0.5) / cols * 84 + 8 + (rnd() - 0.5) * (60 / cols)), y: Math.round((r + 0.5) / rows * 70 + 18 + (rnd() - 0.5) * (40 / rows)) });
+    }
+    return mischen(out, rnd);
+  };
+  /** „Ruby lernt von dir“: Wörter des falschen Satzes; markiert, welches falsch ist. */
+  P.fehlerTeile = (f) => String(f.falsch).trim().split(/\s+/).map((t) => ({ t, falsch: t.replace(/[.,!?¿¡;:»«]/g, '') === f.wort }));
+  /** Inselbewohner: alle Wörter fertiger Einheiten (Emoji + Wort + Deutsch). */
+  P.inselDinge = (lp, fertig) => lp.abschnitte.flatMap((a) => a.einheiten).filter((e) => fertig(e))
+    .flatMap((e) => e.woerter.map(([z, de, img], i) => ({ id: e.id + '-' + i, z, de, img })));
+
   /** Alle Texte des Lernpfads, die vertont werden: Wörter, Sätze, Beispiele der Regeln, Geschichten (mit der Stimme der Figur). */
   P.lernSpeech = (lp) => {
     const out = new Map(); const who = P.LANGS[lp.sprache].who; if (!who) return [];
@@ -320,6 +354,8 @@
       e.saetze.forEach(([z]) => add(who, z));
       (e.regel.beispiele || []).forEach(([z]) => add(who, z.includes('→') ? null : z));
       e.geschichte.zeilen.forEach(([f, z]) => add((lp.figuren[f] || {}).who || who, z));
+      (e.aktionen || []).forEach((a) => add(who, a.sag));
+      (e.fehler || []).forEach((f) => add(who, f.richtig));
     }
     return [...out.values()];
   };

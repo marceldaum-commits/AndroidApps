@@ -46,7 +46,7 @@
       ],
       [
        "salut",
-       "hallo",
+       "hallo (unter Freunden)",
        "🙋",
        "salut heißt hallo und tschüss – nur zu Freunden."
       ],
@@ -109,12 +109,12 @@
       "text": "Zu Kindern und Freunden sagt man tu (du), zu Erwachsenen vous (Sie). Darum gibt es zwei Arten, bitte zu sagen.",
       "beispiele": [
        [
-        "Merci, Léa. S'il te plaît !",
-        "Danke, Léa. Bitte!"
+        "S'il te plaît, Léa !",
+        "Bitte, Léa!"
        ],
        [
-        "Merci, Madame Martin. S'il vous plaît !",
-        "Danke, Frau Martin. Bitte!"
+        "S'il vous plaît, Madame Martin !",
+        "Bitte, Frau Martin!"
        ]
       ]
      },
@@ -383,7 +383,7 @@
       [
        "J'ai dix doigts.",
        "Ich habe zehn Finger.",
-       "🖐️"
+       "🙌"
       ],
       [
        "Un, deux, trois, compte avec moi !",
@@ -652,7 +652,7 @@
      ],
      "regel": {
       "titel": "mon, ma, mes",
-      "text": "„mein“ hat drei Formen: mon bei männlichen Wörtern, ma bei weiblichen, mes bei mehreren. Vor a, e, i, o, u nimmt man auch bei weiblichen Wörtern mon: mon amie, mon école.",
+      "text": "„mein“ hat drei Formen: mon bei männlichen Wörtern, ma bei weiblichen, mes bei mehreren. Vor a, e, i, o, u und stummem h nimmt man auch bei weiblichen Wörtern mon: mon amie, mon école.",
       "beispiele": [
        [
         "mon frère",
@@ -1081,7 +1081,7 @@
        [
         "lea",
         "Bonjour, Madame !",
-        "Guten Morgen!"
+        "Guten Morgen, Frau Martin!"
        ],
        [
         "martin",

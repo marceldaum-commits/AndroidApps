@@ -391,3 +391,39 @@ a.btn { text-decoration: none; }
 .chat-zeile .blase .de { display: block; color: #3e6a3e; font-weight: 600; font-size: 15px; margin-top: 4px; }
 @media (prefers-reduced-motion: reduce) { .lp-knoten.jetzt .ring, .lp-lektion.jetzt .go, .zug.fahrt { animation: none; } }
 .lp-knoten.wiggle .ring, .lp-wort.wiggle, .btn.wiggle { animation: wiggle .5s; }
+
+/* ---------- Wimmelbild, Mach was ich sage, Ruby lernt, Insel ---------- */
+.wimmel, .insel { position: relative; width: 100%; height: min(58vh, 460px); border-radius: 24px; overflow: hidden;
+  background: radial-gradient(circle at 30% 20%, #fff8 0 8%, transparent 9%), linear-gradient(#bfe6ff 0 35%, #9be08f 35% 100%); box-shadow: inset 0 -12px 0 #7cc471; }
+.insel { background: radial-gradient(ellipse at 50% 60%, #f6e3a1 0 52%, #8fd3f5 53% 100%); box-shadow: inset 0 0 0 6px #6cc3ef; touch-action: none; }
+.wimmel .deko { position: absolute; font-size: 28px; opacity: .55; pointer-events: none; }
+.wding, .iding { position: absolute; transform: translate(-50%, -50%); font-size: 44px; background: none; line-height: 1; animation: popbig .4s var(--d, 0s) both; touch-action: none; }
+.wding.gefunden::after { content: '✓'; position: absolute; right: -6px; top: -6px; font-size: 14px; background: #3bb54a; color: #fff; border-radius: 50%; width: 18px; height: 18px; line-height: 18px; text-align: center; font-weight: 900; }
+.wding.hupf, .iding.hupf { animation: hupf .5s; }
+.wding.shake { animation: shake .4s; }
+.wlabel { position: absolute; left: 50%; bottom: 105%; transform: translateX(-50%); background: #fff; border-radius: 12px; padding: 4px 10px; box-shadow: 0 3px 0 #c7d6e3; white-space: nowrap; font-size: 16px; z-index: 3; }
+.wlabel small { display: block; color: var(--muted); font-weight: 600; font-size: 13px; }
+.wimmel-stand { text-align: center; font-weight: 800; color: var(--muted); }
+.tpr-befehl { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.tpr-text { font-size: 20px; font-weight: 800; background: #fff; border-radius: 14px; padding: 6px 12px; }
+.tpr-leute { display: flex; justify-content: space-around; gap: 8px; width: 100%; }
+.tpr-person { flex: 1; max-width: 140px; min-height: 120px; background: #fff; border: 3px dashed #9fd0f5; border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 8px; }
+.tpr-person .e { font-size: 44px; }
+.tpr-person .hand { font-size: 26px; min-height: 30px; }
+.tpr-person .hand.popbig { animation: popbig .4s; }
+.tpr-dinge { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.tpr-ding { font-size: 42px; width: 70px; height: 70px; border-radius: 18px; background: #fff3c4; box-shadow: 0 5px 0 #e0c060; touch-action: none; }
+.tpr-ding.gewaehlt { outline: 4px solid #2b8fd6; }
+.tpr-ding.weg { visibility: hidden; }
+.tpr-ding.shake { animation: shake .4s; }
+.tpr-ding.ghost { position: fixed; z-index: 50; pointer-events: none; opacity: .9; transform: scale(1.15); }
+.lehrer-tafel { width: 100%; background: #2f5d3a; border: 8px solid #a0703c; border-radius: 16px; padding: 18px 12px; position: relative; }
+.tafel-ruby { position: absolute; top: -26px; right: 8px; font-size: 40px; }
+.tafel-satz { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.tafel-wort { background: none; color: #fff; font-size: 26px; font-weight: 800; border-bottom: 3px dashed #ffffff55; padding: 2px 4px; font-family: inherit; }
+.tafel-wort.falsch { color: #ffb4a8; text-decoration: line-through; }
+.tafel-wort.richtig { color: #b9f6b0; border-bottom-color: #b9f6b0; animation: popbig .4s; }
+.tafel-wort.shake { animation: shake .4s; }
+.inselknopf { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 14px; background: linear-gradient(135deg, #8fd3f5, #f6e3a1); border-radius: 20px; padding: 14px; box-shadow: 0 4px 0 #6cb2d6; font-size: 20px; }
+.inselknopf small { font-weight: 600; color: #3b5568; font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .wding, .iding, .tpr-person .hand.popbig { animation: none; } }

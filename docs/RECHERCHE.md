@@ -267,3 +267,18 @@ Quellen: [ISB Bayern – Fachlehrplan Englisch 3/4](https://www.isb.bayern.de/fi
 - Aufbau: 4 Abschnitte (Pre-A1 bis A2), je 8 Einheiten, je 5 Lektionen à 3–5 Minuten (Kennenlernen → Abruf → Regel entdecken + Satz-Zug → Hören & Sprechen → Geschichte). Jedes Wort kommt in mindestens 5 Lektionen vor, danach in der Wiederholung und gemischt in späteren Einheiten.
 - Regeln werden entdeckt (Beispiele zuerst, dann der Kindersatz), Chunks werden als Ganzes gelernt, keine Leben/Herzen, keine Strafen.
 - Inhalte durch zweiten Durchgang lektoriert (19 Hinweise übernommen). Details: `quasselquest/LERNPFAD.md`.
+
+## Quasselquest, 19.11.2026 – „Neue Wege statt Karten umdrehen“ (Auftrag Marcel)
+
+**Gefunden**
+- **Lernen durch Lehren (Protégé-Effekt):** Kinder, die einer Figur etwas beibringen, strengen sich mehr an und lernen mehr als beim Lernen für sich selbst – besonders schwächere Kinder ([Stanford: Teachable Agents](https://purl.stanford.edu/zm369yx3532)). Eine Studie von 2025 mit 58 Grundschulkindern und französischen Vokabeln bestätigt das, wieder mit dem größten Nutzen für Kinder mit wenig Vorwissen ([arXiv 2506.18365](https://arxiv.org/html/2506.18365v1)).
+- **Total Physical Response (Befehle ausführen):** Für Kinder in vielen kleinen Studien wirksamer und motivierender als klassischer Unterricht ([Beispielstudie](https://www.degruyterbrill.com/document/doi/10.1515/eujal-2023-0014/html)); digitale Umsetzungen sind kaum untersucht → Chance.
+- **Kritik an Duolingo für Kinder:** viele Aufgaben lassen sich durch Raten lösen, wenig Grammatik-Erklärung, emotionaler Druck (Serien, „Erpressung“), lange Spielzeiten ([Internet Matters](https://www.internetmatters.org/advice/apps-and-platforms/skills-building/duolingo), [Opened](https://opened.co/tools/duolingo), [Common Sense Media](https://www.commonsensemedia.org/website-reviews/duolingo/user-reviews/child)).
+- **Was Kinder 2026 lieben:** offene Spielwelten zum Bauen und Rollenspiel (Toca Boca World, Sago Mini) statt endloser Level; geführte Varianten helfen gegen „Wahl-Lähmung“ ([Screenwise](https://screenwiseapp.com/guides/creative-apps-for-young-kids)).
+
+**Entscheidung (Konzept in `quasselquest/LERNPFAD.md`, Abschnitt „Neue Wege“)**
+1. **Wimmelbild statt Karten umdrehen:** neue Wörter entdeckt man in einer Szene.
+2. **„Mach, was ich sage!“:** Befehle hören und ausführen (Dinge ziehen) – Verstehen durch Tun.
+3. **„Ruby lernt von dir“:** Ruby baut Sätze mit typischen Fehlern, das Kind ist Lehrer und korrigiert.
+4. **Meine Insel:** jedes gelernte Wort wird ein Ding auf der eigenen Insel – frei anordnen, antippen, hören. Der Wortschatz ist die Spielwelt.
+5. Raten verhindern: weniger Auswahl, mehr Bauen, Ziehen, Sprechen, Korrigieren.

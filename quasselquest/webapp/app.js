@@ -14,7 +14,7 @@
     return mem || null;
   }
   function save() { mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
-  const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, eigene: {}, tage: {}, hinweis: {}, tests: {}, lp: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei', zaehlung: true, nachhilfe: true }, week: { key: '', n: 0 } });
+  const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, eigene: {}, tage: {}, hinweis: {}, tests: {}, lp: {}, insel: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei', zaehlung: true, nachhilfe: true }, week: { key: '', n: 0 } });
   let state = load() || fresh();
   state.settings = Object.assign(fresh().settings, state.settings || {});
   // Stand 1 → 2: Spracherkennung standardmäßig nur auf dem Gerät; Wochenziel statt Tagesserie
@@ -30,6 +30,7 @@
   if (!state.hinweis) state.hinweis = {};
   if (!state.tests) state.tests = {};
   if (!state.lp) state.lp = {};
+  if (!state.insel) state.insel = {};
   const PK = window.PAKETE;
   window.APP_SETTINGS = state.settings;
 
@@ -1075,7 +1076,7 @@
         return;
       }
 
-      if (step.mode === 'neu' || step.mode === 'regel' || step.mode === 'sprechen' || step.mode === 'geschichte') return lpSchritt(pack, L, step, frac, resolve, say);
+      if (['neu', 'regel', 'sprechen', 'geschichte', 'wimmel', 'tpr', 'lehrer'].includes(step.mode)) return lpSchritt(pack, L, step, frac, resolve, say, run);
       const c = step.card; const k = PK.classify(c, pack.lang);
       if (step.mode === 'zug') {
         const el = packFrame(pack, frac, '🚂 Satz-Zug', 'Bau den Satz Wort für Wort!'); tk = token;
@@ -1218,12 +1219,48 @@
         return `<button class="lp-knoten${fertig ? ' fertig' : ''}${jetzt ? ' jetzt' : ''}${zu ? ' zu' : ''}" style="--x:${[0, -1, 0, 1][i % 4]};--p:${(d / n).toFixed(2)}" data-lp-e="${esc(e.id)}" aria-label="${esc(e.titel)}">
           <span class="ring"><span class="kern">${zu ? '🔒' : esc(e.emoji)}</span></span>${fertig ? '<span class="krone">👑</span>' : ''}
           <span class="lbl">${esc(e.titel)}</span>${jetzt ? `<span class="los">${d ? 'Weiter' : 'Start'}</span>` : ''}</button>`;
-      }).join('')}</div></div>`).join('') + '<p class="muted lp-mehr">Weitere Abschnitte (Mein Alltag, Unterwegs, Erlebnisse) kommen bald.</p>';
+      }).join('')}</div></div>`).join('') + `<button class="inselknopf" data-insel>🏝️ <b>Meine Insel</b><small>${inselZahl(lp)} Wörter wohnen schon dort</small></button>` + '<p class="muted lp-mehr">Weitere Abschnitte (Mein Alltag, Unterwegs, Erlebnisse) kommen bald.</p>';
+    box.querySelector('[data-insel]').onclick = () => { A.sfx('pop'); insel(lp); };
     box.querySelectorAll('[data-lp-e]').forEach((b) => b.onclick = () => {
       const e = lpEinheiten(lp).find((x) => x.id === b.dataset.lpE);
       if (b.classList.contains('zu')) { A.sfx('soft'); b.classList.remove('wiggle'); void b.offsetWidth; b.classList.add('wiggle'); rubySay(el, 'Diese Einheit öffnet sich, wenn du die davor geschafft hast. Du schaffst das! 💪', 'talk'); return; }
       A.sfx('pop'); A.vibrate(20); einheitSeite(lp, e);
     });
+  }
+  const einheitFertig = (lp) => (e) => lpDone(e) >= PK.lektionenFuer(lp.sprache).length;
+  const inselZahl = (lp) => PK.inselDinge(lp, einheitFertig(lp)).length;
+  /** Meine Insel: alle Wörter fertiger Einheiten als Dinge – frei verschieben, antippen = hören. Ruby stellt Suchfragen. */
+  function insel(lp) {
+    const L = PK.LANGS[lp.sprache]; const dinge = PK.inselDinge(lp, einheitFertig(lp));
+    const pos = state.insel[lp.sprache] = state.insel[lp.sprache] || {};
+    dinge.forEach((d, i) => { if (!pos[d.id]) { const p = PK.wimmelPlaetze(dinge.length, 99)[i]; pos[d.id] = { x: p.x, y: p.y }; } });
+    const el = screen(`<div>
+      <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:24px">🏝️ Meine Insel</div><div class="spacer"></div>${dinge.length >= 4 ? '<button class="btn small blue" data-such>🔍 Ruby fragt</button>' : ''}</div>
+      ${ruby(dinge.length ? 'Das ist deine Insel! Jedes Wort, das du gelernt hast, wohnt hier. Zieh die Dinge, wohin du willst – und tipp sie an!' : 'Deine Insel ist noch leer. Schaff deine erste Einheit im Lernpfad – dann ziehen die Wörter hier ein! 🌱')}
+      <div class="insel" data-insel>${dinge.map((d) => `<button class="iding" data-id="${esc(d.id)}" style="left:${pos[d.id].x}%;top:${pos[d.id].y}%">${esc(d.img)}<span class="wlabel" hidden><b>${esc(d.z)}</b><small>${esc(d.de)}</small></span></button>`).join('')}</div></div>`);
+    el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); save(); home(); };
+    const feld = el.querySelector('[data-insel]'); let suche = null;
+    el.querySelectorAll('.iding').forEach((b) => {
+      const d = dinge.find((x) => x.id === b.dataset.id);
+      b.onpointerdown = (ev) => {
+        ev.preventDefault(); const r = feld.getBoundingClientRect(); let moved = false; const sx = ev.clientX; const sy = ev.clientY;
+        const mv = (e2) => { if (Math.abs(e2.clientX - sx) + Math.abs(e2.clientY - sy) < 6) return; moved = true;
+          const x = Math.max(4, Math.min(96, (e2.clientX - r.left) / r.width * 100)); const y = Math.max(6, Math.min(94, (e2.clientY - r.top) / r.height * 100));
+          b.style.left = x + '%'; b.style.top = y + '%'; pos[d.id] = { x: Math.round(x), y: Math.round(y) }; };
+        const up = () => {
+          window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up);
+          if (moved) { A.sfx('pop'); save(); return; }
+          if (suche) { if (d.id === suche.id) { A.sfx('right'); confetti(25); rubySay(el, `Super! <b>${esc(d.z)}</b> 🎉`, 'dance'); suche = null; setTimeout(() => { if (alive(tok)) frage(); }, 1300); } else { A.sfx('soft'); rubySay(el, 'Nein, such weiter! 👀', 'talk'); if (L.who) speak(PK.sprechbar(suche.z), L.who); } return; }
+          A.sfx('tap'); b.classList.remove('hupf'); void b.offsetWidth; b.classList.add('hupf');
+          const lab = b.querySelector('.wlabel'); lab.hidden = false; setTimeout(() => { if (alive(tok)) lab.hidden = true; }, 2000);
+          if (L.who) speak(PK.sprechbar(d.z), L.who);
+        };
+        window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up);
+      };
+    });
+    const tok = token; let n = 0;
+    const frage = () => { if (n >= 5) { rubySay(el, 'Du kennst deine Insel super! 🏆', 'dance'); A.sfx('fanfare'); confetti(60); n = 0; return; } n++; suche = dinge[Math.floor(Math.random() * dinge.length)]; rubySay(el, `Wo ist … 🔊 (${n}/5)`, 'talk'); if (L.who) speak(PK.sprechbar(suche.z), L.who); else rubySay(el, `Wo ist <b>${esc(suche.z)}</b>? (${n}/5)`, 'talk'); };
+    const sb = el.querySelector('[data-such]'); if (sb) sb.onclick = () => { A.sfx('pop'); n = 0; frage(); };
   }
   function einheitSeite(lp, e) {
     const L = PK.LANGS[lp.sprache]; const ls = PK.lektionenFuer(lp.sprache); const d = lpDone(e);
@@ -1271,21 +1308,145 @@
       ${ruby(krone ? `Du hast die Einheit „${esc(e.titel)}“ geschafft! Hier ist deine Krone! 👑` : `Lektion „${esc(ls[k].t)}“ geschafft!${run.total ? ` ${run.first} von ${run.total} gleich beim ersten Mal richtig.` : ''}${goal ? ' Und dein Wochenziel ist erreicht! 🏆' : ''}`, 'dance')}
       <div class="stamp">${krone ? '👑' : ls[k].e}</div>
       <div class="bigstars">${[0, 1, 2].map((x) => `<span style="animation-delay:${0.5 + x * 0.25}s">${x < sterne ? '⭐' : '☆'}</span>`).join('')}</div>
-      ${krone ? `<div class="card center"><b>Das kannst du jetzt:</b><br>${esc(e.ziel)}</div>` : ''}
+      ${krone ? `<div class="card center"><b>Das kannst du jetzt:</b><br>${esc(e.ziel)}<br><br>🏝️ ${e.woerter.length} neue Bewohner ziehen auf deine Insel!</div>` : ''}
       <div class="row center"><button class="btn white" data-unit>Zur Einheit</button><button class="btn blue" data-next>${k + 1 < n ? 'Nächste Lektion ➜' : 'Zum Lernpfad 🗺️'}</button></div></div>`);
     setTimeout(() => { A.sfx(krone ? 'fanfare' : 'stamp'); A.vibrate(40); confetti(krone ? 150 : 70); }, 250);
     el.querySelector('[data-unit]').onclick = () => { A.sfx('tap'); einheitSeite(lp, e); };
     el.querySelector('[data-next]').onclick = () => { A.sfx('pop'); if (k + 1 < n) lektionStarten(lp, e, k + 1); else home(); };
   }
   /** Spielarten des Lernpfads ohne Karte: Kennenlernen, Regel entdecken, Nachsprechen, Geschichte. */
-  function lpSchritt(pack, L, step, frac, resolve, say) {
+  function lpSchritt(pack, L, step, frac, resolve, say, run) {
     const e = pack.einheit;
-    const titel = { neu: '🌱 Neue Wörter', regel: '💡 Regel entdecken', sprechen: '🎤 Sprich nach!', geschichte: '📖 ' + esc(e.geschichte.titel) }[step.mode];
-    const sub = { neu: 'Tipp jede Karte an: hören und umdrehen!', regel: esc(e.regel.titel), sprechen: 'Erst anhören, dann nachsprechen.', geschichte: 'Hör zu! Tipp auf eine Sprechblase, dann siehst du die Übersetzung.' }[step.mode];
+    const titel = { neu: '🌱 Neue Wörter', regel: '💡 Regel entdecken', sprechen: '🎤 Sprich nach!', geschichte: '📖 ' + esc(e.geschichte.titel), wimmel: '🔍 Wimmelbild', tpr: '🖐️ Mach, was ich sage!', lehrer: '🎓 Ruby lernt von dir' }[step.mode];
+    const sub = { neu: 'Tipp jede Karte an: hören und umdrehen!', regel: esc(e.regel.titel), sprechen: 'Erst anhören, dann nachsprechen.', geschichte: 'Hör zu! Tipp auf eine Sprechblase, dann siehst du die Übersetzung.', wimmel: 'Entdecke alle neuen Wörter im Bild!', tpr: 'Hör zu und zieh das Richtige zur richtigen Person!', lehrer: 'Ruby hat einen Fehler gemacht. Findest du ihn?' }[step.mode];
     const el = packFrame(pack, frac, titel, sub); const tk = token;
     el.querySelector('[data-quit]').onclick = () => resolve('quit');
     const body = el.querySelector('[data-body]');
     const weiterKnopf = (txt, hidden) => `<div class="row center"><button class="btn blue" data-weiter${hidden ? ' hidden' : ''}>${txt}</button></div>`;
+    const wertung = (ok) => { run.total++; if (ok) run.first++; tally(pack.lang, ok); };
+    const figuren = (pack.lp && pack.lp.figuren) || {};
+
+    if (step.mode === 'wimmel') {
+      // Entdecken: alle Wörter verstecken sich im Bild. Antippen = hören + Deutsch. Danach: „Find …!“
+      const plaetze = PK.wimmelPlaetze(e.woerter.length, e.id.split('').reduce((a, ch) => a + ch.charCodeAt(0), 0));
+      const deko = ['🌳', '🌼', '☁️', '🪨', '🌿', '🍄'];
+      body.innerHTML = `<div class="wimmel" data-w>${deko.map((d, i) => `<span class="deko" style="left:${(i * 17 + 5) % 92}%;top:${i % 2 ? 6 : 88}%">${d}</span>`).join('')}
+        ${e.woerter.map(([z, de, img], i) => `<button class="wding" data-i="${i}" style="left:${plaetze[i].x}%;top:${plaetze[i].y}%;--d:${(i * 0.08).toFixed(2)}s" aria-label="Ding ${i + 1}">${esc(img)}<span class="wlabel" hidden><b>${esc(z)}</b><small>${esc(de)}</small></span></button>`).join('')}</div>
+        <div class="wimmel-stand" data-stand>0 von ${e.woerter.length} entdeckt</div>${weiterKnopf('Spiel starten ➜', true)}`;
+      const gefunden = new Set(); let phase = 'entdecken'; let ziel = -1; let runde = 0; let erster = true;
+      const ziele = shuffle(e.woerter.map((_, i) => i)).slice(0, Math.min(5, e.woerter.length));
+      const frage = () => { ziel = ziele[runde]; erster = true; rubySay(el, `Find … 🔊`); say(PK.sprechbar(e.woerter[ziel][0])); };
+      body.querySelectorAll('.wding').forEach((b) => b.onclick = async () => {
+        const i = +b.dataset.i; const [z] = e.woerter[i];
+        if (phase === 'entdecken') {
+          A.sfx('pop'); A.vibrate(10); b.classList.add('gefunden'); b.querySelector('.wlabel').hidden = false;
+          setTimeout(() => { if (alive(tk)) b.querySelector('.wlabel').hidden = true; }, 2200);
+          say(PK.sprechbar(z));
+          if (!gefunden.has(i)) {
+            gefunden.add(i); body.querySelector('[data-stand]').textContent = `${gefunden.size} von ${e.woerter.length} entdeckt`;
+            if (gefunden.size === e.woerter.length) { confetti(40); A.sfx('right'); body.querySelector('[data-weiter]').hidden = false; rubySay(el, 'Du hast alles entdeckt! 🎉 Jetzt spielen wir: Ich sage ein Wort – du findest es!', 'dance'); }
+          }
+          return;
+        }
+        if (i === ziel) {
+          A.sfx('right'); A.vibrate(25); b.classList.remove('hupf'); void b.offsetWidth; b.classList.add('hupf'); confetti(20); wertung(erster);
+          rubySay(el, `${['Super!', 'Richtig!', 'Klasse!'][runde % 3]} <b>${esc(z)}</b> = ${esc(e.woerter[i][1])}`, 'dance');
+          runde++; if (runde >= ziele.length) { await sleep(1100); if (alive(tk)) resolve('ok'); return; }
+          await sleep(1300); if (alive(tk)) frage();
+        } else { erster = false; A.sfx('soft'); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); rubySay(el, 'Hör noch mal! 👂', 'talk'); say(PK.sprechbar(e.woerter[ziel][0]), ); }
+      });
+      body.querySelector('[data-weiter]').onclick = () => {
+        A.sfx('whoosh'); phase = 'finden'; body.querySelector('[data-weiter]').hidden = true; body.querySelector('[data-stand]').textContent = 'Hör zu und tipp auf das Wort!';
+        body.querySelectorAll('.wlabel').forEach((x) => x.hidden = true); frage();
+      };
+      el.querySelector('[data-rubytext]') && rubySay(el, `${e.woerter.length} Wörter verstecken sich hier! Tipp alles an, was du siehst.`);
+      return;
+    }
+
+    if (step.mode === 'tpr') {
+      // Mach, was ich sage: Befehl hören, Ding(e) zur richtigen Figur ziehen (oder antippen, dann Figur antippen)
+      const a = step.aktion; const n = a.anzahl || 1;
+      const leute = Object.entries(figuren).filter(([id]) => !['brown', 'martin', 'garcia', 'ted'].includes(id) || id === a.an);
+      const zielLeute = shuffle([leute.find(([id]) => id === a.an)].concat(shuffle(leute.filter(([id]) => id !== a.an)).slice(0, 2)).filter(Boolean));
+      const andere = shuffle([...new Set((e.aktionen || []).map((x) => x.ding).concat(e.woerter.map((w) => w[2])).filter((d) => d !== a.ding))]).slice(0, 3);
+      const dinge = shuffle(Array.from({ length: n + (n > 1 ? 1 : 0) }, () => a.ding).concat(andere));
+      body.innerHTML = `<div class="tpr-befehl"><button class="speaker" data-play aria-label="Anhören">🔊</button><button class="slowbtn" data-slow aria-label="Langsam">🐢</button><span data-text class="tpr-text" hidden>${esc(a.sag)}</span></div>
+        <div class="tpr-leute">${zielLeute.map(([id, F]) => `<div class="tpr-person" data-an="${esc(id)}"><span class="e">${esc(F.emoji)}</span><b>${esc(F.name)}</b><span class="hand" data-hand></span></div>`).join('')}</div>
+        <div class="tpr-dinge">${dinge.map((d, i) => `<button class="tpr-ding" data-i="${i}" data-d="${esc(d)}"${DIAG && d === a.ding ? ' data-ok' : ''}>${esc(d)}</button>`).join('')}</div>
+        <button class="quiet" data-zeig>Ich habe es nicht verstanden – zeig mir den Satz</button>`;
+      const play = async (slow) => { const b = body.querySelector('[data-play]'); b.classList.add('playing'); await speak(a.sag, L.who, slow ? { slow: true } : null); if (alive(tk)) b.classList.remove('playing'); };
+      body.querySelector('[data-play]').onclick = () => { A.sfx('tap'); play(); };
+      body.querySelector('[data-slow]').onclick = () => { A.sfx('tap'); play(true); };
+      body.querySelector('[data-zeig]').onclick = () => { A.sfx('tap'); body.querySelector('[data-text]').hidden = false; body.querySelector('[data-zeig]').hidden = true; erster = false; play(true); };
+      let erster = true; let gegeben = 0; let gewaehlt = null; let fertig = false;
+      const geben = (btn, an) => {
+        if (fertig || !btn || btn.disabled) return;
+        const ok = btn.dataset.d === a.ding && an === a.an;
+        if (!ok) {
+          erster = false; A.sfx('soft'); btn.classList.remove('shake'); void btn.offsetWidth; btn.classList.add('shake');
+          rubySay(el, btn.dataset.d !== a.ding ? 'Hmm, das passt nicht. Hör noch mal genau hin! 👂' : 'Das richtige Ding – aber zu wem soll es? Hör noch mal! 👂', 'talk'); play(true); return;
+        }
+        btn.disabled = true; btn.classList.add('weg'); gegeben++; A.sfx('pop'); A.vibrate(15);
+        const hand = body.querySelector(`[data-an="${a.an}"] [data-hand]`); hand.textContent += a.ding; hand.classList.remove('popbig'); void hand.offsetWidth; hand.classList.add('popbig');
+        if (gegeben >= n) {
+          fertig = true; wertung(erster); A.sfx('right'); confetti(35);
+          body.querySelector('[data-text]').hidden = false;
+          rubySay(el, `Genau! <b>${esc(a.sag)}</b><br><small>${esc(a.de)}</small>`, 'dance');
+          setTimeout(() => { if (alive(tk)) resolve('ok'); }, 2000);
+        } else rubySay(el, `${gegeben} … weiter! 😊`, 'talk');
+      };
+      // Ziehen mit Finger/Maus; Antippen + Person antippen geht auch
+      body.querySelectorAll('.tpr-ding').forEach((b) => {
+        b.onclick = () => { if (b.disabled) return; body.querySelectorAll('.tpr-ding').forEach((x) => x.classList.remove('gewaehlt')); b.classList.add('gewaehlt'); gewaehlt = b; A.sfx('tap'); };
+        b.onpointerdown = (ev) => {
+          if (b.disabled) return; ev.preventDefault();
+          const r = b.getBoundingClientRect(); const dx = ev.clientX - r.left; const dy = ev.clientY - r.top; let moved = false;
+          const ghost = b.cloneNode(true); ghost.className = 'tpr-ding ghost'; ghost.style.left = r.left + 'px'; ghost.style.top = r.top + 'px'; document.body.appendChild(ghost);
+          const mv = (e2) => { moved = true; ghost.style.left = (e2.clientX - dx) + 'px'; ghost.style.top = (e2.clientY - dy) + 'px'; };
+          const up = (e2) => {
+            window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up); ghost.remove();
+            if (!moved) { b.onclick(); return; }
+            const ziel = document.elementsFromPoint(e2.clientX, e2.clientY).find((x) => x.dataset && x.dataset.an);
+            if (ziel) geben(b, ziel.dataset.an);
+          };
+          window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up);
+        };
+      });
+      body.querySelectorAll('.tpr-person').forEach((p) => p.onclick = () => { if (gewaehlt) { geben(gewaehlt, p.dataset.an); gewaehlt && gewaehlt.classList.remove('gewaehlt'); gewaehlt = null; } else { A.sfx('tap'); rubySay(el, 'Erst ein Ding antippen oder ziehen!', 'talk'); } });
+      rubySay(el, 'Hör gut zu! 👂');
+      setTimeout(() => { if (alive(tk)) play(); }, 300);
+      return;
+    }
+
+    if (step.mode === 'lehrer') {
+      // Ruby lernt von dir: Fehler im Satz finden, richtiges Wort beibringen. Der falsche Satz wird NICHT vorgesprochen.
+      const f = step.fehler; const teile = PK.fehlerTeile(f);
+      body.innerHTML = `<div class="lehrer-tafel"><span class="tafel-ruby">🦜</span><div class="tafel-satz">${teile.map((x, i) => `<button class="tafel-wort" data-i="${i}"${DIAG && x.falsch ? ' data-ok' : ''}>${esc(x.t)}</button>`).join(' ')}</div></div>
+        <div class="opts" data-opts hidden></div>`;
+      let erster = true; let phase = 'finden';
+      body.querySelectorAll('.tafel-wort').forEach((b) => b.onclick = () => {
+        if (phase !== 'finden') return;
+        if (teile[+b.dataset.i].falsch) {
+          phase = 'korrigieren'; A.sfx('pop'); b.classList.add('falsch');
+          const opts = shuffle([f.korrektur].concat(f.choices || []));
+          const box = body.querySelector('[data-opts]'); box.hidden = false;
+          box.innerHTML = opts.map((o, i) => `<button class="opt" data-o="${i}"${DIAG && o === f.korrektur ? ' data-ok' : ''}>${esc(o)}</button>`).join('');
+          rubySay(el, 'Oh! Da habe ich mich vertan. Was ist richtig? 🤔', 'talk');
+          box.querySelectorAll('.opt').forEach((o) => o.onclick = async () => {
+            if (o.disabled) return;
+            if (opts[+o.dataset.o] === f.korrektur) {
+              phase = 'fertig'; box.querySelectorAll('.opt').forEach((x) => x.disabled = true); o.classList.add('sel');
+              b.textContent = b.textContent.replace(f.wort, f.korrektur); b.classList.remove('falsch'); b.classList.add('richtig');
+              A.sfx('right'); A.vibrate(25); confetti(40); wertung(erster);
+              rubySay(el, `Danke, das merke ich mir! 🎓<br><small>💡 ${esc(f.tipp)}</small>`, 'dance');
+              await say(f.richtig); await sleep(1400); if (alive(tk)) resolve('ok');
+            } else { erster = false; o.classList.add('no'); o.disabled = true; A.sfx('soft'); rubySay(el, `Hmm, ${esc(opts[+o.dataset.o])}? Ich glaube, das stimmt auch nicht …`, 'talk'); }
+          });
+        } else { erster = false; A.sfx('soft'); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); rubySay(el, `„${esc(b.textContent)}“ ist richtig. Such weiter! 🔍`, 'talk'); }
+      });
+      rubySay(el, 'Ich übe auch! Aber in meinem Satz ist ein Fehler. Tipp auf das falsche Wort!');
+      return;
+    }
 
     if (step.mode === 'neu') {
       body.innerHTML = `<div class="neu-grid">${e.woerter.map(([z, de, img], i) => `<button class="neu-karte" data-i="${i}" style="--d:${(i * 0.06).toFixed(2)}s">
