@@ -1,7 +1,7 @@
 # Familien-Speicher (gemeinsame Bibliothek)
 
 `familie.js` ist eine **unveränderte Kopie** der gemeinsamen Client-Bibliothek aller Lern-Apps (Quelle: Mathe-Trainer,
-Stand `1f4b377`, sha256 der Originaldatei `3016aabd…`). Neue Versionen kommen über die AppZentrale; dann Datei ersetzen,
+Stand `e9993ec`, sha256 der Originaldatei `3f7ec567…`). Neue Versionen kommen über die AppZentrale; dann Datei ersetzen,
 erste Zeile (Versionskommentar) anpassen und die Tests laufen lassen:
 
 ```
