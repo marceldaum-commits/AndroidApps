@@ -226,6 +226,9 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
     // Elternbereich nur hinter dem Eltern-Tor (dort stehen Angebote für Eltern – nie für Kinder sichtbar)
     var parentGate by remember { mutableStateOf(false) }
     if (parentGate) de.kurvenflug.app.ui.pro.ParentGate(onDismiss = { parentGate = false }, why = "Der Elternbereich ist für Erwachsene.") { parentGate = false; platform.count("elternbereich"); nav.goOnce(Routes.PARENT) }
+    // Pro-Seite (mit Preis) nur hinter dem Eltern-Tor – nie direkt aus einer Kinderansicht
+    var proGate by remember { mutableStateOf(false) }
+    if (proGate) de.kurvenflug.app.ui.pro.ParentGate(onDismiss = { proGate = false }, why = "Die Pro-Seite ist für Erwachsene.") { proGate = false; nav.goOnce(Routes.PRO) }
     // Monatssummen dauerhaft fortschreiben (Eltern-Bericht „verlauf“; die einzelnen Durchgänge hält die App nur 60 Tage)
     val allPlays by remember { vm.weekPlays(0L) }.collectAsStateWithLifecycle(emptyList())
     var months by remember { mutableStateOf(de.kurvenflug.core.model.MonthSums.parse(vm.settings.monthSums)) }
@@ -352,7 +355,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
             // Pro-Inhalt ohne Pro (nur wenn ein Kaufweg angeboten wird): stattdessen die Pro-Seite
             val ps = LocalPro.current
             if (!de.kurvenflug.core.model.Pro.open(id, ps.pro, ps.locking, allStars)) {
-                de.kurvenflug.app.ui.pro.ProScreen(ps, platform.proShop, onCode = vm.settings::setProCode, onBack = { nav.popSafe() }, locked = true)
+                de.kurvenflug.app.ui.pro.ProLockedNotice(onBack = { nav.popSafe() }, onParents = { parentGate = true })
                 return@composable
             }
             val chapter = (if (de.kurvenflug.core.model.Andromeda.isAndromeda(id)) de.kurvenflug.core.model.Andromeda.chapter(id.removePrefix(de.kurvenflug.core.model.Andromeda.PREFIX).substringBefore('-').toInt()) else null)
@@ -556,7 +559,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 update = upd?.let { UpdateState.Available(it) } ?: UpdateState.Idle,
                 onBack = { nav.popSafe() },
                 onReset = vm::resetAll,
-                onPro = if (platform.proShop != null) ({ nav.goOnce(Routes.PRO) }) else null,
+                onPro = if (platform.proShop != null) ({ proGate = true }) else null,
                 voltVoice = vm.settings.voltVoice.collectAsStateWithLifecycle().value, onVoltVoice = vm.settings::setVoltVoice,
                 readAloud = vm.settings.readAloud.collectAsStateWithLifecycle().value, onReadAloud = vm.settings::setReadAloud,
                 readSpeed = vm.settings.readSpeed.collectAsStateWithLifecycle().value, onReadSpeed = vm.settings::setReadSpeed,

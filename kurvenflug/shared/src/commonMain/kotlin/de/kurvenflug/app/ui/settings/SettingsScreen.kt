@@ -74,7 +74,7 @@ fun SettingsScreen(
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     val shop = de.kurvenflug.app.LocalPro.current.locking
-                    if (shop) Text("Kurvenflug ist kostenlos bis Klasse 10. Optional gibt es „Kurvenflug Pro“ als Einmalkauf ohne Abo " +
+                    if (shop) Text("KurvenFlug ist kostenlos (alle Kapitel, Klasse 5–10). Optional gibt es „Kurvenflug Pro“ als Einmalkauf ohne Abo " +
                         "(Extrem-Stufen, Andromeda, mehr Spieler). Kaufen kann man nur nach einer Frage für Erwachsene.", style = MaterialTheme.typography.bodySmall)
                     val nova = readAloudAvailable
                     Text(if (platform.isWeb) "Kurvenflug speichert den Spielstand nur hier in diesem Browser. Keine Anmeldung, keine Werbung, " +
