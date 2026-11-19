@@ -48,7 +48,8 @@
     5. Ziel nicht erreichbar: keine Weiterleitung, nichts gesendet.
   - Außerdem grün: `web-sprachen.cjs`, `web-paket.cjs`, core:model und content.
   - Safari-Abhilfe: 937 abgesichert, 0 Endaufrufe.
-  - Noch offen: echter Rundlauf wissensgarten-test → lernen-test, sobald 2.3.0 auf test ist.
+  - **Echter Rundlauf auf der Test-Stufe (19.11., ohne echte Kinderdaten, Testprofil „Testkind“):** wissensgarten-test.… mit Lernstand und `#paket=gs-tiere` → lernen-test.…/wissensgarten/. Server: PUT 204, GET 200, DELETE 204. Profil und ausgeblendetes Sprach-Beet sind angekommen, gs-tiere wurde gepflanzt, `wg.umzug.offen` ist leer, die Wasm-Bildprüfung unter dem Pfad /wissensgarten/ meldet „Garten sichtbar ✓“. Die Testdaten auf lernen-test sind danach gelöscht.
+  - „Zu Quasselquest“: lernen-test.…/quasselquest/ und lernen.…/quasselquest/ antworten mit 200.
 - **Rückweg:** 2.2.19 (Commit 40c6926). Die Umzugs-Logik steckt nur in `index.html` (Skript vor dem Lader); ohne sie läuft alles wie vorher.
 
 ## 2.2.19 – Sprachen an Quasselquest (19.11.2026, Entscheidungen Marcel über die AppZentrale)
