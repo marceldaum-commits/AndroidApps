@@ -245,7 +245,7 @@
       ${packTiles()}
       ${en ? `<div class="section-h">Weitere Orte auf der Reise</div>
       <div class="worlds">${C.worlds.slice(1).map((w) => `<button class="wtile" data-world="${w.id}"><span class="soon">kommt bald</span><span class="e">${w.emoji}</span><b>${esc(w.title)}</b><small>${esc(w.de)} · ${w.stufe === 'gs' ? 'Kl. 3–4' : 'Kl. 5–6'}</small></button>`).join('')}</div>` : ''}
-      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · <a href="datenschutz.html">Datenschutz</a> · <a href="lizenzen.txt">Stimmen &amp; Lizenzen</a> · <button class="linkbtn" data-kids-home>🔒 Deine Daten</button></div>
+      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · <a href="datenschutz.html">Datenschutz</a> · <a href="lizenzen.txt">KI-Stimmen &amp; Lizenzen</a> · <button class="linkbtn" data-kids-home>🔒 Deine Daten</button></div>
     </div>`);
     el.querySelector('[data-kids-home]').onclick = () => { A.sfx('tap'); kidsPrivacy(home); };
     el.querySelector('[data-allapps]').onclick = () => { A.sfx('tap'); elternTor(openAllApps, 'Hier geht es zur Website.'); };
@@ -304,7 +304,7 @@
       <div class="ep-top"><button class="iconbtn" data-quit aria-label="Beenden">✕</button>
         <div class="progress"><i style="width:${Math.round(frac * 100)}%"></i></div>
         <button class="iconbtn" data-explain aria-label="Ruby erklärt">💡</button></div>
-      ${inner}</div>`);
+      ${inner}<div class="ki-hinweis">🤖 KI-generierte Stimme</div></div>`);
     requestAnimationFrame(() => { const i = el.querySelector('.progress > i'); if (i) i.style.width = Math.round(frac * 100 + 6) + '%'; });
     el.querySelector('[data-explain]').onclick = () => { A.sfx('tap'); explain(run.ep); };
     return el;
@@ -1074,7 +1074,7 @@
       <div class="ep-top"><button class="iconbtn" data-quit aria-label="Beenden">✕</button>
         <div class="progress"><i style="width:${Math.round(frac * 100)}%"></i></div><span class="pill">${pack.emoji}</span></div>
       <div class="game-title">${title}<small>${sub}</small></div>
-      <div data-body class="stage" style="min-height:0"></div>${ruby('', '')}</div>`);
+      <div data-body class="stage" style="min-height:0"></div>${ruby('', '')}${PK.LANGS[pack.lang].who ? '<div class="ki-hinweis">🤖 KI-generierte Stimme</div>' : ''}</div>`);
     requestAnimationFrame(() => { const i = el.querySelector('.progress > i'); if (i) i.style.width = Math.round(frac * 100 + 8) + '%'; });
     return el;
   }

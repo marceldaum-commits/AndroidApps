@@ -190,6 +190,21 @@ for (const [name, type, opts] of [
     await page.click('[data-lp-e="en-1-1"]'); await page.waitForSelector('.lp-lektion.jetzt'); await page.click('.lp-lektion.jetzt');
     ok(await playPackRound(page, null, null), 'Lernpfad Englisch Lektion 1 durchgespielt');
     await page.click('[data-unit]'); await page.click('[data-back]'); await page.waitForSelector('.world');
+    // Latein (ohne Stimme): Einheit 1 komplett – Wimmelbild und Befehle zum Lesen, Fehler finden, Geschichte
+    await page.click('[data-lang="la"]'); await page.waitForSelector('[data-lp-e="la-1-1"]');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'lernpfad_la');
+    await page.click('[data-lp-e="la-1-1"]'); await page.waitForSelector('.lp-lektion.jetzt');
+    ok(await page.$$eval('.lp-lektion', (x) => x.length) === 5, 'Latein: 5 Lektionen (auch „Ruby lernt von dir“ ohne Sprechen)');
+    for (let l = 0; l < 5; l++) {
+      await page.click('.lp-lektion.jetzt');
+      const gut = await playPackRound(page, null, FOTOS && name === 'chromium_handy' ? 'la_lp' + (l + 1) : null);
+      ok(gut, `Lernpfad la-1-1 Lektion ${l + 1} durchgespielt`);
+      if (!gut) break;
+      await page.click('[data-unit]'); await page.waitForSelector('.lp-lektionen');
+    }
+    ok((await page.evaluate(() => window.quasselTest.state().lp))['la-1-1'] === 5, 'Einheit la-1-1 fertig gespeichert');
+    await page.click('[data-back]'); await page.waitForSelector('[data-lp-e="la-1-2"]');
+    await page.click('[data-lang="en"]'); await page.waitForSelector('.world');
     // Klassenarbeits-Generalprobe: Test eintragen (erst mit Fehler), Lernplan, Generalprobe mit Auswertung
     await page.click('[data-lang="en"]'); await page.waitForSelector('[data-test-new]'); await page.click('[data-test-new]');
     await page.click('[data-save]');

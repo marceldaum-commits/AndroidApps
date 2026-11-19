@@ -240,7 +240,7 @@
   };
 
   // ------------------------------------------------------------------ Lernpfad „Neu lernen“ (siehe LERNPFAD.md)
-  P.LERNPFAD = ['en', 'fr', 'es'];
+  P.LERNPFAD = ['en', 'fr', 'es', 'la'];
   P.LEKTIONEN = [
     { t: 'Entdecken', e: '🔍', sub: 'Wimmelbild: Wörter finden und hören' },
     { t: 'Mach, was ich sage!', e: '🖐️', sub: 'Befehle verstehen, Wörter bauen' },

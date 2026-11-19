@@ -388,6 +388,20 @@
    "karten": 36
   },
   {
+   "id": "s1-spanisch-alltag",
+   "sprache": "es",
+   "version": 1,
+   "title": "Spanisch im Alltag",
+   "emoji": "🛍️",
+   "grades": [
+    6,
+    7,
+    8
+   ],
+   "description": "Wörter für Schule, Freizeit, Essen und Stadt – mal Deutsch → Spanisch, mal Spanisch → Deutsch.",
+   "karten": 35
+  },
+  {
    "id": "s1-spanisch-grammatik",
    "sprache": "es",
    "version": 1,

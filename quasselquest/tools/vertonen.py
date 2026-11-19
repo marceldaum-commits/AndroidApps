@@ -90,7 +90,10 @@ def sprich(voice, text, tempo, ton, ziel):
         # leise Ränder kürzen, Lautstärke angleichen, mono 22 kHz, MP3 40 kbit/s
         subprocess.check_call(['ffmpeg', '-v', 'error', '-y', '-i', w.name,
                                '-af', filt + 'silenceremove=start_periods=1:start_threshold=-50dB,areverse,silenceremove=start_periods=1:start_threshold=-50dB,areverse,loudnorm=I=-18:TP=-2,apad=pad_dur=0.12',
-                               '-ac', '1', '-ar', '22050', '-c:a', 'libmp3lame', '-b:a', '40k', ziel])
+                               '-ac', '1', '-ar', '22050', '-c:a', 'libmp3lame', '-b:a', '40k',
+                               # KI-VO Art. 50 Abs. 2: maschinenlesbar als KI-generiert gekennzeichnet
+                               '-id3v2_version', '3', '-metadata', 'comment=KI-generiert (synthetische Stimme, Piper TTS)',
+                               '-metadata', 'encoded_by=Quasselquest (KI-generierte Stimme)', ziel])
 
 
 # ---------------------------------------------------------------- Hörprüfung (Whisper, nur beim Bauen)
