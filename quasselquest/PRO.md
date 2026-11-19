@@ -28,3 +28,4 @@ Sicherung/Kopplung immer; Nachhilfe-Hinweis für alle Sprachen. Mein Schulbuch g
 ## Recht (19.11.): freigegeben mit Auflagen
 - Schloss-Text in der Kinderansicht NUR: „Das gehört zu Quasselquest Pro.“ (ohne Zusatz zu den Eltern). Der Weg zum Freischalten liegt im Elternbereich hinter dem Tor.
 - Kaufschutz wie geplant. AGB § 13 und Information der Plus-Käufer erledigen Leitstand/Marcel; Shop bleibt bis dahin privat.
+- **Bestätigt von Marcel (ELTERN-TOR.md aktualisiert, gilt für alle Apps):** Schloss nur „Das gehört zu Quasselquest Pro.“; der Weg ins Tor über einen neutralen Knopf „Für Eltern“.
