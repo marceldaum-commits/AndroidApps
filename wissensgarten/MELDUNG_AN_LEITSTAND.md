@@ -39,7 +39,16 @@
   - Plus-Endpunkt bleibt absolut `https://wissensgarten.mathenachhilfe-online.com/wg-api/plus/` und braucht CORS für lernen(-test). Bitte bestätigen.
 - **Eigener Deeplink** jetzt `https://lernen.mathenachhilfe-online.com/wissensgarten/#paket=<ID>`. Die alte Form leitet mit `#paket=` weiter.
 - **Datenschutz-Text** in der App: neuer Abschnitt „Umzug auf die gemeinsame Adresse“. Bitte auch die Datenschutzerklärung auf der Website ergänzen.
-- **Belege:** siehe unten (Browser-Test `webApp/tools/web-umzug.cjs`).
+- **Belege, alle grün:**
+  - `webApp/tools/web-umzug.cjs` mit zwei getrennten Ursprüngen (alt :8812, neu :8813) und nachgebildetem Sicherungs-Server, 5 Fälle:
+    1. Gelingt: Profil, Beete inklusive ausgeblendetem Sprach-Beet, Karten, Lernprotokoll und Merkbild kommen an. `#paket=` wird danach auf der neuen Adresse ausgeführt. Ablauf PUT → GET → DELETE, danach liegt nichts mehr auf dem Server. Die alte Adresse behält ihre Daten.
+    2. Offline: keine Weiterleitung, die App startet, kein Merker gesetzt.
+    3. Ziel hat schon einen Garten: Er bleibt unverändert, die Sicherung wird trotzdem gelöscht.
+    4. Ohne Lernstand: direkt weiter, nichts gesendet.
+    5. Ziel nicht erreichbar: keine Weiterleitung, nichts gesendet.
+  - Außerdem grün: `web-sprachen.cjs`, `web-paket.cjs`, core:model und content.
+  - Safari-Abhilfe: 937 abgesichert, 0 Endaufrufe.
+  - Noch offen: echter Rundlauf wissensgarten-test → lernen-test, sobald 2.3.0 auf test ist.
 - **Rückweg:** 2.2.19 (Commit 40c6926). Die Umzugs-Logik steckt nur in `index.html` (Skript vor dem Lader); ohne sie läuft alles wie vorher.
 
 ## 2.2.19 – Sprachen an Quasselquest (19.11.2026, Entscheidungen Marcel über die AppZentrale)
