@@ -102,6 +102,8 @@ async function playPackRound(page, packId, shot) {
   return ok;
 }
 const shotDone = new Set();
+async function torTippen(page, zahl) { for (const z of String(zahl)) await page.click(`.tor-taste[data-z="${z}"]`); await page.click('.tor-taste[data-ok]'); }
+async function torLoesen(page) { if (!(await page.$('.tor'))) return; const l = await page.getAttribute('.tor', 'data-loesung'); await torTippen(page, l); }
 let snapN = 0; let curName = '';
 async function snap(page, name) { if (!FOTOS) return; await wait(450); await page.screenshot({ path: `${shots}${curName}_${String(++snapN).padStart(2, '0')}_${name}.png` }); }
 
@@ -221,13 +223,17 @@ for (const [name, type, opts] of [
     await page.route('**/zaehler/v1/e', (r) => r.fulfill({ status: 204, body: '' }));   // in WebKit nicht immer wirksam – gezählt wird über 'request'
     await page.evaluate(() => { const st = window.quasselTest.state(); const d = window.PAKETE.today(); st.tage.fr = { [d]: [12, 4] }; });
     ok(!(await page.$('.hint-card')), 'Kein Nachhilfe-Hinweis im Kinderbereich');
-    await page.click('[data-settings]'); await snap(page, 'einstellungen');
+    await page.click('[data-settings]');
+    await page.waitForSelector('.tor'); const l0 = await page.getAttribute('.tor', 'data-loesung'); await torTippen(page, +l0 + 1);
+    const l1 = await page.getAttribute('.tor', 'data-loesung');
+    ok((await page.textContent('.tor [data-err]')).includes('neue Aufgabe') && /\w+ mal \w+/.test(await page.textContent('[data-aufgabe]')), 'Eltern-Tor: Aufgabe in Worten, nach einem Fehler sofort neue Aufgabe');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'eltern_tor');
+    await torTippen(page, l1); await page.waitForSelector('[data-parents]'); await snap(page, 'einstellungen');
     await page.click('[data-kids]'); ok((await page.textContent('#app')).includes('kein Konto'), 'Datenschutz in Kindersprache erreichbar');
     if (FOTOS && name === 'chromium_handy') await snap(page, 'daten_kinder');
     await page.click('[data-back]'); await page.waitForSelector('[data-parents]');
-    await page.click('[data-parents]'); await page.fill('.modal input', '2015'); await page.click('.modal [data-ok]');
-    ok((await page.textContent('.modal .err')).includes('Erwachsene'), 'Eltern-Tor hält Kinder ab');
-    await page.fill('.modal input', '1985'); await page.click('.modal [data-ok]'); await page.waitForSelector('input[name=rec]');
+    await page.click('[data-parents]'); await torLoesen(page);
+    await page.waitForSelector('input[name=rec]'); ok(true, 'Elternbereich ohne zweite Aufgabe (Tor 10 Minuten offen)');
     ok((await page.getAttribute('[data-probe-ka]', 'href') || '').includes('src=quasselquest-klassenarbeit&thema=englisch'), 'Hinweis „Arbeit in 5 Tagen“ im Elternbereich, Link mit src=klassenarbeit');
     ok(!!(await page.$('.hint-card')) && (await page.getAttribute('[data-probe]', 'href')).includes('src=quasselquest-elternbericht&thema=franzoesisch'), 'Nachhilfe-Hinweis im Elternbereich (Französisch hakt), Link mit src/thema/klasse');
     for (let w = 0; w < 30 && !(calls.some((c) => c.ev === 'elternbereich') && calls.some((c) => c.ev === 'nachhilfe_hinweis' && c.thema === 'franzoesisch') && calls.some((c) => c.ort === 'klassenarbeit')); w++) await page.waitForTimeout(200);   // WebKit meldet Anfragen verzögert
@@ -237,7 +243,7 @@ for (const [name, type, opts] of [
     await page.click('[data-hide-ka]'); await page.waitForSelector('input[name=rec]');
     ok(!(await page.$('.hint-card')), 'Hinweise ausgeblendet');
     await page.click('[data-sw="zaehlung"]'); await page.waitForTimeout(1500); const n0 = calls.length;
-    await page.click('[data-back]'); await page.click('[data-parents]'); await page.fill('.modal input', '1985'); await page.click('.modal [data-ok]'); await page.waitForSelector('input[name=rec]'); await page.waitForTimeout(1500);
+    await page.click('[data-back]'); await page.click('[data-parents]'); await torLoesen(page); await page.waitForSelector('input[name=rec]'); await page.waitForTimeout(1500);
     ok(calls.length === n0, 'Zählung aus → kein Aufruf');
     await page.click('[data-sw="zaehlung"]');
     await snap(page, 'eltern');

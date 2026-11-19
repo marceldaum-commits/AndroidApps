@@ -140,7 +140,8 @@
       const fin = () => { if (done) return; done = true; clearTimeout(t); if (current === src) current = null; if (speakDone === fin) speakDone = null; ok(true); };
       const t = setTimeout(fin, b.duration * 1000 + 1500);
       src.onended = fin; speakDone = fin; current = src;
-      src.start(0); A.played = (A.played || 0) + 1;
+      // 0,12 s Vorlauf: Lautsprecher und Bluetooth-Kopfhörer verschlucken sonst gern den ersten Laut („Three“ → „ree“)
+      src.start(c.currentTime + 0.12); A.played = (A.played || 0) + 1;
     });
   }
   function deviceSay(text, opts) {

@@ -435,3 +435,56 @@ a.btn { text-decoration: none; }
 .chat-zeile .wer .mini-ruby { width: 40px; height: 40px; }
 .insel .iding { font-size: 36px; }
 .insel { background: radial-gradient(ellipse at 50% 50%, #f6e3a1 0 62%, #8fd3f5 63% 100%); }
+.tor-aufgabe { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 22px; margin: 6px 0; }
+.tor-eingabe { text-align: center; font-size: 30px; font-weight: 900; letter-spacing: 4px; background: #f3f8fc; border-radius: 14px; padding: 6px; min-height: 48px; }
+.tor-tasten { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+.tor-taste { font-size: 24px; font-weight: 800; padding: 12px 0; border-radius: 14px; background: #fff; box-shadow: 0 4px 0 #c7d6e3; }
+.tor-taste.ok { background: #2b8fd6; color: #fff; box-shadow: 0 4px 0 #1d6aa3; }
+.linkbtn { background: none; color: inherit; text-decoration: underline; font: inherit; padding: 0; }
+
+/* ---------- Große Bildschirme (PC, Vollbild): breitere Seite, zwei Spalten, Hafen-Szene an den Rändern ---------- */
+@media (min-width: 1100px) {
+  #app { max-width: 1280px; padding-left: 32px; padding-right: 32px; }
+  .ruby { width: 140px; height: 140px; }
+  .bubble { font-size: 20px; padding: 16px 20px; }
+  .title { font-size: 36px; }
+  /* Startseite: zwei Spalten – links Hafen und Pakete, rechts der Lernpfad */
+  .home { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); column-gap: 32px; align-items: start; }
+  .home > * { grid-column: 1 / -1; }
+  .home > .world { grid-column: 1; }
+  .home > [data-lp] { grid-column: 2; grid-row: span 12; position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow: auto; padding: 0 6px 12px; }
+  .home > [data-lp]:empty { display: none; }
+  .home > [data-lp] ~ * { grid-column: 1; }
+  .home > .foot { grid-column: 1 / -1; }
+  .world { min-height: 340px; padding: 24px 28px 36px; }
+  .world h2 { font-size: 32px; }
+  .stations { margin-top: 70px; }
+  .station .dot { width: 92px; height: 92px; font-size: 44px; }
+  .station .lbl { font-size: 17px; }
+  .station .stars { font-size: 18px; }
+  .boatdeco { font-size: 52px; top: 80px; }
+  .worlds { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+  .wtile { padding: 16px; }
+  .wtile .e { font-size: 38px; }
+  /* Spielbildschirme bleiben gut lesbar mittig */
+  .stage:not(.onb) { max-width: 920px; margin: 0 auto; }
+  /* Einstieg: Ruby groß links, Klassenwahl und Name rechts */
+  .stage.onb { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); column-gap: 40px; align-items: center; min-height: 70vh; align-content: center; }
+  .stage.onb > .ruby-wrap { grid-row: 1 / span 3; flex-direction: column; align-items: center; text-align: center; }
+  .stage.onb > .ruby-wrap .ruby { width: 280px; height: 280px; }
+  .stage.onb > .ruby-wrap .bubble { font-size: 22px; }
+  .stage.onb > .ruby-wrap .bubble::before { left: 50%; top: -10px; bottom: auto; border: 10px solid transparent; border-bottom-color: #fff; border-top: 0; transform: translateX(-50%); }
+  .stage.onb .grade { grid-template-columns: repeat(6, 1fr); }
+  .stage.onb .grade button { min-height: 84px; font-size: 32px; }
+  .stage.onb > [data-go] { grid-column: 2; font-size: 22px; }
+  /* Hafen-Szene füllt die Ränder: ruhiges Meer ganz unten, Bilder nur im freien Rand links und rechts */
+  body::before { content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: 9vh; pointer-events: none; z-index: 0;
+    background: radial-gradient(circle at 20px -6px, transparent 18px, #6cc3ef 19px) repeat-x 0 0 / 40px 30px, linear-gradient(#6cc3ef, #3ea0de); opacity: .55; }
+  #app { position: relative; z-index: 1; }
+}
+@media (min-width: 1500px) {
+  html::before, html::after { position: fixed; top: 8vh; bottom: 12vh; width: calc((100vw - 1280px) / 2); display: flex; flex-direction: column;
+    justify-content: space-around; align-items: center; white-space: pre; font-size: 56px; line-height: 1; opacity: .5; pointer-events: none; z-index: 0; }
+  html::before { left: 0; content: "☀️\A\A⛵\A\A🐟"; }
+  html::after { right: 0; content: "🐦\A\A⚓\A\A🐳"; }
+}
