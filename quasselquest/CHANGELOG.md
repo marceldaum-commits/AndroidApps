@@ -1,5 +1,31 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.4.0 – Lernpfad: eine Sprache von Anfang an lernen (19.11.2026)
+- Neu für Englisch, Französisch und Spanisch: ein Lernpfad zum Neulernen einer Sprache – auch ohne Schulunterricht.
+- Abschnitt 1 „Erste Schritte“ mit 8 Einheiten: Hallo, Ich bin …, Zahlen, Farben, Familie, Tiere, Essen, Schule.
+- Jede Einheit hat 5 kurze Lektionen (je 3–5 Minuten): neue Wörter kennenlernen (Karten umdrehen und anhören), Wörter üben, eine Regel selbst entdecken und Sätze im Satz-Zug bauen, zuhören und nachsprechen, eine kleine Geschichte verstehen.
+- Für jede geschaffte Einheit gibt es eine Krone 👑; danach öffnet sich die nächste. Keine Leben, keine Strafen.
+- Wörter aus früheren Einheiten kommen gemischt wieder dran, damit nichts vergessen wird.
+- Alle Wörter, Sätze und Geschichten sind vorgelesen (Figuren mit eigener Stimme). Die Spracherkennung beim Nachsprechen versteht jetzt auch Französisch und Spanisch – weiterhin nur auf dem Gerät.
+
+## 0.3.3 – Klassenarbeits-Generalprobe (19.11.2026)
+- „📝 Mein Test ist am …“: Datum der Klassenarbeit oder des Vokabeltests eintragen und auswählen, was drankommt (Pakete oder eigene Schulbuch-Listen).
+- Ruby macht daraus einen Lernplan: jeden Tag eine kurze Runde, am letzten Tag die Generalprobe.
+- Generalprobe wie in der Arbeit: 12 Aufgaben, Vokabeln werden getippt, erst am Ende gibt es die Auflösung – mit richtiger Lösung und kurzer Erklärung zu jedem Fehler. Keine Noten.
+- Fair geprüft: Alternativen zählen („thanks“ statt „thank you“), fehlende Akzente oder Groß-/Kleinschreibung werden als „Fast!“ erklärt.
+- Was noch nicht sitzt, kommt ab dem nächsten Tag automatisch wieder dran.
+- Elternbereich: 3 bis 14 Tage vor einer eingetragenen Arbeit ein ruhiger Hinweis auf eine kostenlose Probestunde (ausblendbar, abschaltbar).
+
+## 0.3.2 – Datenschutz für Kinder und Schulen (19.11.2026)
+- „Deine Daten – kurz erklärt“: Ruby erklärt Kindern in sechs einfachen Sätzen, was mit ihren Daten passiert (Einstellungen).
+- Datenblatt für Schulen zum Ausdrucken: keine Konten, Daten nur auf dem Gerät, Mikrofon, Zählung, Server, AVV, Urheberrecht, Tipps für Schulgeräte.
+- Wer am Gerät „weniger Bewegung“ eingestellt hat, bekommt auch kein Konfetti mehr.
+
+## 0.3.1 – Elternbereich: Lernstand in Worten (19.11.2026)
+- Für Eltern: Lernstand für jede Sprache in Worten – was euer Kind diese Woche geübt hat, wie viel beim ersten Versuch klappt, was es schon kann und welche Karten schon sitzen.
+- Fällt eine Sprache länger schwer, erscheint – nur im Elternbereich – ein sachlicher Hinweis auf unsere Online-Nachhilfe. Höchstens alle zwei Wochen, ausblendbar, ganz abschaltbar.
+- Anonyme Nutzungszählung (ohne Namen, Kennung, Cookies oder Lernstand), im Elternbereich abschaltbar.
+
 ## 0.3.0 – „Warum?“ und „Mein Schulbuch“ (19.11.2026)
 - **Warum?** Bei einer falschen Antwort markiert Ruby genau die Stelle, die nicht stimmt (zum Beispiel den Akzent in „le pére“), und erklärt die Regel in einem Satz – ohne gleich die Lösung zu verraten.
 - **Mein Schulbuch:** In jeder Sprache kann euer Kind (oder ihr) die Wörter aus dem Schulbuch eintippen, nach Lektionen geordnet: „Hund = dog“, eine Zeile pro Wort. Für Deutsch einfach die Lernwörter – daraus wird ein Diktat-Spiel. Falsche Zeilen werden verständlich gemeldet. Gespielt wird mit denselben Spielen und derselben Wiederholung. Die Listen bleiben auf dem Gerät.

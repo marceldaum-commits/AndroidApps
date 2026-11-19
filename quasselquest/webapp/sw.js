@@ -1,8 +1,8 @@
 // Offline-Speicher der WebApp. Die Versionsnummer wechselt mit jeder Auslieferung (prüft tools/test-inhalt.mjs).
-const VERSION = '0.3.0';
+const VERSION = '0.4.0';
 const CACHE = 'quasselquest-' + VERSION;
-const FILES = ['./', 'index.html', 'app.css', 'version.js', 'content.js', 'pakete.js', 'audio.js', 'app.js', 'datenschutz.html',
-  'manifest.webmanifest', 'audio/index.json', 'pakete/index.json', 'lizenzen.txt', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
+const FILES = ['./', 'index.html', 'app.css', 'version.js', 'content.js', 'pakete.js', 'audio.js', 'app.js', 'datenschutz.html', 'datenblatt-schule.html',
+  'manifest.webmanifest', 'audio/index.json', 'pakete/index.json', 'lernpfad/en.json', 'lernpfad/fr.json', 'lernpfad/es.json', 'lizenzen.txt', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {
   // Programmdateien und alle vorab vertonten Sätze (audio/index.json) offline speichern
@@ -25,7 +25,9 @@ self.addEventListener('message', (e) => { if (e.data === 'skipWaiting') self.ski
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
-  if (req.url.endsWith('version.json')) { e.respondWith(fetch(req, { cache: 'no-store' }).catch(() => caches.match(req))); return; }
-  e.respondWith(caches.match(req, { ignoreSearch: req.mode === 'navigate' }).then((hit) => hit || fetch(req).catch(() =>
-    req.mode === 'navigate' ? caches.match('index.html') : Response.error())));
+  // Nur im eigenen Speicher suchen (caches.open(CACHE).match): Unter lernen.… liegen alle Apps auf derselben Adresse –
+  // caches.match würde auch Dateien anderer Apps finden (z. B. deren index.html).
+  if (req.url.endsWith('version.json')) { e.respondWith(fetch(req, { cache: 'no-store' }).catch(() => caches.open(CACHE).then((c) => c.match(req)))); return; }
+  e.respondWith(caches.open(CACHE).then((c) => c.match(req, { ignoreSearch: req.mode === 'navigate' }).then((hit) => hit || fetch(req).catch(() =>
+    req.mode === 'navigate' ? c.match('index.html') : Response.error()))));
 });

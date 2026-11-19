@@ -308,7 +308,7 @@
         "pig"
       ],
       "info": "Achtung: „sheep“ (Schaf) mit langem i, „ship“ (Schiff) mit kurzem i.",
-      "img": "🐑⛵"
+      "img": "🐑🌿"
     },
     {
       "id": "024",
@@ -356,7 +356,7 @@
         "Hund"
       ],
       "info": "„donkey“ = Esel. Das Pferd heißt „horse“.",
-      "img": "🐴👂"
+      "img": "🫏"
     },
     {
       "id": "028",
@@ -416,7 +416,7 @@
         "brown"
       ],
       "info": "Rot und Gelb gemischt ergibt Orange.",
-      "img": "❤️💛🍊"
+      "img": "❤️➕💛"
     },
     {
       "id": "033",
@@ -428,7 +428,7 @@
         "pink"
       ],
       "info": "Blau und Gelb gemischt ergibt Grün – wie ein Frosch.",
-      "img": "💙💛🐸"
+      "img": "💙➕💛"
     },
     {
       "id": "034",
@@ -440,7 +440,7 @@
         "yellow"
       ],
       "info": "Rot und Blau gemischt ergibt Lila – auf Englisch „purple“.",
-      "img": "❤️💙🍇"
+      "img": "❤️➕💙"
     }
   ]
 }

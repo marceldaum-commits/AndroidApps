@@ -86,7 +86,7 @@
               { who: 'sam', en: 'Hello! I have to go now. Goodbye!', de: 'Hallo! Ich muss jetzt gehen. Auf Wiedersehen!',
                 options: [
                   { en: 'Goodbye, Sam!', de: 'Auf Wiedersehen, Sam!', ok: true },
-                  { en: 'Good morning, Sam!', de: 'Guten Morgen, Sam!', reply: { en: 'Morning? I am leaving! 👋', de: 'Morgen? Ich gehe doch! 👋' } },
+                  { en: 'Good morning, Sam!', de: 'Guten Morgen, Sam!', reply: { en: 'Morning? I am leaving! 👋', de: 'Guten Morgen? Ich gehe doch! 👋' } },
                 ] },
             ],
             end: { who: 'mia', en: 'See you soon!', de: 'Bis bald!' },
@@ -108,8 +108,8 @@
           scene: [
             { who: 'ted', img: '👴🎣', en: "Hello! I'm Grandpa Ted. I'm a fisherman.", de: 'Hallo! Ich bin Opa Ted. Ich bin Fischer.' },
             { who: 'ted', img: '🐟🐟🐟', en: "Look! One, two, three fish.", de: 'Schau! Ein, zwei, drei Fische.' },
-            { who: 'ruby', img: '🦜❓', en: 'How many boats can you see?', de: 'Wie viele Boote siehst du?' },
-            { who: 'mia', img: '⛵⛵⛵⛵⛵', en: 'I can see five boats.', de: 'Ich sehe fünf Boote.' },
+            { who: 'ruby', img: '⛵⛵⛵⛵⛵', en: 'How many boats can you see?', de: 'Wie viele Boote siehst du?' },
+            { who: 'mia', img: '👧🖐️', en: 'I can see five boats.', de: 'Ich sehe fünf Boote.' },
             { who: 'ted', img: '👴😄', en: 'Well done!', de: 'Gut gemacht!' },
           ],
           games: [
@@ -150,7 +150,7 @@
                   { en: 'Hello!', de: 'Hallo!', reply: { en: 'Hello again! 😄 But now: goodbye!', de: 'Hallo nochmal! 😄 Aber jetzt: Tschüss!' } },
                 ] },
             ],
-            end: { who: 'ted', en: 'Enjoy your fish!', de: 'Lass dir die Fische schmecken!' },
+            end: { who: 'ted', en: 'Enjoy your fish!', de: 'Lass es dir schmecken!' },
           },
           explain: {
             title: 'Ruby erklärt: Zahlen und Mehrzahl',
@@ -170,8 +170,8 @@
             { who: 'mia', img: '👧🖌️', en: 'I paint the boats.', de: 'Ich male die Boote an.' },
             { who: 'mia', img: '🟥⛵', en: 'This boat is red.', de: 'Dieses Boot ist rot.' },
             { who: 'sam', img: '🟦⛵', en: 'My boat is blue.', de: 'Mein Boot ist blau.' },
-            { who: 'ruby', img: '🦜❓', en: 'What colour is Ruby?', de: 'Welche Farbe hat Ruby?' },
-            { who: 'mia', img: '🦜🟥', en: 'Ruby is red!', de: 'Ruby ist rot!' },
+            { who: 'ruby', img: '🌊❓', en: 'What colour is the sea?', de: 'Welche Farbe hat das Meer?' },
+            { who: 'mia', img: '🌊🟦', en: 'The sea is blue!', de: 'Das Meer ist blau!' },
           ],
           games: [
             {
@@ -204,7 +204,7 @@
                 options: [
                   { en: 'My boat is {c}.', de: 'Mein Boot ist {cDe}.', ok: true },
                 ] },
-              { who: 'mia', en: 'Wow, {aC} boat! I like it!', de: 'Wow, ein Boot in {cDe}! Das gefällt mir!',
+              { who: 'mia', en: 'Wow, {aC} boat! I like it!', de: 'Wow, ein Boot in {cDeGross}! Das gefällt mir!',
                 options: [
                   { en: 'Thank you, Mia!', de: 'Danke, Mia!', ok: true },
                   { en: 'Goodbye!', de: 'Auf Wiedersehen!', reply: { en: 'Wait! Say thank you first! 😄', de: 'Warte! Sag erst danke! 😄' } },
@@ -219,7 +219,7 @@
               'Nach der Farbe fragen: „What colour is …?“ (Welche Farbe hat …?). In britischem Englisch schreibt man „colour“, in amerikanischem „color“.',
               'Antworten: „It\'s green.“ (Es ist grün.) „It\'s“ ist die kurze Form von „It is“.',
               'Im Englischen steht die Farbe vor dem Ding: „a red boat“ (ein rotes Boot) – die Farbe ändert sich dabei nie, egal ob ein Boot oder viele Boote.',
-              'Aussprache-Tipp: Bei „purple“ klingt das u wie ein kurzes „ö“.',
+              'Aussprache-Tipp: Bei „purple“ klingt das u wie ein langes „ö“ ohne r: „pöpl“.',
             ],
           },
           wg: 'gs-englisch-farben-zahlen',
@@ -263,6 +263,7 @@
       nFische: v.n ? (v.n === 1 ? 'Ein Fisch' : zahlen[v.n - 1].replace(/^./, (m) => m.toUpperCase()) + ' Fische') : '',
       c: col.en || '',
       cDe: col.de || '',
+      cDeGross: col.de ? col.de[0].toUpperCase() + col.de.slice(1) : '',
       aC: col.en ? (/^[aeiou]/.test(col.en) ? 'an ' : 'a ') + col.en : '',
     };
     // Am Satzanfang (Textbeginn oder nach . ! ?) wird groß geschrieben.

@@ -203,3 +203,70 @@ test('„Warum?“: Fehlerstelle wird genau markiert, Regel passt zur Art des Fe
     const d = P.diff(w, c.a); assert.equal(d.vor + d.fehler + d.nach, w);
   }
 });
+
+test('Generalprobe: Antworten werden fair geprüft (Alternativen ja, Akzent und Großschreibung als „Fast!“)', () => {
+  assert.deepEqual(P.akzeptiert('thank you (thanks)'), ['thank you', 'thanks']);
+  assert.equal(P.pruefeTipp('  Thanks ', { a: 'thank you (thanks)' }, 'en').ok, true);
+  const fr = P.pruefeTipp('le pere', { a: 'le père' }, 'fr');
+  assert.equal(fr.ok, false); assert.equal(fr.fast, true); assert.match(fr.hinweis, /Akzent/);
+  const de = P.pruefeTipp('vogel', { a: 'Vogel' }, 'de');
+  assert.equal(de.ok, false); assert.match(de.hinweis, /Groß/);
+  assert.equal(P.pruefeTipp('Hund', { a: 'Vogel' }, 'de').fast, undefined);
+  // Jede Antwort jedes Pakets wird als richtig erkannt, wenn man sie genau abtippt
+  for (const p of PACKS) for (const c of p.cards) for (const a of P.akzeptiert(c.a)) assert.equal(P.pruefeTipp(a, c, p.lang).ok, true, `${p.id}: ${a}`);
+});
+
+test('Lernplan: jeden Tag ein Paket, am letzten Tag vor dem Test die Generalprobe', () => {
+  const plan = P.lernplan(['a', 'b'], 100, 105);
+  assert.equal(plan.length, 5);
+  assert.deepEqual(plan.map((t) => t.paket), ['a', 'b', 'a', 'b', null]);
+  assert.equal(plan[4].probe, true);
+  assert.deepEqual(P.lernplan(['a'], 100, 101), [{ tag: 100, paket: 'a', probe: false }]);
+  assert.deepEqual(P.lernplan(['a'], 100, 100), []);
+});
+
+test('Buchstaben-Bau nur, wenn das Wort eindeutig aus der Aufgabe folgt (keine Auswahlfragen, keine Reime)', () => {
+  for (const p of PACKS) for (const c of p.cards) {
+    if (!P.modes(c, p.lang).includes('bauen')) continue;
+    const k = P.classify(c, p.lang); const b = P.bauFrage(c, p.lang);
+    assert.ok(b, `${p.id}: „${c.q}“ hat Bauen, aber keine Bau-Aufgabe`);
+    assert.doesNotMatch(b.text, /^(Welche[rs]? |Was reimt)/, `${p.id}: „${b.text}“ ist eine Auswahlfrage`);
+    if (/richtig geschrieben|Wie schreibt man/.test(c.q)) assert.ok(b.hoer, `${p.id}: „${c.q}“ braucht das vorgesprochene Wort`);
+    if (k.kind === 'diktat') assert.ok(k.vorher);
+  }
+});
+
+const LP = P.LERNPFAD.map((l) => JSON.parse(readFileSync(new URL('lernpfad/' + l + '.json', dir), 'utf8')));
+test('Lernpfad: jede Einheit vollständig, Bedeutungen eindeutig, Figuren vorhanden, Lektionen spielbar', () => {
+  for (const lp of LP) for (const a of lp.abschnitte) for (const e of a.einheiten) {
+    const wo = `${lp.sprache} ${e.id}`;
+    assert.ok(e.woerter.length >= 6 && e.saetze.length >= 3 && e.regel.beispiele.length >= 2 && e.geschichte.zeilen.length >= 3, wo + ' unvollständig');
+    for (const w of e.woerter) assert.ok(w[0] && w[1] && w[2], wo + ' Wort ohne Bild/Übersetzung: ' + w[0]);
+    const de = e.woerter.map((w) => w[1].toLowerCase()); assert.equal(new Set(de).size, de.length, wo + ': zwei Wörter mit gleicher Bedeutung');
+    const zi = e.woerter.map((w) => w[0].toLowerCase()); assert.equal(new Set(zi).size, zi.length, wo + ': Wort doppelt');
+    for (const [f] of e.geschichte.zeilen) assert.ok(lp.figuren[f], wo + ': unbekannte Figur ' + f);
+    for (const q of e.geschichte.fragen) assert.ok(!q.choices.includes(q.a) && q.choices.length >= 2, wo + ': Frage ' + q.q);
+    for (const x of e.aktionen || []) {
+      assert.ok(x.sag && x.de && x.ding && lp.figuren[x.an] && x.anzahl >= 1 && x.anzahl <= 5, wo + ': Aktion ' + JSON.stringify(x));
+    }
+    for (const f of e.fehler || []) {
+      const t = P.fehlerTeile(f); assert.equal(t.filter((x) => x.falsch).length, 1, wo + ': genau ein falsches Wort in „' + f.falsch + '“');
+      const idx = t.findIndex((x) => x.falsch); const r = t.map((x, i) => (i === idx ? x.t.replace(f.wort, f.korrektur) : x.t)).join(' ');
+      assert.equal(r, f.richtig, wo + ': Korrektur ergibt nicht den richtigen Satz');
+      assert.ok(!f.choices.includes(f.korrektur) && f.korrektur !== f.wort, wo + ': Auswahl bei „' + f.falsch + '“');
+    }
+    const pk = P.lernPack(e, lp.sprache);
+    for (const l of P.lektionenFuer(lp.sprache)) {
+      const st = P.lektion(pk, l.nr, () => 0.42);
+      assert.ok(st.length >= 4, wo + ' Lektion ' + l.nr + ' zu kurz');
+      for (const s of st) if (s.card) assert.ok(s.card.a, wo + ' leere Karte');
+    }
+    for (const c of pk.cards) for (const w of P.wrongs(c, pk, 3)) assert.notEqual(w, c.a, wo + ': falsche Antwort = richtige');
+  }
+});
+
+test('Service Worker sucht nur im eigenen Speicher (gemeinsame Adresse lernen.…)', () => {
+  const sw = readFileSync(new URL('sw.js', dir), 'utf8');
+  assert.doesNotMatch(sw, /caches\.match\(/, 'caches.match findet auch Dateien anderer Apps');
+  assert.match(sw, /caches\.open\(CACHE\)\.then\(\(c\) => c\.match/);
+});

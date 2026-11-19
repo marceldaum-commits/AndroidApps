@@ -199,7 +199,7 @@
         "What do you in your free time?",
         "What does you do in your free time?"
       ],
-      "info": "Hier steht „do“ zweimal: einmal als Fragewort-Helfer, einmal als „machen“.",
+      "info": "Hier steht „do“ zweimal: einmal als Helfer für die Frage (Hilfsverb), einmal als „machen“.",
       "img": "🎮🛹"
     },
     {
@@ -308,7 +308,7 @@
         "Es nieselt ein bisschen."
       ],
       "info": "Eine englische Redewendung – zum Glück fallen keine Tiere vom Himmel!",
-      "img": "🐱🐶🌧️"
+      "img": "🌧️☔💦"
     },
     {
       "id": "024",
@@ -379,7 +379,7 @@
         "Excuse me, how do I come at the station?",
         "Excuse me, where do I get the station?"
       ],
-      "info": "Um etwas bitten: „Excuse me“. Sich entschuldigen: „Sorry“.",
+      "info": "Wenn du jemanden ansprichst oder um etwas bittest: „Excuse me“. Wenn dir etwas leidtut: „Sorry“.",
       "img": "🚉🧭"
     },
     {
@@ -451,7 +451,7 @@
         "It's my row.",
         "I'm at it."
       ],
-      "info": "turn = an der Reihe sein. „Whose turn is it?“ = Wer ist dran?",
+      "info": "my turn = ich bin an der Reihe. „Whose turn is it?“ = Wer ist dran?",
       "img": "🎲🙋"
     },
     {

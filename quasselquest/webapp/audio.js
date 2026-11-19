@@ -254,12 +254,12 @@
     return local ? 'device' : 'browser';
   };
   /** Einmal zuhören (max. 6 s). Liefert Liste möglicher Texte oder [] (nicht verstanden/abgebrochen/nicht verfügbar). */
-  A.listen = () => new Promise((ok) => {
+  A.listen = (lang) => new Promise((ok) => {
     const mode = A.recognitionMode();
     if (mode === 'none') { ok(null); return; }
     let r;
     try { r = new SR(); } catch (e) { ok(null); return; }
-    r.lang = 'en-GB'; r.interimResults = false; r.maxAlternatives = 5; r.continuous = false;
+    r.lang = ({ en: 'en-GB', fr: 'fr-FR', es: 'es-ES', de: 'de-DE' })[lang || 'en'] || 'en-GB'; r.interimResults = false; r.maxAlternatives = 5; r.continuous = false;
     if (mode === 'device') {
       // Streng: Bestätigt der Browser „nur auf dem Gerät“ nicht, wird gar nicht erst zugehört (sonst könnte Ton an den Hersteller gehen).
       try { r.processLocally = true; } catch (e) {}
@@ -281,7 +281,7 @@
   /** Wie ähnlich ist das Gehörte dem Zielsatz? 0..1 (Anteil der Zielwörter, die vorkommen). Großzügig für Kinderstimmen. */
   A.similarity = (target, alts) => {
     const digits = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-    const norm = (s) => String(s).toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean)
+    const norm = (s) => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[’']/g, '').replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean)
       .map((w) => (/^\d+$/.test(w) && +w <= 10 ? digits[+w] : w));
     const want = norm(target); if (!want.length) return 0;
     let best = 0;

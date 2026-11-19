@@ -88,7 +88,7 @@
         "la soeure",
         "la fille"
       ],
-      "img": "👧"
+      "img": "👭"
     },
     {
       "id": "006",
@@ -134,7 +134,8 @@
         "le chien",
         "le chapeau"
       ],
-      "img": "🐱"
+      "img": "🐱",
+      "info": "Achtung: chat ist männlich – le chat, obwohl es auf Deutsch „die Katze“ heißt."
     },
     {
       "id": "010",
@@ -258,7 +259,7 @@
         "la tableau",
         "la tabel"
       ],
-      "img": "🍽️"
+      "img": "🍽️🪑"
     },
     {
       "id": "021",
@@ -269,7 +270,7 @@
         "la fenètre",
         "la porte"
       ],
-      "img": "🖼️☀️"
+      "img": "🪟"
     },
     {
       "id": "022",

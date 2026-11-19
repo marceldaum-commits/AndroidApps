@@ -27,7 +27,7 @@
     },
     {
       "img": "💬🎤",
-      "text": "Wörtliche Rede steht in Anführungszeichen. Steht der Begleitsatz hinten, kommt nach dem Schlusszeichen ein Komma: „Hallo“, sagt Lea."
+      "text": "Wörtliche Rede steht in Anführungszeichen. Steht der Begleitsatz hinten, kommt nach dem Anführungszeichen oben ein Komma: „Hallo“, sagt Lea."
     },
     {
       "img": "🕵️✨",
@@ -69,7 +69,7 @@
         "Möchtest du Tee oder, Kakao?"
       ],
       "info": "Wie „und“ steht auch „oder“ zwischen zwei Wörtern ohne Komma.",
-      "img": "🍵☕"
+      "img": "🍵🍫"
     },
     {
       "id": "004",

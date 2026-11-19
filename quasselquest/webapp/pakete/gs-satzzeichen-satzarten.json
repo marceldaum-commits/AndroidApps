@@ -383,7 +383,7 @@
     },
     {
       "id": "030",
-      "q": "Welches Zeichen steht nach dem Begleitsatz vorne, z. B. „Ben ruft_“?",
+      "q": "Welches Zeichen fehlt nach dem Begleitsatz? Ben ruft_ „Hallo!“",
       "a": "Doppelpunkt",
       "choices": [
         "Komma",
