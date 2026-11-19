@@ -204,7 +204,7 @@
                 options: [
                   { en: 'My boat is {c}.', de: 'Mein Boot ist {cDe}.', ok: true },
                 ] },
-              { who: 'mia', en: 'Wow, {aC} boat! I like it!', de: 'Wow, ein Boot in {cDe}! Das gefällt mir!',
+              { who: 'mia', en: 'Wow, {aC} boat! I like it!', de: 'Wow, ein Boot in {cDeGross}! Das gefällt mir!',
                 options: [
                   { en: 'Thank you, Mia!', de: 'Danke, Mia!', ok: true },
                   { en: 'Goodbye!', de: 'Auf Wiedersehen!', reply: { en: 'Wait! Say thank you first! 😄', de: 'Warte! Sag erst danke! 😄' } },
@@ -219,7 +219,7 @@
               'Nach der Farbe fragen: „What colour is …?“ (Welche Farbe hat …?). In britischem Englisch schreibt man „colour“, in amerikanischem „color“.',
               'Antworten: „It\'s green.“ (Es ist grün.) „It\'s“ ist die kurze Form von „It is“.',
               'Im Englischen steht die Farbe vor dem Ding: „a red boat“ (ein rotes Boot) – die Farbe ändert sich dabei nie, egal ob ein Boot oder viele Boote.',
-              'Aussprache-Tipp: Bei „purple“ klingt das u wie ein kurzes „ö“.',
+              'Aussprache-Tipp: Bei „purple“ klingt das u wie ein langes „ö“ ohne r: „pöpl“.',
             ],
           },
           wg: 'gs-englisch-farben-zahlen',
@@ -263,6 +263,7 @@
       nFische: v.n ? (v.n === 1 ? 'Ein Fisch' : zahlen[v.n - 1].replace(/^./, (m) => m.toUpperCase()) + ' Fische') : '',
       c: col.en || '',
       cDe: col.de || '',
+      cDeGross: col.de ? col.de[0].toUpperCase() + col.de.slice(1) : '',
       aC: col.en ? (/^[aeiou]/.test(col.en) ? 'an ' : 'a ') + col.en : '',
     };
     // Am Satzanfang (Textbeginn oder nach . ! ?) wird groß geschrieben.

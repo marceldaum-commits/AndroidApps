@@ -122,7 +122,7 @@
     {
       "id": "008",
       "q": "Welche Wortart ist „singen“?",
-      "a": "Verb (Tunwort / Zeitwort)",
+      "a": "Verb (Tuwort / Zeitwort)",
       "choices": [
         "Nomen",
         "Adjektiv",
@@ -158,7 +158,7 @@
     {
       "id": "011",
       "q": "Welche Wortart ist „spielen“?",
-      "a": "Verb (Tunwort / Zeitwort)",
+      "a": "Verb (Tuwort / Zeitwort)",
       "choices": [
         "Nomen",
         "Adjektiv",
@@ -395,7 +395,7 @@
     {
       "id": "032",
       "q": "Welche Wortart sagt, was jemand tut?",
-      "a": "Verb (Tunwort / Zeitwort)",
+      "a": "Verb (Tuwort / Zeitwort)",
       "choices": [
         "Nomen",
         "Adjektiv",
