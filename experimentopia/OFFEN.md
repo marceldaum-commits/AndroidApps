@@ -35,3 +35,4 @@
   (1) Elternbereich/Elternbericht hinter dem Tor: Hinweis bei objektiven Schwierigkeiten, Berechnung nur auf dem Gerät, höchstens 1× in 4 Wochen je Thema, wegklickbar, Schalter „Hinweise auf Nachhilfe ausblenden“. Bei uns: nur Physik-Themen (Nachhilfe nur Physik).
   (2) Kinderansicht nur: „Du kommst hier gerade nicht weiter? Das ist okay. Probier eine leichtere Stufe oder schau dir die Erklärung noch einmal an. Und du kannst jederzeit deine Eltern oder deine Lehrkraft fragen.“ Knöpfe [Leichter üben] [Erklärung ansehen], kein Außenlink.
   (3) Kl. 9–10 (wenn Klasse bekannt), ohne Tor: „Tipp: Wenn ein Thema länger hakt, kann eine persönliche Erklärung helfen. Mit deinen Eltern könnt ihr bei uns eine kostenlose, unverbindliche Probestunde anfragen. [Mehr erfahren]“ höchstens 1×/Woche, wegklickbar. Kl. 5–8 nur hinter dem Tor. Zählung nur anonym. Meldung „Rechtsbezug: ja (V15)“.
+- Vollständiger Wortlaut Recht V15/V10-neu/Eltern-Tor: docs/RECHT-VORGABEN.md
