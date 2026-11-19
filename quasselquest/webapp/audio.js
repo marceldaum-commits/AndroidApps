@@ -186,6 +186,8 @@
     return deviceSay(text, Object.assign({}, opts, { slow }));
   };
   /** Kann dieser Satz hörbar gemacht werden (Datei oder Gerätestimme)? */
+  /** Gerätestimme direkt (z. B. Vorlese-Knopf am Eltern-Tor – Pflicht laut Eltern-Tor-Standard, auch solange Deutsch keine eigene Stimme hat). */
+  A.geraetSagen = (text, who) => deviceSay(text, { who: who || 'de' });
   A.canHear = (text, who) => !A.OHNE_TON.has(A.langOf(who)) && S().voice !== false && (A.hasRecording(text, who) || A.canSpeak(A.langOf(who)));
 
   // ------------------------------------------------------------------ Mikrofon (nur auf Knopfdruck)

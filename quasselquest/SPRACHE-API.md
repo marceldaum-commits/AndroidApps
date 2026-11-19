@@ -15,7 +15,7 @@ gibt es **keinen einzigen** Aufruf (eigener Test in der App). Eine andere Wahl g
 
 | Feld | Typ | Pflicht | Beispiel | Bedeutung |
 |---|---|---|---|---|
-| `sprache` | Text | ja | `en` | `en`, `fr`, `es`, `la`, `de` |
+| `sprache` | Text | ja | `en` | `en`, `fr`, `es`, `de` (später `it`, `uk`); **nie** `la` |
 | `ziel` | Text | ja | `My name is Ruby.` | der bekannte Zielsatz (öffentlicher App-Inhalt, max. 300 Zeichen) |
 | `ziel_id` | Text | nein | `w1e1-echo-2` | Inhalts-ID des Satzes (nur zur Fehlersuche, kein Personenbezug) |
 | `audio` | Datei | ja | `aufnahme.wav` | WAV mono 16 kHz 16 bit **oder** WebM/Opus (`audio/webm;codecs=opus`) |
@@ -44,18 +44,18 @@ Die App wertet in beiden Wegen gleich: ★★★ ab 90 %, ★★ ab 70 %, ★ ab
 | 400 | Feld fehlt/ungültig (`{"fehler":"feld","feld":"sprache"}`) | keine Sterne, neutraler Hinweis |
 | 413 | Aufnahme zu groß/lang | keine Sterne, neutraler Hinweis |
 | 415 | Audioformat nicht unterstützt | App versucht beim nächsten Mal WAV |
-| 429 | zu viele Anfragen (Header `Retry-After`) | keine Sterne, Weg 1 wenn verfügbar |
+| 429 / 503 | Warteschlange voll bzw. überlastet (Header `Retry-After`) | keine Sterne, Weg 1 wenn verfügbar, sonst „Aus“ für diesen Satz |
 | 5xx / Zeitüberschreitung | Server nicht erreichbar | **Rückfall auf Weg 1** (wenn das Gerät es kann), sonst ohne Sterne |
 
-Zeitgrenze: Antwort **innerhalb 5 s**, sonst bricht die App ab (Rückfall Weg 1).
+Zeitgrenze: bis etwa 5 s zeigt die App einen Ladekreis („Ruby hört genau hin …“). Nach **8 s** bricht sie ab (Rückfall auf Weg 1, wenn das Gerät es kann, sonst ohne Sterne).
+Modelle laut Messung des Leitstands (Marcel: „small + echt nachmessen“): Whisper small für EN/ES (ca. 1 s, 90–96 %), FR wird mit echten Aufnahmen nachgemessen (ggf. large-v3-turbo nur für FR, ca. 4 s). **Latein: keine Auswertung** (Server lehnt `la` ab, die App fragt nie an).
 
 ## Pflichten des Servers (Recht V12)
 - Server in Deutschland; Aufnahme **nur im Arbeitsspeicher**, nach der Auswertung **sofort gelöscht**, nie auf Platte, nie in Logs.
 - Logs ohne IP-Adresse (oder gekürzt), ohne Audio, ohne erkannten Text. Erlaubt: Zeit, Sprache, Dauer, Statuscode.
 - Keine Stimmprofile, kein Wiedererkennen von Sprechern, kein Training mit Aufnahmen.
 - CORS: nur `https://lernen.mathenachhilfe-online.com` und `https://lernen-test.mathenachhilfe-online.com`.
-- Vorschlag Erkenner: Whisper (MIT-Lizenz) `small` bzw. `base`, Sprache fest aus `sprache`, Latein ggf. mit `it` als Hilfssprache
-  plus Abgleich gegen den Zielsatz (wird gemessen).
+- Erkenner: Whisper (MIT-Lizenz), Sprache fest aus `sprache`, Abgleich gegen den Zielsatz.
 
 ## Testen
 `tools/sprache-mock.mjs` (Mock-Server, kommt mit dem Bau auf dem Arbeits-Branch): antwortet wie oben, mit Schaltern für 413/429/500

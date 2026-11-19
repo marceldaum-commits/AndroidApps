@@ -17,6 +17,10 @@
 **Deutsch vorübergehend ohne Stimme**
 - Die bisherige deutsche Computerstimme ist entfernt. Bis eine neue (weibliche) Stimme ausgewählt ist, zeigen deutsche Übungen nur Text. Beim Diktat erscheint das Wort 3 Sekunden lang zum Merken, dann baut oder schreibt man es aus dem Kopf („👀 Noch mal zeigen“ geht immer).
 
+**Sonst**
+- „← Alle Apps“ führt wieder direkt zur Website von Nachhilfe Online, ohne Eltern-Tor (Einstellungen und Elternbereich bleiben hinter dem Tor).
+- Latein: Überschriften und Ruby sagen „Lies …“ statt „Hör zu …“.
+
 **KI-Stimmen gekennzeichnet**
 - Unter jeder Übung mit Vorlesen steht „🤖 KI-generierte Stimme“. Die Audiodateien sind auch technisch als KI-generiert markiert. Der Link heißt jetzt „KI-Stimmen & Lizenzen“ und nennt zu jeder Stimme Datensatz, Lizenz und Quelle.
 

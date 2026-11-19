@@ -257,7 +257,7 @@
       <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · <a href="datenschutz.html">Datenschutz</a> · <a href="lizenzen.txt">KI-Stimmen &amp; Lizenzen</a> · <button class="linkbtn" data-kids-home>🔒 Deine Daten</button></div>
     </div>`);
     el.querySelector('[data-kids-home]').onclick = () => { A.sfx('tap'); kidsPrivacy(home); };
-    el.querySelector('[data-allapps]').onclick = () => { A.sfx('tap'); elternTor(openAllApps, 'Hier geht es zur Website.'); };
+    el.querySelector('[data-allapps]').onclick = () => { A.sfx('tap'); openAllApps(); }; // Marcel 19.11.2026 (V10 geändert): Website-Link ohne Eltern-Tor, neutral
     el.querySelector('[data-settings]').onclick = () => { A.sfx('tap'); elternTor(settings); };
     const ps = el.querySelector('[data-pass]'); if (ps) ps.onclick = () => { A.sfx('tap'); passport(); };
     el.querySelectorAll('[data-lang]').forEach((b) => b.onclick = () => {
@@ -877,7 +877,7 @@
     const bg = h(`<div class="modal-bg"><div class="modal card tor" role="dialog" aria-labelledby="tor-t">
       <h2 id="tor-t" style="font-size:20px">👪 Eltern-Tor</h2>
       ${grund ? `<p style="font-weight:800;margin:4px 0">${esc(grund)}</p>` : ''}<p class="muted">Dieser Bereich ist für Erwachsene. Bitte rechne:</p>
-      <div class="tor-aufgabe"><b data-aufgabe aria-live="polite"></b>${A.canHear('eins', 'de') ? '<button class="slowbtn" data-vorlesen aria-label="Aufgabe vorlesen">🔊</button>' : ''}</div>
+      <div class="tor-aufgabe"><b data-aufgabe aria-live="polite"></b>${A.canSpeak('de') ? '<button class="slowbtn" data-vorlesen aria-label="Aufgabe vorlesen">🔊</button>' : ''}</div>
       <div class="tor-eingabe" data-eingabe aria-label="Deine Eingabe">&nbsp;</div><div class="err" data-err></div>
       <div class="tor-tasten">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((z) => `<button class="tor-taste" data-z="${z}" aria-label="${z}">${z}</button>`).join('')}
         <button class="tor-taste" data-weg aria-label="Löschen">⌫</button><button class="tor-taste" data-z="0" aria-label="0">0</button><button class="tor-taste ok" data-ok aria-label="Bestätigen">OK</button></div>
@@ -893,7 +893,7 @@
     const zeig = () => { bg.querySelector('[data-eingabe]').textContent = eingabe || ' '; };
     bg.querySelectorAll('[data-z]').forEach((t) => t.onclick = () => { if (eingabe.length < 4) { eingabe += t.dataset.z; zeig(); A.sfx('tap'); } });
     bg.querySelector('[data-weg]').onclick = () => { eingabe = eingabe.slice(0, -1); zeig(); A.sfx('tap'); };
-    if (bg.querySelector('[data-vorlesen]')) bg.querySelector('[data-vorlesen]').onclick = () => { A.sfx('tap'); speak(`${ZAHLWORT[a]} mal ${ZAHLWORT[b]}`, 'de'); };
+    if (bg.querySelector('[data-vorlesen]')) bg.querySelector('[data-vorlesen]').onclick = () => { A.sfx('tap'); A.geraetSagen(`${ZAHLWORT[a]} mal ${ZAHLWORT[b]}`, 'de'); };
     bg.querySelector('[data-x]').onclick = () => { A.sfx('tap'); bg.remove(); };
     bg.querySelector('[data-ok]').onclick = () => {
       if (!eingabe) return;
@@ -1370,7 +1370,7 @@
   function lpSchritt(pack, L, step, frac, resolve, say, run) {
     const e = pack.einheit;
     const titel = { neu: '🌱 Neue Wörter', regel: '💡 Regel entdecken', sprechen: '🎤 Sprich nach!', geschichte: '📖 ' + esc(e.geschichte.titel), wimmel: '🔍 Wimmelbild', tpr: '🖐️ Mach, was ich sage!', lehrer: '🎓 Ruby lernt von dir' }[step.mode];
-    const sub = { neu: 'Tipp jede Karte an: hören und umdrehen!', regel: esc(e.regel.titel), sprechen: 'Erst anhören, dann nachsprechen.', geschichte: 'Hör zu! Tipp auf eine Sprechblase, dann siehst du die Übersetzung.', wimmel: 'Entdecke alle neuen Wörter im Bild!', tpr: 'Hör zu und zieh das Richtige zur richtigen Person!', lehrer: 'Ruby hat einen Fehler gemacht. Findest du ihn?' }[step.mode];
+    const sub = { neu: L.who ? 'Tipp jede Karte an: hören und umdrehen!' : 'Tipp jede Karte an und dreh sie um!', regel: esc(e.regel.titel), sprechen: 'Erst anhören, dann nachsprechen.', geschichte: L.who ? 'Hör zu! Tipp auf eine Sprechblase, dann siehst du die Übersetzung.' : 'Lies mit! Tipp auf eine Sprechblase, dann siehst du die Übersetzung.', wimmel: 'Entdecke alle neuen Wörter im Bild!', tpr: L.who ? 'Hör zu und zieh das Richtige zur richtigen Person!' : 'Lies den Befehl und zieh das Richtige zur richtigen Person!', lehrer: 'Ruby hat einen Fehler gemacht. Findest du ihn?' }[step.mode];
     const el = packFrame(pack, frac, titel, sub); const tk = token;
     el.querySelector('[data-quit]').onclick = () => resolve('quit');
     const body = el.querySelector('[data-body]');
@@ -1593,7 +1593,7 @@
       if (i === g.zeilen.length - 1) w.textContent = 'Zu den Fragen ➜';
     };
     w.onclick = () => { i++; if (i >= g.zeilen.length) { A.sfx('whoosh'); resolve('ok'); return; } A.sfx('tap'); zeige(); };
-    rubySay(el, 'Eine kleine Geschichte! Hör gut zu – danach habe ich zwei Fragen.');
+    rubySay(el, L.who ? 'Eine kleine Geschichte! Hör gut zu – danach habe ich zwei Fragen.' : 'Eine kleine Geschichte! Lies gut mit – danach habe ich zwei Fragen.');
     zeige();
   }
 
