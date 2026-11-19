@@ -1,13 +1,14 @@
-# Quasselquest – Englisch sprechen, hören, spielen · Klasse 3–6
+# Quasselquest – Sprachen sprechen, hören, spielen · Klasse 3–13
 
 WebApp (PWA) in schlichtem JavaScript – ohne Kotlin/Wasm, damit iPhone und iPad keine weißen Seiten zeigen.
 Konzept: [`KONZEPT.md`](KONZEPT.md) · Meldungen: [`MELDUNG_AN_LEITSTAND.md`](MELDUNG_AN_LEITSTAND.md) · Änderungen: [`CHANGELOG.md`](CHANGELOG.md)
 
-**Stand: Version 0.1.0 vom 18.11.2026 – Prototyp „Hello Harbour“** (3 Episoden, 5 Spielarten). Name „Quasselquest“ von Marcel am 19.11.2026 entschieden.
+**Stand: Version 0.2.0 vom 19.11.2026** – Sprachen Englisch, Deutsch, Französisch, Spanisch, Latein; Englisch Welt 1 „Hello Harbour“ (3 Episoden, 5 Spielarten); 19 Wörter-und-Regeln-Pakete (658 Karten) als Spiele mit Wiederholung. Name „Quasselquest“ von Marcel am 19.11.2026 entschieden.
 Test: https://quasselquest-test.mathenachhilfe-online.com (Branch `quasselquest-test`, Workflow `quasselquest-web-test.yml`) · Live nur durch den Leitstand.
 
 ## Aufbau
 - `webapp/` – die fertige WebApp (wird so ausgeliefert, kein Build-Schritt)
+  - `pakete.js` Sprachen, Karten-Arten, Spielarten, Wiederholung (Leitner) · `pakete/` die Pakete (aus dem Wissensgarten übernommen mit `tools/pakete-uebernehmen.mjs`)
   - `content.js` Inhalte (Welten, Episoden, Spiele, Missionen, „Ruby erklärt“)
   - `audio.js` Töne (im Code erzeugt), Stimme (englische Gerätestimme, nur lokale Stimmen), Mikrofon (nur auf Knopfdruck), Spracherkennung (optional, bevorzugt auf dem Gerät)
   - `app.js` Oberfläche und Spiele · `app.css` Aussehen und Animationen · `sw.js` Offline + Update

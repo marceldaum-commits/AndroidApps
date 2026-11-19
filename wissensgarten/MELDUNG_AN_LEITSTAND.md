@@ -9,6 +9,53 @@
 
 
 
+## 2.2.19 – Sprachen an Quasselquest (19.11.2026, Entscheidungen Marcel über die AppZentrale)
+- **Ausgeblendet:** 19 freie Pakete und 2 Plus-Pakete, Liste in `core/model/.../Angebot.kt`, Test `AngebotTest`.
+  - Englisch (7), Französisch (2), Latein (1), Spanisch (1).
+  - Deutsch-Sprachteil: gs-lesestart, gs-rechtschreibung, gs-satzzeichen-satzarten, gs-wortarten, s1-deutsch-grammatik, s1-deutsch-zeichensetzung, s1-deutsch-fremdwoerter, aw-redewendungen.
+  - Plus: ob-englisch-abi-vokabeln, aw-experte-sprache.
+  - Es bleiben s1-deutsch-stilmittel und ob-deutsch-epochen.
+- **Ausgeblendet heißt:**
+  - In der Samenhandlung, bei Einrichtung bzw. neuem Profil, in der Duell-Wahl, im Plus-Vorschau-Katalog und beim Deeplink `#paket=` erscheinen sie nicht mehr.
+  - **Bestehende Beete** filtert `GardenRepository.beds/allBeds/bedsOnce` heraus. Garten, Gießen, Spiele, Radio, Berichte und Eltern-Bericht sehen sie nicht mehr.
+  - **Nicht gelöscht:** Sicherung bzw. Sync (`SnapshotIO`, direkt am Speicher) und Paket-Updates (`syncPacks`) behalten sie. „Profil löschen“ löscht weiterhin alles.
+- **Hinweis auf Quasselquest:**
+  - Im Garten erscheint die Karte „🗣️ Sprachen sind umgezogen!“, sobald das Kind ausgeblendete Sprach-Beete hat. Eine allgemeine Version steht oben in der Samenhandlung.
+  - Der Knopf „Zu Quasselquest“ erscheint, sobald `Angebot.QUASSELQUEST_URL` gesetzt ist (Adresse vom Leitstand). Bis dahin steht dort „Quasselquest öffnet bald – frag deine Eltern.“
+- **Belege:** Bildschirmfoto `screenshots/84_quasselquest_hinweis.png`. `webApp/tools/web-sprachen.cjs` (Wasm und JS) prüft: Das Beet ist ausgeblendet, Beet, Karten und Lernprotokoll bleiben gespeichert, und `#paket=` pflanzt kein Sprachpaket.
+- **Für den Leitstand:**
+  - Der Plus-Text im Shop bzw. auf der Website darf keine Sprachen mehr nennen.
+  - Den Plus-Endpunkt bitte so lassen: Die Pakete werden in der App ausgeblendet. Löschen auf dem Server erst nach dem Umzug zu Quasselquest.
+- **Rückweg:** 2.2.18, bzw. 2.2.17 als letzte Live-Version.
+
+## 2.2.18 – Großes Inhaltsupdate „Aufräum-Tag“ (19.11.2026, einen Tag vor dem Termin Fr 20.11.)
+- **Abgleich umgesetzt (Wochenrunde 18.11., von Marcel bestätigt):**
+  - `s1-mathe-gleichungen` v2: Die Rechenaufgaben ohne Rechenweg (001–004, 009–016, 024–026, 031–035) sind zu Merkwissen umgeschrieben: Regel bzw. Verfahren als Frage, im `info` ein vollständig durchgerechnetes Beispiel mit allen Umformungsschritten (`| − 3 → …`) und Probe. Alle 35 übrigen Karten wurden ebenfalls vervollständigt; neue Karte 036 „Textaufgabe: erster Schritt“ (4-Schritte-Verfahren). Die Erklär-Szenen enthalten jetzt die Lösungs-Reihenfolge und die Schreibweise mit Umformungsstrich. 36 Karten.
+  - `s1-mathe-kopfrechnen` v3: Die Tempo-Aufgaben (005–011, 026–030, 032, 033, 035, 036) sind zu „Welcher Trick hilft …?“ mit Begründung (Rechengesetz) und vollständigem Beispiel umgeschrieben. Die Teilbarkeits-Karten 012, 018, 019, 021 und 031 begründen jetzt auch, warum die falschen Antworten falsch sind. 36 Karten.
+  - Umgeschrieben statt gelöscht: Karten-IDs bleiben, der Lernfortschritt bleibt erhalten (`syncPacks` gleicht über `sourceId` ab).
+- **Geprüft:**
+  - Jede Rechnung in beiden Paketen wurde von Hand nachgerechnet, mit Probe.
+  - Die falschen Antworten sind so gewählt, dass sie wirklich falsch sind. Wo es zwei richtige Wege gibt (2(x + 3) = 16), nennt die Antwort beide.
+  - `AntwortKontrolleTest`, `PackValidationTest` und `DifficultyTest` sind grün. `VorlesenListeTest` ist neu gelaufen (Nova-Liste aktualisiert).
+- **Querverweise („Hier geht's weiter“ im Theorie-Blatt):**
+  - Die Knöpfe erscheinen unter Brummis Erklärung, nur für die abgestimmten Pakete (Liste in `core/model/.../Querverweise.kt`, Test `QuerverweiseTest`).
+  - Ziele: Mathe-Trainer `#/u/<id>` (Plus Analysis `#/g/analysis`), Rechenblitz `?thema=&stufe=&modus=training`, KurvenFlug `#kapitel=` (geraden, terme, weg-zeit), Experimentopia `#thema=` (12 Pakete), Raumlicht `?ziel=galton` (Wahrscheinlichkeit).
+  - Alle Links tragen `src=wissensgarten-theorie` (unser Vorschlag, bitte bestätigen oder Wortlaut nennen).
+  - Auf der Test-Stufe gehen die Links auf `<app>-test.` bzw. `trainer-test.`.
+  - Kopfrechen-Tricks → Rechenblitz `?thema=pow&stufe=3&modus=training` (Kennung vom Rechenblitz bestätigt) und Mathe-Trainer `#/u/k5-rechnen`.
+  - Offen: die Bestätigung von Raumlicht für `galton`, angefragt über die AppZentrale.
+- **Deeplink `#paket=<ID>`** (Web): `https://wissensgarten.mathenachhilfe-online.com/#paket=<Paket-ID>`.
+  - Ist das Paket schon im Garten, öffnet sich das Beet. Sonst wird es gepflanzt und geöffnet, mit einem Hinweis von Brummi.
+  - Ein Plus-Paket ohne Plus führt zur Paketübersicht.
+  - Der Hash wird danach aus der Adresse entfernt. Auch `hashchange` bei geöffneter App wirkt.
+  - Vor dem ersten Einrichten wartet der Link, bis das Kind angelegt ist.
+- **Belege:**
+  - Bildschirmfoto `screenshots/83_theorie_querverweise.png`.
+  - `webApp/tools/web-paket.cjs`: 5/5 grün (pflanzen, Hash entfernt, kein doppeltes Beet, hashchange, unbekannte ID).
+  - Bau mit Safari-27.2-Abhilfe: 937 abgesichert, 0 Endaufrufe in beiden Bundles.
+- **Rechengeschichten Klasse 1–4** sind zurückgestellt.
+- **Neues Profil (Marcel, 19.11.):** Kompendium Klasse 1–13 ohne Sprachen. Das Herausnehmen der Sprachpakete folgt mit 2.2.19 (nur auf test).
+
 ## 2.2.17 – „← Alle Apps“ (18.11.2026)
 - **Ort:** schmale Leiste ganz oben in allen Hauptansichten (Garten = Startbildschirm, Samen, Laden, Familie, Mehr): App-Logo + „← Alle Apps“, Tippziel ≥ 44 px, kein Preis und kein Kaufhinweis. In Runden, Spielen, Onboarding und Dialogen erscheint die Leiste nicht.
 - **Ziel:** `https://www.mathenachhilfe-online.com/lern-apps/?src=wissensgarten-kopf`, auf der Test-Stufe `staging.`. Im Browser im selben Tab; aus der installierten Home-Bildschirm-App per `window.open` im normalen Browser.

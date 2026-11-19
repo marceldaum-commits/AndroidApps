@@ -87,7 +87,8 @@
   const fileFor = (text, who, slow) => {
     if (!index) return null;
     const e = index[(who || 'ruby') + '|' + norm(text)] || index['ruby|' + norm(text)];
-    return e ? 'audio/piper/' + (slow ? e.s : e.n) : null;
+    // Unsichere Aufnahmen (Hörprüfung nicht bestanden) nicht abspielen – lieber die Gerätestimme als eine falsche Aussprache
+    return e && !e.unsicher ? 'audio/piper/' + (slow ? e.s : e.n) : null;
   };
   A.hasRecording = (text, who) => !!fileFor(text, who, false);
   A.voiceMode = () => {

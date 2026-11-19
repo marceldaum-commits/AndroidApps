@@ -1,0 +1,470 @@
+{
+  "id": "s1-englisch-alltag",
+  "version": 2,
+  "title": "Englisch im Alltag",
+  "subject": "englisch",
+  "grades": [
+    5,
+    6,
+    7
+  ],
+  "emoji": "💬",
+  "tier": "free",
+  "description": "Nützliche englische Sätze für Restaurant, Schule, Hobbys, Wetter, Einkaufen und Wegbeschreibungen.",
+  "intro": [
+    {
+      "img": "🗺️💬",
+      "text": "Wusstest du? Mit ein paar Dutzend Alltagssätzen kommst du in England schon richtig weit – im Café, im Laden und auf der Straße."
+    },
+    {
+      "img": "⚠️🍕",
+      "text": "Vorsicht, Falle! Nicht Wort für Wort übersetzen: „Ich bekomme eine Pizza“ heißt NICHT „I become a pizza“ – sonst wirst du zur Pizza!"
+    },
+    {
+      "img": "🙏😊",
+      "text": "Engländer lieben „please“, „thank you“ und „sorry“. Wer höflich fragt, bekommt fast immer ein Lächeln zurück."
+    },
+    {
+      "img": "🎭🗣️",
+      "text": "Lerntrick: Sprich die Sätze laut und spiel die Szene nach – als Kellner, Verkäuferin oder Tourist. So bleiben sie hängen!"
+    },
+    {
+      "img": "✈️🚀",
+      "text": "Stell dir vor, du landest gleich in London. Los geht's – zeig, was du sagen kannst!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie sagt man: „Ich habe Hunger.“?",
+      "a": "I'm hungry.",
+      "choices": [
+        "I have hunger.",
+        "I'm hunger.",
+        "I have hungry."
+      ],
+      "info": "Hunger und Durst drückt man mit „be“ aus: I'm hungry. I'm thirsty.",
+      "img": "😋🍔"
+    },
+    {
+      "id": "002",
+      "q": "Wie sagt man: „Ich hätte gern eine Pizza, bitte.“?",
+      "a": "I'd like a pizza, please.",
+      "choices": [
+        "I become a pizza, please.",
+        "I want have a pizza, please.",
+        "I would a pizza, please."
+      ],
+      "info": "Falscher Freund: „become“ heißt „werden“, nicht „bekommen“!",
+      "img": "🍕🙋"
+    },
+    {
+      "id": "003",
+      "q": "Wie sagt man: „Was möchtest du trinken?“",
+      "a": "What would you like to drink?",
+      "choices": [
+        "What want you drink?",
+        "What would you like drinking?",
+        "What do you will drink?"
+      ],
+      "info": "„Would you like …?“ ist die höfliche Art, etwas anzubieten.",
+      "img": "🥤❓"
+    },
+    {
+      "id": "004",
+      "q": "Wie sagt man: „Guten Appetit!“",
+      "a": "Enjoy your meal!",
+      "choices": [
+        "Good appetite!",
+        "Have good eating!",
+        "Well eat!"
+      ],
+      "info": "„Good appetite“ sagt man im Englischen nicht – „Enjoy your meal!“ klingt richtig.",
+      "img": "🍝😋"
+    },
+    {
+      "id": "005",
+      "q": "Wie sagt man: „Ich bin satt.“?",
+      "a": "I'm full.",
+      "choices": [
+        "I'm sad.",
+        "I'm ready.",
+        "I'm empty."
+      ],
+      "info": "Satt = voll: I'm full. Und „sad“ heißt traurig!",
+      "img": "🍽️😌"
+    },
+    {
+      "id": "006",
+      "q": "Wie sagt man im Restaurant: „Die Rechnung, bitte.“?",
+      "a": "Can I have the bill, please?",
+      "choices": [
+        "Can I have the account, please?",
+        "Can I have the calculation, please?",
+        "Can I get the bell, please?"
+      ],
+      "info": "In Großbritannien „bill“, in den USA sagt man „check“.",
+      "img": "🧾💷"
+    },
+    {
+      "id": "007",
+      "q": "Wie sagt man: „Darf ich bitte auf die Toilette gehen?“",
+      "a": "May I go to the toilet, please?",
+      "choices": [
+        "Can I make the toilet, please?",
+        "Must I go to the toilet, please?",
+        "May I go at the toilet, please?"
+      ],
+      "info": "„May I …?“ ist die höfliche Art, um Erlaubnis zu fragen.",
+      "img": "🚻🙋"
+    },
+    {
+      "id": "008",
+      "q": "Wie sagt man: „Können Sie das bitte wiederholen?“",
+      "a": "Could you repeat that, please?",
+      "choices": [
+        "Could you that repeat, please?",
+        "Could you again say, please?",
+        "Can you repeat please that?"
+      ],
+      "info": "Im Englischen steht das Objekt hinter dem Verb: repeat that.",
+      "img": "🔁👂"
+    },
+    {
+      "id": "009",
+      "q": "Wie fragt man: „Wie schreibt man das?“ (Buchstabe für Buchstabe)",
+      "a": "How do you spell that?",
+      "choices": [
+        "How is that spelling?",
+        "How spell you that?",
+        "How do you that spell?"
+      ],
+      "info": "to spell = buchstabieren. Fragen meist mit „do“.",
+      "img": "🔤✏️"
+    },
+    {
+      "id": "010",
+      "q": "Wie fragt man: „Was bedeutet …?“",
+      "a": "What does … mean?",
+      "choices": [
+        "What means …?",
+        "What is … meaning?",
+        "What does … means?"
+      ],
+      "info": "Fragen mit „does“: Das Verb bleibt ohne s – mean, nicht means.",
+      "img": "📖❓"
+    },
+    {
+      "id": "011",
+      "q": "Was heißt die „Pause“ zwischen zwei Schulstunden auf Englisch?",
+      "a": "break (recess)",
+      "choices": [
+        "pause",
+        "rest",
+        "stop"
+      ],
+      "info": "In der Schule: break. In den USA sagt man auch „recess“.",
+      "img": "🔔🍎"
+    },
+    {
+      "id": "012",
+      "q": "Wie sagt man: „mein Lieblingsfach“?",
+      "a": "my favourite subject",
+      "choices": [
+        "my lovely subject",
+        "my favourite object",
+        "my darling subject"
+      ],
+      "info": "Schulfach = subject. Amerikanisch schreibt man „favorite“.",
+      "img": "📚❤️"
+    },
+    {
+      "id": "013",
+      "q": "Wie sagt man: „Ich verstehe das nicht.“?",
+      "a": "I don't understand.",
+      "choices": [
+        "I understand not.",
+        "I not understand.",
+        "I don't stand under."
+      ],
+      "info": "Verneinung mit „don't“ vor dem Verb.",
+      "img": "🤔❓"
+    },
+    {
+      "id": "014",
+      "q": "Wie fragt man: „Was machst du in deiner Freizeit?“",
+      "a": "What do you do in your free time?",
+      "choices": [
+        "What make you in your free time?",
+        "What do you in your free time?",
+        "What does you do in your free time?"
+      ],
+      "info": "Hier steht „do“ zweimal: einmal als Fragewort-Helfer, einmal als „machen“.",
+      "img": "🎮🛹"
+    },
+    {
+      "id": "015",
+      "q": "Wie sagt man: „Ich spiele gern Fußball.“?",
+      "a": "I like playing football.",
+      "choices": [
+        "I play gladly football.",
+        "I like play football.",
+        "I'm liking football play."
+      ],
+      "info": "„gern tun“ = like + Verb mit -ing (oder like to …).",
+      "img": "⚽😄"
+    },
+    {
+      "id": "016",
+      "q": "Wie sagt man: „Ich spiele Gitarre.“ (britisch)",
+      "a": "I play the guitar.",
+      "choices": [
+        "I make guitar.",
+        "I play at the guitar.",
+        "I'm playing on the guitar."
+      ],
+      "info": "Bei Instrumenten steht im britischen Englisch meist „the“.",
+      "img": "🎸🎶"
+    },
+    {
+      "id": "017",
+      "q": "Wie sagt man: „Ich sammle Briefmarken.“?",
+      "a": "I collect stamps.",
+      "choices": [
+        "I collect brands.",
+        "I gather letter marks.",
+        "I collect postcards."
+      ],
+      "info": "stamp = Briefmarke. „brand“ ist eine Marke wie bei Turnschuhen.",
+      "img": "✉️🔍"
+    },
+    {
+      "id": "018",
+      "q": "Wie fragt man: „Hast du Lust, ins Kino zu gehen?“",
+      "a": "Would you like to go to the cinema?",
+      "choices": [
+        "Have you lust to go to the cinema?",
+        "Would you like going in the cinema?",
+        "Do you want go to the cinema?"
+      ],
+      "info": "Falscher Freund: „lust“ bedeutet im Englischen etwas ganz anderes!",
+      "img": "🎬🍿"
+    },
+    {
+      "id": "019",
+      "q": "Wie fragt man: „Wie ist das Wetter heute?“",
+      "a": "What's the weather like today?",
+      "choices": [
+        "How is the weather like today?",
+        "Which weather is it today?",
+        "How does the weather today?"
+      ],
+      "info": "Merke: What … like? = Wie ist …?",
+      "img": "🌦️❓"
+    },
+    {
+      "id": "020",
+      "q": "Wie sagt man: „Es ist sonnig und warm.“?",
+      "a": "It's sunny and warm.",
+      "choices": [
+        "It's sun and warm.",
+        "It has sunny and warm.",
+        "It's sunning and warm."
+      ],
+      "info": "sun → sunny, rain → rainy, wind → windy, cloud → cloudy.",
+      "img": "☀️😎"
+    },
+    {
+      "id": "021",
+      "q": "Wie sagt man: „Es ist neblig.“?",
+      "a": "It's foggy.",
+      "choices": [
+        "It's cloudy.",
+        "It's windy.",
+        "It's frosty."
+      ],
+      "info": "fog = Nebel → foggy. cloudy heißt bewölkt.",
+      "img": "🌫️👻"
+    },
+    {
+      "id": "022",
+      "q": "Wie sagt man: „Es ist eiskalt.“?",
+      "a": "It's freezing.",
+      "choices": [
+        "It's boiling.",
+        "It's melting.",
+        "It's icing."
+      ],
+      "info": "to freeze = frieren. „It's boiling“ sagt man, wenn es superheiß ist.",
+      "img": "🥶❄️"
+    },
+    {
+      "id": "023",
+      "q": "„It's raining cats and dogs.“ – was bedeutet das?",
+      "a": "Es regnet in Strömen.",
+      "choices": [
+        "Es regnet Katzen und Hunde.",
+        "Die Tiere wollen rein.",
+        "Es nieselt ein bisschen."
+      ],
+      "info": "Eine englische Redewendung – zum Glück fallen keine Tiere vom Himmel!",
+      "img": "🐱🐶🌧️"
+    },
+    {
+      "id": "024",
+      "q": "Wie fragt man im Laden: „Was kostet das?“",
+      "a": "How much is it?",
+      "choices": [
+        "What costs it?",
+        "How many is it?",
+        "What does it costs?"
+      ],
+      "info": "Bei Geld: how much. „How many“ nimmt man für zählbare Dinge.",
+      "img": "💷🏷️"
+    },
+    {
+      "id": "025",
+      "q": "Wie sagt man im Laden: „Ich schaue mich nur um.“?",
+      "a": "I'm just looking.",
+      "choices": [
+        "I'm only looking me around.",
+        "I'm just seeing.",
+        "I watch only."
+      ],
+      "info": "Damit sagst du freundlich: Danke, ich brauche gerade keine Hilfe.",
+      "img": "👀🛍️"
+    },
+    {
+      "id": "026",
+      "q": "Wie fragt man: „Haben Sie das eine Nummer größer?“",
+      "a": "Do you have this in a bigger size?",
+      "choices": [
+        "Do you have this one number bigger?",
+        "Have you this in a more big size?",
+        "Do you have this in a bigger number?"
+      ],
+      "info": "Kleidergröße = size. big → bigger.",
+      "img": "👕📏"
+    },
+    {
+      "id": "027",
+      "q": "Wie fragt man: „Kann ich mit Karte bezahlen?“",
+      "a": "Can I pay by card?",
+      "choices": [
+        "Can I pay over card?",
+        "Can I card pay?",
+        "Can I pay with chart?"
+      ],
+      "info": "Bezahlen mit Karte: pay by card. Bar bezahlen: pay in cash.",
+      "img": "💳🙂"
+    },
+    {
+      "id": "028",
+      "q": "Was heißt „die Quittung“ (Kassenzettel) auf Englisch?",
+      "a": "receipt",
+      "choices": [
+        "recipe",
+        "quittance",
+        "receive"
+      ],
+      "info": "Achtung: „recipe“ ist ein Kochrezept! Beim „receipt“ ist das p stumm.",
+      "img": "🧾✅"
+    },
+    {
+      "id": "029",
+      "q": "Wie fragt man: „Entschuldigung, wie komme ich zum Bahnhof?“",
+      "a": "Excuse me, how do I get to the station?",
+      "choices": [
+        "Sorry, how come I to the station?",
+        "Excuse me, how do I come at the station?",
+        "Excuse me, where do I get the station?"
+      ],
+      "info": "Um etwas bitten: „Excuse me“. Sich entschuldigen: „Sorry“.",
+      "img": "🚉🧭"
+    },
+    {
+      "id": "030",
+      "q": "Wie sagt man: „Gehen Sie geradeaus.“?",
+      "a": "Go straight on.",
+      "choices": [
+        "Go straight out.",
+        "Go just out.",
+        "Go straightly on."
+      ],
+      "info": "Man hört auch „Go straight ahead“.",
+      "img": "⬆️🚶"
+    },
+    {
+      "id": "031",
+      "q": "Wie sagt man: „Biegen Sie links ab.“?",
+      "a": "Turn left.",
+      "choices": [
+        "Bend left.",
+        "Turn to the links.",
+        "Turn on links."
+      ],
+      "info": "turn left = links abbiegen, turn right = rechts abbiegen.",
+      "img": "⬅️🚶"
+    },
+    {
+      "id": "032",
+      "q": "Wie sagt man: „Es ist gegenüber der Bank.“?",
+      "a": "It's opposite the bank.",
+      "choices": [
+        "It's against the bank.",
+        "It's in front of the bank.",
+        "It's over the bank."
+      ],
+      "info": "opposite = gegenüber. „in front of“ heißt „vor“.",
+      "img": "🏦↔️"
+    },
+    {
+      "id": "033",
+      "q": "Was heißt „an der Ampel“ auf Englisch?",
+      "a": "at the traffic lights",
+      "choices": [
+        "at the amp",
+        "at the street lamp",
+        "at the crossing light"
+      ],
+      "info": "Ampel = traffic lights – sie hat ja mehrere Lichter.",
+      "img": "🚦🚗"
+    },
+    {
+      "id": "034",
+      "q": "Wie sagt man: „Wie spät ist es?“",
+      "a": "What time is it?",
+      "choices": [
+        "How late is it?",
+        "How much clock is it?",
+        "What's the hour clock?"
+      ],
+      "info": "Wort für Wort übersetzt klappt hier nicht: What time is it?",
+      "img": "⏰❓"
+    },
+    {
+      "id": "035",
+      "q": "Wie sagt man beim Spielen: „Ich bin dran.“?",
+      "a": "It's my turn.",
+      "choices": [
+        "I'm on it.",
+        "It's my row.",
+        "I'm at it."
+      ],
+      "info": "turn = an der Reihe sein. „Whose turn is it?“ = Wer ist dran?",
+      "img": "🎲🙋"
+    },
+    {
+      "id": "036",
+      "q": "Wie antwortet man auf „Thank you!“ mit „Gern geschehen!“?",
+      "a": "You're welcome!",
+      "choices": [
+        "Gladly happened!",
+        "With pleasure done!",
+        "You are welcomed!"
+      ],
+      "info": "Auch „No problem!“ geht im Alltag.",
+      "img": "🤗🙏"
+    }
+  ]
+}

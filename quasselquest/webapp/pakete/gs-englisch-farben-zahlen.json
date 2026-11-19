@@ -1,0 +1,446 @@
+{
+  "id": "gs-englisch-farben-zahlen",
+  "version": 2,
+  "title": "Farben, Zahlen, Tiere",
+  "subject": "englisch",
+  "grades": [
+    1,
+    2,
+    3
+  ],
+  "emoji": "🎨",
+  "tier": "free",
+  "description": "Noch mehr Farben, die Zahlen bis 20, Haus- und Bauernhoftiere und freundliche Begrüßungen auf Englisch.",
+  "intro": [
+    {
+      "img": "👋🐝",
+      "text": "Hello! Wusstest du? Englisch ist mit Deutsch verwandt. Darum klingen manche Wörter fast gleich: Hamster – hamster, Ball – ball."
+    },
+    {
+      "img": "🎨🌈",
+      "text": "Auch Farben gibt es auf Englisch: braun ist brown, grau ist grey und lila ist purple. Und orange bleibt einfach orange!"
+    },
+    {
+      "img": "🔢✋",
+      "text": "Zählen geht ganz leicht: one, two, three, four, five … Ab 13 enden die Zahlen auf „-teen“: thirteen, fourteen, fifteen."
+    },
+    {
+      "img": "🐷🐑🦆",
+      "text": "Auf dem Bauernhof triffst du pig, sheep, duck und goat. Und das Kaninchen heißt rabbit."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Let's go – los geht's! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was heißt „Guten Morgen“ auf Englisch?",
+      "a": "good morning",
+      "choices": [
+        "good night",
+        "good afternoon",
+        "goodbye"
+      ],
+      "info": "Morgens sagst du „good morning“, abends vor dem Schlafen „good night“.",
+      "img": "🌅☀️"
+    },
+    {
+      "id": "002",
+      "q": "Was sagst du abends, bevor du schlafen gehst?",
+      "a": "good night",
+      "choices": [
+        "good morning",
+        "hello",
+        "good afternoon"
+      ],
+      "info": "„Good night!“ – Gute Nacht! Dazu passt: „Sleep well!“ – Schlaf gut!",
+      "img": "🌙😴"
+    },
+    {
+      "id": "003",
+      "q": "Du möchtest etwas haben. Wie sagst du höflich „bitte“?",
+      "a": "please",
+      "choices": [
+        "sorry",
+        "hello",
+        "yes"
+      ],
+      "info": "„Can I have an apple, please?“ – Kann ich bitte einen Apfel haben?",
+      "img": "🙏🍎"
+    },
+    {
+      "id": "004",
+      "q": "Was sagst du, wenn dir etwas leidtut?",
+      "a": "sorry",
+      "choices": [
+        "please",
+        "thank you",
+        "hello"
+      ],
+      "info": "„Sorry!“ – Entschuldigung! Das Wort kennst du bestimmt schon.",
+      "img": "😟💔"
+    },
+    {
+      "id": "005",
+      "q": "Was bedeutet „What's your name?“",
+      "a": "Wie heißt du?",
+      "choices": [
+        "Wie alt bist du?",
+        "Wo wohnst du?",
+        "Wie geht es dir?"
+      ],
+      "info": "Darauf antwortest du: „My name is …“",
+      "img": "🏷️❓"
+    },
+    {
+      "id": "006",
+      "q": "Was heißt „orange“ auf Englisch?",
+      "a": "orange",
+      "choices": [
+        "pink",
+        "purple",
+        "brown"
+      ],
+      "info": "Gleiches Wort! Man spricht es nur anders aus, ungefähr „órrintsch“.",
+      "img": "🍊"
+    },
+    {
+      "id": "007",
+      "q": "Was heißt „rosa“ auf Englisch?",
+      "a": "pink",
+      "choices": [
+        "purple",
+        "red",
+        "orange"
+      ],
+      "info": "Rosa heißt „pink“ – wie ein Schweinchen.",
+      "img": "🐷🌸"
+    },
+    {
+      "id": "008",
+      "q": "Was heißt „braun“ auf Englisch?",
+      "a": "brown",
+      "choices": [
+        "blue",
+        "black",
+        "grey"
+      ],
+      "info": "„brown“ klingt fast wie „braun“ – wie ein Teddybär.",
+      "img": "🐻🍫"
+    },
+    {
+      "id": "009",
+      "q": "Was heißt „grau“ auf Englisch?",
+      "a": "grey (gray)",
+      "choices": [
+        "green",
+        "blue",
+        "brown"
+      ],
+      "info": "Grau wie ein Elefant: „grey“. In Amerika schreibt man „gray“.",
+      "img": "🐘"
+    },
+    {
+      "id": "010",
+      "q": "Was heißt „lila“ auf Englisch?",
+      "a": "purple",
+      "choices": [
+        "pink",
+        "blue",
+        "brown"
+      ],
+      "info": "Lila heißt „purple“. Lila Trauben sind „purple grapes“.",
+      "img": "💜🍇"
+    },
+    {
+      "id": "011",
+      "q": "Was heißt „eins“ auf Englisch?",
+      "a": "one",
+      "choices": [
+        "two",
+        "ten",
+        "nine"
+      ],
+      "info": "„one“ spricht man ungefähr wie „wann“.",
+      "img": "☝️"
+    },
+    {
+      "id": "012",
+      "q": "Was heißt „vier“ auf Englisch?",
+      "a": "four",
+      "choices": [
+        "five",
+        "fourteen",
+        "forty"
+      ],
+      "info": "„four“ klingt wie „for“. Ein Kleeblatt mit vier Blättern bringt Glück!",
+      "img": "🍀"
+    },
+    {
+      "id": "013",
+      "q": "Was heißt „fünf“ auf Englisch?",
+      "a": "five",
+      "choices": [
+        "four",
+        "nine",
+        "fifteen"
+      ],
+      "info": "An einer Hand hast du „five“ Finger.",
+      "img": "🖐️"
+    },
+    {
+      "id": "014",
+      "q": "Was heißt „acht“ auf Englisch?",
+      "a": "eight",
+      "choices": [
+        "eighteen",
+        "eleven",
+        "nine"
+      ],
+      "info": "„eight“ spricht man ungefähr „äit“. Eine Spinne hat eight Beine!",
+      "img": "🕷️"
+    },
+    {
+      "id": "015",
+      "q": "Was heißt „elf“ auf Englisch?",
+      "a": "eleven",
+      "choices": [
+        "seven",
+        "twelve",
+        "eight"
+      ],
+      "info": "Achtung: „elf“ heißt „eleven“. Eine Fußballmannschaft hat eleven Spieler.",
+      "img": "⚽"
+    },
+    {
+      "id": "016",
+      "q": "Was heißt „dreizehn“ auf Englisch?",
+      "a": "thirteen",
+      "choices": [
+        "thirty",
+        "three",
+        "fourteen"
+      ],
+      "info": "Die „-teen“-Zahlen gehen von 13 bis 19. „thirty“ ist 30!",
+      "img": "1️⃣3️⃣"
+    },
+    {
+      "id": "017",
+      "q": "Was heißt „fünfzehn“ auf Englisch?",
+      "a": "fifteen",
+      "choices": [
+        "fifty",
+        "five",
+        "sixteen"
+      ],
+      "info": "Merke: fifteen = 15, fifty = 50.",
+      "img": "1️⃣5️⃣"
+    },
+    {
+      "id": "018",
+      "q": "Welche Zahl ist „six“?",
+      "a": "6",
+      "choices": [
+        "7",
+        "9",
+        "16"
+      ],
+      "info": "„six“ = 6. Ein Marienkäfer hat six Beine.",
+      "img": "🐞"
+    },
+    {
+      "id": "019",
+      "q": "Welche Zahl ist „sixteen“?",
+      "a": "16",
+      "choices": [
+        "6",
+        "60",
+        "17"
+      ],
+      "info": "six + teen = 16. Die Endung „-teen“ gehört zu den Zahlen 13 bis 19.",
+      "img": "1️⃣6️⃣"
+    },
+    {
+      "id": "020",
+      "q": "Welche Zahl ist „nineteen“?",
+      "a": "19",
+      "choices": [
+        "9",
+        "90",
+        "15"
+      ],
+      "info": "nine + teen = 19. Danach kommt „twenty“, also 20.",
+      "img": "1️⃣9️⃣"
+    },
+    {
+      "id": "021",
+      "q": "Was heißt „Kaninchen“ auf Englisch?",
+      "a": "rabbit",
+      "choices": [
+        "rat",
+        "hamster",
+        "duck"
+      ],
+      "info": "Das Kaninchen heißt „rabbit“. Achtung: „rat“ ist die Ratte!",
+      "img": "🐇🥕"
+    },
+    {
+      "id": "022",
+      "q": "Was heißt „Schwein“ auf Englisch?",
+      "a": "pig",
+      "choices": [
+        "dog",
+        "goat",
+        "sheep"
+      ],
+      "info": "Das Schwein heißt „pig“. Ein kleines Ferkel heißt „piglet“.",
+      "img": "🐷"
+    },
+    {
+      "id": "023",
+      "q": "Was heißt „Schaf“ auf Englisch?",
+      "a": "sheep",
+      "choices": [
+        "ship",
+        "goat",
+        "pig"
+      ],
+      "info": "Achtung: „sheep“ (Schaf) mit langem i, „ship“ (Schiff) mit kurzem i.",
+      "img": "🐑⛵"
+    },
+    {
+      "id": "024",
+      "q": "Was heißt „Ziege“ auf Englisch?",
+      "a": "goat",
+      "choices": [
+        "sheep",
+        "cow",
+        "duck"
+      ],
+      "info": "Die Ziege heißt „goat“. Ihre Milch heißt „goat's milk“.",
+      "img": "🐐🥛"
+    },
+    {
+      "id": "025",
+      "q": "Was heißt „Huhn“ auf Englisch?",
+      "a": "chicken",
+      "choices": [
+        "duck",
+        "goat",
+        "rabbit"
+      ],
+      "info": "„chicken“ ist das Huhn. Ein Küken heißt „chick“.",
+      "img": "🐔🥚"
+    },
+    {
+      "id": "026",
+      "q": "Was bedeutet „duck“?",
+      "a": "Ente",
+      "choices": [
+        "Gans",
+        "Huhn",
+        "Taube"
+      ],
+      "info": "„duck“ = Ente. Sie macht auf Englisch „quack“.",
+      "img": "🦆💧"
+    },
+    {
+      "id": "027",
+      "q": "Was bedeutet „donkey“?",
+      "a": "Esel",
+      "choices": [
+        "Affe",
+        "Pferd",
+        "Hund"
+      ],
+      "info": "„donkey“ = Esel. Das Pferd heißt „horse“.",
+      "img": "🐴👂"
+    },
+    {
+      "id": "028",
+      "q": "Was bedeutet „hamster“?",
+      "a": "Hamster",
+      "choices": [
+        "Hase",
+        "Maus",
+        "Igel"
+      ],
+      "info": "Gleiches Wort, gleiches Tier! Nur das „a“ spricht man fast wie „ä“.",
+      "img": "🐹🌻"
+    },
+    {
+      "id": "029",
+      "q": "two + three = ?",
+      "a": "five",
+      "choices": [
+        "four",
+        "six",
+        "ten"
+      ],
+      "info": "2 + 3 = 5 – two plus three is five.",
+      "img": "✌️➕3️⃣"
+    },
+    {
+      "id": "030",
+      "q": "four + four = ?",
+      "a": "eight",
+      "choices": [
+        "six",
+        "nine",
+        "fourteen"
+      ],
+      "info": "4 + 4 = 8 – four plus four is eight.",
+      "img": "4️⃣➕4️⃣"
+    },
+    {
+      "id": "031",
+      "q": "ten − four = ?",
+      "a": "six",
+      "choices": [
+        "five",
+        "seven",
+        "fourteen"
+      ],
+      "info": "10 − 4 = 6 – ten minus four is six.",
+      "img": "🔟➖4️⃣"
+    },
+    {
+      "id": "032",
+      "q": "red + yellow = ?",
+      "a": "orange",
+      "choices": [
+        "purple",
+        "green",
+        "brown"
+      ],
+      "info": "Rot und Gelb gemischt ergibt Orange.",
+      "img": "❤️💛🍊"
+    },
+    {
+      "id": "033",
+      "q": "blue + yellow = ?",
+      "a": "green",
+      "choices": [
+        "purple",
+        "orange",
+        "pink"
+      ],
+      "info": "Blau und Gelb gemischt ergibt Grün – wie ein Frosch.",
+      "img": "💙💛🐸"
+    },
+    {
+      "id": "034",
+      "q": "red + blue = ?",
+      "a": "purple",
+      "choices": [
+        "green",
+        "orange",
+        "yellow"
+      ],
+      "info": "Rot und Blau gemischt ergibt Lila – auf Englisch „purple“.",
+      "img": "❤️💙🍇"
+    }
+  ]
+}

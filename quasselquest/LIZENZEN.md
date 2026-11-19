@@ -11,3 +11,12 @@ Nicht verwendet: Piper-Stimmen, die auf den „lessac“-Daten aufbauen (nur nic
 
 Töne und Musik: im Code erzeugt, keine fremden Aufnahmen.
 Bilder: Emoji des Geräts; Ruby (Papagei) selbst gezeichnet (SVG).
+
+Stimmen der Sprachpakete (Lizenzen geprüft am 19.11.2026):
+- Deutsch: Piper „de_DE-thorsten-medium“ (Thorsten Müller, Thorsten-Voice), CC0. Grundmodell „rdh“ ebenfalls CC0.
+- Französisch: Piper „fr_FR-siwis-medium“, Daten SIWIS French Speech Synthesis Database (Universität Edinburgh u. a.), CC BY 4.0;
+  Grundmodell hifi_tts_92 (NVIDIA Hi-Fi TTS), CC BY 4.0.
+- Spanisch: Piper „es_ES-davefx-medium“, CC0. Grundmodell „rdh“ ebenfalls CC0.
+- Latein: Es gibt keine freie Stimme mit sauberer Lizenz – Latein wird gelesen, nicht vorgelesen.
+
+Inhalte der Pakete: selbst geschrieben im Wissensgarten (keine Listen aus Schulbüchern), übernommen am 19.11.2026.

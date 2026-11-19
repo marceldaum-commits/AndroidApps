@@ -63,6 +63,10 @@ private suspend fun plusPackTexts(): List<String> = runCatching {
 /** Freischalt-Code aus #pro=… (neu, landet nicht in Server-Protokollen) oder ?pro=… (alte Karten und Mails) – danach sofort aus der Adresse entfernen */
 private fun takeProParam(): JsString? = js("(function () { var u = new URL(location.href); var v = u.searchParams.get('pro'); if (v) u.searchParams.delete('pro'); var h = (u.hash || '').replace(/^#/, ''); var hp = new URLSearchParams(h); var w = hp.get('pro'); if (w) { hp.delete('pro'); var rest = hp.toString(); u.hash = rest ? '#' + rest : ''; } var code = w || v; if (code) history.replaceState(null, '', u.pathname + u.search + u.hash); return code; })()")
 
+/** Deeplink …/#paket=<Paket-ID> (z. B. aus KurvenFlug, Raumlicht, Experimentopia): lesen und aus der Adresse entfernen */
+private fun takePaketParam(): JsString? = js("(function () { var u = new URL(location.href); var hp = new URLSearchParams((u.hash || '').replace(/^#/, '')); var w = hp.get('paket'); if (!w) return null; hp.delete('paket'); var rest = hp.toString(); u.hash = rest ? '#' + rest : ''; history.replaceState(null, '', u.pathname + u.search + u.hash); return /^[a-z0-9-]{3,60}$/.test(w) ? w : null; })()")
+private fun onPaketHash(cb: (String) -> Unit): Unit = js("window.addEventListener('hashchange', function () { var u = new URL(location.href); var w = new URLSearchParams((u.hash || '').replace(/^#/, '')).get('paket'); if (w && /^[a-z0-9-]{3,60}$/.test(w)) { history.replaceState(null, '', u.pathname + u.search); cb(w); } })")
+
 private fun hideSplash(): Unit = js("(function () { var s = document.getElementById('splash'); if (s) { s.classList.add('weg'); setTimeout(function () { s.remove(); }, 600); } window.dispatchEvent(new Event('wg-ready')); })()")
 /** Schritt ins Start-Protokoll (index.html, sichtbar mit ?diag=1) */
 private fun diag(step: String): Unit = js("window.wgDiag && window.wgDiag(step)")
@@ -128,6 +132,8 @@ fun main() {
             de.wissensgarten.core.data.PlusEntitlements.Redeem.INVALID -> "Der Freischalt-Link ist leider ungültig. Bitte den Code im Eltern-Bereich eingeben."
         }
     }
+    val paketRequest = kotlinx.coroutines.flow.MutableStateFlow(takePaketParam()?.toString())
+    onPaketHash { paketRequest.value = it }
     vm.refreshPlusPacksIfDue()
     diag("App: Daten bereit → Zeichenfläche anlegen")
     if (diagOn()) onElternTest(
@@ -175,7 +181,7 @@ fun main() {
         }
         if (ready) {
             val start = remember { if (vm.onboarded.value) Routes.GARDEN else Routes.ONBOARDING }
-            WissensgartenApp(vm, hostWithUsage, start)
+            WissensgartenApp(vm, hostWithUsage, start, paketRequest = paketRequest)
         } else Box(
             // Gleiche Farben wie das HTML-Startbild – nie ein weißer Bildschirm
             Modifier.fillMaxSize().background(androidx.compose.ui.graphics.Color(0xFFFBF6EC)), contentAlignment = Alignment.Center,

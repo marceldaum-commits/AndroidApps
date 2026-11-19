@@ -1,8 +1,8 @@
 // Offline-Speicher der WebApp. Die Versionsnummer wechselt mit jeder Auslieferung (prüft tools/test-inhalt.mjs).
-const VERSION = '0.1.0';
+const VERSION = '0.2.1';
 const CACHE = 'quasselquest-' + VERSION;
-const FILES = ['./', 'index.html', 'app.css', 'version.js', 'content.js', 'audio.js', 'app.js', 'datenschutz.html',
-  'manifest.webmanifest', 'audio/index.json', 'lizenzen.txt', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
+const FILES = ['./', 'index.html', 'app.css', 'version.js', 'content.js', 'pakete.js', 'audio.js', 'app.js', 'datenschutz.html',
+  'manifest.webmanifest', 'audio/index.json', 'pakete/index.json', 'lizenzen.txt', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {
   // Programmdateien und alle vorab vertonten Sätze (audio/index.json) offline speichern
@@ -11,6 +11,8 @@ self.addEventListener('install', (e) => {
     const idx = await (await c.match('audio/index.json')).json();
     const mp3 = new Set();
     for (const e of Object.values(idx.saetze || {})) { mp3.add('audio/piper/' + e.n); mp3.add('audio/piper/' + e.s); }
+    const pk = await (await c.match('pakete/index.json')).json();
+    await c.addAll((pk.pakete || []).map((p) => 'pakete/' + p.id + '.json'));
     await c.addAll([...mp3]);
   }));
 });

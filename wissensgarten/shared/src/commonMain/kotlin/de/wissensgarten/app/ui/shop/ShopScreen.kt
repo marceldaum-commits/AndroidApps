@@ -44,6 +44,7 @@ fun ShopScreen(
                     modifier = Modifier.padding(top = 4.dp),
                 )
             }
+            item { de.wissensgarten.app.ui.common.QuasselquestHinweis(0, Modifier) }
             item {
                 ElevatedCard(Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(14.dp)) {

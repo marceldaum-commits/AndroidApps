@@ -13,6 +13,7 @@ import de.wissensgarten.core.model.ShopItems
 import de.wissensgarten.core.model.StudyCard
 import de.wissensgarten.core.model.Subject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -25,8 +26,13 @@ class GardenRepository(
     private fun newId() = Uuid.random().toString()
 
     val profiles: Flow<List<ProfileEntity>> = dao.profiles()
-    fun beds(profileId: String): Flow<List<BedWithCards>> = dao.bedsWithCards(profileId)
-    fun allBeds(): Flow<List<BedWithCards>> = dao.allBedsWithCards()
+    // Sprach-Beete (an Quasselquest abgegeben, Marcel 19.11.2026) werden ausgeblendet, aber NICHT gelöscht:
+    // Sicherung, Sync und Paket-Updates (dao direkt) behalten sie, damit ein Umzug zu Quasselquest sie übernehmen kann.
+    private fun sichtbar(l: List<BedWithCards>) = l.filterNot { de.wissensgarten.core.model.Angebot.ausgeblendet(it.bed.packId) }
+    fun beds(profileId: String): Flow<List<BedWithCards>> = dao.bedsWithCards(profileId).map(::sichtbar)
+    fun allBeds(): Flow<List<BedWithCards>> = dao.allBedsWithCards().map(::sichtbar)
+    /** Anzahl ausgeblendeter Sprach-Beete eines Profils (für den Hinweis auf Quasselquest) */
+    fun ausgeblendeteBeete(profileId: String): Flow<Int> = dao.bedsWithCards(profileId).map { l -> l.count { de.wissensgarten.core.model.Angebot.ausgeblendet(it.bed.packId) } }
     fun logsSince(since: Long) = dao.logsSince(since)
 
     suspend fun profile(id: String) = dao.profile(id)
@@ -112,7 +118,7 @@ class GardenRepository(
     suspend fun bedEntity(bedId: String) = dao.bed(bedId)
     suspend fun logCount(profileId: String) = dao.logCount(profileId)
     suspend fun profileLogsSince(profileId: String, since: Long) = dao.profileLogsSince(profileId, since)
-    suspend fun bedsOnce(profileId: String) = dao.bedsWithCardsOnce(profileId)
+    suspend fun bedsOnce(profileId: String) = sichtbar(dao.bedsWithCardsOnce(profileId))
 
     suspend fun deleteCard(cardId: String) {
         tombstones?.add(listOf(cardId))

@@ -308,6 +308,19 @@ open class ScreenshotTest {
         de.wissensgarten.app.ui.common.TheorySheet(de.wissensgarten.app.ui.common.Theory("${tiere.emoji} ${tiere.title}", tiere.intro)) {}
     }
 
+    @Test fun theoryLinks() = shot("83_theorie_querverweise", settle = 2500) {
+        val gl = pack("s1-mathe-gleichungen")
+        de.wissensgarten.app.ui.common.TheorySheet(de.wissensgarten.app.ui.common.Theory("${gl.emoji} ${gl.title}", gl.intro.drop(3).take(2),
+            de.wissensgarten.core.model.Querverweise.fuer(gl.id))) {}
+    }
+
+    @Test fun quasselquest() = shot("84_quasselquest_hinweis") {
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.padding(vertical = 24.dp)) {
+            de.wissensgarten.app.ui.common.QuasselquestHinweis(2)
+            de.wissensgarten.app.ui.common.QuasselquestHinweis(0)
+        }
+    }
+
     @Test fun shop() = shot("08_samenhandlung") {
         ShopScreen(profile, packs, garden, { true }, {}, {}, { _, _ -> })
     }

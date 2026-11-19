@@ -120,13 +120,15 @@ fun androidx.navigation.NavController.goOnce(route: String) {
 @Composable
 fun WissensgartenApp(vm: AppViewModel, host: AppHost, startRoute: String,
                      waterRequest: MutableStateFlow<Boolean> = MutableStateFlow(false),
-                     duelRequest: MutableStateFlow<String?> = MutableStateFlow(null)) {
-    AppUi(vm, host).Root(startRoute, waterRequest, duelRequest)
+                     duelRequest: MutableStateFlow<String?> = MutableStateFlow(null),
+                     paketRequest: MutableStateFlow<String?> = MutableStateFlow(null)) {
+    AppUi(vm, host).Root(startRoute, waterRequest, duelRequest, paketRequest)
 }
 
 private class AppUi(val vm: AppViewModel, val host: AppHost) {
     @Composable
-    fun Root(startRoute: String, waterRequest: MutableStateFlow<Boolean>, duelRequest: MutableStateFlow<String?>) {
+    fun Root(startRoute: String, waterRequest: MutableStateFlow<Boolean>, duelRequest: MutableStateFlow<String?>,
+             paketRequest: MutableStateFlow<String?> = MutableStateFlow(null)) {
             val theme by vm.theme.collectAsStateWithLifecycle()
         val soundOn by vm.settings.sound.collectAsStateWithLifecycle()
         val sfx = host.sfx
@@ -187,6 +189,24 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                     if (t.contains("WGK1-")) { if (vm.openClassCode(t)) nav.navigate(Routes.KLASSE) }
                     else if (vm.openDuelCode(t)) nav.navigate(Routes.DUEL)
                 }
+                // Deeplink …/#paket=<ID> aus einer anderen Lern-App: Beet öffnen bzw. Paket erst pflanzen
+                val paketId by paketRequest.collectAsStateWithLifecycle()
+                val allPacks by vm.packs.collectAsStateWithLifecycle()
+                var gepflanzt by remember { mutableStateOf<String?>(null) }
+                LaunchedEffect(paketId, onboardedNow, beds, allPacks) {
+                    val id = paketId ?: return@LaunchedEffect
+                    if (!onboardedNow || allPacks.isEmpty()) return@LaunchedEffect
+                    when (val z = vm.paketZiel(id)) {
+                        is AppViewModel.PaketZiel.Beet -> {
+                            paketRequest.value = null
+                            if (gepflanzt == id) host.toast("🌱 „${z.titel}“ wächst jetzt in deinem Garten!")
+                            nav.navigate(Routes.bed(z.bedId)) { launchSingleTop = true }
+                        }
+                        is AppViewModel.PaketZiel.Pflanzen -> if (gepflanzt != id) { gepflanzt = id; vm.plantPack(z.pack) }
+                        AppViewModel.PaketZiel.Plus -> { paketRequest.value = null; host.toast("🌟 Dieses Paket gehört zu Wissensgarten Plus."); nav.navigate(Routes.SHOP) { launchSingleTop = true } }
+                        AppViewModel.PaketZiel.Unbekannt -> { paketRequest.value = null; nav.navigate(Routes.SHOP) { launchSingleTop = true } }
+                    }
+                }
                 LaunchedEffect(water, beds) {
                     if (water && beds.isNotEmpty()) {
                         waterRequest.value = false
@@ -213,7 +233,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         val theory = remember(beds, packs) {
             val byId = packs.associateBy { it.id }
             val map = beds.associate { b -> b.bed.id to b.bed.packId?.let(byId::get) }
-            ({ bedId: String -> map[bedId]?.let { p -> de.wissensgarten.app.ui.common.Theory("${p.emoji} ${p.title}", p.intro) } })
+            ({ bedId: String -> map[bedId]?.let { p -> de.wissensgarten.app.ui.common.Theory("${p.emoji} ${p.title}", p.intro,
+                de.wissensgarten.core.model.Querverweise.fuer(p.id, host.testStage)) } })
         }
         CompositionLocalProvider(de.wissensgarten.app.ui.common.LocalTheory provides theory) { AppNavContent(nav, startRoute) }
     }
@@ -224,6 +245,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         val profiles by vm.profiles.collectAsStateWithLifecycle()
         val beds by vm.beds.collectAsStateWithLifecycle()
         val packs by vm.packs.collectAsStateWithLifecycle()
+        // Neu pflanzen lassen sich nur Pakete im Profil (Sprachen → Quasselquest); vorhandene Beete bleiben
+        val angebot = remember(packs) { packs.filter(de.wissensgarten.core.model.Angebot::angeboten) }
         val now by vm.now.collectAsStateWithLifecycle()
         val backStack by nav.currentBackStackEntryAsState()
         val route = backStack?.destination?.route
@@ -298,7 +321,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         ) { pad ->
             NavHost(nav, startDestination = startRoute, modifier = Modifier.padding(pad)) {
                 composable(Routes.ONBOARDING) {
-                    OnboardingScreen(packs, addingProfile = false, onCancel = {}, onFinish = { name, avatar, level, ids, own ->
+                    OnboardingScreen(angebot, addingProfile = false, onCancel = {}, onFinish = { name, avatar, level, ids, own ->
                         vm.finishOnboarding(name, avatar, level, ids, own)
                         nav.navigate(Routes.tutorial(true)) { popUpTo(Routes.ONBOARDING) { inclusive = true } }
                     }, welcomeExtra = {
@@ -309,7 +332,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                     })
                 }
                 composable(Routes.ADD_PROFILE) {
-                    OnboardingScreen(packs, addingProfile = true, onCancel = { nav.popSafe() }) { name, avatar, level, ids, own ->
+                    OnboardingScreen(angebot, addingProfile = true, onCancel = { nav.popSafe() }) { name, avatar, level, ids, own ->
                         vm.addProfile(name, avatar, level, ids, own)
                         nav.popSafe(); goTab(Routes.GARDEN)
                     }
@@ -347,6 +370,9 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                                 Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
                                     val upd by vm.availableUpdate.collectAsStateWithLifecycle()
                                     upd?.let { de.wissensgarten.app.ui.settings.UpdateBanner(it.version) { gate("Ein Update installieren dürfen nur Eltern.") { goTab(Routes.SETTINGS) } } }
+                                    // Sprachen sind zu Quasselquest umgezogen: ausgeblendete Beete → freundlicher Hinweis
+                                    val sprachBeete by vm.sprachBeete.collectAsStateWithLifecycle()
+                                    if (sprachBeete > 0) de.wissensgarten.app.ui.common.QuasselquestHinweis(sprachBeete)
                                     // Klassenarbeiten: Countdown-Karten oder Einladung zum Eintragen
                                     val plans = remember(rev, beds, now) { vm.examPlans() }
                                     var addExam by remember { mutableStateOf(false) }
@@ -419,7 +445,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                 composable(Routes.SHOP) {
                     WithProfile(profile) { p ->
                         ShopScreen(
-                            profile = p, packs = packs + vm.plusPreviews.collectAsStateWithLifecycle().value, beds = beds, canUse = vm.entitlements::canUse,
+                            profile = p, packs = angebot + vm.plusPreviews.collectAsStateWithLifecycle().value.filter(de.wissensgarten.core.model.Angebot::angeboten), beds = beds, canUse = vm.entitlements::canUse,
                             onLocked = {
                                 if (vm.entitlements.code != null) { host.toast("🐝 Brummi holt die Plus-Pakete … gleich noch einmal antippen."); vm.refreshPlusPacksIfDue(force = true) }
                                 else gate("Dieses Paket gehört zu Wissensgarten Plus.") { nav.navigate(Routes.PLUS) }
@@ -465,7 +491,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                     // Thema: ein Paket aus dem Garten des aktiven Profils (sonst ein passendes für die Stufe)
                     val pack = remember {
                         val mine = beds.mapNotNull { b -> b.bed.packId?.let { pid -> packs.firstOrNull { it.id == pid } } }
-                        (mine.ifEmpty { packs.filter { (profile?.level ?: 0) in it.grades }.ifEmpty { packs } }).randomOrNull()
+                        (mine.ifEmpty { angebot.filter { (profile?.level ?: 0) in it.grades }.ifEmpty { angebot } }).randomOrNull()
                     }
                     // Pakete noch nicht geladen (z. B. nach Neustart der App) → zurück statt Absturz
                     if (pack == null) { LaunchedEffect(Unit) { nav.popBackStack() }; return@composable }
@@ -544,7 +570,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                 composable(Routes.DUEL_PACK) {
                     Column(Modifier.fillMaxSize()) {
                         PackBrowser(
-                            packs = packs, level = profile?.level ?: 0,
+                            packs = angebot, level = profile?.level ?: 0,
                             isChosen = { false },
                             onToggle = { p -> vm.newDuel(p); nav.navigate(Routes.DUEL_PLAY) { popUpTo(Routes.DUEL) } },
                             chosenLabel = "", chooseLabel = "Duell",

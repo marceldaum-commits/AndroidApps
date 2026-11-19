@@ -29,6 +29,10 @@ STIMMEN = {
     'mia':  {'modell': 'en_GB-cori-medium', 'tempo': 1.0, 'tonhoehe': 1.08},
     'sam':  {'modell': 'en_US-john-medium', 'tempo': 1.0, 'tonhoehe': 1.12},
     'ted':  {'modell': 'en_US-john-medium', 'tempo': 1.15, 'tonhoehe': 0.92},
+    # Sprachpakete (Lizenzen geprüft 19.11.2026, siehe LIZENZEN.md); Latein: keine freie Stimme → wird nicht vorgelesen
+    'de':   {'modell': 'de_DE-thorsten-medium', 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'de'},
+    'fr':   {'modell': 'fr_FR-siwis-medium', 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'fr'},
+    'es':   {'modell': 'es_ES-davefx-medium', 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'es'},
 }
 EINZELWORT = 1.15   # einzelne Wörter etwas langsamer – kurze Wörter werden sonst leicht verschluckt
 LANGSAM = 1.5   # Faktor für die Schildkröte 🐢
@@ -42,14 +46,18 @@ def datei(modell, tempo, ton, text):
     return hashlib.sha256(f'piper|{modell}|{tempo}|{ton}|{norm(text)}'.encode('utf-8')).hexdigest()[:20] + '.mp3'
 
 
-def nova_hash(text):
-    """Gleiche Kennung wie der Wissensgarten (Nova.hash): sha256("nova|en|<text>"), die ersten 32 Zeichen."""
-    return hashlib.sha256(f'nova|en|{norm(text)}'.encode('utf-8')).hexdigest()[:32]
+def nova_hash(text, sprache='en'):
+    """Gleiche Kennung wie der Wissensgarten (Nova.hash): sha256("nova|<sprache>|<text>"), die ersten 32 Zeichen."""
+    return hashlib.sha256(f'nova|{sprache}|{norm(text)}'.encode('utf-8')).hexdigest()[:32]
 
 
 def saetze():
-    js = "const C=require(process.argv[1]);process.stdout.write(JSON.stringify(C.allSpeech()))"
-    out = subprocess.check_output(['node', '-e', js, os.path.join(WEB, 'content.js')])
+    js = ("const C=require(process.argv[1]);const P=require(process.argv[2]);const fs=require('fs');const d=process.argv[3];"
+          "const idx=JSON.parse(fs.readFileSync(d+'index.json'));"
+          "const packs=idx.pakete.map(m=>Object.assign(JSON.parse(fs.readFileSync(d+m.id+'.json')),{lang:m.sprache}));"
+          "process.stdout.write(JSON.stringify(C.allSpeech().concat(P.speech(packs))))")
+    out = subprocess.check_output(['node', '-e', js, os.path.join(WEB, 'content.js'), os.path.join(WEB, 'pakete.js'),
+                                   os.path.join(WEB, 'pakete') + os.sep])
     return json.loads(out)
 
 
@@ -73,7 +81,7 @@ def sprich(voice, text, tempo, ton, ziel):
 
 
 # ---------------------------------------------------------------- Hörprüfung (Whisper, nur beim Bauen)
-ZIFFERN = {str(i): w for i, w in enumerate('zero one two three four five six seven eight nine ten'.split())}
+ZIFFERN = {str(i): w for i, w in enumerate('zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty'.split())}
 # Gleich klingende Wörter zählen als richtig erkannt (die Erkennung kann sie nicht unterscheiden)
 GLEICHKLANG = {'two': {'to', 'too'}, 'four': {'for'}, 'eight': {'ate'}, 'one': {'won'}, 'meet': {'meat'}, 'see': {'sea', 'c'},
                'red': {'read'}, 'colour': {'color'}, 'hi': {'high'}, 'i': {'eye', 'aye'}, 'here': {'hear'}, 'you': {'u'},
@@ -82,26 +90,31 @@ GLEICHKLANG = {'two': {'to', 'too'}, 'four': {'for'}, 'eight': {'ate'}, 'one': {
 
 def woerter(t):
     t = t.lower().replace('’', "'")
-    return [ZIFFERN.get(w, w) for w in re.sub(r"[^a-z0-9' ]", ' ', t).split()]
+    t = unicodedata.normalize('NFD', t)
+    t = ''.join(ch for ch in t if unicodedata.category(ch) != 'Mn')   # Akzente egal (é = e)
+    return [ZIFFERN.get(w, w) for w in re.sub(r"[^a-z0-9ß' ]", ' ', t).split()]
 
 
 def treffer(soll, ist):
-    ist = set(woerter(ist)); w = woerter(sprechtext(soll))
+    iw = woerter(ist); ist_s = set(iw); w = woerter(sprechtext(soll))
     if not w: return 1.0
-    return sum(1 for x in w if x in ist or (GLEICHKLANG.get(x, set()) & ist)) / len(w)
+    if ''.join(w) == ''.join(iw): return 1.0          # zusammengesetzte Wörter: „Ausrufe Satz“ = „Ausrufesatz“
+    return sum(1 for x in w if x in ist_s or (GLEICHKLANG.get(x, set()) & ist_s)) / len(w)
 
 
 class Pruefer:
     def __init__(self):
         from faster_whisper import WhisperModel
         import numpy as np
-        self.np = np
-        self.m = WhisperModel('base.en', device='cpu', compute_type='int8')
+        self.np = np; self.W = WhisperModel; self.m = {}
 
-    def hoere(self, mp3):
+    def hoere(self, mp3, sprache='en'):
+        name = 'base.en' if sprache == 'en' else 'base'
+        if name not in self.m:
+            self.m[name] = self.W(name, device='cpu', compute_type='int8')
         raw = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', mp3, '-f', 's16le', '-ac', '1', '-ar', '16000', '-'])
         a = self.np.frombuffer(raw, self.np.int16).astype(self.np.float32) / 32768.0
-        return ' '.join(x.text for x in self.m.transcribe(a, language='en', beam_size=1)[0]).strip()
+        return ' '.join(x.text for x in self.m[name].transcribe(a, language=sprache, beam_size=1)[0]).strip()
 
 
 def varianten(text, basis):
@@ -148,7 +161,7 @@ if __name__ == '__main__':
             p = os.path.join(ordner, f)
             if not os.path.exists(p):
                 sprich(stimmen[st['modell']], form, tempo, st['tonhoehe'], p); neu += 1
-            gehört = pruefer.hoere(p) if pruefer else ''
+            gehört = pruefer.hoere(p, st.get('sprache', 'en')) if pruefer else ''
             q = treffer(s['text'], gehört) if pruefer else 1.0
             if bestes is None or q > bestes[0]:
                 bestes = (q, form, tempo, f, gehört)
@@ -169,9 +182,9 @@ if __name__ == '__main__':
         json.dump(index, fh, ensure_ascii=False, separators=(',', ':'), sort_keys=True)
     # Für die spätere Nova-Vertonung (erst nach Marcels Go): gleiches Format wie wissensgarten/webapp/vorlesen/texte.json
     os.makedirs(os.path.join(WEB, 'vorlesen'), exist_ok=True)
-    texte = sorted({norm(sprechtext(s['text'])) for s in liste})
+    texte = sorted({(STIMMEN[s['who']].get('sprache', 'en'), norm(sprechtext(s['text']))) for s in liste})
     with open(os.path.join(WEB, 'vorlesen', 'texte.json'), 'w', encoding='utf-8') as fh:
-        json.dump({'format': 1, 'app': 'quasselquest', 'texte': [{'text': t, 'sprache': 'en', 'nova': nova_hash(t)} for t in texte]},
+        json.dump({'format': 1, 'app': 'quasselquest', 'texte': [{'text': t, 'sprache': l, 'nova': nova_hash(t, l)} for l, t in texte]},
                   fh, ensure_ascii=False, indent=0)
     unklar = sorted(((v['treffer'], k, v['gehoert']) for k, v in index['saetze'].items() if v['treffer'] < 0.99))
     with open(os.path.join(HIER, '..', 'HOERPRUEFUNG.md'), 'w', encoding='utf-8') as fh:

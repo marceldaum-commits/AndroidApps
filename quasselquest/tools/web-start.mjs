@@ -19,7 +19,9 @@ const server = createServer(async (req, res) => {
   catch { res.writeHead(404); res.end('nicht da'); }
 });
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
-const base = `http://127.0.0.1:${server.address().port}/`;
+const URL_ARG = (process.argv.find((x) => x.startsWith('--url=')) || '').slice(6);
+const base = URL_ARG ? (URL_ARG.endsWith('/') ? URL_ARG : URL_ARG + '/') : `http://127.0.0.1:${server.address().port}/`;
+if (URL_ARG) console.log('Prüfe gegen ' + base);
 if (FOTOS) await mkdir(shots, { recursive: true });
 
 let failed = 0;
@@ -57,6 +59,35 @@ async function playEpisode(page, id, shot) {
   const r = !!(await page.$('.reward'));
   if (r && shot) await snap(page, shot + '_stempel');
   return r;
+}
+
+async function playPackRound(page, packId, shot) {
+  await page.click(`[data-pack="${packId}"]`);
+  for (let guard = 0; guard < 80; guard++) {
+    await wait(250);
+    if (await page.$('.reward')) break;
+    if (await page.$('[data-next]') && !(await page.$('.progress'))) { await page.click('[data-next]'); continue; } // Einführung
+    const title = await page.$eval('.game-title', (e) => e.textContent).catch(() => '');
+    if (shot && !shotDone.has(shot + title.slice(0, 5))) { shotDone.add(shot + title.slice(0, 5)); await snap(page, shot + '_' + title.replace(/[^A-Za-zÄÖÜäöü]+/g, '').slice(0, 12).toLowerCase()); }
+    const b = await page.$('.balloon[data-ok]:not([disabled])'); if (b) { await b.click({ force: true }); await wait(1500); continue; }
+    const o = await page.$('.opt[data-ok]:not([disabled])'); if (o) { await o.click(); await wait(1500); continue; }
+    const tiles = await page.$$('.tile[data-pos]:not([disabled])');
+    if (tiles.length) {
+      const n = await page.$$eval('.slot', (x) => x.length);
+      for (let p = 0; p < n; p++) { const t = await page.$(`.tile[data-pos="${p}"]:not([disabled])`); if (t) await t.click(); }
+      await wait(1600); continue;
+    }
+    const mems = await page.$$('.mem:not(.up)');
+    if (mems.length) {
+      const pairs = await page.$$eval('.mem', (x) => x.map((e) => e.dataset.pair));
+      for (const pr of [...new Set(pairs)]) { const two = await page.$$(`.mem[data-pair="${pr}"]:not(.up)`); for (const t of two) await t.click(); await wait(250); }
+      await wait(1800); continue;
+    }
+    if (guard % 10 === 9) console.log('    … hängt bei:', (await page.evaluate(() => document.querySelector('#app').innerText)).replace(/\s+/g, ' ').slice(0, 160));
+  }
+  const ok = !!(await page.$('.reward'));
+  if (ok && shot) await snap(page, shot + '_ende');
+  return ok;
 }
 const shotDone = new Set();
 let snapN = 0; let curName = '';
@@ -105,6 +136,16 @@ for (const [name, type, opts] of [
     await page.reload(); await page.waitForSelector('.world');
     ok((await page.textContent('.pill')).includes('3'), 'Fortschritt nach Neuladen noch da');
     await snap(page, 'hafen_fertig');
+    // Sprachen: je eine Runde Wörter & Regeln
+    for (const [lang, pack] of [['en', 'gs-englisch-basics'], ['de', 'gs-rechtschreibung'], ['fr', 's1-franzoesisch-grundwortschatz'], ['es', 's1-spanisch-grundwortschatz'], ['la', 's1-latein-grundwortschatz']]) {
+      await page.click(`[data-lang="${lang}"]`); await page.waitForSelector(`[data-pack="${pack}"]`);
+      if (FOTOS && name === 'chromium_handy') await snap(page, 'sprache_' + lang);
+      ok(await playPackRound(page, pack, FOTOS && name === 'chromium_handy' && (lang === 'fr' || lang === 'de') ? 'paket_' + lang : null), `Paket-Runde ${lang} (${pack}) durchgespielt`);
+      await page.click('[data-home]'); await page.waitForSelector('.langbar');
+    }
+    const st2 = await page.evaluate(() => window.quasselTest.state());
+    ok(Object.keys(st2.karten).length >= 20, `Wiederholung gespeichert (${Object.keys(st2.karten).length} Karten)`);
+    await page.click('[data-lang="en"]'); await page.waitForSelector('.world');
     await page.click('[data-settings]'); await snap(page, 'einstellungen');
     await page.click('[data-parents]'); await page.fill('.modal input', '2015'); await page.click('.modal [data-ok]');
     ok((await page.textContent('.modal .err')).includes('Erwachsene'), 'Eltern-Tor hält Kinder ab');

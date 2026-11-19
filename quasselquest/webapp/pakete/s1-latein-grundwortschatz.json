@@ -1,0 +1,473 @@
+{
+  "id": "s1-latein-grundwortschatz",
+  "version": 5,
+  "title": "Latein Grundwortschatz",
+  "subject": "latein",
+  "grades": [
+    5,
+    6,
+    7,
+    8
+  ],
+  "emoji": "🏛️",
+  "tier": "free",
+  "description": "Wichtige lateinische Grundwörter – Verben, Nomen, Adjektive – mit deutscher Bedeutung.",
+  "intro": [
+    {
+      "img": "📺👁️",
+      "text": "Wusstest du, dass „video“ ein lateinisches Wort ist? Es heißt „ich sehe“! Und „audio“ bedeutet „ich höre“."
+    },
+    {
+      "img": "🏛️📜",
+      "text": "Latein wurde im alten Rom gesprochen und steckt in vielen Sprachen – auch im Deutschen und Englischen. Wer Latein lernt, versteht plötzlich viele Fremdwörter."
+    },
+    {
+      "img": "🔗🐠",
+      "text": "Lerntrick: Such zu jedem Wort ein bekanntes Fremdwort. aqua → Aquarium, terra → Terrasse, scribere → Skript. So bleibt die Bedeutung hängen!"
+    },
+    {
+      "img": "📝👂",
+      "text": "Noch ein Trick: Sprich die Wörter laut und schreib sie auf. Was du siehst, hörst und schreibst, merkst du dir dreifach."
+    },
+    {
+      "img": "🦉🚀",
+      "text": "Bald verstehst du, was die alten Römer gesagt haben. Age! – das heißt: Los!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was bedeutet „amare“?",
+      "a": "lieben",
+      "choices": [
+        "loben",
+        "rufen",
+        "arbeiten"
+      ],
+      "img": "❤️"
+    },
+    {
+      "id": "002",
+      "q": "Was bedeutet „videre“?",
+      "a": "sehen",
+      "choices": [
+        "hören",
+        "wissen",
+        "kommen"
+      ],
+      "img": "👁️"
+    },
+    {
+      "id": "003",
+      "q": "Was bedeutet „audire“?",
+      "a": "hören",
+      "choices": [
+        "sehen",
+        "wagen",
+        "sagen"
+      ],
+      "img": "👂🔊"
+    },
+    {
+      "id": "004",
+      "q": "Was bedeutet „venire“?",
+      "a": "kommen",
+      "choices": [
+        "verkaufen",
+        "sehen",
+        "siegen"
+      ],
+      "img": "🛬"
+    },
+    {
+      "id": "005",
+      "q": "Was bedeutet „dicere“?",
+      "a": "sagen (sprechen)",
+      "choices": [
+        "lehren",
+        "führen",
+        "schreiben"
+      ],
+      "img": "🗣️💬"
+    },
+    {
+      "id": "006",
+      "q": "Was bedeutet „esse“?",
+      "a": "sein",
+      "choices": [
+        "essen",
+        "haben",
+        "sitzen"
+      ],
+      "info": "Achtung: esse heißt nicht „essen“!",
+      "img": "😌"
+    },
+    {
+      "id": "007",
+      "q": "Was bedeutet „habere“?",
+      "a": "haben",
+      "choices": [
+        "sein",
+        "wohnen",
+        "geben"
+      ],
+      "img": "👜💰"
+    },
+    {
+      "id": "008",
+      "q": "Was bedeutet „laborare“?",
+      "a": "arbeiten",
+      "choices": [
+        "lachen",
+        "loben",
+        "lieben"
+      ],
+      "img": "⚒️💦"
+    },
+    {
+      "id": "009",
+      "q": "Was bedeutet „clamare“?",
+      "a": "rufen (schreien)",
+      "choices": [
+        "lachen",
+        "klagen",
+        "schweigen"
+      ],
+      "img": "📢"
+    },
+    {
+      "id": "010",
+      "q": "Was bedeutet „ridere“?",
+      "a": "lachen",
+      "choices": [
+        "schreien",
+        "weinen",
+        "zurückgeben"
+      ],
+      "img": "😂"
+    },
+    {
+      "id": "011",
+      "q": "Was bedeutet „currere“?",
+      "a": "laufen (eilen)",
+      "choices": [
+        "sorgen",
+        "stehen",
+        "sitzen"
+      ],
+      "img": "🏃⏱️"
+    },
+    {
+      "id": "012",
+      "q": "Was bedeutet „scribere“?",
+      "a": "schreiben",
+      "choices": [
+        "sagen",
+        "lesen",
+        "zeigen"
+      ],
+      "img": "✒️📜"
+    },
+    {
+      "id": "013",
+      "q": "Was bedeutet „legere“?",
+      "a": "lesen",
+      "choices": [
+        "schreiben",
+        "legen",
+        "liegen"
+      ],
+      "info": "legere ≠ legen!",
+      "img": "📖🕯️"
+    },
+    {
+      "id": "014",
+      "q": "Was bedeutet „dare“?",
+      "a": "geben",
+      "choices": [
+        "nehmen",
+        "dürfen",
+        "sagen"
+      ],
+      "img": "🎁➡️"
+    },
+    {
+      "id": "015",
+      "q": "Was bedeutet „stare“?",
+      "a": "stehen",
+      "choices": [
+        "sitzen",
+        "laufen",
+        "starren"
+      ],
+      "img": "💂"
+    },
+    {
+      "id": "016",
+      "q": "Was bedeutet „sedere“?",
+      "a": "sitzen",
+      "choices": [
+        "stehen",
+        "sehen",
+        "säen"
+      ],
+      "img": "🧘"
+    },
+    {
+      "id": "017",
+      "q": "Was bedeutet „timere“?",
+      "a": "fürchten (Angst haben)",
+      "choices": [
+        "zählen",
+        "lieben",
+        "hoffen"
+      ],
+      "img": "😱"
+    },
+    {
+      "id": "018",
+      "q": "Was bedeutet „debere“?",
+      "a": "müssen (sollen)",
+      "choices": [
+        "können",
+        "wollen",
+        "geben"
+      ],
+      "img": "⚠️📋"
+    },
+    {
+      "id": "019",
+      "q": "Was bedeutet „posse“?",
+      "a": "können",
+      "choices": [
+        "müssen",
+        "setzen",
+        "besitzen"
+      ],
+      "img": "💪"
+    },
+    {
+      "id": "020",
+      "q": "Was bedeutet „vocare“?",
+      "a": "rufen (nennen)",
+      "choices": [
+        "fragen",
+        "wohnen",
+        "sehen"
+      ],
+      "img": "📞"
+    },
+    {
+      "id": "021",
+      "q": "Was bedeutet „servus“?",
+      "a": "Sklave (Diener)",
+      "choices": [
+        "Herr",
+        "Bauer",
+        "Soldat"
+      ],
+      "img": "⛓️🧹"
+    },
+    {
+      "id": "022",
+      "q": "Was bedeutet „dominus“?",
+      "a": "Herr",
+      "choices": [
+        "Sklave",
+        "Haus",
+        "Kirche"
+      ],
+      "img": "👑"
+    },
+    {
+      "id": "023",
+      "q": "Was bedeutet „amicus“?",
+      "a": "Freund",
+      "choices": [
+        "Feind",
+        "Bruder",
+        "Gast"
+      ],
+      "info": "inimicus = Feind",
+      "img": "🤝😊"
+    },
+    {
+      "id": "024",
+      "q": "Was bedeutet „puella“?",
+      "a": "Mädchen",
+      "choices": [
+        "Junge",
+        "Frau",
+        "Mutter"
+      ],
+      "img": "👧🌸"
+    },
+    {
+      "id": "025",
+      "q": "Was bedeutet „puer“?",
+      "a": "Junge (Knabe)",
+      "choices": [
+        "Mädchen",
+        "Vater",
+        "Mann"
+      ],
+      "img": "👦⚽"
+    },
+    {
+      "id": "026",
+      "q": "Was bedeutet „forum“?",
+      "a": "Marktplatz",
+      "choices": [
+        "Wald",
+        "Tempel",
+        "Hafen"
+      ],
+      "img": "🏛️🛍️"
+    },
+    {
+      "id": "027",
+      "q": "Was bedeutet „villa“?",
+      "a": "Landhaus",
+      "choices": [
+        "Dorf",
+        "Stadt",
+        "Straße"
+      ],
+      "img": "🏡🌳"
+    },
+    {
+      "id": "028",
+      "q": "Was bedeutet „aqua“?",
+      "a": "Wasser",
+      "choices": [
+        "Luft",
+        "Erde",
+        "Feuer"
+      ],
+      "img": "🐠💧"
+    },
+    {
+      "id": "029",
+      "q": "Was bedeutet „terra“?",
+      "a": "Land (Erde)",
+      "choices": [
+        "Meer",
+        "Himmel",
+        "Wasser"
+      ],
+      "img": "🌍"
+    },
+    {
+      "id": "030",
+      "q": "Was bedeutet „via“?",
+      "a": "Weg (Straße)",
+      "choices": [
+        "Leben",
+        "Stadt",
+        "Haus"
+      ],
+      "info": "vita = Leben",
+      "img": "🛣️"
+    },
+    {
+      "id": "031",
+      "q": "Was bedeutet „urbs“?",
+      "a": "Stadt",
+      "choices": [
+        "Land",
+        "Feld",
+        "Berg"
+      ],
+      "img": "🏙️🏛️"
+    },
+    {
+      "id": "032",
+      "q": "Was bedeutet „deus“?",
+      "a": "Gott",
+      "choices": [
+        "Tag",
+        "Herr",
+        "König"
+      ],
+      "info": "dies = Tag",
+      "img": "⚡☁️"
+    },
+    {
+      "id": "033",
+      "q": "Was bedeutet „pater“?",
+      "a": "Vater",
+      "choices": [
+        "Mutter",
+        "Bruder",
+        "Pate"
+      ],
+      "img": "👨"
+    },
+    {
+      "id": "034",
+      "q": "Was bedeutet „mater“?",
+      "a": "Mutter",
+      "choices": [
+        "Vater",
+        "Material",
+        "Schwester"
+      ],
+      "img": "👩🍼"
+    },
+    {
+      "id": "035",
+      "q": "Was bedeutet „bonus, -a, -um“?",
+      "a": "gut",
+      "choices": [
+        "schön",
+        "groß",
+        "schlecht"
+      ],
+      "img": "👍"
+    },
+    {
+      "id": "036",
+      "q": "Was bedeutet „magnus, -a, -um“?",
+      "a": "groß",
+      "choices": [
+        "klein",
+        "viel",
+        "schnell"
+      ],
+      "img": "🐘"
+    },
+    {
+      "id": "037",
+      "q": "Was bedeutet „parvus, -a, -um“?",
+      "a": "klein",
+      "choices": [
+        "groß",
+        "arm",
+        "neu"
+      ],
+      "img": "🐭"
+    },
+    {
+      "id": "038",
+      "q": "Was bedeutet „semper“?",
+      "a": "immer",
+      "choices": [
+        "nie",
+        "oft",
+        "heute"
+      ],
+      "img": "♾️"
+    },
+    {
+      "id": "039",
+      "q": "Was bedeutet „non“?",
+      "a": "nicht",
+      "choices": [
+        "nie",
+        "nun",
+        "auch"
+      ],
+      "img": "🚫"
+    }
+  ]
+}

@@ -1,8 +1,9 @@
 {
-  "name": "Quasselquest – Englisch mit Ruby",
+  "name": "Quasselquest – Sprachen mit Ruby",
   "short_name": "Quasselquest",
-  "description": "Englisch sprechen, hören und spielen – Klasse 3 bis 6.",
+  "description": "Sprachen sprechen, hören und spielen – Klasse 3 bis 13.",
   "lang": "de",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
