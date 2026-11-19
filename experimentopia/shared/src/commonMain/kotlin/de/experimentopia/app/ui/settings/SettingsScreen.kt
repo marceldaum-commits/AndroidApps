@@ -108,8 +108,8 @@ private fun Toggle(title: String, sub: String, on: Boolean, onChange: (Boolean) 
 }
 
 /**
- * Forscher-Pass: was drin ist, was frei bleibt. Kinder sehen nur „Frag deine Eltern“ – keinen Preis, keinen Kaufknopf
- * (Entscheidung Marcel, 19.11.2026). Preis, Kauf und Code-Eingabe erst nach der Frage für Erwachsene ([ParentGate]).
+ * Forscher-Pass: was drin ist, was frei bleibt. Kinder sehen nur den sachlichen Hinweis auf den Elternbereich – keinen Preis, keinen Kaufknopf,
+ * keine Aufforderung (Entscheidung Marcel 19.11.2026; Standard ELTERN-TOR der AppZentrale, UWG Anhang Nr. 28). Preis, Kauf und Code-Eingabe erst nach der Frage für Erwachsene ([ParentGate]).
  * Solange keine Kasse eingetragen ist ([Pro.ENABLED] falsch), ist alles frei und es gibt nichts zu kaufen.
  */
 @Composable
@@ -146,8 +146,9 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, pa
                 !Pro.ENABLED -> Text("Der Forscher-Pass kommt bald – bis dahin ist alles frei. 🎁", color = E.Sun, modifier = Modifier.testTag("pro-status"))
                 // Kinder: kein Preis, kein Kaufknopf – nur der Weg zu den Eltern
                 !parents -> Panel(Modifier.fillMaxWidth(), border = E.Violet) {
-                    Text("👪 Frag deine Eltern", color = E.Violet, fontWeight = FontWeight.Black, fontSize = 20.sp)
-                    Text("Zeig ihnen diese Seite. Bis dahin warten noch viele freie Versuche auf dich – auf jeder Insel die ersten fünf.", color = E.Text, fontSize = 14.sp)
+                    Text("👪 Für Eltern", color = E.Violet, fontWeight = FontWeight.Black, fontSize = 20.sp)
+                    Text("Hier geht es nur mit einer Frage für Erwachsene weiter.", color = E.Text, fontSize = 14.sp)
+                    Text("Frei bleiben auf jeder Insel die ersten fünf Versuche und die ganze Wasserinsel.", color = E.Muted, fontSize = 13.sp)
                     GlowButton({ gate = true }, Modifier.fillMaxWidth().testTag("pro-eltern"), color = E.Violet) { Text("🔐 Für Eltern", fontWeight = FontWeight.Bold) }
                 }
                 else -> Panel(Modifier.fillMaxWidth(), border = E.Sun) {

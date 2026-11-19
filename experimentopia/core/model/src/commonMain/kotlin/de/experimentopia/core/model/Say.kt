@@ -13,8 +13,8 @@ object Say {
     const val JOURNAL_EMPTY = "Dein Forscherbuch ist noch leer. Mach deinen ersten Versuch – ich schreibe alles mit!"
     const val FREE_LAB = "Hier gibt es keine Aufgaben. Stell eigene Fragen, gib eigene Werte ein und probier aus, was passiert!"
     const val PRO_HAS = "Du hast den Forscher-Pass! Alle Inseln und Geräte gehören dir. Danke! 💛"
-    const val PRO_ALL = "Mit dem Forscher-Pass öffnest du alle Inseln und Geräte – einmal, ohne Abo."
-    fun proWhat(what: String) = "„$what“ gehört zum Forscher-Pass. Frag deine Eltern!"
+    const val PRO_ALL = "Hier steht, was zum Forscher-Pass gehört. Deine Eltern können im Elternbereich nachsehen."
+    fun proWhat(what: String) = "„$what“ gehört zum Forscher-Pass. Deine Eltern können im Elternbereich nachsehen."
 
     /** Zahl der Inseln als Wort – damit der Begrüßungstext nie veraltet */
     fun islandCountWord() = listOf("null", "einer", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf").getOrElse(Island.entries.size) { "${Island.entries.size}" }

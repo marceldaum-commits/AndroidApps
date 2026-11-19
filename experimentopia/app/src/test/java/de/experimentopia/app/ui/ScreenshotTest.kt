@@ -183,7 +183,7 @@ class ScreenshotTest {
         Pro.configure("979eb515eb05b04dcc42e5fb776f108cdbdc86bb3c7cf28e05721fdde9e6b812", "https://www.mathenachhilfe-online.com/kasse/?add-to-cart=4143")
         try { shot("66_forscher_pass_kaufen") { de.experimentopia.app.ui.settings.ProScreen("Alles", parentsAtStart = true) {} } } finally { Pro.configure("", "") }
     }
-    /** Kind tippt ein Schloss an: nur „Frag deine Eltern“ – kein Preis, kein Kaufknopf (Entscheidung Marcel, 19.11.2026) */
+    /** Kind tippt ein Schloss an: nur sachlicher Hinweis auf den Elternbereich – kein Preis, kein Kaufknopf, keine Aufforderung (ELTERN-TOR, 19.11.2026) */
     @Test fun proKind() {
         Pro.configure("979eb515eb05b04dcc42e5fb776f108cdbdc86bb3c7cf28e05721fdde9e6b812", "https://www.mathenachhilfe-online.com/kasse/?add-to-cart=4143")
         try {
@@ -192,6 +192,8 @@ class ScreenshotTest {
                 r.onNodeWithTag("pro-code").assertDoesNotExist()
                 r.onNodeWithText(Pro.WEB_PRICE).assertDoesNotExist()
                 r.onNodeWithTag("pro-eltern").assertExists()
+                r.onNodeWithText("Frag deine Eltern", substring = true).assertDoesNotExist()
+                r.onAllNodesWithText("Deine Eltern können im Elternbereich nachsehen.", substring = true).onFirst().assertExists()
             }) { de.experimentopia.app.ui.settings.ProScreen("Knallgas") {} }
         } finally { Pro.configure("", "") }
     }

@@ -2,6 +2,13 @@
 
 Neueste oben.
 
+## 19.11.2026 – Version 2.13.2 vom 19.11.2026: sachlicher Schloss-Text (ELTERN-TOR, UWG Anh. Nr. 28) – fertig für den Betriebstest
+
+- Schloss/Blubb: „„<Versuch>“ gehört zum Forscher-Pass. Deine Eltern können im Elternbereich nachsehen.“ (vorher „Frag deine Eltern!“ – stand so schon in 2.13.0 live). Blubb in den Einstellungen wirbt nicht mehr („Hier steht, was zum Forscher-Pass gehört …“). Panel „👪 Für Eltern“: „Hier geht es nur mit einer Frage für Erwachsene weiter.“ Kein Preis, kein Kaufknopf, keine Code-Eingabe in der Kinderansicht.
+- Neuer Test `KinderTextTest`: kein „Frag deine Eltern“, „Kauf dir“, „kaufen“, „€“, „Abo“ in allen Blubb-Texten; `proKind` prüft die Kinderansicht. Alle Tests, Lint, Webapp, web-start (11), web-umzug (21) grün. Bild 66_forscher_pass_kind angesehen.
+- Noch offen für ein Di/Fr-Update: Eltern-Tor nach Standard (Malaufgabe in Worten, Ziffern-Tastatur), PC-Ansicht bei 1920/1366/1280 prüfen.
+- Rückweg: 2.13.0 (`216aafcc`).
+
 ## 19.11.2026 – Version 2.13.1 vom 19.11.2026: Schloss → „Frag deine Eltern“ – fertig für den Betriebstest
 
 Entscheidung Marcel (19.11., über die AppZentrale): Schlösser bleiben, Pro bleibt aktiv, 5 Versuche je Insel frei, kein Kaufknopf für Kinder.

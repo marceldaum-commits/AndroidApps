@@ -1,5 +1,9 @@
 # Changelog – Experimentopia
 
+## 2.13.2 – Sachlicher Hinweis am Schloss (19.11.2026)
+
+- 🔒 Am Schloss steht jetzt nur sachlich: „Das gehört zum Forscher-Pass. Deine Eltern können im Elternbereich nachsehen.“ Kinder werden nicht aufgefordert, ihre Eltern um einen Kauf zu bitten. Auch Blubb wirbt nicht mehr für den Forscher-Pass.
+
 ## 2.13.1 – Schloss heißt „Frag deine Eltern“ (19.11.2026)
 
 - 👪 Tippt ein Kind auf einen Versuch mit Schloss, sieht es nur noch „Frag deine Eltern“ und was der Forscher-Pass bringt. Es gibt keinen Preis und keinen Kaufknopf für Kinder. Preis, Kauf und Code-Eingabe erscheinen erst nach der Frage für Erwachsene. Auf jeder Insel bleiben die ersten fünf Versuche frei, die Wasserinsel ganz.
