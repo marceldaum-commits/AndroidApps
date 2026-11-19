@@ -2,6 +2,10 @@
 
 Neueste oben.
 
+## 19.11.2026 – Echter Rundlauf 2.13.0 auf lernen-test: bestanden
+
+Ausgelieferte Server, nichts von hier (`tools/web-umzug-echt.mjs`, Chromium): experimentopia-test.… mit Lernstand und `#thema=optik` → Weiterleitung `#umzug=<id>.<key>.<schreib>&thema=optik` → lernen-test.…/experimentopia/ (2.13.0) → Lernstand vollständig, Optik aufgeklappt. Server: PUT 204, GET 200, DELETE 204, danach GET 404. Bild 95. Live erst nach Freigabe des Leitstands.
+
 ## 19.11.2026 – Version 2.13.0 vom 19.11.2026: Umzug auf lernen.mathenachhilfe-online.com/experimentopia/ – fertig für den Betriebstest
 
 Marcels Entscheidung (19.11.), Standard UMZUG-LERNEN der AppZentrale. Den automatischen Lernstand-Umzug hat Marcel mir direkt bestätigt.
