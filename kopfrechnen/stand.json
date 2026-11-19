@@ -1,9 +1,9 @@
-{"app":"rechenblitz","version":"3.28.0","shell":2,"id":"eac051948864d390","files":{
+{"app":"rechenblitz","version":"3.28.0","shell":2,"id":"3490c60ec2cd89ae","files":{
 "LICENSE-fonts-OFL.txt":"7ccbf925128fa58dd9db15a952de2cb1388bada8bceddb13b90302c63c517ef8",
 "LICENSE-qrcode-generator.txt":"cbb4dd65aafcbc67fdd469b12042464153219bc26f238b2f19858c7980e5b01a",
 "app.css":"82b79d02c5b5eb7ae45b048658bf235030a7ea92544d513862283b0d724907ea",
 "app.min.css":"0e25502e0e5992083c3d20f73112799a0e523dcfc35fd5864ec335e56b49723c",
-"config.js":"f2d7a3654a540d28f8c38cb8ea06c0fed412052ffc7ee2a740a03ff5f45eb407",
+"config.js":"2d8f10d9d922ad26b95549538c1926c8601842537546f05f3e75659e53266687",
 "fonts/Caveat.woff2":"891951df5e8b5b0f0bc760d31375405e795c666b5add70437de12d4a6482b33f",
 "fonts/Inter.woff2":"3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
 "fonts/SourceSerif4-italic.woff2":"96e6393209728ab93c334ae739af8a040cd2006c82e8614d6465a8084db88f89",

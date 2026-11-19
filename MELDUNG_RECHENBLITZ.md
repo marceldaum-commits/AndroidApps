@@ -46,7 +46,7 @@ Nach dem Standard UMZUG-LERNEN.md (AppZentrale, Stand 2a584ec):
 - **Rückweg:** `umzug: false` (eine Zeile) bzw. die alte Adresse normal ausliefern; Live bleibt bis zur Freigabe auf 3.26.16.
 
 **Nachtrag 19.11. (nach der Server-Bestätigung des Leitstands):**
-- `config.js` hat auf **rechenblitz-test jetzt `umzug: true`**. Die alte Test-Adresse zieht damit nach lernen-test um.
+- `config.js` hatte kurz `umzug: true`; **auf Wunsch der AppZentrale wieder `false`, bis der Leitstand meldet, dass lernen-test.…/rechenblitz/ ausliefert (Auftrag 47)** – dann schalte ich ein.
 - Vorher prüft die App, ob die neue Adresse erreichbar ist (DNS/Netz). Wenn nicht, bleibt sie auf der alten Adresse.
 - Unter lernen. leitet nichts weiter; der Umzug läuft nur auf `rechenblitz(-test).`.
 - **Server-Pfade sind jetzt relativ zum App-Ordner:** `api/meldung`, `api` (Klassen-Challenge), `api/push`, `api/gutschein`. Auf der alten Adresse ergibt das wie bisher `/api/…`, unter lernen. `/rechenblitz/api/…`.
