@@ -1792,6 +1792,1842 @@
      ]
     }
    ]
+  },
+  {
+   "id": "2",
+   "stufe": "A1.1",
+   "titel": "Mein Alltag",
+   "emoji": "🏠",
+   "ziel": "Ich kann über mich und meinen Tag erzählen.",
+   "einheiten": [
+    {
+     "id": "en-2-1",
+     "titel": "Mein Körper",
+     "emoji": "🧍",
+     "ziel": "Ich kann Körperteile nennen und sagen, was jemand hat.",
+     "woerter": [
+      [
+       "eye",
+       "Auge",
+       "👁️"
+      ],
+      [
+       "ear",
+       "Ohr",
+       "👂"
+      ],
+      [
+       "nose",
+       "Nase",
+       "👃"
+      ],
+      [
+       "mouth",
+       "Mund",
+       "👄"
+      ],
+      [
+       "hand",
+       "Hand",
+       "✋",
+       "hand ist im Englischen und im Deutschen gleich – zwei Hände: two hands."
+      ],
+      [
+       "leg",
+       "Bein",
+       "🦵"
+      ],
+      [
+       "foot",
+       "Fuß",
+       "🦶",
+       "Ein Fuß: a foot, zwei Füße: two feet."
+      ],
+      [
+       "tooth",
+       "Zahn",
+       "🦷",
+       "Ein Zahn: a tooth, viele Zähne: teeth."
+      ]
+     ],
+     "saetze": [
+      [
+       "I've got two eyes.",
+       "Ich habe zwei Augen.",
+       "👀"
+      ],
+      [
+       "Touch your nose!",
+       "Fass dir an die Nase!",
+       "👃"
+      ],
+      [
+       "Clap your hands!",
+       "Klatsch in die Hände!",
+       "👏"
+      ],
+      [
+       "My tooth is loose!",
+       "Mein Zahn wackelt!",
+       "🦷"
+      ]
+     ],
+     "regel": {
+      "titel": "have got – haben",
+      "text": "Wenn du sagst, was du hast, sagt man in England oft have got: I have got, kurz I've got. Bei he, she und it heißt es has got, kurz he's got, she's got, it's got.",
+      "beispiele": [
+       [
+        "I've got two hands.",
+        "Ich habe zwei Hände."
+       ],
+       [
+        "A dog has got four legs.",
+        "Ein Hund hat vier Beine."
+       ],
+       [
+        "She's got blue eyes.",
+        "Sie hat blaue Augen."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Mias Monster",
+      "zeilen": [
+       [
+        "mia",
+        "Look, Sam! This is my monster.",
+        "Schau, Sam! Das ist mein Monster."
+       ],
+       [
+        "sam",
+        "Wow! It's got three eyes!",
+        "Wow! Es hat drei Augen!"
+       ],
+       [
+        "mia",
+        "Yes, and it's got two noses.",
+        "Ja, und es hat zwei Nasen."
+       ],
+       [
+        "sam",
+        "And legs?",
+        "Und Beine?"
+       ],
+       [
+        "mia",
+        "It's got eight legs!",
+        "Es hat acht Beine!"
+       ],
+       [
+        "sam",
+        "Ha ha! I like your monster.",
+        "Haha! Ich mag dein Monster."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie viele Augen hat das Monster?",
+        "a": "drei",
+        "choices": [
+         "zwei",
+         "vier",
+         "acht"
+        ]
+       },
+       {
+        "q": "Wie viele Beine hat das Monster?",
+        "a": "acht",
+        "choices": [
+         "zwei",
+         "drei",
+         "zehn"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Give Ruby an eye for her monster.",
+       "de": "Gib Ruby ein Auge für ihr Monster.",
+       "ding": "👁️",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Sam two ears for his monster.",
+       "de": "Gib Sam zwei Ohren für sein Monster.",
+       "ding": "👂",
+       "anzahl": 2,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Mia three noses for her monster.",
+       "de": "Gib Mia drei Nasen für ihr Monster.",
+       "ding": "👃",
+       "anzahl": 3,
+       "an": "mia"
+      },
+      {
+       "sag": "Give Ruby four teeth.",
+       "de": "Gib Ruby vier Zähne.",
+       "ding": "🦷",
+       "anzahl": 4,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Sam five feet.",
+       "de": "Gib Sam fünf Füße.",
+       "ding": "🦶",
+       "anzahl": 5,
+       "an": "sam"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "I've got two foots.",
+       "richtig": "I've got two feet.",
+       "wort": "foots",
+       "korrektur": "feet",
+       "choices": [
+        "foot",
+        "feets"
+       ],
+       "tipp": "Ein Fuß: foot – zwei Füße: feet. Ein besonderes Wort!"
+      },
+      {
+       "falsch": "She have got blue eyes.",
+       "richtig": "She has got blue eyes.",
+       "wort": "have",
+       "korrektur": "has",
+       "choices": [
+        "is",
+        "are"
+       ],
+       "tipp": "Bei he, she und it heißt es has got."
+      },
+      {
+       "falsch": "The baby has got two tooths.",
+       "richtig": "The baby has got two teeth.",
+       "wort": "tooths",
+       "korrektur": "teeth",
+       "choices": [
+        "tooth",
+        "teeths"
+       ],
+       "tipp": "Ein Zahn: tooth – zwei Zähne: teeth."
+      },
+      {
+       "falsch": "Touch you nose!",
+       "richtig": "Touch your nose!",
+       "wort": "you",
+       "korrektur": "your",
+       "choices": [
+        "you're",
+        "yours"
+       ],
+       "tipp": "deine Nase = your nose, mit r am Ende."
+      }
+     ]
+    },
+    {
+     "id": "en-2-2",
+     "titel": "Kleidung",
+     "emoji": "👚",
+     "ziel": "Ich kann sagen, was ich anhabe und wem etwas gehört.",
+     "woerter": [
+      [
+       "T-shirt",
+       "T-Shirt",
+       "👕"
+      ],
+      [
+       "trousers",
+       "Hose",
+       "👖",
+       "trousers ist immer Mehrzahl: My trousers are blue."
+      ],
+      [
+       "dress",
+       "Kleid",
+       "👗"
+      ],
+      [
+       "jacket",
+       "Jacke",
+       "🧥",
+       "Ein dicker Mantel heißt coat."
+      ],
+      [
+       "scarf",
+       "Schal",
+       "🧣",
+       "Zwei Schals: two scarves."
+      ],
+      [
+       "cap",
+       "Kappe",
+       "🧢",
+       "Eine warme Wintermütze heißt woolly hat."
+      ],
+      [
+       "sock",
+       "Socke",
+       "🧦"
+      ],
+      [
+       "shoe",
+       "Schuh",
+       "👟"
+      ]
+     ],
+     "saetze": [
+      [
+       "I like your T-shirt!",
+       "Mir gefällt dein T-Shirt!",
+       "👕"
+      ],
+      [
+       "Put on your jacket.",
+       "Zieh deine Jacke an.",
+       "🧥"
+      ],
+      [
+       "Where are my socks?",
+       "Wo sind meine Socken?",
+       "🧦"
+      ],
+      [
+       "My shoes are too small.",
+       "Meine Schuhe sind zu klein.",
+       "👟"
+      ]
+     ],
+     "regel": {
+      "titel": "my, your, his, her",
+      "text": "Wem gehört es? my = mein/meine, your = dein/deine, his = sein/seine (bei einem Jungen oder Mann), her = ihr/ihre (bei einem Mädchen oder einer Frau). Diese Wörter ändern sich nie – egal ob Schuh, Jacke oder Socken.",
+      "beispiele": [
+       [
+        "This is my scarf.",
+        "Das ist mein Schal."
+       ],
+       [
+        "Sam has got a cap. His cap is blue.",
+        "Sam hat eine Kappe. Seine Kappe ist blau."
+       ],
+       [
+        "Mia has got a dress. Her dress is red.",
+        "Mia hat ein Kleid. Ihr Kleid ist rot."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wo ist meine Kappe?",
+      "zeilen": [
+       [
+        "sam",
+        "Where is my cap?",
+        "Wo ist meine Kappe?"
+       ],
+       [
+        "mia",
+        "Is it red?",
+        "Ist sie rot?"
+       ],
+       [
+        "sam",
+        "No, it's blue.",
+        "Nein, sie ist blau."
+       ],
+       [
+        "mia",
+        "Look! Ruby has got your cap!",
+        "Schau! Ruby hat deine Kappe!"
+       ],
+       [
+        "ruby",
+        "I like your cap, Sam! Here you are.",
+        "Mir gefällt deine Kappe, Sam! Bitte schön."
+       ],
+       [
+        "sam",
+        "Ha ha! Thank you, Ruby!",
+        "Haha! Danke, Ruby!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was sucht Sam?",
+        "a": "seine Kappe",
+        "choices": [
+         "seine Jacke",
+         "seinen Schal",
+         "seine Socken"
+        ]
+       },
+       {
+        "q": "Welche Farbe hat Sams Kappe?",
+        "a": "blau",
+        "choices": [
+         "rot",
+         "grün",
+         "gelb"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Give Mia a T-shirt.",
+       "de": "Gib Mia ein T-Shirt.",
+       "ding": "👕",
+       "anzahl": 1,
+       "an": "mia"
+      },
+      {
+       "sag": "Give Sam two socks.",
+       "de": "Gib Sam zwei Socken.",
+       "ding": "🧦",
+       "anzahl": 2,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Ruby a scarf.",
+       "de": "Gib Ruby einen Schal.",
+       "ding": "🧣",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Sam three caps.",
+       "de": "Gib Sam drei Kappen.",
+       "ding": "🧢",
+       "anzahl": 3,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Mia four shoes.",
+       "de": "Gib Mia vier Schuhe.",
+       "ding": "👟",
+       "anzahl": 4,
+       "an": "mia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "This is Mia. His dress is red.",
+       "richtig": "This is Mia. Her dress is red.",
+       "wort": "His",
+       "korrektur": "Her",
+       "choices": [
+        "She",
+        "He"
+       ],
+       "tipp": "Mia ist ein Mädchen – ihr Kleid = her dress."
+      },
+      {
+       "falsch": "Sam has got a cap. Her cap is blue.",
+       "richtig": "Sam has got a cap. His cap is blue.",
+       "wort": "Her",
+       "korrektur": "His",
+       "choices": [
+        "He",
+        "Him"
+       ],
+       "tipp": "Sam ist ein Junge – seine Kappe = his cap."
+      },
+      {
+       "falsch": "My socks is green.",
+       "richtig": "My socks are green.",
+       "wort": "is",
+       "korrektur": "are",
+       "choices": [
+        "am",
+        "be"
+       ],
+       "tipp": "Mehrere Socken – also are."
+      },
+      {
+       "falsch": "I've got a orange T-shirt.",
+       "richtig": "I've got an orange T-shirt.",
+       "wort": "a",
+       "korrektur": "an",
+       "choices": [
+        "am",
+        "and"
+       ],
+       "tipp": "orange fängt mit o an – also an."
+      }
+     ]
+    },
+    {
+     "id": "en-2-3",
+     "titel": "Zuhause",
+     "emoji": "🏡",
+     "ziel": "Ich kann mein Zuhause zeigen und sagen, wo etwas ist.",
+     "woerter": [
+      [
+       "house",
+       "Haus",
+       "🏠"
+      ],
+      [
+       "door",
+       "Tür",
+       "🚪"
+      ],
+      [
+       "window",
+       "Fenster",
+       "🪟"
+      ],
+      [
+       "bed",
+       "Bett",
+       "🛏️"
+      ],
+      [
+       "sofa",
+       "Sofa",
+       "🛋️"
+      ],
+      [
+       "bath",
+       "Badewanne",
+       "🛁",
+       "Das Badezimmer heißt bathroom."
+      ],
+      [
+       "box",
+       "Kiste",
+       "📦",
+       "box heißt Kiste, Karton oder Schachtel. Zwei Kisten: two boxes."
+      ],
+      [
+       "key",
+       "Schlüssel",
+       "🔑"
+      ]
+     ],
+     "saetze": [
+      [
+       "Welcome to my house!",
+       "Willkommen in meinem Haus!",
+       "🏠"
+      ],
+      [
+       "Where is the cat?",
+       "Wo ist die Katze?",
+       "🐱"
+      ],
+      [
+       "It's under the bed.",
+       "Sie ist unter dem Bett.",
+       "🛏️"
+      ],
+      [
+       "Close the door, please.",
+       "Mach bitte die Tür zu.",
+       "🚪"
+      ]
+     ],
+     "regel": {
+      "titel": "in, on, under",
+      "text": "Wo ist etwas? in = in, on = auf, under = unter. Davor steht meistens the: in the box, on the bed, under the sofa.",
+      "beispiele": [
+       [
+        "The key is in the box.",
+        "Der Schlüssel ist in der Kiste."
+       ],
+       [
+        "The cat is on the bed.",
+        "Die Katze ist auf dem Bett."
+       ],
+       [
+        "The dog is under the sofa.",
+        "Der Hund ist unter dem Sofa."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Opas Schlüssel",
+      "zeilen": [
+       [
+        "ted",
+        "Oh no! Where is my key?",
+        "Oh nein! Wo ist mein Schlüssel?"
+       ],
+       [
+        "mia",
+        "Is it in the box, Grandpa?",
+        "Ist er in der Kiste, Opa?"
+       ],
+       [
+        "ted",
+        "No, it isn't.",
+        "Nein, da ist er nicht."
+       ],
+       [
+        "ruby",
+        "Look! It's under the sofa!",
+        "Schau! Er ist unter dem Sofa!"
+       ],
+       [
+        "ted",
+        "Thank you, Ruby! You're my friend.",
+        "Danke, Ruby! Du bist meine Freundin."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was sucht Opa Ted?",
+        "a": "seinen Schlüssel",
+        "choices": [
+         "seine Kiste",
+         "sein Buch",
+         "seine Katze"
+        ]
+       },
+       {
+        "q": "Wo ist der Schlüssel?",
+        "a": "unter dem Sofa",
+        "choices": [
+         "in der Kiste",
+         "auf dem Bett",
+         "in der Badewanne"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Give Ruby a key.",
+       "de": "Gib Ruby einen Schlüssel.",
+       "ding": "🔑",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Sam two boxes.",
+       "de": "Gib Sam zwei Kisten.",
+       "ding": "📦",
+       "anzahl": 2,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Mia a bed.",
+       "de": "Gib Mia ein Bett.",
+       "ding": "🛏️",
+       "anzahl": 1,
+       "an": "mia"
+      },
+      {
+       "sag": "Give Ruby three windows.",
+       "de": "Gib Ruby drei Fenster.",
+       "ding": "🪟",
+       "anzahl": 3,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Sam a sofa.",
+       "de": "Gib Sam ein Sofa.",
+       "ding": "🛋️",
+       "anzahl": 1,
+       "an": "sam"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "I've got two boxs.",
+       "richtig": "I've got two boxes.",
+       "wort": "boxs",
+       "korrektur": "boxes",
+       "choices": [
+        "box",
+        "boxen"
+       ],
+       "tipp": "Nach x hängt man -es an: boxes."
+      },
+      {
+       "falsch": "The key are in the box.",
+       "richtig": "The key is in the box.",
+       "wort": "are",
+       "korrektur": "is",
+       "choices": [
+        "am",
+        "be"
+       ],
+       "tipp": "Es ist ein Schlüssel – also is."
+      },
+      {
+       "falsch": "Sam's cat is on her bed.",
+       "richtig": "Sam's cat is on his bed.",
+       "wort": "her",
+       "korrektur": "his",
+       "choices": [
+        "he",
+        "him"
+       ],
+       "tipp": "Sam ist ein Junge – sein Bett = his bed."
+      },
+      {
+       "falsch": "Mia has got a orange sofa.",
+       "richtig": "Mia has got an orange sofa.",
+       "wort": "a",
+       "korrektur": "an",
+       "choices": [
+        "at",
+        "on"
+       ],
+       "tipp": "orange fängt mit o an – also an."
+      }
+     ]
+    },
+    {
+     "id": "en-2-4",
+     "titel": "Mein Tag",
+     "emoji": "🕖",
+     "ziel": "Ich kann sagen, wie spät es ist, und von meinem Tag erzählen.",
+     "woerter": [
+      [
+       "get up",
+       "aufstehen",
+       "⏰"
+      ],
+      [
+       "breakfast",
+       "Frühstück",
+       "🥣"
+      ],
+      [
+       "brush teeth",
+       "Zähne putzen",
+       "🪥",
+       "Ich putze mir die Zähne: I brush my teeth."
+      ],
+      [
+       "go to school",
+       "zur Schule gehen",
+       "🚸"
+      ],
+      [
+       "lunch",
+       "Mittagessen",
+       "🍽️"
+      ],
+      [
+       "go home",
+       "nach Hause gehen",
+       "🏡"
+      ],
+      [
+       "go to bed",
+       "ins Bett gehen",
+       "🛌"
+      ],
+      [
+       "o'clock",
+       "Uhr",
+       "🕰️",
+       "Nur bei vollen Stunden: seven o'clock = sieben Uhr. Die Uhr an der Wand heißt clock."
+      ]
+     ],
+     "saetze": [
+      [
+       "What time is it?",
+       "Wie spät ist es?",
+       "⌚"
+      ],
+      [
+       "It's seven o'clock.",
+       "Es ist sieben Uhr.",
+       "🕖"
+      ],
+      [
+       "I get up at seven.",
+       "Ich stehe um sieben auf.",
+       "⏰"
+      ],
+      [
+       "Time for bed!",
+       "Zeit fürs Bett!",
+       "🌙"
+      ]
+     ],
+     "regel": {
+      "titel": "I play – he plays",
+      "text": "Was man jeden Tag tut, sagt man in der einfachen Gegenwart: I get up, you get up. Bei he, she und it hängt man ein -s an: he gets up, she plays. Merksatz: he, she, it – das s muss mit! Nach sh, ch und o kommt -es: she brushes, he goes.",
+      "beispiele": [
+       [
+        "I go to school at eight.",
+        "Ich gehe um acht zur Schule."
+       ],
+       [
+        "Sam gets up at seven.",
+        "Sam steht um sieben auf."
+       ],
+       [
+        "Mia brushes her teeth.",
+        "Mia putzt sich die Zähne."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Früh auf!",
+      "zeilen": [
+       [
+        "ruby",
+        "Good morning, Sam! It's seven o'clock.",
+        "Guten Morgen, Sam! Es ist sieben Uhr."
+       ],
+       [
+        "sam",
+        "Good morning! I get up and brush my teeth.",
+        "Guten Morgen! Ich stehe auf und putze mir die Zähne."
+       ],
+       [
+        "ruby",
+        "And Mia?",
+        "Und Mia?"
+       ],
+       [
+        "sam",
+        "Mia gets up at six o'clock!",
+        "Mia steht um sechs Uhr auf!"
+       ],
+       [
+        "ruby",
+        "Six? I'm in bed at six!",
+        "Um sechs? Da bin ich im Bett!"
+       ],
+       [
+        "sam",
+        "Ha ha! I go to school at eight.",
+        "Haha! Ich gehe um acht zur Schule."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Um wie viel Uhr steht Mia auf?",
+        "a": "um sechs",
+        "choices": [
+         "um sieben",
+         "um acht",
+         "um zehn"
+        ]
+       },
+       {
+        "q": "Wann geht Sam zur Schule?",
+        "a": "um acht",
+        "choices": [
+         "um sechs",
+         "um sieben",
+         "um neun"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Give Sam a toothbrush.",
+       "de": "Gib Sam eine Zahnbürste.",
+       "ding": "🪥",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Mia two glasses of milk.",
+       "de": "Gib Mia zwei Gläser Milch.",
+       "ding": "🥛",
+       "anzahl": 2,
+       "an": "mia"
+      },
+      {
+       "sag": "Give Ruby three bananas.",
+       "de": "Gib Ruby drei Bananen.",
+       "ding": "🍌",
+       "anzahl": 3,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Sam a pizza.",
+       "de": "Gib Sam eine Pizza.",
+       "ding": "🍕",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Mia four books.",
+       "de": "Gib Mia vier Bücher.",
+       "ding": "📕",
+       "anzahl": 4,
+       "an": "mia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Sam get up at seven.",
+       "richtig": "Sam gets up at seven.",
+       "wort": "get",
+       "korrektur": "gets",
+       "choices": [
+        "getting",
+        "to get"
+       ],
+       "tipp": "he, she, it – das s muss mit: Sam gets up."
+      },
+      {
+       "falsch": "Mia brushs her teeth.",
+       "richtig": "Mia brushes her teeth.",
+       "wort": "brushs",
+       "korrektur": "brushes",
+       "choices": [
+        "brush",
+        "brushing"
+       ],
+       "tipp": "Nach sh kommt -es: she brushes."
+      },
+      {
+       "falsch": "I goes to school at eight.",
+       "richtig": "I go to school at eight.",
+       "wort": "goes",
+       "korrektur": "go",
+       "choices": [
+        "going",
+        "to go"
+       ],
+       "tipp": "Bei I kommt kein -s ans Verb."
+      },
+      {
+       "falsch": "He go to bed at nine.",
+       "richtig": "He goes to bed at nine.",
+       "wort": "go",
+       "korrektur": "goes",
+       "choices": [
+        "gos",
+        "going"
+       ],
+       "tipp": "he, she, it – das s muss mit. Nach o kommt -es: he goes."
+      }
+     ]
+    },
+    {
+     "id": "en-2-5",
+     "titel": "Wochentage",
+     "emoji": "🗓️",
+     "ziel": "Ich kann die Wochentage nennen und Fragen mit Do und Does stellen.",
+     "woerter": [
+      [
+       "Monday",
+       "Montag",
+       "🌕",
+       "Monday ist der Mond-Tag (moon). Am Montag = on Monday."
+      ],
+      [
+       "Tuesday",
+       "Dienstag",
+       "🛡️",
+       "Tuesday gehört zu Tyr, einem alten Kriegsgott mit Schild."
+      ],
+      [
+       "Wednesday",
+       "Mittwoch",
+       "🧙",
+       "Wednesday ist Wodans Tag. Sprich: Wens-dei – das erste d hört man nicht."
+      ],
+      [
+       "Thursday",
+       "Donnerstag",
+       "⚡",
+       "Thursday ist Thors Tag – Thor ist der Donnergott. Donnerstag!"
+      ],
+      [
+       "Friday",
+       "Freitag",
+       "🎉",
+       "Juhu, bald ist Wochenende!"
+      ],
+      [
+       "Saturday",
+       "Samstag",
+       "🪐",
+       "Saturday ist der Tag des Saturn."
+      ],
+      [
+       "Sunday",
+       "Sonntag",
+       "🌞",
+       "Sunday ist der Sonnen-Tag (sun)."
+      ],
+      [
+       "week",
+       "Woche",
+       "📅",
+       "Wochentage schreibt man im Englischen immer groß: Monday, Friday."
+      ]
+     ],
+     "saetze": [
+      [
+       "What day is it today?",
+       "Welcher Tag ist heute?",
+       "🗓️"
+      ],
+      [
+       "It's Monday.",
+       "Es ist Montag.",
+       "🌕"
+      ],
+      [
+       "See you on Friday!",
+       "Bis Freitag!",
+       "👋"
+      ],
+      [
+       "I love the weekend!",
+       "Ich liebe das Wochenende!",
+       "🥳"
+      ]
+     ],
+     "regel": {
+      "titel": "Fragen mit Do und Does",
+      "text": "Viele Fragen fangen mit Do an: Do you get up at seven? Bei he, she und it fragt man mit Does. Das -s steckt dann schon in Does, darum bekommt das Tu-Wort kein -s: Does Mia get up at six? Kurz antworten: Yes, I do. / No, he doesn't.",
+      "beispiele": [
+       [
+        "Do you go to school on Monday?",
+        "Gehst du am Montag zur Schule?"
+       ],
+       [
+        "Does Mia get up at six?",
+        "Steht Mia um sechs auf?"
+       ],
+       [
+        "Yes, she does.",
+        "Ja, das tut sie."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Schule am Samstag?",
+      "zeilen": [
+       [
+        "ruby",
+        "Do you go to school on Saturday, Mia?",
+        "Gehst du am Samstag zur Schule, Mia?"
+       ],
+       [
+        "mia",
+        "No, I don't! I go to school on Monday, Tuesday, Wednesday, Thursday and Friday.",
+        "Nein! Ich gehe am Montag, Dienstag, Mittwoch, Donnerstag und Freitag zur Schule."
+       ],
+       [
+        "ruby",
+        "And Grandpa Ted? Does he go to school?",
+        "Und Opa Ted? Geht er zur Schule?"
+       ],
+       [
+        "mia",
+        "Ha ha! No, he doesn't.",
+        "Haha! Nein, tut er nicht."
+       ],
+       [
+        "ted",
+        "I go to the sea on Sunday!",
+        "Ich gehe am Sonntag ans Meer!"
+       ],
+       [
+        "mia",
+        "Wow! I like the sea!",
+        "Wow! Ich mag das Meer!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "An welchem Tag geht Mia NICHT zur Schule?",
+        "a": "Samstag",
+        "choices": [
+         "Montag",
+         "Mittwoch",
+         "Freitag"
+        ]
+       },
+       {
+        "q": "Wohin geht Opa Ted am Sonntag?",
+        "a": "ans Meer",
+        "choices": [
+         "zur Schule",
+         "nach Hause",
+         "ins Bett"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "It's Monday. Give Sam a book.",
+       "de": "Es ist Montag. Gib Sam ein Buch.",
+       "ding": "📕",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "It's Tuesday. Give Mia two pencils.",
+       "de": "Es ist Dienstag. Gib Mia zwei Bleistifte.",
+       "ding": "✏️",
+       "anzahl": 2,
+       "an": "mia"
+      },
+      {
+       "sag": "It's Wednesday. Give Ruby an apple.",
+       "de": "Es ist Mittwoch. Gib Ruby einen Apfel.",
+       "ding": "🍎",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "It's Thursday. Give Sam three bananas.",
+       "de": "Es ist Donnerstag. Gib Sam drei Bananen.",
+       "ding": "🍌",
+       "anzahl": 3,
+       "an": "sam"
+      },
+      {
+       "sag": "It's Friday! Give Mia a pizza.",
+       "de": "Es ist Freitag! Gib Mia eine Pizza.",
+       "ding": "🍕",
+       "anzahl": 1,
+       "an": "mia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Do Sam go to school on Monday?",
+       "richtig": "Does Sam go to school on Monday?",
+       "wort": "Do",
+       "korrektur": "Does",
+       "choices": [
+        "Is",
+        "Are"
+       ],
+       "tipp": "Bei he, she, it – und bei Sam – fragt man mit Does."
+      },
+      {
+       "falsch": "Does Mia goes to school?",
+       "richtig": "Does Mia go to school?",
+       "wort": "goes",
+       "korrektur": "go",
+       "choices": [
+        "going",
+        "went"
+       ],
+       "tipp": "Das -s steckt schon in Does – das Tu-Wort bleibt ohne -s."
+      },
+      {
+       "falsch": "Do you like Sundays? Yes, I does.",
+       "richtig": "Do you like Sundays? Yes, I do.",
+       "wort": "does",
+       "korrektur": "do",
+       "choices": [
+        "is",
+        "dos"
+       ],
+       "tipp": "Bei I heißt die kurze Antwort: Yes, I do."
+      },
+      {
+       "falsch": "See you in Friday!",
+       "richtig": "See you on Friday!",
+       "wort": "in",
+       "korrektur": "on",
+       "choices": [
+        "under",
+        "to"
+       ],
+       "tipp": "Vor Wochentagen steht on: on Friday."
+      }
+     ]
+    },
+    {
+     "id": "en-2-6",
+     "titel": "Hobbys",
+     "emoji": "🤸",
+     "ziel": "Ich kann sagen, was ich gern mache und was ich kann.",
+     "woerter": [
+      [
+       "swim",
+       "schwimmen",
+       "🏊"
+      ],
+      [
+       "football",
+       "Fußball",
+       "⚽",
+       "Fußball spielen = play football."
+      ],
+      [
+       "dance",
+       "tanzen",
+       "💃"
+      ],
+      [
+       "sing",
+       "singen",
+       "🎤"
+      ],
+      [
+       "read",
+       "lesen",
+       "📖"
+      ],
+      [
+       "ride a bike",
+       "Rad fahren",
+       "🚲",
+       "Ich fahre Rad: I ride my bike."
+      ],
+      [
+       "paint",
+       "malen",
+       "🖌️"
+      ],
+      [
+       "computer games",
+       "Computerspiele",
+       "🎮"
+      ]
+     ],
+     "saetze": [
+      [
+       "I can swim.",
+       "Ich kann schwimmen.",
+       "🏊"
+      ],
+      [
+       "Can you dance?",
+       "Kannst du tanzen?",
+       "💃"
+      ],
+      [
+       "Let's play football!",
+       "Lass uns Fußball spielen!",
+       "⚽"
+      ],
+      [
+       "My hobby is reading.",
+       "Mein Hobby ist Lesen.",
+       "📚"
+      ]
+     ],
+     "regel": {
+      "titel": "can – können",
+      "text": "can heißt können. Es bleibt immer gleich, auch bei he und she gibt es kein -s: I can, he can, she can. Danach kommt das Tu-Wort ohne to: I can swim. Nicht können heißt can't.",
+      "beispiele": [
+       [
+        "I can swim.",
+        "Ich kann schwimmen."
+       ],
+       [
+        "Sam can't dance.",
+        "Sam kann nicht tanzen."
+       ],
+       [
+        "Can you sing?",
+        "Kannst du singen?"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Was kannst du?",
+      "zeilen": [
+       [
+        "mia",
+        "Can you swim, Sam?",
+        "Kannst du schwimmen, Sam?"
+       ],
+       [
+        "sam",
+        "Yes, I can. And I can play football.",
+        "Ja, kann ich. Und ich kann Fußball spielen."
+       ],
+       [
+        "mia",
+        "I can't play football. I can dance!",
+        "Ich kann nicht Fußball spielen. Ich kann tanzen!"
+       ],
+       [
+        "ruby",
+        "And I can sing! La la la!",
+        "Und ich kann singen! La la la!"
+       ],
+       [
+        "sam",
+        "Wow, Ruby!",
+        "Wow, Ruby!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was kann Mia?",
+        "a": "tanzen",
+        "choices": [
+         "Fußball spielen",
+         "Rad fahren",
+         "malen"
+        ]
+       },
+       {
+        "q": "Was kann Ruby?",
+        "a": "singen",
+        "choices": [
+         "schwimmen",
+         "Fußball spielen",
+         "lesen"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Give Sam a football.",
+       "de": "Gib Sam einen Fußball.",
+       "ding": "⚽",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Mia a bike.",
+       "de": "Gib Mia ein Fahrrad.",
+       "ding": "🚲",
+       "anzahl": 1,
+       "an": "mia"
+      },
+      {
+       "sag": "Give Ruby three books.",
+       "de": "Gib Ruby drei Bücher.",
+       "ding": "📕",
+       "anzahl": 3,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Mia five pencils.",
+       "de": "Gib Mia fünf Bleistifte.",
+       "ding": "✏️",
+       "anzahl": 5,
+       "an": "mia"
+      },
+      {
+       "sag": "Give Sam two guitars.",
+       "de": "Gib Sam zwei Gitarren.",
+       "ding": "🎸",
+       "anzahl": 2,
+       "an": "sam"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Mia cans dance.",
+       "richtig": "Mia can dance.",
+       "wort": "cans",
+       "korrektur": "can",
+       "choices": [
+        "is",
+        "are"
+       ],
+       "tipp": "can bekommt nie ein -s."
+      },
+      {
+       "falsch": "I can swims.",
+       "richtig": "I can swim.",
+       "wort": "swims",
+       "korrektur": "swim",
+       "choices": [
+        "swimming",
+        "to swim"
+       ],
+       "tipp": "Nach can kommt das Tu-Wort ohne Endung."
+      },
+      {
+       "falsch": "Mia play football on Monday.",
+       "richtig": "Mia plays football on Monday.",
+       "wort": "play",
+       "korrektur": "plays",
+       "choices": [
+        "playing",
+        "to play"
+       ],
+       "tipp": "he, she, it – das s muss mit: Mia plays."
+      },
+      {
+       "falsch": "Can you dance? Yes, I do.",
+       "richtig": "Can you dance? Yes, I can.",
+       "wort": "do",
+       "korrektur": "can",
+       "choices": [
+        "is",
+        "does"
+       ],
+       "tipp": "Fragt man mit Can, antwortet man mit can: Yes, I can."
+      }
+     ]
+    },
+    {
+     "id": "en-2-7",
+     "titel": "Wetter",
+     "emoji": "🌦️",
+     "ziel": "Ich kann sagen, wie das Wetter ist und ob mir kalt oder heiß ist.",
+     "woerter": [
+      [
+       "rain",
+       "Regen",
+       "🌧️",
+       "Es regnet: It's raining."
+      ],
+      [
+       "snow",
+       "Schnee",
+       "❄️",
+       "Es schneit: It's snowing."
+      ],
+      [
+       "wind",
+       "Wind",
+       "🌬️",
+       "windig = windy."
+      ],
+      [
+       "cloud",
+       "Wolke",
+       "☁️",
+       "bewölkt = cloudy."
+      ],
+      [
+       "rainbow",
+       "Regenbogen",
+       "🌈"
+      ],
+      [
+       "umbrella",
+       "Regenschirm",
+       "☂️",
+       "an umbrella – mit an, weil umbrella mit einem u-Laut anfängt."
+      ],
+      [
+       "hot",
+       "heiß",
+       "🥵",
+       "Mir ist heiß: I'm hot."
+      ],
+      [
+       "cold",
+       "kalt",
+       "🥶",
+       "Mir ist kalt: I'm cold. (Nicht: I have cold!)"
+      ]
+     ],
+     "saetze": [
+      [
+       "What's the weather like?",
+       "Wie ist das Wetter?",
+       "⛅"
+      ],
+      [
+       "It's sunny.",
+       "Es ist sonnig.",
+       "☀️"
+      ],
+      [
+       "It's raining.",
+       "Es regnet.",
+       "🌧️"
+      ],
+      [
+       "I'm cold!",
+       "Mir ist kalt!",
+       "🥶"
+      ]
+     ],
+     "regel": {
+      "titel": "there is – there are",
+      "text": "Wenn du sagst, was es gibt oder was da ist: Bei einem Ding sagt man there is (kurz: there's), bei mehreren there are.",
+      "beispiele": [
+       [
+        "There is a rainbow.",
+        "Da ist ein Regenbogen."
+       ],
+       [
+        "There are three clouds.",
+        "Da sind drei Wolken."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Regen und Regenbogen",
+      "zeilen": [
+       [
+        "sam",
+        "What's the weather like, Ruby?",
+        "Wie ist das Wetter, Ruby?"
+       ],
+       [
+        "ruby",
+        "It's raining. There are black clouds.",
+        "Es regnet. Da sind schwarze Wolken."
+       ],
+       [
+        "sam",
+        "Oh no! Where is my umbrella?",
+        "Oh nein! Wo ist mein Regenschirm?"
+       ],
+       [
+        "ruby",
+        "It's under your bed!",
+        "Er ist unter deinem Bett!"
+       ],
+       [
+        "sam",
+        "Look, Ruby! There is a rainbow!",
+        "Schau, Ruby! Da ist ein Regenbogen!"
+       ],
+       [
+        "ruby",
+        "Red, yellow, green, blue … I love rainbows!",
+        "Rot, Gelb, Grün, Blau … Ich liebe Regenbögen!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wo ist Sams Regenschirm?",
+        "a": "unter seinem Bett",
+        "choices": [
+         "auf dem Sofa",
+         "in der Kiste",
+         "in seiner Tasche"
+        ]
+       },
+       {
+        "q": "Was sieht Sam am Ende?",
+        "a": "einen Regenbogen",
+        "choices": [
+         "Schnee",
+         "einen Schneemann",
+         "eine Katze"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "It's raining. Give Sam an umbrella.",
+       "de": "Es regnet. Gib Sam einen Regenschirm.",
+       "ding": "☂️",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "It's cold. Give Mia a jacket.",
+       "de": "Es ist kalt. Gib Mia eine Jacke.",
+       "ding": "🧥",
+       "anzahl": 1,
+       "an": "mia"
+      },
+      {
+       "sag": "It's sunny. Give Ruby a cap.",
+       "de": "Es ist sonnig. Gib Ruby eine Kappe.",
+       "ding": "🧢",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "It's hot. Give Sam three ice creams.",
+       "de": "Es ist heiß. Gib Sam drei Eis.",
+       "ding": "🍦",
+       "anzahl": 3,
+       "an": "sam"
+      },
+      {
+       "sag": "It's snowing. Give Ruby two scarves.",
+       "de": "Es schneit. Gib Ruby zwei Schals.",
+       "ding": "🧣",
+       "anzahl": 2,
+       "an": "ruby"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "There is two clouds.",
+       "richtig": "There are two clouds.",
+       "wort": "is",
+       "korrektur": "are",
+       "choices": [
+        "am",
+        "be"
+       ],
+       "tipp": "Zwei Wolken sind mehr als eins – also there are."
+      },
+      {
+       "falsch": "There are a rainbow.",
+       "richtig": "There is a rainbow.",
+       "wort": "are",
+       "korrektur": "is",
+       "choices": [
+        "be",
+        "has"
+       ],
+       "tipp": "Ein Regenbogen – also there is."
+      },
+      {
+       "falsch": "I have cold.",
+       "richtig": "I am cold.",
+       "wort": "have",
+       "korrektur": "am",
+       "choices": [
+        "has",
+        "is"
+       ],
+       "tipp": "Mir ist kalt = I am cold. Hier sagt man am, nicht have."
+      },
+      {
+       "falsch": "I've got a umbrella.",
+       "richtig": "I've got an umbrella.",
+       "wort": "a",
+       "korrektur": "an",
+       "choices": [
+        "am",
+        "in"
+       ],
+       "tipp": "umbrella fängt mit einem u-Laut an – also an."
+      }
+     ]
+    },
+    {
+     "id": "en-2-8",
+     "titel": "Zahlen bis 20",
+     "emoji": "🔢",
+     "ziel": "Ich kann bis zwanzig zählen und sagen, wie viele es sind.",
+     "woerter": [
+      [
+       "eleven",
+       "elf",
+       "1️⃣1️⃣"
+      ],
+      [
+       "twelve",
+       "zwölf",
+       "1️⃣2️⃣"
+      ],
+      [
+       "thirteen",
+       "dreizehn",
+       "1️⃣3️⃣",
+       "Ab 13 hängt man -teen an: thirteen, fourteen … nineteen. Betonung hinten: thir-TEEN."
+      ],
+      [
+       "fourteen",
+       "vierzehn",
+       "1️⃣4️⃣"
+      ],
+      [
+       "fifteen",
+       "fünfzehn",
+       "1️⃣5️⃣",
+       "Achtung: fifteen, nicht fiveteen!"
+      ],
+      [
+       "sixteen",
+       "sechzehn",
+       "1️⃣6️⃣",
+       "Dazu gehören auch seventeen (17) und nineteen (19)."
+      ],
+      [
+       "eighteen",
+       "achtzehn",
+       "1️⃣8️⃣",
+       "Nur ein t in der Mitte: eighteen."
+      ],
+      [
+       "twenty",
+       "zwanzig",
+       "2️⃣0️⃣",
+       "Die Zehner enden auf -ty: twenty, thirty, forty, fifty … bis one hundred."
+      ]
+     ],
+     "saetze": [
+      [
+       "I'm eleven years old.",
+       "Ich bin elf Jahre alt.",
+       "🎂"
+      ],
+      [
+       "How many children are there?",
+       "Wie viele Kinder sind da?",
+       "🧒"
+      ],
+      [
+       "Count to twenty!",
+       "Zähl bis zwanzig!",
+       "🔢"
+      ],
+      [
+       "Twelve and eight is twenty.",
+       "Zwölf und acht ist zwanzig.",
+       "➕"
+      ]
+     ],
+     "regel": {
+      "titel": "Besondere Mehrzahl",
+      "text": "Die meisten Wörter bekommen in der Mehrzahl ein -s. Ein paar sind besonders und ändern sich in der Mitte: man → men, woman → women, child → children, foot → feet, tooth → teeth, mouse → mice. Und ein paar bleiben gleich: one sheep, two sheep.",
+      "beispiele": [
+       [
+        "twelve children",
+        "zwölf Kinder"
+       ],
+       [
+        "fifteen men and sixteen women",
+        "fünfzehn Männer und sechzehn Frauen"
+       ],
+       [
+        "eighteen sheep",
+        "achtzehn Schafe"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wie viele sind wir?",
+      "zeilen": [
+       [
+        "brown",
+        "Good morning! Let's count. How many children are there?",
+        "Guten Morgen! Lasst uns zählen. Wie viele Kinder sind da?"
+       ],
+       [
+        "sam",
+        "There are twenty children.",
+        "Da sind zwanzig Kinder."
+       ],
+       [
+        "brown",
+        "Good! And how many girls?",
+        "Gut! Und wie viele Mädchen?"
+       ],
+       [
+        "mia",
+        "Eleven girls and nine boys!",
+        "Elf Mädchen und neun Jungen!"
+       ],
+       [
+        "brown",
+        "Yes! And how many teachers?",
+        "Ja! Und wie viele Lehrer?"
+       ],
+       [
+        "ruby",
+        "One teacher – and one Ruby!",
+        "Ein Lehrer – und eine Ruby!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie viele Kinder sind da?",
+        "a": "zwanzig",
+        "choices": [
+         "zwölf",
+         "elf",
+         "neun"
+        ]
+       },
+       {
+        "q": "Wie viele Mädchen sind da?",
+        "a": "elf",
+        "choices": [
+         "neun",
+         "zwölf",
+         "zwanzig"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Give Ruby two mice.",
+       "de": "Gib Ruby zwei Mäuse.",
+       "ding": "🐭",
+       "anzahl": 2,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Sam three sheep.",
+       "de": "Gib Sam drei Schafe.",
+       "ding": "🐑",
+       "anzahl": 3,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Mia four fish.",
+       "de": "Gib Mia vier Fische.",
+       "ding": "🐟",
+       "anzahl": 4,
+       "an": "mia"
+      },
+      {
+       "sag": "Give Ruby five boxes.",
+       "de": "Gib Ruby fünf Kisten.",
+       "ding": "📦",
+       "anzahl": 5,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Sam two babies.",
+       "de": "Gib Sam zwei Babys.",
+       "ding": "👶",
+       "anzahl": 2,
+       "an": "sam"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "There are twelve childs.",
+       "richtig": "There are twelve children.",
+       "wort": "childs",
+       "korrektur": "children",
+       "choices": [
+        "childrens",
+        "child"
+       ],
+       "tipp": "Ein Kind: child – viele Kinder: children."
+      },
+      {
+       "falsch": "There are five mans.",
+       "richtig": "There are five men.",
+       "wort": "mans",
+       "korrektur": "men",
+       "choices": [
+        "mens",
+        "man"
+       ],
+       "tipp": "Ein Mann: man – mehrere Männer: men."
+      },
+      {
+       "falsch": "I'm fiveteen years old.",
+       "richtig": "I'm fifteen years old.",
+       "wort": "fiveteen",
+       "korrektur": "fifteen",
+       "choices": [
+        "fiveten",
+        "fivteen"
+       ],
+       "tipp": "15 heißt fifteen – mit f in der Mitte, nicht five."
+      },
+      {
+       "falsch": "I can see eighteen sheeps.",
+       "richtig": "I can see eighteen sheep.",
+       "wort": "sheeps",
+       "korrektur": "sheep",
+       "choices": [
+        "sheepen",
+        "shoop"
+       ],
+       "tipp": "sheep bleibt in der Mehrzahl gleich: one sheep, two sheep."
+      }
+     ]
+    }
+   ]
   }
  ]
 }
