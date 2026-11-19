@@ -55,7 +55,9 @@ def saetze():
     js = ("const C=require(process.argv[1]);const P=require(process.argv[2]);const fs=require('fs');const d=process.argv[3];"
           "const idx=JSON.parse(fs.readFileSync(d+'index.json'));"
           "const packs=idx.pakete.map(m=>Object.assign(JSON.parse(fs.readFileSync(d+m.id+'.json')),{lang:m.sprache}));"
-          "process.stdout.write(JSON.stringify(C.allSpeech().concat(P.speech(packs))))")
+          "const lp=P.LERNPFAD.map(l=>JSON.parse(fs.readFileSync(d+'../lernpfad/'+l+'.json')));"
+          "const lpPacks=lp.flatMap(x=>x.abschnitte.flatMap(a=>a.einheiten.map(e=>P.lernPack(e,x.sprache))));"
+          "process.stdout.write(JSON.stringify(C.allSpeech().concat(P.speech(packs),P.speech(lpPacks),...lp.map(P.lernSpeech))))")
     out = subprocess.check_output(['node', '-e', js, os.path.join(WEB, 'content.js'), os.path.join(WEB, 'pakete.js'),
                                    os.path.join(WEB, 'pakete') + os.sep])
     return json.loads(out)

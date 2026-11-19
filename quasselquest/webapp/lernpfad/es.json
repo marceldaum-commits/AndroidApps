@@ -1,0 +1,1135 @@
+{
+ "format": 1,
+ "sprache": "es",
+ "titel": "Spanisch von Anfang an",
+ "figuren": {
+  "ruby": {
+   "name": "Ruby",
+   "emoji": "🦜",
+   "who": "es"
+  },
+  "lucia": {
+   "name": "Lucía",
+   "emoji": "👧",
+   "who": "es"
+  },
+  "pablo": {
+   "name": "Pablo",
+   "emoji": "👦",
+   "who": "es"
+  },
+  "garcia": {
+   "name": "Señor García",
+   "emoji": "🧑‍🏫",
+   "who": "es"
+  }
+ },
+ "abschnitte": [
+  {
+   "id": "1",
+   "stufe": "Pre-A1",
+   "titel": "Erste Schritte",
+   "emoji": "🌱",
+   "ziel": "Ich kann Hallo sagen, mich vorstellen und viele Dinge auf Spanisch benennen.",
+   "einheiten": [
+    {
+     "id": "es-1-1",
+     "titel": "¡Hola!",
+     "emoji": "👋",
+     "ziel": "Ich kann Hallo und Tschüss sagen, bitte und danke.",
+     "woerter": [
+      [
+       "hola",
+       "hallo",
+       "👋",
+       "Das h spricht man im Spanischen nicht: „ola“."
+      ],
+      [
+       "adiós",
+       "tschüss",
+       "🚶"
+      ],
+      [
+       "buenos días",
+       "guten Morgen",
+       "🌅"
+      ],
+      [
+       "buenas noches",
+       "gute Nacht",
+       "🌙"
+      ],
+      [
+       "por favor",
+       "bitte",
+       "🙏"
+      ],
+      [
+       "gracias",
+       "danke",
+       "💐"
+      ],
+      [
+       "sí",
+       "ja",
+       "✅",
+       "sí mit Akzent heißt ja – si ohne Akzent heißt wenn."
+      ],
+      [
+       "no",
+       "nein",
+       "❌"
+      ]
+     ],
+     "saetze": [
+      [
+       "Hola, soy Ruby.",
+       "Hallo, ich bin Ruby.",
+       "🦜"
+      ],
+      [
+       "¿Qué tal?",
+       "Wie geht's?",
+       "🙂"
+      ],
+      [
+       "Muy bien, gracias.",
+       "Sehr gut, danke.",
+       "😊"
+      ],
+      [
+       "¡Adiós, hasta luego!",
+       "Tschüss, bis später!",
+       "👋"
+      ]
+     ],
+     "regel": {
+      "titel": "Zeichen auf dem Kopf",
+      "text": "Fragen und Ausrufe bekommen im Spanischen auch vorne ein Zeichen – umgedreht: ¿ am Anfang einer Frage, ¡ am Anfang eines Ausrufs.",
+      "beispiele": [
+       [
+        "¿Qué tal?",
+        "Wie geht's?"
+       ],
+       [
+        "¡Hola!",
+        "Hallo!"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Neu in der Straße",
+      "zeilen": [
+       [
+        "lucia",
+        "¡Hola! Soy Lucía.",
+        "Hallo! Ich bin Lucía."
+       ],
+       [
+        "pablo",
+        "¡Hola, Lucía! Soy Pablo.",
+        "Hallo, Lucía! Ich bin Pablo."
+       ],
+       [
+        "lucia",
+        "¿Qué tal, Pablo?",
+        "Wie geht's, Pablo?"
+       ],
+       [
+        "pablo",
+        "Muy bien, gracias.",
+        "Sehr gut, danke."
+       ],
+       [
+        "lucia",
+        "¡Adiós, Pablo!",
+        "Tschüss, Pablo!"
+       ],
+       [
+        "pablo",
+        "¡Adiós, hasta luego!",
+        "Tschüss, bis später!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie heißt das Mädchen?",
+        "a": "Lucía",
+        "choices": [
+         "Pablo",
+         "Ruby",
+         "Carmen"
+        ]
+       },
+       {
+        "q": "Wie geht es Pablo?",
+        "a": "sehr gut",
+        "choices": [
+         "schlecht",
+         "müde",
+         "traurig"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "es-1-2",
+     "titel": "Me llamo …",
+     "emoji": "🧒",
+     "ziel": "Ich kann sagen, wie ich heiße, und nach dem Namen fragen.",
+     "woerter": [
+      [
+       "yo",
+       "ich",
+       "🙋"
+      ],
+      [
+       "tú",
+       "du",
+       "👉",
+       "tú mit Akzent heißt du – tu ohne Akzent heißt dein."
+      ],
+      [
+       "el niño",
+       "der Junge",
+       "👦"
+      ],
+      [
+       "la niña",
+       "das Mädchen",
+       "👧"
+      ],
+      [
+       "el amigo",
+       "der Freund",
+       "🤝",
+       "Die Freundin: la amiga."
+      ],
+      [
+       "el nombre",
+       "der Name",
+       "🏷️"
+      ],
+      [
+       "el hombre",
+       "der Mann",
+       "👨"
+      ],
+      [
+       "la mujer",
+       "die Frau",
+       "👩"
+      ]
+     ],
+     "saetze": [
+      [
+       "Me llamo Lucía.",
+       "Ich heiße Lucía.",
+       "👧"
+      ],
+      [
+       "¿Cómo te llamas?",
+       "Wie heißt du?",
+       "🏷️"
+      ],
+      [
+       "Soy una niña.",
+       "Ich bin ein Mädchen.",
+       "👧"
+      ],
+      [
+       "Eres mi amigo.",
+       "Du bist mein Freund.",
+       "🤝"
+      ]
+     ],
+     "regel": {
+      "titel": "„ich“ darf fehlen",
+      "text": "ich bin = soy, du bist = eres. Das yo (ich) lässt man meistens weg – man hört schon am Verb, wer gemeint ist.",
+      "beispiele": [
+       [
+        "Soy Pablo.",
+        "Ich bin Pablo."
+       ],
+       [
+        "Eres mi amiga.",
+        "Du bist meine Freundin."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wer bist du?",
+      "zeilen": [
+       [
+        "pablo",
+        "¡Hola! ¿Cómo te llamas?",
+        "Hallo! Wie heißt du?"
+       ],
+       [
+        "lucia",
+        "Me llamo Lucía. ¿Y tú?",
+        "Ich heiße Lucía. Und du?"
+       ],
+       [
+        "pablo",
+        "Me llamo Pablo.",
+        "Ich heiße Pablo."
+       ],
+       [
+        "lucia",
+        "¿Eres el amigo de Ruby?",
+        "Bist du der Freund von Ruby?"
+       ],
+       [
+        "pablo",
+        "¡Sí! Ruby es mi amiga.",
+        "Ja! Ruby ist meine Freundin."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie heißt der Junge?",
+        "a": "Pablo",
+        "choices": [
+         "Lucía",
+         "Diego",
+         "Tom"
+        ]
+       },
+       {
+        "q": "Wer ist Pablos Freundin?",
+        "a": "Ruby",
+        "choices": [
+         "Carmen",
+         "Marta",
+         "Lisa"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "es-1-3",
+     "titel": "Zahlen 1–10",
+     "emoji": "🔢",
+     "ziel": "Ich kann bis zehn zählen und sagen, wie alt ich bin.",
+     "woerter": [
+      [
+       "uno",
+       "eins",
+       "1️⃣"
+      ],
+      [
+       "dos",
+       "zwei",
+       "2️⃣"
+      ],
+      [
+       "tres",
+       "drei",
+       "3️⃣"
+      ],
+      [
+       "cuatro",
+       "vier",
+       "4️⃣"
+      ],
+      [
+       "cinco",
+       "fünf",
+       "5️⃣"
+      ],
+      [
+       "seis",
+       "sechs",
+       "6️⃣"
+      ],
+      [
+       "siete",
+       "sieben",
+       "7️⃣"
+      ],
+      [
+       "ocho",
+       "acht",
+       "8️⃣"
+      ],
+      [
+       "nueve",
+       "neun",
+       "9️⃣"
+      ],
+      [
+       "diez",
+       "zehn",
+       "🔟"
+      ]
+     ],
+     "saetze": [
+      [
+       "¿Cuántos años tienes?",
+       "Wie alt bist du?",
+       "🎂"
+      ],
+      [
+       "Tengo ocho años.",
+       "Ich bin acht Jahre alt.",
+       "🎂"
+      ],
+      [
+       "Tengo diez dedos.",
+       "Ich habe zehn Finger.",
+       "🖐️"
+      ],
+      [
+       "Uno, dos, tres, ¡vamos a contar!",
+       "Eins, zwei, drei, lass uns zählen!",
+       "🔢"
+      ]
+     ],
+     "regel": {
+      "titel": "Alter mit „haben“",
+      "text": "Im Spanischen hat man sein Alter: Tengo ocho años heißt wörtlich „Ich habe acht Jahre“.",
+      "beispiele": [
+       [
+        "Tengo nueve años.",
+        "Ich bin neun Jahre alt."
+       ],
+       [
+        "Tienes diez años.",
+        "Du bist zehn Jahre alt."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wie alt bist du?",
+      "zeilen": [
+       [
+        "pablo",
+        "Lucía, ¿cuántos años tienes?",
+        "Lucía, wie alt bist du?"
+       ],
+       [
+        "lucia",
+        "Tengo nueve años. ¿Y tú?",
+        "Ich bin neun. Und du?"
+       ],
+       [
+        "pablo",
+        "Yo tengo diez años.",
+        "Ich bin zehn Jahre alt."
+       ],
+       [
+        "lucia",
+        "¿Diez años? ¡Genial!",
+        "Zehn Jahre? Toll!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie alt ist Lucía?",
+        "a": "neun",
+        "choices": [
+         "acht",
+         "zehn",
+         "sieben"
+        ]
+       },
+       {
+        "q": "Wie alt ist Pablo?",
+        "a": "zehn",
+        "choices": [
+         "neun",
+         "zwei",
+         "sechs"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "es-1-4",
+     "titel": "Farben",
+     "emoji": "🎨",
+     "ziel": "Ich kann Farben nennen und sagen, welche Farbe etwas hat.",
+     "woerter": [
+      [
+       "rojo",
+       "rot",
+       "🔴"
+      ],
+      [
+       "azul",
+       "blau",
+       "🔵"
+      ],
+      [
+       "verde",
+       "grün",
+       "🟢"
+      ],
+      [
+       "amarillo",
+       "gelb",
+       "🟡"
+      ],
+      [
+       "negro",
+       "schwarz",
+       "⚫"
+      ],
+      [
+       "blanco",
+       "weiß",
+       "⚪"
+      ],
+      [
+       "naranja",
+       "orange",
+       "🟠"
+      ],
+      [
+       "rosa",
+       "rosa",
+       "🌸"
+      ]
+     ],
+     "saetze": [
+      [
+       "La pelota es roja.",
+       "Der Ball ist rot.",
+       "🔴"
+      ],
+      [
+       "El sol es amarillo.",
+       "Die Sonne ist gelb.",
+       "☀️"
+      ],
+      [
+       "Me gusta el verde.",
+       "Ich mag Grün.",
+       "💚"
+      ],
+      [
+       "¿De qué color es?",
+       "Welche Farbe hat es?",
+       "🎨"
+      ]
+     ],
+     "regel": {
+      "titel": "Die Farbe passt sich an",
+      "text": "Die Farbe steht hinter dem Ding und passt sich an: Bei weiblichen Wörtern wird aus -o ein -a. Farben auf -e oder einen Mitlaut (verde, azul) bleiben gleich.",
+      "beispiele": [
+       [
+        "el coche rojo",
+        "das rote Auto"
+       ],
+       [
+        "la pelota roja",
+        "der rote Ball"
+       ],
+       [
+        "la pelota verde",
+        "der grüne Ball"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Das bunte Boot",
+      "zeilen": [
+       [
+        "lucia",
+        "¡Mira, Pablo! El barco es rojo y blanco.",
+        "Schau, Pablo! Das Boot ist rot und weiß."
+       ],
+       [
+        "pablo",
+        "¿Y el mar?",
+        "Und das Meer?"
+       ],
+       [
+        "lucia",
+        "¡El mar es azul!",
+        "Das Meer ist blau!"
+       ],
+       [
+        "pablo",
+        "Me gusta el azul.",
+        "Ich mag Blau."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Welche Farbe hat das Boot?",
+        "a": "rot und weiß",
+        "choices": [
+         "blau und gelb",
+         "grün",
+         "schwarz"
+        ]
+       },
+       {
+        "q": "Welche Farbe mag Pablo?",
+        "a": "Blau",
+        "choices": [
+         "Rot",
+         "Gelb",
+         "Rosa"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "es-1-5",
+     "titel": "Familie",
+     "emoji": "👪",
+     "ziel": "Ich kann meine Familie vorstellen.",
+     "woerter": [
+      [
+       "la madre",
+       "die Mutter",
+       "👩"
+      ],
+      [
+       "el padre",
+       "der Vater",
+       "👨"
+      ],
+      [
+       "la hermana",
+       "die Schwester",
+       "👧"
+      ],
+      [
+       "el hermano",
+       "der Bruder",
+       "👦"
+      ],
+      [
+       "la abuela",
+       "die Oma",
+       "👵"
+      ],
+      [
+       "el abuelo",
+       "der Opa",
+       "👴"
+      ],
+      [
+       "el bebé",
+       "das Baby",
+       "👶"
+      ],
+      [
+       "la familia",
+       "die Familie",
+       "👪"
+      ]
+     ],
+     "saetze": [
+      [
+       "Esta es mi madre.",
+       "Das ist meine Mutter.",
+       "👩"
+      ],
+      [
+       "Tengo una hermana.",
+       "Ich habe eine Schwester.",
+       "👧"
+      ],
+      [
+       "Mi abuelo es divertido.",
+       "Mein Opa ist lustig.",
+       "👴"
+      ],
+      [
+       "Quiero mucho a mi familia.",
+       "Ich habe meine Familie sehr lieb.",
+       "❤️"
+      ]
+     ],
+     "regel": {
+      "titel": "-o männlich, -a weiblich",
+      "text": "el steht vor männlichen, la vor weiblichen Wörtern. Wörter auf -o sind meist männlich, Wörter auf -a meist weiblich.",
+      "beispiele": [
+       [
+        "el hermano",
+        "der Bruder"
+       ],
+       [
+        "la hermana",
+        "die Schwester"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Lucías Familie",
+      "zeilen": [
+       [
+        "lucia",
+        "¡Mira, Pablo! Esta es mi familia.",
+        "Schau, Pablo! Das ist meine Familie."
+       ],
+       [
+        "pablo",
+        "¿Quién es?",
+        "Wer ist das?"
+       ],
+       [
+        "lucia",
+        "Es mi hermano Leo. Tiene seis años.",
+        "Das ist mein Bruder Leo. Er ist sechs."
+       ],
+       [
+        "pablo",
+        "¿Y ella?",
+        "Und sie?"
+       ],
+       [
+        "lucia",
+        "Es mi abuela. ¡La quiero mucho!",
+        "Das ist meine Oma. Ich habe sie sehr lieb!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie heißt Lucías Bruder?",
+        "a": "Leo",
+        "choices": [
+         "Pablo",
+         "Diego",
+         "Max"
+        ]
+       },
+       {
+        "q": "Wie alt ist Leo?",
+        "a": "sechs",
+        "choices": [
+         "acht",
+         "drei",
+         "zehn"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "es-1-6",
+     "titel": "Tiere",
+     "emoji": "🐾",
+     "ziel": "Ich kann Tiere nennen und von meinem Haustier erzählen.",
+     "woerter": [
+      [
+       "el perro",
+       "der Hund",
+       "🐶",
+       "Das rr wird kräftig gerollt."
+      ],
+      [
+       "el gato",
+       "die Katze",
+       "🐱"
+      ],
+      [
+       "el pájaro",
+       "der Vogel",
+       "🐦"
+      ],
+      [
+       "el pez",
+       "der Fisch",
+       "🐟",
+       "el pez lebt im Wasser – auf dem Teller heißt Fisch el pescado."
+      ],
+      [
+       "el caballo",
+       "das Pferd",
+       "🐴"
+      ],
+      [
+       "el conejo",
+       "das Kaninchen",
+       "🐰"
+      ],
+      [
+       "el ratón",
+       "die Maus",
+       "🐭"
+      ],
+      [
+       "la vaca",
+       "die Kuh",
+       "🐮"
+      ]
+     ],
+     "saetze": [
+      [
+       "Tengo un perro.",
+       "Ich habe einen Hund.",
+       "🐶"
+      ],
+      [
+       "¿Tienes una mascota?",
+       "Hast du ein Haustier?",
+       "🐾"
+      ],
+      [
+       "El gato es negro.",
+       "Die Katze ist schwarz.",
+       "🐈‍⬛"
+      ],
+      [
+       "Tengo dos conejos.",
+       "Ich habe zwei Kaninchen.",
+       "🐰"
+      ]
+     ],
+     "regel": {
+      "titel": "Mehrzahl: -s oder -es",
+      "text": "Endet ein Wort auf a, e, i, o oder u, hängt man -s an. Endet es auf einen anderen Buchstaben, hängt man -es an. Aus z wird dabei c, und der Akzent fällt manchmal weg: ratón → ratones.",
+      "beispiele": [
+       [
+        "el gato → los gatos",
+        "die Katzen"
+       ],
+       [
+        "el ratón → los ratones",
+        "die Mäuse"
+       ],
+       [
+        "el pez → los peces",
+        "die Fische"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Haustiere",
+      "zeilen": [
+       [
+        "pablo",
+        "Lucía, ¿tienes una mascota?",
+        "Lucía, hast du ein Haustier?"
+       ],
+       [
+        "lucia",
+        "¡Sí! Tengo un gato. Es negro.",
+        "Ja! Ich habe eine Katze. Sie ist schwarz."
+       ],
+       [
+        "pablo",
+        "Yo tengo dos perros y un pez.",
+        "Ich habe zwei Hunde und einen Fisch."
+       ],
+       [
+        "lucia",
+        "¿Dos perros? ¡Genial!",
+        "Zwei Hunde? Toll!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Welches Tier hat Lucía?",
+        "a": "eine Katze",
+        "choices": [
+         "einen Hund",
+         "ein Pferd",
+         "einen Vogel"
+        ]
+       },
+       {
+        "q": "Wie viele Hunde hat Pablo?",
+        "a": "zwei",
+        "choices": [
+         "drei",
+         "einen",
+         "keinen"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "es-1-7",
+     "titel": "Essen",
+     "emoji": "🍎",
+     "ziel": "Ich kann sagen, was ich mag und was nicht, und um etwas bitten.",
+     "woerter": [
+      [
+       "la manzana",
+       "der Apfel",
+       "🍎"
+      ],
+      [
+       "el plátano",
+       "die Banane",
+       "🍌"
+      ],
+      [
+       "el pan",
+       "das Brot",
+       "🍞"
+      ],
+      [
+       "el queso",
+       "der Käse",
+       "🧀"
+      ],
+      [
+       "la leche",
+       "die Milch",
+       "🥛"
+      ],
+      [
+       "el agua",
+       "das Wasser",
+       "💧",
+       "agua ist weiblich, bekommt aber el – so klingt es schöner."
+      ],
+      [
+       "el zumo",
+       "der Saft",
+       "🧃",
+       "In Lateinamerika sagt man el jugo."
+      ],
+      [
+       "la pizza",
+       "die Pizza",
+       "🍕"
+      ]
+     ],
+     "saetze": [
+      [
+       "Me gustan las manzanas.",
+       "Ich mag Äpfel.",
+       "🍎"
+      ],
+      [
+       "No me gusta la leche.",
+       "Ich mag keine Milch.",
+       "🥛"
+      ],
+      [
+       "Agua, por favor.",
+       "Wasser, bitte.",
+       "💧"
+      ],
+      [
+       "Tengo hambre.",
+       "Ich habe Hunger.",
+       "😋"
+      ]
+     ],
+     "regel": {
+      "titel": "Verneinen mit no",
+      "text": "Verneinen ist im Spanischen leicht: Man stellt no vor das Verb. Steht davor noch me, te …, kommt no ganz nach vorn: No me gusta.",
+      "beispiele": [
+       [
+        "Me gusta el queso.",
+        "Ich mag Käse."
+       ],
+       [
+        "No me gusta el queso.",
+        "Ich mag keinen Käse."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Hunger!",
+      "zeilen": [
+       [
+        "pablo",
+        "¡Tengo hambre!",
+        "Ich habe Hunger!"
+       ],
+       [
+        "ruby",
+        "¿Te gusta la pizza?",
+        "Magst du Pizza?"
+       ],
+       [
+        "pablo",
+        "¡Sí, me gusta la pizza! Y zumo, por favor.",
+        "Ja, ich mag Pizza! Und Saft, bitte."
+       ],
+       [
+        "ruby",
+        "¡Aquí tienes!",
+        "Bitte schön!"
+       ],
+       [
+        "pablo",
+        "¡Gracias, Ruby!",
+        "Danke, Ruby!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was mag Pablo?",
+        "a": "Pizza",
+        "choices": [
+         "Käse",
+         "Brot",
+         "Bananen"
+        ]
+       },
+       {
+        "q": "Was möchte Pablo trinken?",
+        "a": "Saft",
+        "choices": [
+         "Wasser",
+         "Milch",
+         "Tee"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "es-1-8",
+     "titel": "Schule",
+     "emoji": "🏫",
+     "ziel": "Ich kann Schulsachen nennen und verstehe einfache Aufforderungen.",
+     "woerter": [
+      [
+       "la escuela",
+       "die Schule",
+       "🏫",
+       "In Spanien sagt man oft el colegio."
+      ],
+      [
+       "el libro",
+       "das Buch",
+       "📕"
+      ],
+      [
+       "el bolígrafo",
+       "der Kuli",
+       "🖊️",
+       "Kurz sagt man el boli."
+      ],
+      [
+       "el lápiz",
+       "der Bleistift",
+       "✏️"
+      ],
+      [
+       "la mochila",
+       "der Rucksack",
+       "🎒"
+      ],
+      [
+       "la silla",
+       "der Stuhl",
+       "🪑"
+      ],
+      [
+       "el profesor",
+       "der Lehrer",
+       "🧑‍🏫",
+       "Die Lehrerin: la profesora."
+      ],
+      [
+       "la regla",
+       "das Lineal",
+       "📏",
+       "la regla heißt auch: die Regel."
+      ]
+     ],
+     "saetze": [
+      [
+       "Abre tu libro, por favor.",
+       "Öffne bitte dein Buch.",
+       "📖"
+      ],
+      [
+       "Tengo un lápiz.",
+       "Ich habe einen Bleistift.",
+       "✏️"
+      ],
+      [
+       "¿Dónde está mi mochila?",
+       "Wo ist mein Rucksack?",
+       "🎒"
+      ],
+      [
+       "Mi profesora es simpática.",
+       "Meine Lehrerin ist nett.",
+       "🧑‍🏫"
+      ]
+     ],
+     "regel": {
+      "titel": "Aufforderungen",
+      "text": "Eine Aufforderung an eine Person klingt wie die er/sie-Form: él abre (er öffnet) → ¡Abre! (Öffne!). An mehrere: ¡Abrid! (in Lateinamerika: ¡Abran!)",
+      "beispiele": [
+       [
+        "¡Abre tu libro!",
+        "Öffne dein Buch!"
+       ],
+       [
+        "¡Escucha, por favor!",
+        "Hör bitte zu!"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wo ist mein Buch?",
+      "zeilen": [
+       [
+        "garcia",
+        "¡Buenos días, niños!",
+        "Guten Morgen, Kinder!"
+       ],
+       [
+        "lucia",
+        "¡Buenos días, señor García!",
+        "Guten Morgen, Herr García!"
+       ],
+       [
+        "garcia",
+        "Abrid los libros, por favor.",
+        "Öffnet bitte die Bücher."
+       ],
+       [
+        "pablo",
+        "¡Oh, no! ¿Dónde está mi libro?",
+        "Oh nein! Wo ist mein Buch?"
+       ],
+       [
+        "lucia",
+        "¡Mira, Pablo! Está en tu mochila.",
+        "Schau, Pablo! Es ist in deinem Rucksack."
+       ],
+       [
+        "pablo",
+        "¡Gracias, Lucía!",
+        "Danke, Lucía!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was sucht Pablo?",
+        "a": "sein Buch",
+        "choices": [
+         "seinen Bleistift",
+         "seinen Stuhl",
+         "sein Lineal"
+        ]
+       },
+       {
+        "q": "Wo ist es?",
+        "a": "in seinem Rucksack",
+        "choices": [
+         "auf dem Stuhl",
+         "bei Señor García",
+         "zu Hause"
+        ]
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

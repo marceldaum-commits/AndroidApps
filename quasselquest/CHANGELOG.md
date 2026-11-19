@@ -1,5 +1,13 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.4.0 – Lernpfad: eine Sprache von Anfang an lernen (19.11.2026)
+- Neu für Englisch, Französisch und Spanisch: ein Lernpfad zum Neulernen einer Sprache – auch ohne Schulunterricht.
+- Abschnitt 1 „Erste Schritte“ mit 8 Einheiten: Hallo, Ich bin …, Zahlen, Farben, Familie, Tiere, Essen, Schule.
+- Jede Einheit hat 5 kurze Lektionen (je 3–5 Minuten): neue Wörter kennenlernen (Karten umdrehen und anhören), Wörter üben, eine Regel selbst entdecken und Sätze im Satz-Zug bauen, zuhören und nachsprechen, eine kleine Geschichte verstehen.
+- Für jede geschaffte Einheit gibt es eine Krone 👑; danach öffnet sich die nächste. Keine Leben, keine Strafen.
+- Wörter aus früheren Einheiten kommen gemischt wieder dran, damit nichts vergessen wird.
+- Alle Wörter, Sätze und Geschichten sind vorgelesen (Figuren mit eigener Stimme). Die Spracherkennung beim Nachsprechen versteht jetzt auch Französisch und Spanisch – weiterhin nur auf dem Gerät.
+
 ## 0.3.3 – Klassenarbeits-Generalprobe (19.11.2026)
 - „📝 Mein Test ist am …“: Datum der Klassenarbeit oder des Vokabeltests eintragen und auswählen, was drankommt (Pakete oder eigene Schulbuch-Listen).
 - Ruby macht daraus einen Lernplan: jeden Tag eine kurze Runde, am letzten Tag die Generalprobe.

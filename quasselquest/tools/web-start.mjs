@@ -71,9 +71,14 @@ async function playPackRound(page, packId, shot) {
     if (shot && !shotDone.has(shot + title.slice(0, 5))) { shotDone.add(shot + title.slice(0, 5)); await snap(page, shot + '_' + title.replace(/[^A-Za-zÄÖÜäöü]+/g, '').slice(0, 12).toLowerCase()); }
     const b = await page.$('.balloon[data-ok]:not([disabled])'); if (b) { await b.click({ force: true }); await wait(1500); continue; }
     const o = await page.$('.opt[data-ok]:not([disabled])'); if (o) { await o.click(); await wait(1500); continue; }
+    // Lernpfad-Spielarten ohne Wertung: Kennenlernen, Regel, Nachsprechen, Geschichte
+    const neu = await page.$$('.neu-karte'); if (neu.length && await page.$('[data-weiter][disabled]')) { for (const k of neu) await k.click(); await wait(300); }
+    const zeig = await page.$('[data-zeig]:not([hidden])'); if (zeig) { await zeig.click(); await wait(300); }
+    const quiet = await page.$('[data-quiet]:not([hidden])'); if (quiet) { await quiet.click(); await wait(300); }
+    const weiter = await page.$('[data-weiter]:not([hidden]):not([disabled])'); if (weiter) { await weiter.click(); await wait(400); continue; }
     const tiles = await page.$$('.tile[data-pos]:not([disabled])');
     if (tiles.length) {
-      const n = await page.$$eval('.slot', (x) => x.length);
+      const n = (await page.$$eval('.slot', (x) => x.length)) || (await page.$$eval('.tile[data-pos]', (x) => x.filter((e) => e.dataset.pos !== '-1').length));
       for (let p = 0; p < n; p++) { const t = await page.$(`.tile[data-pos="${p}"]:not([disabled])`); if (t) await t.click(); }
       await wait(1600); continue;
     }
@@ -154,6 +159,28 @@ for (const [name, type, opts] of [
       ok(await playPackRound(page, null, FOTOS && name === 'chromium_handy' && lang === 'de' ? 'schulbuch_runde_de' : null), `Mein Schulbuch ${lang}: Runde gespielt`);
       await page.click('[data-home]'); await page.waitForSelector('[data-new]'); await page.click('[data-back]'); await page.waitForSelector('.langbar');
     }
+    // Lernpfad „Neu lernen“: Französisch Einheit 1 komplett (5 Lektionen → Krone), Englisch Lektion 1
+    await page.click('[data-lang="fr"]'); await page.waitForSelector('[data-lp-e="fr-1-1"]');
+    ok(await page.$eval('[data-lp-e="fr-1-1"]', (e) => e.classList.contains('jetzt')) && await page.$eval('[data-lp-e="fr-1-2"]', (e) => e.classList.contains('zu')), 'Lernpfad Französisch: Einheit 1 offen, Einheit 2 noch zu');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'lernpfad_fr');
+    await page.click('[data-lp-e="fr-1-1"]'); await page.waitForSelector('.lp-lektion.jetzt');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'lernpfad_einheit');
+    for (let l = 0; l < 5; l++) {
+      await page.click('.lp-lektion.jetzt');
+      const gut = await playPackRound(page, null, FOTOS && name === 'chromium_handy' ? 'lp' + (l + 1) : null);
+      ok(gut, `Lernpfad fr-1-1 Lektion ${l + 1} durchgespielt`);
+      if (!gut) break;
+      if (l === 4 && FOTOS && name === 'chromium_handy') await snap(page, 'lernpfad_krone');
+      await page.click('[data-unit]'); await page.waitForSelector('.lp-lektionen');
+    }
+    const lpSt = await page.evaluate(() => window.quasselTest.state().lp);
+    ok(lpSt['fr-1-1'] === 5, 'Einheit fr-1-1 fertig gespeichert (' + JSON.stringify(lpSt) + ')');
+    await page.click('[data-back]'); await page.waitForSelector('[data-lp-e="fr-1-2"]');
+    ok(await page.$eval('[data-lp-e="fr-1-1"]', (e) => e.classList.contains('fertig')) && await page.$eval('[data-lp-e="fr-1-2"]', (e) => e.classList.contains('jetzt')), 'Krone für Einheit 1, Einheit 2 jetzt offen');
+    await page.click('[data-lang="en"]'); await page.waitForSelector('[data-lp-e="en-1-1"]');
+    await page.click('[data-lp-e="en-1-1"]'); await page.waitForSelector('.lp-lektion.jetzt'); await page.click('.lp-lektion.jetzt');
+    ok(await playPackRound(page, null, null), 'Lernpfad Englisch Lektion 1 durchgespielt');
+    await page.click('[data-unit]'); await page.click('[data-back]'); await page.waitForSelector('.world');
     // Klassenarbeits-Generalprobe: Test eintragen (erst mit Fehler), Lernplan, Generalprobe mit Auswertung
     await page.click('[data-lang="en"]'); await page.waitForSelector('[data-test-new]'); await page.click('[data-test-new]');
     await page.click('[data-save]');

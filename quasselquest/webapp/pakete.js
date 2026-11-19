@@ -93,7 +93,10 @@
     if (feld === 'a' && card.choices && card.choices.length >= n) return card.choices.slice(0, n);
     const own = feld === 'a' ? (card.choices || []) : [];
     const want = feld === 'de' ? P.classify(card, pack.lang).de : card.a;
-    const pool = pack.cards.filter((c) => c !== card).map((c) => (feld === 'de' ? P.classify(c, pack.lang).de : c.a))
+    const art = (c) => P.classify(c, pack.lang).kind + (c.satz != null ? 's' : '');
+    const gleich = pack.cards.filter((c) => c !== card && art(c) === art(card));
+    const quelle = gleich.length >= n ? gleich : pack.cards.filter((c) => c !== card);
+    const pool = [...new Set(quelle.map((c) => (feld === 'de' ? P.classify(c, pack.lang).de : c.a)))]
       .filter((x) => x && x !== want && !own.includes(x));
     const out = own.slice();
     while (out.length < n && pool.length) out.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
@@ -206,6 +209,96 @@
     const tage = []; const n = Math.max(0, testTag - heute);
     for (let d = 0; d < n; d++) tage.push({ tag: heute + d, paket: d === n - 1 && n > 1 ? null : packIds[d % packIds.length], probe: d === n - 1 && n > 1 });
     return tage;
+  };
+
+  // ------------------------------------------------------------------ Lernpfad „Neu lernen“ (siehe LERNPFAD.md)
+  P.LERNPFAD = ['en', 'fr', 'es'];
+  P.LEKTIONEN = [
+    { t: 'Neue Wörter', e: '🌱', sub: 'Anschauen, hören, erkennen' },
+    { t: 'Wörter üben', e: '🎯', sub: 'Selbst sagen und bauen' },
+    { t: 'Sätze bauen', e: '🚂', sub: 'Regel entdecken, Sätze legen' },
+    { t: 'Hören & Sprechen', e: '🎤', sub: 'Zuhören und nachsprechen', stimme: true },
+    { t: 'Geschichte', e: '📖', sub: 'Eine kleine Geschichte verstehen' },
+  ];
+  /** Lektionen einer Einheit (ohne Stimme fällt „Hören & Sprechen“ weg). */
+  P.lektionenFuer = (lang) => P.LEKTIONEN.map((l, nr) => ({ ...l, nr })).filter((l) => !l.stimme || P.LANGS[lang].who);
+  /** Karten einer Einheit im Paket-Format: Wörter in beide Richtungen, Sätze in beide Richtungen, Fragen zur Geschichte. */
+  P.lernPack = (e, lang) => {
+    const L = P.LANGS[lang]; const cards = [];
+    e.woerter.forEach(([z, de, img, info], i) => {
+      cards.push({ id: 'w' + i + 'v', q: `Was bedeutet „${z}“?`, a: de, img, info, wort: i });
+      cards.push({ id: 'w' + i + 'z', q: `Was heißt „${de}“ auf ${L.name}?`, a: z, img, info, wort: i });
+    });
+    e.saetze.forEach(([z, de, img], i) => {
+      cards.push({ id: 's' + i + 'z', q: `Wie sagt man: „${de}“`, a: z, img, satz: i });
+      cards.push({ id: 's' + i + 'v', q: `Was bedeutet „${z}“?`, a: de, img, satz: i });
+    });
+    ((e.geschichte && e.geschichte.fragen) || []).forEach((f, i) => cards.push({ id: 'g' + i, q: f.q, a: f.a, choices: f.choices, img: '📖', frage: i }));
+    return { id: 'lp-' + e.id, lang, title: e.titel, emoji: e.emoji, cards, einheit: e };
+  };
+  /** Satz in Bausteine für den Satz-Zug: Wörter; einzelne Satzzeichen (? ! : ;) hängen am Wort davor. */
+  P.zugTeile = (satz) => {
+    const out = [];
+    for (const t of String(satz).trim().split(/\s+/)) {
+      if (/^[?!:;»«]+$/.test(t) && out.length) out[out.length - 1] += ' ' + t; else out.push(t);
+    }
+    return out;
+  };
+  const mischen = (a, rnd) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  /**
+   * Die Schritte einer Lektion. Schritt = { mode, card } | { mode:'memory', cards } | { mode:'neu' } | { mode:'regel' }
+   * | { mode:'sprechen', text, de, img } | { mode:'geschichte' }. Spielarten wechseln sich ab, damit es nie eintönig wird.
+   */
+  P.lektion = (pack, nr, rnd) => {
+    rnd = rnd || Math.random;
+    const e = pack.einheit; const stimme = !!P.LANGS[pack.lang].who;
+    const C = (id) => pack.cards.find((c) => c.id === id);
+    const W = e.woerter.map((_, i) => i); const S = e.saetze.map((_, i) => i);
+    const steps = [];
+    const abwechselnd = (cards, modes) => { let last = ''; for (const c of cards) {
+      const ok = modes.filter((m) => P.modes(c, pack.lang).includes(m) || m === 'zug');
+      const pick = ok.filter((m) => m !== last); const m = (pick.length ? pick : ok)[Math.floor(rnd() * (pick.length ? pick.length : ok.length))] || 'ballon';
+      last = m; steps.push({ mode: m, card: c });
+    } };
+    if (nr === 0) {
+      steps.push({ mode: 'neu' });
+      const ws = mischen(W, rnd); const memo = ws.slice(0, 3); const rest = ws.slice(3);
+      abwechselnd(rest.slice(0, Math.ceil(rest.length / 2)).map((i) => C('w' + i + 'v')), stimme ? ['ballon', 'hoeren'] : ['ballon']);
+      steps.push({ mode: 'memory', cards: memo.map((i) => C('w' + i + 'v')) });
+      abwechselnd(rest.slice(Math.ceil(rest.length / 2)).map((i) => C('w' + i + 'v')), stimme ? ['hoeren', 'ballon'] : ['ballon']);
+    } else if (nr === 1) {
+      abwechselnd(mischen(W, rnd).map((i) => C('w' + i + 'z')), stimme ? ['bauen', 'ballon', 'hoeren'] : ['bauen', 'ballon']);
+      abwechselnd(mischen(S, rnd).slice(0, 2).map((i) => C('s' + i + 'v')), ['ballon']);
+    } else if (nr === 2) {
+      steps.push({ mode: 'regel' });
+      const ss = mischen(S, rnd);
+      ss.forEach((i, k) => { steps.push({ mode: 'zug', card: C('s' + i + 'z') }); if (k === 1) steps.push({ mode: 'memory', cards: mischen(W, rnd).slice(0, 3).map((w) => C('w' + w + 'z')) }); });
+      abwechselnd(mischen(S, rnd).slice(0, 2).map((i) => C('s' + i + 'v')), stimme ? ['hoeren'] : ['ballon']);
+    } else if (nr === 3) {
+      const ss = mischen(S, rnd); const ws = mischen(W, rnd).slice(0, 2);
+      ss.forEach((i, k) => {
+        steps.push({ mode: 'sprechen', text: e.saetze[i][0], de: e.saetze[i][1], img: e.saetze[i][2] });
+        if (k < 2) steps.push({ mode: 'hoeren', card: C('s' + ss[(k + 2) % ss.length] + 'v') });
+      });
+      ws.forEach((i) => steps.push({ mode: 'sprechen', text: e.woerter[i][0], de: e.woerter[i][1], img: e.woerter[i][2] }));
+    } else {
+      steps.push({ mode: 'geschichte' });
+      (e.geschichte.fragen || []).forEach((_, i) => steps.push({ mode: 'ballon', card: C('g' + i) }));
+      abwechselnd(mischen(S, rnd).slice(0, 2).map((i) => C('s' + i + 'z')), ['zug', 'ballon']);
+    }
+    return steps;
+  };
+  /** Alle Texte des Lernpfads, die vertont werden: Wörter, Sätze, Beispiele der Regeln, Geschichten (mit der Stimme der Figur). */
+  P.lernSpeech = (lp) => {
+    const out = new Map(); const who = P.LANGS[lp.sprache].who; if (!who) return [];
+    const add = (w, t) => { if (t) out.set(w + '|' + t, { who: w, text: t }); };
+    for (const a of lp.abschnitte) for (const e of a.einheiten) {
+      e.woerter.forEach(([z]) => add(who, P.sprechbar(z)));
+      e.saetze.forEach(([z]) => add(who, z));
+      (e.regel.beispiele || []).forEach(([z]) => add(who, z.includes('→') ? null : z));
+      e.geschichte.zeilen.forEach(([f, z]) => add((lp.figuren[f] || {}).who || who, z));
+    }
+    return [...out.values()];
   };
 
   // ------------------------------------------------------------------ Wiederholung (Leitner-Kästen, wachsende Abstände)

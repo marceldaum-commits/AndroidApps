@@ -14,7 +14,7 @@
     return mem || null;
   }
   function save() { mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
-  const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, eigene: {}, tage: {}, hinweis: {}, tests: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei', zaehlung: true, nachhilfe: true }, week: { key: '', n: 0 } });
+  const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, eigene: {}, tage: {}, hinweis: {}, tests: {}, lp: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei', zaehlung: true, nachhilfe: true }, week: { key: '', n: 0 } });
   let state = load() || fresh();
   state.settings = Object.assign(fresh().settings, state.settings || {});
   // Stand 1 → 2: Spracherkennung standardmäßig nur auf dem Gerät; Wochenziel statt Tagesserie
@@ -29,6 +29,7 @@
   if (!state.tage) state.tage = {};
   if (!state.hinweis) state.hinweis = {};
   if (!state.tests) state.tests = {};
+  if (!state.lp) state.lp = {};
   const PK = window.PAKETE;
   window.APP_SETTINGS = state.settings;
 
@@ -225,6 +226,7 @@
       ${langBar()}
       ${ruby(greet + tip)}
       ${testAktiv() ? testCard() : ''}
+      ${en ? '' : '<div data-lp class="lp"></div>'}
       ${en ? `<div class="world">
         <div class="waves"></div><div class="boatdeco">⛵</div>
         <h2>${w1.emoji} ${esc(w1.title)}</h2><div class="sub">Welt 1 · ${esc(w1.de)}</div>
@@ -233,7 +235,7 @@
           return `<button class="station ${cls}" data-ep="${e.id}" aria-label="${esc(e.title)}"><span class="dot">${e.soon ? '🔜' : e.emoji}</span>
             <span class="lbl">${esc(e.title)}</span><span class="stars">${p && p.done ? '⭐'.repeat(p.stars) : ''}</span></button>`;
         }).join('')}</div>
-      </div>` : ''}
+      </div><div data-lp class="lp"></div>` : ''}
       <div class="row" style="margin-top:14px">${en ? '<button class="btn white small" data-pass>📘 Mein Reisepass</button>' : ''}
         <span class="pill" title="Wochenziel">🎯 Diese Woche: ${Math.min(weekCount(), WEEK_GOAL)}/${WEEK_GOAL}${weekCount() >= WEEK_GOAL ? ' ✅' : ''}</span></div>
       ${testAktiv() ? '' : testCard()}
@@ -267,6 +269,7 @@
       const w = C.worlds.find((x) => x.id === +b.dataset.world);
       rubySay(el, `Nach <b>${esc(w.title)}</b> fliegen wir bald! Dort geht es um: ${esc(w.de)}.`, 'talk');
     });
+    lernpfad(state.lang).then((lp) => { const box = el.querySelector('[data-lp]'); if (lp && box && box.isConnected) lpPfadZeigen(el, box, lp); });
     maybeApplyUpdate();
   }
 
@@ -1072,7 +1075,39 @@
         return;
       }
 
+      if (step.mode === 'neu' || step.mode === 'regel' || step.mode === 'sprechen' || step.mode === 'geschichte') return lpSchritt(pack, L, step, frac, resolve, say);
       const c = step.card; const k = PK.classify(c, pack.lang);
+      if (step.mode === 'zug') {
+        const el = packFrame(pack, frac, '🚂 Satz-Zug', 'Bau den Satz Wort für Wort!'); tk = token;
+        el.querySelector('[data-quit]').onclick = () => resolve('quit');
+        const body = el.querySelector('[data-body]');
+        const teile = PK.zugTeile(c.a);
+        const andere = pack.cards.filter((x) => x.satz != null && x.id.endsWith('z') && x.a !== c.a).flatMap((x) => PK.zugTeile(x.a)).filter((t) => !teile.includes(t));
+        const extra = shuffle([...new Set(andere)]).slice(0, teile.length > 5 ? 1 : 2);
+        const tiles = shuffle(teile.map((t, i) => ({ t, i })).concat(extra.map((t) => ({ t, i: -1 }))));
+        body.innerHTML = `<div class="qcard"><div class="qimg">${esc(c.img || pack.emoji)}</div><div class="q">${esc(k.de || c.q)}</div></div>
+          <div class="zug" data-zug><span class="lok">🚂</span></div>
+          <div class="tiles">${tiles.map((x, i) => `<button class="tile wort" data-t="${i}"${DIAG ? ` data-pos="${x.i}"` : ''}>${esc(x.t)}</button>`).join('')}</div>`;
+        let pos = 0; let fehler = 0;
+        body.querySelectorAll('.tile').forEach((b) => b.onclick = async () => {
+          if (b.disabled || pos >= teile.length) return;
+          const x = tiles[+b.dataset.t];
+          if (x.t === teile[pos]) {
+            b.disabled = true; b.classList.add('used'); A.sfx('pop');
+            const w = document.createElement('span'); w.className = 'waggon'; w.textContent = x.t; body.querySelector('[data-zug]').appendChild(w); pos++;
+            if (pos === teile.length) {
+              body.querySelector('[data-zug]').classList.add('fahrt'); A.sfx('right'); A.vibrate(25); confetti(35);
+              body.querySelectorAll('.tile').forEach((y) => y.disabled = true);
+              showInfo(el, c, `<b>${esc(c.a)}</b>`); await say(k.sprich || c.a); done([[c, fehler === 0]]);
+            }
+          } else {
+            fehler++; b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); A.sfx('soft');
+            if (fehler === 2) rubySay(el, `Tipp: Als Nächstes kommt <b>${esc(teile[pos])}</b>.`, 'talk');
+          }
+        });
+        rubySay(el, 'Welches Wort kommt zuerst?');
+        return;
+      }
       if (step.mode === 'ballon') {
         const el = packFrame(pack, frac, '🎈 Ballon-Jagd', 'Tipp den richtigen Ballon an!'); tk = token;
         el.querySelector('[data-quit]').onclick = () => resolve('quit');
@@ -1160,6 +1195,190 @@
         rubySay(el, 'Welcher Buchstabe kommt zuerst?');
       }
     });
+  }
+
+  // ------------------------------------------------------------------ Lernpfad „Neu lernen“ (LERNPFAD.md)
+  const LP = {};
+  function lernpfad(lang) {
+    if (!PK.LERNPFAD.includes(lang)) return Promise.resolve(null);
+    if (!LP[lang]) LP[lang] = fetch('lernpfad/' + lang + '.json').then((r) => { if (!r.ok) throw new Error('lp'); return r.json(); }).catch(() => { delete LP[lang]; return null; });
+    return LP[lang];
+  }
+  const lpDone = (e) => state.lp[e.id] || 0;
+  const lpEinheiten = (lp) => lp.abschnitte.flatMap((a) => a.einheiten);
+  function lpPfadZeigen(el, box, lp) {
+    const n = PK.lektionenFuer(lp.sprache).length;
+    let offen = true;
+    box.innerHTML = `<div class="section-h">🗺️ ${esc(lp.titel)}</div>` + lp.abschnitte.map((a) => `<div class="lp-abschnitt">
+      <div class="lp-kopf"><span class="e">${esc(a.emoji)}</span><div><b>Abschnitt ${esc(a.id)}: ${esc(a.titel)}</b><small>${esc(a.ziel)}</small></div></div>
+      <div class="lp-weg">${a.einheiten.map((e, i) => {
+        const d = Math.min(lpDone(e), n); const fertig = d >= n; const jetzt = offen && !fertig; const zu = !offen;
+        if (!fertig) offen = false;
+        return `<button class="lp-knoten${fertig ? ' fertig' : ''}${jetzt ? ' jetzt' : ''}${zu ? ' zu' : ''}" style="--x:${[0, -1, 0, 1][i % 4]};--p:${(d / n).toFixed(2)}" data-lp-e="${esc(e.id)}" aria-label="${esc(e.titel)}">
+          <span class="ring"><span class="kern">${zu ? '🔒' : esc(e.emoji)}</span></span>${fertig ? '<span class="krone">👑</span>' : ''}
+          <span class="lbl">${esc(e.titel)}</span>${jetzt ? `<span class="los">${d ? 'Weiter' : 'Start'}</span>` : ''}</button>`;
+      }).join('')}</div></div>`).join('') + '<p class="muted lp-mehr">Weitere Abschnitte (Mein Alltag, Unterwegs, Erlebnisse) kommen bald.</p>';
+    box.querySelectorAll('[data-lp-e]').forEach((b) => b.onclick = () => {
+      const e = lpEinheiten(lp).find((x) => x.id === b.dataset.lpE);
+      if (b.classList.contains('zu')) { A.sfx('soft'); b.classList.remove('wiggle'); void b.offsetWidth; b.classList.add('wiggle'); rubySay(el, 'Diese Einheit öffnet sich, wenn du die davor geschafft hast. Du schaffst das! 💪', 'talk'); return; }
+      A.sfx('pop'); A.vibrate(20); einheitSeite(lp, e);
+    });
+  }
+  function einheitSeite(lp, e) {
+    const L = PK.LANGS[lp.sprache]; const ls = PK.lektionenFuer(lp.sprache); const d = lpDone(e);
+    const el = screen(`<div>
+      <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:24px">${esc(e.emoji)} ${esc(e.titel)}</div></div>
+      ${ruby(`<b>Dein Ziel:</b> ${esc(e.ziel)}`)}
+      <div class="lp-lektionen">${ls.map((l, k) => { const st = k < d ? 'fertig' : (k === d ? 'jetzt' : 'zu');
+        return `<button class="lp-lektion ${st}" data-l="${k}"${st === 'zu' ? ' disabled' : ''}><span class="e">${k < d ? '✅' : (st === 'zu' ? '🔒' : l.e)}</span><span class="t"><b>${k + 1}. ${esc(l.t)}</b><small>${esc(l.sub)}</small></span>${st === 'jetzt' ? '<span class="go">▶</span>' : ''}</button>`; }).join('')}</div>
+      <div class="section-h">Die Wörter dieser Einheit</div>
+      <div class="lp-woerter">${e.woerter.map(([z, de, img], i) => `<button class="lp-wort" data-w="${i}"><span class="b">${esc(img)}</span><b>${esc(z)}</b><small>${esc(de)}</small></button>`).join('')}</div>
+    </div>`);
+    el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); home(); };
+    el.querySelectorAll('.lp-lektion').forEach((b) => b.onclick = () => { if (b.disabled) return; A.sfx('pop'); A.vibrate(20); lektionStarten(lp, e, +b.dataset.l); });
+    el.querySelectorAll('.lp-wort').forEach((b) => b.onclick = () => {
+      A.sfx('tap'); const w = e.woerter[+b.dataset.w]; if (L.who) speak(PK.sprechbar(w[0]), L.who);
+      b.classList.remove('wiggle'); void b.offsetWidth; b.classList.add('wiggle');
+    });
+  }
+  async function lektionStarten(lp, e, k) {
+    const lang = lp.sprache; const L = PK.LANGS[lang]; const l = PK.lektionenFuer(lang)[k];
+    const pack = PK.lernPack(e, lang); pack.lp = lp;
+    const steps = PK.lektion(pack, l.nr);
+    // Wiederholung: bis zu 2 fällige Wörter aus früheren Einheiten einstreuen (gemischtes Üben)
+    const faellig = [];
+    for (const x of lpEinheiten(lp)) {
+      if (x.id === e.id || !lpDone(x)) continue;
+      const p = PK.lernPack(x, lang);
+      for (const c of p.cards) { const st = state.karten[PK.key(p, c)]; if (st && st.d <= PK.today() && c.wort != null) faellig.push({ p, c }); }
+    }
+    shuffle(faellig).slice(0, 2).forEach(({ p, c }, i) => steps.splice(Math.min(steps.length, 2 + i * 4), 0, { mode: 'ballon', card: c, pack: p }));
+    const run = { first: 0, total: 0 };
+    for (let i = 0; i < steps.length; i++) {
+      const res = await packStep(steps[i].pack || pack, L, steps[i], i / steps.length, run);
+      if (res === 'quit') { save(); return einheitSeite(lp, e); }
+    }
+    const vorher = lpDone(e); if (k + 1 > vorher) state.lp[e.id] = k + 1;
+    const goal = noteEpisodeDone(); save();
+    lektionFertig(lp, e, k, run, goal, vorher);
+  }
+  function lektionFertig(lp, e, k, run, goal, vorher) {
+    const ls = PK.lektionenFuer(lp.sprache); const n = ls.length;
+    const krone = k + 1 === n && vorher < n;
+    const q = run.total ? run.first / run.total : 1; const sterne = q >= 0.9 ? 3 : (q >= 0.6 ? 2 : 1);
+    const el = screen(`<div class="reward">
+      ${ruby(krone ? `Du hast die Einheit „${esc(e.titel)}“ geschafft! Hier ist deine Krone! 👑` : `Lektion „${esc(ls[k].t)}“ geschafft!${run.total ? ` ${run.first} von ${run.total} gleich beim ersten Mal richtig.` : ''}${goal ? ' Und dein Wochenziel ist erreicht! 🏆' : ''}`, 'dance')}
+      <div class="stamp">${krone ? '👑' : ls[k].e}</div>
+      <div class="bigstars">${[0, 1, 2].map((x) => `<span style="animation-delay:${0.5 + x * 0.25}s">${x < sterne ? '⭐' : '☆'}</span>`).join('')}</div>
+      ${krone ? `<div class="card center"><b>Das kannst du jetzt:</b><br>${esc(e.ziel)}</div>` : ''}
+      <div class="row center"><button class="btn white" data-unit>Zur Einheit</button><button class="btn blue" data-next>${k + 1 < n ? 'Nächste Lektion ➜' : 'Zum Lernpfad 🗺️'}</button></div></div>`);
+    setTimeout(() => { A.sfx(krone ? 'fanfare' : 'stamp'); A.vibrate(40); confetti(krone ? 150 : 70); }, 250);
+    el.querySelector('[data-unit]').onclick = () => { A.sfx('tap'); einheitSeite(lp, e); };
+    el.querySelector('[data-next]').onclick = () => { A.sfx('pop'); if (k + 1 < n) lektionStarten(lp, e, k + 1); else home(); };
+  }
+  /** Spielarten des Lernpfads ohne Karte: Kennenlernen, Regel entdecken, Nachsprechen, Geschichte. */
+  function lpSchritt(pack, L, step, frac, resolve, say) {
+    const e = pack.einheit;
+    const titel = { neu: '🌱 Neue Wörter', regel: '💡 Regel entdecken', sprechen: '🎤 Sprich nach!', geschichte: '📖 ' + esc(e.geschichte.titel) }[step.mode];
+    const sub = { neu: 'Tipp jede Karte an: hören und umdrehen!', regel: esc(e.regel.titel), sprechen: 'Erst anhören, dann nachsprechen.', geschichte: 'Hör zu! Tipp auf eine Sprechblase, dann siehst du die Übersetzung.' }[step.mode];
+    const el = packFrame(pack, frac, titel, sub); const tk = token;
+    el.querySelector('[data-quit]').onclick = () => resolve('quit');
+    const body = el.querySelector('[data-body]');
+    const weiterKnopf = (txt, hidden) => `<div class="row center"><button class="btn blue" data-weiter${hidden ? ' hidden' : ''}>${txt}</button></div>`;
+
+    if (step.mode === 'neu') {
+      body.innerHTML = `<div class="neu-grid">${e.woerter.map(([z, de, img], i) => `<button class="neu-karte" data-i="${i}" style="--d:${(i * 0.06).toFixed(2)}s">
+        <span class="vorn"><span class="bild">${esc(img)}</span><b>${esc(z)}</b></span><span class="hinten"><span class="bild">${esc(img)}</span><b>${esc(de)}</b></span></button>`).join('')}</div>
+        ${weiterKnopf('Weiter ➜')}`;
+      const w = body.querySelector('[data-weiter]'); w.disabled = true;
+      const gesehen = new Set();
+      body.querySelectorAll('.neu-karte').forEach((b) => b.onclick = () => {
+        const i = +b.dataset.i; A.sfx('tap'); A.vibrate(10); b.classList.toggle('um'); say(PK.sprechbar(e.woerter[i][0]));
+        if (!gesehen.has(i)) { gesehen.add(i); if (gesehen.size === e.woerter.length) { w.disabled = false; w.classList.add('wiggle'); A.sfx('right'); confetti(30); rubySay(el, 'Super! Jetzt kennst du alle neuen Wörter. Los geht\'s! 🎉', 'dance'); } }
+      });
+      w.onclick = () => { if (w.disabled) return; A.sfx('whoosh'); resolve('ok'); };
+      rubySay(el, `${e.woerter.length} neue Wörter! Tipp jede Karte an – ich sage dir, wie man sie spricht.`);
+      return;
+    }
+    if (step.mode === 'regel') {
+      const r = e.regel;
+      body.innerHTML = `<div class="regel-bsp">${r.beispiele.map(([z, de], i) => `<button class="regel-zeile" data-i="${i}" style="--d:${(i * 0.25).toFixed(2)}s"><b>${esc(z)}</b><small>${esc(de)}</small></button>`).join('')}</div>
+        <div class="regel-text" data-text hidden>💡 ${esc(r.text)}</div>
+        <div class="row center"><button class="btn white" data-zeig>🤔 Was fällt dir auf? Zeig mir die Regel!</button></div>${weiterKnopf('Verstanden ➜', true)}`;
+      body.querySelectorAll('.regel-zeile').forEach((b) => b.onclick = () => { A.sfx('tap'); const z = r.beispiele[+b.dataset.i][0]; if (!z.includes('→')) say(z); });
+      body.querySelector('[data-zeig]').onclick = () => {
+        A.sfx('pop'); body.querySelector('[data-text]').hidden = false; body.querySelector('[data-zeig]').hidden = true; body.querySelector('[data-weiter]').hidden = false;
+        confetti(20); rubySay(el, 'Genau! Schau dir die Beispiele noch einmal an – jetzt siehst du die Regel überall.', 'dance');
+      };
+      body.querySelector('[data-weiter]').onclick = () => { A.sfx('whoosh'); resolve('ok'); };
+      rubySay(el, 'Schau dir die Beispiele an. Tipp darauf zum Anhören. Was fällt dir auf? 🤔');
+      return;
+    }
+    if (step.mode === 'sprechen') {
+      const text = PK.sprechbar(step.text);
+      body.innerHTML = `<div class="echo-line"><div class="pic">${esc(step.img || pack.emoji)}</div><div class="en">${esc(step.text)}</div><div class="hint-de">${esc(step.de)}</div></div>
+        <div class="listen-row"><button class="speaker" data-play aria-label="Anhören">🔊</button><button class="slowbtn" data-slow aria-label="Langsam">🐢</button><button class="mic" data-mic aria-label="Aufnehmen">🎤</button></div>
+        <div class="mic-label" data-ml>Erst anhören, dann auf 🎤 tippen und nachsprechen.</div>
+        ${weiterKnopf('Weiter ➜', true)}<button class="quiet" data-quiet>Ich sage es leise für mich</button>
+        <div class="ai-note">Deine Stimme bleibt auf diesem Gerät.</div>`;
+      const mic = body.querySelector('[data-mic]'); const ml = body.querySelector('[data-ml]'); const w = body.querySelector('[data-weiter]'); const quiet = body.querySelector('[data-quiet]');
+      const play = async (slow) => { const b = body.querySelector('[data-play]'); b.classList.add('playing'); await speak(text, L.who, slow ? { slow: true } : null); if (alive(tk)) b.classList.remove('playing'); };
+      let rec = null; let busy = false; let tries = 0; let fertig = false;
+      const finish = (msg, gut) => { if (fertig) return; fertig = true; ml.textContent = ''; rubySay(el, msg, 'dance'); A.sfx('right'); if (gut) confetti(30); w.hidden = false; quiet.hidden = true; };
+      mic.onclick = async () => {
+        if (fertig) return;
+        if (rec) {
+          const r = rec; rec = null; mic.classList.remove('on'); mic.textContent = '🎤';
+          const res = await r.stop(); if (res.url) URL.revokeObjectURL(res.url); if (!alive(tk)) return;
+          if (res.loudFrames > 6) finish('Super gesprochen! 🎉', true); else { ml.textContent = 'Ich habe fast nichts gehört – noch mal, ruhig lauter!'; A.sfx('soft'); }
+          return;
+        }
+        if (busy) return; busy = true; A.stop(); A.sfx('pop');
+        if (A.recognitionMode() !== 'none') {
+          mic.classList.add('on'); ml.textContent = 'Ich höre zu …';
+          const alts = await A.listen(pack.lang); mic.classList.remove('on'); busy = false;
+          if (!alive(tk)) return;
+          if (alts && alts.length) {
+            tries++;
+            if (A.similarity(text, alts) >= 0.5) { finish(`Ich habe dich verstanden: „${esc(alts[0])}“ ⭐`, true); return; }
+            if (tries >= 2) { finish('Gut gemacht! Das Mikrofon tut sich manchmal schwer – du hast es super versucht! 🎉', true); return; }
+            ml.textContent = `Ich habe „${alts[0]}“ gehört. Hör noch einmal zu und versuch es wieder!`; A.sfx('soft'); play(true); return;
+          }
+          if (alts && !alts.length) { tries++; if (tries >= 2) { finish('Gut gemacht! Weiter geht\'s! 🎉', true); return; } ml.textContent = 'Ich hab dich nicht ganz gehört – noch mal?'; A.sfx('soft'); return; }
+        }
+        busy = false;
+        if (!A.micSupported()) { finish('Toll! Laut mitsprechen hilft am meisten. 🎉', true); return; }
+        try {
+          rec = await A.record((lvl) => mic.style.setProperty('--lvl', lvl.toFixed(2)));
+          if (!alive(tk)) { rec.stop(); rec = null; return; }
+          mic.classList.add('on'); mic.textContent = '⏹️'; ml.textContent = 'Sprich jetzt – dann tipp auf ⏹️.';
+        } catch (err) { rec = null; ml.textContent = 'Das Mikrofon ist nicht erlaubt. Sprich einfach laut mit und tipp auf „leise für mich“.'; }
+      };
+      body.querySelector('[data-play]').onclick = () => { A.sfx('tap'); play(); };
+      body.querySelector('[data-slow]').onclick = () => { A.sfx('tap'); play(true); };
+      quiet.onclick = () => { A.sfx('tap'); finish('Okay! Beim nächsten Mal vielleicht laut? 😊', false); };
+      w.onclick = () => { A.sfx('whoosh'); if (rec) { rec.stop(); rec = null; } resolve('ok'); };
+      rubySay(el, 'Hör gut zu und sprich mir nach!');
+      setTimeout(() => { if (alive(tk)) play(); }, 300);
+      return;
+    }
+    // Geschichte: Sprechblasen erscheinen nacheinander, mit Stimme der Figur; Antippen zeigt die Übersetzung
+    const g = e.geschichte; const fig = (pack.lp && pack.lp.figuren) || {};
+    body.innerHTML = `<div class="chat" data-chat></div>${weiterKnopf('Weiter ➜')}`;
+    const chat = body.querySelector('[data-chat]'); const w = body.querySelector('[data-weiter]');
+    let i = 0;
+    const zeige = () => {
+      const [f, z, de] = g.zeilen[i]; const F = fig[f] || { name: f, emoji: '🙂', who: L.who };
+      const div = document.createElement('div'); div.className = 'chat-zeile ' + (f === g.zeilen[0][0] ? 'links' : 'rechts');
+      div.innerHTML = `<span class="wer" title="${esc(F.name)}">${esc(F.emoji)}</span><button class="blase"><small>${esc(F.name)}</small><b>${esc(z)}</b><span class="de" hidden>${esc(de)}</span></button>`;
+      chat.appendChild(div); try { div.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (err) {}
+      div.querySelector('.blase').onclick = () => { A.sfx('tap'); const x = div.querySelector('.de'); x.hidden = !x.hidden; if (F.who) speak(z, F.who); };
+      A.sfx('pop'); if (F.who) speak(z, F.who);
+      if (i === g.zeilen.length - 1) w.textContent = 'Zu den Fragen ➜';
+    };
+    w.onclick = () => { i++; if (i >= g.zeilen.length) { A.sfx('whoosh'); resolve('ok'); return; } A.sfx('tap'); zeige(); };
+    rubySay(el, 'Eine kleine Geschichte! Hör gut zu – danach habe ich zwei Fragen.');
+    zeige();
   }
 
   // ------------------------------------------------------------------ Klassenarbeits-Generalprobe (Pflicht 2)
