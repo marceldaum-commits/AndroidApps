@@ -1,5 +1,9 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.4.6 – Sprachauswahl bleibt stehen (19.11.2026)
+- Wer eine Sprache antippt, sieht sie jetzt weiter – die Sprachleiste springt nicht mehr an den Anfang zurück, die gewählte Sprache rückt in die Mitte.
+- „← Alle Apps“ führt (wie schon seit 0.4.0) nur über das Eltern-Tor auf die Website; das Tor sagt jetzt dazu: „Hier geht es zur Website.“
+
 ## 0.4.5 – Kleiner Text für Kinder angepasst (19.11.2026)
 - „Deine Daten“: Das Beispiel, was nur Erwachsene einschalten können, ist jetzt die Spracherkennung übers Internet.
 
