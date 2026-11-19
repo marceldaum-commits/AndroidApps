@@ -2554,4 +2554,5 @@ I18N.add('uk', {"% sind":"% — це",
 "Das gehört zu Rechenblitz Pro. Deine Eltern können im Elternbereich nachsehen.":"Це входить до Rechenblitz Pro. Твої батьки можуть подивитися в розділі для батьків.",
 "🔒 Für Eltern":"🔒 Для батьків",
 "Was Pro enthält · Code einlösen":"Що містить Pro · активувати код",
-"Pro-Hinweise für Kinder ohne Preis und ohne Kauf-Knopf – Kaufen nur im Bereich für Erwachsene":"Підказки про Pro для дітей без ціни й кнопки купівлі — купівля лише в розділі для дорослих"});
+"Pro-Hinweise für Kinder ohne Preis und ohne Kauf-Knopf – Kaufen nur im Bereich für Erwachsene":"Підказки про Pro для дітей без ціни й кнопки купівлі — купівля лише в розділі для дорослих",
+"Adventskalender ohne Gutschein-Hinweise":"Адвент-календар без згадок про ваучер"});

@@ -43,3 +43,9 @@ Server-`rev` entscheidet, nie Zeitstempel allein. Bei 409 sicher zusammenführen
 - Auflage A6: **nur ein Einwilligungstext** = der Pflichttext oben (unverändert), darunter der Link „Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)“ und der Knopf **„Einverstanden – Familie anlegen“**. Nichts vorausgewählt.
 - Anlegen und Beitreten nur hinter dem Eltern-Tor.
 - Roadmap, noch nicht bauen: ein Kind einzeln löschen.
+
+## Freigabe V8 mit Auflagen (v1.7, 19.11.)
+1. **Beitreten** per Familien-Link oder QR-Code: derselbe Pflichttext hinter dem Eltern-Tor, Knopf **„Einverstanden – Familie beitreten“** (nicht vorausgewählt). Wer abbricht, lädt nichts hoch.
+2. **Sicherheitshinweis** (NICHT im Pflichttext): dauerhaft auf der Familien-Seite und zusätzlich direkt bei „Link teilen“, beim QR-Code und beim Notfall-Blatt:
+   „Wer den Familien-Link oder den QR-Code hat, kann die Lernstände eurer Familie öffnen, ändern und löschen. Teilt ihn nur mit Personen, denen ihr vertraut, und bewahrt das Notfall-Blatt sicher auf.“
+3. Meldung mit Commit und Zeile „Rechtsbezug: ja (V8)“.
