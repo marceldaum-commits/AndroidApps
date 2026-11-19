@@ -1,4 +1,4 @@
-{"app":"rechenblitz","version":"3.28.2","shell":2,"id":"fc96f99e97914c48","files":{
+{"app":"rechenblitz","version":"3.28.2","shell":2,"id":"5477aba3ab6632ed","files":{
 "LICENSE-fonts-OFL.txt":"7ccbf925128fa58dd9db15a952de2cb1388bada8bceddb13b90302c63c517ef8",
 "LICENSE-qrcode-generator.txt":"cbb4dd65aafcbc67fdd469b12042464153219bc26f238b2f19858c7980e5b01a",
 "app.css":"b3e0b50618f8d7b2fc9f6dfee129e90502c3ff0cb4a9768f1826ed80226e18ce",
@@ -21,7 +21,7 @@
 "js/elterntor.js":"2ab5590db229e8d6d150ebf32df0782200b4bf3a415b2a40bbcb36681b608596",
 "js/engine.js":"92cc67dd0720f68974a692ec8d968107e67c2da9dda217fa866c7a73d49a4a90",
 "js/extras.js":"d821479d36c7a9c58cd0ae88a25d6b1afb1dc66aba881113c571cce6661ec689",
-"js/familie.js":"78e3d769156dc836c061bc9816fae1cb9bc607d6fcad3b1cce05e30cf631e805",
+"js/familie.js":"fd128514cd181da261eaf2d829b98f58fab5dc84b30a8cc30a9856fa3b080d93",
 "js/garten.js":"3ea9757170b70e44abf98fa799177ab3dadb41119668cd1835dd8966a2a7cdfc",
 "js/i18n.js":"776501e8920658b2fd4cdb44ce467e5269028ef2158bb49e847a5f92d5ada9ad",
 "js/kopplung.js":"6a5a0273f09b8e642e2cfad9266526038426663a8c9a58ed7ba20a693b7136c2",
