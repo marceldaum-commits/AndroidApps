@@ -9,7 +9,7 @@ Arbeitsordner: `englisch/` – wird nach der Namensentscheidung in `<name>/` umb
 
 | | Name | Warum | Subdomain |
 |---|---|---|---|
-| ⭐ 1 | **Quasselquest** | „quasseln“ versteht jedes Kind, „Quest“ kennt es aus Spielen. Sagt sofort: Hier wird geredet, und es ist ein Abenteuer. Passt zur Reise-Geschichte (Kapitel 3). Gut zu sprechen, zu merken, zu schreiben. | `quasselquest` / `quasselquest-test` |
+| ⭐ 1 | **Quasselquest** (auch Empfehlung von „Geld verdienen“) | „quasseln“ versteht jedes Kind, „Quest“ kennt es aus Spielen. Sagt sofort: Hier wird geredet, und es ist ein Abenteuer. Passt zur Reise-Geschichte (Kapitel 3). Gut zu sprechen, zu merken, zu schreiben. | `quasselquest` / `quasselquest-test` |
 | 2 | **Wortwelle** | Schallwelle + Wörter: steht für Hören und Sprechen. Ruhiger, auch für Kl. 5/6 nicht „zu klein“. Alliteration wie „Rechenblitz“. | `wortwelle` / `wortwelle-test` |
 | 3 | **Plauderhafen** | Die Reise beginnt im Hafen („Hello Harbour“), von dort geht es in die englischsprachige Welt. „Plaudern“ klingt freundlich und auch für Eltern einladend. | `plauderhafen` / `plauderhafen-test` |
 
@@ -146,16 +146,16 @@ mehrere Figuren = mehrere Stimmen, britisches Englisch als Standard, weil die me
 | Kostenlos (für immer) | Pro (Freischaltung per Code `#pro=`, Kauf nur hinter dem Eltern-Tor) |
 |---|---|
 | Welt 1 „Hello Harbour“ und Welt 7 „London Town“ komplett | alle übrigen Welten und neue Episoden |
-| jeweils die **erste Episode jeder Welt** (zum Kennenlernen) | Mini-Geschichten-Reihe „Grandpa Ted's Tales“ (wöchentlich neu) |
-| alle Spielarten, Rubys Tagesaufgabe, Reisepass | „Klassenarbeit bald?“-Training Kl. 5/6: Hörverstehen im Stil einer Klassenarbeit |
+| jeweils die **erste Episode jeder Welt** (zum Kennenlernen) | Mini-Geschichten-Reihe „Grandpa Ted's Tales“ (wöchentlich neu; **die erste Geschichte ist gratis**) |
+| alle Spielarten, Rubys Tagesaufgabe, Reisepass | **„Hörtraining für Klassenarbeiten Kl. 5/6“** – Hörverstehen im Stil einer Klassenarbeit (so heißt es im Elternbereich; stärkster Kaufgrund für Eltern) |
 | Mikrofon-Funktionen, Eltern-Handy koppeln, Sicherung | Rubys Baumhaus: weitere Deko-Sets |
 
-- **Pro als Einmalkauf** wie bei den anderen Apps; ab Januar gilt auch der **Familienpass „Alle Apps“**. Freischalten von Anfang an über den gemeinsamen Code
+- **Pro als Einmalkauf, 7,99 €** wie bei den anderen Apps (Vorschlag „Geld verdienen“); ab Januar gilt auch der **Familienpass „Alle Apps“**. Freischalten von Anfang an über den gemeinsamen Code
   (`#pro=CODE`, danach sofort aus der Adresse entfernt; Code-Eingabe von Hand immer sichtbar). Preis, App-Nummer und Code-Präfix legen Marcel, Leitstand und „Geld verdienen“ fest.
-- **Nachhilfe-Hinweis (Auftrag C):** nur im Elternbereich hinter dem Eltern-Tor, nie im Kinderbereich, nie durch Ruby. Themen-Kennung `englisch`.
+- **Nachhilfe-Hinweis (Auftrag C):** nur im Elternbereich hinter dem Eltern-Tor, nie im Kinderbereich, nie durch Ruby. Themen-Kennung `englisch` in allen Links zur Website (`/probestunde-anfrage/?src=<name>-elternbericht&thema=englisch&klasse=<n>`, vor Arbeiten `src=<name>-klassenarbeit`; solange die Adresse 404 liefert, wie die anderen Apps `/probestunde/`).
   Auslöser „Thema hakt“ (mindestens 10 Antworten, unter 60 % richtig beim ersten Versuch in 14 Tagen) und „Englisch-Arbeit bald?“ (Termin eintragen, 3–14 Tage vorher).
   Text und Links nach RATGEBER.md Teil 5, höchstens alle 14 Tage, ausblendbar, Schalter „Hinweise auf unsere Nachhilfe zeigen“.
-- **Zählung:** gemeinsames Format, `app=<name>`, `thema=englisch`, Ereignisse aus der gemeinsamen Liste; Schalter „Anonyme Nutzungszählung“ im Elternbereich.
+- **Zählung:** gemeinsames Format, `app=<name>`; als `thema` grob `englisch` oder – falls der Leitstand sie in die Positivliste aufnimmt – feinere Kennungen je Welt (`englisch-begruessung`, `englisch-zahlen`, `englisch-farben`, …), Ereignisse aus der gemeinsamen Liste; Schalter „Anonyme Nutzungszählung“ im Elternbereich.
 - **Kinderbereich (UWG Anhang Nr. 28):** keine Preise, keine Kaufknöpfe, kein „Frag deine Eltern“. Gesperrte Episoden zeigen nur ein 🔒 und
   „Dieser Ort ist noch zu“ – Antippen öffnet das Eltern-Tor, nicht den Shop. Preise, Pro und Nachhilfe-Hinweis (Englisch) stehen nur hinter dem Eltern-Tor.
 

@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 19.11.2026 – Rückmeldungen der Räume eingearbeitet
+
+- **„Geld verdienen“** empfiehlt ebenfalls **Quasselquest** (Marke vor Start im DPMA/EUIPO prüfen, Klassen 9 und 41). Pro 7,99 € einmalig, ab Januar im Familienpass; die erste Geschichte der Reihe ist gratis. Im Elternbereich heißt Pro „Hörtraining für Klassenarbeiten Kl. 5/6“. Steht so im Konzept.
+- **Kennungen:** Links zur Website nehmen immer `thema=englisch`. Für die Zählung schlägt „Geld verdienen“ zusätzlich feine Kennungen je Welt vor (`englisch-begruessung`, `englisch-zahlen`, `englisch-farben`, `englisch-familie`, `englisch-schule`, `englisch-tiere`, `englisch-essen`, `englisch-feste`, `englisch-simple-present`, `englisch-simple-past`). **Bitte entscheiden:** in die Positivliste aufnehmen oder nur `englisch`? Bis dahin baue ich `englisch`.
+- **Probestunde:** `/probestunde-anfrage/?src=<name>-elternbericht&thema=englisch&klasse=<n>`. Laut den anderen Apps liefert die Adresse noch 404. Ich nehme dann vorerst `/probestunde/` wie die anderen Apps. Die Adresse des Neukundenpakets kommt vom Leitstand (Auftrag C2).
+- **Wissensgarten:** Die Wortliste für Welt 1 ist abgeglichen (fehlende Sätze kommen am 24.11. in seine Pakete). Die Wortliste für Welt 3 liegt in `englisch/wortlisten/welt3-school-street.md`.
+- **Rechenblitz:** keine Überschneidung. Später Link „Jetzt rechnen im Rechenblitz“ bei Zahlen (`?thema=add&stufe=1&modus=training`).
+
 ## 19.11.2026 – Konzept überarbeitet nach Recherche und RATGEBER (noch Version 0.1.0, nicht ausgeliefert)
 
 - Eingearbeitet: Recherche „Sprachlern App gegen Duolingo“ und RATGEBER.md Teil 5 von „Geld verdienen“, Plattform-Hinweise von Experimentopia und Mathe-Trainer.
