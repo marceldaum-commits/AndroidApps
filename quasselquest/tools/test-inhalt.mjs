@@ -224,3 +224,14 @@ test('Lernplan: jeden Tag ein Paket, am letzten Tag vor dem Test die Generalprob
   assert.deepEqual(P.lernplan(['a'], 100, 101), [{ tag: 100, paket: 'a', probe: false }]);
   assert.deepEqual(P.lernplan(['a'], 100, 100), []);
 });
+
+test('Buchstaben-Bau nur, wenn das Wort eindeutig aus der Aufgabe folgt (keine Auswahlfragen, keine Reime)', () => {
+  for (const p of PACKS) for (const c of p.cards) {
+    if (!P.modes(c, p.lang).includes('bauen')) continue;
+    const k = P.classify(c, p.lang); const b = P.bauFrage(c, p.lang);
+    assert.ok(b, `${p.id}: „${c.q}“ hat Bauen, aber keine Bau-Aufgabe`);
+    assert.doesNotMatch(b.text, /^(Welche[rs]? |Was reimt)/, `${p.id}: „${b.text}“ ist eine Auswahlfrage`);
+    if (/richtig geschrieben|Wie schreibt man/.test(c.q)) assert.ok(b.hoer, `${p.id}: „${c.q}“ braucht das vorgesprochene Wort`);
+    if (k.kind === 'diktat') assert.ok(k.vorher);
+  }
+});

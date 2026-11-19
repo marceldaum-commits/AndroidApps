@@ -78,13 +78,36 @@
     let t = null;
     if (k.kind === 'zu') t = card.a;
     else if (k.kind === 'von' && EINZELWORT.test(card.a.trim())) t = card.a;
-    else if ((lang === 'de' && k.kind === 'frage') || k.kind === 'diktat') t = card.a;
+    else if (k.kind === 'diktat') t = card.a;
+    else if (lang === 'de' && k.kind === 'frage') {
+      const b = P.bauFrage(card, lang); if (!b) return null; t = card.a;
+    }
     if (!t) return null;
     t = t.trim();
     if (EINZELWORT.test(t)) return { vor: '', wort: t };
     const m = ARTIKEL.exec(t);
     if (m && EINZELWORT.test(m[2])) return { vor: m[1] + ' ', wort: m[2] };
     return null;
+  };
+
+  // Deutsche Wissensfragen im Buchstaben-Bau: nur wenn das Wort eindeutig aus der Frage folgt.
+  const NUR_AUSWAHL = /^(Welche[rs]? |Steht |Zeitform|„|Was reimt sich)|Fall von|Satzglied|Prädikat|adverbial/;
+  const RECHTSCHREIBUNG = /^(Welches Wort ist richtig geschrieben\?|Wie schreibt man es richtig\?)/;
+  /**
+   * Wie lautet die Aufgabe beim Buchstaben-Bau? { text, hoer } – hoer = Wort, das vorher vorgesprochen wird.
+   * null = Karte passt nicht zum Bauen (Auswahlfrage, Reim mit mehreren Lösungen) → nur Ballons.
+   */
+  P.bauFrage = (card, lang) => {
+    const k = P.classify(card, lang); const q = card.q || '';
+    if (k.kind !== 'frage' || lang !== 'de') return { text: q, hoer: k.vorher || null };
+    if (RECHTSCHREIBUNG.test(q)) {
+      if (!k.sprich) return null;
+      const satz = (q.match(/„(.+?)“/) || [])[1];
+      return { text: satz ? `Hör zu und bau das Wort für die Lücke: „${satz}“` : 'Hör zu und bau das Wort richtig!', hoer: k.sprich };
+    }
+    if (NUR_AUSWAHL.test(q)) return null;
+    if (/^Wie schreibt man/.test(q) && k.sprich) return { text: q, hoer: k.sprich };
+    return { text: q, hoer: null };
   };
 
   /** Falsche Antworten: aus der Karte, sonst aus anderen Karten desselben Pakets (gleiche Art). */

@@ -26,9 +26,11 @@ WEB = os.path.normpath(os.path.join(HIER, '..', 'webapp'))
 # Mia stärker als 1.08 höher gestimmt wurde undeutlich.
 STIMMEN = {
     'ruby': {'modell': 'en_GB-cori-medium', 'tempo': 1.05, 'tonhoehe': 1.0},
-    'mia':  {'modell': 'en_GB-cori-medium', 'tempo': 1.0, 'tonhoehe': 1.08},
-    'sam':  {'modell': 'en_US-john-medium', 'tempo': 1.0, 'tonhoehe': 1.12},
-    'ted':  {'modell': 'en_US-john-medium', 'tempo': 1.15, 'tonhoehe': 0.92},
+    # Marcel 19.11.2026: alle englischen Figuren mit Rubys Stimme – kein Wechsel der Stimmen. Die tiefer gestimmte
+    # Ted-Stimme (john) hat Wörter verschluckt („One, two, three“ → „two“ kaum hörbar).
+    'mia':  {'modell': 'en_GB-cori-medium', 'tempo': 1.05, 'tonhoehe': 1.0},
+    'sam':  {'modell': 'en_GB-cori-medium', 'tempo': 1.05, 'tonhoehe': 1.0},
+    'ted':  {'modell': 'en_GB-cori-medium', 'tempo': 1.05, 'tonhoehe': 1.0},
     # Sprachpakete (Lizenzen geprüft 19.11.2026, siehe LIZENZEN.md); Latein: keine freie Stimme → wird nicht vorgelesen
     'de':   {'modell': 'de_DE-thorsten-medium', 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'de'},
     'fr':   {'modell': 'fr_FR-siwis-medium', 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'fr'},
@@ -66,9 +68,18 @@ def saetze():
 EMOJI = re.compile('[\U0001F000-\U0001FAFF\u2600-\u27BF\uFE0F]')
 
 
+ZAHLWORT = r"(?:one|two|three|four|five|six|seven|eight|nine|ten|un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|eins|zwei|drei|vier|fünf|sechs|sieben|acht|neun|zehn)"
+
+
 def sprechtext(text):
-    """Was die Stimme liest: ohne Emojis (sonst liest sie „grinning face“)."""
-    return re.sub(r'\s+', ' ', EMOJI.sub('', text)).strip()
+    """Was die Stimme liest: ohne Emojis (sonst liest sie „grinning face“). In Zählreihen wird aus dem Komma ein Punkt –
+    sonst rattert die Stimme die Zahlen herunter und verschluckt eine („One, two, three“)."""
+    t = re.sub(r'\s+', ' ', EMOJI.sub('', text)).strip()
+    muster = re.compile(r'(?i)\b(' + ZAHLWORT + r'),\s+(' + ZAHLWORT + r')\b')
+    while True:
+        neu = muster.sub(lambda m: m.group(1) + '. ' + m.group(2)[:1].upper() + m.group(2)[1:], t, count=1)
+        if neu == t: return t
+        t = neu
 
 
 def sprich(voice, text, tempo, ton, ziel):
@@ -97,6 +108,23 @@ def woerter(t):
     return [ZIFFERN.get(w, w) for w in re.sub(r"[^a-z0-9ß' ]", ' ', t).split()]
 
 
+def treffer_woertlich(soll, ist):
+    """Anteil der Zielwörter, die in der wörtlichen Erkennung der Reihe nach vorkommen (Leerzeichen egal, kleine Abweichungen erlaubt)."""
+    import difflib
+    w = woerter(sprechtext(soll)); kette = re.sub(r"[^a-z']", '', ist.replace("'", "'")); pos = 0; hit = 0
+    zahl = {v: k for k, v in ZIFFERN.items()}
+    for x in w:
+        x = re.sub(r"[^a-z']", '', ZIFFERN.get(x, x))
+        if not x: hit += 1; continue
+        i = kette.find(x, pos)
+        if i < 0:   # leicht anders geschrieben/gehört? (z. B. „colour“ → „color“)
+            best = max(((difflib.SequenceMatcher(None, x, kette[j:j + L]).ratio(), j, L) for L in (len(x) - 1, len(x), len(x) + 1)
+                        for j in range(pos, max(pos + 1, len(kette) - L + 1))), default=(0, pos, len(x))) if kette[pos:] else (0, pos, len(x))
+            if best[0] >= 0.8: i = best[1]; pos = i + best[2]; hit += 1; continue
+        if i >= 0: hit += 1; pos = i + len(x)
+    return hit / len(w) if w else 1.0
+
+
 def treffer(soll, ist):
     iw = woerter(ist); ist_s = set(iw); w = woerter(sprechtext(soll))
     if not w: return 1.0
@@ -109,6 +137,20 @@ class Pruefer:
         from faster_whisper import WhisperModel
         import numpy as np
         self.np = np; self.W = WhisperModel; self.m = {}
+
+    def woertlich(self, mp3):
+        """Zweite Prüfung für Englisch mit wav2vec2 (CTC ohne Sprachmodell): ergänzt keine fehlenden Wörter wie Whisper."""
+        if 'w2v' not in self.m:
+            import torch, transformers
+            from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
+            transformers.logging.set_verbosity_error()
+            self.m['w2v'] = (torch, Wav2Vec2Processor.from_pretrained('facebook/wav2vec2-base-960h'), Wav2Vec2ForCTC.from_pretrained('facebook/wav2vec2-base-960h').eval())
+        torch, P, M = self.m['w2v']
+        raw = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', mp3, '-f', 's16le', '-ac', '1', '-ar', '16000', '-'])
+        a = self.np.frombuffer(raw, self.np.int16).astype(self.np.float32) / 32768.0
+        with torch.no_grad():
+            ids = M(P(a, sampling_rate=16000, return_tensors='pt').input_values).logits.argmax(-1)
+        return P.batch_decode(ids)[0].lower()
 
     def hoere(self, mp3, sprache='en'):
         name = 'base.en' if sprache == 'en' else 'base'
@@ -154,7 +196,7 @@ if __name__ == '__main__':
         if st['modell'] not in stimmen:
             stimmen[st['modell']] = PiperVoice.load(os.path.join(args.stimmen, st['modell'] + '.onnx'))
         vorher = alt.get(key)
-        if vorher and vorher.get('stimme') == st['modell'] and vorher.get('treffer', 1) >= 0.99 and all(os.path.exists(os.path.join(ordner, vorher[a])) for a in ('n', 's')):
+        if vorher and vorher.get('pruefung') == 2 and vorher.get('stimme') == st['modell'] and vorher.get('treffer', 1) >= 0.99 and all(os.path.exists(os.path.join(ordner, vorher[a])) for a in ('n', 's')):
             index['saetze'][key] = vorher; gebraucht.update([vorher['n'], vorher['s']]); continue
         basis = st['tempo'] * (EINZELWORT if ' ' not in s['text'].strip() else 1.0)
         bestes = None
@@ -165,6 +207,9 @@ if __name__ == '__main__':
                 sprich(stimmen[st['modell']], form, tempo, st['tonhoehe'], p); neu += 1
             gehört = pruefer.hoere(p, st.get('sprache', 'en')) if pruefer else ''
             q = treffer(s['text'], gehört) if pruefer else 1.0
+            if pruefer and st.get('sprache', 'en') == 'en' and q >= 0.99:
+                wl = pruefer.woertlich(p); q2 = treffer_woertlich(s['text'], wl)
+                if q2 < 0.99: gehört = f'{gehört} [wörtlich: {wl}]'; q = min(q, q2)
             if bestes is None or q > bestes[0]:
                 bestes = (q, form, tempo, f, gehört)
             if q >= 0.99:
@@ -173,7 +218,7 @@ if __name__ == '__main__':
         fs = datei(st['modell'], round(tempo * LANGSAM, 3), st['tonhoehe'], form)
         if not os.path.exists(os.path.join(ordner, fs)):
             sprich(stimmen[st['modell']], form, round(tempo * LANGSAM, 3), st['tonhoehe'], os.path.join(ordner, fs)); neu += 1
-        index['saetze'][key] = {'n': f, 's': fs, 'stimme': st['modell'], 'gehoert': gehört, 'treffer': round(q, 2)}
+        index['saetze'][key] = {'n': f, 's': fs, 'stimme': st['modell'], 'gehoert': gehört, 'treffer': round(q, 2), 'pruefung': 2}
         gebraucht.update([f, fs])
         if (i + 1) % 25 == 0:
             print(f'{i + 1}/{len(liste)} …', file=sys.stderr)

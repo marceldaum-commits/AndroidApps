@@ -1162,7 +1162,8 @@
       }
 
       if (step.mode === 'bauen') {
-        const t = PK.bauteile(c, pack.lang);
+        const t = PK.bauteile(c, pack.lang); const bf = PK.bauFrage(c, pack.lang) || { text: c.q, hoer: null };
+        const hoer = k.kind === 'diktat' ? k.vorher : bf.hoer;
         const el = packFrame(pack, frac, '🔤 Buchstaben-Bau', 'Bau das Wort Buchstabe für Buchstabe!'); tk = token;
         el.querySelector('[data-quit]').onclick = () => resolve('quit');
         const body = el.querySelector('[data-body]');
@@ -1170,12 +1171,12 @@
         const extraPool = 'aeinrstlodmuhgk';
         const extra = []; while (extra.length < 2) { const x = extraPool[Math.floor(Math.random() * extraPool.length)]; if (!letters.includes(x)) extra.push(x); }
         const tiles = shuffle(letters.map((l, i) => ({ l, i })).concat(extra.map((l) => ({ l, i: -1 }))));
-        body.innerHTML = `<div class="qcard"><div class="qimg">${esc(c.img || pack.emoji)}</div><div class="q">${esc(c.q)}</div>
-          ${k.vorher && A.canHear(k.vorher, L.who || 'de') ? '<button class="speaker" data-hear aria-label="Anhören">🔊</button>' : (k.kind === 'diktat' ? `<div class="novoice">${esc(c.a)}<small>Keine Stimme auf diesem Gerät – lies das Wort und bau es nach.</small></div>` : '')}</div>
+        body.innerHTML = `<div class="qcard"><div class="qimg">${esc(c.img || pack.emoji)}</div><div class="q">${esc(k.kind === 'diktat' ? c.q : bf.text)}</div>
+          ${hoer && A.canHear(hoer, L.who || 'de') ? '<button class="speaker" data-hear aria-label="Anhören">🔊</button>' : (hoer ? `<div class="novoice">${esc(c.a)}<small>Keine Stimme auf diesem Gerät – lies das Wort und bau es nach.</small></div>` : '')}</div>
           <div class="slots">${t.vor ? `<span class="pre">${esc(t.vor.trim())}</span>` : ''}${letters.map((_, i) => `<span class="slot" data-s="${i}"></span>`).join('')}</div>
           <div class="tiles">${tiles.map((x, i) => `<button class="tile" data-t="${i}"${DIAG ? ` data-pos="${x.i}"` : ''}>${esc(x.l)}</button>`).join('')}</div>`;
         let pos = 0; let mistakes = 0;
-        const hb = body.querySelector('[data-hear]'); if (hb) { hb.onclick = () => { A.sfx('tap'); say(k.vorher); }; say(k.vorher); }
+        const hb = body.querySelector('[data-hear]'); if (hb) { hb.onclick = () => { A.sfx('tap'); say(hoer); }; say(hoer); }
         body.querySelectorAll('.tile').forEach((b) => b.onclick = async () => {
           if (b.disabled || pos >= letters.length) return;
           const x = tiles[+b.dataset.t];
@@ -1448,18 +1449,20 @@
   function probeStep(item, i, n) {
     return new Promise((resolve) => {
       const { p, c } = item; const k = PK.classify(c, p.lang);
-      const tippen = ['zu', 'formen', 'luecke', 'diktat'].includes(k.kind) || (p.lang === 'de' && k.kind === 'frage' && /^[\p{L} -]{1,30}$/u.test(c.a));
+      const bf = p.lang === 'de' && k.kind === 'frage' ? PK.bauFrage(c, p.lang) : null;
+      const tippen = ['zu', 'formen', 'luecke', 'diktat'].includes(k.kind) || (!!bf && /^[\p{L} -]{1,30}$/u.test(c.a));
+      const hoerProbe = k.kind === 'diktat' || k.kind === 'von' ? k.vorher : (tippen && bf ? bf.hoer : null);
       const el = screen(`<div class="stage">
         <div class="ep-top"><button class="iconbtn" data-quit aria-label="Abbrechen">✕</button><div class="progress"><i style="width:${Math.round(100 * i / n)}%"></i></div><span class="pill">${i + 1}/${n}</span></div>
         <div class="game-title">📝 Generalprobe<small>Wie in der Klassenarbeit: erst am Ende gibt es die Auflösung.</small></div>
-        <div class="qcard"><div class="qimg">${esc(c.img || p.emoji)}</div><div class="q">${esc(k.kind === 'diktat' ? 'Schreib das Wort, das du hörst.' : c.q)}</div>
-          ${k.vorher && (k.kind === 'diktat' || k.kind === 'von') ? '<button class="slowbtn" data-hear aria-label="Anhören">🔊</button>' : ''}</div>
+        <div class="qcard"><div class="qimg">${esc(c.img || p.emoji)}</div><div class="q">${esc(k.kind === 'diktat' ? 'Schreib das Wort, das du hörst.' : (tippen && bf ? bf.text : c.q))}</div>
+          ${hoerProbe ? '<button class="slowbtn" data-hear aria-label="Anhören">🔊</button>' : ''}</div>
         ${tippen ? `<input class="input" data-in autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Deine Antwort" style="font-size:22px;text-align:center">
           <button class="btn blue" data-ok>Weiter ➜</button>`
           : `<div class="opts">${shuffle([c.a].concat(PK.wrongs(c, p, 3))).map((o) => `<button class="opt" data-o="${esc(o)}">${esc(o)}</button>`).join('')}</div>`}
         </div>`);
       const L = PK.LANGS[p.lang];
-      const hb = el.querySelector('[data-hear]'); if (hb) { hb.onclick = () => { A.sfx('tap'); if (L.who) speak(k.vorher, L.who); }; if (L.who) speak(k.vorher, L.who); }
+      const hb = el.querySelector('[data-hear]'); if (hb) { hb.onclick = () => { A.sfx('tap'); if (L.who) speak(hoerProbe, L.who); }; if (L.who) speak(hoerProbe, L.who); }
       el.querySelector('[data-quit]').onclick = () => { if (confirm('Generalprobe abbrechen?')) resolve('quit'); };
       if (tippen) {
         const inp = el.querySelector('[data-in]'); setTimeout(() => inp.focus(), 60);

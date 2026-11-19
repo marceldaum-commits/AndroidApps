@@ -108,8 +108,8 @@
           scene: [
             { who: 'ted', img: '👴🎣', en: "Hello! I'm Grandpa Ted. I'm a fisherman.", de: 'Hallo! Ich bin Opa Ted. Ich bin Fischer.' },
             { who: 'ted', img: '🐟🐟🐟', en: "Look! One, two, three fish.", de: 'Schau! Ein, zwei, drei Fische.' },
-            { who: 'ruby', img: '🦜❓', en: 'How many boats can you see?', de: 'Wie viele Boote siehst du?' },
-            { who: 'mia', img: '⛵⛵⛵⛵⛵', en: 'I can see five boats.', de: 'Ich sehe fünf Boote.' },
+            { who: 'ruby', img: '⛵⛵⛵⛵⛵', en: 'How many boats can you see?', de: 'Wie viele Boote siehst du?' },
+            { who: 'mia', img: '👧🖐️', en: 'I can see five boats.', de: 'Ich sehe fünf Boote.' },
             { who: 'ted', img: '👴😄', en: 'Well done!', de: 'Gut gemacht!' },
           ],
           games: [
@@ -170,8 +170,8 @@
             { who: 'mia', img: '👧🖌️', en: 'I paint the boats.', de: 'Ich male die Boote an.' },
             { who: 'mia', img: '🟥⛵', en: 'This boat is red.', de: 'Dieses Boot ist rot.' },
             { who: 'sam', img: '🟦⛵', en: 'My boat is blue.', de: 'Mein Boot ist blau.' },
-            { who: 'ruby', img: '🦜❓', en: 'What colour is Ruby?', de: 'Welche Farbe hat Ruby?' },
-            { who: 'mia', img: '🦜🟥', en: 'Ruby is red!', de: 'Ruby ist rot!' },
+            { who: 'ruby', img: '🌊❓', en: 'What colour is the sea?', de: 'Welche Farbe hat das Meer?' },
+            { who: 'mia', img: '🌊🟦', en: 'The sea is blue!', de: 'Das Meer ist blau!' },
           ],
           games: [
             {
