@@ -34,3 +34,13 @@ Insel-Positionen, Einstellungen, Name → fragen (Elternbereich), sonst Gerätes
 - [ ] Laden/Speichern hinter `Speicher`-Schnittstelle (lokal + später familie), `stand`-Zeit pflegen
 - [ ] Zusammenführen-Funktion (rein, mit Unit-Tests)
 - [ ] Profil-Platzhalter (kindId lokal erzeugen, sobald gekoppelt)
+
+## familie.js – API (Mathe-Trainer 3b0d53c, gespiegelt in FAMILIE-API.md, 19.11.2026)
+- Netz-Funktionen werfen nie: `{ok:true,…}` | `{ok:false, grund}`; grund: netz | keine | konflikt | schreibrecht | zu-gross | zu-oft | schluessel | ungueltig | fehler.
+- `neueFamilie()`, `familieLink(fam, app, basis?)`, `familieLesen(textOderHash)`, `familienNummer(famId)`, `notfallBlatt(fam, app, basis?)`, `neueKindId()`, `geraetKindId(id)`.
+- Index (= Profilwahl): `neuerIndex()`, `kindHinzu(index, {name, klasse, farbe})`, `appMerken(index, app)`.
+- Server: `const fa = familie(fam, {basis, f})` → `anlegen`, `indexLaden/indexSichern(index, rev)`, `standLaden(app, kindId)`,
+  `standSichern(app, kindId, daten, rev)` (Konflikt → `{ok:false, grund:'konflikt', daten, stand, rev}`: zusammenführen, erneut sichern),
+  `liste`, `rechte`, `einloesen(code)` (nur hinter dem Tor), `protokoll`, `loeschen`, `nummer`, `link(app)`.
+- Sperrliste: `sperrlisteLaden({basis, f, speicher, schluessel:'quasselquest.sperrliste'})`, `codeGesperrt(code, …)` vor jeder Offline-Pro-Prüfung.
+- Datei-Weg folgt vom Mathe-Trainer; Server vom Leitstand steht noch aus.
