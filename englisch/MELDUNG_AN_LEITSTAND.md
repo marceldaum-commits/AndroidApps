@@ -2,6 +2,13 @@
 
 Neueste oben.
 
+## 19.11.2026 – Nachtrag „Geld verdienen“
+
+- Thema ist immer `englisch` (bestätigt); die Frage nach feineren Kennungen ist damit erledigt.
+- Probestunde direkt über `https://www.mathenachhilfe-online.com/probestunde/?src=<name>-elternbericht&thema=englisch&klasse=<n>` (die alte Adresse `/probestunde-anfrage/` leitet mit 301 dorthin weiter).
+- Gesperrte Pro-Deko wird im Kinderbereich gar nicht gezeigt.
+- Weiter offen beim Leitstand: App-Nummer, Präfix der Freischalt-Codes, Shop-Produkt.
+
 ## 19.11.2026 – Rückmeldungen der Räume eingearbeitet
 
 - **„Geld verdienen“** empfiehlt ebenfalls **Quasselquest** (Marke vor Start im DPMA/EUIPO prüfen, Klassen 9 und 41). Pro 7,99 € einmalig, ab Januar im Familienpass; die erste Geschichte der Reihe ist gratis. Im Elternbereich heißt Pro „Hörtraining für Klassenarbeiten Kl. 5/6“. Steht so im Konzept.
