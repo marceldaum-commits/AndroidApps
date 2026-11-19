@@ -276,3 +276,9 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
 - Eigene Karten/Klassen-Codes/Namen übers Tonstudio: von Recht FREIGEGEBEN (V14-Nachtrag). Voreinstellung an, Pflicht: Eltern-Schalter hinter dem Tor zum Abschalten (Wortlaut + DSE 10c von der AppZentrale abwarten), aus = Gerätestimme. Anfrage als „privat“ per POST, höchstens 300 Zeichen je Stück (längere Texte an Satzgrenzen teilen), nichts zwischenspeichern.
 - Plus-Audio nur mit gültigem Code: FREIGEGEBEN, Schutz baut der Leitstand.
 - Kennzeichnung „🤖 KI-generierte Stimme“ (statt „Nova – …“), Lizenzliste nach V13 (Wortlaut von der AppZentrale). Nova entfällt.
+
+## Merkzettel für Di 24.11./Mi 25.11. – Weg zur Probestunde (Recht V15)
+Wortlaut verbindlich aus docs/plattform/appzentrale/PROBESTUNDE.md (Branch appzentrale, d672374, nicht in diesem Repo – Datei vor dem Einbau holen bzw. von der AppZentrale erbitten).
+- Elternbereich/Elternbericht (hinter dem Tor): Hinweis bei objektiven Schwierigkeiten, Berechnung NUR auf dem Gerät, höchstens 1× in 4 Wochen je Thema, wegklickbar, Schalter „Hinweise auf Nachhilfe ausblenden“.
+- Kinderansicht nur: „Du kommst hier gerade nicht weiter? Das ist okay. Probier eine leichtere Stufe oder schau dir die Erklärung noch einmal an. Und du kannst jederzeit deine Eltern oder deine Lehrkraft fragen.“ Knöpfe [Leichter üben] [Erklärung ansehen], kein Außenlink.
+- Kein Kl.-9–10-Hinweis; Probestunde nur hinter dem Tor. Zählung nur anonym. Meldung mit „Rechtsbezug: ja (V15)“.
