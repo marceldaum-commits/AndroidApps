@@ -37,3 +37,4 @@ Lücken: Sprechpraxis mit Rückmeldung in Schulwerkzeugen; spielerisches Latein 
 3. Regel-Rückmeldung für jede Fehlerart + Test für Abdeckung – Grundform („Warum?“) vorhanden, Abdeckungstest fehlt.
 4. Leichter Klassenmodus ohne Konten (Klassen-Code) vor Sommer 2027.
 Elternbereich: Einmalkauf, Gratis-Sicherung und Kontofreiheit ausdrücklich nennen. Schullizenz einheitlich 29 €/Klasse, 149–249 €/Schule.
+- **Schloss-Text bei Pro (AppZentrale 19.11., UWG Anh. Nr. 28):** kein Preis, kein Kaufen-Knopf, keine Aufforderung ans Kind (auch nicht „Frag deine Eltern“). Nur sachlich: „Das gehört zu Quasselquest Pro. Deine Eltern können im Elternbereich nachsehen.“ → Weg nur zum Eltern-Tor.
