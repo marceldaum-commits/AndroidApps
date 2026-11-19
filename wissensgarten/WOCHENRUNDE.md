@@ -255,8 +255,7 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
 
 ## Merkzettel für Di 24.11. (2.4.0, nach der Pause)
 - **Liegt schon auf dem Branch (2.3.4, nicht gebaut):**
-  - „← Alle Apps“ hinter dem Tor (V10a).
-  - Fußzeile im Startbild als Text.
+  - ~~„← Alle Apps“ hinter dem Tor~~ / ~~Fußzeile als Text~~ → ZURÜCKNEHMEN (V10 geändert, AppZentrale 19.11., ELTERN-TOR.md @ 0d1c53b): „Alle Apps“ OHNE Tor, Fußzeile „Ein Angebot von Nachhilfe – online“ wieder als neutraler Link. Neutral = keine Kaufsprache, keine Preise/Countdowns, kein Link in Warenkorb/Kasse. Kauf-/Shop-Knöpfe, Elternbereich, Einstellungen bleiben hinter dem Tor.
   - Test-Zählung auf trainer-test.
   - Radio-Hinweis „Spracherkennung ist hier aus.“ (V11).
 - **Familien-Speicher (v1.7):**
