@@ -828,7 +828,7 @@
       ['🎤', 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme bleibt auf dem Gerät und wird nach dem Anhören gelöscht. Nur wenn deine Eltern es erlauben, darf die Spracherkennung deines Browsers übers Internet mithelfen.'],
       ['🚫', 'Hier gibt es <b>keine Werbung</b>. Wir zählen nur anonym, wie oft etwas in der App benutzt wird – ohne deinen Namen und ohne deine Antworten. Deine Eltern können das Zählen ausschalten.'],
       ['📒', 'Deine eigenen Wortlisten bleiben auch nur hier auf dem Gerät.'],
-      ['👪', 'Manche Dinge, zum Beispiel das Koppeln mit dem Handy deiner Eltern, können nur Erwachsene einschalten.'],
+      ['👪', 'Manche Dinge, zum Beispiel die Spracherkennung übers Internet, können nur Erwachsene einschalten.'],
     ];
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">🔒 Deine Daten</div></div>

@@ -1,5 +1,8 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.4.5 – Kleiner Text für Kinder angepasst (19.11.2026)
+- „Deine Daten“: Das Beispiel, was nur Erwachsene einschalten können, ist jetzt die Spracherkennung übers Internet.
+
 ## 0.4.4 – Datenschutz noch genauer (19.11.2026)
 - „Deine Daten“: Eltern können das anonyme Zählen ausschalten – das steht jetzt auch im Kindertext.
 - Aufnahmen beim Nachsprechen werden jetzt auch dann sofort verworfen, wenn man das Spiel mittendrin verlässt; eine laufende Aufnahme stoppt beim Verlassen sofort.
