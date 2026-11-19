@@ -1,5 +1,8 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.4.3 – Lizenzhinweise ergänzt (19.11.2026)
+- Bei den Stimmen mit Namensnennungs-Lizenz (Englisch „cori“, Französisch „siwis“) steht jetzt direkt dabei, wie wir die Aufnahmen bearbeitet haben, mit Link zur Lizenz.
+
 ## 0.4.2 – Datenschutz für Kinder genauer erklärt (19.11.2026)
 - „Deine Daten – kurz erklärt“ ist jetzt genauer: Antworten, Name und Lernstand bleiben auf dem Gerät; gezählt wird nur anonym, wie oft die App genutzt wird; die Online-Spracherkennung hilft nur, wenn die Eltern es erlauben.
 
