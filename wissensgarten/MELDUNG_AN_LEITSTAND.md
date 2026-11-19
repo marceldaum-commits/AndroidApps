@@ -23,7 +23,8 @@
   - Ziele: Mathe-Trainer `#/u/<id>` (Plus Analysis `#/g/analysis`), Rechenblitz `?thema=&stufe=&modus=training`, KurvenFlug `#kapitel=` (geraden, terme, weg-zeit), Experimentopia `#thema=` (12 Pakete), Raumlicht `?ziel=galton` (Wahrscheinlichkeit).
   - Alle Links tragen `src=wissensgarten-theorie` (unser Vorschlag, bitte bestätigen oder Wortlaut nennen).
   - Auf der Test-Stufe gehen die Links auf `<app>-test.` bzw. `trainer-test.`.
-  - Offen: die Rechenblitz-Kennung für Quadratzahlen (bis zur Antwort geht der Link zur Startseite) und die Bestätigung von Raumlicht für `galton`. Beide Fragen sind über die AppZentrale gestellt.
+  - Kopfrechen-Tricks → Rechenblitz `?thema=pow&stufe=3&modus=training` (Kennung vom Rechenblitz bestätigt) und Mathe-Trainer `#/u/k5-rechnen`.
+  - Offen: die Bestätigung von Raumlicht für `galton`, angefragt über die AppZentrale.
 - **Deeplink `#paket=<ID>`** (Web): `https://wissensgarten.mathenachhilfe-online.com/#paket=<Paket-ID>`.
   - Ist das Paket schon im Garten, öffnet sich das Beet. Sonst wird es gepflanzt und geöffnet, mit einem Hinweis von Brummi.
   - Ein Plus-Paket ohne Plus führt zur Paketübersicht.

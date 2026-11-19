@@ -18,6 +18,7 @@ object Querverweise {
         "s1-mathe-brueche-prozent" to "u/k6-bruch",
         "s1-mathe-geometrie-formeln" to "u/k8-flaechen",
         "s1-mathe-gleichungen" to "u/k7-gleichungen",
+        "s1-mathe-kopfrechnen" to "u/k5-rechnen",
         "s1-mathe-negative-zahlen" to "u/k5-ganz",
         "s1-mathe-pythagoras-trigo" to "u/k9-pythagoras",
         "s1-mathe-wahrscheinlichkeit" to "u/k6-zufall",
@@ -31,7 +32,7 @@ object Querverweise {
         "s1-physik-einheiten-formeln" to "weg-zeit",
     )
 
-    /** Rechenblitz: Tempo trainieren (`?thema=&stufe=&modus=`) – leer heißt Startseite */
+    /** Rechenblitz: Tempo trainieren (`?thema=&stufe=&modus=`), Kennungen vom Rechenblitz bestätigt (19.11.: pow = Quadratzahlen, Stufe 3 bis 20²) */
     private val rechenblitz = mapOf(
         "gs-einmaleins" to "thema=mul&stufe=2&modus=training",
         "gs-plus-minus-20" to "thema=add&stufe=2&modus=training",
@@ -40,7 +41,7 @@ object Querverweise {
         "gs-geld" to "thema=geld&modus=training",
         "gs-uhrzeit" to "thema=zeit&modus=training",
         "gs-mathe-groessen" to "thema=unit&modus=training",
-        "s1-mathe-kopfrechnen" to "",
+        "s1-mathe-kopfrechnen" to "thema=pow&stufe=3&modus=training",
     )
 
     /** Experimentopia: Ausprobieren im Versuch (`#thema=<name>`) */

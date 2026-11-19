@@ -19,8 +19,10 @@ class QuerverweiseTest {
         assertEquals("https://raumlicht-test.mathenachhilfe-online.com/?ziel=galton&src=wissensgarten-theorie", Querverweise.fuer("s1-mathe-wahrscheinlichkeit", true).last().url)
     }
 
-    @Test fun kopfrechnenOhneThemaGehtZurStartseite() {
-        assertEquals("https://rechenblitz.mathenachhilfe-online.com/?src=wissensgarten-theorie", Querverweise.fuer("s1-mathe-kopfrechnen").single().url)
+    @Test fun kopfrechnenQuadratzahlenImRechenblitz() {
+        val l = Querverweise.fuer("s1-mathe-kopfrechnen")
+        assertEquals(listOf("Mathe-Trainer", "Rechenblitz"), l.map { it.app })
+        assertEquals("https://rechenblitz.mathenachhilfe-online.com/?thema=pow&stufe=3&modus=training&src=wissensgarten-theorie", l[1].url)
     }
 
     @Test fun alleLinksSindHttpsUndTragenSrc() {
