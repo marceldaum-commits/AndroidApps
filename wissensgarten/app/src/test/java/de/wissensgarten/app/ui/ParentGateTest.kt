@@ -9,16 +9,16 @@ import java.io.File
 import kotlin.random.Random
 
 class ParentGateTest {
-    @Test fun tasksAreForAdultsAndHaveExactlyOneRightAnswer() {
+    @Test fun tasksAreForAdultsAndWrittenInWords() {
         val r = Random(1)
         repeat(200) {
             val t = ParentGate.task(r)
             assertTrue("zu leicht: ${t.a}×${t.b}", t.answer >= 78)
-            val o = ParentGate.options(t, r)
-            assertEquals(4, o.toSet().size)
-            assertEquals(1, o.count { it == t.answer })
-            assertTrue(o.all { it > 0 })
+            assertTrue(t.answer.toString().length <= ParentGate.MAX_DIGITS)
+            assertFalse("Ziffern in „${t.words}“", t.words.any { it.isDigit() })
+            assertTrue(t.words.contains(" mal "))
         }
+        assertEquals("siebzehn mal acht", ParentGate.Task(17, 8).words)
     }
 
     @Test fun gateStaysOpenTenMinutes() {

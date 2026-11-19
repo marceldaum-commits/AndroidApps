@@ -27,12 +27,18 @@ object ParentGate {
     /** Wird aufgerufen, wenn Eltern das Tor gerade geöffnet haben (für die anonyme Zählung „elternbereich“) */
     var onPassed: (() -> Unit)? = null
 
-    /** Aufgabe: zweistellig × einstellig – für Erwachsene leicht, für Grundschulkinder schwer. */
-    data class Task(val a: Int, val b: Int) { val answer get() = a * b }
+    /** Aufgabe: zweistellig × einstellig – für Erwachsene leicht, für Grundschulkinder schwer (gemeinsamer Standard ELTERN-TOR.md). */
+    data class Task(val a: Int, val b: Int) {
+        val answer get() = a * b
+        /** In Worten, damit Leseanfänger nicht einfach rechnen: „siebzehn mal acht“ */
+        val words get() = "${wort(a)} mal ${wort(b)}"
+    }
     fun task(r: Random = Random) = Task(r.nextInt(13, 20), r.nextInt(6, 10))
-    /** Vier Antworten, eine richtig – keine Tastatur nötig, aber Raten hilft kaum (3 Fehlversuche → neue Aufgabe). */
-    fun options(t: Task, r: Random = Random) = (listOf(t.answer) + generateSequence { t.answer + r.nextInt(-12, 13) }
-        .filter { it != t.answer && it > 0 }.distinct().take(3)).shuffled(r)
+    private val WORTE = mapOf(6 to "sechs", 7 to "sieben", 8 to "acht", 9 to "neun", 13 to "dreizehn", 14 to "vierzehn", 15 to "fünfzehn",
+        16 to "sechzehn", 17 to "siebzehn", 18 to "achtzehn", 19 to "neunzehn")
+    fun wort(n: Int) = WORTE[n] ?: n.toString()
+    /** Höchstens 3 Ziffern (größtes Ergebnis 19 × 9 = 171) */
+    const val MAX_DIGITS = 3
 }
 
 /** Ruft [onPass] auf – sofort, wenn das Tor offen ist, sonst nach gelöster Aufgabe. */
@@ -53,32 +59,59 @@ fun ParentGateHost(content: @Composable () -> Unit) {
     }
 }
 
+/**
+ * Eltern-Aufgabe in Worten mit Vorlese-Knopf, Eingabe über eine eigene Ziffern-Tastatur (keine Auswahlknöpfe, kein Raten).
+ * Nach EINEM Fehler kommt sofort eine neue Aufgabe. Kein Zeitdruck, Abbrechen jederzeit.
+ */
 @Composable
 fun ParentGateDialog(reason: String, onPass: () -> Unit, onCancel: () -> Unit, random: Random = remember { Random }) {
     var task by remember { mutableStateOf(ParentGate.task(random)) }
-    var options by remember(task) { mutableStateOf(ParentGate.options(task, random)) }
-    var wrong by remember(task) { mutableIntStateOf(0) }
+    var input by remember(task) { mutableStateOf("") }
+    var wrong by remember { mutableStateOf(false) }
+    val voice = de.wissensgarten.app.ui.fx.LocalVoice.current
+    fun check() {
+        if (input.isEmpty()) return
+        if (input.toIntOrNull() == task.answer) { voice?.stop(); onPass() } else { wrong = true; task = ParentGate.task(random) }
+    }
     AlertDialog(
-        onDismissRequest = onCancel,
+        onDismissRequest = { voice?.stop(); onCancel() },
         title = { Text("👨‍👩‍👧 Für Eltern") },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(reason, style = MaterialTheme.typography.bodyMedium)
-                Text("Bitte löse die Aufgabe:", style = MaterialTheme.typography.bodySmall)
-                Text("${task.a} × ${task.b} = ?", fontSize = 28.sp, fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.CenterHorizontally).semantics { contentDescription = "${task.a} mal ${task.b}" })
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
-                    options.forEach { o ->
-                        OutlinedButton(onClick = {
-                            if (o == task.answer) onPass()
-                            else if (++wrong >= 3) task = ParentGate.task(random)
-                        }, modifier = Modifier.weight(1f), contentPadding = PaddingValues(4.dp)) { Text("$o") }
+                Text("Bitte rechnen und das Ergebnis eintippen:", style = MaterialTheme.typography.bodySmall)
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                    Text(task.words, fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f)
+                        .semantics { contentDescription = "Aufgabe: ${task.words}" })
+                    if (voice != null) IconButton(onClick = { voice.speak(task.words, de.wissensgarten.app.ui.fx.Locale.GERMAN) },
+                        modifier = Modifier.semantics { contentDescription = "Aufgabe vorlesen" }) { Text("🔊", fontSize = 22.sp) }
+                }
+                Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surface,
+                    border = androidx.compose.foundation.BorderStroke(2.dp, MaterialTheme.colorScheme.primary), modifier = Modifier.fillMaxWidth()) {
+                    Text(input.ifEmpty { " " }, fontSize = 28.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(10.dp)
+                        .semantics { contentDescription = if (input.isEmpty()) "Noch keine Eingabe" else "Eingabe $input" })
+                }
+                if (wrong) Text("Das war nicht richtig – hier ist eine neue Aufgabe.", color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall)
+                // Eigene Ziffern-Tastatur: 1–9, ⌫, 0, OK
+                listOf(listOf("1", "2", "3"), listOf("4", "5", "6"), listOf("7", "8", "9"), listOf("⌫", "0", "OK")).forEach { row ->
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+                        row.forEach { k ->
+                            OutlinedButton(onClick = {
+                                when (k) {
+                                    "⌫" -> input = input.dropLast(1)
+                                    "OK" -> check()
+                                    else -> if (input.length < ParentGate.MAX_DIGITS) input += k
+                                }
+                            }, modifier = Modifier.weight(1f).heightIn(min = 48.dp)
+                                .semantics { contentDescription = when (k) { "⌫" -> "Löschen"; "OK" -> "Bestätigen"; else -> k } },
+                                contentPadding = PaddingValues(4.dp)) { Text(k, fontSize = 18.sp) }
+                        }
                     }
                 }
-                if (wrong > 0) Text("Leider falsch – noch einmal.", color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
             }
         },
         confirmButton = {},
-        dismissButton = { TextButton(onClick = onCancel) { Text("Abbrechen") } },
+        dismissButton = { TextButton(onClick = { voice?.stop(); onCancel() }) { Text("Abbrechen") } },
     )
 }

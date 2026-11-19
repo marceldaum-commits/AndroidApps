@@ -3,6 +3,13 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.3.1 – Schöner am großen Bildschirm, flüssiger auf langsamen Rechnern (19.11.2026)
+- **Am PC und großen Bildschirm:** Der Garten ist jetzt größer und breiter statt einer schmalen Spalte, die Ränder zeigen Himmel und Wiese.
+- **Flüssiger auf langsamen Rechnern:** Kommt ein Rechner beim Zeichnen nicht hinterher (z. B. ohne Grafik-Beschleunigung), malt der Garten etwas weniger Bilder pro Sekunde. Dafür reagiert er sofort auf Tippen, Klicken und Wischen, statt zu hängen.
+- **Neues Eltern-Tor (gemeinsam für alle unsere Lern-Apps):** Die Aufgabe steht jetzt in Worten (z. B. „siebzehn mal acht“) und lässt sich vorlesen. Die Antwort tippt ihr über eine Zifferntastatur ein, nach einem Fehler kommt sofort eine neue Aufgabe. So kommen Kinder nicht mehr durch Raten hinein.
+- Im Laden steht kein veralteter Plus-Hinweis mehr. Tippt ein Kind auf ein Plus-Paket, heißt es nur noch sachlich: „Das gehört zu Wissensgarten Plus. Deine Eltern können im Elternbereich nachsehen.“
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.3.0 – Neue Adresse für alle Lern-Apps (19.11.2026)
 - **Der Wissensgarten wohnt jetzt unter lernen.mathenachhilfe-online.com/wissensgarten/** – zusammen mit allen anderen Lern-Apps unter einer Adresse.
 - **Der Garten zieht automatisch mit:** Wer die alte Adresse öffnet, wird weitergeleitet, und Brummi packt den Lernstand ein: Profile, Beete, Karten, Fortschritt, Einstellungen und (wenn sie hineinpassen) selbst gemalte Merkbilder. Das geht Ende-zu-Ende verschlüsselt, unser Server kann nichts lesen und löscht die Umzugs-Sicherung gleich danach.

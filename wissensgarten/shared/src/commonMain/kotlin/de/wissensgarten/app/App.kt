@@ -14,6 +14,8 @@ import androidx.compose.material.icons.filled.Storefront
 import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.foundation.background
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -171,9 +173,18 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                 host.music.unlock()
                 if (!jinglePlayed) { jinglePlayed = true; sfx.play(de.wissensgarten.app.ui.fx.Sound.JINGLE, volume = 0.7f) }
             }, color = MaterialTheme.colorScheme.background) {
-              // Tablets: Inhalt mittig in angenehmer Breite statt über den ganzen Bildschirm gezogen
-              Box(Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.TopCenter) {
-              Box(Modifier.fillMaxHeight().widthIn(max = 720.dp)) {
+              // Tablets und PC: Inhalt mittig in angenehmer Breite. Auf breiten Bildschirmen wird alles etwas größer
+              // (statt einer schmalen Spalte), und die Ränder zeigen Himmel und Wiese statt leerer Fläche.
+              androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
+              val outer = androidx.compose.ui.platform.LocalDensity.current
+              val scale = ((maxWidth.value - 760f) / 1400f + 1f).coerceIn(1f, 1.3f).let { if (maxHeight.value < 640f) 1f else it }
+              val wide = maxWidth > 800.dp
+              Box(Modifier.fillMaxSize().then(if (wide) Modifier.background(androidx.compose.ui.graphics.Brush.verticalGradient(
+                  listOf(androidx.compose.ui.graphics.Color(0xFFCFE8F7), MaterialTheme.colorScheme.background, androidx.compose.ui.graphics.Color(0xFFDDEFD0)))) else Modifier),
+                  contentAlignment = androidx.compose.ui.Alignment.TopCenter) {
+              CompositionLocalProvider(androidx.compose.ui.platform.LocalDensity provides androidx.compose.ui.unit.Density(outer.density * scale, outer.fontScale)) {
+              Box(Modifier.fillMaxHeight().widthIn(max = 760.dp).then(if (wide) Modifier.shadow(8.dp)
+                  .background(MaterialTheme.colorScheme.background) else Modifier)) {
               de.wissensgarten.app.ui.common.ParentGateHost {
                 val nav = rememberNavController()
                 AppNav(nav, startRoute)
@@ -203,7 +214,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             nav.navigate(Routes.bed(z.bedId)) { launchSingleTop = true }
                         }
                         is AppViewModel.PaketZiel.Pflanzen -> if (gepflanzt != id) { gepflanzt = id; vm.plantPack(z.pack) }
-                        AppViewModel.PaketZiel.Plus -> { paketRequest.value = null; host.toast("🌟 Dieses Paket gehört zu Wissensgarten Plus."); nav.navigate(Routes.SHOP) { launchSingleTop = true } }
+                        AppViewModel.PaketZiel.Plus -> { paketRequest.value = null; host.toast("🌟 Das gehört zu Wissensgarten Plus. Deine Eltern können im Elternbereich nachsehen."); nav.navigate(Routes.SHOP) { launchSingleTop = true } }
                         AppViewModel.PaketZiel.Unbekannt -> { paketRequest.value = null; nav.navigate(Routes.SHOP) { launchSingleTop = true } }
                     }
                 }
@@ -214,6 +225,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                     }
                 }
                 host.voice?.let { de.wissensgarten.app.ui.fx.NovaLadehinweis(it, host) }
+              }
+              }
               }
               }
               }
@@ -448,7 +461,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             profile = p, packs = angebot + vm.plusPreviews.collectAsStateWithLifecycle().value.filter(de.wissensgarten.core.model.Angebot::angeboten), beds = beds, canUse = vm.entitlements::canUse,
                             onLocked = {
                                 if (vm.entitlements.code != null) { host.toast("🐝 Brummi holt die Plus-Pakete … gleich noch einmal antippen."); vm.refreshPlusPacksIfDue(force = true) }
-                                else gate("Dieses Paket gehört zu Wissensgarten Plus.") { nav.navigate(Routes.PLUS) }
+                                else gate("Das gehört zu Wissensgarten Plus. Deine Eltern können im Elternbereich nachsehen.") { nav.navigate(Routes.PLUS) }
                             },
                             onPlant = vm::plantPack,
                             onOpenBed = { nav.navigate(Routes.bed(it)) },
