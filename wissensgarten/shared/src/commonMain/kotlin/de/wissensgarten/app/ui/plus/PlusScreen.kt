@@ -102,15 +102,16 @@ fun PlusScreen(
                 Text("Nach dem Kauf kommt der Code per E-Mail (dazu die Rechnung). Er gilt auf allen Geräten der Familie in der Web-App – einfach den Link in der E-Mail öffnen oder hier einfügen.",
                     style = MaterialTheme.typography.bodySmall)
                 OutlinedTextField(code, { code = it; message = null }, label = { Text("WG-…") }, modifier = Modifier.fillMaxWidth(), minLines = 2)
+                val hostForToast = de.wissensgarten.app.ui.fx.LocalHost.current
                 Button(onClick = {
-                    message = when (onRedeem(code)) {
+                    message = when (onRedeem(code.trim())) {
                         PlusEntitlements.Redeem.OK -> "🌟 Plus ist freigeschaltet – vielen Dank!"
                         PlusEntitlements.Redeem.EXPIRED -> "Dieser Code ist abgelaufen."
                         PlusEntitlements.Redeem.INVALID -> "Das ist kein gültiger Plus-Code. Bitte genau so einfügen, wie er in der E-Mail steht."
-                    }
+                    }.also { m -> hostForToast?.toast(m) }   // Ergebnis auch als Meldung oben – unten am Rand übersieht man es leicht
                 }, enabled = code.isNotBlank(), modifier = Modifier.fillMaxWidth()) { Text("Freischalten") }
+                message?.let { Text(it, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary) }
             }
-            message?.let { Text(it, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary) }
             Spacer(Modifier.height(24.dp))
         }
     }
