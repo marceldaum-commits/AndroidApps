@@ -101,15 +101,22 @@ fun PlusScreen(
                 Text("Code eingeben", style = MaterialTheme.typography.titleMedium)
                 Text("Nach dem Kauf kommt der Code per E-Mail (dazu die Rechnung). Er gilt auf allen Geräten der Familie in der Web-App – einfach den Link in der E-Mail öffnen oder hier einfügen.",
                     style = MaterialTheme.typography.bodySmall)
-                OutlinedTextField(code, { code = it; message = null }, label = { Text("WG-…") }, modifier = Modifier.fillMaxWidth(), minLines = 2)
                 val hostForToast = de.wissensgarten.app.ui.fx.LocalHost.current
-                Button(onClick = {
+                val focus = androidx.compose.ui.platform.LocalFocusManager.current
+                val freischalten: () -> Unit = {
+                    focus.clearFocus()
                     message = when (onRedeem(code.trim())) {
                         PlusEntitlements.Redeem.OK -> "🌟 Plus ist freigeschaltet – vielen Dank!"
                         PlusEntitlements.Redeem.EXPIRED -> "Dieser Code ist abgelaufen."
                         PlusEntitlements.Redeem.INVALID -> "Das ist kein gültiger Plus-Code. Bitte genau so einfügen, wie er in der E-Mail steht."
                     }.also { m -> hostForToast?.toast(m) }   // Ergebnis auch als Meldung oben – unten am Rand übersieht man es leicht
-                }, enabled = code.isNotBlank(), modifier = Modifier.fillMaxWidth()) { Text("Freischalten") }
+                }
+                // Enter im Feld schaltet ebenfalls frei (am PC kam der erste Klick auf den Knopf bei aktivem Eingabefeld nicht immer an)
+                OutlinedTextField(code, { code = it.replace("\n", " "); message = null }, label = { Text("WG-…") }, modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(imeAction = androidx.compose.ui.text.input.ImeAction.Done),
+                    keyboardActions = androidx.compose.foundation.text.KeyboardActions(onDone = { if (code.isNotBlank()) freischalten() }))
+                Button(onClick = { freischalten() }, enabled = code.isNotBlank(), modifier = Modifier.fillMaxWidth()) { Text("Freischalten") }
                 message?.let { Text(it, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary) }
             }
             Spacer(Modifier.height(24.dp))
