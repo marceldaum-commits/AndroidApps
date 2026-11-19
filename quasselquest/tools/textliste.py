@@ -30,8 +30,8 @@ for e in liste:
         {'art': 'langsam', 'speed': LANGSAM, 'datei': f'audio/server/{l}/{e["id"]}-langsam.mp3'},
     ]
 out = {'format': 1, 'app': 'quasselquest', 'modell': 'Kokoro-82M (hexgrad, Apache-2.0) über kokoro-onnx 0.6.1; Deutsch: folgt',
-       'stimmen': {l: {'stimme': STIMME[l], 'kokoro_lang': KOKORO_LANG[l], 'hinweis': 'Stimme folgt (Chatterbox/Zonos, Leitstand)' if l == 'de' else None} for l in STIMME},
-       'mp3': {'kanaele': 1, 'abtastrate': 24000, 'bitrate': '48k', 'id3_comment': 'KI-generiert (synthetische Stimme, Kokoro TTS)',
+       'stimmen': {l: {'stimme': STIMME[l], 'kokoro_lang': KOKORO_LANG[l], 'hinweis': 'Chatterbox Multilingual, Stimme „de-1“ (Leitstand)' if l == 'de' else None} for l in STIMME},
+       'mp3': {'kanaele': 1, 'abtastrate': 24000, 'bitrate': '48k', 'id3_comment': {'en': 'KI-generiert (synthetische Stimme, Kokoro-82M)', 'fr': 'KI-generiert (synthetische Stimme, Kokoro-82M)', 'es': 'KI-generiert (synthetische Stimme, Kokoro-82M)', 'it': 'KI-generiert (synthetische Stimme, Kokoro-82M)', 'de': 'KI-generiert (synthetische Stimme, Chatterbox Multilingual)'},
                'stille_rand_kuerzen': True, 'lautheit_lufs': -18, 'vorlauf_s': 0.12},
        'eintraege': liste}
 ziel = os.path.join(V.WEB, 'vorlesen', 'textliste.json'); os.makedirs(os.path.dirname(ziel), exist_ok=True)

@@ -26,14 +26,20 @@
   "de": {
    "stimme": null,
    "kokoro_lang": "de",
-   "hinweis": "Stimme folgt (Chatterbox/Zonos, Leitstand)"
+   "hinweis": "Chatterbox Multilingual, Stimme „de-1“ (Leitstand)"
   }
  },
  "mp3": {
   "kanaele": 1,
   "abtastrate": 24000,
   "bitrate": "48k",
-  "id3_comment": "KI-generiert (synthetische Stimme, Kokoro TTS)",
+  "id3_comment": {
+   "en": "KI-generiert (synthetische Stimme, Kokoro-82M)",
+   "fr": "KI-generiert (synthetische Stimme, Kokoro-82M)",
+   "es": "KI-generiert (synthetische Stimme, Kokoro-82M)",
+   "it": "KI-generiert (synthetische Stimme, Kokoro-82M)",
+   "de": "KI-generiert (synthetische Stimme, Chatterbox Multilingual)"
+  },
   "stille_rand_kuerzen": true,
   "lautheit_lufs": -18,
   "vorlauf_s": 0.12

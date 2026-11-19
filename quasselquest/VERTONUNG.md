@@ -14,8 +14,8 @@ werden **nicht** mit der App ausgeliefert. Deutsch bleibt bis dahin ohne Ton (nu
   "format": 1, "app": "quasselquest", "modell": "Kokoro-82M (hexgrad, Apache-2.0)",
   "stimmen": { "en": { "stimme": "af_heart", "kokoro_lang": "en-us" }, "fr": { "stimme": "ff_siwis", "kokoro_lang": "fr-fr" },
                "es": { "stimme": "ef_dora", "kokoro_lang": "es" }, "it": { "stimme": "if_sara", "kokoro_lang": "it" },
-               "de": { "stimme": null, "hinweis": "Stimme folgt (Chatterbox/Zonos, Leitstand)" } },
-  "mp3": { "kanaele": 1, "abtastrate": 24000, "bitrate": "48k", "id3_comment": "KI-generiert (synthetische Stimme, Kokoro TTS)",
+               "de": { "stimme": null, "hinweis": "Chatterbox Multilingual, Stimme „de-1“ (Leitstand)" } },
+  "mp3": { "kanaele": 1, "abtastrate": 24000, "bitrate": "48k", "id3_comment": { "en": "KI-generiert (synthetische Stimme, Kokoro-82M)", "…": "…", "de": "KI-generiert (synthetische Stimme, Chatterbox Multilingual)" },
            "stille_rand_kuerzen": true, "lautheit_lufs": -18, "vorlauf_s": 0.12 },
   "eintraege": [
     { "id": "3f2a…(20 Zeichen)", "sprache": "en", "text": "Give Mia three fish.", "sprechtext": "Give Mia three fish.",
@@ -36,7 +36,7 @@ werden **nicht** mit der App ausgeliefert. Deutsch bleibt bis dahin ohne Ton (nu
 | `fassungen[].datei` | Pfad relativ zu `quasselquest/webapp/`, an dem die MP3 abgelegt wird |
 
 ## Rückgabe an Quasselquest
-- Alle MP3 unter `audio/server/<sprache>/` mit den Dateinamen aus der Liste, dazu ID3-Kommentar „KI-generiert (synthetische Stimme, Kokoro TTS)“ (Deutsch später mit dem dann verwendeten Modell).
+- Alle MP3 unter `audio/server/<sprache>/` mit den Dateinamen aus der Liste, dazu der ID3-Kommentar je Sprache aus `mp3.id3_comment`: EN/FR/ES/IT „KI-generiert (synthetische Stimme, Kokoro-82M)“, DE „KI-generiert (synthetische Stimme, Chatterbox Multilingual)“ (Recht).
 - Optional eine Datei `audio/server/pruefung.json` mit `{ "<id>": { "gehoert": "…", "treffer": 0.97 } }`, falls der Server selbst nachhört.
   Sonst übernehme ich die Hörprüfung (Whisper, wie bisher).
 - Ich baue die Dateien in `audio/index.json` ein, prüfe sie (Hörprüfung, Browser-Test) und melde die Version (geplant 0.5.1).
@@ -50,5 +50,5 @@ Englisch 721, Französisch 838, Spanisch 801, Deutsch 185 Texte, jeweils normal 
 - `id` = die ersten 20 Hex-Zeichen von SHA-1 über `"<sprache>|<sprechtext>"` (Unicode NFC, UTF-8, Leerraum zu einem Leerzeichen zusammengefasst, ohne Rand).
   Gleicher Text ergibt gleiche Datei, und unveränderte Texte muss der Server nicht neu vertonen.
 - `sprache`: ISO-639-1 (`en`, `fr`, `es`, `it`, `de` …). Stimme und Sprache des Modells stehen einmal oben unter `stimmen`.
-- `datei` ist relativ zum Web-Ordner der App. Der Server legt die MP3 genau dort ab und setzt den ID3-Kommentar aus `mp3.id3_comment`.
+- `datei` ist relativ zum Web-Ordner der App. Der Server legt die MP3 genau dort ab und setzt den ID3-Kommentar aus `mp3.id3_comment` (Text oder Objekt je Sprache).
 - Änderungen am Format nur mit neuer Nummer bei `format`. Neue, freiwillige Felder dürfen ohne neue Nummer dazukommen.
