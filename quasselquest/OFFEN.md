@@ -29,3 +29,11 @@
 - **Pro:** Gekauftes Pro läuft nie ab; nur Probe-/Geschenk-Codes mit Ablaufdatum (offline geprüft, spätestes gesehenes Datum merken). Quasselquest hat noch keinen Pro-Code (Pro neutral vorbereitet: QQ-, App 7, Sprach-Byte) → bis Mo 23.11. so an AppZentrale melden.
 - **Familien-Speicher OHNE Google (ersetzt Eltern-Login-Nachricht):** Lern-/Spielstände, Pro, KI pro Familie verschlüsselt auf unserem Server (eltern/v1), Kopplung per Familien-Code/QR, automatische Sicherung bei Verbindung, Notfall-Code zum Ausdrucken + Generalschlüssel (Marcel). Kein Google, kein Konto fürs Kind. Noch nichts Serverseitiges bauen (Wochenrunde 23.11.).
 - **Bis Mo 23.11. melden:** Lernstand = localStorage `quasselquest.v1` (alt `englisch.v1`), JSON mit klasse, name, lang, karten (Leitner je Karte), eigene Listen, tage, hinweis, tests, lp (Lernpfad), insel (Positionen), progress, settings, week – Größe messen; Pro-/Geschenk-/KI-Codes: noch keine.
+
+## Aufträge aus dem USP-Bericht (Geld verdienen, 19.11.) – nach den Pflichtaufgaben, nach Wirkung in Di/Fr-Updates
+Lücken: Sprechpraxis mit Rückmeldung in Schulwerkzeugen; spielerisches Latein aus dem Deutschen (ca. 539.000 Lateinschüler); Training im Klassenarbeits-Format mit eigenen Schulbuch-Vokabeln. Duolingo for Schools endet 31.07.2027.
+1. Eigene Wortlisten in alle Spielarten (gratis) – **weitgehend erledigt** (Mein Schulbuch: Ballon, Hören, Bauen, Memory, Diktat); prüfen: Hör-Detektiv für eigene Listen.
+2. Generalprobe als Pro-Kern je Sprache mit Hören, Lesen, sprachlichen Mitteln, Vokabeln beide Richtungen, ab Kl. 7 Sprachmittlung – **Grundform in 0.3.3**, Ausbau offen.
+3. Regel-Rückmeldung für jede Fehlerart + Test für Abdeckung – Grundform („Warum?“) vorhanden, Abdeckungstest fehlt.
+4. Leichter Klassenmodus ohne Konten (Klassen-Code) vor Sommer 2027.
+Elternbereich: Einmalkauf, Gratis-Sicherung und Kontofreiheit ausdrücklich nennen. Schullizenz einheitlich 29 €/Klasse, 149–249 €/Schule.
