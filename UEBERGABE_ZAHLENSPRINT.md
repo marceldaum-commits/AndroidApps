@@ -54,6 +54,10 @@ Wer weiterarbeitet, liest zuerst diese Datei, dann `MELDUNG_RECHENBLITZ.md` (obe
    - Hinweis für installierte Apps: „Rechenblitz heißt jetzt Zahlensprint – bitte neu installieren, dein Lernstand bleibt“.
    - **Intern bleibt alles „rechenblitz“:** Speicher `rechenblitz`, `rb-classes`, `rb-teacher`, Zähl-Kennung, Eltern-Kopplung, Familien-Speicher-App-Name (HKDF-info!), Code-Präfix RB-/App-Byte 2.
    - Rundlauf alt → neu: Lernstand, Pro, `#pro=`, `?thema=`.
+   - **Auflagen Recht (V2, 19.11.):**
+     - Hinweis „Früher: Rechenblitz“ etwa 3 Monate sichtbar lassen (bis ca. Ende Februar 2027).
+     - TMview und Stores prüfen vor dem 24.11. (AppZentrale/Recht).
+     - DSE 10b, AGB § 13, Shop und Widerrufsseite am selben Tag umstellen (Leitstand).
    - Außerdem am Di: quadratische Gleichungen im Kopf, PC-Ansicht verbessern (Fotos vorher in `docs/bilder/pc-vorher/`; ab etwa 1500 px bis 1360 px Breite, Übung als Raster, rechte Startspalte füllen; Handy und iPad unverändert).
 3. **Familien-Speicher anbinden** (nach dem Fr-Update): siehe `docs/FAMILIEN-SPEICHER-RECHENBLITZ.md`.
    - Bibliothek `kopfrechnen/js/familie.js @ e9993ec` (unverändert, sha256 3f7ec567…f5f9, ES-Modul, per `import()` laden); `node tests/familie.mjs` → 51 Prüfungen.
