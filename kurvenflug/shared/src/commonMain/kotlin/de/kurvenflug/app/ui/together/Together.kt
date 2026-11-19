@@ -83,7 +83,7 @@ fun ProfileScreen(
                 val ps = de.kurvenflug.app.LocalPro.current
                 val maxP = minOf(Settings.MAX_PROFILES, de.kurvenflug.core.model.Pro.maxProfiles(ps.pro, ps.locking))
                 if (profiles.size >= maxP && maxP < Settings.MAX_PROFILES)
-                    Text("⭐ Mehr als ${de.kurvenflug.core.model.Pro.FREE_PROFILES} Spieler gehören zu KurvenFlug Pro. Deine Eltern können im Elternbereich nachsehen.", color = Q.Yellow)
+                    Text("⭐ Mehr als ${de.kurvenflug.core.model.Pro.FREE_PROFILES} Spieler gehören zu KurvenFlug Pro.", color = Q.Yellow)
                 if (profiles.size < maxP) NeonButton(onClick = { editing = -1; name = ""; avatar = Settings.AVATARS[profiles.size % Settings.AVATARS.size] },
                     color = Q.Green, modifier = Modifier.fillMaxWidth()) { Text("➕ Neuer Spieler", fontWeight = FontWeight.Bold) }
                 editing?.let { id ->

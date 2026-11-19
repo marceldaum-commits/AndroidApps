@@ -147,7 +147,7 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
  * Kinder-Hinweis an jedem Pro-Schloss (UWG Anhang Nr. 28, Korrektur AppZentrale 19.11.): sachlich, kein Preis, kein Kaufknopf,
  * keine Aufforderung an das Kind. Der einzige Weg führt zum Eltern-Tor, nie direkt zur Kasse.
  */
-const val PRO_LOCKED_TEXT = "Das gehört zu KurvenFlug Pro. Deine Eltern können im Elternbereich nachsehen."
+const val PRO_LOCKED_TEXT = "Das gehört zu KurvenFlug Pro."   // ohne Eltern-Zusatz (Recht/Marcel 19.11.: kam einer mittelbaren Kaufaufforderung zu nah)
 
 @Composable
 fun ProLockedNotice(onBack: () -> Unit, onParents: () -> Unit) {
