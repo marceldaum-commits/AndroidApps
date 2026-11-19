@@ -27,8 +27,10 @@ function umzugDaten() {
 }
 // ALT: einpacken, hochladen, weiterleiten. Gibt false zurück, wenn die App hier normal starten soll.
 async function umzugAlt() {
-  // Ist die neue Adresse erreichbar? (DNS/Netz) – sonst hier bleiben und beim nächsten Start erneut versuchen
-  try { await fetch(UMZUG.ziel(UMZUG.stufe()) + 'stand.json?u=' + Date.now(), { mode: 'no-cors', cache: 'no-store', credentials: 'omit' }); } catch { return false; }
+  // Liefert die neue Adresse wirklich Rechenblitz aus? Eigenes App-Symbol als Bild laden (404, falsche Seite oder kein Netz → Fehler).
+  // Sonst hier bleiben und beim nächsten Start erneut versuchen (Standard UMZUG-LERNEN.md)
+  const bereit = await new Promise(res => { const im = new Image(), t = setTimeout(() => res(false), 8000); im.onload = () => { clearTimeout(t); res(im.naturalWidth === 192); }; im.onerror = () => { clearTimeout(t); res(false); }; im.src = UMZUG.ziel(UMZUG.stufe()) + 'icons/icon-192.png?u=' + Date.now(); });
+  if (!bereit) return false;
   const daten = umzugDaten();
   if (!Object.keys(daten).length) { umzugWeiter(umzugZielUrl('')); return true; }   // nichts zu übertragen: nur weiterleiten
   const st = UMZUG.stufe(), k = { id: zufall(16), schreib: zufall(16), key: zufall(32) };

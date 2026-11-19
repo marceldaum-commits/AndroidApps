@@ -1,4 +1,4 @@
-{"app":"rechenblitz","version":"3.28.0","shell":2,"id":"eac051948864d390","files":{
+{"app":"rechenblitz","version":"3.28.0","shell":2,"id":"80b445a73fce6b57","files":{
 "LICENSE-fonts-OFL.txt":"7ccbf925128fa58dd9db15a952de2cb1388bada8bceddb13b90302c63c517ef8",
 "LICENSE-qrcode-generator.txt":"cbb4dd65aafcbc67fdd469b12042464153219bc26f238b2f19858c7980e5b01a",
 "app.css":"82b79d02c5b5eb7ae45b048658bf235030a7ea92544d513862283b0d724907ea",
@@ -34,13 +34,13 @@
 "js/panels.js":"621578a20c031dcd0e0b3f378de0bffea85af4b5f004636e022be11ac297cb69",
 "js/pro.js":"0df3343918e52d5daf0165c631b180a4692587dd7712f450c8bf7697cab1cb3c",
 "js/raetsel.js":"150ff6ff85bf552d1060c2a25dac9a8304b36308545b4f842df77a9c00507d1e",
-"js/rechenblitz.min.js":"d32c832b227b6d02508b2ed76f273fc12b25619afafa2054c16a4b78348d886c",
+"js/rechenblitz.min.js":"ce7d6e367538c008e927ff0f506d94e4c5fb6376d5a9d7fd9144311d503ea93a",
 "js/reise.js":"484b62edca9ccbcb55bd78c99f798dab3bb614ed0ceffe6810f05d0617748600",
 "js/reminder.js":"dc1c8158558f6cf41c8239a4a80d05738891e6e39a368b93ee72bd264fc952f7",
 "js/speech.js":"6ea525425341f67ef2ca591410ac1d0c0238756537b939ba0e57e8ca2ecf436c",
 "js/theorie-i18n.js":"141ae9d942022e66ec886dbc2e097cd48d76d254d723c4af4361c251e16e70b4",
 "js/theorie.js":"196ba740aae09d95050e960eec675cfa973afd4496aca500c0109f1d2624706e",
-"js/umzug.js":"b3de67569dbeadc60d6f999d373d3cb4ba3e66f38fa8dd57f0bf6f41444e4836",
+"js/umzug.js":"adcf59624f10a992aa2e7a51735511de33af7a7396b75541432247688146c093",
 "js/vendor/nacl.min.js":"d01d638878a33e735094982276e424d89c3494c86544a740983f9c93570da67d",
 "js/vendor/qrcode.js":"18ae399f81182bc9de916e9c77b195df20cc58d6f2d55a62b085a299f1bf1780",
 "js/welt.js":"fa8804e7e42ccf82c7010a52537939b9d60bdb7b1f5e043f0cf86dd3c6208284",
