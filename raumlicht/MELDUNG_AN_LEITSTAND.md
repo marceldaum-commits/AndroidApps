@@ -17,7 +17,7 @@ Neueste oben.
 
 **Bitte prüfen / entscheiden:** (1) Wortlaut zur Notfall-Kopie – Raumlicht sagt Eltern ausdrücklich, dass der Betreiber den Zugang wiederherstellen kann (Text in `Familie.NOTE`, Datenschutz Punkt 9); bitte für alle Apps gleich. (2) Lässt der Test-Server Aufrufe von `raumlicht-test.` (andere Herkunft) zu? Auf `lernen-test.` ist es dieselbe Herkunft.
 
-**Geprüft:** Logik-Tests, Oberflächen-Tests (neu `familienSpeicher`, `familienLinkFuehrtDurchsElternTor`), Lint, Browser-Prüfung `web-familie.mjs` (je Fassung 13: Tor, anlegen, Server sieht nichts Lesbares, zweites Gerät holt Stand, Konflikt) – Zahlen siehe Nachtrag unten. Bild `screenshots/95_familie.png`.
+**Geprüft:** Logik-Tests, Oberflächen-Tests (neu `familienSpeicher`, `familienLinkFuehrtDurchsElternTor`), Lint, 201 Logik-Tests, 153 Oberflächen-Tests, Lint, 192 Browser-Prüfungen (166 bisherige + 26 neue in `web-familie.mjs`: Tor, anlegen, Server sieht nichts Lesbares, zweites Gerät holt Stand, Konflikt; je Wasm und JS). Bild `screenshots/95_familie.png`.
 
 ## 19.11.2026 – 2.18.34 auf test: Eltern-Tor vor dem Shop, Lux wirbt nicht mehr (Marcel hat hier selbst „ja“ gesagt – zu meinem Vorschlag, nicht zur vollen gemeinsamen Vorgabe)
 
