@@ -53,8 +53,10 @@ def nova_hash(text, sprache='en'):
     return hashlib.sha256(f'nova|{sprache}|{norm(text)}'.encode('utf-8')).hexdigest()[:32]
 
 
-def saetze():
-    js = ("const C=require(process.argv[1]);const P=require(process.argv[2]);const fs=require('fs');const d=process.argv[3];"
+def saetze(mit_deutsch=False):
+    # mit_deutsch: Deutsch hat in der App vorübergehend keine Stimme; für die Textliste (Server-Vertonung) trotzdem mitnehmen
+    js = (("const P0=require(process.argv[2]);P0.LANGS.de.who='de';" if mit_deutsch else '') +
+          "const C=require(process.argv[1]);const P=require(process.argv[2]);const fs=require('fs');const d=process.argv[3];"
           "const idx=JSON.parse(fs.readFileSync(d+'index.json'));"
           "const packs=idx.pakete.map(m=>Object.assign(JSON.parse(fs.readFileSync(d+m.id+'.json')),{lang:m.sprache}));"
           "const lp=P.LERNPFAD.map(l=>JSON.parse(fs.readFileSync(d+'../lernpfad/'+l+'.json')));"
