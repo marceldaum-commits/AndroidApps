@@ -75,7 +75,7 @@ class KiTest {
         Ki.answer(200, """{"text":"  Stell dir die Ebene als Tischplatte vor. ","rest":7}""").let { assertEquals(200, it.status); assertEquals("Stell dir die Ebene als Tischplatte vor.", it.text); assertEquals(7, it.rest) }
         Ki.answer(402, """{"fehler":"proben","rest":0}""").let { assertEquals("", it.text); assertEquals(0, it.rest) }
         Ki.answer(502, "<html>Bad Gateway</html>").let { assertEquals("", it.text); assertNull(it.rest) }; Ki.answer(0, "").let { assertEquals("", it.text); assertNull(it.rest) }
-        assertTrue(Ki.problem(402, false).contains("3 Proben")); assertTrue(Ki.problem(402, true).contains("gilt nicht mehr")); assertTrue(Ki.problem(429, true).contains("Morgen"))
+        assertEquals("Deine 3 Proben sind aufgebraucht.", Ki.problem(402, false)); for (bad in listOf("Pass", "€", "kauf", "Shop")) assertFalse(bad, Ki.problem(402, false).contains(bad, ignoreCase = true) || Ki.problem(429, false).contains(bad, ignoreCase = true)); assertTrue(Ki.problem(402, true).contains("gilt nicht mehr")); assertTrue(Ki.problem(429, true).contains("Morgen"))
         assertTrue(Ki.problem(0, false).contains("Internet")); assertTrue(Ki.problem(502, true).contains("später")); assertTrue(Ki.problem(404, false).contains("später"))
     }
 

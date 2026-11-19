@@ -134,8 +134,9 @@ fun ProScreen(what: String?, active: Boolean, offered: Boolean, onCode: (String)
                     Pro.free.forEach { Text("✓ $it", color = Q.Muted, fontSize = 13.sp) }
                 }
                 if (offered) {
-                    NeonButton({ count("pro_kasse", place, null); runCatching { uri.openUri(de.raumlicht.core.model.Zaehler.link(Pro.CHECKOUT_URL, place)) } }, Modifier.fillMaxWidth().testTag("pro-kaufen"), color = Q.Yellow) { Text("Zum Shop: Raumlicht Pro · ${Pro.PRICE}", fontWeight = FontWeight.Bold) }
-                    Text("Einmalig ${Pro.PRICE} (inkl. MwSt.), kein Abo, kein Ablauf. Gekauft wird im Shop auf mathenachhilfe-online.com. Bist du noch nicht 18, schließen deine Eltern den Kauf ab. " +
+                    val gate = LocalElternTor.current
+                    NeonButton({ gate { count("pro_kasse", place, null); runCatching { uri.openUri(de.raumlicht.core.model.Zaehler.link(Pro.CHECKOUT_URL, place)) } } }, Modifier.fillMaxWidth().testTag("pro-kaufen"), color = Q.Yellow) { Text("Zum Shop: Raumlicht Pro · ${Pro.PRICE}", fontWeight = FontWeight.Bold) }
+                    Text("Einmalig ${Pro.PRICE} (inkl. MwSt.), kein Abo, kein Ablauf. Gekauft wird im Shop auf mathenachhilfe-online.com. Wer unter 18 ist, kauft nicht selbst – das machen die Eltern. " +
                         "Danach kommt eine E-Mail mit Link und Code. Raumlicht Pro gilt in der Web-App.", Modifier.testTag("pro-status"), color = Q.Muted, fontSize = 13.sp)
                 } else Text("Raumlicht Pro ist noch nicht erhältlich.", Modifier.testTag("pro-status"), color = Q.Muted, fontSize = 13.sp)
                 Column(Modifier.fillMaxWidth().background(Q.Deep, RoundedCornerShape(18.dp)).border(1.dp, Q.Cyan.copy(alpha = 0.6f), RoundedCornerShape(18.dp)).padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {

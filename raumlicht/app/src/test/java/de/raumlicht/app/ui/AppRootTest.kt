@@ -141,10 +141,12 @@ class AppRootTest {
         rule.onAllNodesWithTag("ki-antwort").assertCountEquals(2); rule.onNodeWithText("Was heißt die erste Zahl?").assertExists(); rule.onNodeWithTag("ki-rest").assertTextContains("Noch 1 Probe frei", substring = true)
         assertTrue(asked[1], asked[1].contains("\"art\":\"rueckfrage\"") && asked[1].contains("Was heißt die erste Zahl?") && asked[1].contains("\"rolle\":\"lux\""))
         rule.onRoot().captureRoboImage("../screenshots/82_ki_tutor.png")
-        // Proben aufgebraucht: freundlicher Hinweis, der bisherige Wortwechsel bleibt, „KI dazubuchen“ führt zur KI-Seite
+        // Proben aufgebraucht: nur die sachliche Auskunft – keine Werbung für den Pass, kein Knopf zur Kaufseite; der bisherige Wortwechsel bleibt
         rule.onNodeWithTag("ki-anders").performClick(); settle()
-        rule.onNodeWithTag("ki-problem").assertTextContains("Proben sind aufgebraucht", substring = true); rule.onAllNodesWithTag("ki-antwort").assertCountEquals(2)
-        rule.onNodeWithTag("ki-dazubuchen").performScrollTo().performClick(); settle(); assertEquals(Routes.KI, nav.top)
+        rule.onNodeWithTag("ki-problem").assertTextEquals("Deine 3 Proben sind aufgebraucht."); rule.onAllNodesWithTag("ki-antwort").assertCountEquals(2)
+        rule.onNodeWithTag("ki-dazubuchen").assertDoesNotExist(); rule.onNodeWithText("KI-Abi-Pass", substring = true).assertDoesNotExist()
+        // die KI-Seite bleibt über die Einstellungen erreichbar
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.go(Routes.KI); settle(); assertEquals(Routes.KI, nav.top)
         rule.onNodeWithTag("ki-kaufen").assertTextContains("Zum Shop: KI-Abi-Pass · 14,99 €", substring = true); rule.onNodeWithTag("ki-status").assertTextContains("kein Abo", substring = true).assertTextContains("gilt in der Web-App", substring = true); rule.onNodeWithTag("ki-datenschutz").assertExists()
         // abgelaufener Pass, falscher Code, gültiger Pass (mitten aus der E-Mail)
         rule.onNodeWithTag("ki-code").performScrollTo().performTextInput(KI_ALT); rule.onNodeWithTag("ki-freischalten").performScrollTo().performClick(); settle()
@@ -301,6 +303,33 @@ class AppRootTest {
         rule.onNodeWithTag("alle-apps").performClick(); settle(); assertEquals(1, appsOpened)
         nav.go(Routes.level("1-1")); settle(); rule.onNodeWithTag("alle-apps").assertDoesNotExist()
         nav.restart(Routes.BACKSTAGE); settle(); rule.onNodeWithTag("alle-apps").assertDoesNotExist()
+    }
+
+    /** Eltern-Tor vor dem Shop: Malaufgabe in Worten, eigene Ziffern-Tastatur, nach einem Fehler eine neue Aufgabe, zehn Minuten offen, jederzeit abbrechen. */
+    @Test fun elternTorVorDemShop() {
+        val zahl = mapOf("dreizehn" to 13, "vierzehn" to 14, "fünfzehn" to 15, "sechzehn" to 16, "siebzehn" to 17, "achtzehn" to 18, "neunzehn" to 19, "sechs" to 6, "sieben" to 7, "acht" to 8, "neun" to 9)
+        fun aufgabe(): String = rule.onNodeWithTag("eltern-tor-aufgabe").fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsProperties.Text].first().text
+        fun loesung(text: String): Int { val m = Regex("Wie viel ist (\\S+) mal (\\S+)\\?").find(text)!!; return zahl.getValue(m.groupValues[1]) * zahl.getValue(m.groupValues[2]) }
+        fun tippe(ziffern: String) { ziffern.forEach { rule.onNodeWithTag("eltern-tor-taste-$it").performClick() }; rule.onNodeWithTag("eltern-tor-taste-OK").performClick(); settle() }
+        start(pro = true); nav.go(Routes.PRO); settle()
+        // Preis und sachliche Info bleiben sichtbar, der Weg zum Shop führt übers Tor
+        rule.onNodeWithTag("pro-kaufen").performScrollTo().assertTextContains("7,99 €", substring = true); rule.onNodeWithTag("pro-status").assertTextContains("Wer unter 18 ist, kauft nicht selbst", substring = true)
+        rule.onNodeWithTag("eltern-tor").assertDoesNotExist(); rule.onNodeWithTag("pro-kaufen").performClick(); settle()
+        rule.onNodeWithTag("eltern-tor").assertExists(); rule.onNodeWithTag("eltern-tor-hinweis").assertTextContains("Wer unter 18 ist, kauft nicht selbst", substring = true)
+        val erste = aufgabe(); assertTrue(erste, Regex("Wie viel ist (dreizehn|vierzehn|fünfzehn|sechzehn|siebzehn|achtzehn|neunzehn) mal (sechs|sieben|acht|neun)\\?").matches(erste)); assertFalse("keine Ziffern in der Aufgabe", erste.any { it.isDigit() })
+        rule.onRoot().captureRoboImage("../screenshots/94_eltern_tor.png")
+        // falsche Antwort: sofort eine neue Aufgabe, nichts geht auf
+        tippe("1"); rule.onNodeWithTag("eltern-tor-falsch").assertExists(); assertNotEquals(erste, aufgabe()); assertTrue(counted.none { it.contains("pro_kasse") || it.contains("elternbereich") })
+        // löschen und richtig lösen: Tor auf, gezählt, Weg zum Shop frei
+        rule.onNodeWithTag("eltern-tor-taste-9").performClick(); rule.onNodeWithTag("eltern-tor-taste-⌫").performClick(); rule.onNodeWithTag("eltern-tor-eingabe").assertTextEquals("–")
+        tippe(loesung(aufgabe()).toString()); rule.onNodeWithTag("eltern-tor").assertDoesNotExist()
+        assertEquals(1, counted.count { it.contains("\"ev\":\"elternbereich\"") }); assertEquals(1, counted.count { it.contains("\"ev\":\"pro_kasse\"") })
+        // innerhalb von zehn Minuten bleibt das Tor offen
+        rule.onNodeWithTag("pro-kaufen").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-tor").assertDoesNotExist(); assertEquals(2, counted.count { it.contains("pro_kasse") })
+        // danach wieder zu – und „Abbrechen“ führt nirgendwohin
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMinutes(11))
+        rule.onNodeWithTag("pro-kaufen").performClick(); settle(); rule.onNodeWithTag("eltern-tor").assertExists()
+        rule.onNodeWithTag("eltern-tor-abbrechen").performClick(); settle(); rule.onNodeWithTag("eltern-tor").assertDoesNotExist(); assertEquals(2, counted.count { it.contains("pro_kasse") }); assertEquals(1, counted.count { it.contains("elternbereich") })
     }
 
     /** „Analysis & Zufall erleben“: von der Startseite erreichbar, alle Erlebnis-Bereiche samt Rotationskörper-Labor, dazu die Verweise zum Üben im Mathe-Trainer. */

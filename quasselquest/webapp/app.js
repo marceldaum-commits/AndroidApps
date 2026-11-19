@@ -172,8 +172,8 @@
   const KLASSEN = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   function onboarding() {
     let klasse = null;
-    const el = screen(`<div class="stage">
-      ${ruby('Hello! Ich bin <b>Ruby</b>, ein Papagei, der viele Sprachen spricht. Papageien sprechen alles nach – und du bald auch! 🦜', 'talk')}
+    const el = screen(`<div class="stage onb">
+      ${ruby('Hello! Ich bin <b>Ruby</b>, ein Papagei, der viele Sprachen spricht. Papageien sprechen alles nach – und du bald auch! 🎉', 'talk')}
       <div class="card"><h2 style="font-size:20px">In welche Klasse gehst du?</h2><p class="muted" style="margin:6px 0 12px">Du kannst das später ändern.</p>
         <div class="grade">${KLASSEN.map((k) => `<button data-k="${k}" aria-label="Klasse ${k}">${k}</button>`).join('')}</div></div>
       <div class="card"><h2 style="font-size:20px">Wie heißt du? <small class="muted">(freiwillig)</small></h2>
@@ -219,7 +219,7 @@
     const greet = (state.name ? `${esc(L.hallo.replace(/[!¡ ]+$/, ''))}, <b>${esc(state.name)}</b>! ` : esc(L.hallo) + ' ');
     const tip = en ? (next ? (prog('w1e1') ? 'Weiter geht\'s! Tipp auf den hüpfenden Kreis.' : 'Komm mit zum Hafen! Tipp auf den hüpfenden Kreis.') : 'Du hast alle Orte am Hafen geschafft! Bald geht die Reise weiter. 🚢')
       : `Heute üben wir <b>${esc(L.name)}</b>. Such dir ein Paket aus – ich spiele mit dir!${L.who ? '' : ' (Latein lesen wir – vorlesen kann ich es noch nicht.)'}`;
-    const el = screen(`<div>
+    const el = screen(`<div class="home">
       <div class="top"><button class="allapps" data-allapps>← Alle Apps</button><div class="spacer"></div>
         <span class="pill" title="Stempel im Reisepass">📘 ${stampCount()}</span>
         <button class="iconbtn" data-settings aria-label="Einstellungen">⚙️</button></div>
@@ -244,10 +244,11 @@
       ${packTiles()}
       ${en ? `<div class="section-h">Weitere Orte auf der Reise</div>
       <div class="worlds">${C.worlds.slice(1).map((w) => `<button class="wtile" data-world="${w.id}"><span class="soon">kommt bald</span><span class="e">${w.emoji}</span><b>${esc(w.title)}</b><small>${esc(w.de)} · ${w.stufe === 'gs' ? 'Kl. 3–4' : 'Kl. 5–6'}</small></button>`).join('')}</div>` : ''}
-      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · <a href="datenschutz.html">Datenschutz</a></div>
+      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · <a href="datenschutz.html">Datenschutz</a> · <button class="linkbtn" data-kids-home>🔒 Deine Daten</button></div>
     </div>`);
-    el.querySelector('[data-allapps]').onclick = openAllApps;
-    el.querySelector('[data-settings]').onclick = () => { A.sfx('tap'); settings(); };
+    el.querySelector('[data-kids-home]').onclick = () => { A.sfx('tap'); kidsPrivacy(home); };
+    el.querySelector('[data-allapps]').onclick = () => { A.sfx('tap'); elternTor(openAllApps); };
+    el.querySelector('[data-settings]').onclick = () => { A.sfx('tap'); elternTor(settings); };
     const ps = el.querySelector('[data-pass]'); if (ps) ps.onclick = () => { A.sfx('tap'); passport(); };
     el.querySelectorAll('[data-lang]').forEach((b) => b.onclick = () => {
       if (state.lang === b.dataset.lang) return;
@@ -462,7 +463,7 @@
       if (!cmd) {
         clearTimeout(waiting); el.querySelector('[data-timer]').hidden = true; run.max++;
         A.sfx('squawk'); b.classList.add('wrong'); el.querySelectorAll('.choice').forEach((x) => x.disabled = true);
-        rubySay(el, 'Hihi, reingelegt! 🦜 Ich habe nicht „Ruby says“ gesagt. Macht nichts – weiter!', 'dance');
+        rubySay(el, 'Hihi, reingelegt! 😄 Ich habe nicht „Ruby says“ gesagt. Macht nichts – weiter!', 'dance');
         await sleep(1900); if (alive(tk)) next(); return;
       }
       if (t === target) {
@@ -759,7 +760,6 @@
       <div class="stamp">${ep.emoji}</div>
       <div class="bigstars">${[0, 1, 2].map((k) => `<span style="animation-delay:${0.5 + k * 0.25}s">${k < stars ? '⭐' : '☆'}</span>`).join('')}</div>
       <div class="row center"><button class="btn white" data-explain>💡 Ruby erklärt</button><button class="btn blue" data-home>Zum Hafen ⚓</button></div>
-      ${ep.wg ? `<a class="btn white small" style="text-decoration:none" href="https://wissensgarten.mathenachhilfe-online.com/#paket=${encodeURIComponent(ep.wg)}" target="_blank" rel="noopener">🌻 Wörter wiederholen im Wissensgarten</a>` : ''}
     </div>`);
     setTimeout(() => { A.sfx('stamp'); A.vibrate(60); confetti(120); }, 250);
     el.querySelector('[data-home]').onclick = () => { A.sfx('tap'); home(); };
@@ -821,7 +821,7 @@
   }
 
   /** Datenschutz in Kindersprache (Pflicht 8): kurz, ehrlich, mit Ruby. */
-  function kidsPrivacy() {
+  function kidsPrivacy(zurueck) {
     const punkte = [
       ['🏠', 'Alles, was du hier lernst, bleibt auf <b>diesem Gerät</b>. Wir bekommen deinen Lernstand nicht.'],
       ['🙈', 'Du brauchst <b>kein Konto</b> und keine E-Mail. Deinen Namen musst du nicht verraten – ein Spitzname reicht.'],
@@ -832,27 +832,50 @@
     ];
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">🔒 Deine Daten</div></div>
-      ${ruby('Squawk! Ich passe auf deine Daten auf wie auf meine Federn. 🦜', 'talk')}
+      ${ruby('Squawk! Ich passe auf deine Daten auf wie auf meine Federn. 🪶', 'talk')}
       <div class="card">${punkte.map(([e, t]) => `<div class="set" style="justify-content:flex-start;gap:14px"><span style="font-size:30px">${e}</span><span style="font-weight:600">${t}</span></div>`).join('')}</div>
       <p class="muted" style="margin-top:12px">Für Erwachsene: <a href="datenschutz.html">ausführliche Datenschutzerklärung</a> · <a href="datenblatt-schule.html">Datenblatt für Schulen</a></p>
     </div>`);
-    el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); settings(); };
+    el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); (zurueck || settings)(); };
   }
 
-  function parentGate() {
-    const year = new Date().getFullYear();
-    const bg = h(`<div class="modal-bg"><div class="modal card"><h2 style="font-size:20px">👪 Eltern-Tor</h2>
-      <p class="muted">Dieser Bereich ist für Erwachsene. Bitte gib dein Geburtsjahr ein.</p>
-      <input class="input" inputmode="numeric" maxlength="4" placeholder="z. B. 1985"><div class="err"></div>
-      <div class="row" style="margin-top:8px"><button class="btn white" data-x>Abbrechen</button><button class="btn blue" data-ok>Weiter</button></div></div></div>`);
+  // ------------------------------------------------------------------ Eltern-Tor (gemeinsamer Standard ELTERN-TOR der AppZentrale)
+  // Malaufgabe 13–19 × 6–9 in Worten, mit Vorlese-Knopf, Eingabe über eigene Ziffern-Tastatur. Nach einem Fehler sofort eine
+  // neue Aufgabe. Kein Zeitdruck, jederzeit abbrechen. Gelöst = 10 Minuten offen (nur im Arbeitsspeicher).
+  const ZAHLWORT = { 6: 'sechs', 7: 'sieben', 8: 'acht', 9: 'neun', 13: 'dreizehn', 14: 'vierzehn', 15: 'fünfzehn', 16: 'sechzehn', 17: 'siebzehn', 18: 'achtzehn', 19: 'neunzehn' };
+  let torOffenBis = 0;
+  function elternTor(dann) {
+    if (Date.now() < torOffenBis) { dann(); return; }
+    let a; let b; let eingabe = '';
+    const bg = h(`<div class="modal-bg"><div class="modal card tor" role="dialog" aria-labelledby="tor-t">
+      <h2 id="tor-t" style="font-size:20px">👪 Eltern-Tor</h2>
+      <p class="muted">Dieser Bereich ist für Erwachsene. Bitte rechne:</p>
+      <div class="tor-aufgabe"><b data-aufgabe aria-live="polite"></b><button class="slowbtn" data-vorlesen aria-label="Aufgabe vorlesen">🔊</button></div>
+      <div class="tor-eingabe" data-eingabe aria-label="Deine Eingabe">&nbsp;</div><div class="err" data-err></div>
+      <div class="tor-tasten">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((z) => `<button class="tor-taste" data-z="${z}" aria-label="${z}">${z}</button>`).join('')}
+        <button class="tor-taste" data-weg aria-label="Löschen">⌫</button><button class="tor-taste" data-z="0" aria-label="0">0</button><button class="tor-taste ok" data-ok aria-label="Bestätigen">OK</button></div>
+      <div class="row" style="margin-top:8px"><button class="btn white" data-x>Abbrechen</button></div></div></div>`);
     document.body.appendChild(bg);
-    bg.querySelector('[data-x]').onclick = () => bg.remove();
-    bg.querySelector('[data-ok]').onclick = () => {
-      const y = parseInt(bg.querySelector('input').value, 10);
-      if (!(y >= 1900 && y <= year - 18)) { bg.querySelector('.err').textContent = 'Dieser Bereich ist nur für Erwachsene.'; A.sfx('soft'); return; }
-      bg.remove(); zaehlen('elternbereich'); parents();
+    const neu = (hinweis) => {
+      a = 13 + Math.floor(Math.random() * 7); b = 6 + Math.floor(Math.random() * 4); eingabe = '';
+      const t = `${ZAHLWORT[a]} mal ${ZAHLWORT[b]}`;
+      const auf = bg.querySelector('[data-aufgabe]'); auf.textContent = t[0].toUpperCase() + t.slice(1); auf.setAttribute('aria-label', 'Aufgabe: ' + t);
+      if (DIAG) bg.querySelector('.tor').dataset.loesung = a * b;
+      bg.querySelector('[data-eingabe]').innerHTML = '&nbsp;'; bg.querySelector('[data-err]').textContent = hinweis || '';
     };
+    const zeig = () => { bg.querySelector('[data-eingabe]').textContent = eingabe || ' '; };
+    bg.querySelectorAll('[data-z]').forEach((t) => t.onclick = () => { if (eingabe.length < 4) { eingabe += t.dataset.z; zeig(); A.sfx('tap'); } });
+    bg.querySelector('[data-weg]').onclick = () => { eingabe = eingabe.slice(0, -1); zeig(); A.sfx('tap'); };
+    bg.querySelector('[data-vorlesen]').onclick = () => { A.sfx('tap'); speak(`${ZAHLWORT[a]} mal ${ZAHLWORT[b]}`, 'de'); };
+    bg.querySelector('[data-x]').onclick = () => { A.sfx('tap'); bg.remove(); };
+    bg.querySelector('[data-ok]').onclick = () => {
+      if (!eingabe) return;
+      if (+eingabe !== a * b) { A.sfx('soft'); neu('Das stimmt leider nicht. Hier ist eine neue Aufgabe.'); return; }
+      bg.remove(); torOffenBis = Date.now() + 10 * 60 * 1000; zaehlen('elternbereich'); dann();
+    };
+    neu();
   }
+  function parentGate() { elternTor(parents); }
 
   /** Nachhilfe-Hinweis (Auftrag C1): nur hier hinter dem Eltern-Tor, nur wenn ein Fach hakt, je Fach höchstens alle 14 Tage. */
   function nachhilfeHinweis() {

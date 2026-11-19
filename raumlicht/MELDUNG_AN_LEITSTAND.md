@@ -2,6 +2,22 @@
 
 Neueste oben.
 
+## 19.11.2026 – 2.18.34 auf test: Eltern-Tor vor dem Shop, Lux wirbt nicht mehr (Marcel hat hier selbst „ja“ gesagt – zu meinem Vorschlag, nicht zur vollen gemeinsamen Vorgabe)
+
+**Umgesetzt (Entscheidung „wie Mathe-Trainer“):**
+- `ElternTor` / `ElternTorDialog`: Malaufgabe 13–19 × 6–9 **in Worten** („siebzehn mal acht“), eigene Ziffern-Tastatur (keine Auswahlknöpfe, kein Textfeld), nach **einem** Fehler sofort eine neue Aufgabe, kein Zeitdruck, „Abbrechen“ jederzeit, Beschreibungen für Bildschirmleser. Nach dem Lösen 10 Minuten offen, nur im Arbeitsspeicher.
+- Hinter dem Tor: „Zum Shop: Raumlicht Pro“ (`ProScreen.kt`) und „Zum Shop: KI-Abi-Pass“ (`KiScreen.kt`). Hinweis im Tor und unter den Knöpfen: „Wer unter 18 ist, kauft nicht selbst.“ Preise und sachliche Infos bleiben sichtbar.
+- Lux nach 3 KI-Proben: nur „Deine 3 Proben sind aufgebraucht.“ – kein Hinweis auf den Pass, der Knopf „KI dazubuchen“ ist entfernt. Die KI-Seite bleibt über die Einstellungen erreichbar.
+- Zählung: neues Ereignis `elternbereich` (ohne Ort/Thema), wenn das Tor gelöst wird. **Bitte in die Positivliste des Zählers aufnehmen.**
+
+**Bewusst NICHT hinter dem Tor – mit Marcel so abgesprochen:**
+- Eltern-Kopplung (bei Raumlicht koppelt die Schülerin bzw. der Schüler selbst: „Du entscheidest, ob deine Eltern mitlesen“),
+- „← Alle Apps“, die Links „Mehr üben im Mathe-Trainer“, der Probestunden-Hinweis.
+- Kein Vorlese-Knopf sichtbar: Das Vorlesen ist in Raumlicht seit 2.18.14 abgeschaltet; der Knopf ist gebaut und erscheint, sobald es wieder eine Stimme gibt.
+- Hinweis von mir an Marcel (er kennt ihn): Eine Malaufgabe hält Oberstufenschüler kaum auf; das Tor ist hier eher ein deutlicher Hinweis als eine Hürde.
+
+**Geprüft:** `ElternTorTest` (alle 28 Aufgaben, Worte ohne Ziffern, neue Aufgabe nach Fehler, 10 Minuten), `AppRootTest.elternTorVorDemShop` (falsch → neue Aufgabe und nichts geht auf; richtig → Tor auf, gezählt; 10 Minuten offen; danach wieder zu; Abbrechen), `kiTutor` (kein Pass-Hinweis, kein Kauf-Knopf). Bild: `screenshots/94_eltern_tor.png`. Enthält 2.18.33 unverändert (Umzug).
+
 ## 19.11.2026 – 2.18.33: Umzugs-Version für lernen.mathenachhilfe-online.com/raumlicht/ (Marcel hat hier selbst „Ja ja“ gesagt: Umzug heute, Reihenfolge erst 2.18.32 live, dann diese)
 
 **Dieselbe Fassung läuft alt und neu.** Enthält alles aus 2.18.29–2.18.32.

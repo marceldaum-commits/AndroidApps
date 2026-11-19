@@ -1,12 +1,24 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
-## 0.4.0 – Lernpfad: eine Sprache von Anfang an lernen (19.11.2026)
-- Neu für Englisch, Französisch und Spanisch: ein Lernpfad zum Neulernen einer Sprache – auch ohne Schulunterricht.
-- Abschnitt 1 „Erste Schritte“ mit 8 Einheiten: Hallo, Ich bin …, Zahlen, Farben, Familie, Tiere, Essen, Schule.
-- Jede Einheit hat 5 kurze Lektionen (je 3–5 Minuten): neue Wörter kennenlernen (Karten umdrehen und anhören), Wörter üben, eine Regel selbst entdecken und Sätze im Satz-Zug bauen, zuhören und nachsprechen, eine kleine Geschichte verstehen.
-- Für jede geschaffte Einheit gibt es eine Krone 👑; danach öffnet sich die nächste. Keine Leben, keine Strafen.
-- Wörter aus früheren Einheiten kommen gemischt wieder dran, damit nichts vergessen wird.
-- Alle Wörter, Sätze und Geschichten sind vorgelesen (Figuren mit eigener Stimme). Die Spracherkennung beim Nachsprechen versteht jetzt auch Französisch und Spanisch – weiterhin nur auf dem Gerät.
+## 0.4.0 – Lernpfad mit neuen Spielen, alle Karten geprüft (19.11.2026)
+**Neu: Eine Sprache von Anfang an lernen** (Englisch, Französisch, Spanisch)
+- Lernpfad mit 2 Abschnitten („Erste Schritte“ und „Mein Alltag“) zu je 8 Einheiten – Hallo, Zahlen, Farben, Familie, Tiere, Essen, Schule, Körper, Kleidung, Zuhause, Uhrzeit, Wochentage, Hobbys, Wetter und mehr.
+- Jede Einheit hat 5 kurze Lektionen mit neuen Spielen statt Karteikarten:
+  - 🔍 **Wimmelbild:** Die neuen Wörter verstecken sich in einem Bild – entdecken, anhören, dann nach Gehör wiederfinden.
+  - 🖐️ **Mach, was ich sage!** „Give Mia three fish.“ – das Kind zieht die richtigen Dinge zur richtigen Person. Verstehen durch Tun.
+  - 🎓 **Ruby lernt von dir:** Ruby schreibt einen Satz mit Fehler an die Tafel, das Kind findet ihn und bringt Ruby das richtige Wort bei.
+  - 🚂 Sätze bauen, 💡 Regeln selbst entdecken, 🎤 nachsprechen, 📖 kleine Geschichten verstehen.
+- 🏝️ **Meine Insel:** Jedes gelernte Wort zieht auf die eigene Insel – frei anordnen, antippen, anhören. Ruby fragt: „Wo ist …?“
+- Für jede Einheit eine Krone 👑. Keine Leben, keine Strafen, keine Werbung.
+
+**Geprüft und verbessert**
+- Jede einzelne Karte wurde geprüft (über 1.900 Einträge): über 100 Korrekturen, darunter Bilder, die auf eine falsche Antwort zeigten oder die Lösung verrieten (z. B. ein Schiff beim „Schaf“).
+- Alle englischen Figuren sprechen jetzt mit Rubys Stimme. Zählreihen („One, two, three“) werden mit Pausen deutlich gesprochen. Jede Aufnahme wird doppelt automatisch geprüft.
+- Buchstaben-Bau nur noch bei eindeutigen Aufgaben; bei Rechtschreib-Karten wird das Wort vorgesprochen.
+
+**Für Eltern**
+- Neues Eltern-Tor: eine Rechenaufgabe in Worten (z. B. „siebzehn mal acht“) statt Geburtsjahr. Es schützt Elternbereich, Einstellungen und Links nach außen; danach ist es 10 Minuten offen.
+- „Deine Daten – kurz erklärt“ für Kinder jetzt direkt auf der Startseite.
 
 ## 0.3.3 – Klassenarbeits-Generalprobe (19.11.2026)
 - „📝 Mein Test ist am …“: Datum der Klassenarbeit oder des Vokabeltests eintragen und auswählen, was drankommt (Pakete oder eigene Schulbuch-Listen).

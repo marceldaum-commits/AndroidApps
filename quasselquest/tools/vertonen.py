@@ -102,7 +102,7 @@ GLEICHKLANG = {'two': {'to', 'too'}, 'four': {'for'}, 'eight': {'ate'}, 'one': {
 
 
 def woerter(t):
-    t = t.lower().replace('’', "'")
+    t = t.lower().replace('’', "'").replace('mr.', 'mr').replace('mister', 'mr')
     t = unicodedata.normalize('NFD', t)
     t = ''.join(ch for ch in t if unicodedata.category(ch) != 'Mn')   # Akzente egal (é = e)
     return [ZIFFERN.get(w, w) for w in re.sub(r"[^a-z0-9ß' ]", ' ', t).split()]
@@ -148,6 +148,7 @@ class Pruefer:
         torch, P, M = self.m['w2v']
         raw = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', mp3, '-f', 's16le', '-ac', '1', '-ar', '16000', '-'])
         a = self.np.frombuffer(raw, self.np.int16).astype(self.np.float32) / 32768.0
+        a = self.np.concatenate([self.np.zeros(4000, self.np.float32), a])   # 0,25 s Stille vorn – wie der Vorlauf in der App
         with torch.no_grad():
             ids = M(P(a, sampling_rate=16000, return_tensors='pt').input_values).logits.argmax(-1)
         return P.batch_decode(ids)[0].lower()
@@ -158,6 +159,7 @@ class Pruefer:
             self.m[name] = self.W(name, device='cpu', compute_type='int8')
         raw = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', mp3, '-f', 's16le', '-ac', '1', '-ar', '16000', '-'])
         a = self.np.frombuffer(raw, self.np.int16).astype(self.np.float32) / 32768.0
+        a = self.np.concatenate([self.np.zeros(4000, self.np.float32), a])
         return ' '.join(x.text for x in self.m[name].transcribe(a, language=sprache, beam_size=1)[0]).strip()
 
 
