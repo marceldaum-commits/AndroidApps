@@ -823,12 +823,12 @@
   /** Datenschutz in Kindersprache (Pflicht 8): kurz, ehrlich, mit Ruby. */
   function kidsPrivacy(zurueck) {
     const punkte = [
-      ['🏠', 'Alles, was du hier lernst, bleibt auf <b>diesem Gerät</b>. Wir bekommen deinen Lernstand nicht.'],
+      ['🏠', 'Deine Antworten, dein Name und dein Lernstand bleiben auf <b>diesem Gerät</b>. Wir bekommen sie nicht.'],
       ['🙈', 'Du brauchst <b>kein Konto</b> und keine E-Mail. Deinen Namen musst du nicht verraten – ein Spitzname reicht.'],
-      ['🎤', 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme wird nach dem Anhören gelöscht.'],
-      ['🚫', 'Hier gibt es <b>keine Werbung</b>. Wir zählen nur, wie oft die App geöffnet wird – aber nie, wer du bist oder was du lernst.'],
+      ['🎤', 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme bleibt auf dem Gerät und wird nach dem Anhören gelöscht. Nur wenn deine Eltern es erlauben, darf die Spracherkennung deines Browsers übers Internet mithelfen.'],
+      ['🚫', 'Hier gibt es <b>keine Werbung</b>. Wir zählen nur anonym, wie oft die App genutzt wird – ohne deinen Namen und ohne das, was du lernst.'],
       ['📒', 'Deine eigenen Wortlisten bleiben auch nur hier auf dem Gerät.'],
-      ['👪', 'Manche Dinge (zum Beispiel das Eltern-Handy koppeln) dürfen nur deine Eltern einschalten. Frag sie, wenn du etwas wissen willst!'],
+      ['👪', 'Manche Dinge, zum Beispiel das Koppeln mit dem Handy deiner Eltern, können nur Erwachsene einschalten.'],
     ];
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">🔒 Deine Daten</div></div>
