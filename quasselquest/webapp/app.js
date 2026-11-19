@@ -1233,11 +1233,13 @@
   function insel(lp) {
     const L = PK.LANGS[lp.sprache]; const dinge = PK.inselDinge(lp, einheitFertig(lp));
     const pos = state.insel[lp.sprache] = state.insel[lp.sprache] || {};
-    dinge.forEach((d, i) => { if (!pos[d.id]) { const p = PK.wimmelPlaetze(dinge.length, 99)[i]; pos[d.id] = { x: p.x, y: p.y }; } });
+    const raster = PK.inselPlaetze(dinge.length);
+    dinge.forEach((d, i) => { if (!pos[d.id]) pos[d.id] = raster[i]; });
+    const hoehe = Math.max(420, Math.ceil(dinge.length / 6) * 78 + 80);
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:24px">🏝️ Meine Insel</div><div class="spacer"></div>${dinge.length >= 4 ? '<button class="btn small blue" data-such>🔍 Ruby fragt</button>' : ''}</div>
       ${ruby(dinge.length ? 'Das ist deine Insel! Jedes Wort, das du gelernt hast, wohnt hier. Zieh die Dinge, wohin du willst – und tipp sie an!' : 'Deine Insel ist noch leer. Schaff deine erste Einheit im Lernpfad – dann ziehen die Wörter hier ein! 🌱')}
-      <div class="insel" data-insel>${dinge.map((d) => `<button class="iding${pos[d.id].x > 66 ? ' rechts' : (pos[d.id].x < 34 ? ' links' : '')}" data-id="${esc(d.id)}" style="left:${pos[d.id].x}%;top:${pos[d.id].y}%">${esc(d.img)}<span class="wlabel" hidden><b>${esc(d.z)}</b><small>${esc(d.de)}</small></span></button>`).join('')}</div></div>`);
+      <div class="insel" data-insel style="height:${hoehe}px">${dinge.map((d) => `<button class="iding${pos[d.id].x > 66 ? ' rechts' : (pos[d.id].x < 34 ? ' links' : '')}" data-id="${esc(d.id)}" style="left:${pos[d.id].x}%;top:${pos[d.id].y}%">${esc(d.img)}<span class="wlabel" hidden><b>${esc(d.z)}</b><small>${esc(d.de)}</small></span></button>`).join('')}</div></div>`);
     el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); save(); home(); };
     const feld = el.querySelector('[data-insel]'); let suche = null;
     el.querySelectorAll('.iding').forEach((b) => {
@@ -1371,7 +1373,7 @@
       const andere = shuffle([...new Set((e.aktionen || []).map((x) => x.ding).concat(e.woerter.map((w) => w[2])).filter((d) => d !== a.ding))]).slice(0, 3);
       const dinge = shuffle(Array.from({ length: n + (n > 1 ? 1 : 0) }, () => a.ding).concat(andere));
       body.innerHTML = `<div class="tpr-befehl"><button class="speaker" data-play aria-label="Anhören">🔊</button><button class="slowbtn" data-slow aria-label="Langsam">🐢</button><span data-text class="tpr-text" hidden>${esc(a.sag)}</span></div>
-        <div class="tpr-leute">${zielLeute.map(([id, F]) => `<div class="tpr-person" data-an="${esc(id)}"${DIAG && id === a.an ? ' data-ziel' : ''}><span class="e">${esc(F.emoji)}</span><b>${esc(F.name)}</b><span class="hand" data-hand></span></div>`).join('')}</div>
+        <div class="tpr-leute">${zielLeute.map(([id, F]) => `<div class="tpr-person" data-an="${esc(id)}"${DIAG && id === a.an ? ' data-ziel' : ''}><span class="e">${id === 'ruby' ? `<span class="mini-ruby">${rubySVG()}</span>` : esc(F.emoji)}</span><b>${esc(F.name)}</b><span class="hand" data-hand></span></div>`).join('')}</div>
         <div class="tpr-dinge">${dinge.map((d, i) => `<button class="tpr-ding" data-i="${i}" data-d="${esc(d)}"${DIAG && d === a.ding ? ' data-ok' : ''}>${esc(d)}</button>`).join('')}</div>
         <button class="quiet" data-zeig>Ich habe es nicht verstanden – zeig mir den Satz</button>`;
       const play = async (slow) => { const b = body.querySelector('[data-play]'); b.classList.add('playing'); await speak(a.sag, L.who, slow ? { slow: true } : null); if (alive(tk)) b.classList.remove('playing'); };
@@ -1421,7 +1423,7 @@
     if (step.mode === 'lehrer') {
       // Ruby lernt von dir: Fehler im Satz finden, richtiges Wort beibringen. Der falsche Satz wird NICHT vorgesprochen.
       const f = step.fehler; const teile = PK.fehlerTeile(f);
-      body.innerHTML = `<div class="lehrer-tafel"><span class="tafel-ruby">🦜</span><div class="tafel-satz">${teile.map((x, i) => `<button class="tafel-wort" data-i="${i}"${DIAG && x.falsch ? ' data-ok' : ''}>${esc(x.t)}</button>`).join(' ')}</div></div>
+      body.innerHTML = `<div class="lehrer-tafel"><span class="tafel-ruby mini-ruby">${rubySVG()}</span><div class="tafel-satz">${teile.map((x, i) => `<button class="tafel-wort" data-i="${i}"${DIAG && x.falsch ? ' data-ok' : ''}>${esc(x.t)}</button>`).join(' ')}</div></div>
         <div class="opts" data-opts hidden></div>`;
       let erster = true; let phase = 'finden';
       body.querySelectorAll('.tafel-wort').forEach((b) => b.onclick = () => {
@@ -1532,7 +1534,7 @@
     const zeige = () => {
       const [f, z, de] = g.zeilen[i]; const F = fig[f] || { name: f, emoji: '🙂', who: L.who };
       const div = document.createElement('div'); div.className = 'chat-zeile ' + (f === g.zeilen[0][0] ? 'links' : 'rechts');
-      div.innerHTML = `<span class="wer" title="${esc(F.name)}">${esc(F.emoji)}</span><button class="blase"><small>${esc(F.name)}</small><b>${esc(z)}</b><span class="de" hidden>${esc(de)}</span></button>`;
+      div.innerHTML = `<span class="wer" title="${esc(F.name)}">${f === 'ruby' ? `<span class="mini-ruby">${rubySVG()}</span>` : esc(F.emoji)}</span><button class="blase"><small>${esc(F.name)}</small><b>${esc(z)}</b><span class="de" hidden>${esc(de)}</span></button>`;
       chat.appendChild(div); try { div.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (err) {}
       div.querySelector('.blase').onclick = () => { A.sfx('tap'); const x = div.querySelector('.de'); x.hidden = !x.hidden; if (F.who) speak(z, F.who); };
       A.sfx('pop'); if (F.who) speak(z, F.who);

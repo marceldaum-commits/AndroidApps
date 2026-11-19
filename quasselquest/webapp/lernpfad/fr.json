@@ -172,7 +172,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Dis bonjour à Hugo.",
+       "de": "Sag Hugo guten Tag.",
+       "ding": "👋",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Dis au revoir à Léa.",
+       "de": "Sag Léa auf Wiedersehen.",
+       "ding": "🚶",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Dis bonne nuit à Ruby.",
+       "de": "Sag Ruby gute Nacht.",
+       "ding": "🌙",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dis merci à Hugo.",
+       "de": "Sag Hugo danke.",
+       "ding": "💐",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Dis salut à Léa.",
+       "de": "Sag Léa hallo.",
+       "ding": "🙋",
+       "anzahl": 1,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Bonjour, je es Ruby.",
+       "richtig": "Bonjour, je suis Ruby.",
+       "wort": "es",
+       "korrektur": "suis",
+       "choices": [
+        "est",
+        "être"
+       ],
+       "tipp": "ich bin = je suis."
+      },
+      {
+       "falsch": "Ça va bon, merci.",
+       "richtig": "Ça va bien, merci.",
+       "wort": "bon",
+       "korrektur": "bien",
+       "choices": [
+        "bonne",
+        "beau"
+       ],
+       "tipp": "Wie es geht, sagt man mit bien."
+      },
+      {
+       "falsch": "Bon nuit, Léa !",
+       "richtig": "Bonne nuit, Léa !",
+       "wort": "Bon",
+       "korrektur": "Bonne",
+       "choices": [
+        "Bons",
+        "Beau"
+       ],
+       "tipp": "nuit ist weiblich – also bonne."
+      },
+      {
+       "falsch": "Merci, Madame Martin. S'il te plaît !",
+       "richtig": "Merci, Madame Martin. S'il vous plaît !",
+       "wort": "te",
+       "korrektur": "vous",
+       "choices": [
+        "tu",
+        "toi"
+       ],
+       "tipp": "Zu Erwachsenen sagt man s'il vous plaît."
+      }
+     ]
     },
     {
      "id": "fr-1-2",
@@ -309,7 +392,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Dis bonjour à la fille.",
+       "de": "Sag dem Mädchen guten Tag.",
+       "ding": "👋",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Dis au revoir au garçon.",
+       "de": "Sag dem Jungen auf Wiedersehen.",
+       "ding": "🚶",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Dis bonne nuit à ton amie Ruby.",
+       "de": "Sag deiner Freundin Ruby gute Nacht.",
+       "ding": "🌙",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dis merci à la fille.",
+       "de": "Sag dem Mädchen danke.",
+       "ding": "💐",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Dis salut au garçon.",
+       "de": "Sag dem Jungen hallo.",
+       "ding": "🙋",
+       "anzahl": 1,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Tu suis mon ami.",
+       "richtig": "Tu es mon ami.",
+       "wort": "suis",
+       "korrektur": "es",
+       "choices": [
+        "est",
+        "être"
+       ],
+       "tipp": "du bist = tu es."
+      },
+      {
+       "falsch": "Je suis un fille.",
+       "richtig": "Je suis une fille.",
+       "wort": "un",
+       "korrektur": "une",
+       "choices": [
+        "le",
+        "des"
+       ],
+       "tipp": "fille ist weiblich – also une."
+      },
+      {
+       "falsch": "Je suis une garçon.",
+       "richtig": "Je suis un garçon.",
+       "wort": "une",
+       "korrektur": "un",
+       "choices": [
+        "la",
+        "ma"
+       ],
+       "tipp": "garçon ist männlich – also un."
+      },
+      {
+       "falsch": "Je appelle Léa.",
+       "richtig": "Je m'appelle Léa.",
+       "wort": "appelle",
+       "korrektur": "m'appelle",
+       "choices": [
+        "appeler",
+        "s'appelle"
+       ],
+       "tipp": "Man sagt: Je m'appelle – ich nenne mich."
+      }
+     ]
     },
     {
      "id": "fr-1-3",
@@ -449,7 +615,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Dis « neuf » à Léa.",
+       "de": "Sag „neun“ zu Léa.",
+       "ding": "9️⃣",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Dis « trois » à Hugo.",
+       "de": "Sag „drei“ zu Hugo.",
+       "ding": "3️⃣",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Dis « dix » à Ruby.",
+       "de": "Sag „zehn“ zu Ruby.",
+       "ding": "🔟",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dis « sept » à Hugo.",
+       "de": "Sag „sieben“ zu Hugo.",
+       "ding": "7️⃣",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Dis « huit » à Léa.",
+       "de": "Sag „acht“ zu Léa.",
+       "ding": "8️⃣",
+       "anzahl": 1,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Tu es dix ans.",
+       "richtig": "Tu as dix ans.",
+       "wort": "es",
+       "korrektur": "as",
+       "choices": [
+        "est",
+        "suis"
+       ],
+       "tipp": "Das Alter hat man: tu as dix ans."
+      },
+      {
+       "falsch": "J'ai dix doigt.",
+       "richtig": "J'ai dix doigts.",
+       "wort": "doigt",
+       "korrektur": "doigts",
+       "choices": [
+        "doigtes",
+        "doigtx"
+       ],
+       "tipp": "Mehr als einer: hinten ein -s."
+      },
+      {
+       "falsch": "Un, deux, trois, compte avec je !",
+       "richtig": "Un, deux, trois, compte avec moi !",
+       "wort": "je",
+       "korrektur": "moi",
+       "choices": [
+        "me",
+        "tu"
+       ],
+       "tipp": "Nach avec sagt man moi."
+      },
+      {
+       "falsch": "J'ai neuf ans. Et tu ?",
+       "richtig": "J'ai neuf ans. Et toi ?",
+       "wort": "tu",
+       "korrektur": "toi",
+       "choices": [
+        "te",
+        "ton"
+       ],
+       "tipp": "„Und du?“ heißt Et toi ?"
+      }
+     ]
     },
     {
      "id": "fr-1-4",
@@ -578,7 +827,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Donne le ballon rouge à Hugo.",
+       "de": "Gib Hugo den roten Ball.",
+       "ding": "🔴",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux ballons bleus à Léa.",
+       "de": "Gib Léa zwei blaue Bälle.",
+       "ding": "🔵",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne le ballon vert à Ruby.",
+       "de": "Gib Ruby den grünen Ball.",
+       "ding": "🟢",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne trois ballons jaunes à Hugo.",
+       "de": "Gib Hugo drei gelbe Bälle.",
+       "ding": "🟡",
+       "anzahl": 3,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne le ballon blanc à Léa.",
+       "de": "Gib Léa den weißen Ball.",
+       "ding": "⚪",
+       "anzahl": 1,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "La ballon est rouge.",
+       "richtig": "Le ballon est rouge.",
+       "wort": "La",
+       "korrektur": "Le",
+       "choices": [
+        "Les",
+        "Une"
+       ],
+       "tipp": "ballon ist männlich – also le."
+      },
+      {
+       "falsch": "La voiture est vert.",
+       "richtig": "La voiture est verte.",
+       "wort": "vert",
+       "korrektur": "verte",
+       "choices": [
+        "verts",
+        "vertes"
+       ],
+       "tipp": "voiture ist weiblich – die Farbe bekommt ein -e."
+      },
+      {
+       "falsch": "Le bateau est rouge et blanche.",
+       "richtig": "Le bateau est rouge et blanc.",
+       "wort": "blanche",
+       "korrektur": "blanc",
+       "choices": [
+        "blancs",
+        "blanches"
+       ],
+       "tipp": "bateau ist männlich – also blanc."
+      },
+      {
+       "falsch": "J'aime la vert.",
+       "richtig": "J'aime le vert.",
+       "wort": "la",
+       "korrektur": "le",
+       "choices": [
+        "les",
+        "une"
+       ],
+       "tipp": "Farben sind männlich: le vert."
+      }
+     ]
     },
     {
      "id": "fr-1-5",
@@ -717,7 +1049,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Donne le bébé à Léa.",
+       "de": "Gib Léa das Baby.",
+       "ding": "👶",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne un bateau à Hugo.",
+       "de": "Gib Hugo ein Boot.",
+       "ding": "⛵",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne le ballon noir à Ruby.",
+       "de": "Gib Ruby den schwarzen Ball.",
+       "ding": "⚫",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne quatre ballons orange à Hugo.",
+       "de": "Gib Hugo vier orange Bälle.",
+       "ding": "🟠",
+       "anzahl": 4,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne cinq ballons verts à Léa.",
+       "de": "Gib Léa fünf grüne Bälle.",
+       "ding": "🟢",
+       "anzahl": 5,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "C'est mon mère.",
+       "richtig": "C'est ma mère.",
+       "wort": "mon",
+       "korrektur": "ma",
+       "choices": [
+        "mes",
+        "me"
+       ],
+       "tipp": "mère ist weiblich – also ma."
+      },
+      {
+       "falsch": "C'est ma frère Théo.",
+       "richtig": "C'est mon frère Théo.",
+       "wort": "ma",
+       "korrektur": "mon",
+       "choices": [
+        "mes",
+        "me"
+       ],
+       "tipp": "frère ist männlich – also mon."
+      },
+      {
+       "falsch": "J'ai un sœur.",
+       "richtig": "J'ai une sœur.",
+       "wort": "un",
+       "korrektur": "une",
+       "choices": [
+        "le",
+        "des"
+       ],
+       "tipp": "sœur ist weiblich – also une."
+      },
+      {
+       "falsch": "Il est six ans.",
+       "richtig": "Il a six ans.",
+       "wort": "est",
+       "korrektur": "a",
+       "choices": [
+        "es",
+        "suis"
+       ],
+       "tipp": "Das Alter hat man: il a six ans."
+      }
+     ]
     },
     {
      "id": "fr-1-6",
@@ -848,7 +1263,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Donne trois poissons à Léa.",
+       "de": "Gib Léa drei Fische.",
+       "ding": "🐟",
+       "anzahl": 3,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne un chien à Hugo.",
+       "de": "Gib Hugo einen Hund.",
+       "ding": "🐶",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux lapins à Ruby.",
+       "de": "Gib Ruby zwei Kaninchen.",
+       "ding": "🐰",
+       "anzahl": 2,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne une souris à Léa.",
+       "de": "Gib Léa eine Maus.",
+       "ding": "🐭",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne un chat à Hugo.",
+       "de": "Gib Hugo eine Katze.",
+       "ding": "🐱",
+       "anzahl": 1,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "J'ai une chien.",
+       "richtig": "J'ai un chien.",
+       "wort": "une",
+       "korrektur": "un",
+       "choices": [
+        "la",
+        "des"
+       ],
+       "tipp": "chien ist männlich – also un."
+      },
+      {
+       "falsch": "La chat est noir.",
+       "richtig": "Le chat est noir.",
+       "wort": "La",
+       "korrektur": "Le",
+       "choices": [
+        "Les",
+        "Une"
+       ],
+       "tipp": "Im Französischen ist die Katze männlich: le chat."
+      },
+      {
+       "falsch": "J'ai un souris.",
+       "richtig": "J'ai une souris.",
+       "wort": "un",
+       "korrektur": "une",
+       "choices": [
+        "le",
+        "des"
+       ],
+       "tipp": "souris ist weiblich – also une."
+      },
+      {
+       "falsch": "J'ai deux chevals.",
+       "richtig": "J'ai deux chevaux.",
+       "wort": "chevals",
+       "korrektur": "chevaux",
+       "choices": [
+        "chevales",
+        "cheval"
+       ],
+       "tipp": "Zwei Pferde: deux chevaux – mit -aux."
+      }
+     ]
     },
     {
      "id": "fr-1-7",
@@ -982,7 +1480,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Donne une pizza à Hugo.",
+       "de": "Gib Hugo eine Pizza.",
+       "ding": "🍕",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux bananes à Léa.",
+       "de": "Gib Léa zwei Bananen.",
+       "ding": "🍌",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne trois pommes à Ruby.",
+       "de": "Gib Ruby drei Äpfel.",
+       "ding": "🍎",
+       "anzahl": 3,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne du fromage à Hugo.",
+       "de": "Gib Hugo etwas Käse.",
+       "ding": "🧀",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne du jus à Léa.",
+       "de": "Gib Léa etwas Saft.",
+       "ding": "🧃",
+       "anzahl": 1,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Je n'aime non le lait.",
+       "richtig": "Je n'aime pas le lait.",
+       "wort": "non",
+       "korrektur": "pas",
+       "choices": [
+        "ne",
+        "rien"
+       ],
+       "tipp": "Die Klammer heißt ne … pas."
+      },
+      {
+       "falsch": "Tu es faim ?",
+       "richtig": "Tu as faim ?",
+       "wort": "es",
+       "korrektur": "as",
+       "choices": [
+        "est",
+        "suis"
+       ],
+       "tipp": "Hunger hat man: tu as faim."
+      },
+      {
+       "falsch": "J'aime la fromage.",
+       "richtig": "J'aime le fromage.",
+       "wort": "la",
+       "korrektur": "le",
+       "choices": [
+        "les",
+        "une"
+       ],
+       "tipp": "fromage ist männlich – also le."
+      },
+      {
+       "falsch": "J'aime le pizza.",
+       "richtig": "J'aime la pizza.",
+       "wort": "le",
+       "korrektur": "la",
+       "choices": [
+        "les",
+        "un"
+       ],
+       "tipp": "pizza ist weiblich – also la."
+      }
+     ]
     },
     {
      "id": "fr-1-8",
@@ -1124,7 +1705,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Donne un crayon à Hugo.",
+       "de": "Gib Hugo einen Bleistift.",
+       "ding": "✏️",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux livres à Léa.",
+       "de": "Gib Léa zwei Bücher.",
+       "ding": "📕",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne une chaise à Ruby.",
+       "de": "Gib Ruby einen Stuhl.",
+       "ding": "🪑",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Donne un stylo à Léa.",
+       "de": "Gib Léa einen Kuli.",
+       "ding": "🖊️",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne un sac à Hugo.",
+       "de": "Gib Hugo eine Tasche.",
+       "ding": "🎒",
+       "anzahl": 1,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Ouvre ta livre, s'il te plaît.",
+       "richtig": "Ouvre ton livre, s'il te plaît.",
+       "wort": "ta",
+       "korrektur": "ton",
+       "choices": [
+        "tes",
+        "te"
+       ],
+       "tipp": "livre ist männlich – also ton."
+      },
+      {
+       "falsch": "J'ai une crayon.",
+       "richtig": "J'ai un crayon.",
+       "wort": "une",
+       "korrektur": "un",
+       "choices": [
+        "la",
+        "des"
+       ],
+       "tipp": "crayon ist männlich – also un."
+      },
+      {
+       "falsch": "Où est ma sac ?",
+       "richtig": "Où est mon sac ?",
+       "wort": "ma",
+       "korrektur": "mon",
+       "choices": [
+        "mes",
+        "me"
+       ],
+       "tipp": "sac ist männlich – also mon."
+      },
+      {
+       "falsch": "Ouvrir ton livre, s'il te plaît.",
+       "richtig": "Ouvre ton livre, s'il te plaît.",
+       "wort": "Ouvrir",
+       "korrektur": "Ouvre",
+       "choices": [
+        "Ouvert",
+        "Ouvrent"
+       ],
+       "tipp": "Eine Aufforderung ist die tu-Form ohne tu: Ouvre !"
+      }
+     ]
     }
    ]
   }

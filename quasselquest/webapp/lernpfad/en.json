@@ -174,7 +174,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Say hello to Sam.",
+       "de": "Sag Sam Hallo.",
+       "ding": "👋",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "Say goodbye to Mia.",
+       "de": "Sag Mia tschüss.",
+       "ding": "🚶",
+       "anzahl": 1,
+       "an": "mia"
+      },
+      {
+       "sag": "Say good morning to Grandpa Ted.",
+       "de": "Sag Opa Ted guten Morgen.",
+       "ding": "🌅",
+       "anzahl": 1,
+       "an": "ted"
+      },
+      {
+       "sag": "Say good night to Ruby.",
+       "de": "Sag Ruby gute Nacht.",
+       "ding": "🌙",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Say thank you to Mia.",
+       "de": "Sag Mia danke.",
+       "ding": "💐",
+       "anzahl": 1,
+       "an": "mia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "How is you?",
+       "richtig": "How are you?",
+       "wort": "is",
+       "korrektur": "are",
+       "choices": [
+        "am",
+        "be"
+       ],
+       "tipp": "Bei you heißt es immer are."
+      },
+      {
+       "falsch": "I'm fine, thanks you.",
+       "richtig": "I'm fine, thank you.",
+       "wort": "thanks",
+       "korrektur": "thank",
+       "choices": [
+        "thanking",
+        "thanked"
+       ],
+       "tipp": "Es heißt thank you – ohne s."
+      },
+      {
+       "falsch": "Hello, I is Ruby.",
+       "richtig": "Hello, I am Ruby.",
+       "wort": "is",
+       "korrektur": "am",
+       "choices": [
+        "are",
+        "be"
+       ],
+       "tipp": "Bei I heißt es immer am."
+      },
+      {
+       "falsch": "Goodbye, see you bald!",
+       "richtig": "Goodbye, see you soon!",
+       "wort": "bald",
+       "korrektur": "soon",
+       "choices": [
+        "sun",
+        "son"
+       ],
+       "tipp": "„bald“ heißt auf Englisch soon."
+      }
+     ]
     },
     {
      "id": "en-1-2",
@@ -309,7 +392,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Say hello to the girl.",
+       "de": "Sag dem Mädchen Hallo.",
+       "ding": "👋",
+       "anzahl": 1,
+       "an": "mia"
+      },
+      {
+       "sag": "Say goodbye to the boy.",
+       "de": "Sag dem Jungen tschüss.",
+       "ding": "🚶",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "Say good morning to the man.",
+       "de": "Sag dem Mann guten Morgen.",
+       "ding": "🌅",
+       "anzahl": 1,
+       "an": "ted"
+      },
+      {
+       "sag": "Say good night to your friend Ruby.",
+       "de": "Sag deiner Freundin Ruby gute Nacht.",
+       "ding": "🌙",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Say thank you to the boy.",
+       "de": "Sag dem Jungen danke.",
+       "ding": "💐",
+       "anzahl": 1,
+       "an": "sam"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "You is my friend.",
+       "richtig": "You are my friend.",
+       "wort": "is",
+       "korrektur": "are",
+       "choices": [
+        "am",
+        "be"
+       ],
+       "tipp": "Du bist = you are."
+      },
+      {
+       "falsch": "My name are Mia.",
+       "richtig": "My name is Mia.",
+       "wort": "are",
+       "korrektur": "is",
+       "choices": [
+        "am",
+        "be"
+       ],
+       "tipp": "Der Name ist nur einer – also is."
+      },
+      {
+       "falsch": "What's you name?",
+       "richtig": "What's your name?",
+       "wort": "you",
+       "korrektur": "your",
+       "choices": [
+        "yours",
+        "I"
+       ],
+       "tipp": "dein = your, mit r am Ende."
+      },
+      {
+       "falsch": "You are me friend.",
+       "richtig": "You are my friend.",
+       "wort": "me",
+       "korrektur": "my",
+       "choices": [
+        "I",
+        "mine"
+       ],
+       "tipp": "mein = my."
+      }
+     ]
     },
     {
      "id": "en-1-3",
@@ -448,7 +614,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Say “nine” to Mia.",
+       "de": "Sag „neun“ zu Mia.",
+       "ding": "9️⃣",
+       "anzahl": 1,
+       "an": "mia"
+      },
+      {
+       "sag": "Say “three” to Sam.",
+       "de": "Sag „drei“ zu Sam.",
+       "ding": "3️⃣",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "Say “ten” to Ruby.",
+       "de": "Sag „zehn“ zu Ruby.",
+       "ding": "🔟",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Say “six” to Grandpa Ted.",
+       "de": "Sag „sechs“ zu Opa Ted.",
+       "ding": "6️⃣",
+       "anzahl": 1,
+       "an": "ted"
+      },
+      {
+       "sag": "Give Mia two boats.",
+       "de": "Gib Mia zwei Boote.",
+       "ding": "⛵",
+       "anzahl": 2,
+       "an": "mia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "I have ten finger.",
+       "richtig": "I have ten fingers.",
+       "wort": "finger",
+       "korrektur": "fingers",
+       "choices": [
+        "fingeres",
+        "fingern"
+       ],
+       "tipp": "Mehr als eins: hinten kommt ein -s dran."
+      },
+      {
+       "falsch": "I'm eight year old.",
+       "richtig": "I'm eight years old.",
+       "wort": "year",
+       "korrektur": "years",
+       "choices": [
+        "yeares",
+        "jahre"
+       ],
+       "tipp": "Acht Jahre sind mehr als eins – also years."
+      },
+      {
+       "falsch": "How old is you?",
+       "richtig": "How old are you?",
+       "wort": "is",
+       "korrektur": "are",
+       "choices": [
+        "am",
+        "be"
+       ],
+       "tipp": "Bei you heißt es immer are."
+      },
+      {
+       "falsch": "I has ten fingers.",
+       "richtig": "I have ten fingers.",
+       "wort": "has",
+       "korrektur": "have",
+       "choices": [
+        "haves",
+        "is"
+       ],
+       "tipp": "Bei I heißt es have."
+      }
+     ]
     },
     {
      "id": "en-1-4",
@@ -582,7 +831,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Give Sam the red ball.",
+       "de": "Gib Sam den roten Ball.",
+       "ding": "🔴",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Mia two blue balls.",
+       "de": "Gib Mia zwei blaue Bälle.",
+       "ding": "🔵",
+       "anzahl": 2,
+       "an": "mia"
+      },
+      {
+       "sag": "Give the green ball to Ruby.",
+       "de": "Gib Ruby den grünen Ball.",
+       "ding": "🟢",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Grandpa Ted three yellow balls.",
+       "de": "Gib Opa Ted drei gelbe Bälle.",
+       "ding": "🟡",
+       "anzahl": 3,
+       "an": "ted"
+      },
+      {
+       "sag": "Give Mia the black ball.",
+       "de": "Gib Mia den schwarzen Ball.",
+       "ding": "⚫",
+       "anzahl": 1,
+       "an": "mia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "I have two reds balls.",
+       "richtig": "I have two red balls.",
+       "wort": "reds",
+       "korrektur": "red",
+       "choices": [
+        "redes",
+        "rote"
+       ],
+       "tipp": "Die Farbe ändert sich nie – red bleibt red."
+      },
+      {
+       "falsch": "The sun is gelb.",
+       "richtig": "The sun is yellow.",
+       "wort": "gelb",
+       "korrektur": "yellow",
+       "choices": [
+        "yello",
+        "jellow"
+       ],
+       "tipp": "gelb heißt auf Englisch yellow."
+      },
+      {
+       "falsch": "What colour are it?",
+       "richtig": "What colour is it?",
+       "wort": "are",
+       "korrektur": "is",
+       "choices": [
+        "am",
+        "be"
+       ],
+       "tipp": "Bei it heißt es is."
+      },
+      {
+       "falsch": "I likes green.",
+       "richtig": "I like green.",
+       "wort": "likes",
+       "korrektur": "like",
+       "choices": [
+        "liking",
+        "likest"
+       ],
+       "tipp": "Bei I kommt kein -s ans Verb."
+      }
+     ]
     },
     {
      "id": "en-1-5",
@@ -716,7 +1048,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Give the baby to Grandpa Ted.",
+       "de": "Gib Opa Ted das Baby.",
+       "ding": "👶",
+       "anzahl": 1,
+       "an": "ted"
+      },
+      {
+       "sag": "Give Mia an apple.",
+       "de": "Gib Mia einen Apfel.",
+       "ding": "🍎",
+       "anzahl": 1,
+       "an": "mia"
+      },
+      {
+       "sag": "Give Sam the red ball.",
+       "de": "Gib Sam den roten Ball.",
+       "ding": "🔴",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Ruby two boats.",
+       "de": "Gib Ruby zwei Boote.",
+       "ding": "⛵",
+       "anzahl": 2,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Mia three yellow balls.",
+       "de": "Gib Mia drei gelbe Bälle.",
+       "ding": "🟡",
+       "anzahl": 3,
+       "an": "mia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "I have an sister.",
+       "richtig": "I have a sister.",
+       "wort": "an",
+       "korrektur": "a",
+       "choices": [
+        "on",
+        "in"
+       ],
+       "tipp": "sister fängt mit s an – also a."
+      },
+      {
+       "falsch": "I have a apple.",
+       "richtig": "I have an apple.",
+       "wort": "a",
+       "korrektur": "an",
+       "choices": [
+        "and",
+        "on"
+       ],
+       "tipp": "apple fängt mit a an – also an."
+      },
+      {
+       "falsch": "My grandpa are funny.",
+       "richtig": "My grandpa is funny.",
+       "wort": "are",
+       "korrektur": "is",
+       "choices": [
+        "am",
+        "be"
+       ],
+       "tipp": "Bei einer Person heißt es is."
+      },
+      {
+       "falsch": "This is my brother Ben. She is six.",
+       "richtig": "This is my brother Ben. He is six.",
+       "wort": "She",
+       "korrektur": "He",
+       "choices": [
+        "It",
+        "Her"
+       ],
+       "tipp": "Ben ist ein Junge – also he."
+      }
+     ]
     },
     {
      "id": "en-1-6",
@@ -850,7 +1265,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Give Mia three fish.",
+       "de": "Gib Mia drei Fische.",
+       "ding": "🐟",
+       "anzahl": 3,
+       "an": "mia"
+      },
+      {
+       "sag": "Give Sam a dog.",
+       "de": "Gib Sam einen Hund.",
+       "ding": "🐶",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "Give two rabbits to Grandpa Ted.",
+       "de": "Gib Opa Ted zwei Kaninchen.",
+       "ding": "🐰",
+       "anzahl": 2,
+       "an": "ted"
+      },
+      {
+       "sag": "Give Ruby a mouse.",
+       "de": "Gib Ruby eine Maus.",
+       "ding": "🐭",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Mia a cat.",
+       "de": "Gib Mia eine Katze.",
+       "ding": "🐱",
+       "anzahl": 1,
+       "an": "mia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "I have two mouses.",
+       "richtig": "I have two mice.",
+       "wort": "mouses",
+       "korrektur": "mice",
+       "choices": [
+        "mices",
+        "mouse"
+       ],
+       "tipp": "Zwei Mäuse heißt two mice – ein besonderes Wort."
+      },
+      {
+       "falsch": "I have two rabbit.",
+       "richtig": "I have two rabbits.",
+       "wort": "rabbit",
+       "korrektur": "rabbits",
+       "choices": [
+        "rabbites",
+        "rabbitten"
+       ],
+       "tipp": "Mehr als eins: hinten ein -s."
+      },
+      {
+       "falsch": "Does you have a pet?",
+       "richtig": "Do you have a pet?",
+       "wort": "Does",
+       "korrektur": "Do",
+       "choices": [
+        "Is",
+        "Are"
+       ],
+       "tipp": "Bei you fragt man mit Do."
+      },
+      {
+       "falsch": "I has a cat.",
+       "richtig": "I have a cat.",
+       "wort": "has",
+       "korrektur": "have",
+       "choices": [
+        "haves",
+        "is"
+       ],
+       "tipp": "Bei I heißt es have."
+      }
+     ]
     },
     {
      "id": "en-1-7",
@@ -984,7 +1482,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Give Sam a pizza.",
+       "de": "Gib Sam eine Pizza.",
+       "ding": "🍕",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Mia two bananas.",
+       "de": "Gib Mia zwei Bananen.",
+       "ding": "🍌",
+       "anzahl": 2,
+       "an": "mia"
+      },
+      {
+       "sag": "Give three apples to Ruby.",
+       "de": "Gib Ruby drei Äpfel.",
+       "ding": "🍎",
+       "anzahl": 3,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Grandpa Ted some cheese.",
+       "de": "Gib Opa Ted etwas Käse.",
+       "ding": "🧀",
+       "anzahl": 1,
+       "an": "ted"
+      },
+      {
+       "sag": "Give Mia some juice.",
+       "de": "Gib Mia etwas Saft.",
+       "ding": "🧃",
+       "anzahl": 1,
+       "an": "mia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "I not like milk.",
+       "richtig": "I don't like milk.",
+       "wort": "not",
+       "korrektur": "don't",
+       "choices": [
+        "no",
+        "doesn't"
+       ],
+       "tipp": "Nicht mögen: don't vor das Verb."
+      },
+      {
+       "falsch": "I am hunger.",
+       "richtig": "I am hungry.",
+       "wort": "hunger",
+       "korrektur": "hungry",
+       "choices": [
+        "hungers",
+        "hunged"
+       ],
+       "tipp": "Hungrig sein heißt hungry."
+      },
+      {
+       "falsch": "I don't likes milk.",
+       "richtig": "I don't like milk.",
+       "wort": "likes",
+       "korrektur": "like",
+       "choices": [
+        "liking",
+        "liked"
+       ],
+       "tipp": "Nach don't kommt das Verb ohne -s."
+      },
+      {
+       "falsch": "Can I have some water, bitte?",
+       "richtig": "Can I have some water, please?",
+       "wort": "bitte",
+       "korrektur": "please",
+       "choices": [
+        "pleased",
+        "plea"
+       ],
+       "tipp": "bitte heißt auf Englisch please."
+      }
+     ]
     },
     {
      "id": "en-1-8",
@@ -1125,7 +1706,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Give Sam a pencil.",
+       "de": "Gib Sam einen Bleistift.",
+       "ding": "✏️",
+       "anzahl": 1,
+       "an": "sam"
+      },
+      {
+       "sag": "Give Mia two books.",
+       "de": "Gib Mia zwei Bücher.",
+       "ding": "📕",
+       "anzahl": 2,
+       "an": "mia"
+      },
+      {
+       "sag": "Give Grandpa Ted a chair.",
+       "de": "Gib Opa Ted einen Stuhl.",
+       "ding": "🪑",
+       "anzahl": 1,
+       "an": "ted"
+      },
+      {
+       "sag": "Give the pen to Ruby.",
+       "de": "Gib Ruby den Kuli.",
+       "ding": "🖊️",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Give Sam a bag.",
+       "de": "Gib Sam eine Tasche.",
+       "ding": "🎒",
+       "anzahl": 1,
+       "an": "sam"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Where are my bag?",
+       "richtig": "Where is my bag?",
+       "wort": "are",
+       "korrektur": "is",
+       "choices": [
+        "am",
+        "be"
+       ],
+       "tipp": "Es ist eine Tasche – also is."
+      },
+      {
+       "falsch": "Open you book, please.",
+       "richtig": "Open your book, please.",
+       "wort": "you",
+       "korrektur": "your",
+       "choices": [
+        "yours",
+        "I"
+       ],
+       "tipp": "dein Buch = your book."
+      },
+      {
+       "falsch": "I have a pencils.",
+       "richtig": "I have a pencil.",
+       "wort": "pencils",
+       "korrektur": "pencil",
+       "choices": [
+        "pencilen",
+        "penciles"
+       ],
+       "tipp": "Nach a kommt nur eins – ohne -s."
+      },
+      {
+       "falsch": "Opens your book, please.",
+       "richtig": "Open your book, please.",
+       "wort": "Opens",
+       "korrektur": "Open",
+       "choices": [
+        "Opening",
+        "Opened"
+       ],
+       "tipp": "Eine Aufforderung beginnt mit dem Tu-Wort ohne Endung."
+      }
+     ]
     }
    ]
   }

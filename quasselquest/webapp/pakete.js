@@ -339,6 +339,13 @@
     }
     return mischen(out, rnd);
   };
+  /** Startplätze auf der Insel (in %): 6 Spalten, Zeilen nach unten, leicht versetzt – nichts liegt übereinander. */
+  P.inselPlaetze = (n) => {
+    const cols = 6; const rows = Math.max(1, Math.ceil(n / cols)); const out = [];
+    for (let i = 0; i < n; i++) { const c = i % cols; const r = Math.floor(i / cols);
+      out.push({ x: Math.round((c + 0.5) / cols * 76 + 12 + (r % 2 ? 2 : -2)), y: Math.round((r + 0.5) / rows * 84 + 8) }); }
+    return out;
+  };
   /** „Ruby lernt von dir“: Wörter des falschen Satzes; markiert, welches falsch ist. */
   P.fehlerTeile = (f) => String(f.falsch).trim().split(/\s+/).map((t) => ({ t, falsch: t.replace(/[.,!?¿¡;:»«]/g, '') === f.wort }));
   /** Inselbewohner: alle Wörter fertiger Einheiten (Emoji + Wort + Deutsch). */

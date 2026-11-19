@@ -171,7 +171,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Dile hola a Pablo.",
+       "de": "Sag Pablo hallo.",
+       "ding": "👋",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dile adiós a Lucía.",
+       "de": "Sag Lucía tschüss.",
+       "ding": "🚶",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dile buenos días a Ruby.",
+       "de": "Sag Ruby guten Morgen.",
+       "ding": "🌅",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dile buenas noches a Pablo.",
+       "de": "Sag Pablo gute Nacht.",
+       "ding": "🌙",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale las gracias a Lucía.",
+       "de": "Sag Lucía danke.",
+       "ding": "💐",
+       "anzahl": 1,
+       "an": "lucia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Hola, estoy Ruby.",
+       "richtig": "Hola, soy Ruby.",
+       "wort": "estoy",
+       "korrektur": "soy",
+       "choices": [
+        "estás",
+        "tengo"
+       ],
+       "tipp": "Wer man ist, sagt man mit soy."
+      },
+      {
+       "falsch": "Muy bueno, gracias.",
+       "richtig": "Muy bien, gracias.",
+       "wort": "bueno",
+       "korrektur": "bien",
+       "choices": [
+        "buenos",
+        "bonito"
+       ],
+       "tipp": "Wie es geht, sagt man mit bien."
+      },
+      {
+       "falsch": "¡Buenos noches, Pablo!",
+       "richtig": "¡Buenas noches, Pablo!",
+       "wort": "Buenos",
+       "korrektur": "Buenas",
+       "choices": [
+        "Bueno",
+        "Buena"
+       ],
+       "tipp": "noches ist weiblich – also buenas."
+      },
+      {
+       "falsch": "¡Buenas días, Lucía!",
+       "richtig": "¡Buenos días, Lucía!",
+       "wort": "Buenas",
+       "korrektur": "Buenos",
+       "choices": [
+        "Buena",
+        "Bueno"
+       ],
+       "tipp": "días ist männlich – also buenos."
+      }
+     ]
     },
     {
      "id": "es-1-2",
@@ -307,7 +390,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Dile hola a la niña.",
+       "de": "Sag dem Mädchen hallo.",
+       "ding": "👋",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dile adiós al niño.",
+       "de": "Sag dem Jungen tschüss.",
+       "ding": "🚶",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dile buenas noches a tu amiga Ruby.",
+       "de": "Sag deiner Freundin Ruby gute Nacht.",
+       "ding": "🌙",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dale las gracias a la niña.",
+       "de": "Sag dem Mädchen danke.",
+       "ding": "💐",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dile buenos días al niño.",
+       "de": "Sag dem Jungen guten Morgen.",
+       "ding": "🌅",
+       "anzahl": 1,
+       "an": "pablo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Soy un niña.",
+       "richtig": "Soy una niña.",
+       "wort": "un",
+       "korrektur": "una",
+       "choices": [
+        "el",
+        "uno"
+       ],
+       "tipp": "niña ist weiblich – also una."
+      },
+      {
+       "falsch": "Soy una niño.",
+       "richtig": "Soy un niño.",
+       "wort": "una",
+       "korrektur": "un",
+       "choices": [
+        "uno",
+        "la"
+       ],
+       "tipp": "niño ist männlich – also un."
+      },
+      {
+       "falsch": "Eres yo amigo.",
+       "richtig": "Eres mi amigo.",
+       "wort": "yo",
+       "korrektur": "mi",
+       "choices": [
+        "me",
+        "mis"
+       ],
+       "tipp": "mein = mi."
+      },
+      {
+       "falsch": "Tú soy mi amigo.",
+       "richtig": "Tú eres mi amigo.",
+       "wort": "soy",
+       "korrektur": "eres",
+       "choices": [
+        "es",
+        "estás"
+       ],
+       "tipp": "du bist = tú eres."
+      }
+     ]
     },
     {
      "id": "es-1-3",
@@ -446,7 +612,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Dile «nueve» a Lucía.",
+       "de": "Sag „neun“ zu Lucía.",
+       "ding": "9️⃣",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dile «tres» a Pablo.",
+       "de": "Sag „drei“ zu Pablo.",
+       "ding": "3️⃣",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dile «diez» a Ruby.",
+       "de": "Sag „zehn“ zu Ruby.",
+       "ding": "🔟",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dile «siete» a Pablo.",
+       "de": "Sag „sieben“ zu Pablo.",
+       "ding": "7️⃣",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dile «ocho» a Lucía.",
+       "de": "Sag „acht“ zu Lucía.",
+       "ding": "8️⃣",
+       "anzahl": 1,
+       "an": "lucia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Soy ocho años.",
+       "richtig": "Tengo ocho años.",
+       "wort": "Soy",
+       "korrektur": "Tengo",
+       "choices": [
+        "Estoy",
+        "Es"
+       ],
+       "tipp": "Das Alter hat man: tengo ocho años."
+      },
+      {
+       "falsch": "¿Cuántos años eres?",
+       "richtig": "¿Cuántos años tienes?",
+       "wort": "eres",
+       "korrektur": "tienes",
+       "choices": [
+        "estás",
+        "soy"
+       ],
+       "tipp": "Das Alter hat man: ¿cuántos años tienes?"
+      },
+      {
+       "falsch": "Tengo diez dedo.",
+       "richtig": "Tengo diez dedos.",
+       "wort": "dedo",
+       "korrektur": "dedos",
+       "choices": [
+        "dedoes",
+        "dedes"
+       ],
+       "tipp": "Mehr als einer: hinten ein -s."
+      },
+      {
+       "falsch": "Yo tienes diez años.",
+       "richtig": "Yo tengo diez años.",
+       "wort": "tienes",
+       "korrektur": "tengo",
+       "choices": [
+        "tiene",
+        "soy"
+       ],
+       "tipp": "ich habe = tengo."
+      }
+     ]
     },
     {
      "id": "es-1-4",
@@ -579,7 +828,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Dale la pelota roja a Pablo.",
+       "de": "Gib Pablo den roten Ball.",
+       "ding": "🔴",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale dos pelotas azules a Lucía.",
+       "de": "Gib Lucía zwei blaue Bälle.",
+       "ding": "🔵",
+       "anzahl": 2,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale la pelota verde a Ruby.",
+       "de": "Gib Ruby den grünen Ball.",
+       "ding": "🟢",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dale tres pelotas amarillas a Pablo.",
+       "de": "Gib Pablo drei gelbe Bälle.",
+       "ding": "🟡",
+       "anzahl": 3,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale la pelota blanca a Lucía.",
+       "de": "Gib Lucía den weißen Ball.",
+       "ding": "⚪",
+       "anzahl": 1,
+       "an": "lucia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "La pelota es rojo.",
+       "richtig": "La pelota es roja.",
+       "wort": "rojo",
+       "korrektur": "roja",
+       "choices": [
+        "rojos",
+        "rojas"
+       ],
+       "tipp": "pelota ist weiblich – aus -o wird -a."
+      },
+      {
+       "falsch": "El sol es amarilla.",
+       "richtig": "El sol es amarillo.",
+       "wort": "amarilla",
+       "korrektur": "amarillo",
+       "choices": [
+        "amarillas",
+        "amarillos"
+       ],
+       "tipp": "sol ist männlich – also amarillo."
+      },
+      {
+       "falsch": "El pelota es roja.",
+       "richtig": "La pelota es roja.",
+       "wort": "El",
+       "korrektur": "La",
+       "choices": [
+        "Los",
+        "Un"
+       ],
+       "tipp": "pelota ist weiblich – also la."
+      },
+      {
+       "falsch": "La pelota es verda.",
+       "richtig": "La pelota es verde.",
+       "wort": "verda",
+       "korrektur": "verde",
+       "choices": [
+        "verdo",
+        "verdes"
+       ],
+       "tipp": "verde endet auf -e und bleibt immer gleich."
+      }
+     ]
     },
     {
      "id": "es-1-5",
@@ -713,7 +1045,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Dale el bebé a Lucía.",
+       "de": "Gib Lucía das Baby.",
+       "ding": "👶",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale un barco a Pablo.",
+       "de": "Gib Pablo ein Boot.",
+       "ding": "⛵",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale la pelota negra a Ruby.",
+       "de": "Gib Ruby den schwarzen Ball.",
+       "ding": "⚫",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dale dos pelotas blancas a Pablo.",
+       "de": "Gib Pablo zwei weiße Bälle.",
+       "ding": "⚪",
+       "anzahl": 2,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale cinco pelotas verdes a Lucía.",
+       "de": "Gib Lucía fünf grüne Bälle.",
+       "ding": "🟢",
+       "anzahl": 5,
+       "an": "lucia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Tengo un hermana.",
+       "richtig": "Tengo una hermana.",
+       "wort": "un",
+       "korrektur": "una",
+       "choices": [
+        "uno",
+        "el"
+       ],
+       "tipp": "hermana ist weiblich – also una."
+      },
+      {
+       "falsch": "Esta es mi padre.",
+       "richtig": "Este es mi padre.",
+       "wort": "Esta",
+       "korrektur": "Este",
+       "choices": [
+        "Estas",
+        "Estos"
+       ],
+       "tipp": "padre ist männlich – also este."
+      },
+      {
+       "falsch": "Mi abuelo es divertida.",
+       "richtig": "Mi abuelo es divertido.",
+       "wort": "divertida",
+       "korrektur": "divertido",
+       "choices": [
+        "divertidas",
+        "divertidos"
+       ],
+       "tipp": "abuelo ist männlich – also -o."
+      },
+      {
+       "falsch": "Leo es seis años.",
+       "richtig": "Leo tiene seis años.",
+       "wort": "es",
+       "korrektur": "tiene",
+       "choices": [
+        "está",
+        "tengo"
+       ],
+       "tipp": "Das Alter hat man: tiene seis años."
+      }
+     ]
     },
     {
      "id": "es-1-6",
@@ -848,7 +1263,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Dale tres peces a Lucía.",
+       "de": "Gib Lucía drei Fische.",
+       "ding": "🐟",
+       "anzahl": 3,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale un perro a Pablo.",
+       "de": "Gib Pablo einen Hund.",
+       "ding": "🐶",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale dos conejos a Ruby.",
+       "de": "Gib Ruby zwei Kaninchen.",
+       "ding": "🐰",
+       "anzahl": 2,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dale un ratón a Lucía.",
+       "de": "Gib Lucía eine Maus.",
+       "ding": "🐭",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale un gato a Pablo.",
+       "de": "Gib Pablo eine Katze.",
+       "ding": "🐱",
+       "anzahl": 1,
+       "an": "pablo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Tengo dos ratóns.",
+       "richtig": "Tengo dos ratones.",
+       "wort": "ratóns",
+       "korrektur": "ratones",
+       "choices": [
+        "ratón",
+        "ratónes"
+       ],
+       "tipp": "ratón endet auf n – also -es, und der Akzent fällt weg."
+      },
+      {
+       "falsch": "Tengo dos pezs.",
+       "richtig": "Tengo dos peces.",
+       "wort": "pezs",
+       "korrektur": "peces",
+       "choices": [
+        "pez",
+        "pezes"
+       ],
+       "tipp": "Aus z wird c, dazu -es: peces."
+      },
+      {
+       "falsch": "La gato es negro.",
+       "richtig": "El gato es negro.",
+       "wort": "La",
+       "korrektur": "El",
+       "choices": [
+        "Los",
+        "Una"
+       ],
+       "tipp": "gato ist männlich – also el."
+      },
+      {
+       "falsch": "La vaca es negro.",
+       "richtig": "La vaca es negra.",
+       "wort": "negro",
+       "korrektur": "negra",
+       "choices": [
+        "negros",
+        "negras"
+       ],
+       "tipp": "vaca ist weiblich – aus -o wird -a."
+      }
+     ]
     },
     {
      "id": "es-1-7",
@@ -984,7 +1482,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Dale una pizza a Pablo.",
+       "de": "Gib Pablo eine Pizza.",
+       "ding": "🍕",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale dos plátanos a Lucía.",
+       "de": "Gib Lucía zwei Bananen.",
+       "ding": "🍌",
+       "anzahl": 2,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale tres manzanas a Ruby.",
+       "de": "Gib Ruby drei Äpfel.",
+       "ding": "🍎",
+       "anzahl": 3,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dale queso a Pablo.",
+       "de": "Gib Pablo Käse.",
+       "ding": "🧀",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale zumo a Lucía.",
+       "de": "Gib Lucía Saft.",
+       "ding": "🧃",
+       "anzahl": 1,
+       "an": "lucia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Me gusta las manzanas.",
+       "richtig": "Me gustan las manzanas.",
+       "wort": "gusta",
+       "korrektur": "gustan",
+       "choices": [
+        "gustas",
+        "gusto"
+       ],
+       "tipp": "Bei mehreren Dingen heißt es me gustan."
+      },
+      {
+       "falsch": "Soy hambre.",
+       "richtig": "Tengo hambre.",
+       "wort": "Soy",
+       "korrektur": "Tengo",
+       "choices": [
+        "Estoy",
+        "Es"
+       ],
+       "tipp": "Hunger hat man: tengo hambre."
+      },
+      {
+       "falsch": "Me gusta la agua.",
+       "richtig": "Me gusta el agua.",
+       "wort": "la",
+       "korrektur": "el",
+       "choices": [
+        "los",
+        "las"
+       ],
+       "tipp": "agua bekommt el – so klingt es schöner."
+      },
+      {
+       "falsch": "Agua, para favor.",
+       "richtig": "Agua, por favor.",
+       "wort": "para",
+       "korrektur": "por",
+       "choices": [
+        "pro",
+        "con"
+       ],
+       "tipp": "bitte heißt por favor."
+      }
+     ]
     },
     {
      "id": "es-1-8",
@@ -1127,7 +1708,90 @@
         ]
        }
       ]
-     }
+     },
+     "aktionen": [
+      {
+       "sag": "Dale un lápiz a Pablo.",
+       "de": "Gib Pablo einen Bleistift.",
+       "ding": "✏️",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale dos libros a Lucía.",
+       "de": "Gib Lucía zwei Bücher.",
+       "ding": "📕",
+       "anzahl": 2,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale una silla a Ruby.",
+       "de": "Gib Ruby einen Stuhl.",
+       "ding": "🪑",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Dale un bolígrafo a Lucía.",
+       "de": "Gib Lucía einen Kuli.",
+       "ding": "🖊️",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale una mochila a Pablo.",
+       "de": "Gib Pablo einen Rucksack.",
+       "ding": "🎒",
+       "anzahl": 1,
+       "an": "pablo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "¿Dónde es mi mochila?",
+       "richtig": "¿Dónde está mi mochila?",
+       "wort": "es",
+       "korrektur": "está",
+       "choices": [
+        "son",
+        "estoy"
+       ],
+       "tipp": "Wo etwas ist, sagt man mit está."
+      },
+      {
+       "falsch": "Tengo una lápiz.",
+       "richtig": "Tengo un lápiz.",
+       "wort": "una",
+       "korrektur": "un",
+       "choices": [
+        "uno",
+        "la"
+       ],
+       "tipp": "lápiz ist männlich – also un."
+      },
+      {
+       "falsch": "Mi profesora es simpático.",
+       "richtig": "Mi profesora es simpática.",
+       "wort": "simpático",
+       "korrektur": "simpática",
+       "choices": [
+        "simpáticos",
+        "simpáticas"
+       ],
+       "tipp": "profesora ist weiblich – aus -o wird -a."
+      },
+      {
+       "falsch": "Abrir tu libro, por favor.",
+       "richtig": "Abre tu libro, por favor.",
+       "wort": "Abrir",
+       "korrektur": "Abre",
+       "choices": [
+        "Abierto",
+        "Abren"
+       ],
+       "tipp": "Eine Aufforderung klingt wie die er/sie-Form: ¡Abre!"
+      }
+     ]
     }
    ]
   }
