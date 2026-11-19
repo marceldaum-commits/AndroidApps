@@ -84,6 +84,8 @@ Links `https://trainer.mathenachhilfe-online.com/#/u/<id>`:
 - **Fr 20.11.: nichts.** Kein Bauen, keine Änderung auf Test oder Live, keine Live-Bitte, keine Meldung. Stand bleibt: Teststufe 2.18.38 vom 19.11.2026, Live 2.18.34 vom 19.11.2026.
 - **Di 24.11. holt nach,** was im Abschnitt darunter für Freitag stand: Selbstprüfung, die drei PC-Punkte, dazu das Inhaltsupdate (LGS & Gauß als drei Ebenen, neue Abi-Prüfungsaufgaben). Vorher Marcels Test-Befunde abwarten bzw. einarbeiten, falls welche da sind; Live-Bitte für den dann aktuellen Stand mit Rückweg und Rechtsbezug.
 - Der Tagesbericht an die AppZentrale (Mo–Fr 9:43) läuft weiter – er berichtet nur und ändert nichts.
+- **Di 24.11. zusätzlich (Marcel direkt: „Ja“):** Datenschutz-Link der Familien-Seite (`Familie.PRIVACY_URL`) auf `https://www.mathenachhilfe-online.com/datenschutz/#familien-speicher` umstellen.
+- **Ab Mi 25.11. – Vorlesen über das Tonstudio (Marcel direkt: „Wenn alles fertig“):** Textliste im Quasselquest-Format erzeugen (nur Deutsch, Tempo normal, Formeln und Vektoren in Worten; Vorlage `quasselquest/VERTONUNG.md` und `webapp/vorlesen/textliste.json`), Zahl an die AppZentrale melden. **Einschalten (`Vorlesen.ENABLED`) erst, wenn alles fertig ist:** deutsche Tonstudio-Stimme von Marcel gewählt, alle MP3 da und eingebaut, sichtbarer Hinweis „🤖 KI-generierte Stimme“ und Lizenzliste nach Recht V13 (Wortlaut kommt von der AppZentrale), geprüft. Keine fremden Vorlese-Dienste mehr. Vorher Marcel den fertigen Stand nennen.
 
 ## (überholt für Fr 20.11. – Aufgabenliste gilt jetzt für Di 24.11.) ENTSCHEIDUNG von Marcel, direkt bestätigt am 19.11.2026 abends
 
