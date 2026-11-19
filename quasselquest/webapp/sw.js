@@ -2,10 +2,17 @@
 const VERSION = '0.1.0';
 const CACHE = 'quasselquest-' + VERSION;
 const FILES = ['./', 'index.html', 'app.css', 'version.js', 'content.js', 'audio.js', 'app.js', 'datenschutz.html',
-  'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
+  'manifest.webmanifest', 'audio/index.json', 'lizenzen.txt', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES.map((f) => new Request(f, { cache: 'reload' })))));
+  // Programmdateien und alle vorab vertonten Sätze (audio/index.json) offline speichern
+  e.waitUntil(caches.open(CACHE).then(async (c) => {
+    await c.addAll(FILES.map((f) => new Request(f, { cache: 'reload' })));
+    const idx = await (await c.match('audio/index.json')).json();
+    const mp3 = new Set();
+    for (const e of Object.values(idx.saetze || {})) { mp3.add('audio/piper/' + e.n); mp3.add('audio/piper/' + e.s); }
+    await c.addAll([...mp3]);
+  }));
 });
 self.addEventListener('activate', (e) => {
   e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k.startsWith('quasselquest-') && k !== CACHE).map((k) => caches.delete(k))))

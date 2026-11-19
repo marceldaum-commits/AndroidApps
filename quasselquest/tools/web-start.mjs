@@ -98,6 +98,9 @@ for (const [name, type, opts] of [
     const st = await page.evaluate(() => window.quasselTest.state());
     ok(Object.values(st.progress).filter((p) => p.done).length === 3, '3 Stempel gespeichert');
     ok(st.settings.recognition === 'device', 'Spracherkennung standardmäßig nur auf dem Gerät');
+    const played = await page.evaluate(() => window.quasselTest.A.played || 0);
+    ok(played > 20, `Vertonte Sätze abgespielt (${played} Mal)`);
+    ok(!(await page.$('[data-novoice]')), 'Kein Ersatz-Text nötig (alle Sätze vertont)');
     ok(st.week && st.week.n === 3, 'Wochenziel gezählt (3 Episoden)');
     await page.reload(); await page.waitForSelector('.world');
     ok((await page.textContent('.pill')).includes('3'), 'Fortschritt nach Neuladen noch da');

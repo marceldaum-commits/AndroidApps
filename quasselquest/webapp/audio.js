@@ -75,27 +75,105 @@
     return pick(/^en-GB$/i) || pick(/^en-(IE|AU|NZ)$/i) || pick(/^en-US$/i) || vs[0] || null;
   };
   A.canSpeak = () => 'speechSynthesis' in window && !!A.englishVoice();
-  let speakDone = null;
+  // ------------------------------------------------------------------ Vorab vertonte Sätze
+  // Standard: freie Piper-Stimmen (audio/index.json + audio/piper/*.mp3, mit der App offline gespeichert).
+  // Nova (KI-Stimme vom Stimm-Server) ist vorbereitet, aber erst nach Marcels Go eingeschaltet (window.NOVA_FREIGEGEBEN).
+  // Gespielt wird über Web Audio: Nach der ersten Berührung darf das auch iOS jederzeit, ohne neue Geste.
+  const norm = (t) => String(t).normalize('NFC').replace(/\s+/g, ' ').trim();
+  const sprechtext = (t) => norm(String(t).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, ''));
+  let index = null;
+  A.ready = fetch('audio/index.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null))
+    .then((j) => { index = j && j.saetze ? j.saetze : null; }).catch(() => { index = null; });
+  const fileFor = (text, who, slow) => {
+    if (!index) return null;
+    const e = index[(who || 'ruby') + '|' + norm(text)] || index['ruby|' + norm(text)];
+    return e ? 'audio/piper/' + (slow ? e.s : e.n) : null;
+  };
+  A.hasRecording = (text, who) => !!fileFor(text, who, false);
+  A.voiceMode = () => {
+    const m = S().stimme || 'frei';
+    return m === 'nova' && !window.NOVA_FREIGEGEBEN ? 'frei' : m;   // Nova erst nach Freigabe
+  };
+  const buffers = new Map();
+  function decode(c, ab) {
+    return new Promise((ok, no) => { const p = c.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); });
+  }
+  async function bufferFor(url) {
+    if (buffers.has(url)) return buffers.get(url);
+    const c = ac(); if (!c) return null;
+    const r = await fetch(url, url.startsWith('http') ? { credentials: 'omit', referrerPolicy: 'no-referrer', mode: 'cors' } : {});
+    if (!r.ok) return null;
+    const b = await decode(c, await r.arrayBuffer());
+    if (buffers.size > 120) buffers.delete(buffers.keys().next().value);
+    buffers.set(url, b);
+    return b;
+  }
+  // Nova (vorbereitet): gleiche Kennung wie im Wissensgarten – sha256("nova|en|<text>"), die ersten 32 Zeichen
+  const NOVA = 'https://stimmen.mathenachhilfe-online.com/nova/';
+  async function novaUrl(text) {
+    if (!(window.crypto && crypto.subtle)) return null;
+    const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('nova|en|' + sprechtext(text)));
+    const h = Array.from(new Uint8Array(d)).map((x) => x.toString(16).padStart(2, '0')).join('').slice(0, 32);
+    return NOVA + h.slice(0, 2) + '/' + h + '.mp3';
+  }
+  A.novaUrl = novaUrl;
+
+  let speakDone = null; let current = null;
   A.stop = () => {
     try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) {}
+    if (current) { try { current.stop(); } catch (e) {} current = null; }
     if (speakDone) speakDone();
   };
-  /** Englisch sprechen. Erfüllt sich, wenn fertig (oder sofort, wenn keine Stimme da ist). */
-  A.say = (text, opts) => new Promise((ok) => {
+  function playBuffer(b) {
+    return new Promise((ok) => {
+      const c = ac(); const src = c.createBufferSource(); src.buffer = b;
+      const g = c.createGain(); g.gain.value = 1; src.connect(g); g.connect(c.destination);
+      let done = false;
+      const fin = () => { if (done) return; done = true; clearTimeout(t); if (current === src) current = null; if (speakDone === fin) speakDone = null; ok(true); };
+      const t = setTimeout(fin, b.duration * 1000 + 1500);
+      src.onended = fin; speakDone = fin; current = src;
+      src.start(0); A.played = (A.played || 0) + 1;
+    });
+  }
+  function deviceSay(text, opts) {
+    return new Promise((ok) => {
+      if (!A.canSpeak()) { ok(false); return; }
+      const v = A.englishVoice();
+      let done = false;
+      const fin = () => { if (done) return; done = true; clearTimeout(t); if (speakDone === fin) speakDone = null; ok(true); };
+      const t = setTimeout(fin, 15000);
+      const u = new SpeechSynthesisUtterance(sprechtext(text));
+      u.voice = v; u.lang = v.lang;
+      u.pitch = opts.pitch || 1; u.rate = (opts.slow ? 0.6 : 0.9) * (S().slow ? 0.75 : 1);
+      u.onend = u.onerror = fin;
+      speakDone = fin;
+      try { speechSynthesis.speak(u); } catch (e) { fin(); }
+    });
+  }
+  /**
+   * Englisch sprechen: opts.who = Figur (ruby, mia, sam, ted), opts.slow = langsam (🐢).
+   * Reihenfolge: (Nova, wenn freigegeben und gewählt) → vorab vertonte Datei → Stimme des Geräts.
+   * Erfüllt sich mit true, wenn etwas zu hören war, sonst false.
+   */
+  A.say = async (text, opts) => {
     opts = opts || {};
-    if (S().voice === false || !A.canSpeak()) { ok(false); return; }
+    if (S().voice === false) return false;
     A.stop();
-    const v = A.englishVoice();
-    let done = false;
-    const fin = () => { if (done) return; done = true; clearTimeout(t); if (speakDone === fin) speakDone = null; ok(true); };
-    const t = setTimeout(fin, 15000);
-    const u = new SpeechSynthesisUtterance(String(text).replace(/[😄👋🎉]/gu, ''));
-    u.voice = v; u.lang = v.lang;
-    u.pitch = opts.pitch || 1; u.rate = (opts.rate || 0.9) * (S().slow ? 0.75 : 1);
-    u.onend = u.onerror = fin;
-    speakDone = fin;
-    try { speechSynthesis.speak(u); } catch (e) { fin(); }
-  });
+    const slow = !!opts.slow || !!S().slow;
+    try {
+      if (A.voiceMode() === 'nova' && navigator.onLine !== false) {
+        const b = await bufferFor(await novaUrl(text)).catch(() => null);
+        if (b) return playBuffer(b);
+      }
+      if (A.voiceMode() !== 'geraet') {
+        const f = fileFor(text, opts.who, slow);
+        if (f) { const b = await bufferFor(f); if (b) return playBuffer(b); }
+      }
+    } catch (e) {}
+    return deviceSay(text, Object.assign({}, opts, { slow }));
+  };
+  /** Kann dieser Satz hörbar gemacht werden (Datei oder Gerätestimme)? */
+  A.canHear = (text, who) => S().voice !== false && (A.hasRecording(text, who) || A.canSpeak());
 
   // ------------------------------------------------------------------ Mikrofon (nur auf Knopfdruck)
   // Die Aufnahme bleibt im Arbeitsspeicher, wird abgespielt und verworfen. Nichts wird gespeichert oder gesendet.

@@ -1,7 +1,7 @@
 // Inhalts- und Logiktests: node --test tools/test-inhalt.mjs
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const dir = new URL('../webapp/', import.meta.url);
@@ -119,4 +119,23 @@ test('Spracherkennung ist standardmäßig nur auf dem Gerät', () => {
   const app = readFileSync(new URL('app.js', dir), 'utf8');
   assert.match(app, /recognition: 'device'/);
   assert.doesNotMatch(app, /recognition: 'browser'/);
+});
+
+test('Jeder feste Satz ist vorab vertont (normal und langsam) und die Dateien gibt es', () => {
+  const idx = JSON.parse(readFileSync(new URL('audio/index.json', dir), 'utf8')).saetze;
+  const norm = (t) => t.normalize('NFC').replace(/\s+/g, ' ').trim();
+  const fehlt = [];
+  for (const s of C.allSpeech()) {
+    const e = idx[s.who + '|' + norm(s.text)];
+    if (!e) { fehlt.push(s.who + '|' + s.text); continue; }
+    for (const f of [e.n, e.s]) assert.ok(existsSync(new URL('audio/piper/' + f, dir)), f);
+  }
+  assert.deepEqual(fehlt, [], 'Bitte tools/vertonen.py laufen lassen');
+});
+
+test('Nova ist vorbereitet, aber nicht freigeschaltet (erst nach Marcels Go)', () => {
+  assert.match(readFileSync(new URL('version.js', dir), 'utf8'), /NOVA_FREIGEGEBEN = false/);
+  const t = JSON.parse(readFileSync(new URL('vorlesen/texte.json', dir), 'utf8'));
+  assert.equal(t.app, 'quasselquest');
+  assert.ok(t.texte.length >= 100 && t.texte.every((x) => x.sprache === 'en' && /^[0-9a-f]{32}$/.test(x.nova)));
 });

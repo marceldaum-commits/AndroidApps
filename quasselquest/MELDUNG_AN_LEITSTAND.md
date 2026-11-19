@@ -2,6 +2,21 @@
 
 Neueste oben.
 
+## 19.11.2026 – Vertonung mit freien Stimmen (Entscheidung Marcel), Nova vorbereitet – noch Version 0.1.0
+
+- **Alle 185 festen Sätze** sind vorab vertont, jeweils normal und langsam (🐢). Das sind 370 MP3-Dateien mit zusammen 2,8 MB; sie werden offline gespeichert und über Web Audio abgespielt, das funktioniert auf iOS nach der ersten Berührung.
+- **Stimmen mit geprüfter Lizenz** (`quasselquest/LIZENZEN.md`, in der App unter „Lizenzen“):
+  - Ruby und Mia: Piper „en_GB-cori-medium“, CC BY 4.0, britisch.
+  - Sam und Grandpa Ted: Piper „en_US-john-medium“, gemeinfrei (LibriVox), amerikanisch.
+  - Ausgeschlossen sind alle Stimmen, die auf „lessac“ aufbauen (Daten nur für nicht-kommerzielle Forschung), und „semaine“, „ryan“, „hfc“ (Lizenz NC).
+  - Es gibt **keine freie britische Männerstimme mit sauberer Lizenz**. Deshalb sprechen Sam und Ted amerikanisch; mit Nova wird das später einheitlich.
+- **Hörprüfung:** Jede Datei wird beim Bauen mit Whisper geprüft. Klingt sie unklar, werden bis zu 6 Varianten erzeugt (Tempo, Satzzeichen). Ergebnis: 173 von 185 eindeutig erkannt. Die restlichen 12 sind fast nur kurze Wörter zum Antippen (is, I, the, your, my, to), die auch Whisper allein schlecht erkennt; Liste in `quasselquest/HOERPRUEFUNG.md`. **Bitte einmal auf einem echten Gerät anhören.**
+- **Nova** ist vorbereitet:
+  - Gleiche Kennung wie im Wissensgarten (`sha256("nova|en|<Satz>")`, `/nova/<h[0:2]>/<h>.mp3`).
+  - Die Satzliste für das Stimm-Werk liegt in `webapp/vorlesen/texte.json`.
+  - In den Einstellungen ist Nova als „kommt bald“ ausgegraut. Eingeschaltet wird sie erst nach Marcels Go: `NOVA_FREIGEGEBEN = true` in `version.js` setzen und das Stimm-Werk vertonen lassen.
+- Tests: 15/15 Inhaltstests, darunter „jeder Satz hat beide Dateien“ und „Nova nicht freigeschaltet“. Durchspielen in Chromium und WebKit (Handy, iPhone 13, iPad, PC) grün, 77 Sätze wirklich abgespielt. Bildschirmfotos angesehen.
+
 ## 19.11.2026 – Name „Quasselquest“ umgesetzt, Prototyp 0.1.0 geht auf die Test-Stufe
 
 - Entscheidung Marcel (über die AppZentrale): **Name „Quasselquest“**. Vertonung: **erst freie Stimmen** (Piper, Lizenz je Stimme geprüft); **Nova als ausgegraute Option** vorbereiten und erst nach Marcels Go vertonen.

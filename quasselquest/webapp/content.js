@@ -273,6 +273,52 @@
     });
   };
 
+  /** Ansage im Spiel „Ruby says“ (eine Quelle für App und Vertonung). */
+  C.rubySaysText = (mode, target, cmd) => {
+    const core = mode === 'count' ? `touch ${target.en} fish.` : `touch the ${target.en} boat.`;
+    return cmd ? 'Ruby says: ' + core : core.charAt(0).toUpperCase() + core.slice(1);
+  };
+
+  /** Ein einzelnes Wort zum Antippen in der Szene (ohne Satzzeichen am Rand). */
+  C.tapWord = (w) => String(w).replace(/^[^\w']+|[^\w']+$/g, '');
+
+  /**
+   * Alle festen Sätze, die gesprochen werden – mit Sprecher. Grundlage für die Vertonung (tools/vertonen.py)
+   * und für den Test, dass jede Ansage eine Datei hat. Sätze mit dem Namen des Kindes sind nicht dabei
+   * (die liest die Gerätestimme).
+   */
+  C.allSpeech = () => {
+    const out = new Map();
+    const add = (who, text) => { if (text && !/\{name\}|…/.test(text)) out.set(who + '|' + text, { who, text }); };
+    const fills = (t) => {
+      if (/\{n\}|\{nFische\}/.test(t)) return numbers.map((x, i) => C.fill(t, { n: i + 1 }));
+      if (/\{c\}|\{aC\}|\{cDe\}/.test(t)) return colours.map((c) => C.fill(t, { c: c.id }));
+      return [t];
+    };
+    for (const n of numbers) add('ruby', n);
+    for (const c of colours) add('ruby', c.en);
+    for (const w of C.worlds) for (const e of w.episodes || []) {
+      if (e.soon) continue;
+      for (const s of e.scene) { add(s.who, s.en); for (const x of s.en.split(/\s+/)) add(s.who, C.tapWord(x)); }
+      for (const g of e.games) {
+        for (const it of g.items || []) add('ruby', it.en);
+        for (const l of g.lines || []) add('ruby', l.en);
+        for (const l of g.sentences || []) add('ruby', l.en);
+        for (const t of g.targets || []) { add('ruby', C.rubySaysText(g.mode, t, true)); add('ruby', C.rubySaysText(g.mode, t, false)); }
+      }
+      const m = e.mission;
+      for (const st of m.steps) {
+        for (const t of fills(st.en)) add(st.who, t);
+        for (const o of st.options) {
+          for (const t of fills(o.en)) add('ruby', t);          // „🔊 Anhören“ beim Nachsprechen
+          if (o.reply) add(st.who, o.reply.en);
+        }
+      }
+      for (const t of fills(m.end.en)) add(m.end.who, t);
+    }
+    return [...out.values()];
+  };
+
   C.zahlen = zahlen;
   root.CONTENT = C;
   if (typeof module !== 'undefined') module.exports = C;

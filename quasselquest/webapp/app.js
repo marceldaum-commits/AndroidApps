@@ -14,7 +14,7 @@
     return mem || null;
   }
   function save() { mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
-  const fresh = () => ({ v: 2, klasse: null, name: '', progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device' }, week: { key: '', n: 0 } });
+  const fresh = () => ({ v: 2, klasse: null, name: '', progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei' }, week: { key: '', n: 0 } });
   let state = load() || fresh();
   state.settings = Object.assign(fresh().settings, state.settings || {});
   // Stand 1 → 2: Spracherkennung standardmäßig nur auf dem Gerät; Wochenziel statt Tagesserie
@@ -79,10 +79,9 @@
   // ================================================================== Stimme mit Wort-Hervorhebung
   function charVoice(who) { return (C.characters[who] || C.characters.ruby).voice; }
   async function speak(text, who, opts) {
-    const v = Object.assign({}, charVoice(who), opts || {});
-    return A.say(text, v);
+    return A.say(text, Object.assign({}, charVoice(who), { who: who || 'ruby' }, opts || {}));
   }
-  const noVoiceBox = (text) => A.canSpeak() && state.settings.voice !== false ? '' :
+  const noVoiceBox = (text, who) => A.canHear(text, who || 'ruby') ? '' :
     `<div class="novoice" data-novoice>${esc(text)}<small>${state.settings.voice === false ? 'Die Stimme ist ausgeschaltet – lies den Satz.' : 'Auf diesem Gerät gibt es keine englische Stimme – lies den Satz.'}</small></div>`;
 
   // ================================================================== Kopfzeile
@@ -253,17 +252,18 @@
       const words = s.en.split(' ').map((w, k) => `<span class="w" data-w="${k}">${esc(w)}</span>`).join(' ');
       box.innerHTML = `<div class="stage" style="min-height:0;gap:8px"><div class="who"><span>${ch.emoji}</span>${esc(ch.name)}</div>
         <div class="scene-pic">${s.img}</div><div class="scene-line">${words}</div><div class="hint-de">${esc(s.de)}</div></div>`;
-      box.querySelectorAll('.w').forEach((w) => w.onclick = () => { A.sfx('tap'); speak(w.textContent.replace(/[^\w']/g, ''), s.who); w.classList.add('on'); setTimeout(() => w.classList.remove('on'), 500); });
+      box.querySelectorAll('.w').forEach((w) => w.onclick = () => { A.sfx('tap'); speak(C.tapWord(w.textContent), s.who); w.classList.add('on'); setTimeout(() => w.classList.remove('on'), 500); });
       await highlightSpeak(box, s.en, s.who, tk);
     }
     async function highlightSpeak(root, text, who, t) {
       const ws = root.querySelectorAll('.w');
       let k = 0;
       const step = Math.max(260, 2600 / Math.max(ws.length, 1));
-      const timer = setInterval(() => { ws.forEach((w) => w.classList.remove('on')); if (ws[k]) ws[k].classList.add('on'); k++; if (k > ws.length) clearInterval(timer); }, A.canSpeak() ? step : 380);
-      await speak(text, who);
+      const hearable = A.canHear(text, who);
+      const timer = setInterval(() => { ws.forEach((w) => w.classList.remove('on')); if (ws[k]) ws[k].classList.add('on'); k++; if (k > ws.length) clearInterval(timer); }, hearable ? step : 380);
+      const heard = await speak(text, who);
       if (!alive(t)) { clearInterval(timer); return; }
-      if (!A.canSpeak()) await sleep(380 * (ws.length + 1));
+      if (!heard) await sleep(380 * (ws.length + 1));
       clearInterval(timer); ws.forEach((w) => w.classList.remove('on'));
     }
     el.querySelector('[data-again]').onclick = () => { A.sfx('tap'); show(); };
@@ -291,7 +291,7 @@
     };
     const play = async (slow) => {
       const b = el.querySelector('[data-play]'); b.classList.add('playing');
-      await speak(target.en, 'ruby', slow ? { rate: 0.6 } : null);
+      await speak(target.en, 'ruby', slow ? { slow: true } : null);
       if (alive(tk)) b.classList.remove('playing');
     };
     async function next() {
@@ -343,12 +343,10 @@
     const plan = [true, true, false, true, false, true].slice(0, rounds);
     const order = [plan[0]].concat(shuffle(plan.slice(1)));
     let round = 0; let cmd = null; let target = null; let waiting = null;
-    const phrase = () => g.mode === 'count'
-      ? `touch ${target.en} fish.`
-      : `touch the ${target.en} boat.`;
+    const phrase = () => C.rubySaysText(g.mode, target, cmd);
     const play = async () => {
       const b = el.querySelector('[data-play]'); b.classList.add('playing');
-      await speak((cmd ? 'Ruby says: ' : '') + phrase().replace(/^t/, cmd ? 't' : 'T'), 'ruby');
+      await speak(phrase(), 'ruby');
       if (alive(tk)) b.classList.remove('playing');
     };
     async function next() {
@@ -356,8 +354,8 @@
       cmd = order[round]; round++;
       target = g.targets[Math.floor(Math.random() * g.targets.length)];
       const ch = el.querySelector('[data-ch]'); ch.innerHTML = '';
-      const txt = (cmd ? 'Ruby says: ' : '') + phrase().replace(/^t/, cmd ? 't' : 'T');
-      el.querySelector('[data-cmd]').innerHTML = A.canSpeak() && state.settings.voice !== false ? '' : esc(txt);
+      const txt = phrase();
+      el.querySelector('[data-cmd]').innerHTML = A.canHear(txt, 'ruby') ? '' : esc(txt);
       shuffle(g.targets).forEach((t) => {
         const inner = g.mode === 'count' ? `<span class="fishes" style="font-size:22px">${'🐟'.repeat(t.count)}</span>` : boatSVG(t.css);
         const b = h(`<button class="choice" aria-label="Ziel"${DIAG && t === target ? ' data-ok' : ''}${DIAG && !cmd ? ' data-trick' : ''}>${inner}</button>`);
@@ -416,7 +414,7 @@
     const line = () => g.lines[i];
     const play = async (slow) => {
       const b = el.querySelector('[data-play]'); b.classList.add('playing'); el.querySelector('[data-ruby]').classList.add('talk');
-      await speak(line().en, 'ruby', slow ? { rate: 0.65 } : null);
+      await speak(line().en, 'ruby', slow ? { slow: true } : null);
       if (!alive(tk)) return; b.classList.remove('playing'); el.querySelector('[data-ruby]').classList.remove('talk');
     };
     function show() {
@@ -483,7 +481,7 @@
     const p = stepPromise(el, run); const tk = token;
     let i = 0; let words = []; let placed = []; let firstTry = true;
     const s = () => g.sentences[i];
-    const play = async (slow) => { const b = el.querySelector('[data-play]'); b.classList.add('playing'); await speak(s().en, 'ruby', slow ? { rate: 0.6 } : null); if (alive(tk)) b.classList.remove('playing'); };
+    const play = async (slow) => { const b = el.querySelector('[data-play]'); b.classList.add('playing'); await speak(s().en, 'ruby', slow ? { slow: true } : null); if (alive(tk)) b.classList.remove('playing'); };
     function draw() {
       const tr = el.querySelector('[data-train]');
       tr.innerHTML = '<span class="loco">🚂</span>' + placed.map((k, j) => `<button class="wagon" data-t="${j}">${esc(words[k])}</button>`).join('');
@@ -715,18 +713,25 @@
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">⚙️ Einstellungen</div></div>
       <div class="card">
         ${sw('sound', '🔔 Töne')}${sw('voice', '🗣️ Stimme (Englisch vorlesen)')}${sw('slow', '🐢 Immer langsamer sprechen')}${sw('vibrate', '📳 Vibration')}
+
         <div class="set"><span>🎒 Klasse</span><span class="row">${[3, 4, 5, 6].map((k) => `<button class="btn small ${state.klasse === k ? 'blue' : 'white'}" data-k="${k}">${k}</button>`).join('')}</span></div>
         <div class="set"><span>🙂 Name</span><span class="row"><b>${esc(state.name || '–')}</b><button class="btn small white" data-name>Ändern</button></span></div>
+      </div>
+      <div class="card" style="margin-top:14px"><h3 style="margin-bottom:4px">🎙️ Welche Stimme?</h3>
+        <label class="radio"><input type="radio" name="stimme" value="frei" ${A.voiceMode() === 'frei' ? 'checked' : ''}><span><b>Freie Stimmen (Standard)</b><br><span class="muted">Vorab aufgenommen, funktionieren auch ohne Internet. Computer-Stimmen (Piper).</span></span></label>
+        <label class="radio" style="opacity:${window.NOVA_FREIGEGEBEN ? 1 : .45}"><input type="radio" name="stimme" value="nova" ${window.NOVA_FREIGEGEBEN ? '' : 'disabled'} ${A.voiceMode() === 'nova' ? 'checked' : ''}><span><b>Nova – KI-Stimme ${window.NOVA_FREIGEGEBEN ? '' : '(kommt bald)'}</b><br><span class="muted">Besonders natürliche Stimme, mit KI erzeugt (OpenAI) und von unserem Stimm-Server geladen.</span></span></label>
+        <label class="radio"><input type="radio" name="stimme" value="geraet" ${A.voiceMode() === 'geraet' ? 'checked' : ''}><span><b>Stimme des Geräts</b><br><span class="muted">${A.canSpeak() ? 'Die englische Stimme deines Geräts.' : 'Auf diesem Gerät gibt es keine englische Stimme.'}</span></span></label>
       </div>
       <div class="card" style="margin-top:14px">
         <div class="set"><span>👪 Für Eltern</span><button class="btn small blue" data-parents>Öffnen</button></div>
         <div class="set"><span>🔒 Datenschutz</span><a class="btn small white" href="datenschutz.html">Lesen</a></div>
       </div>
-      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}<br>Stimme: ${A.canSpeak() ? 'Englische Stimme des Geräts' : 'keine englische Stimme auf dem Gerät gefunden'}</div>
+      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}<br>Stimmen: Piper „cori“ (CC BY 4.0, Hi-Fi TTS von NVIDIA, Sprecherin Cori Samuel) und „john“ (gemeinfrei, LibriVox) · <a href="lizenzen.txt">Lizenzen</a></div>
     </div>`);
     el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); home(); };
     el.querySelectorAll('[data-sw]').forEach((b) => b.onclick = () => { s[b.dataset.sw] = !s[b.dataset.sw]; save(); A.sfx('tap'); settings(); });
     el.querySelectorAll('[data-k]').forEach((b) => b.onclick = () => { state.klasse = +b.dataset.k; save(); A.sfx('tap'); settings(); });
+    el.querySelectorAll('input[name=stimme]').forEach((x) => x.onchange = () => { s.stimme = x.value; save(); A.sfx('tap'); speak("Hello! I'm Ruby.", 'ruby'); });
     el.querySelector('[data-name]').onclick = async () => { await askName(); settings(); };
     el.querySelector('[data-parents]').onclick = () => { A.sfx('tap'); parentGate(); };
   }
@@ -808,7 +813,9 @@
   }
 
   if (DIAG) window.quasselTest = { state: () => state, C, A, home, playEpisode };
-  try { start(); } catch (e) {
+  // Erst die Liste der vertonten Sätze laden (höchstens 2 Sekunden warten), dann starten
+  Promise.race([A.ready, sleep(2000)]).then(() => { try { start(); } catch (e) { showError(e); } });
+  function showError(e) {
     $app.innerHTML = '<div class="card" style="margin-top:40px"><b>Ups, da ist etwas schiefgegangen.</b><p>Bitte lade die Seite neu.</p><pre style="white-space:pre-wrap;font-size:12px">' + esc(e && e.stack || e) + '</pre></div>';
   }
 })();

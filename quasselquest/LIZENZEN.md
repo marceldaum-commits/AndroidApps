@@ -1,0 +1,13 @@
+# Quasselquest – Lizenzen
+
+Stimmen (vorab vertont mit Piper, https://github.com/OHF-Voice/piper1-gpl – nur zum Erzeugen der Audiodateien benutzt, nicht Teil der App):
+- Ruby und Mia: Piper-Stimme „en_GB-cori-medium“. Trainiert auf dem Hi-Fi Multi-Speaker English TTS Dataset (NVIDIA Corporation),
+  Lizenz CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Sprecherin: Cori Samuel (LibriVox). Quelle: https://www.openslr.org/109/
+  Bakhturina, Lavrukhin, Ginsburg, Zhang: „Hi-Fi Multi-Speaker English TTS Dataset“, Interspeech 2021.
+  Mia: Tonhöhe leicht angehoben (geändert).
+- Sam und Grandpa Ted: Piper-Stimme „en_US-john-medium“ von Bryce Beattie, Aufnahmen von LibriVox (gemeinfrei).
+  Tonhöhe und Tempo angepasst (geändert).
+Nicht verwendet: Piper-Stimmen, die auf den „lessac“-Daten aufbauen (nur nicht-kommerzielle Forschung erlaubt).
+
+Töne und Musik: im Code erzeugt, keine fremden Aufnahmen.
+Bilder: Emoji des Geräts; Ruby (Papagei) selbst gezeichnet (SVG).

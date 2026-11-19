@@ -11,6 +11,7 @@ Test: https://quasselquest-test.mathenachhilfe-online.com (Branch `quasselquest-
   - `content.js` Inhalte (Welten, Episoden, Spiele, Missionen, „Ruby erklärt“)
   - `audio.js` Töne (im Code erzeugt), Stimme (englische Gerätestimme, nur lokale Stimmen), Mikrofon (nur auf Knopfdruck), Spracherkennung (optional, bevorzugt auf dem Gerät)
   - `app.js` Oberfläche und Spiele · `app.css` Aussehen und Animationen · `sw.js` Offline + Update
+- `tools/vertonen.py` – vertont alle festen Sätze mit freien Piper-Stimmen und prüft jede Datei mit einer Spracherkennung (Whisper); Ergebnis in `HOERPRUEFUNG.md`, Lizenzen in `LIZENZEN.md`
 - `tools/test-inhalt.mjs` – Inhalts- und Logiktests: `node --test tools/test-inhalt.mjs`
 - `tools/web-start.mjs` – Durchspielen in Chromium und WebKit (iPhone 13, iPad, Handy, PC), offline, Eltern-Tor, „← Alle Apps“: `node tools/web-start.mjs [--fotos]`
 
