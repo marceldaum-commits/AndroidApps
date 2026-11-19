@@ -121,6 +121,39 @@
       } catch (e) { window.wgDiag('Wasm-Protokoll nicht möglich: ' + e); }
     })();
   </script>
+  <script>
+    // Bild-Bremse für langsame Rechner (z. B. PC ohne Grafik-Beschleunigung): Kostet das Zeichnen eines Bildes im Schnitt
+    // mehr als ~22 ms, zeichnet der Garten höchstens 20 Bilder pro Sekunde. So bleibt Zeit für Tippen, Wischen und Klicken,
+    // statt dass die Seite „hängt“. Läuft es wieder flüssig, wird die Bremse von selbst gelöst. Abschalten: ?bremse=aus
+    (function () {
+      try {
+        if (/[?&]bremse=aus/.test(location.search)) { window.wgStartNote && window.wgStartNote('Bild-Bremse aus'); return; }
+        var orig = window.requestAnimationFrame.bind(window), cancel = window.cancelAnimationFrame.bind(window);
+        var queue = [], nextId = 1, pending = false, slow = false, cost = 0, last = 0;
+        var tick = function (t) {
+          if (slow && t - last < 45) { orig(tick); return; }
+          pending = false; last = t;
+          var q = queue; queue = [];
+          var s = performance.now();
+          for (var i = 0; i < q.length; i++) { try { q[i].cb(t); } catch (e) { (function (x) { setTimeout(function () { throw x; }); })(e); } }
+          var d = performance.now() - s;
+          if (q.length) cost = cost * 0.85 + d * 0.15;
+          if (!slow && cost > 22) { slow = true; window.wgDiag && window.wgDiag('Bild-Bremse an (Zeichnen ' + Math.round(cost) + ' ms) → höchstens 20 Bilder/s'); }
+          else if (slow && cost < 9) { slow = false; window.wgDiag && window.wgDiag('Bild-Bremse aus (Zeichnen ' + Math.round(cost) + ' ms)'); }
+          if (queue.length && !pending) { pending = true; orig(tick); }
+        };
+        window.requestAnimationFrame = function (cb) {
+          var id = nextId++; queue.push({ id: id, cb: cb });
+          if (!pending) { pending = true; orig(tick); }
+          return id;
+        };
+        window.cancelAnimationFrame = function (id) {
+          for (var i = 0; i < queue.length; i++) if (queue[i].id === id) { queue.splice(i, 1); return; }
+        };
+        window.wgBremse = function () { return { an: slow, ms: Math.round(cost) }; };
+      } catch (e) {}
+    })();
+  </script>
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <style>

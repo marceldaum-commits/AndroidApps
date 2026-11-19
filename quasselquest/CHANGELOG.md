@@ -16,6 +16,13 @@
 - Alle englischen Figuren sprechen jetzt mit Rubys Stimme. Zählreihen („One, two, three“) werden mit Pausen deutlich gesprochen. Jede Aufnahme wird doppelt automatisch geprüft.
 - Buchstaben-Bau nur noch bei eindeutigen Aufgaben; bei Rechtschreib-Karten wird das Wort vorgesprochen.
 
+**Am PC und im Vollbild**
+- Große Bildschirme nutzen jetzt die Breite: Hafen und Pakete links, Lernpfad rechts; auf der Startseite steht Ruby groß neben der Klassenwahl; Hafen-Bilder im freien Rand. Handy und Tablet bleiben wie gewohnt.
+
+**Ton**
+- Jede Aufnahme startet mit einem winzigen Vorlauf – so verschlucken Lautsprecher und Bluetooth-Kopfhörer den ersten Laut nicht mehr.
+- Beim ersten Öffnen werden nur die englischen Aufnahmen gespeichert (kleinerer Download); andere Sprachen kommen beim ersten Spielen dazu und gehen danach auch offline.
+
 **Für Eltern**
 - Neues Eltern-Tor: eine Rechenaufgabe in Worten (z. B. „siebzehn mal acht“) statt Geburtsjahr. Es schützt Elternbereich, Einstellungen und Links nach außen; danach ist es 10 Minuten offen.
 - „Deine Daten – kurz erklärt“ für Kinder jetzt direkt auf der Startseite.

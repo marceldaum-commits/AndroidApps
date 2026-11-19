@@ -48,3 +48,7 @@ Insel-Positionen, Einstellungen, Name → fragen (Elternbereich), sonst Gerätes
 - **familie.js @ ffcfe39** (sha256 `a67bc3a8939e5e72800e7b28a53ddecfc9bf71d98869f59baffe040ef6750b6f`) kam als Text vom Mathe-Trainer (19.11., 14:23 UTC).
   Einbinden: unverändert als `webapp/js/familie.js`, oben Kommentar „familie.js @ ffcfe39 (Quelle mathe-trainer)“, nichts nachladen.
   Tests: `tests/familie.mjs` (Pfad in Zeile 5 anpassen) → „familie: 41 Prüfungen bestanden“. Prüfsumme vor dem Kommentar vergleichen.
+- **NEU: familie.js @ 1f4b377** (sha256 `3016aabd994d9f00ddead3c2246b05e5dd3ec9106669638396cc42400283e640`) ersetzt ffcfe39 vollständig (19.11., 14:43 UTC).
+  `anlegen()` ohne Parameter nutzt REC_PUB und schickt X-Notfall-Pruef; Sperrliste `{sperrliste:[SHA-256(codeNr)]}`, `codeNummer(code)` → `L7.<produkt>.<serie>` für QQ-Codes, `codeGesperrt(codeOderNr)`.
+  Neue grund-Werte: gibt-es-schon, code-unbekannt, code-gesperrt, code-vergeben, noch-nicht-live. `einloesen` → `{rechte, recht}` mit `recht.codeNr`.
+  Tests → „familie: 51 Prüfungen bestanden“. Test-Server: https://lernen-test.mathenachhilfe-online.com/familie/v1/ (live: 404 noch_nicht_live).

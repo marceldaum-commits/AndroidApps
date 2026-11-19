@@ -10,7 +10,9 @@ self.addEventListener('install', (e) => {
     await c.addAll(FILES.map((f) => new Request(f, { cache: 'reload' })));
     const idx = await (await c.match('audio/index.json')).json();
     const mp3 = new Set();
-    for (const e of Object.values(idx.saetze || {})) { mp3.add('audio/piper/' + e.n); mp3.add('audio/piper/' + e.s); }
+    // Grundausstattung: nur Englisch (Hafen-Welt) sofort offline – andere Sprachen landen beim ersten Abspielen im Speicher
+    // (Marcel 19.11.: Download-Knopf je Sprache folgt). So bleibt der erste Besuch klein.
+    for (const e of Object.values(idx.saetze || {})) if (String(e.stimme || '').startsWith('en_')) { mp3.add('audio/piper/' + e.n); mp3.add('audio/piper/' + e.s); }
     const pk = await (await c.match('pakete/index.json')).json();
     await c.addAll((pk.pakete || []).map((p) => 'pakete/' + p.id + '.json'));
     await c.addAll([...mp3]);
@@ -28,6 +30,9 @@ self.addEventListener('fetch', (e) => {
   // Nur im eigenen Speicher suchen (caches.open(CACHE).match): Unter lernen.… liegen alle Apps auf derselben Adresse –
   // caches.match würde auch Dateien anderer Apps finden (z. B. deren index.html).
   if (req.url.endsWith('version.json')) { e.respondWith(fetch(req, { cache: 'no-store' }).catch(() => caches.open(CACHE).then((c) => c.match(req)))); return; }
-  e.respondWith(caches.open(CACHE).then((c) => c.match(req, { ignoreSearch: req.mode === 'navigate' }).then((hit) => hit || fetch(req).catch(() =>
-    req.mode === 'navigate' ? c.match('index.html') : Response.error()))));
+  e.respondWith(caches.open(CACHE).then((c) => c.match(req, { ignoreSearch: req.mode === 'navigate' }).then((hit) => hit || fetch(req).then((res) => {
+    // Vertonte Sätze, Pakete und Lernpfade beim ersten Laden merken – danach offline verfügbar
+    if (res.ok && /\/(audio\/piper|pakete|lernpfad)\//.test(new URL(req.url).pathname)) c.put(req, res.clone()).catch(() => {});
+    return res;
+  }).catch(() => (req.mode === 'navigate' ? c.match('index.html') : Response.error())))));
 });

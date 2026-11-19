@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 19.11.2026 – Version 0.4.0 vom 19.11.2026: Lernpfad mit neuen Spielen, jede Karte geprüft, PC-Ansicht, Eltern-Tor-Standard – fertig für den Test
+
+- **Lernpfad „Neu lernen“** (Englisch, Französisch, Spanisch): 2 Abschnitte × 8 Einheiten × 5 Lektionen. Neue Spielarten: Wimmelbild (statt Karten umdrehen), „Mach, was ich sage!“ (Dinge zu Figuren ziehen, 360 Befehle), „Ruby lernt von dir“ (Fehler an der Tafel finden, 192 Sätze – alle auf Eindeutigkeit geprüft), Regel entdecken, Satz-Zug, Nachsprechen (Erkennung nur im Gerät, jetzt auch fr/es), Geschichte. „Meine Insel“ mit allen gelernten Wörtern. Recherche in docs/RECHERCHE.md, Plan in LERNPFAD.md.
+- **Jede Karte geprüft:** 1257 Einträge einzeln (4 Prüfer) + Lernpfad-Lektorat (alle Abschnitte), über 200 Korrekturen insgesamt, davon 26 Bildfehler (z. B. Schiff beim „Schaf“). Unsere Paket-Fassung ist die einzig gültige.
+- **Ton:** alle englischen Figuren mit Rubys Stimme (Marcel); Zählreihen mit Pausen; doppelte Hörprüfung (Whisper + wav2vec2); 0,12 s Vorlauf beim Abspielen gegen verschluckte erste Laute; 103 von 1871 Aufnahmen (5,5 %) unsicher → Gerätestimme. Service Worker lädt nur Englisch vorab (11,8 MB), andere Sprachen beim ersten Abspielen.
+- **Eltern-Tor** nach Standard ELTERN-TOR (Malaufgabe in Worten, Ziffern-Tastatur, 10 Min offen) vor Elternbereich, Einstellungen, „Alle Apps“; toter Wissensgarten-Link entfernt; „Deine Daten“ für Kinder auf der Startseite.
+- **PC-Ansicht** ab 1100 px (Bilder vorher/nachher in screenshots/pc/). sw.js nur noch `caches.open(CACHE).match`.
+- **Prüfung:** 26 Inhaltstests, Browser-Durchlauf Chromium Handy/PC + WebKit iPhone/iPad grün (101 Prüfungen), Bildschirmfotos angesehen.
+- **Rückweg:** 0.3.3 (ed4e88b) – Lernstand bleibt (nur neue Felder lp, insel, tests).
+
 ## 19.11.2026 – Version 0.3.3 vom 19.11.2026: Pflicht 2 Klassenarbeits-Generalprobe – fertig für den Test
 
 - **Kind:** Startseite je Sprache „📝 Mein Test ist am …“ → Datum (morgen bis 60 Tage) + Pakete/eigene Listen. Karte zeigt „Noch N Tage · Heute dran: …“ mit ▶ Üben; Tag gilt als geschafft nach einer Runde.

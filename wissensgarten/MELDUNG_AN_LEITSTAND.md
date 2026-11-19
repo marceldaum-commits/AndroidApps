@@ -9,6 +9,28 @@
 
 
 
+## 2.3.1 – PC-Darstellung, Bild-Bremse, Eltern-Tor nach gemeinsamem Standard (19.11.2026)
+- **Anlass:** Marcel meldete, dass die App am PC im Vollbild nicht schön aussieht und sehr hängt.
+- **Breite Bildschirme** (`App.kt`, BoxWithConstraints):
+  - Ab 800 dp Breite steht der Inhalt als Karte mit Schatten in der Mitte, die Ränder zeigen einen Verlauf von Himmel zu Wiese.
+  - Alles wird proportional größer (Dichte × bis 1,3), die Spalte ist 760 dp breit. Bei 1844 px Breite sind das etwa 990 px statt bisher 720 px.
+  - Auf Handys bleibt alles wie bisher.
+- **Bild-Bremse** (`index.html`, vor dem Laden der App):
+  - `requestAnimationFrame` wird gebündelt. Liegt die mittlere Zeichenzeit über ~22 ms, gibt es höchstens 20 Bilder/s, und der Haupt-Thread bleibt für Eingaben frei.
+  - Unter ~9 ms wird die Bremse wieder gelöst.
+  - Abschalten mit `?bremse=aus`, Stand über `window.wgBremse()` bzw. `?diag=1`.
+  - Messung im Container (Chromium ohne Grafikkarte): Der Willkommensschirm zeichnete dauernd neu und kam nur auf 4–7 Bilder/s, weil die Wachs-Animation praktisch die ganze Rechenzeit kostete. Auf einem PC ohne Grafik-Beschleunigung ist das genau das gemeldete Hängen.
+- **Eltern-Tor** nach ELTERN-TOR.md:
+  - Aufgabe in Worten mit Vorlese-Knopf, eigene Ziffern-Tastatur, nach einem Fehler sofort eine neue Aufgabe, 10 Minuten offen nur im Arbeitsspeicher.
+  - Schloss-Text: „Das gehört zu Wissensgarten Plus. Deine Eltern können im Elternbereich nachsehen.“
+  - Bildschirmfoto `51_eltern_tor.png`, `ParentGateTest` grün.
+- **Laden:** Der veraltete Text „Plus-Pakete (gerade gratis)“ ist entfernt, die Eltern-Info aktualisiert.
+- **Belege:**
+  - Bildschirmfotos `85_web_pc_1920.png`, `86_web_pc_1366.png` und 1280 × 800 angesehen; Handy unverändert.
+  - Grün: `web-umzug.cjs` (5 Fälle), `web-sprachen.cjs`, `web-paket.cjs`, `ParentGateTest`.
+  - Safari-Abhilfe: 937 abgesichert, 0 Endaufrufe.
+- **Rückweg:** 2.3.0 (bb0b780).
+
 ## 2.3.0 – Umzug auf lernen(-test).mathenachhilfe-online.com/wissensgarten/ (19.11.2026, Standard UMZUG-LERNEN.md)
 - **Alte Adresse** (wissensgarten[-test].…, am Hostnamen erkannt). Beim Start, bevor die App lädt (Startbild: „Wir ziehen um … Brummi packt deinen Garten ein“):
   1. Pflicht-Schutz: `lernen…/wissensgarten/icons/icon-192.png` muss als Bild laden (10 s). Bei 404, 503 oder Zertifikatsfehler wird nicht weitergeleitet und die App startet wie bisher.
