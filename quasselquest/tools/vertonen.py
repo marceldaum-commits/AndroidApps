@@ -32,7 +32,8 @@ STIMMEN = {
     'sam':  {'modell': 'en_GB-cori-medium', 'tempo': 1.05, 'tonhoehe': 1.0},
     'ted':  {'modell': 'en_GB-cori-medium', 'tempo': 1.05, 'tonhoehe': 1.0},
     # Sprachpakete (Lizenzen geprüft 19.11.2026, siehe LIZENZEN.md); Latein: keine freie Stimme → wird nicht vorgelesen
-    'de':   {'modell': 'de_DE-thorsten-medium', 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'de'},
+    # Deutsch: zurzeit keine Stimme (thorsten am 19.11.2026 entfernt); neue Stimme kommt aus dem Tonstudio (VERTONUNG.md)
+    'de':   {'modell': None, 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'de'},
     'fr':   {'modell': 'fr_FR-siwis-medium', 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'fr'},
     'es':   {'modell': 'es_ES-davefx-medium', 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'es'},
 }
