@@ -21,7 +21,7 @@
   - **Nicht gelöscht:** Sicherung bzw. Sync (`SnapshotIO`, direkt am Speicher) und Paket-Updates (`syncPacks`) behalten sie. „Profil löschen“ löscht weiterhin alles.
 - **Hinweis auf Quasselquest:**
   - Im Garten erscheint die Karte „🗣️ Sprachen sind umgezogen!“, sobald das Kind ausgeblendete Sprach-Beete hat. Eine allgemeine Version steht oben in der Samenhandlung.
-  - Der Knopf „Zu Quasselquest“ erscheint, sobald `Angebot.QUASSELQUEST_URL` gesetzt ist (Adresse vom Leitstand). Bis dahin steht dort „Quasselquest öffnet bald – frag deine Eltern.“
+  - Der Knopf „Zu Quasselquest“ führt zu `https://lernen.mathenachhilfe-online.com/quasselquest/?src=wissensgarten-sprachen`, auf der Test-Stufe zu `lernen-test.` (gemeinsame Adresse laut UMZUG-LERNEN.md).
 - **Belege:** Bildschirmfoto `screenshots/84_quasselquest_hinweis.png`. `webApp/tools/web-sprachen.cjs` (Wasm und JS) prüft: Das Beet ist ausgeblendet, Beet, Karten und Lernprotokoll bleiben gespeichert, und `#paket=` pflanzt kein Sprachpaket.
 - **Für den Leitstand:**
   - Der Plus-Text im Shop bzw. auf der Website darf keine Sprachen mehr nennen.

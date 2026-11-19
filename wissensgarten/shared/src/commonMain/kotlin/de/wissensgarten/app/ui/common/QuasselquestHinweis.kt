@@ -22,7 +22,8 @@ import de.wissensgarten.core.model.Angebot
 @Composable
 fun QuasselquestHinweis(beete: Int, modifier: Modifier = Modifier.padding(horizontal = 16.dp)) {
     val uri = LocalUriHandler.current
-    val link = remember { Angebot.quasselquestLink() }
+    val test = de.wissensgarten.app.ui.fx.LocalHost.current?.testStage ?: false
+    val link = remember(test) { Angebot.quasselquestLink(test) }
     val wave by rememberInfiniteTransition(label = "qq").animateFloat(-8f, 8f, infiniteRepeatable(tween(700), RepeatMode.Reverse), label = "w")
     Surface(shape = RoundedCornerShape(20.dp), color = Color(0xFFE3F2FD), modifier = modifier.fillMaxWidth()) {
         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -35,8 +36,7 @@ fun QuasselquestHinweis(beete: Int, modifier: Modifier = Modifier.padding(horizo
                     else "Englisch, Französisch, Latein, Spanisch und Rechtschreibung & Grammatik lernst du jetzt in Quasselquest.",
                     style = MaterialTheme.typography.bodyMedium, color = Color(0xFF263238),
                 )
-                if (link != null) FilledTonalButton(onClick = { runCatching { uri.openUri(link) } }) { Text("Zu Quasselquest") }
-                else Text("Quasselquest öffnet bald – frag deine Eltern.", style = MaterialTheme.typography.bodySmall, color = Color(0xFF546E7A))
+                FilledTonalButton(onClick = { runCatching { uri.openUri(link) } }) { Text("Zu Quasselquest") }
             }
         }
     }
