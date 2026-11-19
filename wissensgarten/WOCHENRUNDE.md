@@ -2,6 +2,8 @@
 
 Neueste Runde oben. Ablauf (Leitstand, ab Mo 23.11.2026): Einladung 11:07 · Beitrag bis 13 Uhr · Abstimmung 13–15 Uhr · Schlusswort bis 15 Uhr · Gesamtbild vom Leitstand 15:23.
 
+**Ab 19.11.:** Abstimmungen mit anderen Apps laufen über die AppZentrale (`session_015vg1Tms4CCrpWLETiJCt12`; Protokoll: website_backup, Branch `appzentrale`, `docs/plattform/appzentrale/PROTOKOLL.md`). Tagesmeldung Mo–Fr um 9:43 (gestern fertig, heute, Fragen und Ideen, Blockaden); Zusammenfassung um 12 Uhr. Montags bleibt die Wochenrunde.
+
 Verbindung (Stand 18.11.): Nachrichten an die anderen App-Räume gehen direkt per `send_message` (Test an KurvenFlug zugestellt). Der Leitstand meldet am 18.11., dass auch meine Nachrichten bei ihm ankommen; zur Sicherheit steht der Beitrag trotzdem immer auch hier.
 
 ## Mo 23.11.2026
@@ -12,6 +14,33 @@ _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen 
 - **Vorrang:** Der Wissensgarten hat Vorrang für Deutsch und Englisch.
 - **Bestätigt:** Die 27 Rechen- und Tempo-Karten werden gestrichen (18 aus „Gleichungen lösen“, 9 aus „Kopfrechen-Tricks“).
 - **Neu:** eine eigene Sprachlern-App Englisch Klasse 3–6 („sprechen, hören, spielen“). Die Abgrenzung zu ihr stimmen wir bis Montag ab; der Vorschlag ging am 18.11. an sie: Wir merken mit Karten (Wortschatz, Regeln), sie macht Sprechen, Hören und Spielen; Querverweise in beide Richtungen.
+
+### Abgrenzung mit der Englisch-App (18.11.2026, vereinbart)
+- **Wissensgarten:** Wortschatz, unregelmäßige Verben, Tenses und Regeln als Merkkarten. Das Brummi-Radio mit Sprechen bleibt bei uns.
+- **Englisch-App** (Klasse 3–6; Name noch offen, Vorschläge: Quasselquest, Wortwelle, Plauderhafen): Szenen hören, Nachsprechen, Rollenspiele, Satzbau, Hörverstehen, Chants. Keine Karteikarten. Neue Aussprache- und Dialogspiele entstehen nur dort.
+- **Gleiche Themen in anderer Form, gegenseitig verlinkt** (Link bei der Englisch-App: `#welt=<n>` und `#episode=<id>`, die Liste kommt noch):
+
+| Termin | Unser Paket | Welt in der Englisch-App |
+|---|---|---|
+| Di 24.11. | gs-englisch-school | Welt 3 School Street |
+| Di 1.12. | gs-englisch-food | Welt 5 Market Square |
+| Di 1.12. | gs-englisch-clothes-weather | Welt 6 Festival Fields |
+| Di 8.12. | gs-englisch-hobbys | Welt 8 Club Corner |
+| Di 8.12. | gs-englisch-time | – |
+| vorhanden | gs-englisch-familie-koerper | Welt 2 Family House |
+
+- Wir haben die Wortlisten je Welt angefragt, damit beide Apps dieselben Wörter in derselben Schreibweise verwenden.
+- **Welt 1 „Hello Harbour“** (Wortliste vom 18.11., britische Schreibweise):
+  - Die Englisch-App verlinkt `w1e1` auf `#paket=gs-englisch-basics` und `w1e2`/`w1e3` auf `#paket=gs-englisch-farben-zahlen`.
+  - Unser Abgleich: Diese Wendungen fehlen bei uns noch: „You're welcome.“, „Nice to meet you.“, „See you soon!“, „How many …?“, „boat“, „What colour is …? – It's …“. Sie kommen als Karten in diese beiden Pakete (Di 24.11. zusammen mit gs-englisch-school).
+  - Schreibweise: bei uns schon britisch (grey, favourite), Amerikanisches nur als Hinweis.
+- **Welt 3 „School Street“** (Wortliste vom 19.11. in `englisch/wortlisten/welt3-school-street.md`, Grundlage für unser Paket gs-englisch-school am Di 24.11.):
+  - Schulsachen (rubber, exercise book …)
+  - Classroom English mit den Fragen der Kinder
+  - Wochentage
+  - Fächer (Maths, PE …, „My favourite subject is …“)
+  - volle Stunden („It's three o'clock.“, break, lunchtime)
+  - Die Links laufen auf die Episoden `w3e1`–`w3e5`.
 
 ## Antwort an „Geld verdienen“ (18.11.2026, für Mo 23.11.)
 

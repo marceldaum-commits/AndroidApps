@@ -1,0 +1,836 @@
+{
+"format": 1,
+"app": "quasselquest",
+"texte": [
+{
+"text": "Eight fish, please.",
+"sprache": "en",
+"nova": "6af1f305cf0047b1984ef0ea7bf37a56"
+},
+{
+"text": "Enjoy your fish!",
+"sprache": "en",
+"nova": "db5cc6c2e4f99e3838d157cd1b91acde"
+},
+{
+"text": "Five fish, please.",
+"sprache": "en",
+"nova": "6e7c8ec8c65e5caf2b1e1a67e421fecb"
+},
+{
+"text": "Four fish, please.",
+"sprache": "en",
+"nova": "54be20ec6ef6fe0f728468880564ef6d"
+},
+{
+"text": "Four, five, six.",
+"sprache": "en",
+"nova": "168fc88ef469bdda5bc45f64efe6cc68"
+},
+{
+"text": "Good morning!",
+"sprache": "en",
+"nova": "1a6ca196909cac0afe6d3dba07c394cd"
+},
+{
+"text": "Good morning! How many fish would you like?",
+"sprache": "en",
+"nova": "3172fb02abefd52517231b63864e4c7b"
+},
+{
+"text": "Good morning, Sam!",
+"sprache": "en",
+"nova": "2184b2ec41da7c45ebe34a94ebb5ec00"
+},
+{
+"text": "Good night!",
+"sprache": "en",
+"nova": "cad29366816d4154a549d128c81ba203"
+},
+{
+"text": "Good night? It's morning!",
+"sprache": "en",
+"nova": "569a576a8bcc0b3180b0673b6dd37f2c"
+},
+{
+"text": "Goodbye!",
+"sprache": "en",
+"nova": "f0e73e8b5683f91a665c88df57ec6f61"
+},
+{
+"text": "Goodbye, Sam!",
+"sprache": "en",
+"nova": "37c41c52f9a9fae3ec0a7afb05b11604"
+},
+{
+"text": "Goodbye? But you are new here!",
+"sprache": "en",
+"nova": "c6f9b8ccb036f0a46203eb5fff4b3e69"
+},
+{
+"text": "Grandpa",
+"sprache": "en",
+"nova": "eefd62c74b2e517258c95b674b7c625a"
+},
+{
+"text": "Ha ha! It's not night!",
+"sprache": "en",
+"nova": "3332af38c546948703677f22a27d7cc8"
+},
+{
+"text": "Hello",
+"sprache": "en",
+"nova": "981fe2d7e27771c7df9c037152632f8d"
+},
+{
+"text": "Hello again! But now: goodbye!",
+"sprache": "en",
+"nova": "62d5895c667e96be51176bff499e7fed"
+},
+{
+"text": "Hello!",
+"sprache": "en",
+"nova": "05d2fa8a373f411eac103bfb4c537a6e"
+},
+{
+"text": "Hello! I have to go now. Goodbye!",
+"sprache": "en",
+"nova": "613245626209c2390fba15d17d349a58"
+},
+{
+"text": "Hello! I'm Grandpa Ted. I'm a fisherman.",
+"sprache": "en",
+"nova": "71b92264bd0a3f5f22916ca16da35e75"
+},
+{
+"text": "Hello! I'm Ruby.",
+"sprache": "en",
+"nova": "c65987d26d011cc765f13580a3a25e72"
+},
+{
+"text": "Hello! My name is Sam.",
+"sprache": "en",
+"nova": "0051a0431a402eb53bd7c23a5742bef6"
+},
+{
+"text": "Here you are. Eight fish!",
+"sprache": "en",
+"nova": "3cd9dbc0c218abbafa724eb89bf46d10"
+},
+{
+"text": "Here you are. Five fish!",
+"sprache": "en",
+"nova": "0f42d2710935d5b1225758a64030547f"
+},
+{
+"text": "Here you are. Four fish!",
+"sprache": "en",
+"nova": "d6b68e8548f0dcb3c05740e92361b480"
+},
+{
+"text": "Here you are. Nine fish!",
+"sprache": "en",
+"nova": "5fec4316e6d1fe4e3e09a762308018fa"
+},
+{
+"text": "Here you are. One fish!",
+"sprache": "en",
+"nova": "26874f7dbb6067aba5662d416fdc73ce"
+},
+{
+"text": "Here you are. Seven fish!",
+"sprache": "en",
+"nova": "c81d7ea265fbef670384d5cc3c93603a"
+},
+{
+"text": "Here you are. Six fish!",
+"sprache": "en",
+"nova": "268deb92070e711a0bb3d8d7722fb2bc"
+},
+{
+"text": "Here you are. Ten fish!",
+"sprache": "en",
+"nova": "4b158acbcd03f294da930e80803b9b97"
+},
+{
+"text": "Here you are. Three fish!",
+"sprache": "en",
+"nova": "bd32a6cc3e863e5e81b1a942149e7699"
+},
+{
+"text": "Here you are. Two fish!",
+"sprache": "en",
+"nova": "d50538432b016fa2254c04354cb451fa"
+},
+{
+"text": "Hi",
+"sprache": "en",
+"nova": "b07cf0d366045c7bd5df87eac8b3b801"
+},
+{
+"text": "Hi! I'm Mia. What's your name?",
+"sprache": "en",
+"nova": "0deac67c2d9bd955600f02cb00c4d6b4"
+},
+{
+"text": "Hi, Ruby! I'm Mia.",
+"sprache": "en",
+"nova": "98e026ba5b1a6bba787959eb6ba1c432"
+},
+{
+"text": "Hmm, look again!",
+"sprache": "en",
+"nova": "e43863e80e8b1a140e77e7b146bfabbe"
+},
+{
+"text": "How",
+"sprache": "en",
+"nova": "ba7cf307fd8f74cda56e7744e845c718"
+},
+{
+"text": "How many boats can you see?",
+"sprache": "en",
+"nova": "2a24a5a4e86b8a3730f5a8e86c202982"
+},
+{
+"text": "How many fish?",
+"sprache": "en",
+"nova": "110629b0c0be1417fa65215d48d2e149"
+},
+{
+"text": "I",
+"sprache": "en",
+"nova": "5be0b5dda2cfa08c15eb44ec6b636954"
+},
+{
+"text": "I can see five boats.",
+"sprache": "en",
+"nova": "11e1a7113d2bd6b1039837fe363a1328"
+},
+{
+"text": "I paint the boats.",
+"sprache": "en",
+"nova": "d21838ea667d6cbc14dacccc14ea4e0b"
+},
+{
+"text": "I'm",
+"sprache": "en",
+"nova": "97b73d9c0ae5ed5d98b1224a6f85a12d"
+},
+{
+"text": "It's blue.",
+"sprache": "en",
+"nova": "7368814066ad5c7bb048a2fcc66b50a0"
+},
+{
+"text": "It's green.",
+"sprache": "en",
+"nova": "451ee18e3b5a77464f0effc0f565b82c"
+},
+{
+"text": "It's red.",
+"sprache": "en",
+"nova": "5b63c4f90cc3661d313d442170fbe316"
+},
+{
+"text": "Look",
+"sprache": "en",
+"nova": "b0d13ae16852ceac41089133baf0f091"
+},
+{
+"text": "Look at my boat! What colour is it?",
+"sprache": "en",
+"nova": "33ce50558361a1583a1725dc1bad8cd9"
+},
+{
+"text": "Look! One, two, three fish.",
+"sprache": "en",
+"nova": "612c6a1a4254766b3dae09f959355be3"
+},
+{
+"text": "Mia",
+"sprache": "en",
+"nova": "cae5810225fa833270615545243f9e9e"
+},
+{
+"text": "Morning? I am leaving!",
+"sprache": "en",
+"nova": "1b7bd7f18417951270d89362ef858216"
+},
+{
+"text": "My",
+"sprache": "en",
+"nova": "6f73499145a43dfc54603f676735d9a1"
+},
+{
+"text": "My boat is black.",
+"sprache": "en",
+"nova": "bb8c6ac560b29d8b31d6cabeaca7d86e"
+},
+{
+"text": "My boat is blue.",
+"sprache": "en",
+"nova": "a625c574036ed8152e5719f6cc10011d"
+},
+{
+"text": "My boat is green.",
+"sprache": "en",
+"nova": "c9cf377ebff15874946fa1265c04701a"
+},
+{
+"text": "My boat is orange.",
+"sprache": "en",
+"nova": "784f689116d5adc4d86224d2064f1963"
+},
+{
+"text": "My boat is purple.",
+"sprache": "en",
+"nova": "4c45f2086a81b7690c9c84642dc1c45f"
+},
+{
+"text": "My boat is red.",
+"sprache": "en",
+"nova": "9b0ed6dd36c2c09c08a567a2229d08ee"
+},
+{
+"text": "My boat is white.",
+"sprache": "en",
+"nova": "b4f09a301da2649c046a29e952ffdb16"
+},
+{
+"text": "My boat is yellow.",
+"sprache": "en",
+"nova": "1024c00f6aa779c7bcb5f0ca80b610a1"
+},
+{
+"text": "My name is Mia.",
+"sprache": "en",
+"nova": "caf77009827a97589d1e691374d75bf4"
+},
+{
+"text": "My name is Ruby.",
+"sprache": "en",
+"nova": "a27b7bced86fc09b60147289fdae28ba"
+},
+{
+"text": "Nice",
+"sprache": "en",
+"nova": "a1fd7115d387352c57db3813bd389419"
+},
+{
+"text": "Nice to meet you too!",
+"sprache": "en",
+"nova": "44f5894aa8b39c5e6feee1d4057e978e"
+},
+{
+"text": "Nice to meet you!",
+"sprache": "en",
+"nova": "ba518bee2c8f6440f899cf3fe7879a59"
+},
+{
+"text": "Nice to meet you.",
+"sprache": "en",
+"nova": "d2c89de2e394dbc1447c91ade7720c9f"
+},
+{
+"text": "Nine fish, please.",
+"sprache": "en",
+"nova": "78818441b81fc37ece6dc7230280413e"
+},
+{
+"text": "No, Ruby is the parrot!",
+"sprache": "en",
+"nova": "e92244f354b238326708a4e0933bf8c2"
+},
+{
+"text": "Now you! What colour is your boat?",
+"sprache": "en",
+"nova": "7652280152d3adbe24cf450dfac83a70"
+},
+{
+"text": "One",
+"sprache": "en",
+"nova": "cb055338dd5b4982e4812e441e1f412d"
+},
+{
+"text": "One fish, please.",
+"sprache": "en",
+"nova": "3d6de7aad0b544a3abe64abaa54a66fc"
+},
+{
+"text": "One, two, three.",
+"sprache": "en",
+"nova": "cdfb9288af92a3a7709cd25119bd96d0"
+},
+{
+"text": "Our boats are beautiful!",
+"sprache": "en",
+"nova": "555eb680762d3d0d6219276449001108"
+},
+{
+"text": "Ruby",
+"sprache": "en",
+"nova": "b421a1014121fb93e69f7d55916c4eed"
+},
+{
+"text": "Ruby is red!",
+"sprache": "en",
+"nova": "17b4d090adba69c4a6760172edacd591"
+},
+{
+"text": "Ruby says: touch five fish.",
+"sprache": "en",
+"nova": "d00f859d6ead3821d9db729aab039ac1"
+},
+{
+"text": "Ruby says: touch four fish.",
+"sprache": "en",
+"nova": "dedb398ad4f8e407270f373576542f25"
+},
+{
+"text": "Ruby says: touch one fish.",
+"sprache": "en",
+"nova": "f81828436b90e4a81e76678d619fec74"
+},
+{
+"text": "Ruby says: touch six fish.",
+"sprache": "en",
+"nova": "219f7992e2098555be93b19eceb46432"
+},
+{
+"text": "Ruby says: touch the blue boat.",
+"sprache": "en",
+"nova": "9c5e4dd4539ae56cea759f174f77c438"
+},
+{
+"text": "Ruby says: touch the green boat.",
+"sprache": "en",
+"nova": "9b09af08bb736ab95f6e64d4054596c1"
+},
+{
+"text": "Ruby says: touch the orange boat.",
+"sprache": "en",
+"nova": "1fa6040ff3ba2d89d597c89c64489071"
+},
+{
+"text": "Ruby says: touch the purple boat.",
+"sprache": "en",
+"nova": "4f8d47003b7812197b67fe004d04aab7"
+},
+{
+"text": "Ruby says: touch the red boat.",
+"sprache": "en",
+"nova": "d456ca08e9d43ce94a80b0b97183e9a9"
+},
+{
+"text": "Ruby says: touch the yellow boat.",
+"sprache": "en",
+"nova": "9d81e3d09f0444208f74977066b8087e"
+},
+{
+"text": "Ruby says: touch three fish.",
+"sprache": "en",
+"nova": "402d71d01e6ae684d6b5d25063da3117"
+},
+{
+"text": "Ruby says: touch two fish.",
+"sprache": "en",
+"nova": "a9d1d044164a93523fbc255bcada0551"
+},
+{
+"text": "Sam",
+"sprache": "en",
+"nova": "58c281d2a40822baaa1759df5558bfa7"
+},
+{
+"text": "See you soon!",
+"sprache": "en",
+"nova": "b4abc1142bcbac725801ffd0ac0eeb49"
+},
+{
+"text": "Seven fish, please.",
+"sprache": "en",
+"nova": "da29305e2acbb7b01a372938f9f77a54"
+},
+{
+"text": "Seven, eight, nine, ten.",
+"sprache": "en",
+"nova": "ccf5b72e78b260ac52d0340afc4998dc"
+},
+{
+"text": "Six fish, please.",
+"sprache": "en",
+"nova": "06ab37e9756a71713f2c03b26fb018cb"
+},
+{
+"text": "Ted",
+"sprache": "en",
+"nova": "04c92e29faed3198a9395f93abe9f7c6"
+},
+{
+"text": "Ten fish, please.",
+"sprache": "en",
+"nova": "a3f50ba8eaa7f56630bdb412bb89ca10"
+},
+{
+"text": "Thank you!",
+"sprache": "en",
+"nova": "a2be29c901272c086374040d2dc9dd28"
+},
+{
+"text": "Thank you, Mia!",
+"sprache": "en",
+"nova": "844b4420f4483140861d73ce1793330e"
+},
+{
+"text": "The boat is red.",
+"sprache": "en",
+"nova": "ceba2349619ee0d1917bc085a8de3e03"
+},
+{
+"text": "This",
+"sprache": "en",
+"nova": "a1a00150150784e3dce86824dc8d8941"
+},
+{
+"text": "This boat is red.",
+"sprache": "en",
+"nova": "647a61d74bb31dcbcf0c06b3003c60f6"
+},
+{
+"text": "Three fish, please.",
+"sprache": "en",
+"nova": "7454de06096f9ccf0a061d832f9f5cd5"
+},
+{
+"text": "Touch five fish.",
+"sprache": "en",
+"nova": "ee758f13e55a3f00f2f48418c12e4626"
+},
+{
+"text": "Touch four fish.",
+"sprache": "en",
+"nova": "7adca31e45d7413cf6f137ad0dd6f2c2"
+},
+{
+"text": "Touch one fish.",
+"sprache": "en",
+"nova": "b0b60ba5401be29b3cad7599f4a91dae"
+},
+{
+"text": "Touch six fish.",
+"sprache": "en",
+"nova": "d53f3322f915bd558fade929710176f1"
+},
+{
+"text": "Touch the blue boat.",
+"sprache": "en",
+"nova": "4e5da3c6f14218fe1ed71bd71e3d07e4"
+},
+{
+"text": "Touch the green boat.",
+"sprache": "en",
+"nova": "de734c880613b5fc3da23fd201d1354f"
+},
+{
+"text": "Touch the orange boat.",
+"sprache": "en",
+"nova": "e71760ab354c461ce7826790a9057454"
+},
+{
+"text": "Touch the purple boat.",
+"sprache": "en",
+"nova": "1c95eab715ebdbea447d5ed9de27693e"
+},
+{
+"text": "Touch the red boat.",
+"sprache": "en",
+"nova": "fb640f352d05cb5b0c97cf48ad1b9917"
+},
+{
+"text": "Touch the yellow boat.",
+"sprache": "en",
+"nova": "3bcc7477f5b73e8866bb355f504ea1c9"
+},
+{
+"text": "Touch three fish.",
+"sprache": "en",
+"nova": "193795f7fc8b35950b267ea8d068142a"
+},
+{
+"text": "Touch two fish.",
+"sprache": "en",
+"nova": "d00c875521d41fddc7903e396aa47a3f"
+},
+{
+"text": "Two fish, please.",
+"sprache": "en",
+"nova": "d3bb2092383f7ce1cec3b27f52781e41"
+},
+{
+"text": "Wait! Say thank you first!",
+"sprache": "en",
+"nova": "cb0e8802b697a939fff665a68275aef9"
+},
+{
+"text": "Well",
+"sprache": "en",
+"nova": "bd6e3d786d9d8f98e81cafae840c2484"
+},
+{
+"text": "Well done!",
+"sprache": "en",
+"nova": "32e7f683dfcfadf9fb8b534e01cb9d43"
+},
+{
+"text": "What",
+"sprache": "en",
+"nova": "e13b74db4bdc4bb009f1d6e6483c5036"
+},
+{
+"text": "What colour is Ruby?",
+"sprache": "en",
+"nova": "487bddc4d53382f25667aa8565919335"
+},
+{
+"text": "What colour is the boat?",
+"sprache": "en",
+"nova": "81177183d647777973035108f0581490"
+},
+{
+"text": "What's",
+"sprache": "en",
+"nova": "8a080515e28c8ca00a3d281f12a37ba5"
+},
+{
+"text": "What's your name?",
+"sprache": "en",
+"nova": "8873faf0097c5528ab54fff654c638c8"
+},
+{
+"text": "Wow, a black boat! I like it!",
+"sprache": "en",
+"nova": "dc87d42dfd992ec25f6f02176e2cbfe9"
+},
+{
+"text": "Wow, a blue boat! I like it!",
+"sprache": "en",
+"nova": "0a480a58e43ac78964513ba3180d6c34"
+},
+{
+"text": "Wow, a green boat! I like it!",
+"sprache": "en",
+"nova": "9564be4570369e525919ee84409e0f6d"
+},
+{
+"text": "Wow, a purple boat! I like it!",
+"sprache": "en",
+"nova": "6ec5efb3cd7d0c0c3b5b8627b0ec28db"
+},
+{
+"text": "Wow, a red boat! I like it!",
+"sprache": "en",
+"nova": "fc77428c5dae27431590eedcd9f66962"
+},
+{
+"text": "Wow, a white boat! I like it!",
+"sprache": "en",
+"nova": "7f60617207f93ee4e93f4d51139863a6"
+},
+{
+"text": "Wow, a yellow boat! I like it!",
+"sprache": "en",
+"nova": "13cf2490f3bfdaf05a4613a78dc21191"
+},
+{
+"text": "Wow, an orange boat! I like it!",
+"sprache": "en",
+"nova": "d179fe8f28c85f607edf3d45b2fd38c1"
+},
+{
+"text": "You're welcome. Goodbye!",
+"sprache": "en",
+"nova": "d832032f95afdb31ed7f2f0a386b547a"
+},
+{
+"text": "a",
+"sprache": "en",
+"nova": "fd0d2dd5f8baaa80f4ab920db6c328b4"
+},
+{
+"text": "black",
+"sprache": "en",
+"nova": "2b90a162dd7b2fd10c7010948d1ac2f3"
+},
+{
+"text": "blue",
+"sprache": "en",
+"nova": "8c6703ba33aa669199ef0bf08e172144"
+},
+{
+"text": "boat",
+"sprache": "en",
+"nova": "418067386e4c3e8a4c3c183ccccf413e"
+},
+{
+"text": "boats",
+"sprache": "en",
+"nova": "06e0efcee4cf278884212ab435c0c126"
+},
+{
+"text": "can",
+"sprache": "en",
+"nova": "a2c18fcb09f2a0015833fd666170467e"
+},
+{
+"text": "colour",
+"sprache": "en",
+"nova": "a569949c8843e277bda1e319cf537e89"
+},
+{
+"text": "done",
+"sprache": "en",
+"nova": "345e43575829eae6fa924f459b0f438d"
+},
+{
+"text": "eight",
+"sprache": "en",
+"nova": "3792d91ad81f987a68486f1f7fd54d1b"
+},
+{
+"text": "fish",
+"sprache": "en",
+"nova": "00f848a539d0c0fec151b92f8a8e91a1"
+},
+{
+"text": "fisherman",
+"sprache": "en",
+"nova": "9912d4f49f56c0ee9f0302d415dd0002"
+},
+{
+"text": "five",
+"sprache": "en",
+"nova": "84d7e715328abd8b80be1e332a121f8f"
+},
+{
+"text": "four",
+"sprache": "en",
+"nova": "6822cd3a662fe8c24f91257495559b03"
+},
+{
+"text": "green",
+"sprache": "en",
+"nova": "ebac2ae6369a4eb9c1c6f1893008e418"
+},
+{
+"text": "is",
+"sprache": "en",
+"nova": "f510aa72d9a6ce87e6a9dd49b14bee0c"
+},
+{
+"text": "many",
+"sprache": "en",
+"nova": "7811a13437718745d03476a271515965"
+},
+{
+"text": "meet",
+"sprache": "en",
+"nova": "3a396607ba03950774b7e4759578b599"
+},
+{
+"text": "name",
+"sprache": "en",
+"nova": "c77f17366ec41a340c1b6e223b790f2c"
+},
+{
+"text": "nine",
+"sprache": "en",
+"nova": "517263bc1a04d995f7026f9c69e47bff"
+},
+{
+"text": "one",
+"sprache": "en",
+"nova": "27ad854329d737ac7f3c6cb42d6140dd"
+},
+{
+"text": "orange",
+"sprache": "en",
+"nova": "38e8e757ddf868651d1a159dc8107306"
+},
+{
+"text": "paint",
+"sprache": "en",
+"nova": "8a283cbbde7b2b4de54b32ed9c9374c4"
+},
+{
+"text": "purple",
+"sprache": "en",
+"nova": "5fdca74f9fe5d58286eed95d1f8d81b0"
+},
+{
+"text": "red",
+"sprache": "en",
+"nova": "dd42dbd14270f8dce4730dcde83c7802"
+},
+{
+"text": "see",
+"sprache": "en",
+"nova": "7f6c0a4ed67a780bcf2255ecfe7d81de"
+},
+{
+"text": "seven",
+"sprache": "en",
+"nova": "958a4788de8504730f76df58e7c2a7af"
+},
+{
+"text": "six",
+"sprache": "en",
+"nova": "e4c55308c10683fe0abb06dedfec99e1"
+},
+{
+"text": "ten",
+"sprache": "en",
+"nova": "26400cf0ea4fc7959a8e2e388693eec9"
+},
+{
+"text": "the",
+"sprache": "en",
+"nova": "ad964d35e7de80c18f9bc8a978cdc9a0"
+},
+{
+"text": "three",
+"sprache": "en",
+"nova": "e3a9f42ba76896aada7e68a555a94fbb"
+},
+{
+"text": "to",
+"sprache": "en",
+"nova": "e7ecb9a4e67683ef3789ba318155fe40"
+},
+{
+"text": "two",
+"sprache": "en",
+"nova": "8b396d3fbe6bc256508cb2f06751f4b2"
+},
+{
+"text": "white",
+"sprache": "en",
+"nova": "764cd6058576b90ef1a110f74027b2b3"
+},
+{
+"text": "yellow",
+"sprache": "en",
+"nova": "e1571d8261c5ace3220b8d0e29dc4883"
+},
+{
+"text": "you",
+"sprache": "en",
+"nova": "69d71bb83a47f47323d64a5ca9bb62da"
+},
+{
+"text": "your",
+"sprache": "en",
+"nova": "e3164e7412b79c891998492a7e08ca26"
+}
+]
+}
