@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 19.11.2026 – 2.18.38 auf test: KI-Kennzeichnung (Art. 50) und Familien-Einwilligung nach A6 / v1.7 (Marcel hat hier direkt „ja“ gesagt)
+
+- **KI-Tutor:** unter jeder KI-Antwort klein „Antwort einer KI – sie kann Fehler enthalten.“ (`Ki.LABEL`, `KiSheet.kt`, Marke `ki-kennzeichnung`). Kopf des Fensters weiter „🤖 KI-TUTOR“. KI-erstellte Aufgaben gibt es in Raumlicht nicht – der zweite Satz entfällt. **Diese Änderung betrifft auch die Live-Seite, sobald 2.18.38 live geht.**
+- **Familien-Speicher (nur Teststufe):** nur der Pflichttext, darunter Link „Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)“; Knöpfe „Einverstanden – Familie anlegen“ / „Einverstanden – Familie beitreten“ (kein Haken, nichts vorausgewählt; der Zwischenschritt „Einverstanden“ ist entfallen). Mit `#familie=…` geöffnet wird bis zum Knopf nichts abgefragt. Zusatzabsatz aus dem Einwilligungs-Block entfernt.
+- **Sicherheitshinweis v1.7** wörtlich (`Familie.SECURITY`): dauerhaft auf der Familien-Seite direkt unter dem QR-Code und über „Notfall-Blatt teilen“, außerdem im Text des Notfall-Blatts.
+- Der Link führt derzeit auf `https://www.mathenachhilfe-online.com/datenschutz/` (ohne Sprungmarke) – **bitte die Adresse/Sprungmarke von Abschnitt 10m nennen**, sobald er online ist.
+- **Rechtsbezug: ja (V8)** – Einwilligungstext, Sicherheitshinweis, KI-Kennzeichnung.
+- **Geprüft:** 204 Logik-Tests, 153 Oberflächen-Tests, Lint, alle Browser-Prüfungen bestanden (166 bisherige, davon `web-vorversion` diesmal 6 von 6, plus `web-familie.mjs` 32 von 32). `web-familie.mjs` war im ersten Lauf an vier Stellen rot, weil die Prüfung nach dem Klick nur drei Sekunden wartete; sie wartet jetzt auf die Server-Antwort. Echter Rundlauf auf lernen-test: siehe Nachtrag der AppZentrale-Meldung.
+
 ## 19.11.2026 – 2.18.37 auf test: familie.js @ e9993ec übernommen (Marcel hat hier direkt „ja“ gesagt – auch dazu, künftige Baustein-Fassungen nach Lesen, Prüfsumme und Test ohne Rückfrage zu übernehmen, solange es bei der Teststufe bleibt)
 
 - `web/src/wasmJsMain/resources/familie.js` = e9993ec, sha256 3f7ec567…f5f9, `node familie/tests/familie.mjs` → 51 Prüfungen. Brücke: `familie-weg` → „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“; der Umweg über `/liste` ist entfernt. Beim Beitreten mit einem Link zu einer gelöschten Familie: „Diese Familie gibt es nicht (mehr). Stimmt der Link?“.

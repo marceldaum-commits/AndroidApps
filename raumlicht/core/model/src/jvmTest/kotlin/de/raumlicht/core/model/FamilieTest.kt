@@ -47,6 +47,9 @@ class FamilieTest {
         assertTrue(Familie.NOTE.startsWith("Eure Lernstände werden verschlüsselt auf unserem Server in Deutschland gespeichert."))
         assertTrue(Familie.NOTE.contains("Technisch könnten wir damit eure Lernstände lesen; wir tun das nicht")); assertTrue(Familie.NOTE.endsWith("Jede Wiederherstellung seht ihr hier im Protokoll."))
         assertTrue(Familie.DELETE_WARNING.startsWith("Das löscht die Familie in ALLEN Lern-Apps")); assertTrue(Familie.DELETE_WARNING.endsWith("Die Lernstände auf diesem Gerät bleiben erhalten."))
+        assertEquals("Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)", Familie.PRIVACY_LINK); assertEquals("Einverstanden – Familie anlegen", Familie.AGREE_CREATE); assertEquals("Einverstanden – Familie beitreten", Familie.AGREE_JOIN)
+        assertEquals("Wer den Familien-Link oder den QR-Code hat, kann die Lernstände eurer Familie öffnen, ändern und löschen. Teilt ihn nur mit Personen, denen ihr vertraut, und bewahrt das Notfall-Blatt sicher auf.", Familie.SECURITY)
+        assertFalse("Sicherheitshinweis steht nicht im Pflichttext", Familie.NOTE.contains("Familien-Link"))
         assertEquals("Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.", Familie.GONE); assertEquals(Familie.GONE, Familie.problem("weg"))
     }
 

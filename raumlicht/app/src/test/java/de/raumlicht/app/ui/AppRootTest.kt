@@ -136,11 +136,11 @@ class AppRootTest {
         rule.onNodeWithTag("ki").assertDoesNotExist()                                                                          // vor dem ersten Versuch kein KI-Knopf
         rule.onNodeWithText("▶ Los").performClick(); rule.mainClock.advanceTimeBy(5000)
         rule.onNodeWithTag("ki").assertTextContains("Erklär’s mir anders", substring = true).performClick(); settle()
-        rule.onNodeWithTag("ki-antwort").assertTextContains("Vektor als Weg", substring = true); rule.onNodeWithTag("ki-rest").assertTextContains("Noch 2 Proben frei", substring = true)
+        rule.onNodeWithTag("ki-antwort").assertTextContains("Vektor als Weg", substring = true); rule.onNodeWithTag("ki-kennzeichnung").assertTextEquals("Antwort einer KI – sie kann Fehler enthalten."); rule.onNodeWithTag("ki-rest").assertTextContains("Noch 2 Proben frei", substring = true)
         assertTrue(asked[0], asked[0].contains("\"art\":\"erklaerung\"") && asked[0].contains("\"id\":\"1-2\"") && asked[0].contains("\"geraet\":\"${prefs.kiDevice()}\"") && asked[0].contains("\"code\":\"\""))
         // Rückfrage
         rule.onNodeWithTag("ki-frage").performTextInput("Was heißt die erste Zahl?"); rule.onNodeWithTag("ki-senden").performClick(); settle()
-        rule.onAllNodesWithTag("ki-antwort").assertCountEquals(2); rule.onNodeWithText("Was heißt die erste Zahl?").assertExists(); rule.onNodeWithTag("ki-rest").assertTextContains("Noch 1 Probe frei", substring = true)
+        rule.onAllNodesWithTag("ki-antwort").assertCountEquals(2); rule.onAllNodesWithTag("ki-kennzeichnung").assertCountEquals(2); rule.onNodeWithText("Was heißt die erste Zahl?").assertExists(); rule.onNodeWithTag("ki-rest").assertTextContains("Noch 1 Probe frei", substring = true)
         assertTrue(asked[1], asked[1].contains("\"art\":\"rueckfrage\"") && asked[1].contains("Was heißt die erste Zahl?") && asked[1].contains("\"rolle\":\"lux\""))
         rule.onRoot().captureRoboImage("../screenshots/82_ki_tutor.png")
         // Proben aufgebraucht: nur die sachliche Auskunft – keine Werbung für den Pass, kein Knopf zur Kaufseite; der bisherige Wortwechsel bleibt
@@ -351,9 +351,10 @@ class AppRootTest {
         // Weg: Einstellungen → Eintrag → Eltern-Tor → Familien-Seite
         nav.go(Routes.SETTINGS); settle(); rule.onNodeWithTag("familie-eintrag").assertTextContains("für Eltern", substring = true).performClick(); settle()
         assertNotEquals(Routes.FAMILY, nav.top); rule.onNodeWithTag("eltern-tor").assertExists(); torAuf(); assertEquals(Routes.FAMILY, nav.top)
-        rule.onNodeWithTag("familie-hinweis").assertTextContains("Technisch könnten wir damit eure Lernstände lesen; wir tun das nicht", substring = true); rule.onNodeWithTag("familie-datenschutz").assertExists()
-        // erst „Einverstanden“, dann gibt es Anlegen und Beitreten
-        rule.onNodeWithTag("familie-anlegen").assertDoesNotExist(); rule.onNodeWithTag("familie-link").assertDoesNotExist(); rule.onNodeWithTag("familie-einverstanden").performScrollTo().performClick(); settle(); rule.onNodeWithTag("familie-test").assertTextContains("Kopplung mit dem Eltern-Handy bleibt", substring = true)
+        rule.onNodeWithTag("familie-hinweis").assertTextContains("Technisch könnten wir damit eure Lernstände lesen; wir tun das nicht", substring = true); rule.onNodeWithTag("familie-datenschutz").assertTextContains("Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)", substring = true)
+        // nur ein Einwilligungstext; die Knöpfe selbst sind das Einverständnis – nichts vorausgewählt, der Sicherheitshinweis steht nicht im Pflichttext
+        rule.onNodeWithTag("familie-anlegen").performScrollTo().assertTextEquals("Einverstanden – Familie anlegen"); rule.onNodeWithTag("familie-beitreten").performScrollTo().assertTextEquals("Einverstanden – Familie beitreten")
+        rule.onNodeWithTag("familie-sicherheit").assertDoesNotExist(); rule.onNodeWithTag("familie-einzelheiten").assertDoesNotExist(); assertTrue(calls.isEmpty()); rule.onNodeWithTag("familie-test").assertTextContains("Kopplung mit dem Eltern-Handy bleibt", substring = true)
         // kein Link → verständliche Meldung, nichts geht raus
         rule.onNodeWithTag("familie-link").performScrollTo().performTextInput("irgendwas"); rule.onNodeWithTag("familie-beitreten").performScrollTo().performClick(); settle()
         rule.onNodeWithTag("familie-status").performScrollTo().assertTextContains("kein Familien-Link", substring = true); assertTrue(calls.isEmpty())
@@ -364,6 +365,7 @@ class AppRootTest {
         rule.onNodeWithTag("familie-dabei").assertExists(); rule.onNodeWithTag("familie-kind").assertTextContains("Lea", substring = true); rule.onNodeWithTag("familie-nummer").assertTextContains("K7QX-2MFA", substring = true)
         rule.onNodeWithTag("familie-qr").performScrollTo().assertExists(); rule.onNodeWithTag("familie-status").performScrollTo().assertTextContains("In der Familie gesichert", substring = true)
         assertEquals(1, de.raumlicht.core.model.Familie.State.decode(prefs.family)!!.rev)
+        rule.onNodeWithTag("familie-sicherheit").performScrollTo().assertTextContains("Wer den Familien-Link oder den QR-Code hat, kann die Lernstände eurer Familie öffnen, ändern und löschen.", substring = true)
         rule.onNodeWithTag("familie-protokoll-0").performScrollTo().assertTextEquals("19.11.2026: Familie angelegt")
         rule.onRoot().captureRoboImage("../screenshots/95_familie.png")
         // nichts geändert → kein zweites Sichern beim Zurückgehen; geändert → wird gesichert
@@ -380,7 +382,7 @@ class AppRootTest {
         assertEquals("", prefs.family); val n = calls.size; state = state + ("stars" to "x"); zurueck(); assertEquals(n, calls.size)
         // beitreten mit Link: Kind wählen; hier ist schon gelernt worden → erst fragen, dann holen
         loadAnswer = Triple("ok", "{\"stars\":\"5-5=3\",\"proCode\":\"FREMD\"}", "4|2026-11-18T08:00:00Z")
-        nav.go(Routes.FAMILY); settle(); rule.onNodeWithTag("familie-einverstanden").performScrollTo().performClick(); settle(); rule.onNodeWithTag("familie-link").performScrollTo().performTextInput("https://lernen.test/raumlicht/#familie=$fam"); rule.onNodeWithTag("familie-beitreten").performScrollTo().performClick(); settle()
+        nav.go(Routes.FAMILY); settle(); rule.onNodeWithTag("familie-link").performScrollTo().performTextInput("https://lernen.test/raumlicht/#familie=$fam"); rule.onNodeWithTag("familie-beitreten").performScrollTo().performClick(); settle()
         rule.onNodeWithTag("familie-kind-0").assertTextContains("Lea"); rule.onNodeWithTag("familie-kind-1").assertTextContains("Tim").performClick(); settle()
         assertEquals(listOf("laden", fam, tim), calls.last().subList(0, 3)); rule.onNodeWithTag("familie-frage").assertTextContains("In der Familie gibt es schon einen Lernstand (Stand 18.11.2026)", substring = true)
         rule.onNodeWithTag("familie-holen-ja").performClick(); settle(); assertEquals(listOf(mapOf("stars" to "5-5=3")), applied)
