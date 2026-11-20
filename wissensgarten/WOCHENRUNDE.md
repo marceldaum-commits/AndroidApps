@@ -301,3 +301,9 @@ Wortlaut (AppZentrale 19.11., aus PROBESTUNDE.md @ d672374):
 
 ## Regel Di 24.11. (Marcel 20.11.)
 - Vor 14:00 Berlin nur lesen/planen – nichts bauen, committen, pushen. Ab 14:00 den ganzen Di-Plan, liefern „bis alles fertig ist“ (Nachtschicht erlaubt, keine 16/18-Uhr-Frist). Danach Meldung mit Commit, Rückweg, Rechtsbezug.
+
+## Marcels Befund 20.11. (Handy, live 2.3.3) – für Di 24.11.
+- **Vorlese-Knöpfe nur, wenn Vorlesen an ist:** Ist Vorlesen in den Einstellungen aus (ReadAloud), verschwinden alle 🔊-Knöpfe (SpeakButton in MiniGames.kt, Mascot-Sprechblase onRead, Theorie/Intro usw.). Sonst bleiben sie.
+- **Knöpfe schöner:** Der große, wackelnde „🔊 Vorlesen“-Knopf (FilledTonalButton, 56 dp) wirkt klobig. Neu: kleiner, runder Lautsprecher-Knopf passend zum Stil (z. B. 44–48 dp, Kreis, sanftes Ploppen statt Wackeln), neben der Frage statt darunter. Bildschirmfotos vorher/nachher ansehen.
+- **Zahlen exakt vorlesen:** Notrufnummern und Ziffernfolgen („112“, „116 117“, „911“, Telefonnummern, Jahreszahlen vs. Beträge) werden falsch gesprochen. Regel in Nova.sprechText / neue Textliste: Telefon- und Notrufnummern Ziffer für Ziffer („eins eins zwei“), Leerzeichen-Gruppen als Gruppen („eins eins sechs – eins eins sieben“), sonst Zahlen in Worten. Mit dem Tonstudio (Format 1) gleich richtig vertonen; Test mit allen Karten, die Ziffernfolgen enthalten.
+- Prüfen: Die graue Leiste rechts (… / ♪) auf dem Foto – ist das unsere Leiste oder ein Overlay des Handys? Falls unsere: darf den Fragetext nicht verdecken.
