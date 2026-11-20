@@ -3626,6 +3626,1848 @@
      ]
     }
    ]
+  },
+  {
+   "id": "3",
+   "stufe": "A1.2",
+   "titel": "Unterwegs",
+   "emoji": "🚲",
+   "ziel": "Ich kann einkaufen, nach dem Weg fragen und mich verabreden.",
+   "einheiten": [
+    {
+     "id": "es-3-1",
+     "titel": "En la ciudad",
+     "emoji": "🏙️",
+     "ziel": "Ich kann Orte in der Stadt nennen und sagen, wohin ich will.",
+     "woerter": [
+      [
+       "la ciudad",
+       "die Stadt",
+       "🏙️"
+      ],
+      [
+       "la panadería",
+       "die Bäckerei",
+       "🥖"
+      ],
+      [
+       "la farmacia",
+       "die Apotheke",
+       "💊"
+      ],
+      [
+       "el supermercado",
+       "der Supermarkt",
+       "🛒"
+      ],
+      [
+       "el parque",
+       "der Park",
+       "🌳",
+       "Ich gehe in den Park: Voy al parque (a + el = al)."
+      ],
+      [
+       "la biblioteca",
+       "die Bücherei",
+       "📚",
+       "Achtung: la librería ist ein Buchladen."
+      ],
+      [
+       "el cine",
+       "das Kino",
+       "🎬"
+      ],
+      [
+       "el hospital",
+       "das Krankenhaus",
+       "🏥",
+       "Das h spricht man nicht."
+      ]
+     ],
+     "saetze": [
+      [
+       "Quiero ir al parque.",
+       "Ich will in den Park gehen.",
+       "🛝"
+      ],
+      [
+       "¿Podemos ir al cine?",
+       "Können wir ins Kino gehen?",
+       "🍿"
+      ],
+      [
+       "Vivo en una ciudad pequeña.",
+       "Ich wohne in einer kleinen Stadt.",
+       "📍"
+      ],
+      [
+       "¿Quieres venir?",
+       "Willst du mitkommen?",
+       "🤗"
+      ]
+     ],
+     "regel": {
+      "titel": "querer und poder",
+      "text": "Ich will = quiero, du willst = quieres, er oder sie will = quiere. Ich kann = puedo, du kannst = puedes, er oder sie kann = puede. Im Inneren wird aus e ein ie und aus o ein ue – nur bei wir und ihr nicht: queremos, podemos, queréis, podéis. Danach kommt ein zweites Verb in der Grundform: Quiero jugar.",
+      "beispiele": [
+       [
+        "Quiero ir al cine.",
+        "Ich will ins Kino gehen."
+       ],
+       [
+        "¿Puedes venir al parque?",
+        "Kannst du in den Park kommen?"
+       ],
+       [
+        "Lucía puede ir a la biblioteca.",
+        "Lucía kann in die Bücherei gehen."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Un sábado en la ciudad",
+      "zeilen": [
+       [
+        "lucia",
+        "Pablo, ¿qué quieres hacer hoy?",
+        "Pablo, was willst du heute machen?"
+       ],
+       [
+        "pablo",
+        "¡Quiero ir al cine!",
+        "Ich will ins Kino gehen!"
+       ],
+       [
+        "ruby",
+        "Yo quiero ir a la biblioteca. ¡Me encantan los libros!",
+        "Ich will in die Bücherei gehen. Ich liebe Bücher!"
+       ],
+       [
+        "lucia",
+        "Podemos ir primero a la biblioteca y después al cine.",
+        "Wir können zuerst in die Bücherei gehen und danach ins Kino."
+       ],
+       [
+        "pablo",
+        "¡Vale! Pero antes, a la panadería: ¡tengo hambre!",
+        "Okay! Aber vorher in die Bäckerei: Ich habe Hunger!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wohin will Ruby gehen?",
+        "a": "in die Bücherei",
+        "choices": [
+         "ins Kino",
+         "in die Bäckerei",
+         "in die Apotheke"
+        ]
+       },
+       {
+        "q": "Warum will Pablo in die Bäckerei?",
+        "a": "Er hat Hunger.",
+        "choices": [
+         "Er will ein Buch.",
+         "Er will ins Kino.",
+         "Ruby hat Hunger."
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Dale una barra de pan a Pablo.",
+       "de": "Gib Pablo ein Stangenbrot.",
+       "ding": "🥖",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale dos entradas de cine a Lucía.",
+       "de": "Gib Lucía zwei Kinokarten.",
+       "ding": "🎟️",
+       "anzahl": 2,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale tres libros a Pablo.",
+       "de": "Gib Pablo drei Bücher.",
+       "ding": "📕",
+       "anzahl": 3,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale dos tiritas a Lucía.",
+       "de": "Gib Lucía zwei Pflaster.",
+       "ding": "🩹",
+       "anzahl": 2,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale cuatro flores a Pablo.",
+       "de": "Gib Pablo vier Blumen.",
+       "ding": "🌷",
+       "anzahl": 4,
+       "an": "pablo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Yo quiero va al parque con Ruby.",
+       "richtig": "Yo quiero ir al parque con Ruby.",
+       "wort": "va",
+       "korrektur": "ir",
+       "choices": [
+        "voy",
+        "vas"
+       ],
+       "tipp": "Nach quiero kommt das zweite Verb in der Grundform: ir."
+      },
+      {
+       "falsch": "Lucía no pode venir hoy.",
+       "richtig": "Lucía no puede venir hoy.",
+       "wort": "pode",
+       "korrektur": "puede",
+       "choices": [
+        "podo",
+        "poder"
+       ],
+       "tipp": "Bei poder wird aus o ein ue: puedo, puedes, puede."
+      },
+      {
+       "falsch": "La farmacia está cerrado.",
+       "richtig": "La farmacia está cerrada.",
+       "wort": "cerrado",
+       "korrektur": "cerrada",
+       "choices": [
+        "cerrados",
+        "cerradas"
+       ],
+       "tipp": "la farmacia ist weiblich und nur eine – also cerrada."
+      },
+      {
+       "falsch": "En mi ciudad hay un biblioteca muy bonita.",
+       "richtig": "En mi ciudad hay una biblioteca muy bonita.",
+       "wort": "un",
+       "korrektur": "una",
+       "choices": [
+        "uno",
+        "unos"
+       ],
+       "tipp": "la biblioteca ist weiblich – also una biblioteca."
+      }
+     ]
+    },
+    {
+     "id": "es-3-2",
+     "titel": "Los precios",
+     "emoji": "💶",
+     "ziel": "Ich kann bis hundert zählen und nach Preisen fragen.",
+     "woerter": [
+      [
+       "treinta",
+       "dreißig",
+       "3️⃣0️⃣",
+       "31 = treinta y uno."
+      ],
+      [
+       "cuarenta",
+       "vierzig",
+       "4️⃣0️⃣"
+      ],
+      [
+       "cincuenta",
+       "fünfzig",
+       "5️⃣0️⃣"
+      ],
+      [
+       "sesenta",
+       "sechzig",
+       "6️⃣0️⃣"
+      ],
+      [
+       "setenta",
+       "siebzig",
+       "7️⃣0️⃣",
+       "Nicht verwechseln: sesenta (60) mit s, setenta (70) mit t."
+      ],
+      [
+       "ochenta",
+       "achtzig",
+       "8️⃣0️⃣"
+      ],
+      [
+       "noventa",
+       "neunzig",
+       "9️⃣0️⃣"
+      ],
+      [
+       "cien",
+       "hundert",
+       "💯",
+       "Hundert Euro = cien euros – ohne un davor."
+      ]
+     ],
+     "saetze": [
+      [
+       "¿Cuánto cuesta?",
+       "Wie viel kostet das?",
+       "💰"
+      ],
+      [
+       "Son treinta euros.",
+       "Das macht dreißig Euro.",
+       "💶"
+      ],
+      [
+       "¡Es muy caro!",
+       "Das ist sehr teuer!",
+       "😱"
+      ],
+      [
+       "Tengo cincuenta euros en mi hucha.",
+       "Ich habe fünfzig Euro in meiner Spardose.",
+       "🐷"
+      ]
+     ],
+     "regel": {
+      "titel": "Zehner, y, Einer",
+      "text": "Ab 31 baut man Zahlen wie einen Zug: erst der Zehner, dann y (und), dann der Einer: treinta y cinco (35), noventa y nueve (99). Bis 29 schreibt man die Zahlen in einem Wort: dieciséis, veintiuno, veintidós … Vor einem Nomen wird uno zu un: treinta y un años.",
+      "beispiele": [
+       [
+        "treinta y cinco",
+        "fünfunddreißig"
+       ],
+       [
+        "setenta y ocho",
+        "achtundsiebzig"
+       ],
+       [
+        "veintiséis",
+        "sechsundzwanzig"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "El mercadillo",
+      "zeilen": [
+       [
+        "lucia",
+        "¡Hola, Pablo! ¿Cuánto cuesta el robot?",
+        "Hallo Pablo! Wie viel kostet der Roboter?"
+       ],
+       [
+        "pablo",
+        "Cuesta ochenta euros.",
+        "Er kostet achtzig Euro."
+       ],
+       [
+        "lucia",
+        "¿Ochenta euros? ¡Es muy caro!",
+        "Achtzig Euro? Das ist sehr teuer!"
+       ],
+       [
+        "pablo",
+        "Bueno, para ti: cincuenta euros.",
+        "Na gut, für dich: fünfzig Euro."
+       ],
+       [
+        "ruby",
+        "¡Treinta euros, Pablo! ¡Tu robot es viejo!",
+        "Dreißig Euro, Pablo! Dein Roboter ist alt!"
+       ],
+       [
+        "pablo",
+        "Ja, ja, vale. ¡Treinta euros!",
+        "Haha, okay. Dreißig Euro!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie viel kostet der Roboter am Anfang?",
+        "a": "achtzig Euro",
+        "choices": [
+         "dreißig Euro",
+         "fünfzig Euro",
+         "hundert Euro"
+        ]
+       },
+       {
+        "q": "Für wie viel Euro bekommt Lucía den Roboter?",
+        "a": "dreißig Euro",
+        "choices": [
+         "achtzig Euro",
+         "fünfzig Euro",
+         "siebzig Euro"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Dale tres billetes de diez euros a Lucía.",
+       "de": "Gib Lucía drei Zehn-Euro-Scheine.",
+       "ding": "💶",
+       "anzahl": 3,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale dos monedas a Pablo.",
+       "de": "Gib Pablo zwei Münzen.",
+       "ding": "🪙",
+       "anzahl": 2,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale un robot a Pablo.",
+       "de": "Gib Pablo einen Roboter.",
+       "ding": "🤖",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale cinco monedas a Lucía.",
+       "de": "Gib Lucía fünf Münzen.",
+       "ding": "🪙",
+       "anzahl": 5,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale cuatro billetes de veinte euros a Pablo.",
+       "de": "Gib Pablo vier Zwanzig-Euro-Scheine.",
+       "ding": "💶",
+       "anzahl": 4,
+       "an": "pablo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Los zapatos son muy caro.",
+       "richtig": "Los zapatos son muy caros.",
+       "wort": "caro",
+       "korrektur": "caros",
+       "choices": [
+        "cara",
+        "caras"
+       ],
+       "tipp": "los zapatos sind männlich und mehrere – also caros."
+      },
+      {
+       "falsch": "¿Cuánto cuestan el robot?",
+       "richtig": "¿Cuánto cuesta el robot?",
+       "wort": "cuestan",
+       "korrektur": "cuesta",
+       "choices": [
+        "cuesto",
+        "costar"
+       ],
+       "tipp": "Es geht um einen Roboter – also cuesta."
+      },
+      {
+       "falsch": "Mi abuelo tiene noventa y uno años.",
+       "richtig": "Mi abuelo tiene noventa y un años.",
+       "wort": "uno",
+       "korrektur": "un",
+       "choices": [
+        "una",
+        "unos"
+       ],
+       "tipp": "Vor einem Nomen wird uno zu un: noventa y un años."
+      },
+      {
+       "falsch": "Tengo cincuenta euros en mis hucha roja.",
+       "richtig": "Tengo cincuenta euros en mi hucha roja.",
+       "wort": "mis",
+       "korrektur": "mi",
+       "choices": [
+        "mía",
+        "me"
+       ],
+       "tipp": "Nur eine Spardose – also mi ohne -s."
+      }
+     ]
+    },
+    {
+     "id": "es-3-3",
+     "titel": "En la cafetería",
+     "emoji": "☕",
+     "ziel": "Ich kann im Café höflich bestellen.",
+     "woerter": [
+      [
+       "el chocolate caliente",
+       "der Kakao",
+       "☕",
+       "Wörtlich: heiße Schokolade. In Spanien ist er schön dick."
+      ],
+      [
+       "el batido",
+       "der Milchshake",
+       "🥤"
+      ],
+      [
+       "el helado",
+       "das Eis",
+       "🍦"
+      ],
+      [
+       "la tarta",
+       "der Kuchen",
+       "🍰",
+       "In Lateinamerika sagt man oft el pastel."
+      ],
+      [
+       "el bocadillo",
+       "das belegte Brötchen",
+       "🥪"
+      ],
+      [
+       "las patatas fritas",
+       "die Pommes",
+       "🍟",
+       "In Lateinamerika: las papas fritas."
+      ],
+      [
+       "el camarero",
+       "der Kellner",
+       "🤵",
+       "Die Kellnerin: la camarera."
+      ],
+      [
+       "la cuenta",
+       "die Rechnung",
+       "🧾",
+       "La cuenta, por favor. = Die Rechnung, bitte."
+      ]
+     ],
+     "saetze": [
+      [
+       "¿Qué quieres tomar?",
+       "Was möchtest du?",
+       "📋"
+      ],
+      [
+       "Para mí, un helado, por favor.",
+       "Für mich ein Eis, bitte.",
+       "😋"
+      ],
+      [
+       "Un vaso de agua, por favor.",
+       "Ein Glas Wasser, bitte.",
+       "🚰"
+      ],
+      [
+       "¡Está riquísimo!",
+       "Das ist superlecker!",
+       "🤤"
+      ]
+     ],
+     "regel": {
+      "titel": "Ein Glas Wasser: Mengen mit de",
+      "text": "Wie viel? Nach Mengenwörtern kommt de und dann das Ding – ohne el oder la: un vaso de agua (ein Glas Wasser), una taza de chocolate (eine Tasse Kakao), un trozo de tarta (ein Stück Kuchen). Im Deutschen fehlt das de einfach.",
+      "beispiele": [
+       [
+        "Un vaso de leche, por favor.",
+        "Ein Glas Milch, bitte."
+       ],
+       [
+        "Quiero un trozo de tarta.",
+        "Ich will ein Stück Kuchen."
+       ],
+       [
+        "Pablo pide una taza de chocolate.",
+        "Pablo bestellt eine Tasse Kakao."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "La cafetería de Ruby",
+      "zeilen": [
+       [
+        "ruby",
+        "¡Hola! ¿Qué queréis tomar?",
+        "Hallo! Was möchtet ihr?"
+       ],
+       [
+        "lucia",
+        "Para mí, un batido de fresa y un trozo de tarta, por favor.",
+        "Für mich einen Erdbeer-Milchshake und ein Stück Kuchen, bitte."
+       ],
+       [
+        "pablo",
+        "Yo quiero una sopa… ¡no, patatas fritas!",
+        "Ich will eine Suppe … nein, Pommes!"
+       ],
+       [
+        "ruby",
+        "Aquí tenéis: un batido, un trozo de tarta y patatas fritas.",
+        "Bitte schön: ein Milchshake, ein Stück Kuchen und Pommes."
+       ],
+       [
+        "pablo",
+        "¡Mmm, está riquísimo! La cuenta, por favor.",
+        "Mmm, das ist superlecker! Die Rechnung, bitte."
+       ],
+       [
+        "ruby",
+        "Son diez euros… ¡o un abrazo!",
+        "Das macht zehn Euro … oder eine Umarmung!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was bestellt Pablo am Ende?",
+        "a": "Pommes",
+        "choices": [
+         "eine Suppe",
+         "Kuchen",
+         "einen Milchshake"
+        ]
+       },
+       {
+        "q": "Was bestellt Lucía?",
+        "a": "einen Milchshake und ein Stück Kuchen",
+        "choices": [
+         "eine Suppe und Pommes",
+         "einen Kakao und ein Eis",
+         "ein Brötchen und einen Kakao"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Dale un helado a Lucía.",
+       "de": "Gib Lucía ein Eis.",
+       "ding": "🍦",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale dos bocadillos a Pablo.",
+       "de": "Gib Pablo zwei belegte Brötchen.",
+       "ding": "🥪",
+       "anzahl": 2,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale tres batidos a Lucía.",
+       "de": "Gib Lucía drei Milchshakes.",
+       "ding": "🥤",
+       "anzahl": 3,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale cuatro trozos de tarta a Pablo.",
+       "de": "Gib Pablo vier Stück Kuchen.",
+       "ding": "🍰",
+       "anzahl": 4,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale una taza de chocolate a Lucía.",
+       "de": "Gib Lucía eine Tasse Kakao.",
+       "ding": "☕",
+       "anzahl": 1,
+       "an": "lucia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Quiero un trozo del tarta, ¡está muy rica!",
+       "richtig": "Quiero un trozo de tarta, ¡está muy rica!",
+       "wort": "del",
+       "korrektur": "de",
+       "choices": [
+        "el",
+        "la"
+       ],
+       "tipp": "Nach einer Menge kommt nur de: un trozo de tarta."
+      },
+      {
+       "falsch": "Los patatas fritas están muy ricas.",
+       "richtig": "Las patatas fritas están muy ricas.",
+       "wort": "Los",
+       "korrektur": "Las",
+       "choices": [
+        "El",
+        "Unos"
+       ],
+       "tipp": "las patatas sind weiblich – also las."
+      },
+      {
+       "falsch": "El helado está muy rica.",
+       "richtig": "El helado está muy rico.",
+       "wort": "rica",
+       "korrektur": "rico",
+       "choices": [
+        "ricos",
+        "ricas"
+       ],
+       "tipp": "el helado ist männlich und nur eins – also rico."
+      },
+      {
+       "falsch": "Pablo quero un batido.",
+       "richtig": "Pablo quiere un batido.",
+       "wort": "quero",
+       "korrektur": "quiere",
+       "choices": [
+        "quiera",
+        "querer"
+       ],
+       "tipp": "Bei querer wird aus e ein ie: quiero, quieres, quiere."
+      }
+     ]
+    },
+    {
+     "id": "es-3-4",
+     "titel": "El camino",
+     "emoji": "🧭",
+     "ziel": "Ich kann nach dem Weg fragen und ihn erklären.",
+     "woerter": [
+      [
+       "a la izquierda",
+       "links",
+       "⬅️"
+      ],
+      [
+       "a la derecha",
+       "rechts",
+       "➡️"
+      ],
+      [
+       "todo recto",
+       "geradeaus",
+       "⬆️",
+       "In Lateinamerika sagt man oft: derecho."
+      ],
+      [
+       "el semáforo",
+       "die Ampel",
+       "🚦"
+      ],
+      [
+       "el puente",
+       "die Brücke",
+       "🌉"
+      ],
+      [
+       "la plaza",
+       "der Platz",
+       "⛲"
+      ],
+      [
+       "el mapa",
+       "der Stadtplan",
+       "🗺️",
+       "el mapa ist männlich – obwohl es auf -a endet!"
+      ],
+      [
+       "la señal",
+       "das Schild",
+       "🪧",
+       "Mehrere: las señales."
+      ]
+     ],
+     "saetze": [
+      [
+       "Perdone, ¿dónde está la farmacia?",
+       "Entschuldigung, wo ist die Apotheke?",
+       "🙋‍♀️"
+      ],
+      [
+       "Gire a la izquierda en el semáforo.",
+       "Biegen Sie an der Ampel links ab.",
+       "↩️"
+      ],
+      [
+       "Siga todo recto hasta el puente.",
+       "Gehen Sie geradeaus bis zur Brücke.",
+       "👣"
+      ],
+      [
+       "¿Está lejos? No, está muy cerca.",
+       "Ist es weit? Nein, es ist ganz nah.",
+       "📍"
+      ]
+     ],
+     "regel": {
+      "titel": "Befehle für Erwachsene",
+      "text": "Den Weg erklärt man mit Befehlen. Für Freunde (tú) klingt der Befehl wie die er/sie-Form: gira, toma, sigue. Für Erwachsene, die man siezt (usted), tauscht man den Laut am Ende: Aus -a wird -e (gira → gire, toma → tome), aus -e wird -a (sigue → siga).",
+      "beispiele": [
+       [
+        "¡Gira a la derecha, Pablo!",
+        "Bieg rechts ab, Pablo!"
+       ],
+       [
+        "Señor García, gire a la derecha.",
+        "Herr García, biegen Sie rechts ab."
+       ],
+       [
+        "Siga todo recto, por favor.",
+        "Gehen Sie bitte geradeaus."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "¿Dónde está la biblioteca?",
+      "zeilen": [
+       [
+        "garcia",
+        "Perdona, Lucía, ¿dónde está la biblioteca?",
+        "Entschuldige, Lucía, wo ist die Bücherei?"
+       ],
+       [
+        "lucia",
+        "Siga todo recto hasta el puente, señor García.",
+        "Gehen Sie geradeaus bis zur Brücke, Herr García."
+       ],
+       [
+        "lucia",
+        "Después del puente, gire a la derecha.",
+        "Nach der Brücke biegen Sie rechts ab."
+       ],
+       [
+        "garcia",
+        "A la derecha… ¿y después?",
+        "Rechts … und dann?"
+       ],
+       [
+        "lucia",
+        "En el semáforo, gire a la izquierda. La biblioteca está en la plaza.",
+        "An der Ampel biegen Sie links ab. Die Bücherei ist am Platz."
+       ],
+       [
+        "ruby",
+        "¡O vuele conmigo, señor García! Es más rápido.",
+        "Oder fliegen Sie mit mir, Herr García! Das ist schneller."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wohin will Herr García?",
+        "a": "in die Bücherei",
+        "choices": [
+         "zur Brücke",
+         "ins Kino",
+         "zur Ampel"
+        ]
+       },
+       {
+        "q": "Wo soll Herr García links abbiegen?",
+        "a": "an der Ampel",
+        "choices": [
+         "an der Brücke",
+         "am Platz",
+         "an der Bücherei"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Dale un mapa a Lucía.",
+       "de": "Gib Lucía einen Stadtplan.",
+       "ding": "🗺️",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale dos señales a Pablo.",
+       "de": "Gib Pablo zwei Schilder.",
+       "ding": "🪧",
+       "anzahl": 2,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale una brújula a Pablo.",
+       "de": "Gib Pablo einen Kompass.",
+       "ding": "🧭",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale dos brújulas a Lucía.",
+       "de": "Gib Lucía zwei Kompasse.",
+       "ding": "🧭",
+       "anzahl": 2,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale tres mapas a Pablo.",
+       "de": "Gib Pablo drei Stadtpläne.",
+       "ding": "🗺️",
+       "anzahl": 3,
+       "an": "pablo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "La mapa de Pablo es muy viejo.",
+       "richtig": "El mapa de Pablo es muy viejo.",
+       "wort": "La",
+       "korrektur": "El",
+       "choices": [
+        "Los",
+        "Una"
+       ],
+       "tipp": "el mapa ist männlich, obwohl es auf -a endet."
+      },
+      {
+       "falsch": "En el semáforo, gira a la derecho.",
+       "richtig": "En el semáforo, gira a la derecha.",
+       "wort": "derecho",
+       "korrektur": "derecha",
+       "choices": [
+        "derechos",
+        "derechas"
+       ],
+       "tipp": "rechts heißt a la derecha – mit -a, passend zu la."
+      },
+      {
+       "falsch": "Perdone, ¿dónde estás la farmacia?",
+       "richtig": "Perdone, ¿dónde está la farmacia?",
+       "wort": "estás",
+       "korrektur": "está",
+       "choices": [
+        "estoy",
+        "están"
+       ],
+       "tipp": "Gefragt wird, wo die Apotheke ist – eine Sache, also está wie bei er/sie/es."
+      },
+      {
+       "falsch": "El puente es muy larga.",
+       "richtig": "El puente es muy largo.",
+       "wort": "larga",
+       "korrektur": "largo",
+       "choices": [
+        "largos",
+        "largas"
+       ],
+       "tipp": "el puente ist männlich – also largo."
+      }
+     ]
+    },
+    {
+     "id": "es-3-5",
+     "titel": "Los transportes",
+     "emoji": "🚏",
+     "ziel": "Ich kann sagen, womit ich fahre, und von Plänen erzählen.",
+     "woerter": [
+      [
+       "el autobús",
+       "der Bus",
+       "🚌",
+       "Mehrere: los autobuses – ohne Akzent."
+      ],
+      [
+       "el tren",
+       "der Zug",
+       "🚆"
+      ],
+      [
+       "el metro",
+       "die U-Bahn",
+       "🚇"
+      ],
+      [
+       "el coche",
+       "das Auto",
+       "🚗",
+       "In Lateinamerika sagt man el carro oder el auto."
+      ],
+      [
+       "el avión",
+       "das Flugzeug",
+       "✈️"
+      ],
+      [
+       "el barco",
+       "das Schiff",
+       "🚢"
+      ],
+      [
+       "el patinete",
+       "der Roller",
+       "🛴"
+      ],
+      [
+       "la estación",
+       "der Bahnhof",
+       "🚉"
+      ]
+     ],
+     "saetze": [
+      [
+       "Voy a la escuela a pie.",
+       "Ich gehe zu Fuß zur Schule.",
+       "👟"
+      ],
+      [
+       "¿Tomamos el autobús?",
+       "Nehmen wir den Bus?",
+       "🎫"
+      ],
+      [
+       "¡Mañana voy a viajar en avión!",
+       "Morgen fliege ich mit dem Flugzeug!",
+       "🧳"
+      ],
+      [
+       "El tren sale a las nueve.",
+       "Der Zug fährt um neun Uhr ab.",
+       "🕘"
+      ]
+     ],
+     "regel": {
+      "titel": "Bald passiert's: ir a + Grundform",
+      "text": "Was bald passiert, sagst du mit ir + a + Grundform. ir geht so: voy, vas, va, vamos, vais, van. Voy a tomar el tren heißt: Ich werde den Zug nehmen. Das zweite Verb bleibt immer gleich!",
+      "beispiele": [
+       [
+        "Voy a tomar el metro.",
+        "Ich werde die U-Bahn nehmen."
+       ],
+       [
+        "¿Vas a venir en coche?",
+        "Wirst du mit dem Auto kommen?"
+       ],
+       [
+        "Lucía va a ir en patinete.",
+        "Lucía wird mit dem Roller fahren."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "El gran viaje",
+      "zeilen": [
+       [
+        "pablo",
+        "¡El sábado voy a visitar a mi abuela en Sevilla!",
+        "Am Samstag besuche ich meine Oma in Sevilla!"
+       ],
+       [
+        "lucia",
+        "¿Vas a ir en avión?",
+        "Fliegst du mit dem Flugzeug?"
+       ],
+       [
+        "pablo",
+        "No, voy a ir en tren. Sale a las ocho.",
+        "Nein, ich fahre mit dem Zug. Er fährt um acht Uhr ab."
+       ],
+       [
+        "ruby",
+        "¿Y cómo vas a ir a la estación?",
+        "Und wie kommst du zum Bahnhof?"
+       ],
+       [
+        "pablo",
+        "Voy a tomar el metro… ¡con mi patinete!",
+        "Ich nehme die U-Bahn … mit meinem Roller!"
+       ],
+       [
+        "lucia",
+        "¡Buen viaje, Pablo!",
+        "Gute Reise, Pablo!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Womit fährt Pablo nach Sevilla?",
+        "a": "mit dem Zug",
+        "choices": [
+         "mit dem Flugzeug",
+         "mit dem Auto",
+         "mit dem Schiff"
+        ]
+       },
+       {
+        "q": "Wie kommt Pablo zum Bahnhof?",
+        "a": "mit der U-Bahn",
+        "choices": [
+         "mit dem Bus",
+         "zu Fuß",
+         "mit dem Flugzeug"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Dale un autobús a Pablo.",
+       "de": "Gib Pablo einen Bus.",
+       "ding": "🚌",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale dos trenes a Lucía.",
+       "de": "Gib Lucía zwei Züge.",
+       "ding": "🚆",
+       "anzahl": 2,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale tres coches a Pablo.",
+       "de": "Gib Pablo drei Autos.",
+       "ding": "🚗",
+       "anzahl": 3,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale un avión a Lucía.",
+       "de": "Gib Lucía ein Flugzeug.",
+       "ding": "✈️",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale dos patinetes a Pablo.",
+       "de": "Gib Pablo zwei Roller.",
+       "ding": "🛴",
+       "anzahl": 2,
+       "an": "pablo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Mañana mis abuelos va a tomar el tren.",
+       "richtig": "Mañana mis abuelos van a tomar el tren.",
+       "wort": "va",
+       "korrektur": "van",
+       "choices": [
+        "voy",
+        "vas"
+       ],
+       "tipp": "Mehrere Personen (mis abuelos = sie) – also van."
+      },
+      {
+       "falsch": "El avión es muy rápida.",
+       "richtig": "El avión es muy rápido.",
+       "wort": "rápida",
+       "korrektur": "rápido",
+       "choices": [
+        "rápidos",
+        "rápidas"
+       ],
+       "tipp": "el avión ist männlich und nur eins – also rápido."
+      },
+      {
+       "falsch": "La coche de mi padre es nuevo.",
+       "richtig": "El coche de mi padre es nuevo.",
+       "wort": "La",
+       "korrektur": "El",
+       "choices": [
+        "Las",
+        "Una"
+       ],
+       "tipp": "el coche ist männlich – also el."
+      },
+      {
+       "falsch": "Lucía va a ir en patinete con su tres amigos.",
+       "richtig": "Lucía va a ir en patinete con sus tres amigos.",
+       "wort": "su",
+       "korrektur": "sus",
+       "choices": [
+        "tu",
+        "mi"
+       ],
+       "tipp": "Mehrere Freunde – also sus mit -s."
+      }
+     ]
+    },
+    {
+     "id": "es-3-6",
+     "titel": "¿Quedamos?",
+     "emoji": "📆",
+     "ziel": "Ich kann mich mit Freunden verabreden.",
+     "woerter": [
+      [
+       "la cita",
+       "die Verabredung",
+       "📌",
+       "la cita ist auch der Termin, zum Beispiel beim Arzt."
+      ],
+      [
+       "quedar",
+       "sich treffen",
+       "🤙",
+       "¿Quedamos? = Treffen wir uns?"
+      ],
+      [
+       "el mediodía",
+       "der Mittag",
+       "🕛"
+      ],
+      [
+       "y media",
+       "halb",
+       "🕟",
+       "Son las cuatro y media = Es ist halb fünf (4:30)."
+      ],
+      [
+       "el minuto",
+       "die Minute",
+       "⏱️"
+      ],
+      [
+       "libre",
+       "frei",
+       "🆓",
+       "¿Estás libre? = Hast du Zeit?"
+      ],
+      [
+       "vale",
+       "okay",
+       "👌",
+       "Sagt man in Spanien ganz oft."
+      ],
+      [
+       "pronto",
+       "bald",
+       "🔜",
+       "¡Hasta pronto! = Bis bald!"
+      ]
+     ],
+     "saetze": [
+      [
+       "¿Estás libre el sábado?",
+       "Hast du am Samstag Zeit?",
+       "🤔"
+      ],
+      [
+       "¿Quedamos a las tres?",
+       "Treffen wir uns um drei Uhr?",
+       "🕒"
+      ],
+      [
+       "¡Nos vemos pronto!",
+       "Bis bald! (Wir sehen uns bald!)",
+       "🙌"
+      ],
+      [
+       "Lo siento, no puedo.",
+       "Tut mir leid, ich kann nicht.",
+       "😕"
+      ]
+     ],
+     "regel": {
+      "titel": "me, te, se, nos – sich",
+      "text": "Manche Verben haben ein kleines Extra-Wort dabei – wie „sich“ im Deutschen: levantarse (aufstehen), verse (sich sehen). Es steht vor dem Verb und passt zur Person: me levanto, te levantas, se levanta, nos levantamos. Darum heißt „Bis dann!“ auch: ¡Nos vemos!",
+      "beispiele": [
+       [
+        "Me levanto a las ocho.",
+        "Ich stehe um acht Uhr auf."
+       ],
+       [
+        "¿A qué hora te levantas?",
+        "Um wie viel Uhr stehst du auf?"
+       ],
+       [
+        "Nos vemos en el parque.",
+        "Wir sehen uns im Park."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Una cita",
+      "zeilen": [
+       [
+        "lucia",
+        "¡Hola, Pablo! ¿Estás libre el sábado?",
+        "Hallo Pablo! Hast du am Samstag Zeit?"
+       ],
+       [
+        "pablo",
+        "Por la mañana, no: me levanto muy tarde. Pero por la tarde, ¡sí!",
+        "Am Vormittag nicht: Ich stehe sehr spät auf. Aber am Nachmittag ja!"
+       ],
+       [
+        "lucia",
+        "¡Genial! ¿Quedamos en mi casa a las dos y media?",
+        "Toll! Treffen wir uns um halb drei bei mir?"
+       ],
+       [
+        "pablo",
+        "¡Vale! ¿Puedo ir con Ruby?",
+        "Okay! Kann ich mit Ruby kommen?"
+       ],
+       [
+        "ruby",
+        "¡Sí! Yo también estoy libre.",
+        "Ja! Ich habe auch Zeit."
+       ],
+       [
+        "lucia",
+        "¡Perfecto! ¡Nos vemos el sábado!",
+        "Perfekt! Wir sehen uns am Samstag!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Um wie viel Uhr treffen sie sich?",
+        "a": "um halb drei",
+        "choices": [
+         "um zwei Uhr",
+         "um zwölf Uhr",
+         "um halb fünf"
+        ]
+       },
+       {
+        "q": "Wo treffen sie sich?",
+        "a": "bei Lucía",
+        "choices": [
+         "bei Pablo",
+         "bei Ruby",
+         "im Park"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Dale dos cometas a Pablo.",
+       "de": "Gib Pablo zwei Drachen.",
+       "ding": "🪁",
+       "anzahl": 2,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale dos móviles a Lucía.",
+       "de": "Gib Lucía zwei Handys.",
+       "ding": "📱",
+       "anzahl": 2,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale tres cartas a Pablo.",
+       "de": "Gib Pablo drei Briefe.",
+       "ding": "✉️",
+       "anzahl": 3,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale dos calendarios a Lucía.",
+       "de": "Gib Lucía zwei Kalender.",
+       "ding": "📅",
+       "anzahl": 2,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale cuatro galletas a Pablo.",
+       "de": "Gib Pablo vier Kekse.",
+       "ding": "🍪",
+       "anzahl": 4,
+       "an": "pablo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Los domingos, mi hermano se levantas tarde.",
+       "richtig": "Los domingos, mi hermano se levanta tarde.",
+       "wort": "levantas",
+       "korrektur": "levanta",
+       "choices": [
+        "levantan",
+        "levantar"
+       ],
+       "tipp": "Bei mi hermano (er) endet das Verb auf -a: se levanta."
+      },
+      {
+       "falsch": "Yo se levanto a las siete.",
+       "richtig": "Yo me levanto a las siete.",
+       "wort": "se",
+       "korrektur": "me",
+       "choices": [
+        "mi",
+        "yo"
+       ],
+       "tipp": "Zu yo gehört me: me levanto."
+      },
+      {
+       "falsch": "¿Quedamos a las dos y medio?",
+       "richtig": "¿Quedamos a las dos y media?",
+       "wort": "medio",
+       "korrektur": "media",
+       "choices": [
+        "medios",
+        "medias"
+       ],
+       "tipp": "Bei der Uhrzeit heißt es y media – gemeint ist media hora."
+      },
+      {
+       "falsch": "Pablo está libres el sábado.",
+       "richtig": "Pablo está libre el sábado.",
+       "wort": "libres",
+       "korrektur": "libre",
+       "choices": [
+        "libra",
+        "libro"
+       ],
+       "tipp": "Nur eine Person – also libre ohne -s."
+      }
+     ]
+    },
+    {
+     "id": "es-3-7",
+     "titel": "Las emociones",
+     "emoji": "🎭",
+     "ziel": "Ich kann sagen, wie ich mich fühle, und andere trösten.",
+     "woerter": [
+      [
+       "contento",
+       "froh",
+       "😊",
+       "Ein Mädchen: contenta."
+      ],
+      [
+       "triste",
+       "traurig",
+       "😢",
+       "Bleibt gleich: Pablo está triste, Lucía está triste."
+      ],
+      [
+       "enfadado",
+       "wütend",
+       "😠",
+       "In Lateinamerika oft: enojado."
+      ],
+      [
+       "cansado",
+       "müde",
+       "😴"
+      ],
+      [
+       "enfermo",
+       "krank",
+       "🤒"
+      ],
+      [
+       "el miedo",
+       "die Angst",
+       "😨",
+       "Tengo miedo. = Ich habe Angst."
+      ],
+      [
+       "sorprendido",
+       "überrascht",
+       "😮"
+      ],
+      [
+       "aburrido",
+       "gelangweilt",
+       "🥱",
+       "Estoy aburrido = Mir ist langweilig. Aber: Soy aburrido = Ich bin langweilig!"
+      ]
+     ],
+     "saetze": [
+      [
+       "¿Qué te pasa?",
+       "Was ist los mit dir?",
+       "🥺"
+      ],
+      [
+       "Hoy estoy muy contenta.",
+       "Heute bin ich sehr froh.",
+       "🌞"
+      ],
+      [
+       "Tengo miedo a la oscuridad.",
+       "Ich habe Angst vor der Dunkelheit.",
+       "🌑"
+      ],
+      [
+       "¡No te preocupes!",
+       "Mach dir keine Sorgen!",
+       "🤗"
+      ]
+     ],
+     "regel": {
+      "titel": "estar + Gefühl",
+      "text": "Wie du dich gerade fühlst, sagst du mit estar: estoy, estás, está, estamos, están. Das Gefühl passt sich an wie eine Farbe: Pablo está cansado, Lucía está cansada, los niños están cansados. Gefühle auf -e bleiben gleich: triste.",
+      "beispiele": [
+       [
+        "Estoy cansado.",
+        "Ich bin müde."
+       ],
+       [
+        "¿Estás triste?",
+        "Bist du traurig?"
+       ],
+       [
+        "Lucía está enfadada.",
+        "Lucía ist wütend."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Un día gris",
+      "zeilen": [
+       [
+        "lucia",
+        "Pablo, ¿qué te pasa? ¿Estás triste?",
+        "Pablo, was ist los mit dir? Bist du traurig?"
+       ],
+       [
+        "pablo",
+        "No, no estoy triste. Estoy aburrido…",
+        "Nein, ich bin nicht traurig. Mir ist langweilig …"
+       ],
+       [
+        "ruby",
+        "¿Aburrido? ¡Vamos a jugar al escondite!",
+        "Langweilig? Lass uns Verstecken spielen!"
+       ],
+       [
+        "ruby",
+        "¡Bu!",
+        "Buh!"
+       ],
+       [
+        "pablo",
+        "¡Ay! ¡Qué miedo! … Ja, ja, ¡ya no estoy aburrido!",
+        "Ah! Wie gruselig! … Haha, jetzt ist mir nicht mehr langweilig!"
+       ],
+       [
+        "lucia",
+        "¡Genial! Ahora estás contento.",
+        "Toll! Jetzt bist du froh."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie fühlt sich Pablo am Anfang?",
+        "a": "Ihm ist langweilig.",
+        "choices": [
+         "Er ist traurig.",
+         "Er ist krank.",
+         "Er hat Angst."
+        ]
+       },
+       {
+        "q": "Was spielen sie?",
+        "a": "Verstecken",
+        "choices": [
+         "Fußball",
+         "Videospiele",
+         "Gitarre"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Dale un osito a Lucía, está triste.",
+       "de": "Gib Lucía einen Teddy, sie ist traurig.",
+       "ding": "🧸",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale un termómetro a Pablo, está enfermo.",
+       "de": "Gib Pablo ein Fieberthermometer, er ist krank.",
+       "ding": "🌡️",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale un puzle a Pablo, está aburrido.",
+       "de": "Gib Pablo ein Puzzle, ihm ist langweilig.",
+       "ding": "🧩",
+       "anzahl": 1,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale una linterna a Lucía, tiene miedo.",
+       "de": "Gib Lucía eine Taschenlampe, sie hat Angst.",
+       "ding": "🔦",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale dos naranjas a Lucía, tiene hambre.",
+       "de": "Gib Lucía zwei Orangen, sie hat Hunger.",
+       "ding": "🍊",
+       "anzahl": 2,
+       "an": "lucia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "La madre de Lucía está contento.",
+       "richtig": "La madre de Lucía está contenta.",
+       "wort": "contento",
+       "korrektur": "contenta",
+       "choices": [
+        "contentos",
+        "contentas"
+       ],
+       "tipp": "la madre ist weiblich – also contenta."
+      },
+      {
+       "falsch": "Lucía está trista hoy.",
+       "richtig": "Lucía está triste hoy.",
+       "wort": "trista",
+       "korrektur": "triste",
+       "choices": [
+        "tristo",
+        "tristes"
+       ],
+       "tipp": "Gefühle auf -e bleiben gleich: triste."
+      },
+      {
+       "falsch": "Los niños está aburridos.",
+       "richtig": "Los niños están aburridos.",
+       "wort": "está",
+       "korrektur": "están",
+       "choices": [
+        "estoy",
+        "es"
+       ],
+       "tipp": "Mehrere Kinder – also están."
+      },
+      {
+       "falsch": "El perro de Lucía está sorprendida.",
+       "richtig": "El perro de Lucía está sorprendido.",
+       "wort": "sorprendida",
+       "korrektur": "sorprendido",
+       "choices": [
+        "sorprendidos",
+        "sorprendidas"
+       ],
+       "tipp": "el perro ist männlich und nur einer – also sorprendido."
+      }
+     ]
+    },
+    {
+     "id": "es-3-8",
+     "titel": "¡Feliz cumpleaños!",
+     "emoji": "🥳",
+     "ziel": "Ich kann Geburtstag feiern, gratulieren und sagen, was ich tun muss.",
+     "woerter": [
+      [
+       "el cumpleaños",
+       "der Geburtstag",
+       "🎂",
+       "Immer mit -s am Ende: cumple (wird) + años (Jahre)."
+      ],
+      [
+       "el regalo",
+       "das Geschenk",
+       "🎁"
+      ],
+      [
+       "la vela",
+       "die Kerze",
+       "🕯️"
+      ],
+      [
+       "el globo",
+       "der Luftballon",
+       "🎈"
+      ],
+      [
+       "la fiesta",
+       "das Fest",
+       "🎊"
+      ],
+      [
+       "el caramelo",
+       "das Bonbon",
+       "🍬"
+      ],
+      [
+       "la invitación",
+       "die Einladung",
+       "💌",
+       "Mehrere: las invitaciones – ohne Akzent."
+      ],
+      [
+       "la piñata",
+       "die Piñata",
+       "🪅",
+       "Eine bunte Figur voller Süßigkeiten. Man schlägt drauf, bis sie aufplatzt."
+      ]
+     ],
+     "saetze": [
+      [
+       "¡Feliz cumpleaños!",
+       "Alles Gute zum Geburtstag!",
+       "🥳"
+      ],
+      [
+       "¿Cuándo es tu cumpleaños?",
+       "Wann hast du Geburtstag?",
+       "📆"
+      ],
+      [
+       "¡Tienes que soplar las velas!",
+       "Du musst die Kerzen auspusten!",
+       "💨"
+      ],
+      [
+       "¿Cuántos años cumples?",
+       "Wie alt wirst du?",
+       "🔢"
+      ]
+     ],
+     "regel": {
+      "titel": "tener que – müssen",
+      "text": "Was du tun musst, sagst du mit tener que + Grundform: tengo que, tienes que, tiene que … Tengo que comprar un regalo heißt: Ich muss ein Geschenk kaufen. tener kennst du schon vom Alter – mit que heißt es „müssen“.",
+      "beispiele": [
+       [
+        "Tengo que comprar un regalo.",
+        "Ich muss ein Geschenk kaufen."
+       ],
+       [
+        "Pablo tiene que inflar los globos.",
+        "Pablo muss die Luftballons aufblasen."
+       ],
+       [
+        "¿Tienes que ir a la escuela?",
+        "Musst du in die Schule?"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "La fiesta de Lucía",
+      "zeilen": [
+       [
+        "pablo",
+        "¡Feliz cumpleaños, Lucía! Este regalo es para ti.",
+        "Alles Gute zum Geburtstag, Lucía! Dieses Geschenk ist für dich."
+       ],
+       [
+        "lucia",
+        "¡Gracias, Pablo! Oh, ¡una bolsa de caramelos!",
+        "Danke, Pablo! Oh, eine Tüte Bonbons!"
+       ],
+       [
+        "ruby",
+        "¡Y mira, una piñata! ¡Tienes que romperla!",
+        "Und schau, eine Piñata! Du musst sie aufschlagen!"
+       ],
+       [
+        "lucia",
+        "Uno, dos, tres… ¡pum!",
+        "Eins, zwei, drei … bumm!"
+       ],
+       [
+        "pablo",
+        "¡Cuántos caramelos! Y ahora, la tarta: tienes que soplar las diez velas.",
+        "So viele Bonbons! Und jetzt der Kuchen: Du musst die zehn Kerzen auspusten."
+       ],
+       [
+        "lucia",
+        "¡Fffff! ¡Qué fiesta tan bonita!",
+        "Pffff! Was für ein schönes Fest!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was schenkt Pablo Lucía?",
+        "a": "eine Tüte Bonbons",
+        "choices": [
+         "eine Piñata",
+         "einen Kuchen",
+         "zehn Kerzen"
+        ]
+       },
+       {
+        "q": "Wie viele Kerzen sind auf dem Kuchen?",
+        "a": "zehn",
+        "choices": [
+         "neun",
+         "elf",
+         "zwanzig"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Dale un regalo a Lucía.",
+       "de": "Gib Lucía ein Geschenk.",
+       "ding": "🎁",
+       "anzahl": 1,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale tres globos a Pablo.",
+       "de": "Gib Pablo drei Luftballons.",
+       "ding": "🎈",
+       "anzahl": 3,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale cinco velas a Lucía.",
+       "de": "Gib Lucía fünf Kerzen.",
+       "ding": "🕯️",
+       "anzahl": 5,
+       "an": "lucia"
+      },
+      {
+       "sag": "Dale cuatro caramelos a Pablo.",
+       "de": "Gib Pablo vier Bonbons.",
+       "ding": "🍬",
+       "anzahl": 4,
+       "an": "pablo"
+      },
+      {
+       "sag": "Dale dos invitaciones a Lucía.",
+       "de": "Gib Lucía zwei Einladungen.",
+       "ding": "💌",
+       "anzahl": 2,
+       "an": "lucia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Pablo tene que inflar los globos.",
+       "richtig": "Pablo tiene que inflar los globos.",
+       "wort": "tene",
+       "korrektur": "tiene",
+       "choices": [
+        "tener",
+        "teno"
+       ],
+       "tipp": "tener geht so: tengo, tienes, tiene – mit ie."
+      },
+      {
+       "falsch": "La regalo es muy bonito.",
+       "richtig": "El regalo es muy bonito.",
+       "wort": "La",
+       "korrektur": "El",
+       "choices": [
+        "Las",
+        "Una"
+       ],
+       "tipp": "el regalo ist männlich – also el."
+      },
+      {
+       "falsch": "Hay muchos globo rojos en la fiesta.",
+       "richtig": "Hay muchos globos rojos en la fiesta.",
+       "wort": "globo",
+       "korrektur": "globos",
+       "choices": [
+        "globoes",
+        "globas"
+       ],
+       "tipp": "Viele Luftballons: globo endet auf -o, also kommt -s dran."
+      },
+      {
+       "falsch": "¡Feliz cumpleaño, Lucía!",
+       "richtig": "¡Feliz cumpleaños, Lucía!",
+       "wort": "cumpleaño",
+       "korrektur": "cumpleaños",
+       "choices": [
+        "cumpleañas",
+        "cumpleañes"
+       ],
+       "tipp": "cumpleaños endet immer auf -s – auch bei nur einem Geburtstag."
+      }
+     ]
+    }
+   ]
   }
  ]
 }

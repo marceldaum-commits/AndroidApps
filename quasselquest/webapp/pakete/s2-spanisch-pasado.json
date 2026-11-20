@@ -1,0 +1,451 @@
+{
+  "id": "s2-spanisch-pasado",
+  "version": 1,
+  "title": "Gestern, heute, morgen",
+  "subject": "spanisch",
+  "grades": [
+    8,
+    9,
+    10
+  ],
+  "emoji": "⏳",
+  "tier": "free",
+  "description": "Pretérito indefinido, Pretérito perfecto und ir a + Infinitiv: Erzählen, was war, was heute passiert ist und was gleich passiert.",
+  "intro": [
+    {
+      "img": "⏪📅",
+      "text": "Das Pretérito indefinido erzählt abgeschlossene Ereignisse: ayer, el año pasado, en 2020 – „Ayer fui al cine.“"
+    },
+    {
+      "img": "✅🕐",
+      "text": "Das Pretérito perfecto (haber + Partizip: he comido) nimmt man in Spanien für Zeiträume, die noch nicht vorbei sind: hoy, esta semana, ya, todavía no. In Lateinamerika sagt man dort oft auch das Indefinido."
+    },
+    {
+      "img": "🎯➡️",
+      "text": "Was gleich passiert oder was du vorhast, sagst du mit ir a + Infinitiv: „Voy a comer.“ – „Ich werde (gleich) essen.“"
+    },
+    {
+      "img": "🎵🧠",
+      "text": "Merkhilfe: Die unregelmäßigen Formen wie hice, tuve, estuve haben keinen Akzent. Und ser und ir teilen sich ihre Formen: fui, fuiste, fue …"
+    },
+    {
+      "img": "🚀😃",
+      "text": "Bei Verbformen tippst du das Pronomen mit, z. B. „yo hablé“. ¡Vamos!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie lautet das Indefinido von „hablar“ mit „yo“? (mit Pronomen)",
+      "a": "yo hablé",
+      "choices": [
+        "yo hablo",
+        "yo hablaba",
+        "yo hablí"
+      ],
+      "img": "🗣️⏪",
+      "info": "Endungen -ar: -é, -aste, -ó, -amos, -asteis, -aron. Ohne Akzent wäre es eine andere Form!"
+    },
+    {
+      "id": "002",
+      "q": "Wie lautet das Indefinido von „comer“ mit „tú“? (mit Pronomen)",
+      "a": "tú comiste",
+      "choices": [
+        "tú comistes",
+        "tú comías",
+        "tú comíste"
+      ],
+      "img": "🍝⏪",
+      "info": "Typischer Fehler: kein -s am Ende. Richtig ist comiste."
+    },
+    {
+      "id": "003",
+      "q": "Wie lautet das Indefinido von „vivir“ mit „ella“? (mit Pronomen)",
+      "a": "ella vivió",
+      "choices": [
+        "ella vivío",
+        "ella vivía",
+        "ella vivó"
+      ],
+      "img": "🏡⏪",
+      "info": "Endungen -er/-ir: -í, -iste, -ió, -imos, -isteis, -ieron."
+    },
+    {
+      "id": "004",
+      "q": "Wie lautet das Indefinido von „trabajar“ mit „nosotros“? (mit Pronomen)",
+      "a": "nosotros trabajamos",
+      "choices": [
+        "nosotros trabajemos",
+        "nosotros trabajábamos",
+        "nosotros trabajaron"
+      ],
+      "img": "💼⏪",
+      "info": "Bei -ar und -ir sieht nosotros im Indefinido aus wie im Presente – Wörter wie ayer zeigen die Zeit."
+    },
+    {
+      "id": "005",
+      "q": "Wie lautet das Indefinido von „escribir“ mit „vosotros“? (mit Pronomen)",
+      "a": "vosotros escribisteis",
+      "choices": [
+        "vosotros escribistes",
+        "vosotros escribíais",
+        "vosotros escribieron"
+      ],
+      "img": "✉️⏪"
+    },
+    {
+      "id": "006",
+      "q": "Wie lautet das Indefinido von „comprar“ mit „ellos“? (mit Pronomen)",
+      "a": "ellos compraron",
+      "choices": [
+        "ellos compraban",
+        "ellos compran",
+        "ellos comprieron"
+      ],
+      "img": "🛒⏪"
+    },
+    {
+      "id": "007",
+      "q": "Ayer ___ con mi abuela por teléfono. (hablar, yo)",
+      "a": "hablé",
+      "choices": [
+        "hablo",
+        "habló",
+        "hablaste"
+      ],
+      "img": "☎️👵",
+      "info": "yo → -é, él/ella → -ó. Der Akzent entscheidet!"
+    },
+    {
+      "id": "008",
+      "q": "El sábado pasado mis primos ___ una pizza enorme. (comer)",
+      "a": "comieron",
+      "choices": [
+        "comaron",
+        "comió",
+        "comen"
+      ],
+      "img": "🍕⏪",
+      "info": "ellos/ellas bei -er/-ir: -ieron."
+    },
+    {
+      "id": "009",
+      "q": "Anoche tú ___ muy tarde a casa. (volver)",
+      "a": "volviste",
+      "choices": [
+        "volvistes",
+        "volvió",
+        "vuelves"
+      ],
+      "img": "🌙🏠",
+      "info": "Im Indefinido gibt es bei volver keinen Stammwechsel: volví, volviste …"
+    },
+    {
+      "id": "010",
+      "q": "Ayer yo ___ la cuenta. (pagar)",
+      "a": "pagué",
+      "choices": [
+        "pagé",
+        "pagó",
+        "pago"
+      ],
+      "img": "💶✅",
+      "info": "Damit das g hart bleibt, kommt ein u dazu: pagué, llegué, jugué."
+    },
+    {
+      "id": "011",
+      "q": "El domingo pasado ___ mi móvil por toda la casa. (buscar, yo)",
+      "a": "busqué",
+      "choices": [
+        "buscé",
+        "buscó",
+        "busco"
+      ],
+      "img": "🔍📱",
+      "info": "c wird vor e zu qu: busqué, toqué, saqué."
+    },
+    {
+      "id": "012",
+      "q": "Wie lautet das Indefinido von „ir“ mit „yo“? (mit Pronomen)",
+      "a": "yo fui",
+      "choices": [
+        "yo fue",
+        "yo fuiste",
+        "yo ido"
+      ],
+      "img": "🚶⏪",
+      "info": "ir: fui, fuiste, fue, fuimos, fuisteis, fueron."
+    },
+    {
+      "id": "013",
+      "q": "El verano pasado ___ a Málaga con mi familia. (ir, nosotros)",
+      "a": "fuimos",
+      "choices": [
+        "fuemos",
+        "fueron",
+        "vamos"
+      ],
+      "img": "🏖️🚗"
+    },
+    {
+      "id": "014",
+      "q": "La fiesta de ayer ___ genial. (ser)",
+      "a": "fue",
+      "choices": [
+        "fui",
+        "fueron",
+        "es"
+      ],
+      "img": "🎉⏪",
+      "info": "ser und ir haben im Indefinido die gleichen Formen. Der Satz zeigt, was gemeint ist."
+    },
+    {
+      "id": "015",
+      "q": "Von welchem Verb kommt „fueron“ im Satz „Fueron al cine.“?",
+      "a": "ir",
+      "choices": [
+        "ser",
+        "fumar",
+        "hacer"
+      ],
+      "img": "🍿❓",
+      "info": "„al cine“ zeigt ein Ziel → gehen → ir."
+    },
+    {
+      "id": "016",
+      "q": "Wie lautet das Indefinido von „hacer“ mit „yo“? (mit Pronomen)",
+      "a": "yo hice",
+      "choices": [
+        "yo hací",
+        "yo hizo",
+        "yo hicé"
+      ],
+      "img": "🧁⏪",
+      "info": "hacer: hice, hiciste, hizo, hicimos, hicisteis, hicieron."
+    },
+    {
+      "id": "017",
+      "q": "Wie lautet das Indefinido von „hacer“ mit „él“? (mit Pronomen)",
+      "a": "él hizo",
+      "choices": [
+        "él hico",
+        "él hició",
+        "él hice"
+      ],
+      "img": "👨‍🍳⏪",
+      "info": "Bei él/ella wird c zu z: hizo."
+    },
+    {
+      "id": "018",
+      "q": "Wie lautet das Indefinido von „tener“ mit „nosotros“? (mit Pronomen)",
+      "a": "nosotros tuvimos",
+      "choices": [
+        "nosotros tenimos",
+        "nosotros tuvemos",
+        "nosotros tenemos"
+      ],
+      "img": "🍀⏪",
+      "info": "tener: tuve, tuviste, tuvo, tuvimos, tuvisteis, tuvieron."
+    },
+    {
+      "id": "019",
+      "q": "Wie lautet das Indefinido von „estar“ mit „ellos“? (mit Pronomen)",
+      "a": "ellos estuvieron",
+      "choices": [
+        "ellos estaron",
+        "ellos estuveron",
+        "ellos estuvimos"
+      ],
+      "img": "🏰⏪",
+      "info": "estar: estuve, estuviste, estuvo, estuvimos, estuvisteis, estuvieron."
+    },
+    {
+      "id": "020",
+      "q": "Ayer Marta no ___ tiempo para el gimnasio. (tener)",
+      "a": "tuvo",
+      "choices": [
+        "tuvó",
+        "tenió",
+        "tuve"
+      ],
+      "img": "⏰🏋️",
+      "info": "Unregelmäßige Indefinido-Formen haben keinen Akzent: tuve, tuvo, hice, hizo."
+    },
+    {
+      "id": "021",
+      "q": "En las vacaciones vosotros ___ en Mallorca. (estar)",
+      "a": "estuvisteis",
+      "choices": [
+        "estuvistéis",
+        "estuvieron",
+        "estasteis"
+      ],
+      "img": "🏝️🧳"
+    },
+    {
+      "id": "022",
+      "q": "Wie lautet das Pretérito perfecto von „hablar“ mit „yo“? (mit Pronomen)",
+      "a": "yo he hablado",
+      "choices": [
+        "yo ha hablado",
+        "yo he hablando",
+        "yo hay hablado"
+      ],
+      "img": "🗣️✅",
+      "info": "haber: he, has, ha, hemos, habéis, han + Partizip."
+    },
+    {
+      "id": "023",
+      "q": "Wie lautet das Pretérito perfecto von „comer“ mit „nosotros“? (mit Pronomen)",
+      "a": "nosotros hemos comido",
+      "choices": [
+        "nosotros habemos comido",
+        "nosotros hemos comida",
+        "nosotros han comido"
+      ],
+      "img": "🍽️✅",
+      "info": "Das Partizip bleibt nach haber immer gleich: comido."
+    },
+    {
+      "id": "024",
+      "q": "Hoy ___ mucho en clase. (aprender, nosotros)",
+      "a": "hemos aprendido",
+      "choices": [
+        "hemos aprendiendo",
+        "habemos aprendido",
+        "han aprendido"
+      ],
+      "img": "📚✨",
+      "info": "hoy, esta semana, ya, todavía no → in Spanien meist Pretérito perfecto. In Lateinamerika sagt man oft: Hoy aprendimos mucho."
+    },
+    {
+      "id": "025",
+      "q": "Wie lautet das Partizip (participio) von „hacer“?",
+      "a": "hecho",
+      "choices": [
+        "hacido",
+        "hizo",
+        "echo"
+      ],
+      "img": "🧩✅",
+      "info": "Ohne h ist „echo“ eine Form von echar (werfen)."
+    },
+    {
+      "id": "026",
+      "q": "Wie lautet das Partizip (participio) von „escribir“?",
+      "a": "escrito",
+      "choices": [
+        "escribido",
+        "escribiendo",
+        "escribió"
+      ],
+      "img": "✍️✅"
+    },
+    {
+      "id": "027",
+      "q": "Wie lautet das Partizip (participio) von „ver“?",
+      "a": "visto",
+      "choices": [
+        "vido",
+        "veído",
+        "viste"
+      ],
+      "img": "👀✅"
+    },
+    {
+      "id": "028",
+      "q": "Wie lautet das Partizip (participio) von „volver“?",
+      "a": "vuelto",
+      "choices": [
+        "volvido",
+        "vuelvido",
+        "volto"
+      ],
+      "img": "↩️✅",
+      "info": "Weitere unregelmäßige Partizipien: abierto, dicho, puesto, roto, muerto."
+    },
+    {
+      "id": "029",
+      "q": "¿Ya ___ los deberes? (hacer, tú)",
+      "a": "has hecho",
+      "choices": [
+        "has hacido",
+        "ha hecho",
+        "has echo"
+      ],
+      "img": "📝❓",
+      "info": "ya → Pretérito perfecto (in Spanien)."
+    },
+    {
+      "id": "030",
+      "q": "Todavía no ___ esa película. (ver, yo)",
+      "a": "he visto",
+      "choices": [
+        "he vido",
+        "he veído",
+        "ha visto"
+      ],
+      "img": "🎬🙈"
+    },
+    {
+      "id": "031",
+      "q": "Hace dos semanas ___ al cine con Lucía. (ir, yo)",
+      "a": "fui",
+      "choices": [
+        "he ido",
+        "fue",
+        "voy"
+      ],
+      "img": "🎞️⏪",
+      "info": "hace dos semanas = abgeschlossener Zeitpunkt in der Vergangenheit → Indefinido. Auch nach ayer steht im Standard-Spanisch das Indefinido: Ayer fui al cine."
+    },
+    {
+      "id": "032",
+      "q": "Mañana ___ a visitar a mis abuelos. (ir, yo)",
+      "a": "voy",
+      "choices": [
+        "fui",
+        "va",
+        "vamos"
+      ],
+      "img": "👵👴➡️",
+      "info": "ir a + Infinitiv: voy a visitar = ich werde besuchen."
+    },
+    {
+      "id": "033",
+      "q": "Este sábado mis amigos y yo ___ a jugar al pádel. (ir)",
+      "a": "vamos",
+      "choices": [
+        "van",
+        "voy",
+        "vais"
+      ],
+      "img": "🎾📅",
+      "info": "mis amigos y yo = nosotros → vamos a jugar."
+    },
+    {
+      "id": "034",
+      "q": "Was heißt „Es wird gleich regnen.“ auf Spanisch?",
+      "a": "Va a llover.",
+      "choices": [
+        "Va llover.",
+        "Vas a llover.",
+        "Va a lloviendo."
+      ],
+      "img": "☁️🌂",
+      "info": "Nach ir kommt immer a, danach der Infinitiv."
+    },
+    {
+      "id": "035",
+      "q": "Was heißt „Wir werden einen Kuchen backen.“ auf Spanisch?",
+      "a": "Vamos a hacer una tarta.",
+      "choices": [
+        "Vamos hacer una tarta.",
+        "Vamos a haciendo una tarta.",
+        "Van a hacer una tarta."
+      ],
+      "img": "🎂👩‍🍳",
+      "info": "In Lateinamerika sagt man eher un pastel oder una torta."
+    }
+  ]
+}

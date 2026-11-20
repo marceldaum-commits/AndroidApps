@@ -51,11 +51,12 @@ Je Sprache angepasst:
 - **Englisch:** kein „Sie“, a/an, Plural mit -s, don't, Befehle; später Simple Past, going to, Steigerung.
 - **Französisch:** tu/vous, le/la/l', mon/ma/mes, Adjektiv hinter dem Nomen, ne … pas, Aussprache stummer Endungen; später passé composé, futur proche.
 - **Spanisch:** ¿/¡ vorne, el/la, -o/-a, Subjekt weglassen, tener für das Alter, Plural -s/-es; später ser/estar, pretérito, ir a.
-- **Latein (Abschnitt 1 folgt im Dezember):** Lesen statt Sprechen, kein Artikel, Verb am Ende, Vokativ, Kasus schrittweise.
+- **Latein (Abschnitt 1 seit 0.5.0):** Lesen statt Sprechen (Wimmelbild zeigt das Wort, „Mach, was ich sage!“ zeigt den Befehl, „Ruby lernt von dir“ mit Endungsfehlern und Satz-Zug statt Nachsprechen), kein Artikel, Verb am Ende, Kasus schrittweise.
 - **Deutsch als Zweitsprache (Idee):** gleiche Themenspirale für Kinder, die Deutsch neu lernen – Vorschlag an den Leitstand.
 
 ## Stand
-- **Abschnitt 1** (8 Einheiten × 5 Lektionen) für **Englisch, Französisch, Spanisch** fertig, vertont, getestet.
+- **Abschnitt 1–2** für **Englisch, Französisch, Spanisch** fertig, vertont, getestet; **Abschnitt 3 „Unterwegs“** für Französisch und Spanisch (0.5.0).
+- **Latein:** Abschnitt 1 „Erste Schritte in Rom“ (0.5.0).
 - Abschnitte 2–4: Plan oben; Inhalte folgen in den Di/Fr-Inhaltsupdates.
 - Kostenlos: Abschnitt 1 jeder Sprache vollständig; ab Abschnitt 2 jeweils die erste Einheit (Pro-Kern, sobald Pro
   freigeschaltet ist – bis dahin ist nichts käuflich sichtbar).

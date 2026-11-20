@@ -1,0 +1,1895 @@
+{
+  "format": 1,
+  "sprache": "la",
+  "titel": "Latein von Anfang an",
+  "figuren": {
+    "ruby": {
+      "name": "Ruby",
+      "emoji": "🦜",
+      "who": null
+    },
+    "marcus": {
+      "name": "Marcus",
+      "emoji": "👦",
+      "who": null
+    },
+    "iulia": {
+      "name": "Iulia",
+      "emoji": "👧",
+      "who": null
+    },
+    "aulus": {
+      "name": "Aulus",
+      "emoji": "🧔",
+      "who": null
+    },
+    "magister": {
+      "name": "Magister",
+      "emoji": "🧑‍🏫",
+      "who": null
+    }
+  },
+  "abschnitte": [
+    {
+      "id": "1",
+      "stufe": "Lernjahr 1",
+      "titel": "Erste Schritte in Rom",
+      "emoji": "🏛️",
+      "ziel": "Ich kann einfache lateinische Sätze lesen und übersetzen.",
+      "einheiten": [
+        {
+          "id": "la-1-1",
+          "titel": "Salvē!",
+          "emoji": "👋",
+          "ziel": "Ich kann Hallo und Tschüss sagen und sagen, wer ich bin.",
+          "woerter": [
+            [
+              "salvē",
+              "hallo (sei gegrüßt)",
+              "👋",
+              "Grüßt du mehrere, sagst du salvēte."
+            ],
+            [
+              "valē",
+              "tschüss (leb wohl)",
+              "🚶",
+              "Zu mehreren sagt man valēte."
+            ],
+            [
+              "esse",
+              "sein",
+              "🙋",
+              "Achtung: esse heißt nicht „essen“! ich bin = sum"
+            ],
+            [
+              "puer, puerī m.",
+              "Junge",
+              "👦"
+            ],
+            [
+              "puella, -ae f.",
+              "Mädchen",
+              "👧"
+            ],
+            [
+              "amīcus, -ī m.",
+              "Freund",
+              "🤝",
+              "Die Freundin heißt amīca. Auf Spanisch sagt man heute noch amigo."
+            ],
+            [
+              "nōn",
+              "nicht",
+              "🚫"
+            ],
+            [
+              "ubi?",
+              "wo?",
+              "🔎"
+            ]
+          ],
+          "saetze": [
+            [
+              "Salvē! Ego sum Iūlia.",
+              "Hallo! Ich bin Iulia.",
+              "👧"
+            ],
+            [
+              "Ubi es, Mārce?",
+              "Wo bist du, Marcus?",
+              "❓"
+            ],
+            [
+              "Hīc sum!",
+              "Hier bin ich!",
+              "🙋"
+            ],
+            [
+              "Valēte, amīcī!",
+              "Tschüss, Freunde!",
+              "👋"
+            ]
+          ],
+          "regel": {
+            "titel": "sum, es, est – das Verb „sein“",
+            "text": "Im Lateinischen steckt die Person in der Endung: sum = ich bin, es = du bist, est = er/sie/es ist, sumus = wir sind, estis = ihr seid, sunt = sie sind. „ich“ (ego) und „du“ (tū) braucht man meistens gar nicht. Und: Latein hat keine Artikel – puella heißt „ein Mädchen“ oder „das Mädchen“.",
+            "beispiele": [
+              [
+                "Puella sum.",
+                "Ich bin ein Mädchen."
+              ],
+              [
+                "Amīcī sumus.",
+                "Wir sind Freunde."
+              ],
+              [
+                "Mārcus et Iūlia hīc sunt.",
+                "Marcus und Iulia sind hier."
+              ]
+            ]
+          },
+          "geschichte": {
+            "titel": "Ein Papagei in Rom",
+            "zeilen": [
+              [
+                "ruby",
+                "Salvē, puer! Salvē, puella!",
+                "Hallo, Junge! Hallo, Mädchen!"
+              ],
+              [
+                "marcus",
+                "Salvē! Ego sum Mārcus. Quis es?",
+                "Hallo! Ich bin Marcus. Wer bist du?"
+              ],
+              [
+                "ruby",
+                "Ruby sum. Amīca sum!",
+                "Ich bin Ruby. Ich bin eine Freundin!"
+              ],
+              [
+                "iulia",
+                "Ego sum Iūlia. Ubi est Aulus?",
+                "Ich bin Iulia. Wo ist Aulus?"
+              ],
+              [
+                "aulus",
+                "Hīc sum! Salvēte!",
+                "Hier bin ich! Hallo, ihr alle!"
+              ],
+              [
+                "ruby",
+                "Valēte, amīcī!",
+                "Tschüss, Freunde!"
+              ]
+            ],
+            "fragen": [
+              {
+                "q": "Wie heißt der Junge?",
+                "a": "Marcus",
+                "choices": [
+                  "Aulus",
+                  "Ruby",
+                  "Iulia"
+                ]
+              },
+              {
+                "q": "Nach wem fragt Iulia?",
+                "a": "nach Aulus",
+                "choices": [
+                  "nach Marcus",
+                  "nach Ruby",
+                  "nach dem Magister"
+                ]
+              }
+            ]
+          },
+          "aktionen": [
+            {
+              "sag": "Dā Mārcō rosam!",
+              "de": "Gib Marcus eine Rose!",
+              "ding": "🌹",
+              "anzahl": 1,
+              "an": "marcus"
+            },
+            {
+              "sag": "Dā Iūliae pilam!",
+              "de": "Gib Iulia einen Ball!",
+              "ding": "⚽",
+              "anzahl": 1,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Aulō epistulam!",
+              "de": "Gib Aulus einen Brief!",
+              "ding": "✉️",
+              "anzahl": 1,
+              "an": "aulus"
+            },
+            {
+              "sag": "Dā Iūliae duās rosās!",
+              "de": "Gib Iulia zwei Rosen!",
+              "ding": "🌹",
+              "anzahl": 2,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Mārcō trēs pilās!",
+              "de": "Gib Marcus drei Bälle!",
+              "ding": "⚽",
+              "anzahl": 3,
+              "an": "marcus"
+            }
+          ],
+          "fehler": [
+            {
+              "falsch": "Mārcus et Iūlia amīcī est.",
+              "richtig": "Mārcus et Iūlia amīcī sunt.",
+              "wort": "est",
+              "korrektur": "sunt",
+              "choices": [
+                "es",
+                "sum"
+              ],
+              "tipp": "Marcus und Iulia sind zwei – also sunt (sie sind)."
+            },
+            {
+              "falsch": "Ego et tū amīcī sunt.",
+              "richtig": "Ego et tū amīcī sumus.",
+              "wort": "sunt",
+              "korrektur": "sumus",
+              "choices": [
+                "estis",
+                "sum"
+              ],
+              "tipp": "Ich und du – das sind wir: sumus."
+            },
+            {
+              "falsch": "Salvē, Mārce et Iūlia!",
+              "richtig": "Salvēte, Mārce et Iūlia!",
+              "wort": "Salvē",
+              "korrektur": "Salvēte",
+              "choices": [
+                "Salvēs",
+                "Salvētō"
+              ],
+              "tipp": "Grüßt du zwei oder mehr, sagst du salvēte."
+            },
+            {
+              "falsch": "Iūlia et Aule, valē!",
+              "richtig": "Iūlia et Aule, valēte!",
+              "wort": "valē",
+              "korrektur": "valēte",
+              "choices": [
+                "valēs",
+                "valēre"
+              ],
+              "tipp": "Zu zwei oder mehr sagt man valēte."
+            }
+          ]
+        },
+        {
+          "id": "la-1-2",
+          "titel": "Familia",
+          "emoji": "👨‍👩‍👧‍👦",
+          "ziel": "Ich kann die Familie benennen und sagen, wer wer ist.",
+          "woerter": [
+            [
+              "familia, -ae f.",
+              "Familie",
+              "👨‍👩‍👧‍👦",
+              "Familie kommt von familia."
+            ],
+            [
+              "pater, patris m.",
+              "Vater",
+              "👨",
+              "Auf Englisch father, auf Italienisch padre."
+            ],
+            [
+              "māter, mātris f.",
+              "Mutter",
+              "👩",
+              "Auf Englisch mother, auf Italienisch madre."
+            ],
+            [
+              "fīlius, -ī m.",
+              "Sohn",
+              "👦"
+            ],
+            [
+              "fīlia, -ae f.",
+              "Tochter",
+              "👧",
+              "Eine Filiale ist wie die „Tochter“ eines großen Geschäfts."
+            ],
+            [
+              "frāter, frātris m.",
+              "Bruder",
+              "👬",
+              "Hörst du es? frāter – Bruder – englisch brother."
+            ],
+            [
+              "soror, sorōris f.",
+              "Schwester",
+              "👭"
+            ],
+            [
+              "avus, -ī m.",
+              "Großvater",
+              "👴"
+            ]
+          ],
+          "saetze": [
+            [
+              "Aulus pater est.",
+              "Aulus ist der Vater.",
+              "🧔"
+            ],
+            [
+              "Iūlia soror est, Mārcus frāter.",
+              "Iulia ist die Schwester, Marcus der Bruder.",
+              "👫"
+            ],
+            [
+              "Ubi est avus?",
+              "Wo ist der Großvater?",
+              "❓"
+            ],
+            [
+              "Fīliī et fīliae hīc sunt.",
+              "Die Söhne und die Töchter sind hier.",
+              "🏠"
+            ]
+          ],
+          "regel": {
+            "titel": "Eins oder viele? -a → -ae, -us → -ī",
+            "text": "Viele Nomen enden auf -a (meist weiblich) oder auf -us (meist männlich). Sind es mehr als eins, ändert sich die Endung: aus -a wird -ae, aus -us wird -ī. Das Verb zieht mit: est wird zu sunt.",
+            "beispiele": [
+              [
+                "fīlia → fīliae",
+                "Tochter → Töchter"
+              ],
+              [
+                "fīlius → fīliī",
+                "Sohn → Söhne"
+              ],
+              [
+                "Amīcī hīc sunt.",
+                "Die Freunde sind hier."
+              ]
+            ]
+          },
+          "geschichte": {
+            "titel": "Wer gehört zur Familie?",
+            "zeilen": [
+              [
+                "ruby",
+                "Ubi est familia?",
+                "Wo ist die Familie?"
+              ],
+              [
+                "marcus",
+                "Hīc! Aulus pater est.",
+                "Hier! Aulus ist der Vater."
+              ],
+              [
+                "iulia",
+                "Ego fīlia sum, Mārcus fīlius.",
+                "Ich bin die Tochter, Marcus der Sohn."
+              ],
+              [
+                "ruby",
+                "Et ubi est māter?",
+                "Und wo ist die Mutter?"
+              ],
+              [
+                "aulus",
+                "Māter et avus nōn hīc sunt.",
+                "Die Mutter und der Großvater sind nicht hier."
+              ],
+              [
+                "marcus",
+                "Et tū, Ruby, amīca es!",
+                "Und du, Ruby, bist eine Freundin!"
+              ]
+            ],
+            "fragen": [
+              {
+                "q": "Wer ist der Vater?",
+                "a": "Aulus",
+                "choices": [
+                  "Marcus",
+                  "Ruby",
+                  "der Magister"
+                ]
+              },
+              {
+                "q": "Wer ist nicht hier?",
+                "a": "die Mutter und der Großvater",
+                "choices": [
+                  "Marcus und Iulia",
+                  "Aulus und Iulia",
+                  "Ruby und Marcus"
+                ]
+              }
+            ]
+          },
+          "aktionen": [
+            {
+              "sag": "Dā patrī epistulam!",
+              "de": "Gib dem Vater einen Brief!",
+              "ding": "✉️",
+              "anzahl": 1,
+              "an": "aulus"
+            },
+            {
+              "sag": "Dā fīliae rosam!",
+              "de": "Gib der Tochter eine Rose!",
+              "ding": "🌹",
+              "anzahl": 1,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā fīliō pilam!",
+              "de": "Gib dem Sohn einen Ball!",
+              "ding": "⚽",
+              "anzahl": 1,
+              "an": "marcus"
+            },
+            {
+              "sag": "Dā Iūliae trēs rosās!",
+              "de": "Gib Iulia drei Rosen!",
+              "ding": "🌹",
+              "anzahl": 3,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Aulō duās epistulās!",
+              "de": "Gib Aulus zwei Briefe!",
+              "ding": "✉️",
+              "anzahl": 2,
+              "an": "aulus"
+            }
+          ],
+          "fehler": [
+            {
+              "falsch": "Mārcus et Gāius fīlius sunt.",
+              "richtig": "Mārcus et Gāius fīliī sunt.",
+              "wort": "fīlius",
+              "korrektur": "fīliī",
+              "choices": [
+                "fīlia",
+                "fīliās"
+              ],
+              "tipp": "Zwei Söhne: aus -us wird -ī."
+            },
+            {
+              "falsch": "Iūlia et Tullia fīlia sunt.",
+              "richtig": "Iūlia et Tullia fīliae sunt.",
+              "wort": "fīlia",
+              "korrektur": "fīliae",
+              "choices": [
+                "fīliōs",
+                "fīlius"
+              ],
+              "tipp": "Zwei Töchter: aus -a wird -ae."
+            },
+            {
+              "falsch": "Ego Iūlia sum. Ego et Tullia amīca sumus.",
+              "richtig": "Ego Iūlia sum. Ego et Tullia amīcae sumus.",
+              "wort": "amīca",
+              "korrektur": "amīcae",
+              "choices": [
+                "amīcus",
+                "amīcum"
+              ],
+              "tipp": "Iulia und Tullia sind zwei Freundinnen: amīcae."
+            },
+            {
+              "falsch": "Mārcus et Titus puer sunt.",
+              "richtig": "Mārcus et Titus puerī sunt.",
+              "wort": "puer",
+              "korrektur": "puerī",
+              "choices": [
+                "puella",
+                "puellās"
+              ],
+              "tipp": "Bei puer kommt im Plural nur -ī dazu: puerī."
+            }
+          ]
+        },
+        {
+          "id": "la-1-3",
+          "titel": "In forō",
+          "emoji": "🛒",
+          "ziel": "Ich kann Dinge auf dem Markt benennen und sagen, wer was trägt oder anschaut.",
+          "woerter": [
+            [
+              "forum, -ī n.",
+              "Marktplatz",
+              "🏛️",
+              "Ein Forum ist heute ein Ort, an dem man sich trifft und redet."
+            ],
+            [
+              "mercātor, -ōris m.",
+              "Händler",
+              "🏪",
+              "Merkur war der Gott der Händler."
+            ],
+            [
+              "pecūnia, -ae f.",
+              "Geld",
+              "💰"
+            ],
+            [
+              "mālum, -ī n.",
+              "Apfel",
+              "🍎",
+              "Achtung: mālum mit langem ā ist der Apfel, malum mit kurzem a das Übel."
+            ],
+            [
+              "amphora, -ae f.",
+              "Amphore (Krug)",
+              "🏺",
+              "In Amphoren transportierten die Römer Öl und Wein."
+            ],
+            [
+              "lucerna, -ae f.",
+              "Öllampe",
+              "🪔"
+            ],
+            [
+              "spectāre",
+              "anschauen",
+              "👀",
+              "Ein Spektakel ist etwas zum Anschauen."
+            ],
+            [
+              "portāre",
+              "tragen",
+              "🧺",
+              "Im Portemonnaie trägst du dein Geld."
+            ]
+          ],
+          "saetze": [
+            [
+              "Mercātor amphoram portat.",
+              "Der Händler trägt eine Amphore.",
+              "🏺"
+            ],
+            [
+              "Iūlia mālum spectat.",
+              "Iulia schaut einen Apfel an.",
+              "🍏"
+            ],
+            [
+              "Mārcus pecūniam nōn habet.",
+              "Marcus hat kein Geld.",
+              "🙈"
+            ],
+            [
+              "In forō sumus!",
+              "Wir sind auf dem Marktplatz!",
+              "🏛️"
+            ]
+          ],
+          "regel": {
+            "titel": "Wen oder was? – der Akkusativ",
+            "text": "Wer etwas tut, steht im Nominativ. Wen oder was jemand trägt oder anschaut, bekommt die Akkusativ-Endung -m: aus -a wird -am, aus -us wird -um, und -um bleibt -um. Weil die Endung alles verrät, dürfen die Wörter sogar die Plätze tauschen.",
+            "beispiele": [
+              [
+                "Iūlia amphoram portat.",
+                "Iulia trägt eine Amphore."
+              ],
+              [
+                "Mercātor amīcum spectat.",
+                "Der Händler schaut den Freund an."
+              ],
+              [
+                "Amphoram Iūlia portat.",
+                "Iulia trägt eine Amphore. (Es bleibt dasselbe!)"
+              ]
+            ]
+          },
+          "geschichte": {
+            "titel": "Ein Apfel für Iulia",
+            "zeilen": [
+              [
+                "iulia",
+                "Ecce forum! Ubi est mercātor?",
+                "Schau, der Marktplatz! Wo ist der Händler?"
+              ],
+              [
+                "ruby",
+                "Hīc! Mercātor amphoram portat.",
+                "Hier! Der Händler trägt eine Amphore."
+              ],
+              [
+                "marcus",
+                "Et ecce: māla et lucernae!",
+                "Und schau: Äpfel und Öllampen!"
+              ],
+              [
+                "iulia",
+                "Mālum spectō, sed pecūniam nōn habeō.",
+                "Ich schaue einen Apfel an, aber ich habe kein Geld."
+              ],
+              [
+                "marcus",
+                "Ego quoque pecūniam nōn habeō.",
+                "Ich habe auch kein Geld."
+              ],
+              [
+                "aulus",
+                "Ego pecūniam habeō. Ecce mālum, Iūlia!",
+                "Ich habe Geld. Hier ist ein Apfel, Iulia!"
+              ]
+            ],
+            "fragen": [
+              {
+                "q": "Was trägt der Händler?",
+                "a": "eine Amphore",
+                "choices": [
+                  "einen Apfel",
+                  "eine Öllampe",
+                  "einen Korb"
+                ]
+              },
+              {
+                "q": "Wer hat Geld?",
+                "a": "Aulus",
+                "choices": [
+                  "Iulia",
+                  "Marcus",
+                  "niemand"
+                ]
+              }
+            ]
+          },
+          "aktionen": [
+            {
+              "sag": "Dā Iūliae mālum!",
+              "de": "Gib Iulia einen Apfel!",
+              "ding": "🍎",
+              "anzahl": 1,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Mārcō lucernam!",
+              "de": "Gib Marcus eine Öllampe!",
+              "ding": "🪔",
+              "anzahl": 1,
+              "an": "marcus"
+            },
+            {
+              "sag": "Dā Aulō amphoram!",
+              "de": "Gib Aulus eine Amphore!",
+              "ding": "🏺",
+              "anzahl": 1,
+              "an": "aulus"
+            },
+            {
+              "sag": "Dā Iūliae duo māla!",
+              "de": "Gib Iulia zwei Äpfel!",
+              "ding": "🍎",
+              "anzahl": 2,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Mārcō trēs amphorās!",
+              "de": "Gib Marcus drei Amphoren!",
+              "ding": "🏺",
+              "anzahl": 3,
+              "an": "marcus"
+            }
+          ],
+          "fehler": [
+            {
+              "falsch": "Mārcus et Iūlia lucerna portant.",
+              "richtig": "Mārcus et Iūlia lucernam portant.",
+              "wort": "lucerna",
+              "korrektur": "lucernam",
+              "choices": [
+                "lucernā",
+                "lucernīs"
+              ],
+              "tipp": "Was tragen die beiden? Die Öllampe – lucerna endet auf -a, also heißt der Akkusativ lucernam."
+            },
+            {
+              "falsch": "Ego pecūnia nōn habeō.",
+              "richtig": "Ego pecūniam nōn habeō.",
+              "wort": "pecūnia",
+              "korrektur": "pecūniam",
+              "choices": [
+                "pecūniā",
+                "pecūniae"
+              ],
+              "tipp": "pecūnia endet auf -a – im Akkusativ wird daraus -am."
+            },
+            {
+              "falsch": "Tū mālus spectās.",
+              "richtig": "Tū mālum spectās.",
+              "wort": "mālus",
+              "korrektur": "mālum",
+              "choices": [
+                "mālō",
+                "mālīs"
+              ],
+              "tipp": "mālum endet auf -um – und im Akkusativ bleibt -um. (mālus wäre der Apfelbaum!)"
+            },
+            {
+              "falsch": "Ego mālum et amphora portō.",
+              "richtig": "Ego mālum et amphoram portō.",
+              "wort": "amphora",
+              "korrektur": "amphoram",
+              "choices": [
+                "amphorā",
+                "amphorīs"
+              ],
+              "tipp": "Was trage ich? Die Amphore – wen oder was? Also Akkusativ: amphoram."
+            }
+          ]
+        },
+        {
+          "id": "la-1-4",
+          "titel": "Vīlla",
+          "emoji": "🏡",
+          "ziel": "Ich kann Teile eines römischen Hauses benennen und lateinische Sätze bis zum Verb lesen.",
+          "woerter": [
+            [
+              "vīlla, -ae f.",
+              "Landhaus",
+              "🏡",
+              "Daher kommt unser Wort Villa."
+            ],
+            [
+              "hortus, -ī m.",
+              "Garten",
+              "🌳",
+              "Die Hortensie ist eine Gartenblume."
+            ],
+            [
+              "iānua, -ae f.",
+              "Tür",
+              "🚪",
+              "Der Januar heißt nach Iānus, dem Gott der Türen."
+            ],
+            [
+              "fenestra, -ae f.",
+              "Fenster",
+              "🪟",
+              "Fenster kommt von fenestra."
+            ],
+            [
+              "mūrus, -ī m.",
+              "Mauer",
+              "🧱",
+              "Mauer kommt von mūrus."
+            ],
+            [
+              "lectus, -ī m.",
+              "Bett",
+              "🛏️"
+            ],
+            [
+              "habitāre",
+              "wohnen",
+              "🏘️",
+              "Ein Habitat ist der Ort, an dem ein Tier wohnt."
+            ],
+            [
+              "sedēre",
+              "sitzen",
+              "🪑"
+            ]
+          ],
+          "saetze": [
+            [
+              "Familia in vīllā habitat.",
+              "Die Familie wohnt in einem Landhaus.",
+              "🏡"
+            ],
+            [
+              "Mārcus in hortō sedet.",
+              "Marcus sitzt im Garten.",
+              "🌳"
+            ],
+            [
+              "Iūlia iānuam aperit.",
+              "Iulia öffnet die Tür.",
+              "🚪"
+            ],
+            [
+              "Ruby in mūrō sedet.",
+              "Ruby sitzt auf der Mauer.",
+              "🧱"
+            ]
+          ],
+          "regel": {
+            "titel": "Das Verb kommt zum Schluss",
+            "text": "Im lateinischen Satz steht das Verb meistens ganz am Ende. Lies darum erst bis zum Schluss! Dann übersetze so: Wer? – tut was? – wen oder was? – wo?",
+            "beispiele": [
+              [
+                "Mārcus in hortō sedet.",
+                "Marcus sitzt im Garten."
+              ],
+              [
+                "Aulus iānuam spectat.",
+                "Aulus schaut die Tür an."
+              ],
+              [
+                "Iūlia et Mārcus in vīllā habitant.",
+                "Iulia und Marcus wohnen in einem Landhaus."
+              ]
+            ]
+          },
+          "geschichte": {
+            "titel": "Wo ist Ruby?",
+            "zeilen": [
+              [
+                "aulus",
+                "Ubi est Ruby?",
+                "Wo ist Ruby?"
+              ],
+              [
+                "marcus",
+                "In vīllā nōn est.",
+                "Im Landhaus ist sie nicht."
+              ],
+              [
+                "iulia",
+                "Fortasse in hortō sedet.",
+                "Vielleicht sitzt sie im Garten."
+              ],
+              [
+                "marcus",
+                "Ecce! Ruby in mūrō sedet!",
+                "Schau! Ruby sitzt auf der Mauer!"
+              ],
+              [
+                "ruby",
+                "Salvēte! Hortum et vīllam spectō.",
+                "Hallo! Ich schaue den Garten und das Landhaus an."
+              ],
+              [
+                "aulus",
+                "Intrā per fenestram, Ruby!",
+                "Komm durchs Fenster herein, Ruby!"
+              ]
+            ],
+            "fragen": [
+              {
+                "q": "Wo sitzt Ruby?",
+                "a": "auf der Mauer",
+                "choices": [
+                  "im Bett",
+                  "auf dem Tisch",
+                  "an der Tür"
+                ]
+              },
+              {
+                "q": "Wer fragt, wo Ruby ist?",
+                "a": "Aulus",
+                "choices": [
+                  "Marcus",
+                  "Iulia",
+                  "der Magister"
+                ]
+              }
+            ]
+          },
+          "aktionen": [
+            {
+              "sag": "Dā Aulō clāvem!",
+              "de": "Gib Aulus einen Schlüssel!",
+              "ding": "🔑",
+              "anzahl": 1,
+              "an": "aulus"
+            },
+            {
+              "sag": "Dā Iūliae lucernam!",
+              "de": "Gib Iulia eine Öllampe!",
+              "ding": "🪔",
+              "anzahl": 1,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Mārcō flōrem!",
+              "de": "Gib Marcus eine Blume!",
+              "ding": "🌷",
+              "anzahl": 1,
+              "an": "marcus"
+            },
+            {
+              "sag": "Dā Iūliae duās clāvēs!",
+              "de": "Gib Iulia zwei Schlüssel!",
+              "ding": "🔑",
+              "anzahl": 2,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Aulō trēs flōrēs!",
+              "de": "Gib Aulus drei Blumen!",
+              "ding": "🌷",
+              "anzahl": 3,
+              "an": "aulus"
+            }
+          ],
+          "fehler": [
+            {
+              "falsch": "Duo puerī in hortō sedet.",
+              "richtig": "Duo puerī in hortō sedent.",
+              "wort": "sedet",
+              "korrektur": "sedent",
+              "choices": [
+                "sedēs",
+                "sedeō"
+              ],
+              "tipp": "Zwei Jungen sitzen – sie sitzen: sedent."
+            },
+            {
+              "falsch": "Ego et tū in vīllā habitant.",
+              "richtig": "Ego et tū in vīllā habitāmus.",
+              "wort": "habitant",
+              "korrektur": "habitāmus",
+              "choices": [
+                "habitātis",
+                "habitat"
+              ],
+              "tipp": "Ich und du – das sind wir: habitāmus."
+            },
+            {
+              "falsch": "Ūna puella in hortō sedent.",
+              "richtig": "Ūna puella in hortō sedet.",
+              "wort": "sedent",
+              "korrektur": "sedet",
+              "choices": [
+                "sedēmus",
+                "sedētis"
+              ],
+              "tipp": "Nur ein Mädchen – sie sitzt: sedet."
+            },
+            {
+              "falsch": "Ego iānuam et fenestra spectō.",
+              "richtig": "Ego iānuam et fenestram spectō.",
+              "wort": "fenestra",
+              "korrektur": "fenestram",
+              "choices": [
+                "fenestrā",
+                "fenestrīs"
+              ],
+              "tipp": "Was schaue ich an? Tür und Fenster – beide im Akkusativ: fenestram."
+            }
+          ]
+        },
+        {
+          "id": "la-1-5",
+          "titel": "Animālia",
+          "emoji": "🐾",
+          "ziel": "Ich kann Tiere benennen und sagen, wer was mag oder fürchtet – für ich, du, er, wir, ihr, sie.",
+          "woerter": [
+            [
+              "equus, -ī m.",
+              "Pferd",
+              "🐴"
+            ],
+            [
+              "canis, -is m.",
+              "Hund",
+              "🐕",
+              "Die Kanarischen Inseln heißen nach Hunden (canēs) – und nach den Inseln der Kanarienvogel."
+            ],
+            [
+              "fēlēs, -is f.",
+              "Katze",
+              "🐈"
+            ],
+            [
+              "avis, -is f.",
+              "Vogel",
+              "🐦",
+              "Aviatik heißt Fliegerei."
+            ],
+            [
+              "lupus, -ī m.",
+              "Wolf",
+              "🐺",
+              "Die Lupine, eine Blume, heißt nach lupus."
+            ],
+            [
+              "piscis, -is m.",
+              "Fisch",
+              "🐟",
+              "Das Sternzeichen Fische heißt Pisces."
+            ],
+            [
+              "amāre",
+              "lieben",
+              "❤️",
+              "Ein Amateur tut etwas aus Liebe zur Sache."
+            ],
+            [
+              "timēre",
+              "fürchten (Angst haben)",
+              "😨",
+              "Auf Englisch heißt timid ängstlich."
+            ]
+          ],
+          "saetze": [
+            [
+              "Canis fēlem nōn amat.",
+              "Der Hund mag die Katze nicht.",
+              "🐶"
+            ],
+            [
+              "Fēlēs avem spectat.",
+              "Die Katze beobachtet den Vogel.",
+              "👀"
+            ],
+            [
+              "Equī lupum timent.",
+              "Die Pferde fürchten den Wolf.",
+              "🐎"
+            ],
+            [
+              "Piscēs amāmus.",
+              "Wir lieben Fische.",
+              "🐠"
+            ]
+          ],
+          "regel": {
+            "titel": "Die Endung verrät, wer es tut",
+            "text": "Ein lateinisches Verb braucht kein „ich“ oder „du“ – das sagt die Endung: -ō = ich, -s = du, -t = er/sie/es, -mus = wir, -tis = ihr, -nt = sie. Bei amāre steht vor der Endung ein a (amās, amat), bei timēre ein e (timēs, timet). Nur bei „ich“ heißt es amō, aber timeō.",
+            "beispiele": [
+              [
+                "Equum amō.",
+                "Ich liebe das Pferd."
+              ],
+              [
+                "Lupum timēmus.",
+                "Wir fürchten den Wolf."
+              ],
+              [
+                "Canēs fēlem spectant.",
+                "Die Hunde beobachten die Katze."
+              ]
+            ]
+          },
+          "geschichte": {
+            "titel": "Wer schaut wen an?",
+            "zeilen": [
+              [
+                "marcus",
+                "Ecce, Ruby! Equī in hortō sunt.",
+                "Schau, Ruby! Pferde sind im Garten."
+              ],
+              [
+                "ruby",
+                "Equōs amō! Sed ubi est canis?",
+                "Ich liebe Pferde! Aber wo ist der Hund?"
+              ],
+              [
+                "iulia",
+                "Canis fēlem spectat. Fēlēs avem spectat.",
+                "Der Hund beobachtet die Katze. Die Katze beobachtet den Vogel."
+              ],
+              [
+                "ruby",
+                "Avem? Ō! Fēlem timeō!",
+                "Den Vogel? Oh! Ich habe Angst vor der Katze!"
+              ],
+              [
+                "aulus",
+                "Nōlī timēre! Fēlēs piscēs amat, nōn avēs.",
+                "Hab keine Angst! Die Katze liebt Fische, keine Vögel."
+              ]
+            ],
+            "fragen": [
+              {
+                "q": "Wen beobachtet der Hund?",
+                "a": "die Katze",
+                "choices": [
+                  "den Vogel",
+                  "das Pferd",
+                  "den Wolf"
+                ]
+              },
+              {
+                "q": "Was liebt die Katze, sagt Aulus?",
+                "a": "Fische",
+                "choices": [
+                  "Vögel",
+                  "Pferde",
+                  "Hunde"
+                ]
+              }
+            ]
+          },
+          "aktionen": [
+            {
+              "sag": "Dā Mārcō piscem!",
+              "de": "Gib Marcus einen Fisch!",
+              "ding": "🐟",
+              "anzahl": 1,
+              "an": "marcus"
+            },
+            {
+              "sag": "Dā Iūliae fēlem!",
+              "de": "Gib Iulia eine Katze!",
+              "ding": "🐈",
+              "anzahl": 1,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Aulō equum!",
+              "de": "Gib Aulus ein Pferd!",
+              "ding": "🐴",
+              "anzahl": 1,
+              "an": "aulus"
+            },
+            {
+              "sag": "Dā Iūliae duās avēs!",
+              "de": "Gib Iulia zwei Vögel!",
+              "ding": "🐦",
+              "anzahl": 2,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Mārcō trēs piscēs!",
+              "de": "Gib Marcus drei Fische!",
+              "ding": "🐟",
+              "anzahl": 3,
+              "an": "marcus"
+            }
+          ],
+          "fehler": [
+            {
+              "falsch": "Duo canēs fēlem spectat.",
+              "richtig": "Duo canēs fēlem spectant.",
+              "wort": "spectat",
+              "korrektur": "spectant",
+              "choices": [
+                "spectās",
+                "spectō"
+              ],
+              "tipp": "Zwei Hunde – sie schauen: spectant."
+            },
+            {
+              "falsch": "Ūnus equus lupum timent.",
+              "richtig": "Ūnus equus lupum timet.",
+              "wort": "timent",
+              "korrektur": "timet",
+              "choices": [
+                "timēmus",
+                "timeō"
+              ],
+              "tipp": "Nur ein Pferd – es fürchtet: timet."
+            },
+            {
+              "falsch": "Ego et tū piscēs amant.",
+              "richtig": "Ego et tū piscēs amāmus.",
+              "wort": "amant",
+              "korrektur": "amāmus",
+              "choices": [
+                "amātis",
+                "amat"
+              ],
+              "tipp": "Ich und du – das sind wir: amāmus."
+            },
+            {
+              "falsch": "Duae puellae lupus spectant.",
+              "richtig": "Duae puellae lupum spectant.",
+              "wort": "lupus",
+              "korrektur": "lupum",
+              "choices": [
+                "lupō",
+                "lupīs"
+              ],
+              "tipp": "Wen schauen die Mädchen an? Den Wolf – Akkusativ: lupum."
+            }
+          ]
+        },
+        {
+          "id": "la-1-6",
+          "titel": "Numerī Ⅰ–Ⅹ",
+          "emoji": "🔢",
+          "ziel": "Ich kann bis zehn zählen und sagen, wem jemand etwas gibt.",
+          "woerter": [
+            [
+              "ūnus, ūna, ūnum",
+              "eins",
+              "1️⃣",
+              "Eine Uniform ist „eine Form“ für alle."
+            ],
+            [
+              "duo, duae, duo",
+              "zwei",
+              "2️⃣",
+              "Ein Duo sind zwei."
+            ],
+            [
+              "trēs, tria",
+              "drei",
+              "3️⃣",
+              "Ein Triangel hat drei Ecken."
+            ],
+            [
+              "quattuor",
+              "vier",
+              "4️⃣",
+              "Ein Quartett sind vier."
+            ],
+            [
+              "quīnque",
+              "fünf",
+              "5️⃣",
+              "Ein Quintett sind fünf."
+            ],
+            [
+              "septem",
+              "sieben",
+              "7️⃣",
+              "Der September war bei den Römern der 7. Monat – ihr Jahr begann im März."
+            ],
+            [
+              "octō",
+              "acht",
+              "8️⃣",
+              "Oktober war der 8. Monat."
+            ],
+            [
+              "decem",
+              "zehn",
+              "🔟",
+              "Dezember war der 10. Monat. Und ein Dezimeter ist ein Zehntel Meter."
+            ]
+          ],
+          "saetze": [
+            [
+              "Duo et trēs quīnque sunt.",
+              "Zwei und drei sind fünf.",
+              "➕"
+            ],
+            [
+              "Quot equī sunt? Septem!",
+              "Wie viele Pferde sind es? Sieben!",
+              "🐴"
+            ],
+            [
+              "Mārcus Iūliae octō rosās dat.",
+              "Marcus gibt Iulia acht Rosen.",
+              "🌹"
+            ],
+            [
+              "Aulus mercātōrī decem nummōs dat.",
+              "Aulus gibt dem Händler zehn Münzen.",
+              "🪙"
+            ]
+          ],
+          "regel": {
+            "titel": "Wem? – der Dativ",
+            "text": "Wem gibt man etwas? Das zeigt die Dativ-Endung: aus -a wird -ae, aus -us wird -ō. Dā Iūliae! heißt „Gib Iulia!“, Dā Mārcō! heißt „Gib Marcus!“. Sind es mehrere, endet der Dativ auf -īs: amīcīs = den Freunden.",
+            "beispiele": [
+              [
+                "Mārcus Iūliae trēs rosās dat.",
+                "Marcus gibt Iulia drei Rosen."
+              ],
+              [
+                "Iūlia amīcō duo māla dat.",
+                "Iulia gibt dem Freund zwei Äpfel."
+              ],
+              [
+                "Aulus puerīs decem nucēs dat.",
+                "Aulus gibt den Jungen zehn Nüsse."
+              ]
+            ]
+          },
+          "geschichte": {
+            "titel": "Nüsse für alle",
+            "zeilen": [
+              [
+                "aulus",
+                "Ecce nucēs! Quot sunt?",
+                "Schaut, Nüsse! Wie viele sind es?"
+              ],
+              [
+                "marcus",
+                "Ūna, duae, trēs, quattuor, quīnque, sex, septem, octō, novem, decem!",
+                "Eine, zwei, drei, vier, fünf, sechs, sieben, acht, neun, zehn!"
+              ],
+              [
+                "aulus",
+                "Mārcō quīnque nucēs dō, Iūliae quīnque.",
+                "Ich gebe Marcus fünf Nüsse, Iulia fünf."
+              ],
+              [
+                "ruby",
+                "Et mihi?",
+                "Und mir?"
+              ],
+              [
+                "iulia",
+                "Ruby, tibi duās nucēs dō!",
+                "Ruby, ich gebe dir zwei Nüsse!"
+              ],
+              [
+                "marcus",
+                "Et ego tibi ūnam dō. Nunc trēs nucēs habēs!",
+                "Und ich gebe dir eine. Jetzt hast du drei Nüsse!"
+              ]
+            ],
+            "fragen": [
+              {
+                "q": "Wie viele Nüsse gibt Aulus Marcus?",
+                "a": "fünf",
+                "choices": [
+                  "zwei",
+                  "drei",
+                  "zehn"
+                ]
+              },
+              {
+                "q": "Wie viele Nüsse hat Ruby am Ende?",
+                "a": "drei",
+                "choices": [
+                  "eine",
+                  "fünf",
+                  "zehn"
+                ]
+              }
+            ]
+          },
+          "aktionen": [
+            {
+              "sag": "Dā Mārcō quattuor nucēs!",
+              "de": "Gib Marcus vier Nüsse!",
+              "ding": "🌰",
+              "anzahl": 4,
+              "an": "marcus"
+            },
+            {
+              "sag": "Dā Iūliae duo māla!",
+              "de": "Gib Iulia zwei Äpfel!",
+              "ding": "🍎",
+              "anzahl": 2,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Aulō quīnque rosās!",
+              "de": "Gib Aulus fünf Rosen!",
+              "ding": "🌹",
+              "anzahl": 5,
+              "an": "aulus"
+            },
+            {
+              "sag": "Dā Iūliae trēs piscēs!",
+              "de": "Gib Iulia drei Fische!",
+              "ding": "🐟",
+              "anzahl": 3,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Mārcō ūnum ōvum!",
+              "de": "Gib Marcus ein Ei!",
+              "ding": "🥚",
+              "anzahl": 1,
+              "an": "marcus"
+            }
+          ],
+          "fehler": [
+            {
+              "falsch": "Mārcus Iūliam duās rosās dat.",
+              "richtig": "Mārcus Iūliae duās rosās dat.",
+              "wort": "Iūliam",
+              "korrektur": "Iūliae",
+              "choices": [
+                "Iūliā",
+                "Iūliās"
+              ],
+              "tipp": "Wem gibt Marcus die Rosen? Iulia – Dativ: Iūliae."
+            },
+            {
+              "falsch": "Aulus Mārcum trēs nucēs dat.",
+              "richtig": "Aulus Mārcō trēs nucēs dat.",
+              "wort": "Mārcum",
+              "korrektur": "Mārcō",
+              "choices": [
+                "Mārcus",
+                "Mārcōs"
+              ],
+              "tipp": "Wem gibt Aulus die Nüsse? Marcus – Dativ: Mārcō."
+            },
+            {
+              "falsch": "Iūlia amīcās duo māla dat.",
+              "richtig": "Iūlia amīcīs duo māla dat.",
+              "wort": "amīcās",
+              "korrektur": "amīcīs",
+              "choices": [
+                "amīcōs",
+                "amīcum"
+              ],
+              "tipp": "Wem gibt Iulia die Äpfel? Den Freundinnen – Dativ Plural: amīcīs."
+            },
+            {
+              "falsch": "Ruby Aulum ūnum nummum dat.",
+              "richtig": "Ruby Aulō ūnum nummum dat.",
+              "wort": "Aulum",
+              "korrektur": "Aulō",
+              "choices": [
+                "Aulus",
+                "Aulōs"
+              ],
+              "tipp": "Wem gibt Ruby die Münze? Aulus – Dativ: Aulō."
+            }
+          ]
+        },
+        {
+          "id": "la-1-7",
+          "titel": "Lūdus",
+          "emoji": "🏫",
+          "ziel": "Ich kann Dinge in der Schule benennen und Befehle verstehen.",
+          "woerter": [
+            [
+              "lūdus, -ī m.",
+              "Schule",
+              "🏫",
+              "lūdus heißt auch Spiel – daher das Würfelspiel Ludo."
+            ],
+            [
+              "magister, -trī m.",
+              "Lehrer",
+              "🧑‍🏫",
+              "Aus magister wurde unser Wort Meister."
+            ],
+            [
+              "discipulus, -ī m.",
+              "Schüler",
+              "🎒",
+              "Disziplin ist mit discipulus verwandt: Ein Schüler lernt mit Disziplin."
+            ],
+            [
+              "tabula, -ae f.",
+              "Schreibtafel",
+              "📝",
+              "Tabelle und Tablet kommen von tabula."
+            ],
+            [
+              "liber, librī m.",
+              "Buch",
+              "📖",
+              "Auf Französisch heißt Buch livre."
+            ],
+            [
+              "stilus, -ī m.",
+              "Griffel",
+              "✏️",
+              "Stil kommt von stilus – erst der Schreibgriffel, dann die Art zu schreiben."
+            ],
+            [
+              "laudāre",
+              "loben",
+              "👏",
+              "Eine Laudatio ist eine Lobrede."
+            ],
+            [
+              "tacēre",
+              "schweigen (still sein)",
+              "🤫",
+              "In Noten steht tacet: Dieses Instrument ist still."
+            ]
+          ],
+          "saetze": [
+            [
+              "Tacēte, discipulī!",
+              "Seid still, Schüler!",
+              "🙊"
+            ],
+            [
+              "Mārce, respondē!",
+              "Marcus, antworte!",
+              "💬"
+            ],
+            [
+              "Spectāte tabulam!",
+              "Schaut auf die Tafel!",
+              "👀"
+            ],
+            [
+              "Magister discipulōs laudat.",
+              "Der Lehrer lobt die Schüler.",
+              "🌟"
+            ]
+          ],
+          "regel": {
+            "titel": "Befehle: amā! – amāte!",
+            "text": "Einem sagt man den Befehl ohne Endung: spectā! tacē! Mehreren sagt man ihn mit -te: spectāte! tacēte! Das a oder e vom Verb bleibt dabei – spectāre hat ein a, tacēre ein e.",
+            "beispiele": [
+              [
+                "Spectā, Mārce!",
+                "Schau, Marcus!"
+              ],
+              [
+                "Spectāte, puerī!",
+                "Schaut, Jungen!"
+              ],
+              [
+                "Tacē, Ruby! – Tacēte, amīcī!",
+                "Sei still, Ruby! – Seid still, Freunde!"
+              ]
+            ]
+          },
+          "geschichte": {
+            "titel": "Ruby in der Schule",
+            "zeilen": [
+              [
+                "magister",
+                "Salvēte, discipulī! Tacēte!",
+                "Hallo, Schüler! Seid still!"
+              ],
+              [
+                "ruby",
+                "Salvē, magister!",
+                "Hallo, Lehrer!"
+              ],
+              [
+                "magister",
+                "Quis es? Discipula nōn es!",
+                "Wer bist du? Du bist keine Schülerin!"
+              ],
+              [
+                "marcus",
+                "Ruby est. Tabulam et stilum habet.",
+                "Das ist Ruby. Sie hat eine Schreibtafel und einen Griffel."
+              ],
+              [
+                "magister",
+                "Bene! Spectāte tabulam, discipulī!",
+                "Gut! Schaut auf die Tafel, Schüler!"
+              ],
+              [
+                "magister",
+                "Optimē! Vōs omnēs laudō.",
+                "Sehr gut! Ich lobe euch alle."
+              ]
+            ],
+            "fragen": [
+              {
+                "q": "Was hat Ruby dabei?",
+                "a": "eine Schreibtafel und einen Griffel",
+                "choices": [
+                  "ein Buch und einen Ball",
+                  "Geld und einen Apfel",
+                  "eine Öllampe"
+                ]
+              },
+              {
+                "q": "Wen lobt der Lehrer am Ende?",
+                "a": "alle",
+                "choices": [
+                  "nur Marcus",
+                  "nur Ruby",
+                  "niemanden"
+                ]
+              }
+            ]
+          },
+          "aktionen": [
+            {
+              "sag": "Dā Mārcō stilum!",
+              "de": "Gib Marcus einen Griffel!",
+              "ding": "✏️",
+              "anzahl": 1,
+              "an": "marcus"
+            },
+            {
+              "sag": "Dā Iūliae librum!",
+              "de": "Gib Iulia ein Buch!",
+              "ding": "📖",
+              "anzahl": 1,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Aulō tabulam!",
+              "de": "Gib Aulus eine Schreibtafel!",
+              "ding": "📝",
+              "anzahl": 1,
+              "an": "aulus"
+            },
+            {
+              "sag": "Dā Iūliae duōs stilōs!",
+              "de": "Gib Iulia zwei Griffel!",
+              "ding": "✏️",
+              "anzahl": 2,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Mārcō trēs librōs!",
+              "de": "Gib Marcus drei Bücher!",
+              "ding": "📖",
+              "anzahl": 3,
+              "an": "marcus"
+            }
+          ],
+          "fehler": [
+            {
+              "falsch": "Mārce et Iūlia, tacē!",
+              "richtig": "Mārce et Iūlia, tacēte!",
+              "wort": "tacē",
+              "korrektur": "tacēte",
+              "choices": [
+                "tacēs",
+                "tacēre"
+              ],
+              "tipp": "Zu zwei Kindern sagt man tacēte."
+            },
+            {
+              "falsch": "Mārce, tacēte et spectā!",
+              "richtig": "Mārce, tacē et spectā!",
+              "wort": "tacēte",
+              "korrektur": "tacē",
+              "choices": [
+                "tacētis",
+                "tacēre"
+              ],
+              "tipp": "Nur Marcus ist gemeint – also tacē, ohne -te."
+            },
+            {
+              "falsch": "Discipulī, tacēte et spectā!",
+              "richtig": "Discipulī, tacēte et spectāte!",
+              "wort": "spectā",
+              "korrektur": "spectāte",
+              "choices": [
+                "spectās",
+                "spectāre"
+              ],
+              "tipp": "Der Befehl geht an mehrere Schüler – also mit -te: spectāte, wie tacēte."
+            },
+            {
+              "falsch": "Mārce, dā Iūliae librum et stilus!",
+              "richtig": "Mārce, dā Iūliae librum et stilum!",
+              "wort": "stilus",
+              "korrektur": "stilum",
+              "choices": [
+                "stilō",
+                "stilī"
+              ],
+              "tipp": "Was soll Marcus geben? Buch und Griffel – beide im Akkusativ: stilum."
+            }
+          ]
+        },
+        {
+          "id": "la-1-8",
+          "titel": "Cēna",
+          "emoji": "🍽️",
+          "ziel": "Ich kann Essen benennen und sagen, wie etwas ist – mit der passenden Endung.",
+          "woerter": [
+            [
+              "cēna, -ae f.",
+              "Abendessen",
+              "🍽️",
+              "Auf Italienisch heißt das Abendessen heute noch cena."
+            ],
+            [
+              "pānis, -is m.",
+              "Brot",
+              "🍞",
+              "Eine Kompanie sind eigentlich Leute, die ihr Brot teilen."
+            ],
+            [
+              "aqua, -ae f.",
+              "Wasser",
+              "💧",
+              "Ein Aquarium ist ein Wasserbecken."
+            ],
+            [
+              "ōvum, -ī n.",
+              "Ei",
+              "🥚",
+              "Oval heißt eiförmig."
+            ],
+            [
+              "cāseus, -ī m.",
+              "Käse",
+              "🧀",
+              "Käse kommt von cāseus."
+            ],
+            [
+              "ūva, -ae f.",
+              "Weintraube",
+              "🍇"
+            ],
+            [
+              "bonus, -a, -um",
+              "gut",
+              "👍",
+              "Ein Bonus ist etwas Gutes obendrauf."
+            ],
+            [
+              "parvus, -a, -um",
+              "klein",
+              "🤏"
+            ]
+          ],
+          "saetze": [
+            [
+              "Cēna bona est.",
+              "Das Abendessen ist gut.",
+              "😋"
+            ],
+            [
+              "Mārcus ōvum parvum habet.",
+              "Marcus hat ein kleines Ei.",
+              "🐣"
+            ],
+            [
+              "Iūlia ūvās bonās amat.",
+              "Iulia liebt gute Trauben.",
+              "💜"
+            ],
+            [
+              "Pānis bonus est.",
+              "Das Brot ist gut.",
+              "🥖"
+            ]
+          ],
+          "regel": {
+            "titel": "Adjektive passen sich an (KNG)",
+            "text": "Ein Adjektiv sagt, wie etwas ist. Es passt sich seinem Nomen an: im Kasus (Fall), im Numerus (eins oder viele) und im Genus (männlich, weiblich, sächlich) – kurz KNG. Oft sehen die Endungen gleich aus, aber nicht immer: pānis ist männlich, also pānis bonus.",
+            "beispiele": [
+              [
+                "cēna bona",
+                "ein gutes Abendessen"
+              ],
+              [
+                "ōvum parvum",
+                "ein kleines Ei"
+              ],
+              [
+                "Pānis bonus est.",
+                "Das Brot ist gut."
+              ]
+            ]
+          },
+          "geschichte": {
+            "titel": "Abendessen bei Aulus",
+            "zeilen": [
+              [
+                "aulus",
+                "Cēna parāta est! Venīte!",
+                "Das Abendessen ist fertig! Kommt!"
+              ],
+              [
+                "marcus",
+                "Euge! Pānis et cāseus!",
+                "Super! Brot und Käse!"
+              ],
+              [
+                "iulia",
+                "Et ūvae! Ūvae bonae sunt.",
+                "Und Trauben! Die Trauben sind gut."
+              ],
+              [
+                "ruby",
+                "Ego ūvās parvās amō.",
+                "Ich liebe kleine Trauben."
+              ],
+              [
+                "aulus",
+                "Ecce, Ruby: trēs ūvae parvae!",
+                "Hier, Ruby: drei kleine Trauben!"
+              ],
+              [
+                "iulia",
+                "Cēna bona est!",
+                "Das Abendessen ist gut!"
+              ]
+            ],
+            "fragen": [
+              {
+                "q": "Was liebt Ruby?",
+                "a": "kleine Trauben",
+                "choices": [
+                  "großen Käse",
+                  "Brot",
+                  "Eier"
+                ]
+              },
+              {
+                "q": "Wie viele Trauben bekommt Ruby?",
+                "a": "drei",
+                "choices": [
+                  "zwei",
+                  "fünf",
+                  "zehn"
+                ]
+              }
+            ]
+          },
+          "aktionen": [
+            {
+              "sag": "Dā Mārcō pānem!",
+              "de": "Gib Marcus ein Brot!",
+              "ding": "🍞",
+              "anzahl": 1,
+              "an": "marcus"
+            },
+            {
+              "sag": "Dā Iūliae ōvum!",
+              "de": "Gib Iulia ein Ei!",
+              "ding": "🥚",
+              "anzahl": 1,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Aulō cāseum!",
+              "de": "Gib Aulus einen Käse!",
+              "ding": "🧀",
+              "anzahl": 1,
+              "an": "aulus"
+            },
+            {
+              "sag": "Dā Iūliae duās ūvās!",
+              "de": "Gib Iulia zwei Weintrauben!",
+              "ding": "🍇",
+              "anzahl": 2,
+              "an": "iulia"
+            },
+            {
+              "sag": "Dā Mārcō quattuor ōva!",
+              "de": "Gib Marcus vier Eier!",
+              "ding": "🥚",
+              "anzahl": 4,
+              "an": "marcus"
+            }
+          ],
+          "fehler": [
+            {
+              "falsch": "Iūlia ūvam bonam et parvum habet.",
+              "richtig": "Iūlia ūvam bonam et parvam habet.",
+              "wort": "parvum",
+              "korrektur": "parvam",
+              "choices": [
+                "parvus",
+                "parvae"
+              ],
+              "tipp": "ūva ist weiblich – also bona und parva: ūvam parvam."
+            },
+            {
+              "falsch": "Pānis bonus et parva est.",
+              "richtig": "Pānis bonus et parvus est.",
+              "wort": "parva",
+              "korrektur": "parvus",
+              "choices": [
+                "parvum",
+                "parvae"
+              ],
+              "tipp": "pānis ist männlich – also bonus und parvus."
+            },
+            {
+              "falsch": "Ōva parva et bonī sunt.",
+              "richtig": "Ōva parva et bona sunt.",
+              "wort": "bonī",
+              "korrektur": "bona",
+              "choices": [
+                "bonae",
+                "bonus"
+              ],
+              "tipp": "ōva ist sächlich und Plural – also parva und bona."
+            },
+            {
+              "falsch": "Mārcus cāseum bonam et parvum habet.",
+              "richtig": "Mārcus cāseum bonum et parvum habet.",
+              "wort": "bonam",
+              "korrektur": "bonum",
+              "choices": [
+                "bonus",
+                "bonae"
+              ],
+              "tipp": "cāseus ist männlich – im Akkusativ: cāseum bonum."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

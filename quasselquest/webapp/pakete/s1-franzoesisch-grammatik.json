@@ -1,0 +1,438 @@
+{
+  "id": "s1-franzoesisch-grammatik",
+  "version": 1,
+  "title": "Artikel, Adjektive & Fragen",
+  "subject": "franzoesisch",
+  "grades": [
+    6,
+    7,
+    8
+  ],
+  "emoji": "🧩",
+  "tier": "free",
+  "description": "Grundgrammatik: Artikel, Plural, Adjektive angleichen, Verneinung und Fragen mit est-ce que.",
+  "intro": [
+    {
+      "img": "🧩🔧",
+      "text": "Grammatik ist wie ein Baukasten: Wenn die Teile zusammenpassen, hält der Satz!"
+    },
+    {
+      "img": "🍞🥄",
+      "text": "Wusstest du? Im Französischen sagt man beim Essen „ein Teil von“: du pain (etwas Brot), de la confiture (etwas Marmelade)."
+    },
+    {
+      "img": "🚫➡️",
+      "text": "Lerntrick: Nach der Verneinung schrumpft un, une, du, de la, des zu de: Je n'ai pas de chien. „Ne … pas“ umarmt das Verb wie ein Sandwich!"
+    },
+    {
+      "img": "👗🎀",
+      "text": "Adjektive ziehen sich an wie ihr Nomen: weiblich bekommt meist ein -e, Plural ein -s. Ein kleiner Junge: petit – ein kleines Mädchen: petite."
+    },
+    {
+      "img": "❓🗝️",
+      "text": "Mit „Est-ce que“ vorne machst du aus jedem Satz eine Frage – ganz ohne Umstellen. Allez, c'est parti !"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "___ garçon joue dans la cour. (bestimmter Artikel)",
+      "a": "Le",
+      "choices": [
+        "La",
+        "L'",
+        "Les"
+      ],
+      "img": "👦⚽"
+    },
+    {
+      "id": "002",
+      "q": "J'aime ___ musique. (bestimmter Artikel)",
+      "a": "la",
+      "choices": [
+        "le",
+        "l'",
+        "les"
+      ],
+      "img": "🎵❤️"
+    },
+    {
+      "id": "003",
+      "q": "Welcher bestimmte Artikel steht vor „hôtel“?",
+      "a": "l'",
+      "choices": [
+        "le",
+        "la",
+        "les"
+      ],
+      "img": "🏨",
+      "info": "Vor stummem h wird le/la zu l': l'hôtel."
+    },
+    {
+      "id": "004",
+      "q": "Tu as ___ stylo ? (unbestimmter Artikel)",
+      "a": "un",
+      "choices": [
+        "une",
+        "des",
+        "du"
+      ],
+      "img": "🖊️",
+      "info": "stylo ist männlich: un stylo."
+    },
+    {
+      "id": "005",
+      "q": "Elle a ___ idée géniale. (unbestimmter Artikel)",
+      "a": "une",
+      "choices": [
+        "un",
+        "des",
+        "du"
+      ],
+      "img": "💡",
+      "info": "idée ist weiblich: une idée."
+    },
+    {
+      "id": "006",
+      "q": "Il y a ___ livres sur la table. (unbestimmter Artikel)",
+      "a": "des",
+      "choices": [
+        "un",
+        "une",
+        "du"
+      ],
+      "img": "📚",
+      "info": "Plural von un/une ist des."
+    },
+    {
+      "id": "007",
+      "q": "Je mange ___ pain. (Teilungsartikel)",
+      "a": "du",
+      "choices": [
+        "de la",
+        "des",
+        "de l'"
+      ],
+      "img": "🍞",
+      "info": "de + le = du"
+    },
+    {
+      "id": "008",
+      "q": "Tu veux ___ confiture ? (Teilungsartikel)",
+      "a": "de la",
+      "choices": [
+        "du",
+        "des",
+        "de l'"
+      ],
+      "img": "🍯🥄"
+    },
+    {
+      "id": "009",
+      "q": "Was heißt „etwas Wasser“ auf Französisch?",
+      "a": "de l'eau",
+      "choices": [
+        "du eau",
+        "de la eau",
+        "des eau"
+      ],
+      "img": "🚰💧",
+      "info": "Teilungsartikel vor Vokal: de l'."
+    },
+    {
+      "id": "010",
+      "q": "Je n'ai pas ___ frères. (Artikel nach Verneinung)",
+      "a": "de",
+      "choices": [
+        "des",
+        "les",
+        "du"
+      ],
+      "img": "🙅‍♂️👦",
+      "info": "Nach ne … pas wird des zu de."
+    },
+    {
+      "id": "011",
+      "q": "Wie lautet die Verneinung von „Nous avons de l'argent.“?",
+      "a": "Nous n'avons pas d'argent.",
+      "choices": [
+        "Nous n'avons pas de l'argent.",
+        "Nous n'avons pas de argent.",
+        "Nous ne avons pas d'argent."
+      ],
+      "img": "👛🕸️",
+      "info": "Nach ne … pas wird de l' zu d'."
+    },
+    {
+      "id": "012",
+      "q": "Je voudrais un kilo ___ pommes. (Mengenangabe)",
+      "a": "de",
+      "choices": [
+        "des",
+        "du",
+        "les"
+      ],
+      "img": "⚖️🍏",
+      "info": "Nach Mengen steht nur de: un kilo de, une bouteille de."
+    },
+    {
+      "id": "013",
+      "q": "Wie lautet der Plural von „le journal“?",
+      "a": "les journaux",
+      "choices": [
+        "les journals",
+        "les journaus",
+        "la journaux"
+      ],
+      "img": "📰📰",
+      "info": "Aus -al wird im Plural meist -aux."
+    },
+    {
+      "id": "014",
+      "q": "Wie lautet der Plural von „le gâteau“?",
+      "a": "les gâteaux",
+      "choices": [
+        "les gâteaus",
+        "les gâteau",
+        "les gâteauxs"
+      ],
+      "img": "🎂🎂",
+      "info": "Wörter auf -eau bekommen ein -x."
+    },
+    {
+      "id": "015",
+      "q": "Wie lautet der Plural von „l'animal“?",
+      "a": "les animaux",
+      "choices": [
+        "les animals",
+        "les animaus",
+        "l'animaux"
+      ],
+      "img": "🦊🐻"
+    },
+    {
+      "id": "016",
+      "q": "Wie lautet der Plural von „le nez“?",
+      "a": "les nez",
+      "choices": [
+        "les nezs",
+        "les nezes",
+        "les neux"
+      ],
+      "img": "👃👃",
+      "info": "Wörter auf -s, -x oder -z bleiben im Plural gleich."
+    },
+    {
+      "id": "017",
+      "q": "Ma sœur est très ___. (petit)",
+      "a": "petite",
+      "choices": [
+        "petit",
+        "petits",
+        "petites"
+      ],
+      "img": "👧🤏",
+      "info": "Weiblich, Einzahl: + e"
+    },
+    {
+      "id": "018",
+      "q": "Les filles sont ___. (content)",
+      "a": "contentes",
+      "choices": [
+        "content",
+        "contente",
+        "contents"
+      ],
+      "img": "👭😊",
+      "info": "Weiblich, Mehrzahl: + es"
+    },
+    {
+      "id": "019",
+      "q": "C'est une ___ maison. (beau)",
+      "a": "belle",
+      "choices": [
+        "beau",
+        "bel",
+        "beaux"
+      ],
+      "img": "🏡✨"
+    },
+    {
+      "id": "020",
+      "q": "C'est un ___ arbre. (beau)",
+      "a": "bel",
+      "choices": [
+        "beau",
+        "belle",
+        "beaux"
+      ],
+      "img": "🌳✨",
+      "info": "Vor männlichem Nomen mit Vokal oder stummem h: bel (un bel arbre, un bel hôtel)."
+    },
+    {
+      "id": "021",
+      "q": "Elle porte une robe ___. (blanc)",
+      "a": "blanche",
+      "choices": [
+        "blanc",
+        "blanque",
+        "blance"
+      ],
+      "img": "👗",
+      "info": "blanc → blanche, eine Ausnahme."
+    },
+    {
+      "id": "022",
+      "q": "J'ai une ___ voiture. (nouveau)",
+      "a": "nouvelle",
+      "choices": [
+        "nouveau",
+        "nouvel",
+        "nouveaux"
+      ],
+      "img": "🚗🆕"
+    },
+    {
+      "id": "023",
+      "q": "Ma cousine est ___. (sportif)",
+      "a": "sportive",
+      "choices": [
+        "sportif",
+        "sportife",
+        "sportifs"
+      ],
+      "img": "🏃‍♀️",
+      "info": "Aus -if wird weiblich -ive."
+    },
+    {
+      "id": "024",
+      "q": "Les chaussures sont ___. (cher)",
+      "a": "chères",
+      "choices": [
+        "chers",
+        "chère",
+        "chèrs"
+      ],
+      "img": "👟💶",
+      "info": "chaussure ist weiblich; cher → chère → chères."
+    },
+    {
+      "id": "025",
+      "q": "Welcher Satz ist richtig?",
+      "a": "J'ai un chat noir.",
+      "choices": [
+        "J'ai un noir chat.",
+        "J'ai noir un chat.",
+        "J'ai un chat noire."
+      ],
+      "img": "🐈‍⬛",
+      "info": "Farben stehen hinter dem Nomen."
+    },
+    {
+      "id": "026",
+      "q": "Welche Adjektive stehen meist VOR dem Nomen?",
+      "a": "petit, grand, beau, jeune",
+      "choices": [
+        "rouge, noir, blanc, vert",
+        "français, allemand, anglais",
+        "content, triste, fatigué"
+      ],
+      "img": "📏⬅️",
+      "info": "Kurze, häufige Adjektive stehen vorne: une petite maison."
+    },
+    {
+      "id": "027",
+      "q": "Wie lautet die Verneinung von „Je parle anglais.“?",
+      "a": "Je ne parle pas anglais.",
+      "choices": [
+        "Je parle ne pas anglais.",
+        "Je ne pas parle anglais.",
+        "Je parle pas ne anglais."
+      ],
+      "img": "🙊🚫",
+      "info": "ne … pas umschließt das Verb."
+    },
+    {
+      "id": "028",
+      "q": "Wie lautet die Verneinung von „Il aime le sport.“?",
+      "a": "Il n'aime pas le sport.",
+      "choices": [
+        "Il ne aime pas le sport.",
+        "Il n'aime pas de sport.",
+        "Il n'aime le sport pas."
+      ],
+      "img": "🏋️👎",
+      "info": "Nach aimer, adorer, détester bleibt le/la/les."
+    },
+    {
+      "id": "029",
+      "q": "Elle ne mange ___ de viande. (nie)",
+      "a": "jamais",
+      "choices": [
+        "pas",
+        "rien",
+        "personne"
+      ],
+      "img": "🥩🚫",
+      "info": "ne … jamais = nie"
+    },
+    {
+      "id": "030",
+      "q": "Il n'y a ___ dans le frigo. (nichts)",
+      "a": "rien",
+      "choices": [
+        "jamais",
+        "pas",
+        "personne"
+      ],
+      "img": "🧊🕳️",
+      "info": "ne … rien = nichts"
+    },
+    {
+      "id": "031",
+      "q": "___ tu aimes le chocolat ? (Frageformel)",
+      "a": "Est-ce que",
+      "choices": [
+        "Qu'est-ce que",
+        "Est-ce",
+        "Est-ce qui"
+      ],
+      "img": "🍫❓"
+    },
+    {
+      "id": "032",
+      "q": "___ tu fais ce soir ? (Was …?)",
+      "a": "Qu'est-ce que",
+      "choices": [
+        "Est-ce que",
+        "Que est-ce que",
+        "Quoi est-ce que"
+      ],
+      "img": "🌙🤔",
+      "info": "Qu'est-ce que = Was …?"
+    },
+    {
+      "id": "033",
+      "q": "Wie fragt man mit est-ce que: „Wohnst du in Paris?“",
+      "a": "Est-ce que tu habites à Paris ?",
+      "choices": [
+        "Est-ce que tu habite à Paris ?",
+        "Est-ce tu habites à Paris ?",
+        "Est-ce que habites-tu à Paris ?"
+      ],
+      "img": "🗼🏠"
+    },
+    {
+      "id": "034",
+      "q": "___ est-ce que tu habites ? (Wo …?)",
+      "a": "Où",
+      "choices": [
+        "Ou",
+        "Quand",
+        "Comment"
+      ],
+      "img": "📍🏘️",
+      "info": "où mit Akzent = wo; ou ohne Akzent = oder."
+    }
+  ]
+}

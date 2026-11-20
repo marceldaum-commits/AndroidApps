@@ -32,7 +32,8 @@ STIMMEN = {
     'sam':  {'modell': 'en_GB-cori-medium', 'tempo': 1.05, 'tonhoehe': 1.0},
     'ted':  {'modell': 'en_GB-cori-medium', 'tempo': 1.05, 'tonhoehe': 1.0},
     # Sprachpakete (Lizenzen geprüft 19.11.2026, siehe LIZENZEN.md); Latein: keine freie Stimme → wird nicht vorgelesen
-    'de':   {'modell': 'de_DE-thorsten-medium', 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'de'},
+    # Deutsch: zurzeit keine Stimme (thorsten am 19.11.2026 entfernt); neue Stimme kommt aus dem Tonstudio (VERTONUNG.md)
+    'de':   {'modell': None, 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'de'},
     'fr':   {'modell': 'fr_FR-siwis-medium', 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'fr'},
     'es':   {'modell': 'es_ES-davefx-medium', 'tempo': 1.0, 'tonhoehe': 1.0, 'sprache': 'es'},
 }
@@ -53,8 +54,10 @@ def nova_hash(text, sprache='en'):
     return hashlib.sha256(f'nova|{sprache}|{norm(text)}'.encode('utf-8')).hexdigest()[:32]
 
 
-def saetze():
-    js = ("const C=require(process.argv[1]);const P=require(process.argv[2]);const fs=require('fs');const d=process.argv[3];"
+def saetze(mit_deutsch=False):
+    # mit_deutsch: Deutsch hat in der App vorübergehend keine Stimme; für die Textliste (Server-Vertonung) trotzdem mitnehmen
+    js = (("const P0=require(process.argv[2]);P0.LANGS.de.who='de';" if mit_deutsch else '') +
+          "const C=require(process.argv[1]);const P=require(process.argv[2]);const fs=require('fs');const d=process.argv[3];"
           "const idx=JSON.parse(fs.readFileSync(d+'index.json'));"
           "const packs=idx.pakete.map(m=>Object.assign(JSON.parse(fs.readFileSync(d+m.id+'.json')),{lang:m.sprache}));"
           "const lp=P.LERNPFAD.map(l=>JSON.parse(fs.readFileSync(d+'../lernpfad/'+l+'.json')));"
@@ -90,7 +93,10 @@ def sprich(voice, text, tempo, ton, ziel):
         # leise Ränder kürzen, Lautstärke angleichen, mono 22 kHz, MP3 40 kbit/s
         subprocess.check_call(['ffmpeg', '-v', 'error', '-y', '-i', w.name,
                                '-af', filt + 'silenceremove=start_periods=1:start_threshold=-50dB,areverse,silenceremove=start_periods=1:start_threshold=-50dB,areverse,loudnorm=I=-18:TP=-2,apad=pad_dur=0.12',
-                               '-ac', '1', '-ar', '22050', '-c:a', 'libmp3lame', '-b:a', '40k', ziel])
+                               '-ac', '1', '-ar', '22050', '-c:a', 'libmp3lame', '-b:a', '40k',
+                               # KI-VO Art. 50 Abs. 2: maschinenlesbar als KI-generiert gekennzeichnet
+                               '-id3v2_version', '3', '-metadata', 'comment=KI-generiert (synthetische Stimme, Piper TTS)',
+                               '-metadata', 'encoded_by=Quasselquest (KI-generierte Stimme)', ziel])
 
 
 # ---------------------------------------------------------------- Hörprüfung (Whisper, nur beim Bauen)

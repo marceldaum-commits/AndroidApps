@@ -1,0 +1,444 @@
+{
+  "id": "ob-spanisch-argumentar",
+  "version": 1,
+  "title": "Argumentieren auf Spanisch",
+  "subject": "spanisch",
+  "grades": [
+    10,
+    11,
+    12,
+    13
+  ],
+  "emoji": "⚖️",
+  "tier": "free",
+  "description": "Meinung äußern, Argumente verknüpfen und Wortschatz zu Umwelt, Medien und Gesellschaft – fit für Diskussion und Klausur.",
+  "intro": [
+    {
+      "img": "💬🧭",
+      "text": "Eine gute Argumentation hat einen roten Faden: These, Argumente mit Beispielen, Gegenargument, Fazit. Verbindungswörter wie además, sin embargo und por lo tanto halten alles zusammen."
+    },
+    {
+      "img": "🧠🔀",
+      "text": "Meinung oder Zweifel? Creo que + Indikativo (Creo que es útil). No creo que + Subjuntivo (No creo que sea útil)."
+    },
+    {
+      "img": "🎭⚡",
+      "text": "Auch nach Wertungen wie es importante que, es una lástima que und nach para que steht der Subjuntivo: „Es importante que reciclemos.“"
+    },
+    {
+      "img": "🚫🔤",
+      "text": "Typischer Fehler: „Pienso de que …“ – das de ist zu viel (dequeísmo). Richtig: Pienso que …, Opino que …"
+    },
+    {
+      "img": "🏆🗣️",
+      "text": "¡Manos a la obra! Zeig, dass du mitreden kannst."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was heißt „meiner Meinung nach“ auf Spanisch?",
+      "a": "en mi opinión",
+      "choices": [
+        "a mi opinión",
+        "por mi opinión",
+        "de mi opinión"
+      ],
+      "img": "💭🙋",
+      "info": "Auch möglich: a mi parecer, a mi juicio."
+    },
+    {
+      "id": "002",
+      "q": "Was bedeutet „sin embargo“?",
+      "a": "jedoch",
+      "choices": [
+        "deshalb",
+        "außerdem",
+        "ohne Zweifel"
+      ],
+      "img": "⚖️🔄",
+      "info": "sin embargo leitet einen Gegensatz ein."
+    },
+    {
+      "id": "003",
+      "q": "Was bedeutet „por lo tanto“?",
+      "a": "deshalb",
+      "choices": [
+        "trotzdem",
+        "zum Beispiel",
+        "vor allem"
+      ],
+      "img": "🔗➡️",
+      "info": "Ähnlich: por eso, así que, en consecuencia."
+    },
+    {
+      "id": "004",
+      "q": "Was heißt „außerdem“ auf Spanisch?",
+      "a": "además",
+      "choices": [
+        "a demás",
+        "en cambio",
+        "por eso"
+      ],
+      "img": "➕💬",
+      "info": "en cambio = dagegen, por eso = deshalb."
+    },
+    {
+      "id": "005",
+      "q": "Aunque ___ caro, voy a comprarlo. (ser, subjuntivo)",
+      "a": "sea",
+      "choices": [
+        "esté",
+        "sean",
+        "seas"
+      ],
+      "img": "💸🤷",
+      "info": "aunque + Subjuntivo: „auch wenn es (vielleicht) teuer ist“. aunque + Indikativo (es) nennt eine Tatsache: „obwohl es teuer ist“."
+    },
+    {
+      "id": "006",
+      "q": "No creo que las redes sociales ___ peligrosas para todos. (ser)",
+      "a": "sean",
+      "choices": [
+        "son",
+        "están",
+        "sea"
+      ],
+      "img": "📱⚠️",
+      "info": "No creo que / no pienso que + Subjuntivo. Aber: Creo que son útiles."
+    },
+    {
+      "id": "007",
+      "q": "Creo que el reciclaje ___ muy importante. (ser)",
+      "a": "es",
+      "choices": [
+        "sea",
+        "está",
+        "son"
+      ],
+      "img": "♻️👍",
+      "info": "creo que, pienso que, opino que + Indikativo."
+    },
+    {
+      "id": "008",
+      "q": "Es importante que nosotros ___ menos plástico. (usar)",
+      "a": "usemos",
+      "choices": [
+        "usamos",
+        "usen",
+        "usar"
+      ],
+      "img": "🛍️🚫",
+      "info": "Es importante / necesario que + Subjuntivo."
+    },
+    {
+      "id": "009",
+      "q": "Es verdad que los jóvenes ___ mucho tiempo en internet. (pasar)",
+      "a": "pasan",
+      "choices": [
+        "pasen",
+        "pasáis",
+        "pasa"
+      ],
+      "img": "🌐⏳",
+      "info": "es verdad / es cierto / está claro que + Indikativo (Tatsache). Aber: No es verdad que + Subjuntivo."
+    },
+    {
+      "id": "010",
+      "q": "Para que el planeta ___ un futuro, debemos actuar ya. (tener)",
+      "a": "tenga",
+      "choices": [
+        "tiene",
+        "tenía",
+        "tengan"
+      ],
+      "img": "🌍🌱",
+      "info": "para que (damit) + Subjuntivo."
+    },
+    {
+      "id": "011",
+      "q": "Was bedeutet „el cambio climático“?",
+      "a": "der Klimawandel",
+      "choices": [
+        "der Wetterbericht",
+        "die Klimaanlage",
+        "der Jahreszeitenwechsel"
+      ],
+      "img": "🌡️🌍",
+      "info": "Die Erderwärmung = el calentamiento global."
+    },
+    {
+      "id": "012",
+      "q": "Was heißt „die erneuerbaren Energien“ auf Spanisch?",
+      "a": "las energías renovables",
+      "choices": [
+        "las energías renovadas",
+        "los energías renovables",
+        "las energías reciclables"
+      ],
+      "img": "☀️🌬️",
+      "info": "la energía ist weiblich → las energías renovables."
+    },
+    {
+      "id": "013",
+      "q": "Was bedeutet „la contaminación“?",
+      "a": "die Umweltverschmutzung",
+      "choices": [
+        "der Umweltschutz",
+        "die Verschwendung",
+        "die Mülltrennung"
+      ],
+      "img": "🏭💨",
+      "info": "contaminar = verschmutzen."
+    },
+    {
+      "id": "014",
+      "q": "Was heißt „der Umweltschutz“ auf Spanisch?",
+      "a": "la protección del medio ambiente",
+      "choices": [
+        "la protección del medio ambiento",
+        "el protección del medio ambiente",
+        "la contaminación del medio ambiente"
+      ],
+      "img": "🌳🛡️",
+      "info": "el medio ambiente = die Umwelt."
+    },
+    {
+      "id": "015",
+      "q": "Was bedeutet „el consumo responsable“?",
+      "a": "verantwortungsvoller Konsum",
+      "choices": [
+        "übermäßiger Konsum",
+        "Konsumverzicht",
+        "die Wegwerfgesellschaft"
+      ],
+      "img": "🛒🤔"
+    },
+    {
+      "id": "016",
+      "q": "Was heißt „die Medien“ auf Spanisch?",
+      "a": "los medios de comunicación",
+      "choices": [
+        "las medias",
+        "los medios de transporte",
+        "los mediadores"
+      ],
+      "img": "📺📰",
+      "info": "Kurz auch: los medios. Vorsicht: las medias = die Strümpfe!"
+    },
+    {
+      "id": "017",
+      "q": "Was bedeutet „las noticias falsas“?",
+      "a": "Falschmeldungen (Fake News)",
+      "choices": [
+        "Eilmeldungen",
+        "Schlagzeilen",
+        "Leserbriefe"
+      ],
+      "img": "📰🤥",
+      "info": "In Spanien sagt man auch los bulos."
+    },
+    {
+      "id": "018",
+      "q": "Was heißt „die Privatsphäre“ auf Spanisch?",
+      "a": "la privacidad",
+      "choices": [
+        "la privatización",
+        "la privacía",
+        "el privilegio"
+      ],
+      "img": "🔒👤",
+      "info": "la privatización = die Privatisierung."
+    },
+    {
+      "id": "019",
+      "q": "Was bedeutet „la desigualdad“?",
+      "a": "die Ungleichheit",
+      "choices": [
+        "die Gleichberechtigung",
+        "die Gleichgültigkeit",
+        "die Unabhängigkeit"
+      ],
+      "img": "⚖️📉",
+      "info": "la igualdad = die Gleichheit, des- macht das Gegenteil."
+    },
+    {
+      "id": "020",
+      "q": "Was heißt „die Arbeitslosigkeit“ auf Spanisch?",
+      "a": "el desempleo",
+      "choices": [
+        "el empleo",
+        "el desempeño",
+        "el despido"
+      ],
+      "img": "💼🚫",
+      "info": "In Spanien sagt man im Alltag auch el paro. el despido = die Kündigung."
+    },
+    {
+      "id": "021",
+      "q": "Was bedeutet „la inmigración“?",
+      "a": "die Einwanderung",
+      "choices": [
+        "die Auswanderung",
+        "die Einbürgerung",
+        "die Integration"
+      ],
+      "img": "🧳🌍",
+      "info": "Auswanderung = la emigración."
+    },
+    {
+      "id": "022",
+      "q": "Welches Verbindungswort drückt einen Gegensatz aus?",
+      "a": "en cambio",
+      "choices": [
+        "además",
+        "por eso",
+        "por ejemplo"
+      ],
+      "img": "↔️",
+      "info": "Weitere: sin embargo, no obstante, por el contrario."
+    },
+    {
+      "id": "023",
+      "q": "Welches Verbindungswort leitet eine Folge ein?",
+      "a": "por eso",
+      "choices": [
+        "aunque",
+        "en cambio",
+        "por un lado"
+      ],
+      "img": "🌧️➡️☂️",
+      "info": "Weitere: por lo tanto, así que, en consecuencia."
+    },
+    {
+      "id": "024",
+      "q": "Was heißt „einerseits … andererseits“ auf Spanisch?",
+      "a": "por un lado … por otro lado",
+      "choices": [
+        "en una mano … en la otra mano",
+        "a un lado … al otro lado",
+        "sin embargo … además"
+      ],
+      "img": "⚖️🤔",
+      "info": "Auch möglich: por una parte … por otra parte."
+    },
+    {
+      "id": "025",
+      "q": "Was bedeutet „cabe destacar que“?",
+      "a": "es ist hervorzuheben, dass",
+      "choices": [
+        "es ist zu bezweifeln, dass",
+        "es passt nicht, dass",
+        "es bleibt abzuwarten, ob"
+      ],
+      "img": "🔦❗"
+    },
+    {
+      "id": "026",
+      "q": "Was heißt „zusammenfassend“ auf Spanisch?",
+      "a": "en resumen",
+      "choices": [
+        "por resumen",
+        "a resumen",
+        "en resumido"
+      ],
+      "img": "📝🔚",
+      "info": "Auch: en conclusión, en definitiva."
+    },
+    {
+      "id": "027",
+      "q": "Estoy de acuerdo ___ tu propuesta. (Präposition)",
+      "a": "con",
+      "choices": [
+        "a",
+        "de",
+        "por"
+      ],
+      "img": "🤝👍",
+      "info": "estar de acuerdo con algo / con alguien."
+    },
+    {
+      "id": "028",
+      "q": "Was bedeutet „No estoy de acuerdo en absoluto.“?",
+      "a": "Ich bin überhaupt nicht einverstanden.",
+      "choices": [
+        "Ich bin absolut einverstanden.",
+        "Ich bin nicht ganz einverstanden.",
+        "Ich bin mir nicht sicher."
+      ],
+      "img": "🙅‍♀️💬",
+      "info": "en absoluto verstärkt die Verneinung: überhaupt nicht."
+    },
+    {
+      "id": "029",
+      "q": "Es una lástima que mucha gente no ___ en transporte público. (viajar)",
+      "a": "viaje",
+      "choices": [
+        "viaja",
+        "viajemos",
+        "viajar"
+      ],
+      "img": "🚌😔",
+      "info": "Gefühl/Wertung + que → Subjuntivo. la gente ist Einzahl → viaje."
+    },
+    {
+      "id": "030",
+      "q": "Por un lado, internet nos informa; ___, nos distrae. (Gegensatz)",
+      "a": "por otro lado",
+      "choices": [
+        "por lo tanto",
+        "además",
+        "es decir"
+      ],
+      "img": "🌐↔️",
+      "info": "Auch möglich: por otra parte."
+    },
+    {
+      "id": "031",
+      "q": "Was heißt „Ich bin der Meinung, dass …“ auf Spanisch?",
+      "a": "Opino que …",
+      "choices": [
+        "Opino de que …",
+        "Pienso de que …",
+        "Creo de que …"
+      ],
+      "img": "🧐💬",
+      "info": "Kein de nach opinar, pensar, creer (Fehler: dequeísmo). Aber richtig: Soy de la opinión de que …"
+    },
+    {
+      "id": "032",
+      "q": "Si no reducimos las emisiones, la temperatura ___ subiendo. (seguir, futuro)",
+      "a": "seguirá",
+      "choices": [
+        "siga",
+        "seguiría",
+        "seguía"
+      ],
+      "img": "🌡️📈",
+      "info": "si + Presente → Futuro im Hauptsatz."
+    },
+    {
+      "id": "033",
+      "q": "Was bedeutet „a largo plazo“?",
+      "a": "langfristig",
+      "choices": [
+        "kurzfristig",
+        "rechtzeitig",
+        "vorläufig"
+      ],
+      "img": "🔭⏳",
+      "info": "kurzfristig = a corto plazo."
+    },
+    {
+      "id": "034",
+      "q": "Was bedeutet „tomar conciencia de algo“?",
+      "a": "sich einer Sache bewusst werden",
+      "choices": [
+        "etwas vergessen",
+        "etwas übertreiben",
+        "etwas bezweifeln"
+      ],
+      "img": "💡🧠"
+    }
+  ]
+}

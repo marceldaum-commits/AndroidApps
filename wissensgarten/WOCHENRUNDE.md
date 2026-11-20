@@ -255,8 +255,7 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
 
 ## Merkzettel für Di 24.11. (2.4.0, nach der Pause)
 - **Liegt schon auf dem Branch (2.3.4, nicht gebaut):**
-  - „← Alle Apps“ hinter dem Tor (V10a).
-  - Fußzeile im Startbild als Text.
+  - ~~„← Alle Apps“ hinter dem Tor~~ / ~~Fußzeile als Text~~ → ZURÜCKNEHMEN (V10 geändert, AppZentrale 19.11., ELTERN-TOR.md @ 0d1c53b): „Alle Apps“ OHNE Tor, Fußzeile „Ein Angebot von Nachhilfe – online“ wieder als neutraler Link. Neutral = keine Kaufsprache, keine Preise/Countdowns, kein Link in Warenkorb/Kasse. Kauf-/Shop-Knöpfe, Elternbereich, Einstellungen bleiben hinter dem Tor.
   - Test-Zählung auf trainer-test.
   - Radio-Hinweis „Spracherkennung ist hier aus.“ (V11).
 - **Familien-Speicher (v1.7):**
@@ -269,3 +268,42 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
   - Geräteregel ohne Familie nur für neue Codes: Produkt 2 oder Kauftag ≥ STICHTAG. STICHTAG als leicht setzbare Konstante; den Tag nennt der Leitstand nach Marcels Entscheidung (FAM_LIVE).
   - Hinweistext beim Einlösen ohne Familie, Gültigkeit „365 Tage ab dem Einlösen, ohne automatische Verlängerung“.
   - Sperrliste vor jeder Offline-Prüfung.
+
+## Merkzettel für Mi 25.11. – Tonstudio (Vorlesen neu)
+- Textliste im Quasselquest-Format (ID, Text, Sprache, Tempo, Zielpfad), Formeln/Zahlen in Worten, aufgeteilt nach Paket.
+- Erste Lieferung: Brummi-Sätze + Laufzeit-Bausteine in 1,0 und 0,8; Kartentexte nur 1,0.
+- Plus-Inhalte NICHT in die Liste, bis der Leitstand „Plus-Audio geschützt“ gebaut hat (MP3 nur mit gültigem Code).
+- Eigene Karten/Klassen-Codes/Namen übers Tonstudio: von Recht FREIGEGEBEN (V14-Nachtrag). Voreinstellung an, Pflicht: Eltern-Schalter hinter dem Tor zum Abschalten (Wortlaut + DSE 10c von der AppZentrale abwarten), aus = Gerätestimme. Anfrage als „privat“ per POST, höchstens 300 Zeichen je Stück (längere Texte an Satzgrenzen teilen), nichts zwischenspeichern.
+- Plus-Audio nur mit gültigem Code: FREIGEGEBEN, Schutz baut der Leitstand.
+- Kennzeichnung „🤖 KI-generierte Stimme“ (statt „Nova – …“), Lizenzliste nach V13 (Wortlaut von der AppZentrale). Nova entfällt.
+
+## Merkzettel für Di 24.11./Mi 25.11. – Weg zur Probestunde (Recht V15)
+Wortlaut (AppZentrale 19.11., aus PROBESTUNDE.md @ d672374):
+- Auslöser objektiv (z. B. Thema über 2 Wochen unter 50 % richtig), nur auf dem Gerät berechnet.
+- Elterntext: „Hinweis: In <Thema> hat <Spitzname> in den letzten Wochen öfter Schwierigkeiten. Das ist normal und lässt sich üben – die App zeigt dazu passende Übungen. Wenn ihr persönliche Unterstützung möchtet: Unser Angebot – eine kostenlose, unverbindliche Probestunde Online-Nachhilfe. [Probestunde anfragen] · [Solche Hinweise ausblenden]“
+- [Probestunde anfragen] → https://www.mathenachhilfe-online.com/probestunde/?src=wissensgarten (Zählung „Probestunden-Link angetippt“ nur anonym, ohne Thema/Lernstand).
+- Kinderansicht: kein Bezug auf Probestunde oder Elternbereich.
+- Nie „gratis Nachhilfe“ ohne „Probestunde“.
+- Website-Link ohne Tor (V10 neu): Ziel nur Startseite oder /lern-apps/, nie Shop/Kasse; in Kinderansichten keine Kaufsprache, Brummi zeigt nicht auf den Link, Link nie als Belohnung.
+- Elternbereich/Elternbericht (hinter dem Tor): Hinweis bei objektiven Schwierigkeiten, Berechnung NUR auf dem Gerät, höchstens 1× in 4 Wochen je Thema, wegklickbar, Schalter „Hinweise auf Nachhilfe ausblenden“.
+- Kinderansicht nur: „Du kommst hier gerade nicht weiter? Das ist okay. Probier eine leichtere Stufe oder schau dir die Erklärung noch einmal an. Und du kannst jederzeit deine Eltern oder deine Lehrkraft fragen.“ Knöpfe [Leichter üben] [Erklärung ansehen], kein Außenlink.
+- Kein Kl.-9–10-Hinweis; Probestunde nur hinter dem Tor. Zählung nur anonym. Meldung mit „Rechtsbezug: ja (V15)“.
+
+## Merkzettel ab Di 24.11. – Einstellungen und Tor (Präzisierung AppZentrale 19.11.)
+- Ohne Tor erlaubt: Ton, Musik, Lautstärke, Vorlesen an/aus + Tempo, Schriftgröße, Hell/Dunkel.
+- Hinter das Tor: Pro/Plus, KI, Updates, Daten zurücksetzen, Profile löschen, Datenschutz-/Zähl-Schalter, Familie/Kopplung, Online-Erkennung/Aussprache, Nachhilfe-Hinweise, Klassen-Code/Kamera, Teilen nach außen.
+- Am Di prüfen: Einstellungs-Bildschirm aufteilen (Schnell-Schalter oben frei, Rest hinter das Tor).
+
+## /jetzt-Fix (Marcel 20.11.: „Nein, erst Di 24.11.“)
+- Quelltext-Fix ist auf dem Branch (dfbe001a: wg-stimme.js + AndroidVoice.jetzt → 404, stille Gerätestimme). webapp/ unverändert (2.3.3).
+- Am Di mit dem neuen Bau (2.3.4 bzw. 2.4.0) auf test; der Cache-Name in sw.js ändert sich dann ohnehin durch die neue Version.
+- Ab Di: Textliste Format 1 (17.893 Texte: de 17.345, en 439, fr 69, es 40) fürs Tonstudio; Nova/OpenAI überall raus, DSE 10g.
+
+## Regel Di 24.11. (Marcel 20.11.)
+- Vor 14:00 Berlin nur lesen/planen – nichts bauen, committen, pushen. Ab 14:00 den ganzen Di-Plan, liefern „bis alles fertig ist“ (Nachtschicht erlaubt, keine 16/18-Uhr-Frist). Danach Meldung mit Commit, Rückweg, Rechtsbezug.
+
+## Marcels Befund 20.11. (Handy, live 2.3.3) – für Di 24.11.
+- **Vorlese-Knöpfe nur, wenn Vorlesen an ist:** Ist Vorlesen in den Einstellungen aus (ReadAloud), verschwinden alle 🔊-Knöpfe (SpeakButton in MiniGames.kt, Mascot-Sprechblase onRead, Theorie/Intro usw.). Sonst bleiben sie.
+- **Knöpfe schöner:** Der große, wackelnde „🔊 Vorlesen“-Knopf (FilledTonalButton, 56 dp) wirkt klobig. Neu: kleiner, runder Lautsprecher-Knopf passend zum Stil (z. B. 44–48 dp, Kreis, sanftes Ploppen statt Wackeln), neben der Frage statt darunter. Bildschirmfotos vorher/nachher ansehen.
+- **Zahlen exakt vorlesen:** Notrufnummern und Ziffernfolgen („112“, „116 117“, „911“, Telefonnummern, Jahreszahlen vs. Beträge) werden falsch gesprochen. Regel in Nova.sprechText / neue Textliste: Telefon- und Notrufnummern Ziffer für Ziffer („eins eins zwei“), Leerzeichen-Gruppen als Gruppen („eins eins sechs – eins eins sieben“), sonst Zahlen in Worten. Mit dem Tonstudio (Format 1) gleich richtig vertonen; Test mit allen Karten, die Ziffernfolgen enthalten.
+- Graue Leiste rechts (… / ♪) auf dem Foto: nicht von uns – das ist die Lautstärke-Leiste des Handys (kein Code dazu im Wissensgarten).

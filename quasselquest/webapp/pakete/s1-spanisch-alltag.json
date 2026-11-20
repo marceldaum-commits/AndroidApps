@@ -1,0 +1,455 @@
+{
+  "id": "s1-spanisch-alltag",
+  "version": 1,
+  "title": "Spanisch im Alltag",
+  "subject": "spanisch",
+  "grades": [
+    6,
+    7,
+    8
+  ],
+  "emoji": "🛍️",
+  "tier": "free",
+  "description": "Wörter für Schule, Freizeit, Essen und Stadt – mal Deutsch → Spanisch, mal Spanisch → Deutsch.",
+  "intro": [
+    {
+      "img": "🎒🏫",
+      "text": "In Spanien beginnt der Schultag oft um 9 Uhr – und in der großen Pause, „el recreo“, gibt es meistens ein belegtes Brötchen: „un bocadillo“."
+    },
+    {
+      "img": "🍽️🌙",
+      "text": "Spanier essen spät: Mittagessen gibt es oft erst um 14 Uhr, Abendessen um 21 Uhr oder noch später!"
+    },
+    {
+      "img": "🌎🔀",
+      "text": "Manche Wörter sind in Lateinamerika anders: Das Handy heißt in Spanien „el móvil“, in Mexiko „el celular“. Beides ist richtig – wir lernen das Spanisch aus Spanien."
+    },
+    {
+      "img": "🧠🖼️",
+      "text": "Lerntrick: Stell dir zu jedem Wort ein lustiges Bild vor. Ein Huhn („el pollo“), das Fußball spielt, vergisst du nicht so schnell!"
+    },
+    {
+      "img": "🚀😃",
+      "text": "¡Vamos! Ab in die Schule, ins Café und durch die Stadt."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was heißt „der Bleistift“ auf Spanisch?",
+      "a": "el lápiz",
+      "choices": [
+        "la lápiz",
+        "el lápis",
+        "el pincel"
+      ],
+      "img": "✏️",
+      "info": "Mehrzahl: los lápices – aus z wird vor e ein c. el pincel = der Pinsel."
+    },
+    {
+      "id": "002",
+      "q": "Was bedeutet „la mochila“?",
+      "a": "der Rucksack",
+      "choices": [
+        "das Mäppchen",
+        "die Tafel",
+        "das Heft"
+      ],
+      "img": "🏕️🚶",
+      "info": "Die mochila nimmt man in die Schule und zum Wandern mit."
+    },
+    {
+      "id": "003",
+      "q": "Was heißt „das Heft“ auf Spanisch?",
+      "a": "el cuaderno",
+      "choices": [
+        "el cuadro",
+        "la carpeta",
+        "el cuaderna"
+      ],
+      "img": "📓✍️",
+      "info": "el cuadro = das Bild, la carpeta = die Mappe."
+    },
+    {
+      "id": "004",
+      "q": "Was heißt „die Lehrerin“ auf Spanisch?",
+      "a": "la profesora",
+      "choices": [
+        "el profesor",
+        "la profesor",
+        "la alumna"
+      ],
+      "img": "👩‍🏫",
+      "info": "Der Lehrer = el profesor. In der Grundschule sagt man auch la maestra."
+    },
+    {
+      "id": "005",
+      "q": "Was bedeutet „el recreo“?",
+      "a": "die Pause (in der Schule)",
+      "choices": [
+        "der Unterricht",
+        "die Hausaufgabe",
+        "der Stundenplan"
+      ],
+      "img": "🔔⚽"
+    },
+    {
+      "id": "006",
+      "q": "Was heißt „die Hausaufgaben“ auf Spanisch?",
+      "a": "los deberes",
+      "choices": [
+        "las deberes",
+        "los derechos",
+        "los dibujos"
+      ],
+      "img": "📝🏠",
+      "info": "In Lateinamerika sagt man meist la tarea. los derechos = die Rechte."
+    },
+    {
+      "id": "007",
+      "q": "Was bedeutet „la asignatura“?",
+      "a": "das Schulfach",
+      "choices": [
+        "die Unterschrift",
+        "die Klassenarbeit",
+        "die Schulnote"
+      ],
+      "img": "🧪📐🎨",
+      "info": "Mathe, Bio, Kunst … – das sind asignaturas."
+    },
+    {
+      "id": "008",
+      "q": "Was bedeutet „aprobar un examen“?",
+      "a": "eine Prüfung bestehen",
+      "choices": [
+        "eine Prüfung nicht bestehen",
+        "eine Prüfung vorbereiten",
+        "eine Prüfung korrigieren"
+      ],
+      "img": "🥳📄",
+      "info": "Das Gegenteil: suspender un examen."
+    },
+    {
+      "id": "009",
+      "q": "Was heißt „Fußball spielen“ auf Spanisch?",
+      "a": "jugar al fútbol",
+      "choices": [
+        "tocar al fútbol",
+        "jugar a la fútbol",
+        "hacer el fútbol"
+      ],
+      "img": "⚽🏃",
+      "info": "jugar a + Sport oder Spiel (a + el = al), tocar + Instrument. In Lateinamerika oft ohne „al“: jugar fútbol."
+    },
+    {
+      "id": "010",
+      "q": "Was heißt „Gitarre spielen“ auf Spanisch?",
+      "a": "tocar la guitarra",
+      "choices": [
+        "jugar a la guitarra",
+        "tocar el guitarra",
+        "tomar la guitarra"
+      ],
+      "img": "🎸🎶",
+      "info": "Ein Instrument „berührt“ man: tocar."
+    },
+    {
+      "id": "011",
+      "q": "Was bedeutet „ir al cine“?",
+      "a": "ins Kino gehen",
+      "choices": [
+        "ins Theater gehen",
+        "fernsehen",
+        "in den Zirkus gehen"
+      ],
+      "img": "🍿🎟️"
+    },
+    {
+      "id": "012",
+      "q": "Was heißt „das Schwimmbad“ auf Spanisch?",
+      "a": "la piscina",
+      "choices": [
+        "el piscina",
+        "la cocina",
+        "la pecina"
+      ],
+      "img": "🏊‍♀️💦",
+      "info": "In Mexiko sagt man la alberca, in Argentinien la pileta. la cocina = die Küche."
+    },
+    {
+      "id": "013",
+      "q": "Was bedeutet „el fin de semana“?",
+      "a": "das Wochenende",
+      "choices": [
+        "der Wochentag",
+        "der Feiertag",
+        "das Monatsende"
+      ],
+      "img": "😴🗓️",
+      "info": "Wörtlich: „das Ende der Woche“."
+    },
+    {
+      "id": "014",
+      "q": "Was heißt „tanzen“ auf Spanisch?",
+      "a": "bailar",
+      "choices": [
+        "cantar",
+        "bajar",
+        "bañar"
+      ],
+      "img": "🕺🎶",
+      "info": "cantar = singen, bajar = hinuntergehen, bañar = baden."
+    },
+    {
+      "id": "015",
+      "q": "Was bedeutet „el ordenador“?",
+      "a": "der Computer",
+      "choices": [
+        "der Drucker",
+        "der Fernseher",
+        "die Spielkonsole"
+      ],
+      "img": "⌨️🖱️",
+      "info": "In Lateinamerika sagt man la computadora."
+    },
+    {
+      "id": "016",
+      "q": "Was heißt „das Handy“ auf Spanisch?",
+      "a": "el móvil",
+      "choices": [
+        "la móvil",
+        "el mueble",
+        "el movil"
+      ],
+      "img": "📱",
+      "info": "In Lateinamerika sagt man el celular. el mueble = das Möbelstück."
+    },
+    {
+      "id": "017",
+      "q": "Was heißt „das Frühstück“ auf Spanisch?",
+      "a": "el desayuno",
+      "choices": [
+        "la cena",
+        "la merienda",
+        "el desayuna"
+      ],
+      "img": "🌅🥣",
+      "info": "la merienda = der Nachmittagssnack, la cena = das Abendessen."
+    },
+    {
+      "id": "018",
+      "q": "Was bedeutet „la cena“?",
+      "a": "das Abendessen",
+      "choices": [
+        "das Mittagessen",
+        "das Frühstück",
+        "der Nachtisch"
+      ],
+      "img": "👨‍👩‍👧🍽️",
+      "info": "cenar = zu Abend essen."
+    },
+    {
+      "id": "019",
+      "q": "Was heißt „das Hähnchen“ auf Spanisch?",
+      "a": "el pollo",
+      "choices": [
+        "el pelo",
+        "el pavo",
+        "el polvo"
+      ],
+      "img": "🍗",
+      "info": "el pelo = das Haar, el pavo = der Truthahn, el polvo = der Staub."
+    },
+    {
+      "id": "020",
+      "q": "Was bedeutet „el queso“?",
+      "a": "der Käse",
+      "choices": [
+        "die Butter",
+        "der Schinken",
+        "die Sahne"
+      ],
+      "img": "🐭🕳️",
+      "info": "Spanien ist berühmt für den Schafskäse queso manchego."
+    },
+    {
+      "id": "021",
+      "q": "Was heißt „die Erdbeere“ auf Spanisch?",
+      "a": "la fresa",
+      "choices": [
+        "la frase",
+        "el fresa",
+        "la frambuesa"
+      ],
+      "img": "🍓",
+      "info": "In Argentinien und Chile sagt man la frutilla. la frambuesa = die Himbeere."
+    },
+    {
+      "id": "022",
+      "q": "Was bedeutet „el helado“?",
+      "a": "das Eis (zum Essen)",
+      "choices": [
+        "der Kuchen",
+        "der Pudding",
+        "die Schokolade"
+      ],
+      "img": "🥶😋",
+      "info": "Gefrorenes Wasser (Eis zum Schlittern) heißt el hielo."
+    },
+    {
+      "id": "023",
+      "q": "Was heißt „Ich habe Hunger.“ auf Spanisch?",
+      "a": "Tengo hambre.",
+      "choices": [
+        "Soy hambre.",
+        "Estoy hambre.",
+        "Tengo hombre."
+      ],
+      "img": "🍽️😩",
+      "info": "Hunger, Durst und Angst „hat“ man: tengo hambre, tengo sed, tengo miedo. el hombre = der Mann."
+    },
+    {
+      "id": "024",
+      "q": "Was bedeutet „La cuenta, por favor.“?",
+      "a": "Die Rechnung, bitte.",
+      "choices": [
+        "Die Speisekarte, bitte.",
+        "Guten Appetit!",
+        "Noch ein Glas Wasser, bitte."
+      ],
+      "img": "🧑‍🍳💶",
+      "info": "Die Speisekarte heißt la carta."
+    },
+    {
+      "id": "025",
+      "q": "Was heißt „die Straße“ auf Spanisch?",
+      "a": "la calle",
+      "choices": [
+        "el calle",
+        "la cama",
+        "la calla"
+      ],
+      "img": "🚸🏘️",
+      "info": "Das ll spricht man in Spanien meist wie ein deutsches j: ca-je."
+    },
+    {
+      "id": "026",
+      "q": "Was bedeutet „la panadería“?",
+      "a": "die Bäckerei",
+      "choices": [
+        "die Metzgerei",
+        "die Apotheke",
+        "die Buchhandlung"
+      ],
+      "img": "🧑‍🍳🔥",
+      "info": "Im Wort steckt el pan – das Brot!"
+    },
+    {
+      "id": "027",
+      "q": "Was heißt „die Apotheke“ auf Spanisch?",
+      "a": "la farmacia",
+      "choices": [
+        "el farmacia",
+        "la fármaca",
+        "la ferretería"
+      ],
+      "img": "💊⚕️",
+      "info": "la ferretería = der Eisenwarenladen."
+    },
+    {
+      "id": "028",
+      "q": "Was bedeutet „a la derecha“?",
+      "a": "rechts",
+      "choices": [
+        "links",
+        "geradeaus",
+        "gegenüber"
+      ],
+      "img": "🧭🚶",
+      "info": "links = a la izquierda, geradeaus = todo recto."
+    },
+    {
+      "id": "029",
+      "q": "Was heißt „links“ auf Spanisch?",
+      "a": "a la izquierda",
+      "choices": [
+        "a la derecha",
+        "todo recto",
+        "a la izquerda"
+      ],
+      "img": "⬅️🚶",
+      "info": "Schreibe izquierda mit „ie“ in der Mitte."
+    },
+    {
+      "id": "030",
+      "q": "Was heißt „der Bus“ auf Spanisch?",
+      "a": "el autobús",
+      "choices": [
+        "la autobús",
+        "el autobus",
+        "la autopista"
+      ],
+      "img": "🚌",
+      "info": "In Mexiko sagt man el camión, in Argentinien el colectivo. la autopista = die Autobahn."
+    },
+    {
+      "id": "031",
+      "q": "Was bedeutet „el ayuntamiento“?",
+      "a": "das Rathaus",
+      "choices": [
+        "die Kirche",
+        "der Marktplatz",
+        "die Polizeiwache"
+      ],
+      "img": "🏛️🗳️",
+      "info": "Dort arbeitet der Bürgermeister – el alcalde."
+    },
+    {
+      "id": "032",
+      "q": "Was heißt „Wo ist die Apotheke?“ auf Spanisch?",
+      "a": "¿Dónde está la farmacia?",
+      "choices": [
+        "¿Dónde es la farmacia?",
+        "¿Dónde hay la farmacia?",
+        "¿Adónde está la farmacia?"
+      ],
+      "img": "🗺️❓",
+      "info": "Wo sich etwas Bestimmtes befindet, fragt man mit estar. Vorne steht das umgedrehte Fragezeichen ¿."
+    },
+    {
+      "id": "033",
+      "q": "Was bedeutet „cerca de“?",
+      "a": "in der Nähe von",
+      "choices": [
+        "weit weg von",
+        "gegenüber von",
+        "hinter"
+      ],
+      "img": "📍👣",
+      "info": "Gegenteil: lejos de = weit weg von."
+    },
+    {
+      "id": "034",
+      "q": "Was heißt „einkaufen gehen“ auf Spanisch?",
+      "a": "ir de compras",
+      "choices": [
+        "ir a compras",
+        "ir en compras",
+        "ir de comprar"
+      ],
+      "img": "🛍️"
+    },
+    {
+      "id": "035",
+      "q": "Was bedeutet „el mercado“?",
+      "a": "der Markt",
+      "choices": [
+        "der Bahnsteig",
+        "das Kaufhaus",
+        "der Parkplatz"
+      ],
+      "img": "🍅🍉🧺",
+      "info": "Der Supermarkt heißt el supermercado."
+    }
+  ]
+}

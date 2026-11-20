@@ -115,24 +115,8 @@ class AndroidNova(context: Context) : NovaGeraet, NovaOfflineSpeicher, TextToSpe
         listOf(dir, offlineDir, originalDir).forEach { d -> d.listFiles()?.forEach { it.delete() } }
     }
 
-    override suspend fun jetzt(text: String, sprache: String, h: String): Int = withContext(Dispatchers.IO) {
-        runCatching {
-            val c = open("${Nova.BASE}/jetzt").apply {
-                requestMethod = "POST"; doOutput = true
-                setRequestProperty("Content-Type", "application/json; charset=utf-8")
-            }
-            try {
-                val body = buildJsonObject { put("text", text); put("sprache", sprache) }.toString()
-                c.outputStream.use { it.write(body.encodeToByteArray()) }
-                val code = c.responseCode
-                if (code != 200) return@runCatching code
-                val url = Json.parseToJsonElement(c.inputStream.use { it.readBytes().decodeToString() }).jsonObject["url"]?.jsonPrimitive?.content
-                // Nur Dateien von unserem eigenen Stimm-Server
-                if (url == null || !url.startsWith(Nova.BASE + "/")) return@runCatching -1
-                if (get(url, h, dir) == 200) 200 else -1
-            } finally { c.disconnect() }
-        }.getOrDefault(-1)
-    }
+    /** Der Dienst `/jetzt` ist abgeschaltet (20.11.2026): nie mehr anfragen. 404 = still die Gerätestimme, ohne Fehlermeldung. */
+    override suspend fun jetzt(text: String, sprache: String, h: String): Int = 404
 
     private fun open(url: String) = (URL(url).openConnection() as HttpURLConnection).apply {
         connectTimeout = 4_000; readTimeout = 10_000; useCaches = false; instanceFollowRedirects = true

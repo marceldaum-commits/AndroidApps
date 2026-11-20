@@ -1,5 +1,29 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.5.0 – Viel neues Material für Französisch, Spanisch und Latein, mehr Abwechslung (19.11.2026)
+**Mehr Abwechslung**
+- In den Spielen mit Runden (Hör-Detektiv, „Ruby says“) kommt jetzt nie dieselbe Aufgabe zweimal hintereinander und erst dann wieder, wenn alle anderen dran waren.
+- Papagei-Echo und Satz-Zug haben jetzt über 20 Sätze statt 3 oder 4. Bei jedem Spielen kommen 5 andere Sätze in neuer Reihenfolge.
+
+**Ehrliche Rückmeldung beim Nachsprechen**
+- Sterne gibt es nur noch, wenn die Spracherkennung den Satz wirklich verstanden hat. Wer nur aufnimmt, bekommt ein freundliches „Gut gemacht! Hör mal, wie es im Vergleich klingt.“, aber keine Sterne und kein „klang super“.
+
+**Neues Material** (alles selbst geschrieben, von unabhängigen Lektoren Karte für Karte geprüft)
+- **Französisch:** Lernpfad Abschnitt 3 „Unterwegs“ mit 8 Einheiten (Stadt, Preise, Café, Weg, Verkehrsmittel, Verabreden, Gefühle, Geburtstag) und 4 neue Schul-Pakete mit 140 Karten: Alltag, Grammatik (Kl. 6–8), Passé composé (Kl. 7–9), Argumentieren (Oberstufe).
+- **Spanisch:** Lernpfad Abschnitt 3 „Unterwegs“ mit 8 Einheiten und 4 neue Schul-Pakete mit 138 Karten: Alltag, Grammatik (Kl. 6–8), Vergangenheit (Kl. 8–10), Argumentieren (Oberstufe).
+- **Latein:** Jetzt mit eigenem Lernpfad „Latein von Anfang an“, Abschnitt 1 „Erste Schritte in Rom“ mit 8 Einheiten. Latein wird gelesen statt gehört: Wimmelbild und „Mach, was ich sage!“ zeigen das lateinische Wort bzw. den Befehl. Dazu 4 neue Pakete mit 142 Karten: Deklination (Kl. 5–7), Konjugation (Kl. 6–8), Wortschatz Lernjahr 2 (Kl. 7–9), Satzlehre mit Originalsätzen von Caesar, Cicero, Seneca und Nepos (Kl. 9–13).
+- Beim Tippen auf Latein muss man die Längenstriche (ā, ē, ī …) nicht mitschreiben.
+
+**Deutsch vorübergehend ohne Stimme**
+- Die bisherige deutsche Computerstimme ist entfernt. Bis eine neue (weibliche) Stimme ausgewählt ist, zeigen deutsche Übungen nur Text. Beim Diktat erscheint das Wort 3 Sekunden lang zum Merken, dann baut oder schreibt man es aus dem Kopf („👀 Noch mal zeigen“ geht immer).
+
+**Sonst**
+- „← Alle Apps“ führt wieder direkt zur Website von Nachhilfe Online, ohne Eltern-Tor (Einstellungen und Elternbereich bleiben hinter dem Tor).
+- Latein: Überschriften und Ruby sagen „Lies …“ statt „Hör zu …“.
+
+**KI-Stimmen gekennzeichnet**
+- Unter jeder Übung mit Vorlesen steht „🤖 KI-generierte Stimme“. Die Audiodateien sind auch technisch als KI-generiert markiert. Der Link heißt jetzt „KI-Stimmen & Lizenzen“ und nennt zu jeder Stimme Datensatz, Lizenz und Quelle.
+
 ## 0.4.6 – Sprachauswahl bleibt stehen (19.11.2026)
 - Wer eine Sprache antippt, sieht sie jetzt weiter – die Sprachleiste springt nicht mehr an den Anfang zurück, die gewählte Sprache rückt in die Mitte.
 - „← Alle Apps“ führt (wie schon seit 0.4.0) nur über das Eltern-Tor auf die Website; das Tor sagt jetzt dazu: „Hier geht es zur Website.“
