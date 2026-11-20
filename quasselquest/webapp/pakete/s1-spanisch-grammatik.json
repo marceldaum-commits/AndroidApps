@@ -1,0 +1,444 @@
+{
+  "id": "s1-spanisch-grammatik",
+  "version": 1,
+  "title": "ser, estar, gustar & Co.",
+  "subject": "spanisch",
+  "grades": [
+    6,
+    7,
+    8
+  ],
+  "emoji": "🧩",
+  "tier": "free",
+  "description": "Spanische Grammatik zum Mitmachen: ser oder estar, hay, gustar, Verben im Presente, Stammwechsel und Adjektive.",
+  "intro": [
+    {
+      "img": "🤔⚖️",
+      "text": "Im Spanischen gibt es zweimal „sein“: ser für das, was jemand oder etwas ist (Herkunft, Beruf, Eigenschaft), estar für Ort und Zustand (wo? wie geht’s?)."
+    },
+    {
+      "img": "🍫😍",
+      "text": "Bei gustar ist alles andersherum: „Me gusta el chocolate“ heißt wörtlich „Mir gefällt die Schokolade“. Deshalb: me gusta (eins), me gustan (mehrere)."
+    },
+    {
+      "img": "🥾🔄",
+      "text": "Manche Verben ändern ihren Stamm, wenn er betont ist: querer → quiero, poder → puedo. Bei nosotros und vosotros bleibt alles normal: queremos, podemos. Man nennt sie „Schuhverben“, weil die veränderten Formen in der Tabelle wie ein Schuh aussehen."
+    },
+    {
+      "img": "👕👕",
+      "text": "Adjektive passen sich an: una casa bonita, dos casas bonitas. Wörter auf -e bleiben bei männlich und weiblich gleich."
+    },
+    {
+      "img": "🔤✍️",
+      "text": "Bei Verbformen tippst du das Pronomen mit, z. B. „yo quiero“. ¡Vamos!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Mi madre ___ médica. (ser oder estar)",
+      "a": "es",
+      "choices": [
+        "está",
+        "son",
+        "eres"
+      ],
+      "img": "👩‍⚕️🩺",
+      "info": "Beruf → ser."
+    },
+    {
+      "id": "002",
+      "q": "Mis abuelos ___ en Sevilla ahora. (ser oder estar)",
+      "a": "están",
+      "choices": [
+        "son",
+        "hay",
+        "estáis"
+      ],
+      "img": "👵👴📍",
+      "info": "Wo ist jemand? Ort → estar."
+    },
+    {
+      "id": "003",
+      "q": "Hoy Ana ___ triste. (ser oder estar)",
+      "a": "está",
+      "choices": [
+        "es",
+        "estás",
+        "están"
+      ],
+      "img": "🌧️😢",
+      "info": "Gefühl und Zustand im Moment → estar."
+    },
+    {
+      "id": "004",
+      "q": "Nosotros ___ de Alemania. (ser oder estar)",
+      "a": "somos",
+      "choices": [
+        "estamos",
+        "sois",
+        "son"
+      ],
+      "img": "🌍🥨",
+      "info": "Herkunft → ser de."
+    },
+    {
+      "id": "005",
+      "q": "___ las tres y media. (ser oder estar)",
+      "a": "Son",
+      "choices": [
+        "Es",
+        "Están",
+        "Hay"
+      ],
+      "img": "🕞",
+      "info": "Uhrzeit mit ser: Es la una – aber Son las dos, Son las tres …"
+    },
+    {
+      "id": "006",
+      "q": "La ventana ___ abierta. (ser oder estar)",
+      "a": "está",
+      "choices": [
+        "es",
+        "son",
+        "están"
+      ],
+      "img": "🪟💨",
+      "info": "Ergebnis einer Handlung (jemand hat sie geöffnet) → estar."
+    },
+    {
+      "id": "007",
+      "q": "En mi clase ___ veinte alumnos. (haber)",
+      "a": "hay",
+      "choices": [
+        "son",
+        "están",
+        "han"
+      ],
+      "img": "👧👦🔢",
+      "info": "hay = es gibt. Die Form bleibt immer gleich – egal ob eins oder viele."
+    },
+    {
+      "id": "008",
+      "q": "¿Dónde ___ el baño? (hay oder está)",
+      "a": "está",
+      "choices": [
+        "hay",
+        "es",
+        "son"
+      ],
+      "img": "🚻❓",
+      "info": "Etwas Bestimmtes (el baño) → está. Etwas Unbestimmtes → hay: ¿Hay un baño aquí?"
+    },
+    {
+      "id": "009",
+      "q": "Cerca de mi casa ___ un parque. (hay oder está)",
+      "a": "hay",
+      "choices": [
+        "está",
+        "es",
+        "son"
+      ],
+      "img": "🌳🛝",
+      "info": "un parque = irgendein Park, unbestimmt → hay."
+    },
+    {
+      "id": "010",
+      "q": "A mí me ___ el chocolate. (gustar)",
+      "a": "gusta",
+      "choices": [
+        "gustan",
+        "gusto",
+        "gustas"
+      ],
+      "img": "🍫😍",
+      "info": "Was gefällt, ist das Subjekt: el chocolate (eins) → gusta."
+    },
+    {
+      "id": "011",
+      "q": "A Pablo le ___ los videojuegos. (gustar)",
+      "a": "gustan",
+      "choices": [
+        "gusta",
+        "gustas",
+        "gustamos"
+      ],
+      "img": "🎮👦",
+      "info": "los videojuegos (mehrere) → gustan."
+    },
+    {
+      "id": "012",
+      "q": "A nosotros ___ gusta bailar. (Pronomen)",
+      "a": "nos",
+      "choices": [
+        "os",
+        "les",
+        "me"
+      ],
+      "img": "💃🕺",
+      "info": "me, te, le, nos, os, les – nosotros → nos."
+    },
+    {
+      "id": "013",
+      "q": "A mis padres les ___ viajar. (encantar)",
+      "a": "encanta",
+      "choices": [
+        "encantan",
+        "encantas",
+        "encantamos"
+      ],
+      "img": "✈️🧳",
+      "info": "Vor einem Infinitiv immer Einzahl: les encanta viajar. encantar funktioniert wie gustar."
+    },
+    {
+      "id": "014",
+      "q": "Wie lautet das Presente von „estudiar“ mit „vosotros“? (mit Pronomen)",
+      "a": "vosotros estudiáis",
+      "choices": [
+        "vosotros estudian",
+        "vosotros estudiamos",
+        "vosotros estudiais"
+      ],
+      "img": "📚👥",
+      "info": "vosotros benutzt man in Spanien. In Lateinamerika sagt man ustedes estudian."
+    },
+    {
+      "id": "015",
+      "q": "Wie lautet das Presente von „aprender“ mit „tú“? (mit Pronomen)",
+      "a": "tú aprendes",
+      "choices": [
+        "tú aprendo",
+        "tú aprenden",
+        "tú aprendéis"
+      ],
+      "img": "🧠✏️"
+    },
+    {
+      "id": "016",
+      "q": "Wie lautet das Presente von „escribir“ mit „nosotros“? (mit Pronomen)",
+      "a": "nosotros escribimos",
+      "choices": [
+        "nosotros escribemos",
+        "nosotros escriben",
+        "nosotros escribís"
+      ],
+      "img": "✍️📨",
+      "info": "-er und -ir unterscheiden sich nur bei nosotros und vosotros: comemos – escribimos."
+    },
+    {
+      "id": "017",
+      "q": "Wie lautet das Presente von „leer“ mit „ellos“? (mit Pronomen)",
+      "a": "ellos leen",
+      "choices": [
+        "ellos leyen",
+        "ellos leemos",
+        "ellos lees"
+      ],
+      "img": "📖📖"
+    },
+    {
+      "id": "018",
+      "q": "Wie lautet das Presente von „abrir“ mit „vosotros“? (mit Pronomen)",
+      "a": "vosotros abrís",
+      "choices": [
+        "vosotros abréis",
+        "vosotros abren",
+        "vosotros abrimos"
+      ],
+      "img": "🚪🔓",
+      "info": "-ir-Verben bei vosotros: -ís (abrís, vivís)."
+    },
+    {
+      "id": "019",
+      "q": "Wie lautet das Presente von „querer“ mit „yo“? (mit Pronomen)",
+      "a": "yo quiero",
+      "choices": [
+        "yo quero",
+        "yo quiere",
+        "yo queremos"
+      ],
+      "img": "🎁🙋",
+      "info": "e → ie: quiero, quieres, quiere, queremos, queréis, quieren."
+    },
+    {
+      "id": "020",
+      "q": "Wie lautet das Presente von „poder“ mit „tú“? (mit Pronomen)",
+      "a": "tú puedes",
+      "choices": [
+        "tú puede",
+        "tú pueden",
+        "tú pudes"
+      ],
+      "img": "💪✅",
+      "info": "o → ue: puedo, puedes, puede, podemos, podéis, pueden."
+    },
+    {
+      "id": "021",
+      "q": "Wie lautet das Presente von „dormir“ mit „nosotros“? (mit Pronomen)",
+      "a": "nosotros dormimos",
+      "choices": [
+        "nosotros duermimos",
+        "nosotros duermen",
+        "nosotros dormemos"
+      ],
+      "img": "😴🛏️",
+      "info": "Bei nosotros und vosotros ist der Stamm unbetont – kein Wechsel: dormimos."
+    },
+    {
+      "id": "022",
+      "q": "Wie lautet das Presente von „empezar“ mit „ella“? (mit Pronomen)",
+      "a": "ella empieza",
+      "choices": [
+        "ella empeza",
+        "ella empiezo",
+        "ella empiezan"
+      ],
+      "img": "🏁⏰",
+      "info": "e → ie: empiezo, empiezas, empieza …"
+    },
+    {
+      "id": "023",
+      "q": "Wie lautet das Presente von „jugar“ mit „yo“? (mit Pronomen)",
+      "a": "yo juego",
+      "choices": [
+        "yo jugo",
+        "yo juega",
+        "yo jugamos"
+      ],
+      "img": "🎲🃏",
+      "info": "jugar ist das einzige Verb mit u → ue."
+    },
+    {
+      "id": "024",
+      "q": "Wie lautet das Presente von „pensar“ mit „vosotros“? (mit Pronomen)",
+      "a": "vosotros pensáis",
+      "choices": [
+        "vosotros piensáis",
+        "vosotros piensan",
+        "vosotros pensamos"
+      ],
+      "img": "🤔💭",
+      "info": "Bei vosotros kein Stammwechsel: pensáis."
+    },
+    {
+      "id": "025",
+      "q": "Mis amigos ___ a casa a las ocho. (volver)",
+      "a": "vuelven",
+      "choices": [
+        "volven",
+        "vuelve",
+        "volvemos"
+      ],
+      "img": "🏠🕗",
+      "info": "o → ue: vuelvo, vuelves, vuelve, volvemos, volvéis, vuelven."
+    },
+    {
+      "id": "026",
+      "q": "Yo ___ un perro y dos gatos. (tener)",
+      "a": "tengo",
+      "choices": [
+        "teno",
+        "tiene",
+        "tienes"
+      ],
+      "img": "🐶🐱",
+      "info": "tener: tengo, tienes, tiene, tenemos, tenéis, tienen."
+    },
+    {
+      "id": "027",
+      "q": "Yo ___ los deberes por la tarde. (hacer)",
+      "a": "hago",
+      "choices": [
+        "haco",
+        "hace",
+        "hazo"
+      ],
+      "img": "📝🌇",
+      "info": "Verben mit -go bei yo: hago, tengo, pongo, salgo, vengo, digo."
+    },
+    {
+      "id": "028",
+      "q": "Las casas son muy ___. (bonito)",
+      "a": "bonitas",
+      "choices": [
+        "bonitos",
+        "bonita",
+        "bonitoes"
+      ],
+      "img": "🏘️✨",
+      "info": "las casas: weiblich + Mehrzahl → -as."
+    },
+    {
+      "id": "029",
+      "q": "Mi abuela es muy ___. (simpático)",
+      "a": "simpática",
+      "choices": [
+        "simpático",
+        "simpáticas",
+        "simpatica"
+      ],
+      "img": "👵😊",
+      "info": "abuela ist weiblich → -a. Der Akzent bleibt."
+    },
+    {
+      "id": "030",
+      "q": "Tengo dos camisetas ___. (azul)",
+      "a": "azules",
+      "choices": [
+        "azulas",
+        "azul",
+        "azuls"
+      ],
+      "img": "👕👕",
+      "info": "Adjektive auf Konsonant: Mehrzahl mit -es, keine eigene weibliche Form."
+    },
+    {
+      "id": "031",
+      "q": "Es una chica muy ___. (inteligente)",
+      "a": "inteligente",
+      "choices": [
+        "inteligenta",
+        "inteligentes",
+        "inteligento"
+      ],
+      "img": "👧💡",
+      "info": "Adjektive auf -e sind für männlich und weiblich gleich."
+    },
+    {
+      "id": "032",
+      "q": "Mis ___ amigas son de México. (mejor)",
+      "a": "mejores",
+      "choices": [
+        "mejoras",
+        "mejor",
+        "mejoros"
+      ],
+      "img": "👭🌮",
+      "info": "mejor → mejores (Mehrzahl mit -es), gleich für männlich und weiblich."
+    },
+    {
+      "id": "033",
+      "q": "___ mapa de España es muy viejo. (el oder la)",
+      "a": "El",
+      "choices": [
+        "La",
+        "Los",
+        "Las"
+      ],
+      "img": "🗺️📜",
+      "info": "mapa ist männlich, obwohl es auf -a endet."
+    },
+    {
+      "id": "034",
+      "q": "Wie lautet die Mehrzahl von „la luz“?",
+      "a": "las luces",
+      "choices": [
+        "las luzes",
+        "las luz",
+        "los luces"
+      ],
+      "img": "💡💡",
+      "info": "z wird vor e zu c: la luz → las luces, la vez → las veces."
+    }
+  ]
+}

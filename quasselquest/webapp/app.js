@@ -118,6 +118,15 @@
   async function speak(text, who, opts) {
     return A.say(text, Object.assign({}, charVoice(who), { who: who || 'ruby' }, opts || {}));
   }
+  /** Ohne Stimme (z. B. Deutsch vorübergehend): Wort kurz zeigen, dann verdecken – aus dem Kopf bauen/schreiben. */
+  const merkBox = (wort) => `<div class="novoice merk" data-merk data-wort="${esc(wort)}">${esc(wort)}<small>Merk dir das Wort!</small></div>`;
+  function merkStart(m) {
+    if (m.dataset.zu) return; m.dataset.zu = '1'; const wort = m.dataset.wort;
+    const zeigen = () => { m.innerHTML = `${esc(wort)}<small>Merk dir das Wort!</small>`; setTimeout(verdecken, 3000); };
+    const verdecken = () => { if (!m.isConnected) return; m.innerHTML = '<button class="btn white small" data-merk-zeig>👀 Noch mal zeigen</button>'; m.querySelector('[data-merk-zeig]').onclick = () => { A.sfx('tap'); zeigen(); }; };
+    setTimeout(verdecken, 3000);
+  }
+  new MutationObserver(() => document.querySelectorAll('[data-merk]:not([data-zu])').forEach(merkStart)).observe(document.body, { childList: true, subtree: true });
   const noVoiceBox = (text, who) => A.canHear(text, who || 'ruby') ? '' :
     `<div class="novoice" data-novoice>${esc(text)}<small>${state.settings.voice === false ? 'Die Stimme ist ausgeschaltet – lies den Satz.' : 'Auf diesem Gerät gibt es keine englische Stimme – lies den Satz.'}</small></div>`;
 
@@ -245,10 +254,10 @@
       ${packTiles()}
       ${en ? `<div class="section-h">Weitere Orte auf der Reise</div>
       <div class="worlds">${C.worlds.slice(1).map((w) => `<button class="wtile" data-world="${w.id}"><span class="soon">kommt bald</span><span class="e">${w.emoji}</span><b>${esc(w.title)}</b><small>${esc(w.de)} · ${w.stufe === 'gs' ? 'Kl. 3–4' : 'Kl. 5–6'}</small></button>`).join('')}</div>` : ''}
-      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · <a href="datenschutz.html">Datenschutz</a> · <a href="lizenzen.txt">Stimmen &amp; Lizenzen</a> · <button class="linkbtn" data-kids-home>🔒 Deine Daten</button></div>
+      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · <a href="datenschutz.html">Datenschutz</a> · <a href="lizenzen.txt">KI-Stimmen &amp; Lizenzen</a> · <button class="linkbtn" data-kids-home>🔒 Deine Daten</button></div>
     </div>`);
     el.querySelector('[data-kids-home]').onclick = () => { A.sfx('tap'); kidsPrivacy(home); };
-    el.querySelector('[data-allapps]').onclick = () => { A.sfx('tap'); elternTor(openAllApps, 'Hier geht es zur Website.'); };
+    el.querySelector('[data-allapps]').onclick = () => { A.sfx('tap'); openAllApps(); }; // Marcel 19.11.2026 (V10 geändert): Website-Link ohne Eltern-Tor, neutral
     el.querySelector('[data-settings]').onclick = () => { A.sfx('tap'); elternTor(settings); };
     const ps = el.querySelector('[data-pass]'); if (ps) ps.onclick = () => { A.sfx('tap'); passport(); };
     el.querySelectorAll('[data-lang]').forEach((b) => b.onclick = () => {
@@ -304,7 +313,7 @@
       <div class="ep-top"><button class="iconbtn" data-quit aria-label="Beenden">✕</button>
         <div class="progress"><i style="width:${Math.round(frac * 100)}%"></i></div>
         <button class="iconbtn" data-explain aria-label="Ruby erklärt">💡</button></div>
-      ${inner}</div>`);
+      ${inner}<div class="ki-hinweis">🤖 KI-generierte Stimme</div></div>`);
     requestAnimationFrame(() => { const i = el.querySelector('.progress > i'); if (i) i.style.width = Math.round(frac * 100 + 6) + '%'; });
     el.querySelector('[data-explain]').onclick = () => { A.sfx('tap'); explain(run.ep); };
     return el;
@@ -316,13 +325,21 @@
     });
   }
 
+  /** Satz-Pool einer Quest um die passenden Lernpfad-Sätze erweitern (g.mehr = Einheiten-IDs), damit sich lange nichts wiederholt. */
+  async function mitLernpfad(g) {
+    if (!g.mehr) return g;
+    const lp = await lernpfad('en'); if (!lp) return g;
+    const extra = lpEinheiten(lp).filter((e) => g.mehr.includes(e.id)).flatMap((e) => e.saetze.map(([en, de, img]) => ({ en, de, img })));
+    const eigene = new Set((g.lines || g.sentences).map((x) => x.en));
+    const neu = extra.filter((x) => !eigene.has(x.en) && (g.type !== 'train' || PK.zugGeeignet(x.en)));
+    return g.type === 'echo' ? { ...g, lines: g.lines.concat(neu) } : { ...g, sentences: g.sentences.concat(neu) };
+  }
   function runStep(step, run, frac) {
     if (step.kind === 'scene') return scene(run, frac);
     if (step.kind === 'mission') return mission(run, frac);
     const g = step.g;
     if (g.type === 'detective') return detective(run, frac, g);
-    if (g.type === 'echo') return echo(run, frac, g);
-    if (g.type === 'train') return train(run, frac, g);
+    if (g.type === 'echo' || g.type === 'train') return mitLernpfad(g).then((g2) => (g.type === 'echo' ? echo(run, frac, g2) : train(run, frac, g2)));
     if (g.type === 'rubysays') return rubySays(run, frac, g);
     return Promise.resolve();
   }
@@ -373,6 +390,7 @@
     const p = stepPromise(el, run); const tk = token;
     let round = 0; let last = null; let target = null; let firstTry = true;
     const rounds = g.rounds || 5;
+    const reihe = PK.ziehen(g.items, rounds); // jede Runde ein anderes Ziel, erst wenn alle dran waren, wiederholt sich eines
     const card = (it) => {
       if (g.mode === 'count') return `<span class="num">${it.count}</span><span class="fishes">${'🐟'.repeat(it.count)}</span>`;
       if (g.mode === 'colour') return `<span class="blob" style="background:${it.css}"></span>`;
@@ -386,8 +404,7 @@
     async function next() {
       if (round >= rounds) { el._done('ok'); return; }
       round++; firstTry = true;
-      const pool = g.items.filter((x) => x !== last);
-      target = pool[Math.floor(Math.random() * pool.length)]; last = target;
+      target = reihe[round - 1]; last = target;
       const n = Math.min(4, g.items.length);
       const opts = shuffle([target].concat(pickOthers(g.items, target, n - 1)));
       el.querySelector('[data-nv]').innerHTML = noVoiceBox(target.en);
@@ -432,6 +449,7 @@
     const plan = [true, true, false, true, false, true].slice(0, rounds);
     const order = [plan[0]].concat(shuffle(plan.slice(1)));
     let round = 0; let cmd = null; let target = null; let waiting = null;
+    const zielReihe = PK.ziehen(g.targets, rounds);
     const phrase = () => C.rubySaysText(g.mode, target, cmd);
     const play = async () => {
       const b = el.querySelector('[data-play]'); b.classList.add('playing');
@@ -441,7 +459,7 @@
     async function next() {
       if (round >= rounds) { el._done('ok'); return; }
       cmd = order[round]; round++;
-      target = g.targets[Math.floor(Math.random() * g.targets.length)];
+      target = zielReihe[round - 1];
       const ch = el.querySelector('[data-ch]'); ch.innerHTML = '';
       const txt = phrase();
       el.querySelector('[data-cmd]').innerHTML = A.canHear(txt, 'ruby') ? '' : esc(txt);
@@ -500,7 +518,8 @@
       <div class="ai-note">Deine Aufnahme bleibt auf diesem Gerät und wird nach dem Anhören gelöscht.</div>`);
     const p = stepPromise(el, run); const tk = token;
     let i = 0; let recording = null; let lastUrl = null;
-    const line = () => g.lines[i];
+    const zeilen = PK.ziehen(g.lines, Math.min(5, g.lines.length)); // 5 verschiedene, bei jedem Spielen andere Auswahl/Reihenfolge
+    const line = () => zeilen[i];
     const play = async (slow) => {
       const b = el.querySelector('[data-play]'); b.classList.add('playing'); el.querySelector('[data-ruby]').classList.add('talk');
       await speak(line().en, 'ruby', slow ? { slow: true } : null);
@@ -512,18 +531,19 @@
       el.querySelector('[data-st]').textContent = '';
       el.querySelector('[data-next]').hidden = true; el.querySelector('[data-cmp]').hidden = true;
       el.querySelector('[data-ml]').textContent = A.micSupported() ? 'Erst anhören, dann auf 🎤 tippen und nachsprechen.' : 'Sprich den Satz laut nach – Ruby hört dir zu!';
-      rubySay(el, `Satz ${i + 1} von ${g.lines.length}. Sprich mir nach!`);
+      rubySay(el, `Satz ${i + 1} von ${zeilen.length}. Sprich mir nach!`);
       play();
     }
+    // Sterne gibt es nur, wenn die Aussprache wirklich gemessen wurde (stars > 0). Bloßes Aufnehmen wird nicht bewertet.
     function done(stars, msg) {
-      run.max++; if (stars >= 2) run.stars++;
-      el.querySelector('[data-st]').innerHTML = [0, 1, 2].map((k) => `<span style="display:inline-block;animation:popbig .5s ${k * .15}s both">${k < stars ? '⭐' : '☆'}</span>`).join('');
+      if (stars > 0) { run.max++; if (stars >= 2) run.stars++; }
+      el.querySelector('[data-st]').innerHTML = stars > 0 ? [0, 1, 2].map((k) => `<span style="display:inline-block;animation:popbig .5s ${k * .15}s both">${k < stars ? '⭐' : '☆'}</span>`).join('') : '';
       el.querySelector('[data-next]').hidden = false;
-      rubySay(el, msg, 'dance'); A.sfx('right'); if (stars >= 2) confetti(30);
+      rubySay(el, msg, stars > 0 ? 'dance' : 'talk'); A.sfx(stars > 0 ? 'right' : 'pop'); if (stars >= 2) confetti(30);
     }
     el.querySelector('[data-mic]').onclick = async () => {
       const mic = el.querySelector('[data-mic]'); const ml = el.querySelector('[data-ml]');
-      if (!A.micSupported()) { done(2, 'Toll! Wenn du laut nachsprichst, lernst du am meisten. 🎉'); return; }
+      if (!A.micSupported()) { done(0, 'Wenn du laut nachsprichst, lernst du am meisten. 😊'); return; }
       if (recording) {
         const r = recording; recording = null; mic.classList.remove('on'); mic.textContent = '🎤';
         const res = await r.stop(); if (!alive(tk)) return;
@@ -532,7 +552,7 @@
         ml.textContent = spoke ? 'Hör dir selbst zu: erst Ruby, dann du!' : 'Ich habe fast nichts gehört. Sprich ruhig lauter!';
         if (spoke) {
           el.querySelector('[data-cmp]').hidden = false;
-          done(res.loudFrames > 25 ? 3 : 2, 'Squawk! Das klang super! 🎉 Tipp auf „Vergleichen“.');
+          done(0, 'Gut gemacht! Hör mal, wie es im Vergleich klingt: Tipp auf „Vergleichen“. 👂');
         } else { A.sfx('soft'); rubySay(el, 'Noch mal? Tipp auf 🎤 und sprich laut nach!', 'talk'); }
         return;
       }
@@ -549,11 +569,11 @@
     };
     el.querySelector('[data-cmp]').onclick = async () => { A.sfx('tap'); await play(); if (!alive(tk)) return; await sleep(250); const u = lastUrl; lastUrl = null; await A.playUrl(u); el.querySelector('[data-cmp]').hidden = true; };
     el.querySelector('[data-play]').onclick = () => { A.sfx('tap'); play(); };
-    el.querySelector('[data-quiet]').onclick = () => { A.sfx('tap'); if (el.querySelector('[data-next]').hidden) done(1, 'Okay! Beim nächsten Mal vielleicht laut? 😊'); };
+    el.querySelector('[data-quiet]').onclick = () => { A.sfx('tap'); if (el.querySelector('[data-next]').hidden) done(0, 'Okay! Beim nächsten Mal vielleicht laut? 😊'); };
     el.querySelector('[data-next]').onclick = () => {
       A.sfx('whoosh'); if (recording) { recording.stop(); recording = null; }
       if (lastUrl) { try { URL.revokeObjectURL(lastUrl); } catch (e) {} lastUrl = null; }
-      i++; if (i >= g.lines.length) el._done('ok'); else show();
+      i++; if (i >= zeilen.length) el._done('ok'); else show();
     };
     show();
     return p;
@@ -569,7 +589,8 @@
       ${ruby('', '')}`);
     const p = stepPromise(el, run); const tk = token;
     let i = 0; let words = []; let placed = []; let firstTry = true;
-    const s = () => g.sentences[i];
+    const saetze = PK.ziehen(g.sentences, Math.min(5, g.sentences.length)); // jedes Mal andere Auswahl/Reihenfolge
+    const s = () => saetze[i];
     const play = async (slow) => { const b = el.querySelector('[data-play]'); b.classList.add('playing'); await speak(s().en, 'ruby', slow ? { slow: true } : null); if (alive(tk)) b.classList.remove('playing'); };
     function draw() {
       const tr = el.querySelector('[data-train]');
@@ -589,7 +610,7 @@
         speak(s().en, 'ruby');
         tr.classList.add('go'); el.querySelectorAll('.wagon').forEach((x) => x.disabled = true);
         await sleep(1900); if (!alive(tk)) return;
-        i++; if (i >= g.sentences.length) el._done('ok'); else show();
+        i++; if (i >= saetze.length) el._done('ok'); else show();
       } else {
         firstTry = false; A.sfx('soft');
         const want = C.words(s().en);
@@ -612,7 +633,7 @@
       if (DIAG) el.querySelector('[data-train]').dataset.want = s().en;
       el.querySelector('[data-train]').classList.remove('go');
       draw();
-      rubySay(el, `Zug ${i + 1} von ${g.sentences.length}: Bau den Satz, den du hörst!`);
+      rubySay(el, `Zug ${i + 1} von ${saetze.length}: Bau den Satz, den du hörst!`);
       play();
     }
     el.querySelector('[data-play]').onclick = () => { A.sfx('tap'); play(); };
@@ -714,20 +735,20 @@
           <div class="heard" data-heard>Tipp auf 🎤 und sag es laut!</div>
           <button class="quiet" data-quiet>Ich sage es leise für mich</button></div>`);
         dlg.appendChild(box); box.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-        const finish = (msg) => {
-          run.max++; run.stars++;
+        const finish = (msg, gemessen) => { // Stern nur, wenn die Erkennung den Satz wirklich verstanden hat
+          if (gemessen) { run.max++; run.stars++; }
           box.replaceWith(h(`<div class="me">🗣️ ${esc(text)}</div>`));
           A.sfx('right'); A.vibrate(25); rubySay(el, msg, 'dance'); resolve();
         };
         box.querySelector('[data-hear]').onclick = () => { A.sfx('tap'); speak(text, 'ruby'); };
-        box.querySelector('[data-quiet]').onclick = () => { A.sfx('tap'); run.max++; box.replaceWith(h(`<div class="me">🤫 ${esc(text)}</div>`)); resolve(); };
+        box.querySelector('[data-quiet]').onclick = () => { A.sfx('tap'); box.replaceWith(h(`<div class="me">🤫 ${esc(text)}</div>`)); resolve(); };
         const mic = box.querySelector('[data-mic]'); const heard = box.querySelector('[data-heard]');
         let busy = false; let recH = null;
         mic.onclick = async () => {
           if (recH) { // Aufnahme ohne Erkennung beenden
             const r = recH; recH = null; mic.classList.remove('on'); mic.textContent = '🎤';
             const res = await r.stop(); if (res.url) URL.revokeObjectURL(res.url);
-            if (res.loudFrames > 6) finish('Super gesprochen! 🎉'); else { heard.textContent = 'Ich habe fast nichts gehört – noch mal, ruhig lauter!'; A.sfx('soft'); }
+            if (res.loudFrames > 6) finish('Gut gemacht – du hast es laut gesagt! 👍'); else { heard.textContent = 'Ich habe fast nichts gehört – noch mal, ruhig lauter!'; A.sfx('soft'); }
             return;
           }
           if (busy) return; busy = true; A.stop(); A.sfx('pop');
@@ -739,15 +760,15 @@
             if (alts && alts.length) {
               tries++;
               const sim = A.similarity(text, alts);
-              if (sim >= 0.5) { finish(`Ich habe dich verstanden: „${esc(alts[0])}“ ⭐`); return; }
-              if (tries >= 2) { finish('Gut gemacht! Das Mikrofon tut sich manchmal schwer – du hast es super versucht! 🎉'); return; }
+              if (sim >= 0.5) { finish(`Ich habe dich verstanden: „${esc(alts[0])}“ ⭐`, true); return; }
+              if (tries >= 2) { finish('Das Mikrofon tut sich manchmal schwer – du hast es versucht! Weiter geht\'s. 👍'); return; }
               heard.textContent = `Ich habe „${alts[0]}“ gehört. Hör dir den Satz noch mal an und versuch es noch einmal!`; A.sfx('soft'); return;
             }
-            if (alts && !alts.length) { tries++; if (tries >= 2) { finish('Gut gemacht! Weiter geht\'s! 🎉'); return; } heard.textContent = 'Ich hab dich nicht ganz gehört – noch mal?'; A.sfx('soft'); return; }
+            if (alts && !alts.length) { tries++; if (tries >= 2) { finish('Weiter geht\'s! 👍'); return; } heard.textContent = 'Ich hab dich nicht ganz gehört – noch mal?'; A.sfx('soft'); return; }
             // null: Erkennung nicht erlaubt/verfügbar → Aufnahme mit Lautstärke
           }
           busy = false;
-          if (!A.micSupported()) { finish('Toll! 🎉'); return; }
+          if (!A.micSupported()) { finish('Laut sagen hilft beim Lernen! 👍'); return; }
           try {
             recH = await A.record((lvl) => mic.style.setProperty('--lvl', lvl.toFixed(2)));
             mic.classList.add('on'); mic.textContent = '⏹️'; heard.textContent = 'Sprich jetzt – dann tipp auf ⏹️.';
@@ -856,7 +877,7 @@
     const bg = h(`<div class="modal-bg"><div class="modal card tor" role="dialog" aria-labelledby="tor-t">
       <h2 id="tor-t" style="font-size:20px">👪 Eltern-Tor</h2>
       ${grund ? `<p style="font-weight:800;margin:4px 0">${esc(grund)}</p>` : ''}<p class="muted">Dieser Bereich ist für Erwachsene. Bitte rechne:</p>
-      <div class="tor-aufgabe"><b data-aufgabe aria-live="polite"></b><button class="slowbtn" data-vorlesen aria-label="Aufgabe vorlesen">🔊</button></div>
+      <div class="tor-aufgabe"><b data-aufgabe aria-live="polite"></b>${A.canSpeak('de') ? '<button class="slowbtn" data-vorlesen aria-label="Aufgabe vorlesen">🔊</button>' : ''}</div>
       <div class="tor-eingabe" data-eingabe aria-label="Deine Eingabe">&nbsp;</div><div class="err" data-err></div>
       <div class="tor-tasten">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((z) => `<button class="tor-taste" data-z="${z}" aria-label="${z}">${z}</button>`).join('')}
         <button class="tor-taste" data-weg aria-label="Löschen">⌫</button><button class="tor-taste" data-z="0" aria-label="0">0</button><button class="tor-taste ok" data-ok aria-label="Bestätigen">OK</button></div>
@@ -872,7 +893,7 @@
     const zeig = () => { bg.querySelector('[data-eingabe]').textContent = eingabe || ' '; };
     bg.querySelectorAll('[data-z]').forEach((t) => t.onclick = () => { if (eingabe.length < 4) { eingabe += t.dataset.z; zeig(); A.sfx('tap'); } });
     bg.querySelector('[data-weg]').onclick = () => { eingabe = eingabe.slice(0, -1); zeig(); A.sfx('tap'); };
-    bg.querySelector('[data-vorlesen]').onclick = () => { A.sfx('tap'); speak(`${ZAHLWORT[a]} mal ${ZAHLWORT[b]}`, 'de'); };
+    if (bg.querySelector('[data-vorlesen]')) bg.querySelector('[data-vorlesen]').onclick = () => { A.sfx('tap'); A.geraetSagen(`${ZAHLWORT[a]} mal ${ZAHLWORT[b]}`, 'de'); };
     bg.querySelector('[data-x]').onclick = () => { A.sfx('tap'); bg.remove(); };
     bg.querySelector('[data-ok]').onclick = () => {
       if (!eingabe) return;
@@ -1043,7 +1064,7 @@
         if (trio.includes(c)) { plan.push({ mode: 'memory', cards: trio }); memoryUsed = true; continue; }
       }
       if (plan.some((p) => p.cards && p.cards.includes(c))) continue;
-      const ms = PK.modes(c, pack.lang);
+      const ms = PK.modes(c, pack.lang, pack);
       const pickM = ms.filter((m) => m !== lastMode);
       const m = (pickM.length ? pickM : ms)[Math.floor(Math.random() * (pickM.length ? pickM.length : ms.length))];
       lastMode = m; plan.push({ mode: m, card: c });
@@ -1062,7 +1083,7 @@
       <div class="ep-top"><button class="iconbtn" data-quit aria-label="Beenden">✕</button>
         <div class="progress"><i style="width:${Math.round(frac * 100)}%"></i></div><span class="pill">${pack.emoji}</span></div>
       <div class="game-title">${title}<small>${sub}</small></div>
-      <div data-body class="stage" style="min-height:0"></div>${ruby('', '')}</div>`);
+      <div data-body class="stage" style="min-height:0"></div>${ruby('', '')}${PK.LANGS[pack.lang].who ? '<div class="ki-hinweis">🤖 KI-generierte Stimme</div>' : ''}</div>`);
     requestAnimationFrame(() => { const i = el.querySelector('.progress > i'); if (i) i.style.width = Math.round(frac * 100 + 8) + '%'; });
     return el;
   }
@@ -1202,7 +1223,7 @@
         const extra = []; while (extra.length < 2) { const x = extraPool[Math.floor(Math.random() * extraPool.length)]; if (!letters.includes(x)) extra.push(x); }
         const tiles = shuffle(letters.map((l, i) => ({ l, i })).concat(extra.map((l) => ({ l, i: -1 }))));
         body.innerHTML = `<div class="qcard"><div class="qimg">${esc(c.img || pack.emoji)}</div><div class="q">${esc(k.kind === 'diktat' ? c.q : bf.text)}</div>
-          ${hoer && A.canHear(hoer, L.who || 'de') ? '<button class="speaker" data-hear aria-label="Anhören">🔊</button>' : (hoer ? `<div class="novoice">${esc(c.a)}<small>Keine Stimme auf diesem Gerät – lies das Wort und bau es nach.</small></div>` : '')}</div>
+          ${hoer && L.who && A.canHear(hoer, L.who) ? '<button class="speaker" data-hear aria-label="Anhören">🔊</button>' : (hoer ? merkBox(c.a) : '')}</div>
           <div class="slots">${t.vor ? `<span class="pre">${esc(t.vor.trim())}</span>` : ''}${letters.map((_, i) => `<span class="slot" data-s="${i}"></span>`).join('')}</div>
           <div class="tiles">${tiles.map((x, i) => `<button class="tile" data-t="${i}"${DIAG ? ` data-pos="${x.i}"` : ''}>${esc(x.l)}</button>`).join('')}</div>`;
         let pos = 0; let mistakes = 0;
@@ -1349,7 +1370,7 @@
   function lpSchritt(pack, L, step, frac, resolve, say, run) {
     const e = pack.einheit;
     const titel = { neu: '🌱 Neue Wörter', regel: '💡 Regel entdecken', sprechen: '🎤 Sprich nach!', geschichte: '📖 ' + esc(e.geschichte.titel), wimmel: '🔍 Wimmelbild', tpr: '🖐️ Mach, was ich sage!', lehrer: '🎓 Ruby lernt von dir' }[step.mode];
-    const sub = { neu: 'Tipp jede Karte an: hören und umdrehen!', regel: esc(e.regel.titel), sprechen: 'Erst anhören, dann nachsprechen.', geschichte: 'Hör zu! Tipp auf eine Sprechblase, dann siehst du die Übersetzung.', wimmel: 'Entdecke alle neuen Wörter im Bild!', tpr: 'Hör zu und zieh das Richtige zur richtigen Person!', lehrer: 'Ruby hat einen Fehler gemacht. Findest du ihn?' }[step.mode];
+    const sub = { neu: L.who ? 'Tipp jede Karte an: hören und umdrehen!' : 'Tipp jede Karte an und dreh sie um!', regel: esc(e.regel.titel), sprechen: 'Erst anhören, dann nachsprechen.', geschichte: L.who ? 'Hör zu! Tipp auf eine Sprechblase, dann siehst du die Übersetzung.' : 'Lies mit! Tipp auf eine Sprechblase, dann siehst du die Übersetzung.', wimmel: 'Entdecke alle neuen Wörter im Bild!', tpr: L.who ? 'Hör zu und zieh das Richtige zur richtigen Person!' : 'Lies den Befehl und zieh das Richtige zur richtigen Person!', lehrer: 'Ruby hat einen Fehler gemacht. Findest du ihn?' }[step.mode];
     const el = packFrame(pack, frac, titel, sub); const tk = token;
     el.querySelector('[data-quit]').onclick = () => resolve('quit');
     const body = el.querySelector('[data-body]');
@@ -1366,7 +1387,8 @@
         <div class="wimmel-stand" data-stand>0 von ${e.woerter.length} entdeckt</div>${weiterKnopf('Spiel starten ➜', true)}`;
       const gefunden = new Set(); let phase = 'entdecken'; let ziel = -1; let runde = 0; let erster = true;
       const ziele = shuffle(e.woerter.map((_, i) => i)).slice(0, Math.min(5, e.woerter.length));
-      const frage = () => { ziel = ziele[runde]; erster = true; if (DIAG) body.querySelector('[data-w]').dataset.ziel = ziel; rubySay(el, `Find … 🔊`); say(PK.sprechbar(e.woerter[ziel][0])); };
+      const ohneTon = !L.who; // Latein: Wort lesen statt hören
+      const frage = () => { ziel = ziele[runde]; erster = true; if (DIAG) body.querySelector('[data-w]').dataset.ziel = ziel; rubySay(el, ohneTon ? `Wo ist <b>${esc(e.woerter[ziel][0].split(',')[0])}</b>? 👀` : `Find … 🔊`); say(PK.sprechbar(e.woerter[ziel][0])); };
       body.querySelectorAll('.wding').forEach((b) => b.onclick = async () => {
         const i = +b.dataset.i; const [z] = e.woerter[i];
         if (phase === 'entdecken') {
@@ -1375,7 +1397,7 @@
           say(PK.sprechbar(z));
           if (!gefunden.has(i)) {
             gefunden.add(i); body.querySelector('[data-stand]').textContent = `${gefunden.size} von ${e.woerter.length} entdeckt`;
-            if (gefunden.size === e.woerter.length) { confetti(40); A.sfx('right'); body.querySelector('[data-weiter]').hidden = false; rubySay(el, 'Du hast alles entdeckt! 🎉 Jetzt spielen wir: Ich sage ein Wort – du findest es!', 'dance'); }
+            if (gefunden.size === e.woerter.length) { confetti(40); A.sfx('right'); body.querySelector('[data-weiter]').hidden = false; rubySay(el, ohneTon ? 'Du hast alles entdeckt! 🎉 Jetzt spielen wir: Ich zeige ein Wort – du findest es!' : 'Du hast alles entdeckt! 🎉 Jetzt spielen wir: Ich sage ein Wort – du findest es!', 'dance'); }
           }
           return;
         }
@@ -1384,10 +1406,10 @@
           rubySay(el, `${['Super!', 'Richtig!', 'Klasse!'][runde % 3]} <b>${esc(z)}</b> = ${esc(e.woerter[i][1])}`, 'dance');
           runde++; if (runde >= ziele.length) { await sleep(1100); if (alive(tk)) resolve('ok'); return; }
           await sleep(1300); if (alive(tk)) frage();
-        } else { erster = false; A.sfx('soft'); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); rubySay(el, 'Hör noch mal! 👂', 'talk'); say(PK.sprechbar(e.woerter[ziel][0]), ); }
+        } else { erster = false; A.sfx('soft'); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); rubySay(el, ohneTon ? `Lies noch mal: <b>${esc(e.woerter[ziel][0].split(',')[0])}</b> 👀` : 'Hör noch mal! 👂', 'talk'); say(PK.sprechbar(e.woerter[ziel][0]), ); }
       });
       body.querySelector('[data-weiter]').onclick = () => {
-        A.sfx('whoosh'); phase = 'finden'; body.querySelector('[data-weiter]').hidden = true; body.querySelector('[data-stand]').textContent = 'Hör zu und tipp auf das Wort!';
+        A.sfx('whoosh'); phase = 'finden'; body.querySelector('[data-weiter]').hidden = true; body.querySelector('[data-stand]').textContent = ohneTon ? 'Lies das Wort und tipp auf das Ding!' : 'Hör zu und tipp auf das Wort!';
         body.querySelectorAll('.wlabel').forEach((x) => x.hidden = true); frage();
       };
       el.querySelector('[data-rubytext]') && rubySay(el, `${e.woerter.length} Wörter verstecken sich hier! Tipp alles an, was du siehst.`);
@@ -1401,21 +1423,22 @@
       const zielLeute = shuffle([leute.find(([id]) => id === a.an)].concat(shuffle(leute.filter(([id]) => id !== a.an)).slice(0, 2)).filter(Boolean));
       const andere = shuffle([...new Set((e.aktionen || []).map((x) => x.ding).concat(e.woerter.map((w) => w[2])).filter((d) => d !== a.ding))]).slice(0, 3);
       const dinge = shuffle(Array.from({ length: n + (n > 1 ? 1 : 0) }, () => a.ding).concat(andere));
-      body.innerHTML = `<div class="tpr-befehl"><button class="speaker" data-play aria-label="Anhören">🔊</button><button class="slowbtn" data-slow aria-label="Langsam">🐢</button><span data-text class="tpr-text" hidden>${esc(a.sag)}</span></div>
+      const ohneTon = !L.who; // Latein: Befehl lesen statt hören
+      body.innerHTML = `<div class="tpr-befehl">${ohneTon ? '' : '<button class="speaker" data-play aria-label="Anhören">🔊</button><button class="slowbtn" data-slow aria-label="Langsam">🐢</button>'}<span data-text class="tpr-text"${ohneTon ? '' : ' hidden'}>${esc(a.sag)}</span></div>
         <div class="tpr-leute">${zielLeute.map(([id, F]) => `<div class="tpr-person" data-an="${esc(id)}"${DIAG && id === a.an ? ' data-ziel' : ''}><span class="e">${id === 'ruby' ? `<span class="mini-ruby">${rubySVG()}</span>` : esc(F.emoji)}</span><b>${esc(F.name)}</b><span class="hand" data-hand></span></div>`).join('')}</div>
         <div class="tpr-dinge">${dinge.map((d, i) => `<button class="tpr-ding" data-i="${i}" data-d="${esc(d)}"${DIAG && d === a.ding ? ' data-ok' : ''}>${esc(d)}</button>`).join('')}</div>
-        <button class="quiet" data-zeig>Ich habe es nicht verstanden – zeig mir den Satz</button>`;
-      const play = async (slow) => { const b = body.querySelector('[data-play]'); b.classList.add('playing'); await speak(a.sag, L.who, slow ? { slow: true } : null); if (alive(tk)) b.classList.remove('playing'); };
-      body.querySelector('[data-play]').onclick = () => { A.sfx('tap'); play(); };
-      body.querySelector('[data-slow]').onclick = () => { A.sfx('tap'); play(true); };
-      body.querySelector('[data-zeig]').onclick = () => { A.sfx('tap'); body.querySelector('[data-text]').hidden = false; body.querySelector('[data-zeig]').hidden = true; erster = false; play(true); };
+        ${ohneTon ? '' : '<button class="quiet" data-zeig>Ich habe es nicht verstanden – zeig mir den Satz</button>'}`;
+      const play = async (slow) => { if (ohneTon) return; const b = body.querySelector('[data-play]'); b.classList.add('playing'); await speak(a.sag, L.who, slow ? { slow: true } : null); if (alive(tk)) b.classList.remove('playing'); };
+      if (!ohneTon) body.querySelector('[data-play]').onclick = () => { A.sfx('tap'); play(); };
+      if (!ohneTon) body.querySelector('[data-slow]').onclick = () => { A.sfx('tap'); play(true); };
+      if (!ohneTon) body.querySelector('[data-zeig]').onclick = () => { A.sfx('tap'); body.querySelector('[data-text]').hidden = false; body.querySelector('[data-zeig]').hidden = true; erster = false; play(true); };
       let erster = true; let gegeben = 0; let gewaehlt = null; let fertig = false;
       const geben = (btn, an) => {
         if (fertig || !btn || btn.disabled) return;
         const ok = btn.dataset.d === a.ding && an === a.an;
         if (!ok) {
           erster = false; A.sfx('soft'); btn.classList.remove('shake'); void btn.offsetWidth; btn.classList.add('shake');
-          rubySay(el, btn.dataset.d !== a.ding ? 'Hmm, das passt nicht. Hör noch mal genau hin! 👂' : 'Das richtige Ding – aber zu wem soll es? Hör noch mal! 👂', 'talk'); play(true); return;
+          rubySay(el, btn.dataset.d !== a.ding ? (ohneTon ? 'Hmm, das passt nicht. Lies noch mal genau! 👀' : 'Hmm, das passt nicht. Hör noch mal genau hin! 👂') : (ohneTon ? 'Das richtige Ding – aber wem sollst du es geben? Schau auf die Endung! 👀' : 'Das richtige Ding – aber zu wem soll es? Hör noch mal! 👂'), 'talk'); play(true); return;
         }
         btn.disabled = true; btn.classList.add('weg'); gegeben++; A.sfx('pop'); A.vibrate(15);
         const hand = body.querySelector(`[data-an="${a.an}"] [data-hand]`); hand.textContent += a.ding; hand.classList.remove('popbig'); void hand.offsetWidth; hand.classList.add('popbig');
@@ -1444,8 +1467,8 @@
         };
       });
       body.querySelectorAll('.tpr-person').forEach((p) => p.onclick = () => { if (gewaehlt) { geben(gewaehlt, p.dataset.an); gewaehlt && gewaehlt.classList.remove('gewaehlt'); gewaehlt = null; } else { A.sfx('tap'); rubySay(el, 'Erst ein Ding antippen oder ziehen!', 'talk'); } });
-      rubySay(el, 'Hör gut zu! 👂');
-      setTimeout(() => { if (alive(tk)) play(); }, 300);
+      rubySay(el, ohneTon ? 'Lies den Befehl und tu es! 👀' : 'Hör gut zu! 👂');
+      if (!ohneTon) setTimeout(() => { if (alive(tk)) play(); }, 300);
       return;
     }
 
@@ -1523,7 +1546,7 @@
         if (rec) {
           const r = rec; rec = null; mic.classList.remove('on'); mic.textContent = '🎤';
           const res = await r.stop(); if (res.url) URL.revokeObjectURL(res.url); if (!alive(tk)) return;
-          if (res.loudFrames > 6) finish('Super gesprochen! 🎉', true); else { ml.textContent = 'Ich habe fast nichts gehört – noch mal, ruhig lauter!'; A.sfx('soft'); }
+          if (res.loudFrames > 6) finish('Gut gemacht – du hast laut mitgesprochen! 👍', false); else { ml.textContent = 'Ich habe fast nichts gehört – noch mal, ruhig lauter!'; A.sfx('soft'); }
           return;
         }
         if (busy) return; busy = true; A.stop(); A.sfx('pop');
@@ -1534,13 +1557,13 @@
           if (alts && alts.length) {
             tries++;
             if (A.similarity(text, alts) >= 0.5) { finish(`Ich habe dich verstanden: „${esc(alts[0])}“ ⭐`, true); return; }
-            if (tries >= 2) { finish('Gut gemacht! Das Mikrofon tut sich manchmal schwer – du hast es super versucht! 🎉', true); return; }
+            if (tries >= 2) { finish('Das Mikrofon tut sich manchmal schwer – du hast es versucht! Weiter geht\'s. 👍', false); return; }
             ml.textContent = `Ich habe „${alts[0]}“ gehört. Hör noch einmal zu und versuch es wieder!`; A.sfx('soft'); play(true); return;
           }
-          if (alts && !alts.length) { tries++; if (tries >= 2) { finish('Gut gemacht! Weiter geht\'s! 🎉', true); return; } ml.textContent = 'Ich hab dich nicht ganz gehört – noch mal?'; A.sfx('soft'); return; }
+          if (alts && !alts.length) { tries++; if (tries >= 2) { finish('Weiter geht\'s! 👍', false); return; } ml.textContent = 'Ich hab dich nicht ganz gehört – noch mal?'; A.sfx('soft'); return; }
         }
         busy = false;
-        if (!A.micSupported()) { finish('Toll! Laut mitsprechen hilft am meisten. 🎉', true); return; }
+        if (!A.micSupported()) { finish('Laut mitsprechen hilft am meisten! 👍', false); return; }
         try {
           rec = await A.record((lvl) => mic.style.setProperty('--lvl', lvl.toFixed(2)));
           if (!alive(tk)) { rec.stop(); rec = null; return; }
@@ -1570,7 +1593,7 @@
       if (i === g.zeilen.length - 1) w.textContent = 'Zu den Fragen ➜';
     };
     w.onclick = () => { i++; if (i >= g.zeilen.length) { A.sfx('whoosh'); resolve('ok'); return; } A.sfx('tap'); zeige(); };
-    rubySay(el, 'Eine kleine Geschichte! Hör gut zu – danach habe ich zwei Fragen.');
+    rubySay(el, L.who ? 'Eine kleine Geschichte! Hör gut zu – danach habe ich zwei Fragen.' : 'Eine kleine Geschichte! Lies gut mit – danach habe ich zwei Fragen.');
     zeige();
   }
 
@@ -1647,8 +1670,8 @@
       const el = screen(`<div class="stage">
         <div class="ep-top"><button class="iconbtn" data-quit aria-label="Abbrechen">✕</button><div class="progress"><i style="width:${Math.round(100 * i / n)}%"></i></div><span class="pill">${i + 1}/${n}</span></div>
         <div class="game-title">📝 Generalprobe<small>Wie in der Klassenarbeit: erst am Ende gibt es die Auflösung.</small></div>
-        <div class="qcard"><div class="qimg">${esc(c.img || p.emoji)}</div><div class="q">${esc(k.kind === 'diktat' ? 'Schreib das Wort, das du hörst.' : (tippen && bf ? bf.text : c.q))}</div>
-          ${hoerProbe ? '<button class="slowbtn" data-hear aria-label="Anhören">🔊</button>' : ''}</div>
+        <div class="qcard"><div class="qimg">${esc(c.img || p.emoji)}</div><div class="q">${esc(k.kind === 'diktat' ? (PK.LANGS[p.lang].who ? 'Schreib das Wort, das du hörst.' : 'Merk dir das Wort – dann schreib es auf.') : (tippen && bf ? bf.text : c.q))}</div>
+          ${hoerProbe && PK.LANGS[p.lang].who ? '<button class="slowbtn" data-hear aria-label="Anhören">🔊</button>' : (k.kind === 'diktat' ? merkBox(c.a) : '')}</div>
         ${tippen ? `<input class="input" data-in autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Deine Antwort" style="font-size:22px;text-align:center">
           <button class="btn blue" data-ok>Weiter ➜</button>`
           : `<div class="opts">${shuffle([c.a].concat(PK.wrongs(c, p, 3))).map((o) => `<button class="opt" data-o="${esc(o)}">${esc(o)}</button>`).join('')}</div>`}

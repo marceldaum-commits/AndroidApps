@@ -12,7 +12,14 @@ doppelter Hörprüfung. Fr 20.11. ist Prüftag ohne Inhalt; der Schub beginnt Di
 | Latein | – | 1 Paket, 39 Karten (Kl. 5–8) |
 | (Englisch zum Vergleich) | 16 Einheiten + Hafen-Welt | 7 Pakete, 247 Karten |
 
-## Ziel Di 24.11.
+## Stand 19.11.2026 abends (Version 0.5.0, vorgezogen auf Marcels Wunsch „heute“)
+| Sprache | Lernpfad | Schul-Pakete |
+|---|---|---|
+| Französisch | 3 Abschnitte, 24 Einheiten | 6 Pakete, 207 Karten (Kl. 6–13) |
+| Spanisch | 3 Abschnitte, 24 Einheiten | 5 Pakete, 174 Karten (Kl. 6–13) |
+| Latein | 1 Abschnitt, 8 Einheiten (Lesen statt Sprechen) | 5 Pakete, 181 Karten (Kl. 5–13) |
+
+## Ziel Di 24.11. (ursprünglicher Plan – mit 0.5.0 größtenteils schon erreicht)
 - **Französisch:** Lernpfad Abschnitt 3 „Unterwegs“ (8 Einheiten, A1.2) + 4 neue Schul-Pakete (Lernjahr 1–2: Artikel/Teilungsartikel, Verben auf -er/-ir/-re, Adjektive und Angleichung, Fragen; Wortschatz Schule/Freizeit) → **+ ~70 Wörter, ~32 Sätze, ~150 Karten**.
 - **Spanisch:** ebenso Abschnitt 3 + 4 Pakete (Lernjahr 1–2: ser/estar, Verben auf -ar/-er/-ir, gustar, Zahlen/Uhrzeit, Wortschatz) → **+ ~70 Wörter, ~32 Sätze, ~150 Karten**.
 - **Latein:** neuer Lernpfad „Latein von Anfang an“, Abschnitt 1 (8 Einheiten, **Lesen statt Sprechen**: Wimmelbild mit Lesen, Wörter bauen, Formen bestimmen, kurze Sätze übersetzen, „Ruby lernt von dir“ mit Endungsfehlern) + 3 Pakete (a-/o-Deklination, Präsens der a-/e-Konjugation, Grundwortschatz Lernjahr 1 – mit Längen, Genitiv, Geschlecht) → **+ ~120 Karten**.

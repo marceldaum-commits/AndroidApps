@@ -1,0 +1,427 @@
+{
+  "id": "s2-franzoesisch-passe-compose",
+  "version": 1,
+  "title": "Passé composé & futur composé",
+  "subject": "franzoesisch",
+  "grades": [
+    7,
+    8,
+    9
+  ],
+  "emoji": "⏪",
+  "tier": "free",
+  "description": "Über Vergangenes erzählen (passé composé mit avoir und être) und Pläne machen (futur composé).",
+  "intro": [
+    {
+      "img": "⏪📖",
+      "text": "Mit dem passé composé erzählst du, was passiert ist: J'ai joué. Je suis parti. Zwei Teile: Hilfsverb + Partizip."
+    },
+    {
+      "img": "🏠🚪",
+      "text": "Lerntrick: Die meisten Verben nehmen avoir. Mit être gehen vor allem Verben der Bewegung – stell dir ein Haus vor: hineingehen (entrer), hinausgehen (sortir), ankommen (arriver), abfahren (partir), hinauf (monter), hinunter (descendre), fallen (tomber), bleiben (rester)…"
+    },
+    {
+      "img": "👗➕",
+      "text": "Bei être passt sich das Partizip an wie ein Adjektiv: elle est allée, ils sont partis, elles sont arrivées."
+    },
+    {
+      "img": "🔮🚶",
+      "text": "Für Pläne nimmst du aller + Infinitiv: Je vais jouer. Das ist das futur composé – super einfach!"
+    },
+    {
+      "img": "⭐🚀",
+      "text": "Allez, raconte ! Erzähl mit Brummi, was gestern los war und was morgen kommt."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie lautet das passé composé von „manger“ mit „je“? (mit Pronomen)",
+      "a": "j'ai mangé",
+      "choices": [
+        "je ai mangé",
+        "j'ai manger",
+        "j'ai mangée"
+      ],
+      "img": "🍝⏪",
+      "info": "Vor Vokal wird je zu j'."
+    },
+    {
+      "id": "002",
+      "q": "Wie lautet das passé composé von „finir“ mit „tu“? (mit Pronomen)",
+      "a": "tu as fini",
+      "choices": [
+        "tu as finis",
+        "tu es fini",
+        "tu as finit"
+      ],
+      "img": "🏁⏪",
+      "info": "Verben auf -ir: Partizip auf -i."
+    },
+    {
+      "id": "003",
+      "q": "Wie lautet das passé composé von „vendre“ mit „il“? (mit Pronomen)",
+      "a": "il a vendu",
+      "choices": [
+        "il a vendi",
+        "il a vendre",
+        "il a vendit"
+      ],
+      "img": "🏷️⏪",
+      "info": "Verben auf -re: Partizip meist auf -u."
+    },
+    {
+      "id": "004",
+      "q": "Wie lautet das Partizip (participe passé) von „faire“?",
+      "a": "fait",
+      "choices": [
+        "faisé",
+        "fairé",
+        "fit"
+      ],
+      "img": "🔨"
+    },
+    {
+      "id": "005",
+      "q": "Wie lautet das Partizip (participe passé) von „prendre“?",
+      "a": "pris",
+      "choices": [
+        "prendu",
+        "prit",
+        "prendé"
+      ],
+      "img": "✋"
+    },
+    {
+      "id": "006",
+      "q": "Wie lautet das Partizip (participe passé) von „voir“?",
+      "a": "vu",
+      "choices": [
+        "voyé",
+        "vi",
+        "voiré"
+      ],
+      "img": "👀"
+    },
+    {
+      "id": "007",
+      "q": "Wie lautet das Partizip (participe passé) von „avoir“?",
+      "a": "eu",
+      "choices": [
+        "avé",
+        "avu",
+        "ai"
+      ],
+      "img": "🎁",
+      "info": "j'ai eu = ich habe gehabt"
+    },
+    {
+      "id": "008",
+      "q": "Wie lautet das Partizip (participe passé) von „être“?",
+      "a": "été",
+      "choices": [
+        "êtu",
+        "étais",
+        "est"
+      ],
+      "img": "🌟",
+      "info": "j'ai été = ich bin gewesen (mit avoir!)"
+    },
+    {
+      "id": "009",
+      "q": "Wie lautet das Partizip (participe passé) von „mettre“?",
+      "a": "mis",
+      "choices": [
+        "mettu",
+        "metté",
+        "mit"
+      ],
+      "img": "🧥"
+    },
+    {
+      "id": "010",
+      "q": "Wie lautet das Partizip (participe passé) von „lire“?",
+      "a": "lu",
+      "choices": [
+        "liré",
+        "lit",
+        "li"
+      ],
+      "img": "📖"
+    },
+    {
+      "id": "011",
+      "q": "Wie lautet das Partizip (participe passé) von „écrire“?",
+      "a": "écrit",
+      "choices": [
+        "écrivé",
+        "écri",
+        "écrivu"
+      ],
+      "img": "✍️"
+    },
+    {
+      "id": "012",
+      "q": "Wie lautet das Partizip (participe passé) von „boire“?",
+      "a": "bu",
+      "choices": [
+        "boivé",
+        "bois",
+        "buvé"
+      ],
+      "img": "🥤"
+    },
+    {
+      "id": "013",
+      "q": "Wie lautet das Partizip (participe passé) von „ouvrir“?",
+      "a": "ouvert",
+      "choices": [
+        "ouvri",
+        "ouvré",
+        "ouvrit"
+      ],
+      "img": "🚪"
+    },
+    {
+      "id": "014",
+      "q": "Wie lautet das Partizip (participe passé) von „venir“?",
+      "a": "venu",
+      "choices": [
+        "vené",
+        "venit",
+        "vint"
+      ],
+      "img": "🏃"
+    },
+    {
+      "id": "015",
+      "q": "Hier, j'___ regardé un film. (avoir)",
+      "a": "ai",
+      "choices": [
+        "suis",
+        "as",
+        "a"
+      ],
+      "img": "📺🍿"
+    },
+    {
+      "id": "016",
+      "q": "Samedi, nous ___ allés au marché. (être)",
+      "a": "sommes",
+      "choices": [
+        "avons",
+        "êtes",
+        "sont"
+      ],
+      "img": "🧺🥕"
+    },
+    {
+      "id": "017",
+      "q": "Léa est ___ à la plage. (aller)",
+      "a": "allée",
+      "choices": [
+        "allé",
+        "allés",
+        "aller"
+      ],
+      "img": "👧🏖️",
+      "info": "Léa ist weiblich: allé + e"
+    },
+    {
+      "id": "018",
+      "q": "Mes parents sont ___ hier soir. (rentrer)",
+      "a": "rentrés",
+      "choices": [
+        "rentré",
+        "rentrées",
+        "rentrer"
+      ],
+      "img": "👫🌙",
+      "info": "Mehrzahl, männlich (oder gemischt): + s"
+    },
+    {
+      "id": "019",
+      "q": "Les filles sont ___ en retard. (arriver)",
+      "a": "arrivées",
+      "choices": [
+        "arrivé",
+        "arrivés",
+        "arrivée"
+      ],
+      "img": "👭⏰",
+      "info": "Mehrzahl, weiblich: + es"
+    },
+    {
+      "id": "020",
+      "q": "Elle a ___ une lettre. (écrire)",
+      "a": "écrit",
+      "choices": [
+        "écrite",
+        "écrivé",
+        "écrivée"
+      ],
+      "img": "✉️👩",
+      "info": "Mit avoir gleicht sich das Partizip hier nicht an."
+    },
+    {
+      "id": "021",
+      "q": "Welches Verb bildet das passé composé mit „être“?",
+      "a": "partir",
+      "choices": [
+        "manger",
+        "jouer",
+        "finir"
+      ],
+      "img": "🏠❓",
+      "info": "je suis parti(e)"
+    },
+    {
+      "id": "022",
+      "q": "Welches Verb bildet das passé composé mit „avoir“?",
+      "a": "dormir",
+      "choices": [
+        "venir",
+        "naître",
+        "rester"
+      ],
+      "img": "🧰❓",
+      "info": "j'ai dormi"
+    },
+    {
+      "id": "023",
+      "q": "Ce matin, je me ___ levé tôt. (être)",
+      "a": "suis",
+      "choices": [
+        "ai",
+        "es",
+        "sommes"
+      ],
+      "img": "⏰🌅",
+      "info": "Reflexive Verben bilden das passé composé immer mit être."
+    },
+    {
+      "id": "024",
+      "q": "Elle s'est ___ à 7 heures. (réveiller)",
+      "a": "réveillée",
+      "choices": [
+        "réveillé",
+        "réveillés",
+        "réveiller"
+      ],
+      "img": "👩⏰"
+    },
+    {
+      "id": "025",
+      "q": "Wie lautet die Verneinung von „J'ai mangé.“?",
+      "a": "Je n'ai pas mangé.",
+      "choices": [
+        "Je n'ai mangé pas.",
+        "Je ne pas ai mangé.",
+        "Je n'ai pas manger."
+      ],
+      "img": "🍽️🚫",
+      "info": "ne … pas umschließt das Hilfsverb."
+    },
+    {
+      "id": "026",
+      "q": "Wie lautet das passé composé von „tomber“ mit „nous“? (mit Pronomen)",
+      "a": "nous sommes tombés",
+      "choices": [
+        "nous avons tombé",
+        "nous sommes tombé",
+        "nous sommes tomber"
+      ],
+      "img": "🤸💥"
+    },
+    {
+      "id": "027",
+      "q": "Wie lautet das passé composé von „voir“ mit „elles“? (mit Pronomen)",
+      "a": "elles ont vu",
+      "choices": [
+        "elles sont vu",
+        "elles ont vue",
+        "elles ont voyé"
+      ],
+      "img": "👭👀"
+    },
+    {
+      "id": "028",
+      "q": "Wie lautet das futur composé von „manger“ mit „je“? (mit Pronomen)",
+      "a": "je vais manger",
+      "choices": [
+        "je vais mangé",
+        "je va manger",
+        "j'ai manger"
+      ],
+      "img": "🍕🔜",
+      "info": "aller + Infinitiv"
+    },
+    {
+      "id": "029",
+      "q": "Demain, nous ___ partir en vacances. (aller)",
+      "a": "allons",
+      "choices": [
+        "allez",
+        "vont",
+        "sommes"
+      ],
+      "img": "🧳☀️"
+    },
+    {
+      "id": "030",
+      "q": "Ce soir, tu ___ regarder un film ? (aller)",
+      "a": "vas",
+      "choices": [
+        "va",
+        "vais",
+        "as"
+      ],
+      "img": "🌙📺"
+    },
+    {
+      "id": "031",
+      "q": "Ils vont ___ leurs devoirs. (faire)",
+      "a": "faire",
+      "choices": [
+        "font",
+        "fait",
+        "faisons"
+      ],
+      "img": "📝🔜",
+      "info": "Nach aller steht der Infinitiv."
+    },
+    {
+      "id": "032",
+      "q": "Wie lautet die Verneinung von „Je vais venir.“?",
+      "a": "Je ne vais pas venir.",
+      "choices": [
+        "Je ne vais venir pas.",
+        "Je vais pas ne venir.",
+        "Je ne pas vais venir."
+      ],
+      "img": "🙅🚶"
+    },
+    {
+      "id": "033",
+      "q": "„Nous allons partir.“ – welche Zeitform ist das?",
+      "a": "das futur composé",
+      "choices": [
+        "das passé composé",
+        "das Präsens",
+        "das imparfait"
+      ],
+      "img": "🔮"
+    },
+    {
+      "id": "034",
+      "q": "„Nous sommes partis.“ – welche Zeitform ist das?",
+      "a": "das passé composé",
+      "choices": [
+        "das futur composé",
+        "das Präsens",
+        "das imparfait"
+      ],
+      "img": "📜"
+    }
+  ]
+}

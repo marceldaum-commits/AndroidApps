@@ -1,0 +1,461 @@
+{
+  "id": "s1-franzoesisch-alltag",
+  "version": 1,
+  "title": "Französisch im Alltag",
+  "subject": "franzoesisch",
+  "grades": [
+    6,
+    7,
+    8
+  ],
+  "emoji": "🛍️",
+  "tier": "free",
+  "description": "Wörter für Schule, Freizeit, Essen und Stadt – mal Deutsch → Französisch, mal umgekehrt.",
+  "intro": [
+    {
+      "img": "🏫⚽",
+      "text": "Stell dir vor, du verbringst einen Tag in einer französischen Stadt: Schule, Freizeit, Mittagessen, Bummel. Diese Wörter brauchst du dafür!"
+    },
+    {
+      "img": "🍽️🕛",
+      "text": "Wusstest du, dass viele Kinder in Frankreich bis zum Nachmittag Schule haben und mittags in der cantine essen?"
+    },
+    {
+      "img": "🎹⚽",
+      "text": "Lerntrick: Instrumente spielt man „de“, Sport und Spiele „à“: jouer du piano, aber jouer au foot. Denk: Musik kommt DE-m Herzen!"
+    },
+    {
+      "img": "⚠️👯",
+      "text": "Vorsicht, falsche Freunde: la librairie ist keine Bibliothek, sondern eine Buchhandlung. Und le poison ist Gift, kein Fisch!"
+    },
+    {
+      "img": "🗺️🚀",
+      "text": "Allez, on y va ! Bummle mit Brummi durch die Stadt."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was heißt „das Federmäppchen“ auf Französisch?",
+      "a": "la trousse",
+      "choices": [
+        "le trousse",
+        "la trouse",
+        "la poche"
+      ],
+      "img": "✏️👝",
+      "info": "la poche = die Hosentasche"
+    },
+    {
+      "id": "002",
+      "q": "Was heißt „der Radiergummi“ auf Französisch?",
+      "a": "la gomme",
+      "choices": [
+        "le gomme",
+        "la gome",
+        "la pomme"
+      ],
+      "img": "✏️🔙"
+    },
+    {
+      "id": "003",
+      "q": "Was heißt „die Tafel“ auf Französisch?",
+      "a": "le tableau",
+      "choices": [
+        "la tableau",
+        "la table",
+        "le tablo"
+      ],
+      "img": "👩‍🏫",
+      "info": "la table = der Tisch"
+    },
+    {
+      "id": "004",
+      "q": "Was bedeutet „la récréation“?",
+      "a": "die Pause (auf dem Schulhof)",
+      "choices": [
+        "die Klassenarbeit",
+        "der Unterricht",
+        "die Kantine"
+      ],
+      "img": "⚽🔔",
+      "info": "Kurz sagen Kinder einfach „la récré“."
+    },
+    {
+      "id": "005",
+      "q": "Was bedeutet „la cantine“?",
+      "a": "die Schulkantine",
+      "choices": [
+        "der Schulhof",
+        "das Klassenzimmer",
+        "die Turnhalle"
+      ],
+      "img": "🍽️🏫"
+    },
+    {
+      "id": "006",
+      "q": "Was heißt „das Klassenzimmer“ auf Französisch?",
+      "a": "la salle de classe",
+      "choices": [
+        "le salle de classe",
+        "la classe de salle",
+        "la salle de bain"
+      ],
+      "img": "🪑🏫",
+      "info": "la salle de bain = das Badezimmer"
+    },
+    {
+      "id": "007",
+      "q": "Was heißt „der Stundenplan“ auf Französisch?",
+      "a": "l'emploi du temps",
+      "choices": [
+        "le emploi du temps",
+        "l'emploi de temps",
+        "la carte du temps"
+      ],
+      "img": "📅🕗",
+      "info": "emploi ist männlich; vor Vokal wird le zu l'."
+    },
+    {
+      "id": "008",
+      "q": "Was heißt „das Schwimmbad“ auf Französisch?",
+      "a": "la piscine",
+      "choices": [
+        "le piscine",
+        "la poissonnerie",
+        "la pisine"
+      ],
+      "img": "🏊",
+      "info": "la poissonnerie = das Fischgeschäft"
+    },
+    {
+      "id": "009",
+      "q": "Was heißt „das Kino“ auf Französisch?",
+      "a": "le cinéma",
+      "choices": [
+        "la cinéma",
+        "le cinema",
+        "le théâtre"
+      ],
+      "img": "🎬🍿"
+    },
+    {
+      "id": "010",
+      "q": "Was bedeutet „le jeu vidéo“?",
+      "a": "das Videospiel",
+      "choices": [
+        "der Fernseher",
+        "das Handy",
+        "der Film"
+      ],
+      "img": "🎮"
+    },
+    {
+      "id": "011",
+      "q": "Was heißt „Fußball spielen“ auf Französisch?",
+      "a": "jouer au foot",
+      "choices": [
+        "jouer du foot",
+        "jouer à le foot",
+        "jouer à la foot"
+      ],
+      "img": "⚽🏃",
+      "info": "Sport und Spiele: jouer à. Aus à + le wird au."
+    },
+    {
+      "id": "012",
+      "q": "Was heißt „Klavier spielen“ auf Französisch?",
+      "a": "jouer du piano",
+      "choices": [
+        "jouer de le piano",
+        "jouer à le piano",
+        "jouer de la piano"
+      ],
+      "img": "🎹🎶",
+      "info": "Instrumente: jouer de. Aus de + le wird du."
+    },
+    {
+      "id": "013",
+      "q": "Was bedeutet „les vacances“?",
+      "a": "die Ferien",
+      "choices": [
+        "die Freizeit",
+        "der Ausflug",
+        "das Wochenende"
+      ],
+      "img": "🏖️🧳",
+      "info": "In der Bedeutung „Ferien“ steht vacances immer im Plural: les vacances."
+    },
+    {
+      "id": "014",
+      "q": "Was heißt „die Freundin“ auf Französisch?",
+      "a": "l'amie",
+      "choices": [
+        "la amie",
+        "l'ami",
+        "l'amye"
+      ],
+      "img": "👧🤝",
+      "info": "Weiblich mit -e: une amie. Vor Vokal wird la zu l'."
+    },
+    {
+      "id": "015",
+      "q": "Was heißt „singen“ auf Französisch?",
+      "a": "chanter",
+      "choices": [
+        "chantir",
+        "danser",
+        "champer"
+      ],
+      "img": "🎤"
+    },
+    {
+      "id": "016",
+      "q": "Was heißt „das Frühstück“ auf Französisch?",
+      "a": "le petit-déjeuner",
+      "choices": [
+        "la petit-déjeuner",
+        "le déjeuner",
+        "le dîner"
+      ],
+      "img": "🌅☕",
+      "info": "le déjeuner = das Mittagessen, le dîner = das Abendessen"
+    },
+    {
+      "id": "017",
+      "q": "Was heißt „die Erdbeere“ auf Französisch?",
+      "a": "la fraise",
+      "choices": [
+        "le fraise",
+        "la framboise",
+        "la frèse"
+      ],
+      "img": "🍓",
+      "info": "la framboise = die Himbeere"
+    },
+    {
+      "id": "018",
+      "q": "Was heißt „das Hähnchen“ auf Französisch?",
+      "a": "le poulet",
+      "choices": [
+        "la poulet",
+        "le poisson",
+        "le pullet"
+      ],
+      "img": "🍗"
+    },
+    {
+      "id": "019",
+      "q": "Was bedeutet „les frites“?",
+      "a": "die Pommes",
+      "choices": [
+        "die Kartoffeln",
+        "die Nudeln",
+        "der Reis"
+      ],
+      "img": "🍟",
+      "info": "Kartoffeln heißen les pommes de terre – „Erdäpfel“."
+    },
+    {
+      "id": "020",
+      "q": "Was bedeutet „le jus d'orange“?",
+      "a": "der Orangensaft",
+      "choices": [
+        "die Orangenschale",
+        "der Orangenbaum",
+        "das Orangeneis"
+      ],
+      "img": "🍊"
+    },
+    {
+      "id": "021",
+      "q": "Was heißt „die Gabel“ auf Französisch?",
+      "a": "la fourchette",
+      "choices": [
+        "le fourchette",
+        "la cuillère",
+        "la fourchete"
+      ],
+      "img": "🍴",
+      "info": "la cuillère = der Löffel"
+    },
+    {
+      "id": "022",
+      "q": "Was bedeutet „le poisson“?",
+      "a": "der Fisch",
+      "choices": [
+        "das Gift",
+        "die Erbse",
+        "das Huhn"
+      ],
+      "img": "🎣🌊",
+      "info": "Achtung: le poison (mit einem s) ist das Gift!"
+    },
+    {
+      "id": "023",
+      "q": "Was heißt „Ich habe Hunger.“ auf Französisch?",
+      "a": "J'ai faim.",
+      "choices": [
+        "Je suis faim.",
+        "J'ai faime.",
+        "Je fais faim."
+      ],
+      "img": "😋🍽️",
+      "info": "Auf Französisch „hat“ man Hunger: avoir faim."
+    },
+    {
+      "id": "024",
+      "q": "Was heißt „die Rechnung“ (im Restaurant) auf Französisch?",
+      "a": "l'addition",
+      "choices": [
+        "la addition",
+        "le addition",
+        "l'additon"
+      ],
+      "img": "🧾",
+      "info": "addition ist weiblich: l'addition (f)."
+    },
+    {
+      "id": "025",
+      "q": "Was bedeutet „le gâteau“?",
+      "a": "der Kuchen",
+      "choices": [
+        "der Gast",
+        "das Geschenk",
+        "das Brötchen"
+      ],
+      "img": "🎂"
+    },
+    {
+      "id": "026",
+      "q": "Was heißt „die Bäckerei“ auf Französisch?",
+      "a": "la boulangerie",
+      "choices": [
+        "le boulangerie",
+        "la boucherie",
+        "la boulangeri"
+      ],
+      "img": "🥖🏪",
+      "info": "la boucherie = die Metzgerei"
+    },
+    {
+      "id": "027",
+      "q": "Was heißt „die Kirche“ auf Französisch?",
+      "a": "l'église",
+      "choices": [
+        "la église",
+        "l'églize",
+        "l'école"
+      ],
+      "img": "⛪",
+      "info": "église ist weiblich: l'église (f)."
+    },
+    {
+      "id": "028",
+      "q": "Was heißt „die Straße“ auf Französisch?",
+      "a": "la rue",
+      "choices": [
+        "le rue",
+        "la roue",
+        "la ru"
+      ],
+      "img": "🚸🏘️",
+      "info": "la roue = das Rad"
+    },
+    {
+      "id": "029",
+      "q": "Was bedeutet „le magasin“?",
+      "a": "das Geschäft",
+      "choices": [
+        "das Magazin",
+        "der Markt",
+        "die Garage"
+      ],
+      "img": "🛍️",
+      "info": "Falscher Freund: das Magazin heißt le magazine."
+    },
+    {
+      "id": "030",
+      "q": "Was heißt „das Krankenhaus“ auf Französisch?",
+      "a": "l'hôpital",
+      "choices": [
+        "la hôpital",
+        "l'hopital",
+        "l'hôtel"
+      ],
+      "img": "🏥",
+      "info": "hôpital ist männlich: l'hôpital (m)."
+    },
+    {
+      "id": "031",
+      "q": "Was heißt „links“ auf Französisch?",
+      "a": "à gauche",
+      "choices": [
+        "à droite",
+        "tout droit",
+        "au gauche"
+      ],
+      "img": "⬅️",
+      "info": "à droite = rechts, tout droit = geradeaus"
+    },
+    {
+      "id": "032",
+      "q": "Was bedeutet „tout droit“?",
+      "a": "geradeaus",
+      "choices": [
+        "rechts",
+        "links",
+        "zurück"
+      ],
+      "img": "🧭🚶"
+    },
+    {
+      "id": "033",
+      "q": "Was heißt „die Brücke“ auf Französisch?",
+      "a": "le pont",
+      "choices": [
+        "la pont",
+        "le port",
+        "le pond"
+      ],
+      "img": "🌉",
+      "info": "le port = der Hafen"
+    },
+    {
+      "id": "034",
+      "q": "Was heißt „der Platz“ (in der Stadt) auf Französisch?",
+      "a": "la place",
+      "choices": [
+        "le place",
+        "la plage",
+        "la plasse"
+      ],
+      "img": "⛲🏙️",
+      "info": "la plage = der Strand"
+    },
+    {
+      "id": "035",
+      "q": "Was bedeutet „la bibliothèque“?",
+      "a": "die Bibliothek",
+      "choices": [
+        "die Buchhandlung",
+        "die Bibel",
+        "das Museum"
+      ],
+      "img": "📚🤫",
+      "info": "Falscher Freund: la librairie ist die Buchhandlung."
+    },
+    {
+      "id": "036",
+      "q": "Was heißt „die U-Bahn“ auf Französisch?",
+      "a": "le métro",
+      "choices": [
+        "la métro",
+        "le métrot",
+        "le tramway"
+      ],
+      "img": "🚇",
+      "info": "le tramway = die Straßenbahn"
+    }
+  ]
+}

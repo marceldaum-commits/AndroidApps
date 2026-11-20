@@ -156,7 +156,7 @@ test('Pakete: falsche Antworten enthalten nie die richtige; genug Auswahl für j
     assert.ok(w.length >= 2, p.id + '/' + c.id);
     assert.ok(!w.includes(c.a), p.id + '/' + c.id);
     const k = P.classify(c, p.lang);
-    if (P.modes(c, p.lang).includes('hoeren')) { const wd = P.wrongs(c, p, 3, 'de'); assert.ok(wd.length >= 2 && !wd.includes(k.de), p.id + '/' + c.id); }
+    if (P.modes(c, p.lang, p).includes('hoeren')) { const wd = P.wrongs(c, p, 3, 'de'); assert.ok(wd.length >= 2 && !wd.includes(k.de), p.id + '/' + c.id); }
   }
 });
 
@@ -269,4 +269,48 @@ test('Service Worker sucht nur im eigenen Speicher (gemeinsame Adresse lernen.�
   const sw = readFileSync(new URL('sw.js', dir), 'utf8');
   assert.doesNotMatch(sw, /caches\.match\(/, 'caches.match findet auch Dateien anderer Apps');
   assert.match(sw, /caches\.open\(CACHE\)\.then\(\(c\) => c\.match/);
+});
+
+test('Abwechslung: Runden-Spiele ziehen ohne Wiederholung (nie dieselben 2 Aufgaben abwechselnd)', () => {
+  for (let s = 1; s <= 200; s++) {
+    let x = s; const rnd = () => { x = (x * 16807) % 2147483647; return x / 2147483647; };
+    const r = P.ziehen(['a', 'b', 'c', 'd', 'e'], 5, rnd); assert.equal(new Set(r).size, 5);
+    const r2 = P.ziehen(['a', 'b', 'c'], 7, rnd);
+    for (let i = 1; i < r2.length; i++) assert.notEqual(r2[i], r2[i - 1], 'gleiche Aufgabe direkt nacheinander');
+  }
+  for (const e of playable) for (const g of e.games) {
+    const pool = g.items || g.targets; if (!pool) continue;
+    const runden = g.rounds || 5;
+    const r = P.ziehen(pool, runden);
+    assert.equal(new Set(r).size, Math.min(pool.length, runden), `${e.id}/${g.title}: ${runden} Runden aus ${pool.length} Aufgaben`);
+    assert.ok(pool.length >= Math.min(runden, 5), `${e.id}/${g.title}: Pool zu klein (${pool.length})`);
+  }
+  for (const e of playable) for (const g of e.games) {
+    const pool = g.lines || g.sentences; if (!pool) continue;
+    assert.ok(pool.length >= 5, `${e.id}/${g.title}: nur ${pool.length} Sätze – mindestens 5 verschiedene je Runde`);
+  }
+});
+
+test('Abwechslung: Lektionen im Lernpfad und Paket-Runden wiederholen keine Aufgabe direkt nacheinander', () => {
+  for (const l of P.LERNPFAD) {
+    const lp = JSON.parse(readFileSync(new URL('lernpfad/' + l + '.json', dir), 'utf8'));
+    for (const a of lp.abschnitte) for (const e of a.einheiten) {
+      const pk = P.lernPack(e, l);
+      for (const le of P.lektionenFuer(l)) for (let s = 1; s <= 5; s++) {
+        let x = s * 7919; const rnd = () => { x = (x * 16807) % 2147483647; return x / 2147483647; };
+        const st = P.lektion(pk, le.nr, rnd);
+        const ids = st.map((q) => q.card ? q.card.id : (q.fehler ? q.fehler.falsch : (q.aktion ? q.aktion.sag : (q.text || q.mode))));
+        for (let i = 1; i < ids.length; i++) assert.notEqual(ids[i], ids[i - 1], `${e.id} Lektion ${le.nr}: „${ids[i]}“ doppelt hintereinander`);
+        const karten = st.filter((q) => q.card).map((q) => q.card.id);
+        assert.ok(new Set(karten).size >= Math.min(karten.length, 4), `${e.id} Lektion ${le.nr}: zu wenig verschiedene Aufgaben`);
+      }
+    }
+  }
+});
+
+test('Ehrliche Rückmeldung: keine Sterne und kein „klang super“ fürs bloße Aufnehmen', () => {
+  const app = readFileSync(new URL('app.js', dir), 'utf8');
+  assert.doesNotMatch(app, /klang super/i);
+  assert.doesNotMatch(app, /Super gesprochen/);
+  assert.doesNotMatch(app, /done\([123],/, 'Papagei-Echo vergibt Sterne ohne Messung');
 });

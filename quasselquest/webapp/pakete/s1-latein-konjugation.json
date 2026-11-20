@@ -1,0 +1,470 @@
+{
+  "id": "s1-latein-konjugation",
+  "version": 1,
+  "title": "Latein: Verben konjugieren",
+  "subject": "latein",
+  "grades": [
+    6,
+    7,
+    8
+  ],
+  "emoji": "⚔️",
+  "tier": "free",
+  "description": "Präsens, Imperfekt und Perfekt der a-, e-, i- und konsonantischen Konjugation, dazu esse, posse und der Imperativ.",
+  "intro": [
+    {
+      "img": "🧩🔚",
+      "text": "Lateinische Verben brauchen kein „ich“ oder „du“: Die Endung sagt es! -ō, -s, -t, -mus, -tis, -nt."
+    },
+    {
+      "img": "⏳🔤",
+      "text": "Zeitreise mit Kennzeichen: -ba- heißt Imperfekt (portābat = er trug), -v-, -u- oder -s- zeigen oft das Perfekt (portāvit = er hat getragen)."
+    },
+    {
+      "img": "📏✨",
+      "text": "Achte auf die Längen: venit = er kommt, vēnit = er ist gekommen. Ein kleiner Strich, große Wirkung!"
+    },
+    {
+      "img": "📣❗",
+      "text": "Befehle sind kurz: audī! (hör!) – audīte! (hört!). Merkvers: dīc, dūc, fac und fer – die wollen kein -e mehr!"
+    },
+    {
+      "img": "🏆⚔️",
+      "text": "Caesar konnte das schon: „Vēnī, vīdī, vīcī.“ Am Ende dieser Runde verstehst du es auch!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie lautet die 1. Person Plural Präsens von „portāre“?",
+      "a": "portāmus",
+      "choices": [
+        "portātis",
+        "portant",
+        "portābāmus"
+      ],
+      "img": "📦💪",
+      "info": "Personalendungen: -ō, -s, -t, -mus, -tis, -nt. Fremdwort: Transport, Porto."
+    },
+    {
+      "id": "002",
+      "q": "Wie lautet die 3. Person Plural Präsens von „monēre“?",
+      "a": "monent",
+      "choices": [
+        "moneunt",
+        "monētis",
+        "monēbant"
+      ],
+      "img": "☝️🧓",
+      "info": "e-Konjugation: moneō, monēs, monet, monēmus, monētis, monent. monēre = ermahnen."
+    },
+    {
+      "id": "003",
+      "q": "Wie lautet die 3. Person Plural Präsens von „audīre“?",
+      "a": "audiunt",
+      "choices": [
+        "audīnt",
+        "audītis",
+        "audiēbant"
+      ],
+      "img": "👂👂",
+      "info": "i-Konjugation: In der 3. Person Plural kommt ein -u- dazu: audiunt."
+    },
+    {
+      "id": "004",
+      "q": "Wie lautet die 3. Person Plural Präsens von „mittere“?",
+      "a": "mittunt",
+      "choices": [
+        "mittent",
+        "mittint",
+        "mittitis"
+      ],
+      "img": "✉️➡️",
+      "info": "Konsonantische Konjugation: mittō, mittis, mittit, mittimus, mittitis, mittunt. Fremdwort: Mission."
+    },
+    {
+      "id": "005",
+      "q": "Wie lautet die 2. Person Singular Präsens von „agere“?",
+      "a": "agis",
+      "choices": [
+        "agēs",
+        "agās",
+        "agit"
+      ],
+      "img": "🏃‍♂️",
+      "info": "Konsonantische Konjugation: Bindevokal -i-: agō, agis, agit. agere = handeln, treiben."
+    },
+    {
+      "id": "006",
+      "q": "Bestimme die Form „laudātis“.",
+      "a": "2. Person Plural Präsens",
+      "choices": [
+        "3. Person Plural Präsens",
+        "2. Person Singular Präsens",
+        "2. Person Plural Imperfekt"
+      ],
+      "img": "👏👏",
+      "info": "-tis = ihr. Kein -ba-, also Präsens: ihr lobt."
+    },
+    {
+      "id": "007",
+      "q": "Bestimme die Form „dormiēbam“.",
+      "a": "1. Person Singular Imperfekt",
+      "choices": [
+        "1. Person Singular Präsens",
+        "3. Person Singular Imperfekt",
+        "1. Person Singular Perfekt"
+      ],
+      "img": "😴🛏️",
+      "info": "-ba- zeigt das Imperfekt, -m die 1. Person Singular: ich schlief. Fremdwort: Dormitorium (Schlafsaal)."
+    },
+    {
+      "id": "008",
+      "q": "Wie lautet die 3. Person Singular Imperfekt von „monēre“?",
+      "a": "monēbat",
+      "choices": [
+        "monet",
+        "monuit",
+        "monēbant"
+      ],
+      "img": "☝️📜",
+      "info": "Imperfekt = Stamm + -ba- + Endung: monē-ba-t = er ermahnte."
+    },
+    {
+      "id": "009",
+      "q": "Wie lautet die 1. Person Plural Imperfekt von „dūcere“?",
+      "a": "dūcēbāmus",
+      "choices": [
+        "dūcimus",
+        "dūcēbātis",
+        "dūxerāmus"
+      ],
+      "img": "🧭👣",
+      "info": "Konsonantische und i-Konjugation bilden das Imperfekt mit -ēba-: dūcēbāmus = wir führten."
+    },
+    {
+      "id": "010",
+      "q": "Woran erkennst du das Imperfekt?",
+      "a": "am Kennzeichen -ba- (z. B. portābat)",
+      "choices": [
+        "am Kennzeichen -v- (z. B. portāvit)",
+        "an der Endung -ī (z. B. portāvī)",
+        "an der Endung -re (z. B. portāre)"
+      ],
+      "img": "🔎⏳",
+      "info": "Bei esse und posse fehlt das -ba-: erat, poterat."
+    },
+    {
+      "id": "011",
+      "q": "Wie lautet die 1. Person Singular Perfekt von „portāre“?",
+      "a": "portāvī",
+      "choices": [
+        "portābam",
+        "portō",
+        "portāvit"
+      ],
+      "img": "📦✅",
+      "info": "Perfekt-Endungen: -ī, -istī, -it, -imus, -istis, -ērunt."
+    },
+    {
+      "id": "012",
+      "q": "Wie lautet die 3. Person Plural Perfekt von „monēre“?",
+      "a": "monuērunt",
+      "choices": [
+        "monēbant",
+        "monuistis",
+        "monent"
+      ],
+      "img": "☝️✅",
+      "info": "Viele Verben der e-Konjugation bilden das Perfekt mit -u-: monuī, monuistī, monuit …"
+    },
+    {
+      "id": "013",
+      "q": "Wie lautet die 3. Person Singular Perfekt von „mittere“?",
+      "a": "mīsit",
+      "choices": [
+        "mittit",
+        "mittēbat",
+        "mīsērunt"
+      ],
+      "img": "✉️✅",
+      "info": "mittere, mīsī: Das Perfekt sieht ganz anders aus – deshalb lernt man die Stammformen mit."
+    },
+    {
+      "id": "014",
+      "q": "Bestimme die Form „vēnit“ (mit langem ē).",
+      "a": "3. Person Singular Perfekt",
+      "choices": [
+        "3. Person Singular Präsens",
+        "3. Person Plural Perfekt",
+        "1. Person Singular Perfekt"
+      ],
+      "img": "🛬✅",
+      "info": "venit (kurz) = er kommt, vēnit (lang) = er ist gekommen / er kam. Die Länge macht den Unterschied!"
+    },
+    {
+      "id": "015",
+      "q": "Bestimme die Form „mīsistī“.",
+      "a": "2. Person Singular Perfekt",
+      "choices": [
+        "2. Person Plural Perfekt",
+        "2. Person Singular Präsens",
+        "1. Person Singular Perfekt"
+      ],
+      "img": "📨",
+      "info": "-istī = du (Perfekt), -istis = ihr (Perfekt)."
+    },
+    {
+      "id": "016",
+      "q": "Wie lautet die 1. Person Singular Perfekt von „agere“?",
+      "a": "ēgī",
+      "choices": [
+        "agāvī",
+        "agēbam",
+        "āxī"
+      ],
+      "img": "🏃‍♂️✅",
+      "info": "Dehnungsperfekt: Der Stammvokal wird lang und kann sich ändern – agō, ēgī."
+    },
+    {
+      "id": "017",
+      "q": "Wie lautet die 1. Person Singular Perfekt von „dūcere“?",
+      "a": "dūxī",
+      "choices": [
+        "dūcāvī",
+        "dūcēbam",
+        "dūxit"
+      ],
+      "img": "🧭✅",
+      "info": "s-Perfekt: dūc-s-ī wird zu dūxī (x = cs)."
+    },
+    {
+      "id": "018",
+      "q": "Was heißt „wir sind“ auf Latein?",
+      "a": "sumus",
+      "choices": [
+        "estis",
+        "sunt",
+        "erāmus"
+      ],
+      "img": "👫✨",
+      "info": "esse: sum, es, est, sumus, estis, sunt."
+    },
+    {
+      "id": "019",
+      "q": "Wie lautet die 2. Person Singular Präsens von „esse“?",
+      "a": "es",
+      "choices": [
+        "est",
+        "estis",
+        "erās"
+      ],
+      "img": "🫵",
+      "info": "es = du bist. est = er/sie/es ist."
+    },
+    {
+      "id": "020",
+      "q": "Bestimme die Form „erant“.",
+      "a": "3. Person Plural Imperfekt (von esse)",
+      "choices": [
+        "3. Person Plural Präsens (von esse)",
+        "3. Person Plural Perfekt (von esse)",
+        "2. Person Plural Imperfekt (von esse)"
+      ],
+      "img": "⏳👥",
+      "info": "Imperfekt von esse: eram, erās, erat, erāmus, erātis, erant = sie waren."
+    },
+    {
+      "id": "021",
+      "q": "Wie lautet die 3. Person Singular Perfekt von „esse“?",
+      "a": "fuit",
+      "choices": [
+        "erat",
+        "est",
+        "fuērunt"
+      ],
+      "img": "🏚️",
+      "info": "Perfekt von esse: fuī, fuistī, fuit … „Troia fuit“ = Troja ist gewesen (gibt es nicht mehr)."
+    },
+    {
+      "id": "022",
+      "q": "Was heißt „ich kann“ auf Latein?",
+      "a": "possum",
+      "choices": [
+        "potest",
+        "poteram",
+        "possumus"
+      ],
+      "img": "💪",
+      "info": "posse = pot + esse: vor s steht pos-, vor e steht pot-: possum, potes, potest."
+    },
+    {
+      "id": "023",
+      "q": "Wie lautet die 3. Person Plural Präsens von „posse“?",
+      "a": "possunt",
+      "choices": [
+        "potunt",
+        "possumus",
+        "poterant"
+      ],
+      "img": "💪💪",
+      "info": "pos- vor s: possum, possumus, possunt. pot- vor e: potes, potest, potestis."
+    },
+    {
+      "id": "024",
+      "q": "Bestimme die Form „potuistis“.",
+      "a": "2. Person Plural Perfekt (von posse)",
+      "choices": [
+        "2. Person Plural Präsens (von posse)",
+        "2. Person Singular Perfekt (von posse)",
+        "2. Person Plural Imperfekt (von posse)"
+      ],
+      "img": "🏋️✅",
+      "info": "Perfekt von posse: potuī, potuistī, potuit, potuimus, potuistis, potuērunt."
+    },
+    {
+      "id": "025",
+      "q": "Puerī in viā ___. (Präsens von „lūdere“: sie spielen)",
+      "a": "lūdunt",
+      "choices": [
+        "lūdit",
+        "lūdimus",
+        "lūdēbant"
+      ],
+      "img": "⚽🧒",
+      "info": "Konsonantische Konjugation, 3. Person Plural: -unt."
+    },
+    {
+      "id": "026",
+      "q": "Herī magister nōs ___. (Perfekt von „laudāre“: er hat gelobt)",
+      "a": "laudāvit",
+      "choices": [
+        "laudat",
+        "laudābat",
+        "laudāvērunt"
+      ],
+      "img": "👨‍🏫👏",
+      "info": "herī = gestern. laudāre, laudāvī = loben."
+    },
+    {
+      "id": "027",
+      "q": "Ōlim Rōmānī in hāc urbe ___. (Imperfekt von „habitāre“: sie wohnten)",
+      "a": "habitābant",
+      "choices": [
+        "habitant",
+        "habitābat",
+        "habitābāmus"
+      ],
+      "img": "🏛️🏠",
+      "info": "ōlim = einst. Fremdwort: Habitat (Lebensraum)."
+    },
+    {
+      "id": "028",
+      "q": "Vōs bonī discipulī ___. (esse: ihr seid)",
+      "a": "estis",
+      "choices": [
+        "sunt",
+        "sumus",
+        "es"
+      ],
+      "img": "🎒⭐",
+      "info": "Ihr seid gute Schüler! -tis = ihr."
+    },
+    {
+      "id": "029",
+      "q": "Wie lautet der Imperativ Singular von „audīre“?",
+      "a": "audī!",
+      "choices": [
+        "audīte!",
+        "audit!",
+        "audīs!"
+      ],
+      "img": "👂❗",
+      "info": "Imperativ Singular = reiner Stamm: audī! Plural mit -te: audīte!"
+    },
+    {
+      "id": "030",
+      "q": "Was heißt „Schweigt!“ (zu mehreren) auf Latein?",
+      "a": "Tacēte!",
+      "choices": [
+        "Tacē!",
+        "Tacētis!",
+        "Tacent!"
+      ],
+      "img": "🤫🤫",
+      "info": "tacēre = schweigen. Imperativ Plural: Stamm + -te."
+    },
+    {
+      "id": "031",
+      "q": "Wie lautet der Imperativ Plural von „mittere“?",
+      "a": "mittite!",
+      "choices": [
+        "mittete!",
+        "mitte!",
+        "mittitis!"
+      ],
+      "img": "📨❗",
+      "info": "Konsonantische Konjugation: mitte! – mittite! (mit Bindevokal -i-)."
+    },
+    {
+      "id": "032",
+      "q": "Welcher Imperativ ist eine Ausnahme ohne -e am Ende?",
+      "a": "dūc! (führe!)",
+      "choices": [
+        "mitte! (schicke!)",
+        "age! (handle!)",
+        "lege! (lies!)"
+      ],
+      "img": "🧭❗",
+      "info": "Merkvers: dīc, dūc, fac und fer – die wollen kein -e mehr!"
+    },
+    {
+      "id": "033",
+      "q": "Was bedeutet „Servī diū labōrābant.“?",
+      "a": "Die Sklaven arbeiteten lange.",
+      "choices": [
+        "Die Sklaven arbeiten lange.",
+        "Der Sklave arbeitete lange.",
+        "Die Sklaven werden lange arbeiten."
+      ],
+      "img": "⛏️⏳",
+      "info": "diū = lange. -ba- + -nt = sie … (Imperfekt)."
+    },
+    {
+      "id": "034",
+      "q": "Was bedeutet „Amīcī ad forum vēnērunt.“?",
+      "a": "Die Freunde sind zum Forum gekommen.",
+      "choices": [
+        "Die Freunde kommen zum Forum.",
+        "Der Freund ist zum Forum gekommen.",
+        "Die Freunde werden zum Forum kommen."
+      ],
+      "img": "👫🏛️",
+      "info": "vēnērunt = 3. Person Plural Perfekt von venīre. Auch richtig übersetzt: „Die Freunde kamen zum Forum.“"
+    },
+    {
+      "id": "035",
+      "q": "Was bedeutet „Vēnī, vīdī, vīcī.“?",
+      "a": "Ich kam, ich sah, ich siegte.",
+      "choices": [
+        "Ich komme, ich sehe, ich siege.",
+        "Komm, sieh und siege!",
+        "Er kam, er sah, er siegte."
+      ],
+      "img": "🏆⚔️",
+      "info": "So soll Caesar seinen schnellen Sieg bei Zela (47 v. Chr.) gemeldet haben – drei Perfektformen, 1. Person Singular."
+    },
+    {
+      "id": "036",
+      "q": "Zu welcher Konjugation gehört „regere“ (mit kurzem e vor -re)?",
+      "a": "konsonantische Konjugation",
+      "choices": [
+        "e-Konjugation",
+        "a-Konjugation",
+        "i-Konjugation"
+      ],
+      "img": "👑📏",
+      "info": "regere: kurzes e → konsonantisch (regō, regis). monēre: langes ē → e-Konjugation."
+    }
+  ]
+}

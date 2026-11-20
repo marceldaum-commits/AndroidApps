@@ -488,3 +488,6 @@ a.btn { text-decoration: none; }
   html::before { left: 0; content: "☀️\A\A⛵\A\A🐟"; }
   html::after { right: 0; content: "🐦\A\A⚓\A\A🐳"; }
 }
+
+/* KI-VO Art. 50: sichtbarer Hinweis auf synthetische Stimmen */
+.ki-hinweis { font-size: 11px; color: var(--muted, #7a8a99); text-align: center; margin-top: 6px; opacity: .8; }

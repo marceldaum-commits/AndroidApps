@@ -52,20 +52,26 @@
               ],
             },
             {
-              type: 'echo', title: 'Papagei-Echo',
+              type: 'echo', title: 'Papagei-Echo', mehr: ['en-1-1', 'en-1-2', 'en-1-5', 'en-2-6'],
               lines: [
                 { en: 'Hello!', de: 'Hallo!', img: '👋' },
                 { en: 'My name is Ruby.', de: 'Ich heiße Ruby.', img: '🦜' },
                 { en: "What's your name?", de: 'Wie heißt du?', img: '❓' },
                 { en: 'Goodbye!', de: 'Auf Wiedersehen!', img: '🚢' },
+                { en: 'Nice to meet you.', de: 'Schön, dich kennenzulernen.', img: '🤝' },
+                { en: 'How are you?', de: 'Wie geht es dir?', img: '🙂' },
+                { en: "I'm fine, thank you.", de: 'Mir geht es gut, danke.', img: '😊' },
               ],
             },
             {
-              type: 'train', title: 'Satz-Zug',
+              type: 'train', title: 'Satz-Zug', mehr: ['en-1-1', 'en-1-2', 'en-1-5', 'en-2-6'],
               sentences: [
                 { en: 'My name is Mia.', de: 'Ich heiße Mia.' },
                 { en: "What's your name?", de: 'Wie heißt du?' },
                 { en: 'Nice to meet you.', de: 'Schön, dich kennenzulernen.' },
+                { en: 'How are you today?', de: 'Wie geht es dir heute?' },
+                { en: "I'm fine, thank you.", de: 'Mir geht es gut, danke.' },
+                { en: 'This is my friend Mia.', de: 'Das ist meine Freundin Mia.' },
               ],
             },
           ],
@@ -122,12 +128,15 @@
               targets: numbers.slice(0, 6).map((n, i) => ({ id: n, count: i + 1, en: n })),
             },
             {
-              type: 'echo', title: 'Papagei-Echo',
+              type: 'echo', title: 'Papagei-Echo', mehr: ['en-1-3', 'en-2-8', 'en-1-6', 'en-1-7'],
               lines: [
                 { en: 'One, two, three.', de: 'Eins, zwei, drei.', img: '1️⃣2️⃣3️⃣' },
                 { en: 'Four, five, six.', de: 'Vier, fünf, sechs.', img: '4️⃣5️⃣6️⃣' },
                 { en: 'Seven, eight, nine, ten.', de: 'Sieben, acht, neun, zehn.', img: '7️⃣8️⃣9️⃣🔟' },
                 { en: 'How many fish?', de: 'Wie viele Fische?', img: '🐟❓' },
+                { en: 'I have two fish.', de: 'Ich habe zwei Fische.', img: '🐟🐟' },
+                { en: 'Five fish, please.', de: 'Fünf Fische, bitte.', img: '🖐️🐟' },
+                { en: 'Here you are!', de: 'Bitte schön!', img: '🤲' },
               ],
             },
           ],
@@ -179,11 +188,14 @@
               targets: colours.slice(0, 6).map((c) => ({ id: c.id, en: c.en, css: c.css })),
             },
             {
-              type: 'train', title: 'Satz-Zug',
+              type: 'train', title: 'Satz-Zug', mehr: ['en-1-4', 'en-2-2', 'en-1-6', 'en-2-3'],
               sentences: [
                 { en: 'The boat is red.', de: 'Das Boot ist rot.' },
                 { en: 'My boat is green.', de: 'Mein Boot ist grün.' },
                 { en: 'What colour is the boat?', de: 'Welche Farbe hat das Boot?' },
+                { en: 'I like the yellow boat.', de: 'Ich mag das gelbe Boot.' },
+                { en: 'Is your boat blue?', de: 'Ist dein Boot blau?' },
+                { en: 'My boat is not red.', de: 'Mein Boot ist nicht rot.' },
               ],
             },
             {
