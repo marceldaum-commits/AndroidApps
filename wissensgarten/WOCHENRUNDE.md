@@ -298,3 +298,6 @@ Wortlaut (AppZentrale 19.11., aus PROBESTUNDE.md @ d672374):
 - Quelltext-Fix ist auf dem Branch (dfbe001a: wg-stimme.js + AndroidVoice.jetzt → 404, stille Gerätestimme). webapp/ unverändert (2.3.3).
 - Am Di mit dem neuen Bau (2.3.4 bzw. 2.4.0) auf test; der Cache-Name in sw.js ändert sich dann ohnehin durch die neue Version.
 - Ab Di: Textliste Format 1 (17.893 Texte: de 17.345, en 439, fr 69, es 40) fürs Tonstudio; Nova/OpenAI überall raus, DSE 10g.
+
+## Regel Di 24.11. (Marcel 20.11.)
+- Vor 14:00 Berlin nur lesen/planen – nichts bauen, committen, pushen. Ab 14:00 den ganzen Di-Plan, liefern „bis alles fertig ist“ (Nachtschicht erlaubt, keine 16/18-Uhr-Frist). Danach Meldung mit Commit, Rückweg, Rechtsbezug.
