@@ -1,4 +1,12 @@
 {
+ "0026dfebb37c64aad5dd": {
+  "gehoert": "auf dem Holzweg sein.",
+  "sprache": "de",
+  "sprechtext": "auf dem Holzweg sein",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "00481eaed3fc9d874581": {
   "gehoert": "and the sea.",
   "sprache": "en",
@@ -23,6 +31,22 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "00a8554c9c7e8712de4c": {
+  "gehoert": "Ausrufe-Satz",
+  "sprache": "de",
+  "sprechtext": "Ausrufesatz",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "00d6110fac58fd5ca8f0": {
+  "gehoert": "jemandem einen Wein einschenken.",
+  "sprache": "de",
+  "sprechtext": "jemandem reinen Wein einschenken",
+  "status": "anhoeren",
+  "treffer": 0.982,
+  "versuche": 4
+ },
  "010ea336437126a9a076": {
   "gehoert": "I have two mice.",
   "sprache": "en",
@@ -30,6 +54,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "01369faac141b50b726c": {
+  "gehoert": "Nominativ",
+  "sprache": "de",
+  "sprechtext": "Nominativ",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
  },
  "013a467cf1f63b669011": {
   "gehoert": "Nous avons.",
@@ -55,6 +87,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "015cb253b593688e58bd": {
+  "gehoert": "Monologue.",
+  "sprache": "de",
+  "sprechtext": "Monolog",
+  "status": "anhoeren",
+  "treffer": 0.875,
+  "versuche": 4
+ },
  "01724bdaa1a04b7ba02d": {
   "gehoert": "L'argent",
   "sprache": "fr",
@@ -75,6 +115,14 @@
   "gehoert": "Time for bed.",
   "sprache": "en",
   "sprechtext": "Time for bed!",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "01a2b24dd2fbc3cdb806": {
+  "gehoert": "Nein.",
+  "sprache": "de",
+  "sprechtext": "Nein",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -139,6 +187,14 @@
   "gehoert": "Es mi abuela, la quiero mucho.",
   "sprache": "es",
   "sprechtext": "Es mi abuela. ¡La quiero mucho!",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "02841daa9325bcbafa2f": {
+  "gehoert": "Wir gehen heute schwimmen.",
+  "sprache": "de",
+  "sprechtext": "Wir gehen heute schwimmen.",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -251,6 +307,14 @@
   "gehoert": "Clap your hands.",
   "sprache": "en",
   "sprechtext": "Clap your hands!",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "03b9c30d85ae265f8084": {
+  "gehoert": "Diskriminierung",
+  "sprache": "de",
+  "sprechtext": "Diskriminierung",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -411,6 +475,14 @@
   "gehoert": "It's my turn.",
   "sprache": "en",
   "sprechtext": "It's my turn.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "05efcd02f22df0824090": {
+  "gehoert": "Er ging los, ohne sich zu verabschieden.",
+  "sprache": "de",
+  "sprechtext": "Er ging los, ohne sich zu verabschieden.",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -591,6 +663,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "07e89a9df5852e111928": {
+  "gehoert": "Möchtest du Tee oder Kakao?",
+  "sprache": "de",
+  "sprechtext": "Möchtest du Tee oder Kakao?",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "07ebeacd5c4651b1ca84": {
   "gehoert": "Le métro.",
   "sprache": "fr",
@@ -615,12 +695,28 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "082dff9b88f706043272": {
+  "gehoert": "Das ist nicht mein Bier.",
+  "sprache": "de",
+  "sprechtext": "Das ist nicht mein Bier.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "0833dbfcbf322585f008": {
   "gehoert": "Say thank you to the bye.",
   "sprache": "en",
   "sprechtext": "Say thank you to the boy.",
   "status": "abweichung",
   "treffer": 0.947,
+  "versuche": 1
+ },
+ "084f56b082896f9d678c": {
+  "gehoert": "Akkusativobjekt.",
+  "sprache": "de",
+  "sprechtext": "Akkusativobjekt",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "08543019f5489db089c5": {
@@ -727,6 +823,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "093cbfb0a1050460474f": {
+  "gehoert": "Kuss.",
+  "sprache": "de",
+  "sprechtext": "Kuss",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "09654d074c2f3ff1f806": {
   "gehoert": "Donne de velo à une roue bifrelle.",
   "sprache": "fr",
@@ -799,6 +903,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "0a239435161cf6505bb3": {
+  "gehoert": "Anführungszeichen",
+  "sprache": "de",
+  "sprechtext": "Anführungszeichen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "0a3611a44a11355ad47c": {
   "gehoert": "La música es bonita.",
   "sprache": "es",
@@ -807,12 +919,28 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "0a4ce2419a3b38a6c457": {
+  "gehoert": "Implizit",
+  "sprache": "de",
+  "sprechtext": "implizit",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
+ },
  "0adda7d0496fd70e62d2": {
   "gehoert": "Hugo à froid.",
   "sprache": "fr",
   "sprechtext": "Hugo a froid.",
   "status": "abweichung",
   "treffer": 0.9,
+  "versuche": 1
+ },
+ "0aeba39e18f7eec1b620": {
+  "gehoert": "Es ist kälter als ich dachte.",
+  "sprache": "de",
+  "sprechtext": "Es ist kälter, als ich dachte.",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "0b2fed3fd0f9d661854f": {
@@ -1039,6 +1167,14 @@
   "treffer": 0.808,
   "versuche": 1
  },
+ "0d660085e2bd66bcf911": {
+  "gehoert": "Freundlich.",
+  "sprache": "de",
+  "sprechtext": "freundlich",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "0db57ebc087069406c79": {
   "gehoert": "Give Ruby a key.",
   "sprache": "en",
@@ -1078,6 +1214,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "0e5922ea335d22f770b0": {
+  "gehoert": "Springen.",
+  "sprache": "de",
+  "sprechtext": "springen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
  },
  "0e599b0a8cc2f44de3e8": {
   "gehoert": "La dépendance.",
@@ -1147,6 +1291,14 @@
   "gehoert": "¿Dónde está mi gorra?",
   "sprache": "es",
   "sprechtext": "¿Dónde está mi gorra?",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "0f570d07e72f8e3f43e8": {
+  "gehoert": "sympathisch.",
+  "sprache": "de",
+  "sprechtext": "sympathisch",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -1287,6 +1439,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "110636412fa25f32f358": {
+  "gehoert": "Hast du Hunger?",
+  "sprache": "de",
+  "sprechtext": "Hast du Hunger?",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "110c05d2ad66fb60f2d3": {
   "gehoert": "Hi, I'm Mia. What's your name?",
   "sprache": "en",
@@ -1351,6 +1511,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "1184c066c801bb28667f": {
+  "gehoert": "Am schnellsten",
+  "sprache": "de",
+  "sprechtext": "am schnellsten",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "11860a7373648cd7d653": {
   "gehoert": "El dormitorio.",
   "sprache": "es",
@@ -1403,6 +1571,14 @@
   "gehoert": "L'homme.",
   "sprache": "fr",
   "sprechtext": "l'homme",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "1266692ae48ff7244234": {
+  "gehoert": "Stein.",
+  "sprache": "de",
+  "sprechtext": "Stein",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -1463,6 +1639,14 @@
   "treffer": 0.0,
   "versuche": 1
  },
+ "1357c4c942e6d5e17c64": {
+  "gehoert": "Tomaten auf den Augen haben.",
+  "sprache": "de",
+  "sprechtext": "Tomaten auf den Augen haben",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "135d1eaa9cf72f42f54d": {
   "gehoert": "90.",
   "sprache": "fr",
@@ -1515,6 +1699,14 @@
   "gehoert": "Le ballon est rouge.",
   "sprache": "fr",
   "sprechtext": "Le ballon est rouge.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "141cb7f07ea8b72e6a6c": {
+  "gehoert": "Hals und Beinbruch.",
+  "sprache": "de",
+  "sprechtext": "Hals- und Beinbruch!",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -1815,6 +2007,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "184e8ebc966c2309af2a": {
+  "gehoert": "Zahnbürste",
+  "sprache": "de",
+  "sprechtext": "Zahnbürste",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "1853b4ab7f19189b94ef": {
   "gehoert": "Dale 5 lápices a Lucia.",
   "sprache": "es",
@@ -2087,6 +2287,14 @@
   "treffer": 0.759,
   "versuche": 1
  },
+ "1bf7b3af790dc010cc82": {
+  "gehoert": "Goss!",
+  "sprache": "de",
+  "sprechtext": "groß",
+  "status": "anhoeren",
+  "treffer": 0.889,
+  "versuche": 4
+ },
  "1bfe0ebf9e6a92fecc49": {
   "gehoert": "J'aime jouer en foot, frère.",
   "sprache": "fr",
@@ -2255,6 +2463,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "1e040705dec382e96001": {
+  "gehoert": "laufen",
+  "sprache": "de",
+  "sprechtext": "laufen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "1e08fe1503bb6f1c6fa4": {
   "gehoert": "and legs.",
   "sprache": "en",
@@ -2311,6 +2527,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "1e8ce14de25b814624bb": {
+  "gehoert": "Pooh.",
+  "sprache": "de",
+  "sprechtext": "Kuh",
+  "status": "anhoeren",
+  "treffer": 0.286,
+  "versuche": 4
+ },
  "1e907fd68d682bda0607": {
   "gehoert": "Our boats are beautiful.",
   "sprache": "en",
@@ -2325,6 +2549,14 @@
   "sprechtext": "Dale la pelota blanca a Lucía.",
   "status": "abweichung",
   "treffer": 0.958,
+  "versuche": 1
+ },
+ "1ed1d6274aa4226efd2c": {
+  "gehoert": "Effizient",
+  "sprache": "de",
+  "sprechtext": "effizient",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "1ef416f48f88fa29860b": {
@@ -2351,6 +2583,14 @@
   "treffer": 0.222,
   "versuche": 1
  },
+ "1f976e008e16c9523e5d": {
+  "gehoert": "Futur di.",
+  "sprache": "de",
+  "sprechtext": "Futur II",
+  "status": "anhoeren",
+  "treffer": 0.857,
+  "versuche": 4
+ },
  "1f9ab9a9cb9529fae268": {
   "gehoert": "Me levanto a las ocho.",
   "sprache": "es",
@@ -2366,6 +2606,22 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "1fa8b8c4733b86af138c": {
+  "gehoert": "Ausrufezeichen",
+  "sprache": "de",
+  "sprechtext": "Ausrufezeichen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "1ffb01c542a783e0f936": {
+  "gehoert": "Tanne.",
+  "sprache": "de",
+  "sprechtext": "Tanne",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
  },
  "1ffcfa9d4138ea1e1684": {
   "gehoert": "Hello.",
@@ -2467,6 +2723,14 @@
   "gehoert": "Il n'y a rien dans le frigo.",
   "sprache": "fr",
   "sprechtext": "Il n'y a rien dans le frigo.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "21b1f71fbe3041b974a1": {
+  "gehoert": "Motivation",
+  "sprache": "de",
+  "sprechtext": "Motivation",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -2807,6 +3071,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "2757e08a22dd462b665f": {
+  "gehoert": "Lena, Paul und Mia spielen Ball.",
+  "sprache": "de",
+  "sprechtext": "Lena, Paul und Mia spielen Ball.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
+ },
  "2798109423dc81a502a0": {
   "gehoert": "Dale dos móviles a Lucía.",
   "sprache": "es",
@@ -2846,6 +3118,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "28140f8892e4d34d139f": {
+  "gehoert": "Hypothese.",
+  "sprache": "de",
+  "sprechtext": "Hypothese",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
  },
  "28847c7a0fd48b40520b": {
   "gehoert": "Where's my bag? It is blue.",
@@ -2943,6 +3223,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "29934ea61c963e958af8": {
+  "gehoert": "Dativ.",
+  "sprache": "de",
+  "sprechtext": "Dativ",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "2993a03ad59a06cb05de": {
   "gehoert": "La fiesta de ayer fue genial.",
   "sprache": "es",
@@ -2987,6 +3275,14 @@
   "gehoert": "La ventana está abierta.",
   "sprache": "es",
   "sprechtext": "La ventana está abierta.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "2a54cfde840dbb3108f0": {
+  "gehoert": "Ich weiß, dass er kommt und freue mich.",
+  "sprache": "de",
+  "sprechtext": "Ich weiß, dass er kommt, und freue mich.",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -3399,6 +3695,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "2fbcbe60f4da8d215498": {
+  "gehoert": "Und?",
+  "sprache": "de",
+  "sprechtext": "Hund",
+  "status": "anhoeren",
+  "treffer": 0.857,
+  "versuche": 4
+ },
  "2fca14bd4b84903869b7": {
   "gehoert": "35.",
   "sprache": "fr",
@@ -3501,6 +3805,14 @@
   "sprechtext": "Hay doce lápices amarillos.",
   "status": "abweichung",
   "treffer": 0.864,
+  "versuche": 1
+ },
+ "3144ec6f0ab9e9a7ddc2": {
+  "gehoert": "Kalt.",
+  "sprache": "de",
+  "sprechtext": "kalt",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "315386db517a2e56f354": {
@@ -3679,6 +3991,14 @@
   "treffer": 0.909,
   "versuche": 1
  },
+ "3424ff0419ea75da2dde": {
+  "gehoert": "Tier.",
+  "sprache": "de",
+  "sprechtext": "Tier",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "34372da1188e5f6dbe5b": {
   "gehoert": "Ils vont faire leur devoir.",
   "sprache": "fr",
@@ -3757,6 +4077,14 @@
   "sprechtext": "neuf",
   "status": "abweichung",
   "treffer": 0.4,
+  "versuche": 1
+ },
+ "3509d78428c7471f4617": {
+  "gehoert": "Frage Satz",
+  "sprache": "de",
+  "sprechtext": "Fragesatz",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "35130bd074b33c87fd4b": {
@@ -3909,6 +4237,14 @@
   "sprechtext": "Dale una bici a Lucía.",
   "status": "abweichung",
   "treffer": 0.778,
+  "versuche": 1
+ },
+ "374ff1d49408f72806d3": {
+  "gehoert": "wie auf heißen Kohlen sitzen.",
+  "sprache": "de",
+  "sprechtext": "wie auf heißen Kohlen sitzen",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "374ffc29ae1609f0d9cb": {
@@ -4107,6 +4443,14 @@
   "gehoert": "Sam has got a cap. His cap is blue.",
   "sprache": "en",
   "sprechtext": "Sam has got a cap. His cap is blue.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "39836e81267c95d4291d": {
+  "gehoert": "Konsens.",
+  "sprache": "de",
+  "sprechtext": "Konsens",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -4519,6 +4863,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "3dac73c81876b33623f7": {
+  "gehoert": "Die Katze im Sack kaufen.",
+  "sprache": "de",
+  "sprechtext": "die Katze im Sack kaufen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
+ },
  "3db542172b3b7e47d441": {
   "gehoert": "Friday.",
   "sprache": "en",
@@ -4579,6 +4931,14 @@
   "gehoert": "Le professeur.",
   "sprache": "fr",
   "sprechtext": "le professeur",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "3e150e137dcafecb95ed": {
+  "gehoert": "Aufforderungssatz",
+  "sprache": "de",
+  "sprechtext": "Aufforderungssatz",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -4679,10 +5039,26 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "3f1fc7db6fbde1859b23": {
+  "gehoert": "Mit jemandem ein Hühnchen rupfen.",
+  "sprache": "de",
+  "sprechtext": "mit jemandem ein Hühnchen rupfen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "3f4892a28df89309cfc4": {
   "gehoert": "Je suis.",
   "sprache": "fr",
   "sprechtext": "je suis",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "3f629a22cf37e541290c": {
+  "gehoert": "Schluss!",
+  "sprache": "de",
+  "sprechtext": "Schluss",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -4727,6 +5103,14 @@
   "treffer": 0.848,
   "versuche": 1
  },
+ "402938d5df8217b2051b": {
+  "gehoert": "Kinder",
+  "sprache": "de",
+  "sprechtext": "Kinder",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "405f77b1d84f12d00476": {
   "gehoert": "¿Cuántos caramelos y ahora la tarta tienes que soplar las 10 velas?",
   "sprache": "es",
@@ -4766,6 +5150,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "410e08a78da21a7221e0": {
+  "gehoert": "Tatze",
+  "sprache": "de",
+  "sprechtext": "Tatze",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
  },
  "411ec376084d1dfb0cea": {
   "gehoert": "El desayuno.",
@@ -4935,6 +5327,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "42c79f2bc8e326a343f5": {
+  "gehoert": "Misch.",
+  "sprache": "de",
+  "sprechtext": "Milch",
+  "status": "anhoeren",
+  "treffer": 0.8,
+  "versuche": 4
+ },
  "42d14ea8df5a51456ca8": {
   "gehoert": "et la mer.",
   "sprache": "fr",
@@ -4949,6 +5349,14 @@
   "sprechtext": "Where are my socks?",
   "status": "abweichung",
   "treffer": 0.846,
+  "versuche": 1
+ },
+ "42fab03a66097b0a9703": {
+  "gehoert": "Ein Doppelpunkt.",
+  "sprache": "de",
+  "sprechtext": "ein Doppelpunkt",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "4303f1db66c632c1a2a4": {
@@ -5063,6 +5471,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "4433880ea77022822415": {
+  "gehoert": "Empathie",
+  "sprache": "de",
+  "sprechtext": "Empathie",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "443781c3c9ec4b51b15b": {
   "gehoert": "Leo tiene 6 años.",
   "sprache": "es",
@@ -5119,6 +5535,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "450c9029e019decd6591": {
+  "gehoert": "Wir brauchen Mehl, Eier und Milch.",
+  "sprache": "de",
+  "sprechtext": "Wir brauchen Mehl, Eier und Milch.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "452e0dfcfb8e60e80797": {
   "gehoert": "Enjoy your fish.",
   "sprache": "en",
@@ -5147,6 +5571,14 @@
   "gehoert": "el queso",
   "sprache": "es",
   "sprechtext": "el queso",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "4581cf7081e3c2721d36": {
+  "gehoert": "Das erste Wort des neuen Satzes.",
+  "sprache": "de",
+  "sprechtext": "das erste Wort des neuen Satzes",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -5198,6 +5630,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "45b90c76d52b7783c7d4": {
+  "gehoert": "Das gebeugte Färb steht am Ende.",
+  "sprache": "de",
+  "sprechtext": "Das gebeugte Verb steht am Ende.",
+  "status": "anhoeren",
+  "treffer": 0.923,
+  "versuche": 4
  },
  "45c85867a2e80b9a8482": {
   "gehoert": "Tu as un animal.",
@@ -5287,6 +5727,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "469a6a8617b086cc36e5": {
+  "gehoert": "Kohldampf",
+  "sprache": "de",
+  "sprechtext": "Kohldampf",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "46a8740aff9b73227df4": {
   "gehoert": "S'il vous plaît Madame Martin.",
   "sprache": "fr",
@@ -5325,6 +5773,14 @@
   "sprechtext": "¡Hola!",
   "status": "abweichung",
   "treffer": 0.667,
+  "versuche": 1
+ },
+ "475144ee2edad97db2bc": {
+  "gehoert": "Kriterium",
+  "sprache": "de",
+  "sprechtext": "Kriterium",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "475af7b7216a0f827127": {
@@ -5415,6 +5871,14 @@
   "treffer": 0.769,
   "versuche": 1
  },
+ "4826ec85404f46a426dc": {
+  "gehoert": "Spielen.",
+  "sprache": "de",
+  "sprechtext": "spielen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "482d40c7d5abcc9d9f93": {
   "gehoert": "Gives gave given.",
   "sprache": "en",
@@ -5430,6 +5894,14 @@
   "status": "abweichung",
   "treffer": 0.743,
   "versuche": 1
+ },
+ "48a00ce346bd21a74ae5": {
+  "gehoert": "Diskussion.",
+  "sprache": "de",
+  "sprechtext": "Diskussion",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
  },
  "48ea8534c2e7a618e0c0": {
   "gehoert": "La fenêtre.",
@@ -5591,6 +6063,14 @@
   "treffer": 0.8,
   "versuche": 1
  },
+ "4ac791a8d771db4d91c9": {
+  "gehoert": "Eher.",
+  "sprache": "de",
+  "sprechtext": "Lehrer",
+  "status": "anhoeren",
+  "treffer": 0.8,
+  "versuche": 4
+ },
  "4b183bbef681afa699d0": {
   "gehoert": "Last summer we went to Italy.",
   "sprache": "en",
@@ -5695,6 +6175,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "4c7b7d339d8ed2ef3e37": {
+  "gehoert": "Saner...",
+  "sprache": "de",
+  "sprechtext": "Sahne",
+  "status": "anhoeren",
+  "treffer": 0.8,
+  "versuche": 4
+ },
  "4c805e4e12ef01a2c091": {
   "gehoert": "Je vais prendre le métro avec ma trottinette.",
   "sprache": "fr",
@@ -5741,6 +6229,14 @@
   "sprechtext": "Where is my cap?",
   "status": "abweichung",
   "treffer": 0.957,
+  "versuche": 1
+ },
+ "4d1e595af7f516e58b2b": {
+  "gehoert": "Fuss",
+  "sprache": "de",
+  "sprechtext": "Fuß",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "4d2b8d3783a88da99b8d": {
@@ -5815,6 +6311,14 @@
   "treffer": 0.25,
   "versuche": 1
  },
+ "4e0294160d9d9eef56c4": {
+  "gehoert": "Standard",
+  "sprache": "de",
+  "sprechtext": "Standard",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
+ },
  "4e313c050b69be2051dd": {
   "gehoert": "Il est huit heures, je prends mon petit déjeuner.",
   "sprache": "fr",
@@ -5887,6 +6391,14 @@
   "treffer": 0.708,
   "versuche": 1
  },
+ "4ecd4144562672d68d21": {
+  "gehoert": "fühlen",
+  "sprache": "de",
+  "sprechtext": "fühlen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "4ef5158b03a05e23c4f9": {
   "gehoert": "Rain.",
   "sprache": "en",
@@ -5943,6 +6455,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "4f4b14fe8c69d994f3b3": {
+  "gehoert": "Dilemma",
+  "sprache": "de",
+  "sprechtext": "Dilemma",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "4f50b51e97c28ce70a8f": {
   "gehoert": "at the traffic lights.",
   "sprache": "en",
@@ -5971,6 +6491,14 @@
   "gehoert": "Say thank you to Mia.",
   "sprache": "en",
   "sprechtext": "Say thank you to Mia.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "4f834bc9784082aa8b67": {
+  "gehoert": "Klein.",
+  "sprache": "de",
+  "sprechtext": "klein",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -6119,6 +6647,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "51a798e73348f4fa1d19": {
+  "gehoert": "Ein Brett vor dem Kopf haben.",
+  "sprache": "de",
+  "sprechtext": "ein Brett vor dem Kopf haben",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "51b090a11090cd15cb15": {
   "gehoert": "Let's show.",
   "sprache": "es",
@@ -6151,6 +6687,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "51c9d851584abaa42860": {
+  "gehoert": "Kommst du mit?",
+  "sprache": "de",
+  "sprechtext": "Kommst du mit?",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "51d56efcc8fc641e08f1": {
   "gehoert": "La hermana.",
   "sprache": "es",
@@ -6167,6 +6711,22 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "5217ee56276136f0425f": {
+  "gehoert": "jemandem die Daumen drücken.",
+  "sprache": "de",
+  "sprechtext": "jemandem die Daumen drücken",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "5236c34dd7e9a2542466": {
+  "gehoert": "Spiel",
+  "sprache": "de",
+  "sprechtext": "Spiel",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "524cc6a4ba5329b9fccf": {
   "gehoert": "Podemos ir al cine.",
   "sprache": "es",
@@ -6174,6 +6734,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "525342afed4552b93d66": {
+  "gehoert": "beer.",
+  "sprache": "de",
+  "sprechtext": "Bär",
+  "status": "anhoeren",
+  "treffer": 0.571,
+  "versuche": 4
  },
  "5269d7488709662c7a37": {
   "gehoert": "Wow, a white boat. I like it.",
@@ -6199,6 +6767,14 @@
   "treffer": 0.98,
   "versuche": 1
  },
+ "527cf7659ea927785519": {
+  "gehoert": "Lampenfieber haben.",
+  "sprache": "de",
+  "sprechtext": "Lampenfieber haben",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "528046e4ccc3dac3e95a": {
   "gehoert": "Tu vas ?",
   "sprache": "fr",
@@ -6211,6 +6787,14 @@
   "gehoert": "Mis mejores amigas son de México.",
   "sprache": "es",
   "sprechtext": "Mis mejores amigas son de México.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "528921699d3500760453": {
+  "gehoert": "Eulen nach Athen tragen.",
+  "sprache": "de",
+  "sprechtext": "Eulen nach Athen tragen",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -6703,6 +7287,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "57e30971a991fc709ae5": {
+  "gehoert": "Wir singen.",
+  "sprache": "de",
+  "sprechtext": "Wir sangen.",
+  "status": "anhoeren",
+  "treffer": 0.889,
+  "versuche": 4
+ },
  "5833a1f3313b6d985a11": {
   "gehoert": "78910.",
   "sprache": "en",
@@ -6741,6 +7333,14 @@
   "sprechtext": "Six? I'm still in bed at six!",
   "status": "abweichung",
   "treffer": 0.778,
+  "versuche": 1
+ },
+ "58a275268e0cdf8be7a1": {
+  "gehoert": "Phänomen.",
+  "sprache": "de",
+  "sprechtext": "Phänomen",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "58a3bcea73901086eb77": {
@@ -6839,6 +7439,14 @@
   "treffer": 0.957,
   "versuche": 1
  },
+ "59f1a51e09150f018c8a": {
+  "gehoert": "Er brachte ...",
+  "sprache": "de",
+  "sprechtext": "Er brachte.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "59fd04ee06737510606f": {
   "gehoert": "Donne trois clés à une roue bif.",
   "sprache": "fr",
@@ -6886,6 +7494,14 @@
   "status": "abweichung",
   "treffer": 0.923,
   "versuche": 1
+ },
+ "5a85b0cbd5dd2edd4c52": {
+  "gehoert": "Das Autos.",
+  "sprache": "de",
+  "sprechtext": "des Ortes",
+  "status": "anhoeren",
+  "treffer": 0.5,
+  "versuche": 4
  },
  "5a8c20a78df32854c15b": {
   "gehoert": "Me gusta el azul.",
@@ -7231,6 +7847,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "5e6017d54f422fa24cb2": {
+  "gehoert": "Perlen vor die Säue werfen",
+  "sprache": "de",
+  "sprechtext": "Perlen vor die Säue werfen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
+ },
  "5e637946ec75aca87638": {
   "gehoert": "Merci.",
   "sprache": "fr",
@@ -7423,6 +8047,14 @@
   "treffer": 0.75,
   "versuche": 1
  },
+ "60b7e3a4bae9de5a756b": {
+  "gehoert": "Doppelpunkt.",
+  "sprache": "de",
+  "sprechtext": "Doppelpunkt",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 4
+ },
  "60b992dc96bf13db3ce8": {
   "gehoert": "I love the weekend.",
   "sprache": "en",
@@ -7443,6 +8075,22 @@
   "gehoert": "Demain je vais prendre le train.",
   "sprache": "fr",
   "sprechtext": "Demain, je vais prendre le train.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "6100411ca8106efbc63c": {
+  "gehoert": "Das, was jemand wirklich sagt.",
+  "sprache": "de",
+  "sprechtext": "das, was jemand wörtlich sagt",
+  "status": "anhoeren",
+  "treffer": 0.917,
+  "versuche": 4
+ },
+ "6103ab0eb10d77f39367": {
+  "gehoert": "Schule.",
+  "sprache": "de",
+  "sprechtext": "Schule",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -7485,6 +8133,14 @@
   "sprechtext": "Ceno a las nueve. En España cenamos tarde.",
   "status": "abweichung",
   "treffer": 0.903,
+  "versuche": 1
+ },
+ "6166a1f4795cff0a3ccc": {
+  "gehoert": "Warum?",
+  "sprache": "de",
+  "sprechtext": "warum",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "618df37bfaa8998fdb9d": {
@@ -7631,6 +8287,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "6381277f88c69f4f9f24": {
+  "gehoert": "Intention",
+  "sprache": "de",
+  "sprechtext": "Intention",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "63aa1f3beb5408117666": {
   "gehoert": "Donne le ballon rouge à Hugo.",
   "sprache": "fr",
@@ -7685,6 +8349,14 @@
   "sprechtext": "bedroom",
   "status": "abweichung",
   "treffer": 0.933,
+  "versuche": 1
+ },
+ "64742f989d18fd2d1e42": {
+  "gehoert": "Tolerant",
+  "sprache": "de",
+  "sprechtext": "tolerant",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "647c4a58a7e0b52f1929": {
@@ -7799,6 +8471,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "662637dbe33d3889b6bc": {
+  "gehoert": "Ich freue mich darauf, dich zu sehen.",
+  "sprache": "de",
+  "sprechtext": "Ich freue mich darauf, dich zu sehen.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "6641441f90bdc00161da": {
   "gehoert": "Je lève la main.",
   "sprache": "fr",
@@ -7895,6 +8575,14 @@
   "treffer": 0.944,
   "versuche": 1
  },
+ "66b64d9d0daadae4d000": {
+  "gehoert": "Weem",
+  "sprache": "de",
+  "sprechtext": "Wem?",
+  "status": "anhoeren",
+  "treffer": 0.857,
+  "versuche": 4
+ },
  "66cca4367573e49a1d2e": {
   "gehoert": "I get up at 7.",
   "sprache": "en",
@@ -7947,6 +8635,14 @@
   "gehoert": "L'enfant",
   "sprache": "fr",
   "sprechtext": "l'enfant",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "67216c9824c733c6d2a5": {
+  "gehoert": "mit einem großen Buchstaben.",
+  "sprache": "de",
+  "sprechtext": "mit einem großen Buchstaben",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -8095,6 +8791,14 @@
   "treffer": 0.947,
   "versuche": 1
  },
+ "68ed65d1febb04944e8e": {
+  "gehoert": "Konsequenz.",
+  "sprache": "de",
+  "sprechtext": "Konsequenz",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "68ff626348e31ade49c1": {
   "gehoert": "Le nom.",
   "sprache": "fr",
@@ -8119,6 +8823,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "6994d7dc4e4277afcf99": {
+  "gehoert": "Argument.",
+  "sprache": "de",
+  "sprechtext": "Argument",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
+ },
  "699697a0afcb4f05cc7c": {
   "gehoert": "y en mi nido hay veinte.",
   "sprache": "es",
@@ -8131,6 +8843,14 @@
   "gehoert": "La fille.",
   "sprache": "fr",
   "sprechtext": "la fille",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "69bcbde2914540751aef": {
+  "gehoert": "der Art und Weise",
+  "sprache": "de",
+  "sprechtext": "der Art und Weise",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -8151,6 +8871,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "6a0e2e138d4cd8a54044": {
+  "gehoert": "Ose.",
+  "sprache": "de",
+  "sprechtext": "Rose",
+  "status": "anhoeren",
+  "treffer": 0.857,
+  "versuche": 4
+ },
  "6a1898629a2d378c95e9": {
   "gehoert": "El tren sale a las 9.",
   "sprache": "es",
@@ -8165,6 +8893,14 @@
   "sprechtext": "Hmm, look again!",
   "status": "abweichung",
   "treffer": 0.917,
+  "versuche": 1
+ },
+ "6a952ff7135d692a2690": {
+  "gehoert": "Genitiv",
+  "sprache": "de",
+  "sprechtext": "Genitiv",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "6aa90a9c2c72b6071aa5": {
@@ -8229,6 +8965,14 @@
   "sprechtext": "Donne trois crêpes à Léa.",
   "status": "abweichung",
   "treffer": 0.927,
+  "versuche": 1
+ },
+ "6b91df9afea5ff8872e8": {
+  "gehoert": "Objektiv",
+  "sprache": "de",
+  "sprechtext": "objektiv",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "6ba7cc21199634a9aed4": {
@@ -8431,6 +9175,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "6f1fedfb3824ba47322f": {
+  "gehoert": "des Grundes.",
+  "sprache": "de",
+  "sprechtext": "des Grundes",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "6f384585bacb2616907a": {
   "gehoert": "La nariz.",
   "sprache": "es",
@@ -8503,6 +9255,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "7070098857a174285008": {
+  "gehoert": "Zahn.",
+  "sprache": "de",
+  "sprechtext": "Zahn",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
+ },
  "70874a9b8f5b6acc9e2f": {
   "gehoert": "Tengo hambre.",
   "sprache": "es",
@@ -8523,6 +9283,14 @@
   "gehoert": "La pizza.",
   "sprache": "es",
   "sprechtext": "la pizza",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "71022b986e2f3b5a1a42": {
+  "gehoert": "Atmosphäre",
+  "sprache": "de",
+  "sprechtext": "Atmosphäre",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -8566,6 +9334,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "71395ffdccca96682f78": {
+  "gehoert": "Rote.",
+  "sprache": "de",
+  "sprechtext": "rote",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
  },
  "71bf9cafa3e57ffbe469": {
   "gehoert": "A dog has got four legs.",
@@ -8847,6 +9623,14 @@
   "treffer": 0.875,
   "versuche": 1
  },
+ "7627fd0a3180d22d7a28": {
+  "gehoert": "Moise.",
+  "sprache": "de",
+  "sprechtext": "Mäuse",
+  "status": "anhoeren",
+  "treffer": 0.6,
+  "versuche": 4
+ },
  "76300fa20eb3235d6163": {
   "gehoert": "Ruby says, touch the green boat.",
   "sprache": "en",
@@ -8907,6 +9691,14 @@
   "gehoert": "Sí, Ruby es mi amiga.",
   "sprache": "es",
   "sprechtext": "¡Sí! Ruby es mi amiga.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "770a179ed33d479f2601": {
+  "gehoert": "Tim ist so groß wie sein Vater.",
+  "sprache": "de",
+  "sprechtext": "Tim ist so groß wie sein Vater.",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -9111,6 +9903,14 @@
   "treffer": 0.667,
   "versuche": 1
  },
+ "79d6930bf98941b7fd8e": {
+  "gehoert": "Haustür",
+  "sprache": "de",
+  "sprechtext": "Haustür",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
+ },
  "79d91c52116633c30a7e": {
   "gehoert": "S'donner une baguette Aigo",
   "sprache": "fr",
@@ -9155,6 +9955,14 @@
   "gehoert": "Je vais à l'école à pied.",
   "sprache": "fr",
   "sprechtext": "Je vais à l'école à pied.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "7a1ab50738c71649abac": {
+  "gehoert": "Das ist nur ein Katzensprung.",
+  "sprache": "de",
+  "sprechtext": "Das ist nur ein Katzensprung.",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -9230,6 +10038,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "7bbbdfdaad55b5a6854b": {
+  "gehoert": "Außen.",
+  "sprache": "de",
+  "sprechtext": "draußen",
+  "status": "anhoeren",
+  "treffer": 0.857,
+  "versuche": 4
  },
  "7bdaf66daa886fa02db2": {
   "gehoert": "Tile adiós al niño.",
@@ -9319,6 +10135,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "7d74169f6564e9958fd1": {
+  "gehoert": "Tisch.",
+  "sprache": "de",
+  "sprechtext": "Tisch",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "7d8a9e2dd3861c600d8a": {
   "gehoert": "Dale un perro a Lucia.",
   "sprache": "es",
@@ -9350,6 +10174,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "7e163d3b561ed4f766e7": {
+  "gehoert": "Haus.",
+  "sprache": "de",
+  "sprechtext": "Haus",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
  },
  "7e1cdea4e50438603d9f": {
   "gehoert": "Le bateau est rouge et blanc.",
@@ -9535,6 +10367,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "80d0a9f08cad41baf52e": {
+  "gehoert": "Reparatur",
+  "sprache": "de",
+  "sprechtext": "Reparatur",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "80d748bc85ce4bff2001": {
   "gehoert": "Nous n'avons pas d'argent.",
   "sprache": "fr",
@@ -9595,6 +10435,14 @@
   "gehoert": "Ponte la bufanda.",
   "sprache": "es",
   "sprechtext": "¡Ponte la bufanda!",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "81313809469682ae85fe": {
+  "gehoert": "chronologisch.",
+  "sprache": "de",
+  "sprechtext": "chronologisch",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -9743,6 +10591,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "8358c66264dec53f3686": {
+  "gehoert": "Wasser",
+  "sprache": "de",
+  "sprechtext": "Wasser",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "8358de5973bc0a8934fd": {
   "gehoert": "Mia can dance.",
   "sprache": "en",
@@ -9814,6 +10670,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "8458f65a657ee220f838": {
+  "gehoert": "den Nagel auf den Kopf treffen.",
+  "sprache": "de",
+  "sprechtext": "den Nagel auf den Kopf treffen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 4
  },
  "8487319a7b085e7c20db": {
   "gehoert": "J'ai mangé.",
@@ -9899,6 +10763,14 @@
   "gehoert": "Vale, puedo ir con Ruby.",
   "sprache": "es",
   "sprechtext": "¡Vale! ¿Puedo ir con Ruby?",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "85f5cadb04b9ae72a4a5": {
+  "gehoert": "wo sich Fuchs und Hase gute Nacht sagen.",
+  "sprache": "de",
+  "sprechtext": "wo sich Fuchs und Hase gute Nacht sagen",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -10239,6 +11111,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "8b3451b5700f85f247bb": {
+  "gehoert": "Biene",
+  "sprache": "de",
+  "sprechtext": "Biene",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
+ },
  "8b36cdde282003c27536": {
   "gehoert": "Et 50.",
   "sprache": "fr",
@@ -10367,6 +11247,14 @@
   "treffer": 0.727,
   "versuche": 1
  },
+ "8cfa2fe8296306038fc5": {
+  "gehoert": "Um Ohne Stadt.",
+  "sprache": "de",
+  "sprechtext": "um, ohne, statt",
+  "status": "anhoeren",
+  "treffer": 0.909,
+  "versuche": 4
+ },
  "8cfbf870f66b7d4c8842": {
   "gehoert": "Buenos días, Lucía.",
   "sprache": "es",
@@ -10446,6 +11334,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "8dfd1d95bf70c9b56b8e": {
+  "gehoert": "Wesumeer.",
+  "sprache": "de",
+  "sprechtext": "Resümee",
+  "status": "anhoeren",
+  "treffer": 0.667,
+  "versuche": 4
  },
  "8e23d924eca2fe0df015": {
   "gehoert": "la ville.",
@@ -10615,6 +11511,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "8fc44f4963508d7e33f2": {
+  "gehoert": "Krise!",
+  "sprache": "de",
+  "sprechtext": "Riese",
+  "status": "anhoeren",
+  "treffer": 0.8,
+  "versuche": 4
+ },
  "8fc852019c8411393d89": {
   "gehoert": "¡CN!",
   "sprache": "es",
@@ -10647,6 +11551,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "906f9180769a535a9bd4": {
+  "gehoert": "Nuss, ja.",
+  "sprache": "de",
+  "sprechtext": "Nuss",
+  "status": "anhoeren",
+  "treffer": 0.8,
+  "versuche": 4
+ },
  "907775c0a06b2463f6de": {
   "gehoert": "escrito.",
   "sprache": "es",
@@ -10655,10 +11567,26 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "9080dbda8bc9f5898c46": {
+  "gehoert": "wohnen",
+  "sprache": "de",
+  "sprechtext": "wohnen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "909a3fc3f7798f88122a": {
   "gehoert": "I have a sister. She is six.",
   "sprache": "en",
   "sprechtext": "I have a sister. She is six.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "90a25028a32dcc7d0826": {
+  "gehoert": "Dativobjekt",
+  "sprache": "de",
+  "sprechtext": "Dativobjekt",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -10723,6 +11651,14 @@
   "gehoert": "Elle a une idée géniale.",
   "sprache": "fr",
   "sprechtext": "Elle a une idée géniale.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "91a45be7980cf1ec75c7": {
+  "gehoert": "Defizit.",
+  "sprache": "de",
+  "sprechtext": "Defizit",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -10799,6 +11735,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "9282281677111a39d701": {
+  "gehoert": "Vogel.",
+  "sprache": "de",
+  "sprechtext": "Vogel",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
+ },
  "9297a6c3c01481cc6f56": {
   "gehoert": "¿Dónde está Pablo?",
   "sprache": "es",
@@ -10819,6 +11763,14 @@
   "gehoert": "J'aime le bleu.",
   "sprache": "fr",
   "sprechtext": "J'aime le bleu.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "92afff96be56d269abc8": {
+  "gehoert": "Die Nase voll haben.",
+  "sprache": "de",
+  "sprechtext": "die Nase voll haben",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -10918,6 +11870,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "93dcc3559d8fc4807022": {
+  "gehoert": "ambivalent",
+  "sprache": "de",
+  "sprechtext": "ambivalent",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
  },
  "93e0b67b6e7fe87cc87c": {
   "gehoert": "Mia.",
@@ -11029,6 +11989,14 @@
   "sprechtext": "eye",
   "status": "abweichung",
   "treffer": 0.667,
+  "versuche": 1
+ },
+ "94f7ca4ae53a802f8d6d": {
+  "gehoert": "Lese.",
+  "sprache": "de",
+  "sprechtext": "lese",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "951a58d313e897b25773": {
@@ -11151,6 +12119,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "95ea86a8249fda206bbd": {
+  "gehoert": "Fragezeichen",
+  "sprache": "de",
+  "sprechtext": "Fragezeichen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "9604353d39433474e15e": {
   "gehoert": "Le soleil est jaune.",
   "sprache": "fr",
@@ -11222,6 +12198,14 @@
   "status": "abweichung",
   "treffer": 0.933,
   "versuche": 1
+ },
+ "96a70d1825aa53f92fd6": {
+  "gehoert": "ins Fettnäpfchen treten.",
+  "sprache": "de",
+  "sprechtext": "ins Fettnäpfchen treten",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
  },
  "96a8c34ea369a2d138c9": {
   "gehoert": "et dimanche.",
@@ -11335,6 +12319,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "9853ba5796d7dc97009e": {
+  "gehoert": "dieses, jenes oder welches",
+  "sprache": "de",
+  "sprechtext": "dieses, jenes oder welches",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "985cf1706a7069173668": {
   "gehoert": "Drink, drink, drunk.",
   "sprache": "en",
@@ -11414,6 +12406,14 @@
   "status": "abweichung",
   "treffer": 0.4,
   "versuche": 1
+ },
+ "993f19c2dcfcfaacd8c3": {
+  "gehoert": "Schweinhaben.",
+  "sprache": "de",
+  "sprechtext": "Schwein haben",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
  },
  "994d931ddc8b8d7560d3": {
   "gehoert": "La plaza",
@@ -11567,6 +12567,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "9ab5192c5a18687d1b3e": {
+  "gehoert": "Wessen",
+  "sprache": "de",
+  "sprechtext": "Wessen?",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "9ac79c3c6dc43e48f3c8": {
   "gehoert": "El metro.",
   "sprache": "es",
@@ -11597,6 +12605,14 @@
   "sprechtext": "Bueno, para ti: cincuenta euros.",
   "status": "abweichung",
   "treffer": 0.744,
+  "versuche": 1
+ },
+ "9b1f41c713bd661af5c5": {
+  "gehoert": "Perfekt",
+  "sprache": "de",
+  "sprechtext": "Perfekt",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "9b291d4ec1994dad39eb": {
@@ -11645,6 +12661,14 @@
   "sprechtext": "Aaah ! J'ai peur ! … Ha ha, je ne m'ennuie plus !",
   "status": "abweichung",
   "treffer": 0.793,
+  "versuche": 1
+ },
+ "9c4cf8046f5b2fd78229": {
+  "gehoert": "Maschine.",
+  "sprache": "de",
+  "sprechtext": "Maschine",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "9c7474a187cf7e97c4c6": {
@@ -11735,6 +12759,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "9d6f7cdfacdbb0b1e1a4": {
+  "gehoert": "Wer oder was?",
+  "sprache": "de",
+  "sprechtext": "Wer oder was?",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "9d749f823711c9969a2c": {
   "gehoert": "Monday",
   "sprache": "en",
@@ -11797,6 +12829,14 @@
   "sprechtext": "vert",
   "status": "abweichung",
   "treffer": 0.8,
+  "versuche": 1
+ },
+ "9e4db890e04f26c7f1e0": {
+  "gehoert": "relevant.",
+  "sprache": "de",
+  "sprechtext": "relevant",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "9e85a0ee1a5bac496a1c": {
@@ -11975,6 +13015,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "a02152cb878f4c8f07e2": {
+  "gehoert": "Schreiben.",
+  "sprache": "de",
+  "sprechtext": "schreiben",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "a036e803d1e02cdf7a0d": {
   "gehoert": "El barco.",
   "sprache": "es",
@@ -12011,6 +13059,14 @@
   "gehoert": "Girl.",
   "sprache": "en",
   "sprechtext": "girl",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "a0ad01996bcc4de48ddb": {
+  "gehoert": "Brief.",
+  "sprache": "de",
+  "sprechtext": "Brief",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -12311,6 +13367,14 @@
   "treffer": 0.75,
   "versuche": 1
  },
+ "a56f323d19b4a5bc984d": {
+  "gehoert": "Jemandem Löcher in den Bauch fragen.",
+  "sprache": "de",
+  "sprechtext": "jemandem Löcher in den Bauch fragen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "a5b7ca953a367e836556": {
   "gehoert": "Orange.",
   "sprache": "en",
@@ -12533,6 +13597,14 @@
   "sprechtext": "catorce",
   "status": "abweichung",
   "treffer": 0.0,
+  "versuche": 1
+ },
+ "a7c0abe7ba4c2023e282": {
+  "gehoert": "Punkt.",
+  "sprache": "de",
+  "sprechtext": "Punkt",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "a81be7dfff0569722d81": {
@@ -12799,6 +13871,14 @@
   "treffer": 0.0,
   "versuche": 1
  },
+ "ab3cb5cb2872c681b801": {
+  "gehoert": "Kompromiss!",
+  "sprache": "de",
+  "sprechtext": "Kompromiss",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "ab707d712da045cc11b1": {
   "gehoert": "Buenas noches Pablo.",
   "sprache": "es",
@@ -12979,6 +14059,14 @@
   "gehoert": "Los calcetines.",
   "sprache": "es",
   "sprechtext": "los calcetines",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "aebe23015a3f351033f5": {
+  "gehoert": "Wen oder was?",
+  "sprache": "de",
+  "sprechtext": "Wen oder was?",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -13447,6 +14535,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "b4291e694dceaf0cc263": {
+  "gehoert": "sich zum Affen machen.",
+  "sprache": "de",
+  "sprechtext": "sich zum Affen machen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "b4608cf38b731e78c106": {
   "gehoert": "Vives.",
   "sprache": "en",
@@ -13607,6 +14703,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "b67f52973122520b09cb": {
+  "gehoert": "Stuhl.",
+  "sprache": "de",
+  "sprechtext": "Stuhl",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
+ },
  "b686383d26569125863e": {
   "gehoert": "Donne le 8 à l'EA.",
   "sprache": "fr",
@@ -13621,6 +14725,14 @@
   "sprechtext": "visto",
   "status": "abweichung",
   "treffer": 0.8,
+  "versuche": 1
+ },
+ "b6ecb02726e494b27264": {
+  "gehoert": "Heute regnet es.",
+  "sprache": "de",
+  "sprechtext": "Heute regnet es.",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "b6ee191d7c24ecd41816": {
@@ -13807,6 +14919,14 @@
   "treffer": 0.901,
   "versuche": 1
  },
+ "b97733ac8ee64bcee85a": {
+  "gehoert": "Rhythmus.",
+  "sprache": "de",
+  "sprechtext": "Rhythmus",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
+ },
  "b9844b58895a027d72a7": {
   "gehoert": "Le chocolat chaud.",
   "sprache": "fr",
@@ -13894,6 +15014,22 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "ba2d1ac6201c1b370831": {
+  "gehoert": "Sie ist gekommen.",
+  "sprache": "de",
+  "sprechtext": "Sie ist gekommen.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "ba314d2598b538a6baf5": {
+  "gehoert": "Fleisch",
+  "sprache": "de",
+  "sprechtext": "Fleisch",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
  },
  "ba329ea8a0610c98024f": {
   "gehoert": "¡Ne, danke!",
@@ -13983,6 +15119,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "bb24ffa9589bec388deb": {
+  "gehoert": "Belt.",
+  "sprache": "de",
+  "sprechtext": "bellt",
+  "status": "anhoeren",
+  "treffer": 0.889,
+  "versuche": 4
+ },
  "bb4dfbf307de4e09eec2": {
   "gehoert": "Après le pont tourne à droite.",
   "sprache": "fr",
@@ -13990,6 +15134,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "bb5a24a0f6233642f7c1": {
+  "gehoert": "Fazit",
+  "sprache": "de",
+  "sprechtext": "Fazit",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
  },
  "bb623327d80ebc8b5923": {
   "gehoert": "De l'eau s'il te plaît.",
@@ -14030,6 +15182,14 @@
   "status": "abweichung",
   "treffer": 0.828,
   "versuche": 1
+ },
+ "bbdf67bcdf78e54e970b": {
+  "gehoert": "Prognose.",
+  "sprache": "de",
+  "sprechtext": "Prognose",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
  },
  "bbec185c85c987e6f190": {
   "gehoert": "No pasa nada, tengo un paraguas.",
@@ -14179,6 +15339,14 @@
   "gehoert": "Ouvre ton livre s'il te plaît.",
   "sprache": "fr",
   "sprechtext": "Ouvre ton livre, s'il te plaît.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "bdad646a2e99117e30e9": {
+  "gehoert": "Ich gehe.",
+  "sprache": "de",
+  "sprechtext": "ich gehe",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -14343,6 +15511,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "bfe8dcb23d2f70c317c1": {
+  "gehoert": "Akkusativ",
+  "sprache": "de",
+  "sprechtext": "Akkusativ",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
+ },
  "bfece773bfd5b54a89d4": {
   "gehoert": "Diecisiete",
   "sprache": "es",
@@ -14374,6 +15550,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "c02d8f23b691d015bfb3": {
+  "gehoert": "Straße",
+  "sprache": "de",
+  "sprechtext": "Straße",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
  },
  "c05f7a9c166254715d0c": {
   "gehoert": "Donne le neuf alia.",
@@ -14527,6 +15711,14 @@
   "treffer": 0.333,
   "versuche": 1
  },
+ "c24fe6fe6a83bc0a2eeb": {
+  "gehoert": "jemanden auf den Arm nehmen.",
+  "sprache": "de",
+  "sprechtext": "jemanden auf den Arm nehmen",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "c25c9ff0d774d4842191": {
   "gehoert": "Me gusta el queso.",
   "sprache": "es",
@@ -14635,6 +15827,22 @@
   "gehoert": "Salut comment tu t'appelles.",
   "sprache": "fr",
   "sprechtext": "Salut ! Comment tu t'appelles ?",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "c3b4f1864713b18c214a": {
+  "gehoert": "unter einer Decke stecken.",
+  "sprache": "de",
+  "sprechtext": "unter einer Decke stecken",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "c3cd74061cece8d3ea81": {
+  "gehoert": "Fliege!",
+  "sprache": "de",
+  "sprechtext": "Fliege",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -15063,6 +16271,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "c932e2ad3d29921ca77b": {
+  "gehoert": "Wann beginnt die Schule?",
+  "sprache": "de",
+  "sprechtext": "Wann beginnt die Schule?",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "c93e64a04339384fe05f": {
   "gehoert": "Donne de la soupe aléa.",
   "sprache": "fr",
@@ -15407,6 +16623,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "ce091aeef08eae5c0ccb": {
+  "gehoert": "Schneemann",
+  "sprache": "de",
+  "sprechtext": "Schneemann",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "ce6b1c50db0187eb1ee6": {
   "gehoert": "Ouvre ton livre à la page 10.",
   "sprache": "fr",
@@ -15421,6 +16645,14 @@
   "sprechtext": "la mère",
   "status": "abweichung",
   "treffer": 0.727,
+  "versuche": 1
+ },
+ "ce937133d7704163ccd3": {
+  "gehoert": "Sohn.",
+  "sprache": "de",
+  "sprechtext": "Sohn",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "cedce1bda6c74fb549fa": {
@@ -15467,6 +16699,14 @@
   "gehoert": "La sœur.",
   "sprache": "fr",
   "sprechtext": "la sœur",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "cf1b6b180fb3cb43b377": {
+  "gehoert": "Subjekt",
+  "sprache": "de",
+  "sprechtext": "Subjekt",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -15775,6 +17015,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "d3cebbfe30b1cb74f52f": {
+  "gehoert": "jemandem einen Bären aufbinden.",
+  "sprache": "de",
+  "sprechtext": "jemandem einen Bären aufbinden",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "d3ea9e7da8daf5a2767f": {
   "gehoert": "Lettre.",
   "sprache": "fr",
@@ -16063,6 +17311,14 @@
   "treffer": 0.889,
   "versuche": 1
  },
+ "d88a13aa18353c31696b": {
+  "gehoert": "das fünfte Rad am Wagen sein.",
+  "sprache": "de",
+  "sprechtext": "das fünfte Rad am Wagen sein",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "d8a45a5adedb39ec143f": {
   "gehoert": "Soy un niño.",
   "sprache": "es",
@@ -16085,6 +17341,14 @@
   "sprechtext": "D'accord ! Je peux venir avec Ruby ?",
   "status": "abweichung",
   "treffer": 0.862,
+  "versuche": 1
+ },
+ "d8c8a05f7284d2f3c0ac": {
+  "gehoert": "Jemandem auf den Keks gehen.",
+  "sprache": "de",
+  "sprechtext": "jemandem auf den Keks gehen",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "d8fc6cdcb74d3de25763": {
@@ -16165,6 +17429,14 @@
   "sprechtext": "Donne une guitare à Léa.",
   "status": "abweichung",
   "treffer": 0.95,
+  "versuche": 1
+ },
+ "da0e665728f1c363d480": {
+  "gehoert": "Schließ bitte die Tür.",
+  "sprache": "de",
+  "sprechtext": "Schließ bitte die Tür!",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "da135634e4e95fb5d794": {
@@ -16423,6 +17695,22 @@
   "treffer": 0.75,
   "versuche": 1
  },
+ "dd6cd0b10c06a986a2bb": {
+  "gehoert": "Futur in...",
+  "sprache": "de",
+  "sprechtext": "Futur I",
+  "status": "anhoeren",
+  "treffer": 0.923,
+  "versuche": 4
+ },
+ "dd862b958757fbe0fa9b": {
+  "gehoert": "Herr Kaya, unser Hausmeister ist nett?",
+  "sprache": "de",
+  "sprechtext": "Herr Kaya, unser Hausmeister, ist nett.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 4
+ },
  "dd8f0eba86fded2352c6": {
   "gehoert": "Tú eres mi amigo.",
   "sprache": "es",
@@ -16459,6 +17747,14 @@
   "gehoert": "la contaminación.",
   "sprache": "es",
   "sprechtext": "la contaminación",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "de849daa84bf67cf0e85": {
+  "gehoert": "Sonnenblume",
+  "sprache": "de",
+  "sprechtext": "Sonnenblume",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -16599,6 +17895,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "e0b5eb8e1c5e1d45a4ac": {
+  "gehoert": "Komm schnell her!",
+  "sprache": "de",
+  "sprechtext": "Komm schnell her!",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "e0f852049e49e3a5d174": {
   "gehoert": "va a llover.",
   "sprache": "es",
@@ -16695,6 +17999,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "e1ebf27abb77c28b2443": {
+  "gehoert": "subjektiv",
+  "sprache": "de",
+  "sprechtext": "subjektiv",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
+ },
  "e21ab9d4885445ad4993": {
   "gehoert": "Ma soeur.",
   "sprache": "fr",
@@ -16715,6 +18027,14 @@
   "gehoert": "El sofá.",
   "sprache": "es",
   "sprechtext": "el sofá",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "e24d90378f1122b8cbe3": {
+  "gehoert": "Plausibel",
+  "sprache": "de",
+  "sprechtext": "plausibel",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -16757,6 +18077,14 @@
   "sprechtext": "Donne une pizza à Hugo.",
   "status": "abweichung",
   "treffer": 0.438,
+  "versuche": 1
+ },
+ "e29ecdf58c5404e49ac7": {
+  "gehoert": "aus einer Mücke einen Elefanten machen.",
+  "sprache": "de",
+  "sprechtext": "aus einer Mücke einen Elefanten machen",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "e2b27c03e0b659e2060b": {
@@ -16827,6 +18155,14 @@
   "gehoert": "Ruby says, touch the purple boat.",
   "sprache": "en",
   "sprechtext": "Ruby says: touch the purple boat.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "e409d33bed8a17371c7b": {
+  "gehoert": "der Zeit",
+  "sprache": "de",
+  "sprechtext": "der Zeit",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -16983,6 +18319,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "e6950503414440293f1a": {
+  "gehoert": "explizit",
+  "sprache": "de",
+  "sprechtext": "explizit",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "e6bb378f3430458fe2db": {
   "gehoert": "Léa, tu as quel âge?",
   "sprache": "fr",
@@ -16995,6 +18339,14 @@
   "gehoert": "He goes to bed at nine and reads a book.",
   "sprache": "en",
   "sprechtext": "He goes to bed at nine and reads a book.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "e6e9806a0a5d7a9a4461": {
+  "gehoert": "die Ohren steif halten.",
+  "sprache": "de",
+  "sprechtext": "die Ohren steif halten",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -17022,6 +18374,14 @@
   "status": "abweichung",
   "treffer": 0.774,
   "versuche": 1
+ },
+ "e7d32f6557edaf20f23d": {
+  "gehoert": "Nudeln",
+  "sprache": "de",
+  "sprechtext": "Nudeln",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 3
  },
  "e7db0741d7746618acd8": {
   "gehoert": "What?",
@@ -17295,6 +18655,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "eb6c9d3d2b32dca307fc": {
+  "gehoert": "Der Hund spielt im Garten.",
+  "sprache": "de",
+  "sprechtext": "Der Hund spielt im Garten.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "eb7f80e924eb97a40efa": {
   "gehoert": "Ruby says, touch the yellow boat.",
   "sprache": "en",
@@ -17423,6 +18791,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "ed26f68f594c049b3f6c": {
+  "gehoert": "auf großem Fuß leben.",
+  "sprache": "de",
+  "sprechtext": "auf großem Fuß leben",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "ed6c4e7921df29818842": {
   "gehoert": "I've got an umbrella. My umbrella is red.",
   "sprache": "en",
@@ -17453,6 +18829,14 @@
   "sprechtext": "Dale el siete a Pablo.",
   "status": "abweichung",
   "treffer": 0.8,
+  "versuche": 1
+ },
+ "edbc137ebc2de6b53d01": {
+  "gehoert": "Ich glaub, mein Schwein pfeift.",
+  "sprache": "de",
+  "sprechtext": "Ich glaub, mein Schwein pfeift!",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "ede6d72a32b7bac01661": {
@@ -17519,6 +18903,14 @@
   "treffer": 0.8,
   "versuche": 1
  },
+ "ef45a8e334f77296dfbf": {
+  "gehoert": "seinen Senf dazugeben.",
+  "sprache": "de",
+  "sprechtext": "seinen Senf dazugeben",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "ef4d14b68bd967ca9352": {
   "gehoert": "Hi Ruby, I'm Sam.",
   "sprache": "en",
@@ -17531,6 +18923,14 @@
   "gehoert": "L'oreille.",
   "sprache": "fr",
   "sprechtext": "l'oreille",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "ef9b6930983c7faaee2e": {
+  "gehoert": "Der Hund, der dort bellt, heißt Bello.",
+  "sprache": "de",
+  "sprechtext": "Der Hund, der dort bellt, heißt Bello.",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -17595,6 +18995,14 @@
   "gehoert": "Dale dos señales a Pablo.",
   "sprache": "es",
   "sprechtext": "Dale dos señales a Pablo.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "f000ff00a3a3f20945c6": {
+  "gehoert": "Die Flinte ins Korn werfen.",
+  "sprache": "de",
+  "sprechtext": "die Flinte ins Korn werfen",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -17679,6 +19087,14 @@
   "treffer": 1.0,
   "versuche": 1
  },
+ "f123569bb5a65ba27301": {
+  "gehoert": "Aussagesatz",
+  "sprache": "de",
+  "sprechtext": "Aussagesatz",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "f137440fae523c6105c1": {
   "gehoert": "perdone dónde está la farmacia.",
   "sprache": "es",
@@ -17707,6 +19123,14 @@
   "gehoert": "Is your boat blue?",
   "sprache": "en",
   "sprechtext": "Is your boat blue?",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "f1677bf4865ff5e7ebb9": {
+  "gehoert": "Heiß.",
+  "sprache": "de",
+  "sprechtext": "heiß",
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
@@ -18007,6 +19431,14 @@
   "treffer": 0.786,
   "versuche": 1
  },
+ "f596abb560dfc72ecf10": {
+  "gehoert": "Mehl.",
+  "sprache": "de",
+  "sprechtext": "Mehl",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "f59975c6c6fb68089325": {
   "gehoert": "Dale un gato a Pablo.",
   "sprache": "es",
@@ -18030,6 +19462,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "f62fdb5bd6f9245d4152": {
+  "gehoert": "Oma ruft.",
+  "sprache": "de",
+  "sprechtext": "Oma ruft",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 4
  },
  "f632306fb0e51a6d2972": {
   "gehoert": "It's green.",
@@ -18118,6 +19558,14 @@
   "status": "ok",
   "treffer": 1.0,
   "versuche": 1
+ },
+ "f73bec7bf12ae54359e5": {
+  "gehoert": "Eis.",
+  "sprache": "de",
+  "sprechtext": "Eis",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 2
  },
  "f7561ef99e65ef8ad680": {
   "gehoert": "Le dimanche.",
@@ -18333,6 +19781,14 @@
   "sprechtext": "Donne un robot à Hugo.",
   "status": "abweichung",
   "treffer": 0.533,
+  "versuche": 1
+ },
+ "f921bbcaf7f9198e6322": {
+  "gehoert": "sich wie ein Schneekönig freuen.",
+  "sprache": "de",
+  "sprechtext": "sich wie ein Schneekönig freuen",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "f92ea446cb18c376381b": {
@@ -18775,6 +20231,22 @@
   "treffer": 0.5,
   "versuche": 1
  },
+ "ff054cdab0a750deb987": {
+  "gehoert": "Er ist klein, aber sehr schnell.",
+  "sprache": "de",
+  "sprechtext": "Er ist klein, aber sehr schnell.",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
+ "ff15ac4994e7b9d002ec": {
+  "gehoert": "Fahrrad",
+  "sprache": "de",
+  "sprechtext": "Fahrrad",
+  "status": "ok",
+  "treffer": 1.0,
+  "versuche": 1
+ },
  "ff5502ef49453b29dc14": {
   "gehoert": "Me gustan las manzanas.",
   "sprache": "es",
@@ -18837,6 +20309,14 @@
   "sprechtext": "Oh non ! Et mon petit-déjeuner ?",
   "status": "abweichung",
   "treffer": 0.87,
+  "versuche": 1
+ },
+ "ffe6d068df58fb0f4e71": {
+  "gehoert": "Zeit.",
+  "sprache": "de",
+  "sprechtext": "Zeit",
+  "status": "ok",
+  "treffer": 1.0,
   "versuche": 1
  },
  "ffed9f84b7b52f17a019": {
