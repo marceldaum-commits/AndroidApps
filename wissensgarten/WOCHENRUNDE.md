@@ -293,3 +293,8 @@ Wortlaut (AppZentrale 19.11., aus PROBESTUNDE.md @ d672374):
 - Ohne Tor erlaubt: Ton, Musik, Lautstärke, Vorlesen an/aus + Tempo, Schriftgröße, Hell/Dunkel.
 - Hinter das Tor: Pro/Plus, KI, Updates, Daten zurücksetzen, Profile löschen, Datenschutz-/Zähl-Schalter, Familie/Kopplung, Online-Erkennung/Aussprache, Nachhilfe-Hinweise, Klassen-Code/Kamera, Teilen nach außen.
 - Am Di prüfen: Einstellungs-Bildschirm aufteilen (Schnell-Schalter oben frei, Rest hinter das Tor).
+
+## /jetzt-Fix (Marcel 20.11.: „Nein, erst Di 24.11.“)
+- Quelltext-Fix ist auf dem Branch (dfbe001a: wg-stimme.js + AndroidVoice.jetzt → 404, stille Gerätestimme). webapp/ unverändert (2.3.3).
+- Am Di mit dem neuen Bau (2.3.4 bzw. 2.4.0) auf test; der Cache-Name in sw.js ändert sich dann ohnehin durch die neue Version.
+- Ab Di: Textliste Format 1 (17.893 Texte: de 17.345, en 439, fr 69, es 40) fürs Tonstudio; Nova/OpenAI überall raus, DSE 10g.
