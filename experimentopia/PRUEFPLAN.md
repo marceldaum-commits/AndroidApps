@@ -16,6 +16,7 @@ So muss nie alles auf einmal neu geprüft werden, und jede Insel kommt alle 4 Mo
   - jedes Ergebnis nachgerechnet – Antworten werden aus dem Modell berechnet und in Tests gegen Buchwerte geprüft.
 - Weiter Pflicht wie bisher: Ziel mit den Reglern erreichbar, drei Begründungen, Merksatz, Knobelfrage, Bildschirmfoto angesehen, Version + Datum überall.
 - **Meldung enthält:** was neu ist · wie viele Versuche/Aufgaben (neu, geändert, gesamt) · wie geprüft (Tests, Bildschirmfotos, Starttest).
+- **Fragen an Marcel** (Regel 21.11.: „fragen nicht immer doppelt stellen.. nur über dich!“): Entscheidungsfragen nur über die AppZentrale (send_message mit Hintergrund, Optionen, Empfehlung), nie selbst per Auswahlfenster.
 - **Rechtsbezug** (Ablauf AppZentrale ab 19.11.2026): Jede Live-Meldung enthält die Zeile „Rechtsbezug: ja/nein (was)“ – Preise/Kauf, Codes, Texte für Eltern und Kinder, Datenschutz, Werbung, Bewertungen, KI, Mikrofon. Mit Rechtsbezug prüft der Raum „Recht“ vor dem Live-Gang.
 - Ist eine „Kommt bald“-Kachel fertig gebaut, wird sie aus `Coming` in `core/model/.../Upcoming.kt` gestrichen und in der Lehrplan-Liste auf ✅ gesetzt.
 
