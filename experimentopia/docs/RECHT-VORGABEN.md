@@ -25,3 +25,6 @@ Malaufgabe 13–19 × 6–9 in Worten mit Vorlese-Knopf, eigene Ziffern-Tastatur
 - Ohne Tor: Ton, Musik, Lautstärke, Vorlesen an/aus und Tempo, Schriftgröße, Hell/Dunkel.
 - Hinter das Tor: Pro/Plus/KI, Updates, Daten zurücksetzen, Profile löschen, Datenschutz- und Zähl-Schalter, Familie/Kopplung, Online-Erkennung/Aussprache-Auswertung, Hinweise auf Nachhilfe, Klassen-Code/Kamera, Teilen nach außen.
 - Experimentopia prüfen: Forscher-Pass-Eintrag, „Fortschritt zurücksetzen“, Update-Knopf/Schalter, Eltern-Kopplung (ParentCard), Impressum/Datenschutz-Links (nur Lesen, ok) – alles außer den Ton-/Musik-/Vorlese-Schaltern hinter das Tor.
+
+## E) Eltern-Tor: Vorlese-Knopf (Marcel 21.11.: „erst ohne, dann Tonstudio“)
+Bis die Tonstudio-Stimme läuft: Tor OHNE Vorlese-Knopf, keine Gerätestimme. Später feste, im Tonstudio vertonte Tor-Sätze (Rechenblitz bereitet 84 Sätze de/en/uk vor). familie.js: Am Di kommt ein Patch des Mathe-Trainers (codeNummer() für App-Nummern > 7) – dann diese Fassung übernehmen.
