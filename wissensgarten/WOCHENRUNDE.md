@@ -318,3 +318,4 @@ Wortlaut (AppZentrale 19.11., aus PROBESTUNDE.md @ d672374):
 ## Dauerregel 21.11. (Marcel)
 - Arbeit jede Woche Di ab 15:00 bis einschließlich So; Pause Mo und Di bis 15:00 (außer Marcel ordnet anderes an).
 - Wochenrunde Di ab 15:07, Abschluss Di 19:23. Tagesmeldungen nur Mi–Sa.
+- Regel 21.11. (Marcel): Alles für den Leitstand und alle wichtigen Infos NUR an die AppZentrale (auch jede MELDUNG_AN_LEITSTAND.md zusätzlich ihr melden).
