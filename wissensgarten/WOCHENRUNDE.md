@@ -300,7 +300,7 @@ Wortlaut (AppZentrale 19.11., aus PROBESTUNDE.md @ d672374):
 - Ab Di: Textliste Format 1 (17.893 Texte: de 17.345, en 439, fr 69, es 40) fürs Tonstudio; Nova/OpenAI überall raus, DSE 10g.
 
 ## Regel Di 24.11. (Marcel 20.11.)
-- Vor 14:00 Berlin nur lesen/planen – nichts bauen, committen, pushen. Ab 14:00 den ganzen Di-Plan, liefern „bis alles fertig ist“ (Nachtschicht erlaubt, keine 16/18-Uhr-Frist). Danach Meldung mit Commit, Rückweg, Rechtsbezug.
+- Vor 15:00 Berlin (geändert 21.11., vorher 14:00) nur lesen/planen – nichts bauen, committen, pushen. Ab 15:00 den ganzen Di-Plan, liefern „bis alles fertig ist“ (Nachtschicht erlaubt, keine 16/18-Uhr-Frist). Danach Meldung mit Commit, Rückweg, Rechtsbezug.
 
 ## Marcels Befund 20.11. (Handy, live 2.3.3) – für Di 24.11.
 - **Vorlese-Knöpfe nur, wenn Vorlesen an ist:** Ist Vorlesen in den Einstellungen aus (ReadAloud), verschwinden alle 🔊-Knöpfe (SpeakButton in MiniGames.kt, Mascot-Sprechblase onRead, Theorie/Intro usw.). Sonst bleiben sie.
