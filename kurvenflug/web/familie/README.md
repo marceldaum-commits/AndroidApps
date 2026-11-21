@@ -27,3 +27,5 @@ Bei 404 auf anderen Geräten: „Diese Familie gibt es nicht mehr. Lernstand ble
 Sicherheitshinweis (NICHT im Pflichttext; dauerhaft auf der Familien-Seite und direkt bei „Link teilen“, QR-Code und Notfall-Blatt):
 „Wer den Familien-Link oder den QR-Code hat, kann die Lernstände eurer Familie öffnen, ändern und löschen. Teilt ihn nur mit Personen, denen ihr vertraut, und bewahrt das Notfall-Blatt sicher auf.“
 Meldung bei Umsetzung: Commit + „Rechtsbezug: ja (V8)“.
+
+Hinweis 21.11.: `codeNummer()` in e9993ec lehnt App-Nummern > 7 ab (Hörlehrer = App 8). Patch vom Mathe-Trainer kommt am Di 24.11. – dann übernehmen (betrifft KurvenFlug = App 1 nicht direkt, aber die Sperrlisten-Prüfung fremder Codes).

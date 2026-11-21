@@ -35,6 +35,7 @@ Dazu neutral „← Zurück“ und „Elternbereich (für Erwachsene)“ (→ El
 ## C) Eltern-Tor-Standard
 Malaufgabe 13–19 × 6–9 in Worten (mit Vorlese-Knopf), eigene Ziffern-Tastatur, nach einem Fehler neue Aufgabe, kein Zeitdruck,
 Abbrechen jederzeit, Bildschirmleser-Beschreibung, 10 Minuten offen (nur Arbeitsspeicher), Grund sachlich. Gelöstes Tor zählt als „elternbereich“.
+Vorlese-Knopf im Tor (Marcel 21.11.): „erst ohne, dann Tonstudio“ – zunächst OHNE Vorlese-Knopf, später feste Tonstudio-Sätze (Rechenblitz liefert 84 Sätze de/en/uk). Keine Gerätestimme.
 
 ## D) Familien-Speicher
 Pflichttexte A6/V8 und Lösch-Regel: siehe `web/familie/README.md`.
