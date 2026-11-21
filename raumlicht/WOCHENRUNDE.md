@@ -79,6 +79,12 @@ Links `https://trainer.mathenachhilfe-online.com/#/u/<id>`:
 - **Experimentopia-Links mit festen Namen** (ab Fr 20.11. auf `experimentopia-test.`, danach live): `https://experimentopia.mathenachhilfe-online.com/#thema=<name>`. Für uns passend: Achterbahn-Baumeister → `energie` (sobald dort gebaut), Schatten-Aufgabe 5-6 → `optik`. Weitere Namen: `schwimmen`, `hebel`, `rollen`, `kraft`, `fallen`, `pendel`, `strom`, `magnet`, `waerme`, `licht`, `schall`, `elektromagnetismus`, `trennen`, `saeure`, `reaktion`, `vererbung`, `zellen`, `ernaehrung`, `oekologie`, `koerper`. Unbekannte Namen öffnen die Startseite. Experimentopia verlinkt nur auf freie Inhalte.
 - **Vorschlag „Aufräum-Tag“ für Fr 20.11.** (Experimentopia gibt ihn als Marcels Vorschlag weiter): Abgaben umsetzen, Direkt-Links und Querverweise bauen, neuer Inhalt nur im eigenen Profil; strittige Abgaben (u. a. Oberstufe Raumlicht/Mathe-Trainer) bleiben bis Montag unverändert. Für Raumlicht heißt das: Gauß als drei Ebenen (eigenes Profil) und Querverweise; an den 52 Analysis-/Stochastik-Aufgaben wird nichts geändert.
 
+## DAUERREGEL Wochenrhythmus (Marcel, 21.11.2026, über die AppZentrale)
+
+- **Arbeit jede Woche: Dienstag ab 15:00 Uhr bis einschließlich Sonntag. Pause: Montag und Dienstag bis 15:00** – außer Marcel gibt eine Anweisung. In der Pause nichts bauen, nichts hochladen, keine Live-Bitte; lesen und Auskunft geben ist in Ordnung.
+- Geplante Läufe dazu: Inhaltsupdate Di 15:00 (neuer Auftrag, legt der Lauf am 24.11. an) und Fr 8:47; Tagesbericht Mi–Sa 9:43; Monatsprüfung am 24. um 15:05 (fällt der 24. in die Pause, auf den nächsten Arbeitstag verschieben).
+- Montagstermine liegen auf Dienstag: Der Wochenrunden-Beitrag (früher Mo 13:00) geht dienstags nach 15:00 an die Räume.
+
 ## NEUE REGEL von Marcel, direkt bestätigt am 21.11.2026 („ja gilt“) – geht allen älteren Sätzen „erst nach Marcels direktem Ja“ vor
 
 - **Fragen an Marcel laufen nur noch über die AppZentrale** (session_015vg1Tms4CCrpWLETiJCt12): Frage mit Hintergrund, Optionen und Empfehlung dorthin schicken; nicht mehr doppelt bei Marcel nachfragen.
