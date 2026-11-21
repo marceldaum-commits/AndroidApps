@@ -314,3 +314,7 @@ Wortlaut (AppZentrale 19.11., aus PROBESTUNDE.md @ d672374):
 ## Entscheidung 21.11. (Marcel über AppZentrale)
 - Eltern-Tor: Vorlese-Knopf (🔊) vorerst ENTFERNEN, keine Gerätestimme. Später feste Tonstudio-Sätze (Rechenblitz bereitet 84 Sätze de/en/uk vor). ELTERN-TOR.md wird angepasst. ParentGate.kt am Di umbauen.
 - familie.js @ e9993ec: codeNummer() lehnt App-Nummern > 7 ab (Hörlehrer = 8) – Patch vom Mathe-Trainer am Di übernehmen (sha256 neu prüfen).
+
+## Dauerregel 21.11. (Marcel)
+- Arbeit jede Woche Di ab 15:00 bis einschließlich So; Pause Mo und Di bis 15:00 (außer Marcel ordnet anderes an).
+- Wochenrunde Di ab 15:07, Abschluss Di 19:23. Tagesmeldungen nur Mi–Sa.
