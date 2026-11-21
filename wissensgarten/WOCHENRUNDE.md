@@ -307,3 +307,10 @@ Wortlaut (AppZentrale 19.11., aus PROBESTUNDE.md @ d672374):
 - **Knöpfe schöner:** Der große, wackelnde „🔊 Vorlesen“-Knopf (FilledTonalButton, 56 dp) wirkt klobig. Neu: kleiner, runder Lautsprecher-Knopf passend zum Stil (z. B. 44–48 dp, Kreis, sanftes Ploppen statt Wackeln), neben der Frage statt darunter. Bildschirmfotos vorher/nachher ansehen.
 - **Zahlen exakt vorlesen:** Notrufnummern und Ziffernfolgen („112“, „116 117“, „911“, Telefonnummern, Jahreszahlen vs. Beträge) werden falsch gesprochen. Regel in Nova.sprechText / neue Textliste: Telefon- und Notrufnummern Ziffer für Ziffer („eins eins zwei“), Leerzeichen-Gruppen als Gruppen („eins eins sechs – eins eins sieben“), sonst Zahlen in Worten. Mit dem Tonstudio (Format 1) gleich richtig vertonen; Test mit allen Karten, die Ziffernfolgen enthalten.
 - Graue Leiste rechts (… / ♪) auf dem Foto: nicht von uns – das ist die Lautstärke-Leiste des Handys (kein Code dazu im Wissensgarten).
+
+## Regel 21.11. (Marcel)
+- Entscheidungsfragen an Marcel NUR über die AppZentrale (mit Hintergrund, Optionen, Empfehlung), kein eigenes Auswahlfenster an Marcel.
+
+## Entscheidung 21.11. (Marcel über AppZentrale)
+- Eltern-Tor: Vorlese-Knopf (🔊) vorerst ENTFERNEN, keine Gerätestimme. Später feste Tonstudio-Sätze (Rechenblitz bereitet 84 Sätze de/en/uk vor). ELTERN-TOR.md wird angepasst. ParentGate.kt am Di umbauen.
+- familie.js @ e9993ec: codeNummer() lehnt App-Nummern > 7 ab (Hörlehrer = 8) – Patch vom Mathe-Trainer am Di übernehmen (sha256 neu prüfen).
