@@ -16,6 +16,7 @@ So muss nie alles auf einmal neu geprüft werden, und jede Insel kommt alle 4 Mo
   - jedes Ergebnis nachgerechnet – Antworten werden aus dem Modell berechnet und in Tests gegen Buchwerte geprüft.
 - Weiter Pflicht wie bisher: Ziel mit den Reglern erreichbar, drei Begründungen, Merksatz, Knobelfrage, Bildschirmfoto angesehen, Version + Datum überall.
 - **Meldung enthält:** was neu ist · wie viele Versuche/Aufgaben (neu, geändert, gesamt) · wie geprüft (Tests, Bildschirmfotos, Starttest).
+- **Wochenrhythmus** (Dauerregel Marcel 21.11.): Arbeit Di ab 15:00 bis einschließlich So, Pause Mo und Di bis 15:00 (außer Marcel sagt etwas anderes). Großes Update Di und Fr ab 15:03 ohne Frist („bis alles fertig ist“), Tagesmeldung Mi–Sa 9:43, Wochenrunde Di ab 15:07.
 - **Fragen an Marcel** (Regel 21.11.: „fragen nicht immer doppelt stellen.. nur über dich!“): Entscheidungsfragen nur über die AppZentrale (send_message mit Hintergrund, Optionen, Empfehlung), nie selbst per Auswahlfenster.
 - **Rechtsbezug** (Ablauf AppZentrale ab 19.11.2026): Jede Live-Meldung enthält die Zeile „Rechtsbezug: ja/nein (was)“ – Preise/Kauf, Codes, Texte für Eltern und Kinder, Datenschutz, Werbung, Bewertungen, KI, Mikrofon. Mit Rechtsbezug prüft der Raum „Recht“ vor dem Live-Gang.
 - Ist eine „Kommt bald“-Kachel fertig gebaut, wird sie aus `Coming` in `core/model/.../Upcoming.kt` gestrichen und in der Lehrplan-Liste auf ✅ gesetzt.
