@@ -1,0 +1,66 @@
+diff --git a/quasselquest/webapp/audio.js b/quasselquest/webapp/audio.js
+index c9450f4d..486f31b9 100644
+--- a/quasselquest/webapp/audio.js
++++ b/quasselquest/webapp/audio.js
+@@ -95,7 +95,7 @@
+     if (!index) return null;
+     const e = index[(who || 'ruby') + '|' + norm(text)] || index['ruby|' + norm(text)];
+     // Unsichere Aufnahmen (Hörprüfung nicht bestanden) nicht abspielen – lieber die Gerätestimme als eine falsche Aussprache
+-    return e && !e.unsicher ? 'audio/piper/' + (slow ? e.s : e.n) : null;
++    return null;   // HOTFIX 0.4.7 (01.12.): vorab vertonte Piper-Dateien abgeschaltet (Recht V36a); Gerätestimme bleibt
+   };
+   A.hasRecording = (text, who) => !!fileFor(text, who, false);
+   A.voiceMode = () => {
+diff --git a/quasselquest/webapp/sw.js b/quasselquest/webapp/sw.js
+index 8d390567..ecc36ae2 100644
+--- a/quasselquest/webapp/sw.js
++++ b/quasselquest/webapp/sw.js
+@@ -1,5 +1,5 @@
+ // Offline-Speicher der WebApp. Die Versionsnummer wechselt mit jeder Auslieferung (prüft tools/test-inhalt.mjs).
+-const VERSION = '0.4.6';
++const VERSION = '0.4.7';
+ const CACHE = 'quasselquest-' + VERSION;
+ const FILES = ['./', 'index.html', 'app.css', 'version.js', 'content.js', 'pakete.js', 'audio.js', 'app.js', 'datenschutz.html', 'datenblatt-schule.html',
+   'manifest.webmanifest', 'audio/index.json', 'pakete/index.json', 'lernpfad/en.json', 'lernpfad/fr.json', 'lernpfad/es.json', 'lizenzen.txt', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
+@@ -12,7 +12,7 @@ self.addEventListener('install', (e) => {
+     const mp3 = new Set();
+     // Grundausstattung: nur Englisch (Hafen-Welt) sofort offline – andere Sprachen landen beim ersten Abspielen im Speicher
+     // (Marcel 19.11.: Download-Knopf je Sprache folgt). So bleibt der erste Besuch klein.
+-    for (const e of Object.values(idx.saetze || {})) if (String(e.stimme || '').startsWith('en_')) { mp3.add('audio/piper/' + e.n); mp3.add('audio/piper/' + e.s); }
++    for (const e of Object.values(idx.saetze || {})) if (false) { mp3.add('audio/piper/' + e.n); mp3.add('audio/piper/' + e.s); }
+     const pk = await (await c.match('pakete/index.json')).json();
+     await c.addAll((pk.pakete || []).map((p) => 'pakete/' + p.id + '.json'));
+     await c.addAll([...mp3]);
+@@ -32,7 +32,7 @@ self.addEventListener('fetch', (e) => {
+   if (req.url.endsWith('version.json')) { e.respondWith(fetch(req, { cache: 'no-store' }).catch(() => caches.open(CACHE).then((c) => c.match(req)))); return; }
+   e.respondWith(caches.open(CACHE).then((c) => c.match(req, { ignoreSearch: req.mode === 'navigate' }).then((hit) => hit || fetch(req).then((res) => {
+     // Vertonte Sätze, Pakete und Lernpfade beim ersten Laden merken – danach offline verfügbar
+-    if (res.ok && /\/(audio\/piper|pakete|lernpfad)\//.test(new URL(req.url).pathname)) c.put(req, res.clone()).catch(() => {});
++    if (res.ok && /\/(pakete|lernpfad)\//.test(new URL(req.url).pathname)) c.put(req, res.clone()).catch(() => {});
+     return res;
+   }).catch(() => (req.mode === 'navigate' ? c.match('index.html') : Response.error())))));
+ });
+diff --git a/quasselquest/webapp/version.js b/quasselquest/webapp/version.js
+index bbfc0d15..cb782ff9 100644
+--- a/quasselquest/webapp/version.js
++++ b/quasselquest/webapp/version.js
+@@ -1,6 +1,6 @@
+ // Eine Quelle für Version und Datum (auch version.json und sw.js müssen passen – prüft tools/test-inhalt.mjs).
+-window.APP_VERSION = '0.4.6';
+-window.APP_VERSION_DATE = '19.11.2026';
++window.APP_VERSION = '0.4.7';
++window.APP_VERSION_DATE = '01.12.2026';
+ // Kennung für Links und Zählung (Name entschieden von Marcel am 19.11.2026).
+ window.APP_ID = 'quasselquest';
+ window.APP_NAME = 'Quasselquest';
+diff --git a/quasselquest/webapp/version.json b/quasselquest/webapp/version.json
+index 0c9c1414..d24077e5 100644
+--- a/quasselquest/webapp/version.json
++++ b/quasselquest/webapp/version.json
+@@ -1,4 +1,4 @@
+ {
+-  "version": "0.4.6",
+-  "datum": "19.11.2026"
++  "version": "0.4.7",
++  "datum": "01.12.2026"
+ }
