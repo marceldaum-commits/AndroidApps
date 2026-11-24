@@ -1,5 +1,5 @@
 // Offline-Speicher der WebApp. Die Versionsnummer wechselt mit jeder Auslieferung (prüft tools/test-inhalt.mjs).
-const VERSION = '0.5.2';
+const VERSION = '0.5.3';
 const CACHE = 'quasselquest-' + VERSION;
 const OFFLINE = 'quasselquest-offline';   // vom Offline-Download je Sprache (offline.js) – bleibt bei Updates erhalten
 const FILES = ['./', 'index.html', 'app.css', 'version.js', 'content.js', 'pakete.js', 'audio.js', 'app.js', 'datenschutz.html', 'datenblatt-schule.html',

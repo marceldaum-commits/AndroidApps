@@ -1,5 +1,9 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.5.3 – Texte von Recht eingebaut (24.11.2026)
+- Die Elterntexte zur Aussprache-Auswertung und die Kinder-Datenschutzseite („Deine Daten“) haben jetzt den endgültigen Wortlaut. Sichtbar werden sie erst, wenn die Auswertung bzw. der Familien-Speicher eingeschaltet wird; bis dahin ändert sich für euch nichts.
+- „Im Gerät“ steht nicht zur Auswahl, solange es das noch nicht gibt. „Aus“ ist vorgewählt, „Über unseren Server“ nie.
+
 ## 0.5.2 – Familien-Speicher und Pro-Codes vorbereitet (24.11.2026)
 - Neu im Elternbereich (noch ausgeschaltet, bis der Server und die Datenschutz-Texte freigegeben sind): **Familie anlegen oder beitreten**. Der Lernstand eures Kindes wird dann verschlüsselt gesichert und ist auf mehreren Geräten gleich – ohne Konto fürs Kind. Vorher steht der Einwilligungstext; ohne „Einverstanden“ wird nichts hochgeladen.
 - Läuft ein Gerät mit altem Stand, werden die Stände zusammengeführt statt überschrieben (höherer Kasten, jeweils der beste Wert, eigene Listen vereint).
