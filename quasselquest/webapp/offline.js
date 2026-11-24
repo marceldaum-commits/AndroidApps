@@ -62,5 +62,10 @@
       } catch (e) {}
     }
   };
+  /** Englisch gehört zur Grundausstattung (immer offline): nach dem ersten Start im Hintergrund laden, einmalig. */
+  O.grundausstattung = async () => {
+    if (!O.unterstuetzt() || navigator.onLine === false || O.geladen('en')) return;
+    try { await O.laden('en'); } catch (e) {}
+  };
   window.OFFLINE = O;
 })();

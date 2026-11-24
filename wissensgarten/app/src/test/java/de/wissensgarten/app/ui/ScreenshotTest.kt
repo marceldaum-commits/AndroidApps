@@ -570,7 +570,7 @@ open class ScreenshotTest {
     }
 
     @Test fun parentGate() = shot("51_eltern_tor") {
-        de.wissensgarten.app.ui.common.ParentGateDialog("Die Einstellungen sind für Eltern: Sync mit Google, Updates, Daten löschen.", {}, {}, kotlin.random.Random(4))
+        de.wissensgarten.app.ui.common.ParentGateDialog("Der Elternbereich der Einstellungen: Plus, Updates, Sync, Daten löschen.", {}, {}, kotlin.random.Random(4))
     }
 
     @Test fun privacy() = shot("52_datenschutz") { de.wissensgarten.app.ui.settings.PrivacyScreen {} }
@@ -646,7 +646,15 @@ open class ScreenshotTest {
 
     @Test fun parentSettings() = shot("57_eltern_einstellungen") {
         de.wissensgarten.app.ui.settings.SettingsScreen(profile, true, ThemeMode.LIGHT, true, {}, packCount = 47, cardCount = 1607,
-            version = "0.17.0", onTheme = {}, onUpdateProfile = {}, onDeleteProfile = {}, onTutorial = {},
+            version = "2.4.0", onTheme = {}, onUpdateProfile = {}, onDeleteProfile = {}, onTutorial = {},
+            dailyLimit = 20, holiday = true)
+    }
+
+    /** Einstellungen mit geöffnetem Eltern-Tor: Plus, Profil, Daten löschen usw. sind sichtbar (ohne Tor siehe 57_eltern_einstellungen) */
+    @Test fun parentSettingsOffen() = shot("57b_einstellungen_offen") {
+        de.wissensgarten.app.ui.common.ParentGate.open()
+        de.wissensgarten.app.ui.settings.SettingsScreen(profile, true, ThemeMode.LIGHT, true, {}, packCount = 47, cardCount = 1607,
+            version = "2.4.0", onTheme = {}, onUpdateProfile = {}, onDeleteProfile = {}, onTutorial = {},
             dailyLimit = 20, holiday = true)
     }
 
@@ -664,11 +672,11 @@ open class ScreenshotTest {
         androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(16.dp),
             verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp)) {
             de.wissensgarten.app.ui.parents.NachhilfeKarte(
-                "Bruchrechnung fällt Lena gerade schwer (52 % richtig in den letzten zwei Wochen). Üben in der App hilft – manchmal braucht es aber eine Erklärung von einem Menschen. Wenn ihr mögt: Wir bieten Online-Nachhilfe an.",
-                "Kostenlose Probestunde anfragen", onOpen = {}, onHide = {}, second = "Neukundenpaket ansehen")
+                de.wissensgarten.core.model.NachhilfeHinweis.text("brueche", "Lena"),
+                de.wissensgarten.core.model.NachhilfeHinweis.KNOPF, onOpen = {}, onHide = {})
             de.wissensgarten.app.ui.parents.NachhilfeKarte(
-                "Am Dienstag ist die Klassenarbeit „Mathe: Brüche“. Eine kostenlose Probestunde kann vor der Arbeit helfen.",
-                "Kostenlose Probestunde anfragen", onOpen = {}, onHide = {})
+                "Hinweis: Am Dienstag ist die Klassenarbeit „Mathe: Brüche“. Das lässt sich üben – die App zeigt dazu passende Übungen. Wenn ihr persönliche Unterstützung möchtet: Unser Angebot – eine kostenlose, unverbindliche Probestunde Online-Nachhilfe.",
+                de.wissensgarten.core.model.NachhilfeHinweis.KNOPF, onOpen = {}, onHide = {})
         }
     }
 

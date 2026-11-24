@@ -13,7 +13,7 @@
     try { const s = localStorage.getItem(KEY) || localStorage.getItem('englisch.v1'); if (s) return JSON.parse(s); } catch (e) {} // alter Prototyp-Schlüssel
     return mem || null;
   }
-  function save() { mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function save() { mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} if (typeof famPlan === 'function') famPlan(false); }
   const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, eigene: {}, tage: {}, hinweis: {}, tests: {}, lp: {}, insel: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei', zaehlung: true, nachhilfe: true }, week: { key: '', n: 0 } });
   let state = load() || fresh();
   state.settings = Object.assign(fresh().settings, state.settings || {});
@@ -875,7 +875,9 @@
   /** Datenschutz in Kindersprache (Pflicht 8): kurz, ehrlich, mit Ruby. */
   function kidsPrivacy(zurueck) {
     const punkte = [
-      ['🏠', 'Deine Antworten, dein Name und dein Lernstand bleiben auf <b>diesem Gerät</b>.'],
+      ['🏠', window.FAMILIE_AKTIV && window.FAMILIE && window.FAMILIE.gekoppelt()
+        ? 'Dein Lernstand bleibt auf deinen Geräten. Wenn deine Eltern es einschalten, wird er verschlüsselt auf unserem Server in Deutschland gesichert, damit du auf mehreren Geräten weiterüben kannst. Wir schauen ihn uns nicht an und geben ihn nicht weiter. Deine eigenen Wörterlisten werden dabei auch verschlüsselt gesichert. Deine Antworten und dein Name werden dabei nicht an uns gesendet.'   // Recht V40 Fassung A + V42 (Wörterlisten)
+        : 'Deine Antworten, dein Name und dein Lernstand bleiben auf <b>diesem Gerät</b>.'],
       ['🙈', 'Du brauchst <b>kein Konto</b> und keine E-Mail. Deinen Namen musst du nicht verraten – ein Spitzname reicht.'],
       ['🎤', 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme bleibt auf dem Gerät und wird nach dem Anhören gelöscht. Nur wenn deine Eltern es erlauben, darf die Spracherkennung deines Browsers übers Internet mithelfen.'],
       ['🚫', 'Hier gibt es <b>keine Werbung</b>. Wir zählen nur anonym, wie oft etwas in der App benutzt wird – ohne deinen Namen und ohne deine Antworten. Deine Eltern können das Zählen ausschalten.'],
@@ -969,6 +971,127 @@
     return rows.length ? rows.join('') : '<p class="muted">Sobald euer Kind übt, steht hier in Worten, was es schon kann – für jede Sprache.</p>';
   }
 
+  // ================================================================== Quasselquest Pro (PRO.md) – Sperre je Sprache; alles AUS, solange window.PRO_AKTIV nicht true ist
+  const SCHLOSS_TEXT = 'Das gehört zu Quasselquest Pro.';   // Recht: in der Kinderansicht NUR dieser Satz – kein Preis, kein Kaufknopf, keine Aufforderung
+  const NAME_SPRACHE = { en: 'Englisch', de: 'Deutsch', fr: 'Französisch', la: 'Latein', es: 'Spanisch' };
+  /** Ist dieses Ding gesperrt? el = Element mit data-lp-e (Lernpfad-Einheit), data-pack (Paket) oder data-ep (Episode). */
+  function proGesperrt(el) {
+    if (!window.PRO_AKTIV || !window.PRO) return false;
+    let lang = null; let frei = true;
+    if (el.dataset.lpE) { const [l, ab, e] = el.dataset.lpE.split('-'); lang = l; frei = +ab < 2 || +e === 1; }                                   // Abschnitt 1 frei, ab 2 je erste Einheit
+    else if (el.dataset.pack) { const m = PACK_INDEX.find((x) => x.id === el.dataset.pack); if (!m) return false; lang = m.sprache; const erstes = PACK_INDEX.find((x) => x.sprache === lang); frei = /grundwortschatz/.test(m.id) || (erstes && erstes.id === m.id); }
+    else if (el.dataset.ep) { lang = 'en'; frei = /e1$/.test(el.dataset.ep); }                                                                    // erste Episode jeder Welt
+    else return false;
+    return !frei && !window.PRO.darf(lang);
+  }
+  function proHinweis() {
+    const bg = h(`<div class="modal-bg" style="position:fixed;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;z-index:9000"><div class="card center" style="max-width:320px"><div style="font-size:42px">🔒</div><p style="font-weight:800;font-size:20px">${SCHLOSS_TEXT}</p><button class="btn blue" data-ok>OK</button></div></div>`);
+    document.body.appendChild(bg); bg.querySelector('[data-ok]').onclick = () => { A.sfx('tap'); bg.remove(); };
+  }
+  if (window.PRO_AKTIV) {
+    document.addEventListener('click', (ev) => { const t = ev.target.closest && ev.target.closest('[data-lp-e],[data-pack],[data-ep]'); if (t && proGesperrt(t)) { ev.preventDefault(); ev.stopPropagation(); A.sfx('soft'); proHinweis(); } }, true);
+    const schloss = () => document.querySelectorAll('[data-lp-e],[data-pack],[data-ep]').forEach((t) => { const zu = proGesperrt(t); if (zu && !t.dataset.proZu) { t.dataset.proZu = '1'; t.classList.add('pro-zu'); t.insertAdjacentHTML('beforeend', '<span class="pro-schloss" aria-hidden="true">🔒</span>'); } });
+    new MutationObserver(schloss).observe(document.body, { childList: true, subtree: true });
+    // Link …/#pro=CODE oder ?pro=CODE: nicht in der Adresszeile lassen, sondern für den Elternbereich merken
+    const m = /[#?&]pro=([A-Za-z0-9-]+)/.exec(location.hash + location.search);
+    if (m) { try { sessionStorage.setItem('qq-prolink', m[1]); history.replaceState(null, '', location.pathname); } catch (e) {} }
+    window.addEventListener('familie-bereit', () => { if (window.FAMILIE) window.FAMILIE.sperrlisteLaden(); });
+  }
+  const PRO_FEHLER = { form: 'Das ist kein gültiger Code. Bitte noch einmal prüfen.', signatur: 'Dieser Code ist nicht gültig.', fremd: 'Dieser Code gehört zu einer anderen App.', gesperrt: 'Dieser Code wurde gesperrt (zum Beispiel nach einer Erstattung).', speicher: 'Der Code konnte auf diesem Gerät nicht gespeichert werden.' };
+  function proKarte(box) {
+    if (!box) return; const P = window.PRO; let gemerkt = ''; try { gemerkt = sessionStorage.getItem('qq-prolink') || ''; } catch (e) {}
+    const frei = [...P.sprachenFrei()].map((l) => NAME_SPRACHE[l]).filter(Boolean);
+    box.innerHTML = `<p class="muted">${frei.length ? 'Freigeschaltet: <b>' + esc(frei.join(', ')) + '</b>' : 'Noch nicht freigeschaltet. Kostenlos bleiben der Grundwortschatz, die erste Episode, der erste Lernpfad-Abschnitt und die erste Einheit jedes weiteren Abschnitts.'}</p>
+      <div class="row"><input class="input" data-code autocomplete="off" spellcheck="false" placeholder="Code, z. B. QQ-…" value="${esc(gemerkt)}" style="font-size:16px"><button class="btn small blue" data-los>Einlösen</button></div><p class="muted" data-pmeld aria-live="polite"></p>`;
+    const meld = (t, gut) => { const m = box.querySelector('[data-pmeld]'); m.textContent = t; m.style.color = gut ? '' : '#b3261e'; };
+    box.querySelector('[data-los]').onclick = async () => {
+      A.sfx('tap'); const test = window.FAMILIE ? (nr) => window.FAMILIE.codeGesperrt(nr) : null;
+      const r = await P.einloesen(box.querySelector('[data-code]').value, test); if (!r.ok) { meld(PRO_FEHLER[r.grund] || 'Das hat nicht geklappt.'); return; }
+      try { sessionStorage.removeItem('qq-prolink'); } catch (e) {} A.sfx('right'); proKarte(box);
+    };
+  }
+  // ================================================================== Familien-Speicher (Elternbereich, hinter dem Tor; Recht A6/V8)
+  const FAM_TEXT = 'Eure Lernstände werden verschlüsselt auf unserem Server in Deutschland gespeichert. Der Schlüssel liegt auf euren Geräten. Damit wir euch helfen können, falls ihr den Familien-Zugang verliert, hinterlegen wir zusätzlich eine verschlüsselte Notfall-Kopie. Sie lässt sich nur mit einem getrennt und offline aufbewahrten Schlüssel von Mathenachhilfe Online öffnen. Technisch könnten wir damit eure Lernstände lesen; wir tun das nicht und nutzen ihn nur, wenn ihr uns um Wiederherstellung bittet. Jede Wiederherstellung seht ihr hier im Protokoll.';
+  const FAM_SICHER = 'Wer den Familien-Link oder den QR-Code hat, kann die Lernstände eurer Familie öffnen, ändern und löschen. Teilt ihn nur mit Personen, denen ihr vertraut, und bewahrt das Notfall-Blatt sicher auf.';
+  const FAM_LOESCHEN = 'Das löscht die Familie in ALLEN Lern-Apps: alle Lernstände aller Kinder auf unserem Server, die Notfall-Kopie und das Protokoll. Gekaufte Codes werden wieder frei und lassen sich in einer neuen Familie erneut einlösen. Die Lernstände auf diesem Gerät bleiben erhalten.';
+  const FAM_DSE = 'https://www.mathenachhilfe-online.com/datenschutz/#familien-speicher';
+  const famFehler = (r) => ({ netz: 'Keine Verbindung. Der Lernstand bleibt auf diesem Gerät.', 'familie-weg': 'Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.', 'noch-nicht-live': 'Der Familien-Speicher ist noch nicht freigeschaltet.',
+    'zu-oft': 'Zu viele Anfragen – bitte später noch einmal.', 'zu-gross': 'Der Lernstand ist zu groß zum Sichern.', schreibrecht: 'Dieses Gerät darf hier nichts ändern (falscher Link?).', schluessel: 'Der Familien-Link passt nicht zu den gespeicherten Daten.', ungueltig: 'Das ist kein gültiger Familien-Link.', 'gibt-es-schon': 'Diese Familie gibt es schon.', nummer: 'Die Familien-Nummer stimmt nicht.' }[r && r.grund] || 'Das hat nicht geklappt. Bitte später noch einmal versuchen.');
+  /** Fremden Stand zusammengeführt übernehmen (Felder des Formats v3), ohne neues Sichern auszulösen. */
+  function famUebernehmen(stand) {
+    if (!stand) return;
+    for (const k of ['karten', 'tage', 'lp', 'progress', 'eigene', 'week', 'hinweis', 'tests', 'introSeen']) if (stand[k] !== undefined) state[k] = stand[k];
+    mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  let famLetzteZeit = 0; let famTimer = null;
+  /** Automatisch sichern: nach jeder Runde, aber höchstens alle 2 Minuten; sofort, wenn die App in den Hintergrund geht. */
+  function famPlan(sofort) {
+    if (!window.FAMILIE_AKTIV || !window.FAMILIE || !window.FAMILIE.gekoppelt()) return;
+    clearTimeout(famTimer);
+    famTimer = setTimeout(async () => { famLetzteZeit = Date.now(); const r = await window.FAMILIE.sichern(state); if (r.ok && r.stand && r.stand !== state) famUebernehmen(r.stand); }, sofort ? 0 : Math.max(1500, 120000 - (Date.now() - famLetzteZeit)));
+  }
+  async function famStart() {
+    if (!window.FAMILIE_AKTIV || !window.FAMILIE || !window.FAMILIE.gekoppelt()) return;
+    const r = await window.FAMILIE.laden(state); if (r.ok && r.stand) famUebernehmen(r.stand);
+  }
+  if (window.FAMILIE_AKTIV) {
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') famPlan(true); });
+    window.addEventListener('familie-bereit', () => famStart());
+    if (window.FAMILIE) famStart();
+    // Familien-Link geöffnet: nicht in der Adresszeile lassen, sondern für den Elternbereich merken
+    if (/^#familie=/.test(location.hash)) { try { sessionStorage.setItem('qq-famlink', location.href); history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  }
+  function famKopieren(text) { try { if (navigator.clipboard) return navigator.clipboard.writeText(text).then(() => true, () => false); } catch (e) {} return Promise.resolve(false); }
+  function familieKarte(box) {
+    if (!box) return;
+    const F = window.FAMILIE; if (!F) { box.innerHTML = '<p class="muted">Wird geladen …</p>'; window.addEventListener('familie-bereit', () => familieKarte(box), { once: true }); return; }
+    const meld = (t, gut) => { const m = box.querySelector('[data-fmeld]'); if (m) { m.textContent = t; m.style.color = gut ? '' : '#b3261e'; } };
+    const st = F.status();
+    if (!st.gekoppelt) {
+      let gemerkt = ''; try { gemerkt = sessionStorage.getItem('qq-famlink') || ''; } catch (e) {}
+      box.innerHTML = `<p class="muted">Mit dem Familien-Speicher übt euer Kind auf mehreren Geräten mit demselben Stand weiter – und nichts geht verloren, wenn ein Gerät kaputtgeht. Ohne Kopplung bleibt alles wie bisher nur auf diesem Gerät.</p>
+        <div class="row"><button class="btn small blue" data-neu>Familie anlegen</button><button class="btn small white" data-beitritt>Familie beitreten</button></div><div data-fbereich></div><p class="muted" data-fmeld aria-live="polite"></p>`;
+      const zone = box.querySelector('[data-fbereich]');
+      const einwilligung = (knopf, inhalt) => `<div class="card" style="margin-top:10px"><p class="muted" data-fpflicht>${FAM_TEXT}</p><p class="muted">Eure eigenen Wörterlisten („Mein Schulbuch“) werden dabei auch verschlüsselt mitgesichert.</p><p class="muted"><a href="${FAM_DSE}" target="_blank" rel="noopener">Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)</a></p>${inhalt || ''}<div class="row"><button class="btn small blue" data-ok>${knopf}</button><button class="btn small white" data-abbruch>Abbrechen</button></div></div>`;
+      box.querySelector('[data-neu]').onclick = () => {
+        A.sfx('tap'); zone.innerHTML = einwilligung('Einverstanden – Familie anlegen');
+        zone.querySelector('[data-abbruch]').onclick = () => { zone.innerHTML = ''; };
+        zone.querySelector('[data-ok]').onclick = async () => { meld('Familie wird angelegt …', true); const r = await F.anlegen(state); if (!r.ok) { meld(famFehler(r)); return; } A.sfx('right'); if (r.stand && r.stand !== state) famUebernehmen(r.stand); familieKarte(box); };
+      };
+      box.querySelector('[data-beitritt]').onclick = () => {
+        A.sfx('tap'); zone.innerHTML = einwilligung('Einverstanden – Familie beitreten', `<input class="input" data-flink autocomplete="off" spellcheck="false" placeholder="Familien-Link einfügen" value="${esc(gemerkt)}" style="font-size:16px">`);
+        zone.querySelector('[data-abbruch]').onclick = () => { zone.innerHTML = ''; try { sessionStorage.removeItem('qq-famlink'); } catch (e) {} };
+        zone.querySelector('[data-ok]').onclick = async () => {
+          const v = await F.beitretenVorbereiten(zone.querySelector('[data-flink]').value); if (!v.ok) { meld(famFehler(v)); return; }
+          const kinder = v.kinder || [];
+          zone.innerHTML = `<div class="card" style="margin-top:10px"><h3>Wer übt hier?</h3>${kinder.map((k, i) => `<label class="radio"><input type="radio" name="fkind" value="${esc(k.kindId)}" ${i === 0 ? 'checked' : ''}><span><b>${esc(k.name || 'Profil ' + (i + 1))} ${esc(k.farbe || '')}</b></span></label>`).join('')}
+            <label class="radio"><input type="radio" name="fkind" value="" ${kinder.length ? '' : 'checked'}><span><b>Neues Profil in dieser Familie</b></span></label><div class="row"><button class="btn small blue" data-weiter>Weiter</button></div></div>`;
+          zone.querySelector('[data-weiter]').onclick = async () => {
+            const w = zone.querySelector('input[name=fkind]:checked'); meld('Stand wird geladen …', true);
+            const r = await F.beitreten(v, w && w.value ? w.value : null, state); if (!r.ok) { meld(famFehler(r)); return; }
+            famUebernehmen(r.stand); try { sessionStorage.removeItem('qq-famlink'); } catch (e) {} A.sfx('right');
+            if (r.abweichungen && r.abweichungen.length) alert('Dieses Gerät hatte auch Einstellungen oder eine Insel, die sich unterscheiden. Hier bleibt der Stand dieses Geräts.');
+            familieKarte(box);
+          };
+        };
+      };
+      if (gemerkt) box.querySelector('[data-beitritt]').click();
+      return;
+    }
+    box.innerHTML = `<p><b>Gekoppelt</b> · Familien-Nummer <b>${esc(st.nummer)}</b>${st.kindName ? ' · ' + esc(st.kindName) : ''}</p>
+      <p class="muted">${st.letzte ? 'Zuletzt gesichert: ' + esc(new Date(st.letzte).toLocaleString('de-DE')) : 'Noch nicht gesichert.'}</p>
+      <p class="muted" data-fsicher>${FAM_SICHER}</p>
+      <div class="row"><button class="btn small blue" data-jetzt>Jetzt sichern</button><button class="btn small white" data-link>Link teilen</button><button class="btn small white" data-blatt>Notfall-Blatt</button><button class="btn small white" data-del>🗑️ Familie löschen</button></div>
+      <pre class="muted" data-fblatt hidden style="white-space:pre-wrap"></pre><p class="muted" data-fmeld aria-live="polite"></p>`;
+    box.querySelector('[data-jetzt]').onclick = async () => { A.sfx('tap'); meld('Wird gesichert …', true); const r = await F.sichern(state); if (!r.ok) { meld(famFehler(r)); if (r.grund === 'familie-weg') setTimeout(() => familieKarte(box), 1500); return; } if (r.stand !== state) famUebernehmen(r.stand); famLetzteZeit = Date.now(); familieKarte(box); };
+    box.querySelector('[data-link]').onclick = async () => { A.sfx('tap'); const ok = await famKopieren(F.link()); const p = box.querySelector('[data-fblatt]'); p.hidden = false; p.textContent = F.link() + '\n\n' + FAM_SICHER; meld(ok ? 'Link kopiert.' : 'Bitte den Link markieren und kopieren.', true); };
+    box.querySelector('[data-blatt]').onclick = () => { A.sfx('tap'); const b = F.notfallBlatt(); const p = box.querySelector('[data-fblatt]'); p.hidden = false; p.textContent = b.text + '\n\n' + FAM_SICHER; };
+    box.querySelector('[data-del]').onclick = async () => {
+      A.sfx('tap'); if (!confirm(FAM_LOESCHEN)) return;
+      const n = prompt('Zum Bestätigen die Familien-Nummer eintippen (' + st.nummer + '):'); if (n === null) return;
+      const r = await F.loeschen(n); if (!r.ok) { meld(famFehler(r)); return; } familieKarte(box);
+    };
+  }
   /** Offline-Download je Sprache (offline.js): Größe, Fortschritt, Löschen. */
   async function offlineKarte(box) {
     const O = window.OFFLINE; if (!box) return;
@@ -1026,6 +1149,8 @@
         <label class="radio" style="opacity:.5"><input type="radio" name="ausw" value="geraet" disabled><span><b>Im Gerät</b><br><span class="muted">Die Aufnahme bleibt auf dem Gerät. Auf diesem Gerät noch nicht verfügbar.</span></span></label>
         <label class="radio"><input type="radio" name="ausw" value="server" ${window.AUSWERTUNG.wahl() === 'server' ? 'checked' : ''}><span><b>Über unseren Server in Deutschland</b><br><span class="muted">Kein Download. Die Aufnahme (höchstens 15 Sekunden) wird nur gesendet, wenn euer Kind nachspricht, sofort ausgewertet und gelöscht. Es wird nichts gespeichert und nichts mitgeschickt, was euer Kind erkennbar macht.</span></span></label>
         <label class="radio"><input type="radio" name="ausw" value="aus" ${window.AUSWERTUNG.wahl() === 'aus' ? 'checked' : ''}><span><b>Aus</b><br><span class="muted">Keine Auswertung, keine Sterne fürs Nachsprechen. Aufnehmen und selbst Vergleichen bleibt möglich.</span></span></label></div>` : ''}
+      ${window.PRO_AKTIV ? '<div class="card" style="margin-top:14px" data-pro-karte><h3>⭐ Quasselquest Pro</h3><div data-pro></div></div>' : ''}
+      ${window.FAMILIE_AKTIV ? '<div class="card" style="margin-top:14px" data-familie-karte><h3>👪 Familie – Lernstand sichern</h3><div data-fam></div></div>' : ''}
       <div class="card" style="margin-top:14px"><h3>📥 Offline lernen</h3>
         <p class="muted">Ohne Internet üben: Ihr könnt eine Sprache einmalig auf dieses Gerät laden – <b>am besten im WLAN</b>, denn es sind einige Megabyte. Englisch ist immer offline. Geladene Sprachen aktualisieren sich bei neuen Vertonungen von selbst, und ihr könnt sie jederzeit wieder löschen.</p>
         <div data-offline></div></div>
@@ -1057,6 +1182,8 @@
       s.recognition = x.value; save(); el.querySelector('[data-mode]').textContent = modeTxt();
     });
     offlineKarte(el.querySelector('[data-offline]'));
+    if (window.FAMILIE_AKTIV) familieKarte(el.querySelector('[data-fam]'));
+    if (window.PRO_AKTIV) proKarte(el.querySelector('[data-pro]'));
     el.querySelectorAll('input[name=ausw]').forEach((x) => x.onchange = () => { s.auswertung = x.value; save(); A.sfx('tap'); });
     el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); settings(); };
     el.querySelector('[data-reset]').onclick = () => {
@@ -1799,6 +1926,7 @@
       <div class="card"><label style="font-weight:800">Name der Liste</label>
         <input class="input" data-name maxlength="30" placeholder="z. B. Lektion 3" value="${esc(liste ? liste.name : '')}" style="margin:6px 0 12px">
         <label style="font-weight:800">${de ? 'Ein Lernwort pro Zeile' : `Ein Wort pro Zeile: Deutsch = ${esc(L.name)}`}</label>
+        <p class="muted" style="margin:6px 0 0;font-size:14px">Bitte keine Namen oder Adressen als Wörter eintragen.</p>
         <textarea class="input" data-text rows="9" placeholder="${esc(beispiel)}" style="margin-top:6px;font-size:18px;-webkit-user-select:text;user-select:text">${esc(text)}</textarea>
         <div class="err" data-err></div><div class="muted" data-ok style="font-weight:700"></div>
         <div class="row" style="margin-top:8px"><button class="btn blue" data-save>💾 Speichern</button>${liste ? '<button class="btn white small" data-del>🗑️ Löschen</button>' : ''}</div></div>
@@ -1858,7 +1986,7 @@
         const mark = () => { if (reg.waiting && navigator.serviceWorker.controller) { updateReady = true; if (!$app.querySelector('.stage')) maybeApplyUpdate(); } };
         reg.addEventListener('updatefound', () => { const w = reg.installing; if (w) w.addEventListener('statechange', mark); });
         mark();
-        setTimeout(() => { if (window.OFFLINE) window.OFFLINE.abgleichen(); }, 8000);   // geladene Sprachen nach einem Update aktualisieren
+        setTimeout(() => { if (window.OFFLINE) window.OFFLINE.abgleichen().then(() => window.OFFLINE.grundausstattung()); }, 8000);   // geladene Sprachen nach einem Update aktualisieren
         // Beim Öffnen und alle 30 Minuten nach einer neuen Version fragen
         setInterval(() => reg.update().catch(() => {}), 30 * 60 * 1000);
       }).catch(() => {});

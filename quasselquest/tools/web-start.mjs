@@ -11,6 +11,7 @@ const { chromium, webkit, devices } = require('playwright');
 const root = fileURLToPath(new URL('../webapp/', import.meta.url));
 const shots = fileURLToPath(new URL('../screenshots/', import.meta.url));
 const FOTOS = process.argv.includes('--fotos');
+const NUR = ((process.argv.find((x) => x.startsWith('--nur=')) || '').slice(6) || '').split(',').filter(Boolean).length ? (process.argv.find((x) => x.startsWith('--nur=')) || '').slice(6).split(',') : null;   // z. B. --nur=webkit_iphone,chromium_pc
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.svg': 'image/svg+xml', '.png': 'image/png' };
 const server = createServer(async (req, res) => {
   let p = decodeURIComponent(new URL(req.url, 'http://x').pathname); if (p.endsWith('/')) p += 'index.html';
@@ -63,7 +64,7 @@ async function playEpisode(page, id, shot) {
 
 async function playPackRound(page, packId, shot) {
   if (packId) await page.click(`[data-pack="${packId}"]`);
-  for (let guard = 0; guard < 80; guard++) {
+  for (let guard = 0; guard < 200; guard++) {
     await wait(250);
     if (await page.$('.reward')) break;
     if (await page.$('[data-next]') && !(await page.$('.progress'))) { await page.click('[data-next]'); continue; } // Einführung
@@ -112,7 +113,7 @@ for (const [name, type, opts] of [
   ['webkit_iphone', webkit, { ...devices['iPhone 13'] }],
   ['webkit_ipad', webkit, { ...devices['iPad (gen 7)'] }],
   ['chromium_pc', chromium, { viewport: { width: 1280, height: 800 }, deviceScaleFactor: FOTOS ? 2 : 1 }],
-]) {
+].filter(([n]) => !NUR || NUR.includes(n))) {
   console.log(`\n${name}`); curName = name; snapN = 0; shotDone.clear();
   const browser = await type.launch();
   const ctx = await browser.newContext(opts);
@@ -267,11 +268,11 @@ for (const [name, type, opts] of [
       ok(/ca\. \d/.test(await page.textContent('[data-ol="es"] [data-st]')), 'Offline: Größe wird genannt (' + (await page.textContent('[data-ol="es"] [data-st]')) + ')');
       await page.click('[data-ol="es"] [data-act]');
       await page.waitForFunction(() => /gespeichert/.test(document.querySelector('[data-ol="es"] [data-st]')?.textContent || ''), null, { timeout: 120000 }).catch(() => {});
-      const n1 = await page.evaluate(async () => (await (await caches.open('quasselquest-offline')).keys()).length);
+      const n1 = await page.evaluate(async () => (await (await caches.open('quasselquest-offline')).keys()).filter((k) => /\/audio\/server\/es\//.test(k.url)).length);
       ok(n1 > 500, 'Offline: Spanisch geladen (' + n1 + ' Dateien im Offline-Speicher)');
       await snap(page, 'eltern_offline');
       await page.click('[data-ol="es"] [data-act]'); await page.waitForFunction(() => /Zum Laden/.test(document.querySelector('[data-ol="es"] [data-st]')?.textContent || ''), null, { timeout: 20000 }).catch(() => {});
-      const n2 = await page.evaluate(async () => (await (await caches.open('quasselquest-offline')).keys()).length);
+      const n2 = await page.evaluate(async () => (await (await caches.open('quasselquest-offline')).keys()).filter((k) => /\/audio\/server\/es\//.test(k.url)).length);
       ok(n2 === 0, 'Offline: Spanisch wieder gelöscht (' + n2 + ' übrig)');
     }
     await snap(page, 'eltern');
