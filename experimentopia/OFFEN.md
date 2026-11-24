@@ -43,3 +43,6 @@
   (1) Ruft die App die alte Subdomain auf? Stellen suchen: Links.kt nicht mehr (lernen.…), Nova.kt ORIGIN/APP_HOST (Nova aus, kommt raus), umzug.js ALT-Regex (gewollt), README/Docs, Android/TWA (nicht ausgeliefert), Zähl-URL (trainer.…, unabhängig).
   (2) WICHTIG: Unsere Umzugs-Version (umzug.js, seit 2.13.0 live) trägt den Lernstand nur mit, wenn die ALTE Adresse die App ausliefert. Eine 301 auf Server-Ebene schneidet Kinder ab, die seit dem 19.11. die alte Adresse noch nicht geöffnet haben – ihr Lernstand bleibt dann unerreichbar im Browser der alten Adresse. Vorschlag: 301 frühestens nach 30 Tagen (≈ 19.12.2026), wie vereinbart; bis dahin liefert die alte Adresse die Umzugs-Version. Alternativ: 301 nur für alles außer index.html/umzug.js/sw.js/version.json – NICHT empfohlen (Service Worker).
   (3) Familien-Speicher löst das nicht rückwirkend (noch nicht angebunden). Export/Import extra nicht nötig, solange die Umzugs-Version läuft.
+
+- [ ] Recht V45d: Satz „Gekaufte Codes werden wieder frei“ (LOESCHEN_WARNUNG) bei der V38-Umstellung (ein Gerät pro Code) gegenprüfen. In Texten nie „Ende-zu-Ende“ oder „können nicht lesen“ schreiben.
+- [ ] Live-Gang erst nach: Bestätigung V45c (Umzugsvermerk), nova-Dateien auf dem Server weg bis 01.12., Test des Familien-Speichers mit zweiter App, Geräte-Test, Leitstand.
