@@ -69,7 +69,7 @@ object Nova {
     private val ABS = Regex("\\|([^|]{1,30})\\|")
     private val BLANK = Regex("_{2,}")
     /** Bekannte Notruf- und Hilfenummern (110, 112, 116 117 …): werden Ziffer für Ziffer gesprochen, nie als Zahl */
-    private val NOTRUF = Regex("(?<![\\d.,/:\\-])(110|112|911|999|19222|116[ ]?117|116[ ]?116|0800[ ]?\\d{3}[ ]?\\d{4})(?![\\d.,%:/\\-]|[ ]?(?:Euro|€|km|m\\b|cm|kg|g\\b|Jahre|Uhr|Mal))")
+    private val NOTRUF = Regex("(?<![\\d.,/:\\-])(110|112|911|999|19222|116[ ]?117|116[ ]?116|0800[ ]?\\d{3}[ ]?\\d{4})(?![\\d%:/\\-]|[.,]\\d|[ ]?(?:Euro|€|km|m\\b|cm|kg|g\\b|Jahre|Uhr|Mal))")
     private val ZIFFERN_DE = listOf("null", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun")
     private val ZIFFERN_EN = listOf("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
     /** „112“ → „eins eins zwei“, „116 117“ → „eins eins sechs, eins eins sieben“ (Deutsch und Englisch; andere Sprachen unverändert) */
