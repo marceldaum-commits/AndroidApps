@@ -36,7 +36,7 @@
 | Ph | Energieformen, Energieerhaltung, Leistung, Wirkungsgrad | NI 7/8 + 9/10; NRW 7–10 (IF7); BY 9 G; BW 7/8; HE 10.1; BY R8 | teilw. (MASCHINEN k18) | **Insel „Energie-Achterbahn“**: Wagen startet hoch, Balken für Lage-/Bewegungsenergie; mit Reibung erhitzt sich die Bahn |
 | Ph | Impuls, Stöße | BY 10 G; BW 9/10 G (Erhaltungssätze) | nein | Wagen-Stoß-Labor (elastisch/unelastisch, eigene Massen) |
 | Ph | Wurf, 2-D-Bewegung | BY 10 G | nein | Wasserstrahl/Ball-Wurfspiel mit Bahn-Spur |
-| Ph | Elektromagnetismus: Motor, Induktion, Generator, Trafo, Wechselstrom | BY 10 G; NRW 7–10 (IF11); NI 9/10; BW 9/10 G; HE 10.1; BY R | nein | **Insel „Kraftwerk“**: Magnet in der Spule, Lämpchen glimmt (schneller = heller); Trafo-Windungen einstellen; Fahrrad-Dynamo |
+| Ph | Elektromagnetismus: Motor, Induktion, Generator, Trafo, Wechselstrom | BY 10 G; NRW 7–10 (IF11); NI 9/10; BW 9/10 G; HE 10.1; BY R | ja (ELEKTROMAGNETISMUS, 13 Versuche, 24.11.2026) | **Insel „Kraftwerk“**: Magnet in der Spule, Lämpchen glimmt (schneller = heller); Trafo-Windungen einstellen; Fahrrad-Dynamo |
 | Ph | Energieversorgung: Kraftwerke, Erneuerbare, Übertragung | NRW 7–10 (IF11); HE 10.3 G; BY R10; BY 9 G (NTG) | nein | Stadt mit Strom versorgen: Wind, Sonne, Kohle mischen (Wetter-Ereignisse, CO₂-Anzeige) |
 | Ph | Atome, Spektren, Energiestufen | BY 9 G | nein | Gas-Lampen-Spektren als Fingerabdruck zuordnen |
 | Ph | Radioaktivität, α/β/γ, Halbwertszeit, Strahlenschutz, Kernspaltung | NRW 7–10 (IF10); NI 9/10; BY 10 G; HE 10.2 G; BW 9/10; BY R10 | nein | **Insel „Strahlen“**: Geigerzähler und Abschirmung (Papier, Alu, Blei); Würfel-Zerfall für die Halbwertszeit; Kettenreaktion als Domino |
@@ -194,7 +194,7 @@ Fehlende Themen erscheinen in der App als „Kommt bald“ (ohne Datum, ohne Kau
 | # | Thema | Stand |
 |---|---|---|
 | 1 | Optik: Schatten, Spiegel, Brechung, Linsen | ✅ gebaut in 2.7.0 (x1–x11) |
-| 2 | Motor, Dynamo & Trafo (Elektromagnetismus) | Kommt bald |
+| 2 | Motor, Dynamo & Trafo (Elektromagnetismus) | ✅ gebaut in 2.16.0 (24.11.2026): 13 Versuche, 4 Labore (Elektromagnet, Motor-Werkstatt, Dynamo-Werkstatt, Trafo-Station) |
 | 3 | Energie-Achterbahn (Energieformen, Erhaltung) | Kommt bald |
 | 4 | Tier-Safari, Blüten & Bestäubung, Atmung, Skelett (Bio 5/6) | Kommt bald |
 | 5 | Atom-Werkstatt & Periodensystem, Salze & Ionen | Kommt bald |

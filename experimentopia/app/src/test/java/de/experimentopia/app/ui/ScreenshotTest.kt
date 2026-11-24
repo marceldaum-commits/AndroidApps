@@ -167,6 +167,15 @@ class ScreenshotTest {
     @Test fun theory() = shot("61_theorie", settle = 2500, prepare = { it.tap("📖") }) { ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.PREDICT) }
     @Test fun theoryCross() = shot("83_querverweis", settle = 2500, prepare = { r -> r.tap("📖"); r.mainClock.advanceTimeBy(800); r.reveal { r.onNodeWithTag("querverweis") } }) { ExperimentScreen(Catalog.byId("x2")!!, {}, null, {}, startPhase = Phase.PREDICT) }
     @Test fun theoryPro() = shot("62_theorie_profi", settle = 2500, prepare = { it.tap("📖") }) { ExperimentScreen(Catalog.byId("s8")!!, {}, null, {}, startPhase = Phase.PREDICT) }
+    // ── Motor, Dynamo & Trafo (2.16.0)
+    @Test fun coilField() = lab("y2", "110_elektromagnet", prepare = { it.slide("🌀 Windungen", 29f) })
+    @Test fun coilCore() = lab("y3", "111_eisenkern", prepare = { it.onNodeWithText("🔩 mit Eisenkern").performClick(); it.mainClock.advanceTimeBy(300) })
+    @Test fun conductorSwing() = lab("y6", "112_leiterschaukel_kraft", prepare = { it.slide("⚡ Strom", 10f) })
+    @Test fun motorSpeed() = lab("y7", "113_elektromotor", prepare = { it.slide("🔋 Spannung", 10f) })
+    @Test fun induction() = lab("y9", "114_induktion", prepare = { it.slide("🧲 Tempo des Magneten", 7f) })
+    @Test fun generator() = lab("y10", "115_generator", prepare = { it.slide("🚲 Drehfrequenz", 19f) })
+    @Test fun trafoRatio() = lab("y11", "116_trafo", prepare = { it.slide("🌀 Windungen sekundär (N₂)", 3f) })
+    @Test fun trafoLine() = lab("y13", "117_fernleitung", prepare = { it.onNodeWithText("50 kV").performClick(); it.mainClock.advanceTimeBy(300) })
     @Test fun deepLink() = shot("82_direktlink_optik", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, startOpen = Topic.OPTIK, onBack = {}) }
     @Test fun subject() = shot("63_lernen_nach_fach", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, onBack = {}) }
     @Test fun subjectBio() = shot("64_fach_biologie", settle = 2500, prepare = { it.tap("Alle 8 Versuche") }) { de.experimentopia.app.ui.home.SubjectScreen(Subject.BIOLOGIE, someStars, 9, { false }, {}, {}, onBack = {}) }

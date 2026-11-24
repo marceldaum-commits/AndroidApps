@@ -27,6 +27,10 @@ enum class Lab(val title: String, val emoji: String, val island: Island, val blu
     SPIEGEL("Spiegel-Laser", "🔴", Island.LICHTKLANG, "Dreh den Spiegel und triff die Sterne."),
     BRECHUNG("Lichtknick", "💧", Island.LICHTKLANG, "Licht knickt an Wasser und Glas – oder bleibt gefangen."),
     LINSE("Optische Bank", "🔍", Island.LICHTKLANG, "Kerze, Linse, Schirm: Wann wird das Bild scharf?"),
+    SPULE("Elektromagnet", "🧲", Island.STROM, "Spule, Strom und Eisenkern: Wie stark wird das Feld?"),
+    MOTOR("Motor-Werkstatt", "⚙️", Island.STROM, "Leiterschaukel und Elektromotor: Kraft auf Strom."),
+    DYNAMO("Dynamo-Werkstatt", "🚲", Island.STROM, "Magnet in der Spule – und Strom entsteht."),
+    TRAFO("Trafo-Station", "🔌", Island.STROM, "Spannung umspannen und Strom über weite Wege schicken."),
     KLANG("Klangröhren", "🎵", Island.LICHTKLANG, "Gläser, Röhren und Saiten."),
     FALLTURM("Fallturm", "🗼", Island.FALL, "Was fällt schneller – auf Erde, Mond und im Vakuum?"),
     PENDEL("Pendel", "🕰️", Island.FALL, "Schwingungsdauer messen."),
@@ -114,6 +118,10 @@ object FreeLab {
         Lab.SPIEGEL -> MirrorSetup(targets = listOf(40.0, 70.0, 130.0), showAngles = true)
         Lab.BRECHUNG -> RefractSetup(Medium.LUFT, Medium.WASSER, RefractGoal.FREE)
         Lab.LINSE -> LensSetup(goal = LensGoal.FREE)
+        Lab.SPULE -> CoilSetup(200, 3.0, false, adjustWindings = true, adjustVolts = true, adjustCore = true)
+        Lab.MOTOR -> MotorSetup(MotorMode.FORCE)
+        Lab.DYNAMO -> DynamoSetup(DynamoMode.MAGNET, 500, adjustWindings = true)
+        Lab.TRAFO -> TrafoSetup(TrafoMode.RATIO)
         Lab.KLANG -> SoundSetup(SoundMode.BLOW)
         Lab.NEWTON -> NewtonSetup(NewtonMode.CART, listOf(1.0, 2.0, 4.0), listOf(5.0, 10.0, 20.0), listOf(30.0 to 30.0, 30.0 to 90.0))
         Lab.FALLTURM -> FallSetup(Faller.KUGEL, Faller.FEDER, Planet.entries, 10.0)

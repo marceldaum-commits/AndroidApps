@@ -1,5 +1,13 @@
 # Changelog – Experimentopia
 
+## 2.16.0 – Motor, Dynamo & Trafo (24.11.2026)
+
+- 🔌 **Neues Thema „Motor, Dynamo & Trafo“** auf der Blitzinsel, 13 neue Versuche für Klasse 5–10 – damit gibt es jetzt **224 Versuche**. Zum Selbermachen: Strom macht einen Elektromagneten, ein Eisenkern verstärkt ihn, eine Leiterschaukel schlägt aus, ein Motor dreht sich, ein Magnet erzeugt in der Spule Spannung, ein Generator liefert Wechselspannung, ein Trafo spannt um – und man sieht, warum Fernleitungen Hochspannung brauchen.
+- 🧮 **Vier neue Geräte** im Freien Labor (jetzt 42): Elektromagnet, Motor-Werkstatt, Dynamo-Werkstatt und Trafo-Station. Unter jedem Gerät steht die Rechnung mit den eingestellten Werten, zum Beispiel B = μ₀ · N · I ÷ l oder P_V = I² · R. Eigene Werte lassen sich eintippen.
+- 📖 **Theorie-Karte** mit allen Formeln, jeweils mit Bedeutung der Größen, Einheiten und einem durchgerechneten Beispiel.
+- ✅ Alle Ergebnisse stammen aus dem Rechenmodell und sind in Tests gegen Buchwerte nachgerechnet; jedes Ziel ist mit den Reglern erreichbar.
+- 🔗 Direkt-Link `…/#thema=elektromagnetismus` öffnet das neue Thema.
+
 ## 2.15.0 – Familien-Speicher (24.11.2026)
 
 - 👨‍👩‍👧 **Lernstand sicher aufbewahren**: Im Elternbereich (hinter dem Eltern-Tor) können Eltern eine **Familie** anlegen oder einer Familie beitreten. Der Lernstand wird dann verschlüsselt auf unserem Server in Deutschland gesichert; der Schlüssel liegt nur auf den Geräten der Familie. Auf einem neuen Gerät ist der Fortschritt sofort wieder da – und Kinder können auf mehreren Geräten lernen.

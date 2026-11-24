@@ -12,6 +12,7 @@ enum class Topic(val title: String, val emoji: String, val subject: Subject, val
     SCHWINGUNG("Pendel & Schwingungen", "🕰️", Subject.PHYSIK, "Mechanik Pendel Schwingung Periode Schwingungsdauer Uhr"),
     STROM("Stromkreise", "💡", Subject.PHYSIK, "Elektrizität Strom Spannung Widerstand Ohm Leiter Isolator Schalter Reihe parallel Kurzschluss"),
     MAGNET("Magnetismus", "🧲", Subject.PHYSIK, "Magnet Pole Nordpol Südpol Eisen anziehen abstoßen"),
+    ELEKTROMAGNETISMUS("Motor, Dynamo & Trafo", "🔌", Subject.PHYSIK, "Elektromagnetismus Elektromagnet Spule Windungen Eisenkern Feldstärke Tesla Leiterschaukel Lorentzkraft Motor Elektromotor Drehzahl Induktion Dynamo Generator Wechselspannung Transformator Trafo Spannung Hochspannung Fernleitung"),
     WAERME("Wärme & Teilchen", "🌡️", Subject.PHYSIK, "Wärmelehre Temperatur schmelzen sieden verdampfen Teilchenmodell Aggregatzustand Mischtemperatur Wärmekapazität"),
     LICHT("Licht & Farben", "🌈", Subject.PHYSIK, "Optik Licht Farben Malkasten Farben mischen Tuschkasten additiv subtraktiv Prisma Brechung Regenbogen Spektrum Filter"),
     OPTIK("Schatten, Spiegel & Linsen", "🔍", Subject.PHYSIK, "Optik Schatten Kernschatten Lichtausbreitung Spiegel Reflexion Reflexionsgesetz Einfallswinkel Lot Laser Brechung Brechzahl Snellius Totalreflexion Grenzwinkel Glasfaser Linse Sammellinse Brennweite Brennpunkt Bildweite Gegenstandsweite Lupe Auge"),

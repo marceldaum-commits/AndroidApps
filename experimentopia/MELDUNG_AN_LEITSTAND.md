@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 24.11.2026 – Version 2.16.0 vom 24.11.2026 (großer Di-Lauf: Recht-Pflichtpunkte, Familien-Speicher, Motor/Dynamo/Trafo) – fertig für den Betriebstest
+
+Gesamtbericht des Dienstag-Laufs (ab 15:05 gearbeitet). Zwischenstände waren 2.14.0 (ac1197af) und 2.15.0 (18fef541).
+- **Recht / Pflichtpunkte (2.14.0):** Eltern-Tor-Standard (Malaufgabe in Worten, Ziffern-Tastatur, ohne Vorlese-Knopf, 10 Min. nur im Arbeitsspeicher); Kauf, Preis, Forscher-Pass, Eltern-Handy, Zurücksetzen, Zählung und Nachhilfe-Hinweise hinter dem Tor, Kinder sehen in den Einstellungen nur Ton, Musik, Klasse; Schloss nur „… gehört zum Forscher-Pass.“; „← Alle Apps“ ohne Tor und neutral; Probestunde V15 (Elternhinweis nur auf dem Gerät berechnet, höchstens 1× je 4 Wochen je Thema, abschaltbar; Kinder-Hilfesatz ohne Außenlink; Kl.-9–10-Tipp 1×/Woche; Link nur ?src=, Zählung ohne Thema); gemeinsame Startanimation; OpenAI/„Nova“ vollständig entfernt.
+- **Familien-Speicher (2.15.0):** familie.js e9993ec unverändert (sha256 3f7ec567…), Pflichttext, Knöpfe „Einverstanden – Familie anlegen/beitreten“ (nichts vorausgewählt), Sicherheitshinweis auf der Familien-Seite, bei Link/QR und Notfall-Blatt, Löschen nur mit Familien-Nummer, Konflikte sicher zusammengeführt. Echter Rundlauf gegen lernen-test (anlegen, Index, Stand, Konflikt 409, falscher Schlüssel, löschen, „familie-weg“): grün. **Fehler gefunden und behoben:** Der Service Worker hat Antworten von /familie/v1/ (gleiche Adresse) zwischengespeichert – er bedient jetzt nur noch Dateien im eigenen Ordner.
+- **Inhalt (2.16.0):** Thema „Motor, Dynamo & Trafo“, 13 Versuche (Kl. 5–10), 4 Labore, Theorie-Karte mit Formeln, Einheiten und durchgerechneten Beispielen; Antworten aus dem Modell, Tests gegen Buchwerte; „Kommt bald“-Kachel gestrichen; `#thema=elektromagnetismus`. Versuche: 13 neu, 0 geändert, gesamt 224. Gratis-Umfang 78.
+- **Prüfungen:** Modell- und App-Tests, Lint, Webapp, web-start (11), web-umzug (21), web-zaehlung, web-familie-echt (16), Bilder 96–101, 110–117, 120–122 angesehen. PC 1920 und 1280 geprüft, Konsole leer. Kein echtes WebKit hier: Bitte iPhone prüfen.
+- **Rechtsbezug: ja** (Eltern-Tor, V10, V15, Schloss-Text, Familien-Speicher V8/A6, Startanimation, 10g).
+- **Rückweg:** 2.13.2 (6c69e270). Der Familien-Speicher bleibt ohne Server-Freigabe wirkungslos (404 noch_nicht_live).
+
 ## 19.11.2026 – Version 2.13.2 vom 19.11.2026: sachlicher Schloss-Text (ELTERN-TOR, UWG Anh. Nr. 28) – fertig für den Betriebstest
 
 - Schloss/Blubb: „„<Versuch>“ gehört zum Forscher-Pass. Deine Eltern können im Elternbereich nachsehen.“ (vorher „Frag deine Eltern!“ – stand so schon in 2.13.0 live). Blubb in den Einstellungen wirbt nicht mehr („Hier steht, was zum Forscher-Pass gehört …“). Panel „👪 Für Eltern“: „Hier geht es nur mit einer Frage für Erwachsene weiter.“ Kein Preis, kein Kaufknopf, keine Code-Eingabe in der Kinderansicht.

@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.15.0 vom 24.11.2026** · WebApp (installierbar als App, auch offline) – https://lernen.mathenachhilfe-online.com/experimentopia/ (die alte Adresse experimentopia.mathenachhilfe-online.com leitet mit Lernstand dorthin um) · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.16.0 vom 24.11.2026** · WebApp (installierbar als App, auch offline) – https://lernen.mathenachhilfe-online.com/experimentopia/ (die alte Adresse experimentopia.mathenachhilfe-online.com leitet mit Lernstand dorthin um) · 224 Versuche in 21 Fachbereichen (Physik, Chemie, Biologie) · 42 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -156,6 +156,30 @@ Bestandsschutz: Schon gemachte Versuche bleiben immer offen. Die Play-Fassung ha
 | Direkt-Link Optik | Querverweis |
 |---|---|
 | ![](screenshots/82_direktlink_optik.png) | ![](screenshots/83_querverweis.png) |
+
+## Motor, Dynamo & Trafo (seit 2.16.0)
+
+Neues Thema auf der Blitzinsel mit 13 Versuchen und vier Laboren; alle Formeln stehen in `Emag.kt` und sind in `EmagTest` gegen Buchwerte geprüft.
+
+| Elektromagnet | Eisenkern | Leiterschaukel | Elektromotor |
+|---|---|---|---|
+| ![](screenshots/110_elektromagnet.png) | ![](screenshots/111_eisenkern.png) | ![](screenshots/112_leiterschaukel_kraft.png) | ![](screenshots/113_elektromotor.png) |
+
+| Induktion | Generator | Trafo | Fernleitung |
+|---|---|---|---|
+| ![](screenshots/114_induktion.png) | ![](screenshots/115_generator.png) | ![](screenshots/116_trafo.png) | ![](screenshots/117_fernleitung.png) |
+
+## Eltern-Tor, Elternbereich, Familie, Startbild (2.14.0 / 2.15.0)
+
+| Eltern-Tor | Hilfe für Kinder | Tipp Kl. 9–10 | Schloss (Kinderansicht) |
+|---|---|---|---|
+| ![](screenshots/96_eltern_tor.png) | ![](screenshots/97_kind_hilfe.png) | ![](screenshots/98_oberstufe_tipp.png) | ![](screenshots/66_forscher_pass_kind.png) |
+
+| Familie (verbunden) | Einwilligung | Startbild | PC 1920 |
+|---|---|---|---|
+| ![](screenshots/100_familie.png) | ![](screenshots/101_familie_einwilligung.png) | ![](screenshots/99_startbild.png) | ![](screenshots/120_pc_start_1920.png) |
+
+Eltern-Tor, Einstellungen, Probestunde-Hinweise: `docs/RECHT-VORGABEN.md`. Familien-Speicher: `familie.js` (unverändert aus dem Mathe-Trainer, Prüfsumme in `WOCHENRUNDE.md`), Brücke `familie-bruecke.js`, Test gegen den echten Test-Server: `tools/web-familie-echt.mjs`.
 
 ## Anonyme Zählung und Elternbereich (seit 2.11.0)
 

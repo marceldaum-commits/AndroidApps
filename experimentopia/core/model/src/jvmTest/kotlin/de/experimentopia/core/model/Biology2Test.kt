@@ -64,7 +64,7 @@ class Biology2Test {
         assertEquals(Lab.NEWTON, Catalog.byId("n9")!!.setup.lab)
     }
 
-    @Test fun zweihundert() { assertEquals(211, Catalog.all.size); assertEquals(Island.BIO, Catalog.byId("v1")!!.island) }
+    @Test fun zweihundert() { assertEquals(224, Catalog.all.size); assertEquals(Island.BIO, Catalog.byId("v1")!!.island) }
 }
 
 class TheoryTest {

@@ -149,6 +149,27 @@ object Theory {
             "Kühlschrankmagnete halten, weil die Tür aus Stahlblech ist.",
             listOf("Pol" to "Ende eines Magneten, wo er am stärksten zieht", "Magnetfeld" to "Raum, in dem die Magnetkraft wirkt")),
 
+        TheoryCard(Topic.ELEKTROMAGNETISMUS, "Strom und Magnetismus gehören zusammen: Strom macht Magnetfelder – und bewegte Magnetfelder machen Strom.",
+            listOf(
+                p("🧲", "Fließt Strom durch einen Draht, entsteht ein Magnetfeld. Wickelt man den Draht zu einer Spule, wird das Feld stark – und es verschwindet, wenn der Strom ausgeschaltet wird (Elektromagnet)."),
+                p("🔩", "Ein Eisenkern in der Spule verstärkt das Feld stark. Mehr Windungen oder mehr Strom machen es auch stärker."),
+                p("⚙️", "Auf Strom im Magnetfeld wirkt eine Kraft. Polt man den Strom um, kehrt sich die Kraft um. Daraus baut man den Elektromotor: Eine Spule dreht sich, weil die Kraft sie immer weiterschiebt."),
+                p("🚲", "Bewegt man einen Magneten in einer Spule, entsteht Spannung (Induktion) – aber nur, solange er sich bewegt. So arbeitet der Fahrraddynamo und das Kraftwerk."),
+                p("🔌", "Ein Transformator hat zwei Spulen auf einem Eisenkern. Mehr Windungen auf der zweiten Spule, höhere Spannung; weniger Windungen, niedrigere Spannung. Er funktioniert nur mit Wechselspannung."),
+            ),
+            listOf(
+                p("🌀", "Feld einer langen Spule: B = μ₀ · N · I ÷ l (B Flussdichte in Tesla (T), μ₀ = 1,2566·10⁻⁶ T·m/A, N Windungen, I Stromstärke in A, l Länge in m). Beispiel: N = 250, I = 1,6 A, l = 0,10 m: B = 1,2566·10⁻⁶ · 250 · 1,6 ÷ 0,10 = 5,03·10⁻³ T ≈ 5,0 mT. Mit Eisenkern (im Modell μr = 200) ist B 200-mal so groß: ≈ 1,0 T."),
+                p("💪", "Kraft auf einen Leiter (senkrecht zum Feld): F = B · I · l (F in Newton, B in Tesla, I in Ampere, l in Meter). Beispiel: B = 0,1 T, I = 5 A, l = 0,06 m: F = 0,1 · 5 · 0,06 = 0,03 N. Richtung: Dreifingerregel der rechten Hand (technische Stromrichtung): Daumen = Strom, Zeigefinger = Feld (Nord → Süd), Mittelfinger = Kraft."),
+                p("⚙️", "Gleichstrommotor (Modell, Leerlauf): Die Drehzahl ist proportional zur Spannung, n = 600 min⁻¹ je Volt · U. Beispiel: Für 3 000 min⁻¹ braucht man U = 3 000 ÷ 600 = 5 V. Mit Last dreht der echte Motor langsamer."),
+                p("📈", "Induktionsgesetz: U = N · ΔΦ ÷ Δt (Φ magnetischer Fluss in Weber, 1 Wb = 1 V·s). Beispiel: N = 500, ΔΦ = 2,5·10⁻⁵ Wb, Δt = 0,125 s: U = 500 · 2,5·10⁻⁵ ÷ 0,125 = 0,0125 ÷ 0,125 = 0,10 V."),
+                p("🔄", "Generator: Û = N · B · A · 2π · f (Scheitelspannung; A Fläche in m², f Frequenz in Hz). Effektivwert U_eff = Û ÷ √2. Beispiel: N = 100, B = 0,1 T, A = 0,002 m², f = 20 Hz: Û = 100 · 0,1 · 0,002 · 2π · 20 ≈ 2,51 V; U_eff ≈ 1,78 V. Die Steckdose liefert 230 V effektiv, das sind Û ≈ 325 V bei 50 Hz."),
+                p("🔌", "Transformator: U₁ ÷ U₂ = N₁ ÷ N₂. Ideal ohne Verluste: P₁ = P₂, also I₁ ÷ I₂ = N₂ ÷ N₁. Beispiel: U₁ = 12 V, N₁ = 600, N₂ = 900: U₂ = 12 · 900 ÷ 600 = 18 V; bei R = 6 Ω ist I₂ = 18 ÷ 6 = 3 A, P = 18 · 3 = 54 W und I₁ = 54 ÷ 12 = 4,5 A."),
+                p("🗼", "Fernleitung: Strom I = P ÷ U, Verlust P_V = I² · R. Beispiel: P = 2 MW, R = 5 Ω. Bei 10 kV: I = 200 A, P_V = 200² · 5 = 200 kW (10 %). Bei 100 kV: I = 20 A, P_V = 20² · 5 = 2 kW (0,1 %). Zehnfache Spannung = hundertfach kleinerer Verlust."),
+            ),
+            "Das Ladegerät deines Handys enthält einen Trafo, der Fahrraddynamo arbeitet nach dem Induktionsprinzip, und jede Straßenbahn wird von einem Elektromotor angetrieben.",
+            listOf("Spule" to "aufgewickelter Draht mit vielen Windungen", "Induktion" to "Spannung durch sich änderndes Magnetfeld", "Tesla" to "Einheit der magnetischen Flussdichte",
+                "Wechselspannung" to "Spannung, die ständig ihr Vorzeichen wechselt", "Transformator" to "wandelt Wechselspannung mit zwei Spulen um")),
+
         TheoryCard(Topic.WAERME, "Alles besteht aus winzigen Teilchen. Wärme heißt: Die Teilchen bewegen sich schneller.",
             listOf(
                 p("🧊", "Fest: Teilchen sitzen fest am Platz und zittern. Flüssig: Sie rutschen aneinander vorbei. Gasförmig: Sie fliegen frei herum."),
