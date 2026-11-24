@@ -769,3 +769,9 @@ Freischalt-Link `?pro=<Code>`, Vorbild `kurvenflug/pro/`. Sperren erst, wenn ihr
 > Töne werden im Gerät erzeugt; Kamera und Mikrofon werden nicht verwendet.
 
 **Bitte prüfen:** Start auf iPhone/iPad (Safari ab 18.2), Ladezeit über den Server mit gzip, Offline nach dem ersten Besuch, automatisches Update beim nächsten Push.
+
+## 2.16.2 vom 24.11.2026 – Auflagen aus Recht V45 (nur Test)
+- Startbild per Tipp überspringbar; kein schnelles Blinken (Atmen ≈ 0,4 Hz, Ausblenden einmalig < 1 s, bei „weniger Bewegung“ nur Einblenden).
+- Manifest mit fester `id`. Texte-Abgleich mit Fundstellen: `experimentopia/docs/TEXTE-ABGLEICH.md`.
+- Fremde Anbieter-Namen aus README/Quelltext-Kommentaren entfernt. Keine KI-Inhalte in der App.
+- Rechtsbezug: ja (V45, V15, V8/A6, V36). Rückweg: 2.16.1 / 62a35f94, live bleibt 2.13.2 / 6c69e270.

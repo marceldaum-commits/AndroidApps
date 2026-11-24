@@ -6,7 +6,7 @@ import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonArray
 
 /**
- * Vorlesen mit den eigenen Stimmen des Tonstudios auf unserem Server (Marcel 20.11.2026: „Die OpenAI-Verbindung kommt überall raus, wir haben unsere eigenen Stimmen“).
+ * Vorlesen mit den eigenen Stimmen des Tonstudios auf unserem Server (Marcel 20.11.2026: „Wir haben unsere eigenen Stimmen“).
  * Deutsch: de-1 (Chatterbox). Die App selbst ruft keinen Sprachdienst auf: Feste Texte werden vorab vertont und als MP3 ausgeliefert.
  * Gekennzeichnet wird sie als „KI-generierte Stimme“ (synthetische Stimme).
  * Zurzeit ist das Vorlesen AUS ([ENABLED] = false), bis die vertonten Dateien da sind (Textliste ab 25.11.2026).

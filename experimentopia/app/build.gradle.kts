@@ -23,8 +23,8 @@ android {
         applicationId = "de.experimentopia.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 54
-        versionName = "2.16.1"
+        versionCode = 55
+        versionName = "2.16.2"
         // Datum dieser Version – bei jeder Auslieferung zusammen mit versionName anpassen (steht auch im CHANGELOG)
         // nur echte Handys (Maschinencode der Sprachsynthese) – hält die APK klein
         buildConfigField("String", "VERSION_DATE", "\"24.11.2026\"")

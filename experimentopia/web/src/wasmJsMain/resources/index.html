@@ -49,6 +49,7 @@
      Ist die App bereit: kurz zusammenziehen, groß herauszoomen, ausblenden (zusammen unter 1 s). Alles inline, ohne Netzabruf. */
   #start { position: fixed; top: 0; right: 0; bottom: 0; left: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 5;
     background: #05070f; }
+  /* Barrierefrei: keine schnellen Blitze (Atmen ≈ 0,4 Hz, Ausblenden einmalig < 1 s); Tippen überspringt das Ausblenden */
   #start.ende { animation: splashweg .9s ease-in forwards; }
   @keyframes splashweg { 0%, 20% { opacity: 1; } 100% { opacity: 0; } }
   #start.ende svg { animation: zoomaus .9s cubic-bezier(.5, 0, .9, .4) forwards; }
@@ -124,7 +125,7 @@
 </script>
 </head>
 <body>
-<div id="start">
+<div id="start" onclick="if (this.classList.contains('ende')) this.style.display = 'none';">   <!-- Tippen beendet das Ausblenden sofort (überspringbar) -->
   <svg viewBox="16 8 76 76" aria-hidden="true">
     <!-- Logo-Symbol (Kolben mit Blubb) in Weiß – gemeinsame Startanimation der Lern-Apps -->
     <path d="M37 66 L71 66 L77 78 Q78 82 74 82 L34 82 Q30 82 31 78 Z" fill="#ffffff"/>

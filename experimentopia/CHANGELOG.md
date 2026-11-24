@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.16.2 – Startbild zum Überspringen (24.11.2026)
+
+- 🎬 Das Ausblenden des Startbilds lässt sich mit einem Tipp sofort beenden. Es blinkt nichts schnell: Das „Atmen“ des Logos dauert gut 2 Sekunden, das Ausblenden einmalig weniger als 1 Sekunde.
+- 📱 Die App hat jetzt eine feste Kennung für die Installation auf dem Home-Bildschirm (ändert für bereits installierte Apps nichts).
+
 ## 2.16.1 – Kleine Pflege (24.11.2026)
 
 - 🔧 Die gemeinsame Bibliothek für den Familien-Speicher ist auf die neueste Fassung aktualisiert (Codes anderer Lern-Apps werden richtig erkannt). Für Experimentopia ändert sich im Spielablauf nichts.

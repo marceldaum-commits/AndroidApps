@@ -14,7 +14,7 @@ fun dayStartLocal(): Double = js("{ const d = new Date(); d.setHours(0, 0, 0, 0)
 /** Ladebild sanft ausblenden */
 /** Familien-Speicher: Aufruf an familie.js über familie-bruecke.js (JSON rein, JSON raus) */
 fun familieCall(op: String, args: String, done: (String) -> Unit): Unit = js("{ try { window.ExFamilie.call(op, args).then((r) => done(r)); } catch (e) { done('{\\\"ok\\\":false,\\\"grund\\\":\\\"fehler\\\"}'); } }")
-fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s && s.dataset.fertig !== '1') { s.dataset.fertig = '1'; s.classList.add('ende'); s.style.pointerEvents = 'none'; setTimeout(() => { s.style.display = 'none'; }, 1000); } }")
+fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s && s.dataset.fertig !== '1') { s.dataset.fertig = '1'; s.classList.add('ende'); setTimeout(() => { s.style.display = 'none'; }, 1000); } }")
 /** Der Seite sagen, ob gerade die Startseite offen ist – nur dort (oder im Hintergrund) lädt sie sich nach einem Update selbst neu */
 fun atHome(on: Boolean): Unit = js("{ window.__exHome = on; if (on && window.__exTry) window.__exTry(); }")
 
