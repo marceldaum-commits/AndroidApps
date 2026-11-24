@@ -876,7 +876,7 @@
   function kidsPrivacy(zurueck) {
     const punkte = [
       ['🏠', window.FAMILIE_AKTIV && window.FAMILIE && window.FAMILIE.gekoppelt()
-        ? 'Dein Lernstand bleibt auf deinen Geräten. Wenn deine Eltern es einschalten, wird er verschlüsselt auf unserem Server in Deutschland gesichert, damit du auf mehreren Geräten weiterüben kannst. Wir schauen ihn uns nicht an und geben ihn nicht weiter. Deine Antworten und dein Name werden dabei nicht an uns gesendet.'   // Recht V40, Fassung A
+        ? 'Dein Lernstand bleibt auf deinen Geräten. Wenn deine Eltern es einschalten, wird er verschlüsselt auf unserem Server in Deutschland gesichert, damit du auf mehreren Geräten weiterüben kannst. Wir schauen ihn uns nicht an und geben ihn nicht weiter. Deine eigenen Wörterlisten werden dabei auch verschlüsselt gesichert. Deine Antworten und dein Name werden dabei nicht an uns gesendet.'   // Recht V40 Fassung A + V42 (Wörterlisten)
         : 'Deine Antworten, dein Name und dein Lernstand bleiben auf <b>diesem Gerät</b>.'],
       ['🙈', 'Du brauchst <b>kein Konto</b> und keine E-Mail. Deinen Namen musst du nicht verraten – ein Spitzname reicht.'],
       ['🎤', 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme bleibt auf dem Gerät und wird nach dem Anhören gelöscht. Nur wenn deine Eltern es erlauben, darf die Spracherkennung deines Browsers übers Internet mithelfen.'],
@@ -1052,7 +1052,7 @@
       box.innerHTML = `<p class="muted">Mit dem Familien-Speicher übt euer Kind auf mehreren Geräten mit demselben Stand weiter – und nichts geht verloren, wenn ein Gerät kaputtgeht. Ohne Kopplung bleibt alles wie bisher nur auf diesem Gerät.</p>
         <div class="row"><button class="btn small blue" data-neu>Familie anlegen</button><button class="btn small white" data-beitritt>Familie beitreten</button></div><div data-fbereich></div><p class="muted" data-fmeld aria-live="polite"></p>`;
       const zone = box.querySelector('[data-fbereich]');
-      const einwilligung = (knopf, inhalt) => `<div class="card" style="margin-top:10px"><p class="muted" data-fpflicht>${FAM_TEXT}</p><p class="muted"><a href="${FAM_DSE}" target="_blank" rel="noopener">Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)</a></p>${inhalt || ''}<div class="row"><button class="btn small blue" data-ok>${knopf}</button><button class="btn small white" data-abbruch>Abbrechen</button></div></div>`;
+      const einwilligung = (knopf, inhalt) => `<div class="card" style="margin-top:10px"><p class="muted" data-fpflicht>${FAM_TEXT}</p><p class="muted">Eure eigenen Wörterlisten („Mein Schulbuch“) werden dabei auch verschlüsselt mitgesichert.</p><p class="muted"><a href="${FAM_DSE}" target="_blank" rel="noopener">Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)</a></p>${inhalt || ''}<div class="row"><button class="btn small blue" data-ok>${knopf}</button><button class="btn small white" data-abbruch>Abbrechen</button></div></div>`;
       box.querySelector('[data-neu]').onclick = () => {
         A.sfx('tap'); zone.innerHTML = einwilligung('Einverstanden – Familie anlegen');
         zone.querySelector('[data-abbruch]').onclick = () => { zone.innerHTML = ''; };
@@ -1926,6 +1926,7 @@
       <div class="card"><label style="font-weight:800">Name der Liste</label>
         <input class="input" data-name maxlength="30" placeholder="z. B. Lektion 3" value="${esc(liste ? liste.name : '')}" style="margin:6px 0 12px">
         <label style="font-weight:800">${de ? 'Ein Lernwort pro Zeile' : `Ein Wort pro Zeile: Deutsch = ${esc(L.name)}`}</label>
+        <p class="muted" style="margin:6px 0 0;font-size:14px">Bitte keine Namen oder Adressen als Wörter eintragen.</p>
         <textarea class="input" data-text rows="9" placeholder="${esc(beispiel)}" style="margin-top:6px;font-size:18px;-webkit-user-select:text;user-select:text">${esc(text)}</textarea>
         <div class="err" data-err></div><div class="muted" data-ok style="font-weight:700"></div>
         <div class="row" style="margin-top:8px"><button class="btn blue" data-save>💾 Speichern</button>${liste ? '<button class="btn white small" data-del>🗑️ Löschen</button>' : ''}</div></div>
@@ -1985,7 +1986,7 @@
         const mark = () => { if (reg.waiting && navigator.serviceWorker.controller) { updateReady = true; if (!$app.querySelector('.stage')) maybeApplyUpdate(); } };
         reg.addEventListener('updatefound', () => { const w = reg.installing; if (w) w.addEventListener('statechange', mark); });
         mark();
-        setTimeout(() => { if (window.OFFLINE) window.OFFLINE.abgleichen(); }, 8000);   // geladene Sprachen nach einem Update aktualisieren
+        setTimeout(() => { if (window.OFFLINE) window.OFFLINE.abgleichen().then(() => window.OFFLINE.grundausstattung()); }, 8000);   // geladene Sprachen nach einem Update aktualisieren
         // Beim Öffnen und alle 30 Minuten nach einer neuen Version fragen
         setInterval(() => reg.update().catch(() => {}), 30 * 60 * 1000);
       }).catch(() => {});

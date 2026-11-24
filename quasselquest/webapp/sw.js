@@ -9,14 +9,10 @@ self.addEventListener('install', (e) => {
   // Programmdateien und alle vorab vertonten Sätze (audio/index.json) offline speichern
   e.waitUntil(caches.open(CACHE).then(async (c) => {
     await c.addAll(FILES.map((f) => new Request(f, { cache: 'reload' })));
-    const idx = await (await c.match('audio/index.json')).json();
-    const mp3 = new Set();
-    // Grundausstattung: nur Englisch (Hafen-Welt) sofort offline. Andere Sprachen: Offline-Download im Elternbereich
-    // (offline.js) oder beim ersten Abspielen. So bleibt der erste Besuch klein.
-    for (const e of Object.values(idx.saetze || {})) if (e.sprache === 'en' && !e.unsicher) { mp3.add('audio/' + e.n); mp3.add('audio/' + e.s); }
+    // Nur das Nötige beim Installieren (schnell aktiv, Geräte-Test 24.11.: vorher 72 s). Die englischen Sätze lädt die App danach im Hintergrund
+    // (offline.js: Grundausstattung), andere Sprachen per Offline-Download im Elternbereich oder beim ersten Abspielen.
     const pk = await (await c.match('pakete/index.json')).json();
     await c.addAll((pk.pakete || []).map((p) => 'pakete/' + p.id + '.json'));
-    await c.addAll([...mp3]);
   }));
 });
 self.addEventListener('activate', (e) => {

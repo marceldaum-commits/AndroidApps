@@ -267,11 +267,11 @@ for (const [name, type, opts] of [
       ok(/ca\. \d/.test(await page.textContent('[data-ol="es"] [data-st]')), 'Offline: Größe wird genannt (' + (await page.textContent('[data-ol="es"] [data-st]')) + ')');
       await page.click('[data-ol="es"] [data-act]');
       await page.waitForFunction(() => /gespeichert/.test(document.querySelector('[data-ol="es"] [data-st]')?.textContent || ''), null, { timeout: 120000 }).catch(() => {});
-      const n1 = await page.evaluate(async () => (await (await caches.open('quasselquest-offline')).keys()).length);
+      const n1 = await page.evaluate(async () => (await (await caches.open('quasselquest-offline')).keys()).filter((k) => /\/audio\/server\/es\//.test(k.url)).length);
       ok(n1 > 500, 'Offline: Spanisch geladen (' + n1 + ' Dateien im Offline-Speicher)');
       await snap(page, 'eltern_offline');
       await page.click('[data-ol="es"] [data-act]'); await page.waitForFunction(() => /Zum Laden/.test(document.querySelector('[data-ol="es"] [data-st]')?.textContent || ''), null, { timeout: 20000 }).catch(() => {});
-      const n2 = await page.evaluate(async () => (await (await caches.open('quasselquest-offline')).keys()).length);
+      const n2 = await page.evaluate(async () => (await (await caches.open('quasselquest-offline')).keys()).filter((k) => /\/audio\/server\/es\//.test(k.url)).length);
       ok(n2 === 0, 'Offline: Spanisch wieder gelöscht (' + n2 + ' übrig)');
     }
     await snap(page, 'eltern');
