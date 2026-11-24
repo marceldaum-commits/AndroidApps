@@ -252,7 +252,7 @@ class AppRootTest {
         nav.go(Routes.BACKSTAGE); settle(); assertEquals(2, uploads.size); assertTrue(uploads[1].third.contains("\"aufgaben\":1"))
         // aufheben: Bericht auf dem Server löschen, Werte lokal weg
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.restart(Routes.PARENTS); settle()
-        rule.onNodeWithTag("eltern-aufheben").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-aufheben-ja").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("eltern-aufheben").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-alter-ja").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-loesen-ja").performScrollTo().performClick(); settle()
         assertEquals(listOf("https://server.test/b/" + "A".repeat(22)), deleted.toList()); assertEquals("", prefs.parentLink.value); rule.onNodeWithTag("eltern-koppeln").assertExists()
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.restart(Routes.HOME); settle(); assertEquals("nach dem Aufheben geht nichts mehr raus", 2, uploads.size)
     }
@@ -293,7 +293,7 @@ class AppRootTest {
         rule.onNodeWithTag("eltern-senden").performScrollTo().performClick(); settle(); assertEquals(3, uploads.size); assertTrue(uploads[2].first.contains("/b/"))
         state = state + ("sterne" to "1-1=3;1-2=3"); rule.onNodeWithTag("eltern-senden").performClick(); settle(); assertEquals(5, uploads.size); assertTrue(uploads[4].first.contains("/s/"))
         // aufheben: der Merker der Sicherung ist weg
-        rule.onNodeWithTag("eltern-aufheben").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-aufheben-ja").performScrollTo().performClick(); settle(); assertEquals("", prefs.backupMark)
+        rule.onNodeWithTag("eltern-aufheben").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-alter-ja").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-loesen-ja").performScrollTo().performClick(); settle(); assertEquals("", prefs.backupMark)
     }
 
     /** „← Alle Apps“ oben auf der Startseite: sichtbar, groß genug zum Tippen, ohne Preis – und nur dort, nicht in Aufgaben. */
@@ -400,6 +400,43 @@ class AppRootTest {
         zurueck(); nav.restart(Routes.HOME); settle(); assertEquals("sichern", calls.last()[0]); assertEquals("", prefs.family); assertTrue(applied.size == 1)
     }
 
+    /** Verbindung zu den Eltern lösen: Altersfrage; ab 16 selbst (Vermerk „vom Kind gelöst“ statt Löschen), sonst nur über das Eltern-Tor (Löschen wie bisher). */
+    @Test fun kopplungLoesenMitAltersfrage() {
+        val zahl = mapOf("dreizehn" to 13, "vierzehn" to 14, "fünfzehn" to 15, "sechzehn" to 16, "siebzehn" to 17, "achtzehn" to 18, "neunzehn" to 19, "sechs" to 6, "sieben" to 7, "acht" to 8, "neun" to 9)
+        fun torAuf() { val m = Regex("Wie viel ist (\\S+) mal (\\S+)\\?").find(rule.onNodeWithTag("eltern-tor-aufgabe").fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsProperties.Text].first().text)!!
+            (zahl.getValue(m.groupValues[1]) * zahl.getValue(m.groupValues[2])).toString().forEach { rule.onNodeWithTag("eltern-tor-taste-$it").performClick() }; rule.onNodeWithTag("eltern-tor-taste-OK").performClick(); settle() }
+        val released = ArrayList<List<String>>(); var releaseStatus = 204; val url = "https://server.test/b/" + "A".repeat(22)
+        eltern = de.raumlicht.app.ui.settings.ElternPlatform("https://server.test/b/", "https://seite.test/#weg/", { "A".repeat(22) + "." + "B".repeat(22) + "." + "C".repeat(43) },
+            { u, w, _, json, done -> uploads += Triple(u, w, json); done(204) }, { u, _, done -> deleted += u; done(204) },
+            release = { u, w, k, json, done -> released += listOf(u, w, k, json); done(releaseStatus) })
+        start(); rule.runOnUiThread { prefs.setParentLink(""); prefs.pendingRelease = ""; prefs.parentSent = 0 }
+        fun koppeln() { nav.restart(Routes.PARENTS); settle(); rule.onNodeWithTag("eltern-name").performScrollTo().performTextInput("Lea"); rule.onNodeWithTag("eltern-koppeln").performScrollTo().performClick(); settle(); assertNotEquals("", prefs.parentLink.value) }
+        fun aufheben() { rule.onNodeWithTag("eltern-aufheben").performScrollTo().performClick(); settle() }
+        koppeln()
+        // Altersfrage: wörtlich, beide Antworten gleich gestaltet; „Nein“ → nur die Eltern, „Zurück“ ändert nichts
+        aufheben(); rule.onNodeWithTag("eltern-alter-frage").assertTextEquals("Verbindung zu deinen Eltern lösen? Bist du 16 oder älter?")
+        rule.onNodeWithTag("eltern-alter-ja").performScrollTo(); rule.onRoot().captureRoboImage("../screenshots/96_kopplung_loesen.png")
+        rule.onNodeWithTag("eltern-alter-ja").assertTextEquals("Ja, ich bin 16 oder älter"); rule.onNodeWithTag("eltern-alter-nein").assertTextEquals("Nein")
+        rule.onNodeWithTag("eltern-alter-nein").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-nur-eltern").assertTextEquals("Dann können nur deine Eltern die Verbindung lösen – im Elternbereich.")
+        rule.onNodeWithTag("eltern-zurueck").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-aufheben").assertExists(); assertTrue(deleted.isEmpty() && released.isEmpty()); assertNotEquals("", prefs.parentLink.value)
+        // „Nein“ → Zum Elternbereich: erst das Eltern-Tor, dann Bestätigung – gelöscht wird wie bisher, ohne Vermerk
+        aufheben(); rule.onNodeWithTag("eltern-alter-nein").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-zum-bereich").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("eltern-tor").assertExists(); assertTrue(deleted.isEmpty()); torAuf()
+        rule.onNodeWithTag("eltern-aufheben-ja").performScrollTo().performClick(); settle()
+        assertEquals(listOf(url), deleted.toList()); assertTrue(released.isEmpty()); assertEquals("", prefs.parentLink.value); assertEquals("", prefs.pendingRelease)
+        // „Ja, ich bin 16 oder älter“ → Bestätigung → Vermerk statt Löschen, ohne Lerndaten und ohne Namen
+        koppeln(); aufheben(); rule.onNodeWithTag("eltern-alter-ja").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("eltern-loesen-text").assertTextEquals("Wenn du die Verbindung löst, sehen deine Eltern deinen Lernbericht nicht mehr. Wirklich lösen?")
+        rule.onNodeWithTag("eltern-loesen-abbrechen").performScrollTo().performClick(); settle(); assertTrue(released.isEmpty()); assertNotEquals("", prefs.parentLink.value)
+        aufheben(); rule.onNodeWithTag("eltern-alter-ja").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-loesen-ja").performScrollTo().performClick(); settle()
+        assertEquals(1, released.size); assertEquals(listOf(url, "B".repeat(22), "C".repeat(43)), released[0].take(3)); assertEquals("kein zweites Löschen", 1, deleted.size)
+        val note = released[0][3]; assertTrue(note, note.contains("\"status\":\"geloest\"") && note.contains("\"app\":\"raumlicht\"") && !note.contains("Lea") && !note.contains("sterne")); assertTrue(note.length < de.raumlicht.core.model.Eltern.MAX_RELEASE)
+        assertEquals("", prefs.parentLink.value); assertEquals("", prefs.pendingRelease)
+        // offline: der Vermerk bleibt vorgemerkt (nächster Start versucht es einmal), die Kopplung ist trotzdem gelöst
+        releaseStatus = 0; koppeln(); aufheben(); rule.onNodeWithTag("eltern-alter-ja").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-loesen-ja").performScrollTo().performClick(); settle()
+        assertEquals(2, released.size); assertEquals("", prefs.parentLink.value); assertEquals("A".repeat(22) + "." + "B".repeat(22) + "." + "C".repeat(43), prefs.pendingRelease)
+    }
+
     /** Mit einem Familien-Link geöffnet: erst das Eltern-Tor, dann die Familien-Seite mit eingetragenem Link. */
     @Test fun familienLinkFuehrtDurchsElternTor() {
         val fam = "A".repeat(22) + "." + "b".repeat(43) + "." + "C".repeat(22)
@@ -476,7 +513,7 @@ class AppRootTest {
         // Prüfungsmodus (Musik aus): nur Prüfungen auf Zeit und der Pflichtteil
         assertTrue(Routes.isExam("abi/zelt/1")); assertTrue(Routes.isExam(Routes.QUICK)); assertFalse(Routes.isExam("abi/zelt/0")); assertFalse(Routes.isExam(Routes.EXAMS)); assertFalse(Routes.isExam("level/1-1"))
         // Vorlesen: Stimme ist als KI-Stimme gekennzeichnet, Hörprobe vorhanden
-        rule.onNodeWithTag("stimme-name").performScrollTo().assertTextEquals("Stimme: Nova – KI-generierte Stimme"); rule.onNodeWithTag("hoerprobe").assertExists()
+        rule.onNodeWithTag("stimme-name").performScrollTo().assertTextEquals("Stimme: KI-generierte Stimme"); rule.onNodeWithTag("hoerprobe").assertExists()
         // Sprechtempo in sechs Stufen, gemerkt; krumme Werte rasten auf die nächste Stufe
         rule.onNodeWithTag("sprechtempo-text").performScrollTo().assertTextEquals("🐢🐇 Sprechtempo: 1,0×")
         rule.runOnUiThread { prefs.setSpeechRate(118) }; settle(); rule.onNodeWithTag("sprechtempo-text").assertTextEquals("🐢🐇 Sprechtempo: 1,15×")

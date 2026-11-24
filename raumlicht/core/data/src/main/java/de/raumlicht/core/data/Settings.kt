@@ -42,10 +42,6 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     var voiceName: String
         get() = prefs.getString("voiceName", "") ?: ""
         set(v) = prefs.edit().putString("voiceName", v).apply()
-    /** Zuletzt gewählte Qualität beim Offline-Laden der Stimme Nova: Bestqualität statt Standard */
-    var voiceBest: Boolean
-        get() = prefs.getBoolean("voiceBest", false)
-        set(v) = prefs.edit().putBoolean("voiceBest", v).apply()
     var voiceBright: Boolean
         get() = prefs.getBoolean("voiceBright", false)
         set(v) = prefs.edit().putBoolean("voiceBright", v).apply()
@@ -117,7 +113,7 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     override fun resetProgress() {
         val e = prefs.edit()
         prefs.all.keys.filter { it.startsWith("intro_") || it.startsWith("exam_") }.forEach { e.remove(it) }
-        listOf("jamBest", "lageBest", "balloonBest", "diary", "skin", "trail", "hat").forEach { e.remove(it) }
+        listOf("jamBest", "lageBest", "balloonBest", "diary", "skin", "trail", "hat", "learnLog", "learnMonths").forEach { e.remove(it) }   // auch der Lernverlauf: der Bericht für die Eltern beginnt neu
         e.apply()
         _jamBest.value = 0; _lageBest.value = 0; _balloonBest.value = 0; _exams.value = emptyMap(); _diary.value = ""; _skin.value = "pink"; _look.value = "none" to "none"
     }
@@ -163,6 +159,9 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     override var learnMonths: String
         get() = prefs.getString("learnMonths", "") ?: ""
         set(v) { prefs.edit().putString("learnMonths", v).apply() }
+    override var pendingRelease: String
+        get() = prefs.getString("pendingRelease", "") ?: ""
+        set(v) { prefs.edit().putString("pendingRelease", v).apply() }
     override var family: String
         get() = prefs.getString("family", "") ?: ""
         set(v) { prefs.edit().putString("family", v).apply() }

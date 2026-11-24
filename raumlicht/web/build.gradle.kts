@@ -90,7 +90,7 @@ tasks.register<Sync>("webapp") {
     from(tasks.named("jsBrowserDistribution")) { include("raumlicht-js.js") }
     // Lizenztexte der fremden Bausteine – dieselbe Datei wie in der Android-App
     from(rootProject.file("app/src/main/assets/lizenzen.txt"))
-    // Liste der festen Vorlese-Texte: holt unser Stimmen-Server und vertont jeden neuen Text einmal vorab (Stimme „Nova“)
+    // Liste der festen Vorlese-Texte: holt unser Stimmen-Server und vertont jeden neuen Text einmal vorab (Tonstudio)
     from(project(":core:model").tasks.named("vorleseTexte")) { into("vorlesen") }
     into(rootProject.file("webapp"))
     exclude("**/*.LICENSE.txt")

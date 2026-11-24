@@ -85,6 +85,7 @@ fun FamilieScreen(state: Familie.State?, base: String, test: Boolean, status: St
             } else if (state == null) {
                 Card(Q.Cyan) {
                     Text("Neue Familie anlegen", color = Q.Cyan, fontWeight = FontWeight.Black, fontSize = 15.sp)
+                    Text(Familie.UNDER_16, Modifier.testTag("familie-unter16"), color = Q.Text, fontSize = 13.sp, lineHeight = 18.sp)
                     OutlinedTextField(name, { name = it.take(Familie.MAX_NAME) }, Modifier.fillMaxWidth().testTag("familie-name"), label = { Text("Spitzname des Kindes (freiwillig)") }, singleLine = true,
                         supportingText = { Text("Nur die Familie kann ihn lesen. Kein voller Name nötig.") })
                     NeonButton({ sfx?.play(Sound.TAP); onCreate(name) }, Modifier.fillMaxWidth().testTag("familie-anlegen"), color = Q.Cyan) { Text(Familie.AGREE_CREATE, fontWeight = FontWeight.Bold) }

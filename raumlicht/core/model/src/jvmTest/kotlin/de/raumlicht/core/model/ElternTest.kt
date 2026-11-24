@@ -119,4 +119,19 @@ class ElternTest {
         assertEquals(setOf("monat", "min", "aufgaben", "richtigProzent"), v[0].jsonObject.keys); assertEquals("50", v[0].jsonObject["richtigProzent"]!!.jsonPrimitive.content)
         assertEquals(0, Json.parseToJsonElement(Eltern.report("", emptyMap(), "", null, 20_772L, 0)).jsonObject["verlauf"]!!.jsonArray.size)
     }
+
+    @Test fun vermerkVomKindGeloest() {
+        val note = Eltern.releaseNote(1_700_000_000_000L)
+        val o = kotlinx.serialization.json.Json.parseToJsonElement(note) as kotlinx.serialization.json.JsonObject
+        assertEquals(setOf("v", "status", "app", "appName", "stand"), o.keys); assertEquals("geloest", (o["status"] as kotlinx.serialization.json.JsonPrimitive).content)
+        assertEquals("raumlicht", (o["app"] as kotlinx.serialization.json.JsonPrimitive).content); assertTrue((o["stand"] as kotlinx.serialization.json.JsonPrimitive).content.matches(Regex("\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\dZ")))
+        assertTrue("verschlüsselt (iv 16 + ct) höchstens 2000 Zeichen", Eltern.sealedLength(note) <= Eltern.MAX_RELEASE)
+    }
+
+    @Test fun vorgemerkterVermerk() {
+        val p = Eltern.Pairing.decode("${"A".repeat(22)}.${"B".repeat(22)}.${"C".repeat(43)}.Lea")!!
+        assertEquals("${"A".repeat(22)}.${"B".repeat(22)}.${"C".repeat(43)}", Eltern.pending(p)); assertEquals(Triple("A".repeat(22), "B".repeat(22), "C".repeat(43)), Eltern.parsePending(Eltern.pending(p)))
+        assertNull(Eltern.parsePending("")); assertNull(Eltern.parsePending("a.b")); assertNull(Eltern.parsePending("a..c"))
+        assertFalse("der Merker gehört in keine Sicherung", Eltern.saved("elternLoesen"))
+    }
 }

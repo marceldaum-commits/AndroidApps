@@ -136,7 +136,7 @@ class PlayFlowTest {
         var resets = 0
         show { de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "0.5.3", de.raumlicht.app.ui.settings.UpdateState.Idle, {}, onReset = { resets++ }) }
         rule.onNodeWithTag("zuruecksetzen").performScrollTo().performClick(); rule.mainClock.advanceTimeBy(500)
-        rule.onNodeWithText("Wirklich alles zurücksetzen?").assertExists()
+        rule.onNodeWithText("Fortschritt wirklich zurücksetzen?").assertExists()
         rule.onNodeWithTag("zuruecksetzen-nein").performClick(); rule.mainClock.advanceTimeBy(500); assertEquals(0, resets)      // Abbrechen löscht nichts
         rule.onNodeWithTag("zuruecksetzen").performScrollTo().performClick(); rule.mainClock.advanceTimeBy(500)
         rule.onNodeWithTag("zuruecksetzen-ja").performClick(); rule.mainClock.advanceTimeBy(500); assertEquals(1, resets)
@@ -259,7 +259,7 @@ class PlayFlowTest {
         var count = true; var hints = true
         show { CompositionLocalProvider(de.raumlicht.app.ui.settings.LocalOffers provides de.raumlicht.app.ui.settings.OffersChoice(count, { count = it }, hints, { hints = it })) {
             de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "2.18.22", de.raumlicht.app.ui.settings.UpdateState.Idle, {}) } }
-        rule.onNodeWithText("📊 Anonyme Nutzungszählung").performScrollTo().assertExists(); rule.onNodeWithText("Ohne Kennung, ohne Gerät", substring = true).assertExists()
+        rule.onNodeWithText("📊 Anonyme Nutzungszählung").performScrollTo().assertExists(); rule.onNodeWithText("ohne deinen Namen und ohne deine Antworten", substring = true).assertExists()
         rule.onNodeWithText("💬 Hinweise auf unsere Nachhilfe zeigen").performScrollTo().assertExists()
         rule.onNodeWithTag("geschenk").performScrollTo().assertTextContains("Lern-Geschenk verschenken", substring = true)
         rule.onRoot().captureRoboImage("../screenshots/85_schalter_zaehlung.png")

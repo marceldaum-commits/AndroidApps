@@ -15,8 +15,8 @@ object KiHttp {
             try {
                 c.requestMethod = "POST"; c.connectTimeout = 10_000; c.readTimeout = 45_000; c.doOutput = true
                 c.setRequestProperty("Content-Type", "application/json; charset=utf-8")
-                // wie bei der Stimme: der Server lässt nur Anfragen mit der Herkunft unserer App zu
-                c.setRequestProperty("Origin", Vorlesen.APP_ORIGIN)
+                // der Dienst lässt nur Anfragen mit der Herkunft unserer App zu
+                c.setRequestProperty("Origin", Ki.APP_ORIGIN)
                 c.outputStream.use { it.write(body.toByteArray(Charsets.UTF_8)) }
                 val status = c.responseCode
                 status to ((if (status in 200..299) c.inputStream else c.errorStream)?.use { it.readBytes().toString(Charsets.UTF_8) } ?: "")

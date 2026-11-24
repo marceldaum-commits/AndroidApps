@@ -15,7 +15,6 @@ Nicht jeder Baustein steckt in jeder Fassung (Android-App / WebApp) – das steh
 10. Schrift Noto Color Emoji – Web – SIL Open Font License 1.1
 11. Ed25519-Prüfung nach TweetNaCl – gemeinfrei (Public Domain)
 12. Google Play In-App Updates und Play-Dienste – nur Play-Store-Fassung – Nutzungsbedingungen des Play Core SDK von Google
-13. Stimme „Nova“ – KI-generierte Stimme (OpenAI); nicht in der App enthalten, fertige Audiodateien kommen bei Bedarf von unserem Server (Android und Web)
 
 Es folgen die Lizenztexte im Original (englisch).
 

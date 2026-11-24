@@ -34,12 +34,8 @@ class WebPrefs : Prefs {
     override val musicLevel: StateFlow<Int> = _musicLevel; override val soundLevel: StateFlow<Int> = _soundLevel
     override fun setMusicLevel(percent: Int) { val p = percent.coerceIn(0, 100); storeSet(P + "musikLaut", p.toString()); _musicLevel.value = p }
     override fun setSoundLevel(percent: Int) { val p = percent.coerceIn(0, 100); storeSet(P + "tonLaut", p.toString()); _soundLevel.value = p }
-    private val _rate = MutableStateFlow(de.raumlicht.core.model.Vorlesen.tempo(storeGet(P + "novaTempo")?.toIntOrNull() ?: 100))
-    override val speechRate: StateFlow<Int> = _rate; override fun setSpeechRate(percent: Int) { val p = de.raumlicht.core.model.Vorlesen.tempo(percent); storeSet(P + "novaTempo", p.toString()); _rate.value = p }
-    /** Zuletzt gewählte Qualität beim Offline-Laden der Stimme Nova: Bestqualität statt Standard */
-    var voiceBest: Boolean
-        get() = storeGet(P + "novaBest") == "1"
-        set(v) = storeSet(P + "novaBest", if (v) "1" else "0")
+    private val _rate = MutableStateFlow(de.raumlicht.core.model.Vorlesen.tempo((storeGet(P + "sprechTempo") ?: storeGet(P + "novaTempo"))?.toIntOrNull() ?: 100))
+    override val speechRate: StateFlow<Int> = _rate; override fun setSpeechRate(percent: Int) { val p = de.raumlicht.core.model.Vorlesen.tempo(percent); storeSet(P + "sprechTempo", p.toString()); _rate.value = p }
     private val _strict = flag("strengeVektoren", false)
     override val strictVectors: StateFlow<Boolean> = _strict; override fun setStrictVectors(v: Boolean) { put("strengeVektoren", v); _strict.value = v }
     private val _volume = int("lautstaerke", 100)
@@ -79,6 +75,7 @@ class WebPrefs : Prefs {
     override var parentSent: Long get() = storeGet(P + "elternGesendet")?.toLongOrNull() ?: 0L; set(v) = storeSet(P + "elternGesendet", v.toString())
     override var learnLog: String get() = storeGet(P + "lernProtokoll") ?: ""; set(v) = storeSet(P + "lernProtokoll", v)
     override var learnMonths: String get() = storeGet(P + "lernMonate") ?: ""; set(v) = storeSet(P + "lernMonate", v)
+    override var pendingRelease: String get() = storeGet(P + "elternLoesen") ?: ""; set(v) = storeSet(P + "elternLoesen", v)
     override var family: String get() = storeGet(P + "familie") ?: ""; set(v) = storeSet(P + "familie", v)
     override var backupMark: String get() = storeGet(P + "elternSicherung") ?: ""; set(v) = storeSet(P + "elternSicherung", v)
     private val _countUsage = flag("zaehlen", true)
@@ -90,7 +87,7 @@ class WebPrefs : Prefs {
 
     override fun resetProgress() {
         (storeKeys(P + "intro_") + "\n" + storeKeys(P + "exam_")).split('\n').filter { it.isNotBlank() }.forEach { storeRemove(it) }
-        listOf("jamBest", "lageBest", "balloonBest", "diary", "skin", "trail", "hat").forEach { storeRemove(P + it) }
+        listOf("jamBest", "lageBest", "balloonBest", "diary", "skin", "trail", "hat", "lernProtokoll", "lernMonate").forEach { storeRemove(P + it) }   // auch der Lernverlauf: der Bericht für die Eltern beginnt neu
         _jam.value = 0; _lage.value = 0; _balloon.value = 0; _exams.value = emptyMap(); _diary.value = ""; _skin.value = "pink"; _look.value = "none" to "none"
     }
 }

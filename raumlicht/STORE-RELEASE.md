@@ -56,11 +56,7 @@ Dringende Updates: beim Release die „Update-Priorität“ auf 4 oder 5 setzen 
 - Erhebt oder teilt die App Nutzerdaten? **Seit 2.17.0 neu zu beantworten (bitte vor dem Einreichen prüfen lassen) – bis 2.16.x war die Antwort „Nein“.**
 - Unverändert: kein Konto, keine Werbung, keine Analyse, kein Absturz-Dienst. Spielstand und Einstellungen liegen nur auf dem Gerät.
   Der Abbruch-Bericht in den Einstellungen bleibt auf dem Gerät.
-- Netzwerkzugriffe: (1) Play Store für Updates, (2) **Vorlesen mit „Nova“** (nur wenn „Lux spricht“ eingeschaltet ist): Die App lädt fertige MP3-Dateien von
-  stimmen.mathenachhilfe-online.com. Texte, die erst in der Aufgabe entstehen (z. B. Rückmeldungen, die **eingegebene Zahlen** enthalten), schickt sie an diesen Server;
-  der lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Gesendet werden nur Text und Sprache – kein Name, kein Konto, keine Geräte-Kennung.
-- **Offene Frage für das Formular:** Ob diese Texte nach Googles Definition als „erhobene“ oder „geteilte“ Daten gelten (Eingaben des Nutzers verlassen das Gerät und
-  gehen über unseren Server an einen Dritten), muss vor dem Einreichen geklärt werden. Im Zweifel angeben. Keine Rechtsberatung.
+- Netzwerkzugriffe: Play Store für Updates. (Das Vorlesen ist abgeschaltet; kommt es zurück, lädt die App nur fertige Sprachdateien von unserem eigenen Server – dann dieses Formular neu prüfen.)
 - Verschlüsselung bei der Übertragung: Ja (HTTPS). Löschung von Daten: nicht zutreffend (es gibt keine).
 
 ## Antworten: Altersfreigabe (Fragebogen)
@@ -82,4 +78,4 @@ Dringende Updates: beim Release die „Update-Priorität“ auf 4 oder 5 setzen 
 
 - Auf einem echten Gerät hat der Entwickler-Assistent nichts getestet (kein Gerät vorhanden): Play In-App Updates lassen sich erst mit einer über den Store installierten Version prüfen.
 - Die Bildschirmfotos stammen aus den automatischen Tests (echte App-Oberfläche, 3D-Bühne gerendert), nicht von einem Handy.
-- Die Datenschutzerklärung der Website muss die App nennen (lokaler Spielstand, Vorlesen mit Nova über den eigenen Server und OpenAI, Play-Store-Updates) – Vorschlag: `store/datenschutz-abschnitt.md`. Keine Rechtsberatung.
+- Die Datenschutzerklärung der Website muss die App nennen (lokaler Spielstand, Play-Store-Updates; Vorlesen erst, wenn es zurückkommt) – Vorschlag: `store/datenschutz-abschnitt.md`. Keine Rechtsberatung.

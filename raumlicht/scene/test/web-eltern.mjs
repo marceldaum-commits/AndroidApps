@@ -46,7 +46,7 @@ for (const modus of ['wasm', 'js']) {
   let report = null; try { report = JSON.parse(await decrypt(put.body, key)); } catch (e) { console.log('     Entschlüsseln: ' + e.message); }
   check(!!report && report.format === 1 && report.app === 'raumlicht' && report.appName === 'Raumlicht' && /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$/.test(report.stand) && Array.isArray(report.fortschritt) && report.fortschritt.length === 1 && report.fortschritt[0].titel === 'Vektoren und Geometrie' && report.fortschritt[0].von === 92,
     `${modus}: mit dem Schlüssel aus dem Link lässt sich der Bericht entschlüsseln und lesen`);
-  let wrong = false; try { await decrypt(put.body, key.slice(0, 42) + (key[42] === 'A' ? 'B' : 'A')); } catch (e) { wrong = true; }
+  let wrong = false; try { await decrypt(put.body, key.slice(0, 20) + (key[20] === 'A' ? 'B' : 'A') + key.slice(21)); } catch (e) { wrong = true; }
   check(wrong, `${modus}: mit einem falschen Schlüssel geht es nicht`);
   // Kopplung bleibt nach neu Laden; „aufheben“ prüfen wir über die Logik-Tests – hier nur, dass nichts doppelt hochlädt
   const n = seen.filter((s) => s.method === 'PUT').length; await open(`?modus=${modus}`); await page.waitForTimeout(1500);

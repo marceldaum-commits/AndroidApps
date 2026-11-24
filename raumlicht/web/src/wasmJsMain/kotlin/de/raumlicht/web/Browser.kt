@@ -47,6 +47,18 @@ fun elternSenden(url: String, schreib: String, key: String, json: String, done: 
             .then(function (r) { done(r.status); }, function () { done(0); });
     } catch (e) { done(0); }
 }""")
+/** Wie [elternSenden], aber als Vermerk „vom Kind gelöst“ (Header X-Geloest: 1): Der Server löscht dabei sofort die Sicherung, markiert den Eintrag und lässt ihn nach 14 Tagen verfallen */
+fun elternGeloest(url: String, schreib: String, key: String, json: String, done: (Int) -> Unit): Unit = js("""{
+    try {
+        var b64 = function (u8) { var s = ''; for (var i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i]); return btoa(s).split('+').join('-').split('/').join('_').split('=').join(''); };
+        var bin = atob(key.split('-').join('+').split('_').join('/')), raw = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) raw[i] = bin.charCodeAt(i);
+        var iv = crypto.getRandomValues(new Uint8Array(12));
+        crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['encrypt'])
+            .then(function (k) { return crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, new TextEncoder().encode(json)); })
+            .then(function (ct) { return fetch(url, { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Schreib': schreib, 'X-Geloest': '1' }, body: b64(iv) + '.' + b64(new Uint8Array(ct)), credentials: 'omit', referrerPolicy: 'no-referrer' }); })
+            .then(function (r) { done(r.status); }, function () { done(0); });
+    } catch (e) { done(0); }
+}""")
 fun elternLoeschen(url: String, schreib: String, done: (Int) -> Unit): Unit = js("{ try { fetch(url, { method: 'DELETE', headers: { 'X-Schreib': schreib }, credentials: 'omit', referrerPolicy: 'no-referrer' }).then(function (r) { done(r.status); }, function () { done(0); }); } catch (e) { done(0); } }")
 /** Holt die Sicherung und entschlüsselt sie mit [key]; [done] bekommt den Status (200 = gelesen, 404 = keine Sicherung, 0 = keine Verbindung, -1 = Schlüssel passt nicht) und den Klartext */
 fun elternHolen(url: String, key: String, done: (Int, String) -> Unit): Unit = js("""{
@@ -134,7 +146,7 @@ fun vibrate(ms: Int): Unit = js("{ if (navigator.vibrate) navigator.vibrate(ms);
 // ── Stimme: Sprachausgabe des Browsers (rechnet auf dem Gerät bzw. im Browser, je nach System)
 /** Vorgelesen wird nur mit einer deutschen Stimme, die auf dem Gerät eingebaut ist – Stimmen, die den Text an einen Server schicken, benutzt die App nicht
  *  (sonst stimmte „keine Daten an einen Server“ nicht). Solange der Browser seine Stimmen noch lädt, gilt: möglich. */
-/** Stille Notlösung, wenn „Nova“ einen Satz nicht liefern kann: eine deutsche Stimme, die auf dem Gerät eingebaut ist (kein Versand an den Browser-Hersteller) */
+/** Zwischenlösung, solange es keine fertigen Sprachdateien gibt: eine deutsche Stimme, die auf dem Gerät eingebaut ist (kein Versand an den Browser-Hersteller) */
 fun speak(text: String, volume: Double, rate: Double = 1.0, voice: String = ""): Unit = js(
     "{ try { const u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.volume = volume; u.rate = 0.96 * rate; const v = speechSynthesis.getVoices().filter((x) => x.localService && x.lang && x.lang.startsWith('de')); const pick = v.find((x) => x.name === voice) || v[0]; if (!pick) return; u.voice = pick; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }")
 fun speaking(): Boolean = js("('speechSynthesis' in window) && speechSynthesis.speaking")

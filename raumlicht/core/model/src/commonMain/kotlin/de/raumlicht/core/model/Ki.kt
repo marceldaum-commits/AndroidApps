@@ -34,6 +34,8 @@ object Ki {
     const val MAX_QUESTION = 300
     /** so viele frühere Wortwechsel gehen als Zusammenhang mit */
     const val MAX_HISTORY = 6
+    /** Herkunft, mit der sich die Android-App beim KI-Dienst meldet (der Dienst lässt nur Anfragen unserer Apps zu; der Browser schickt sie von selbst mit) */
+    const val APP_ORIGIN = "https://lernen.mathenachhilfe-online.com"
     /** Steht klein unter jeder KI-Antwort (KI-Verordnung Art. 50) – Wortlaut für alle Lern-Apps gleich */
     const val LABEL = "Antwort einer KI – sie kann Fehler enthalten."
     const val PRIVACY = "KI-Tutor (nur wenn du ihn benutzt): Die Aufgabe, deine Eingabe und deine Frage gehen an unseren Server trainer.mathenachhilfe-online.com; " +

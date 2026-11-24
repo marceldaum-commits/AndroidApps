@@ -35,10 +35,12 @@ object Familie {
     const val SECURITY = "Wer den Familien-Link oder den QR-Code hat, kann die Lernstände eurer Familie öffnen, ändern und löschen. " +
         "Teilt ihn nur mit Personen, denen ihr vertraut, und bewahrt das Notfall-Blatt sicher auf."
     const val DETAILS = "Freischalt-Codes stehen nicht im Lernstand der Kinder. Ohne Konto, ohne E-Mail-Adresse."
-    const val PRIVACY_URL = "https://www.mathenachhilfe-online.com/datenschutz/"
+    const val PRIVACY_URL = "https://www.mathenachhilfe-online.com/datenschutz/#familien-speicher"
     /** Einheitliche Warnung vor dem Löschen der ganzen Familie – Wortlaut nicht ändern */
     const val DELETE_WARNING = "Das löscht die Familie in ALLEN Lern-Apps: alle Lernstände aller Kinder auf unserem Server, die Notfall-Kopie und das Protokoll. " +
         "Gekaufte Codes werden wieder frei und lassen sich in einer neuen Familie erneut einlösen. Die Lernstände auf diesem Gerät bleiben erhalten."
+    /** Steht bei „Familie anlegen“ – wer unter 16 ist, legt nicht selbst an (Recht V26) */
+    const val UNDER_16 = "Unter 16? Dann legen bitte deine Eltern die Familie an."
     const val GONE = "Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät."
     const val DELETED = "Die Familie wurde gelöscht. Der Lernstand auf diesem Gerät bleibt."
     /** Familien-Nummer so lesen wie der Server: ohne Bindestrich und Leerzeichen, groß, O→0, I/L→1 */

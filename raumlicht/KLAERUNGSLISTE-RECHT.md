@@ -59,9 +59,7 @@ Sie ist keine Rechtsberatung; Marcel klärt die Punkte mit den zuständigen Stel
 - Kein Konto, keine Werbung, keine Analyse-Dienste, kein Absturz-Dienst.
 - Vorlesen ist aus, bis man es einschaltet.
 
-## E. Neu seit 2.17.0: Vorlesen mit der KI-Stimme „Nova“ (zu klären)
-- Feste Texte sind vorab vertont; die App lädt nur Dateien von stimmen.mathenachhilfe-online.com.
-- **Texte aus der Aufgabe (auch mit eingegebenen Zahlen) gehen an unseren Server und von dort einmalig an OpenAI.** Ohne Name, Konto oder Kennung – aber es sind Eingaben von
-  (auch minderjährigen) Nutzern, die das Gerät verlassen. Zu klären: Auftragsverarbeitung mit OpenAI, Drittland-Übermittlung, Speicherdauer der Audiodateien,
-  Server-Protokolle von stimmen.… (seit 2.17.2 steht in der App „unser Server speichert keine Zugriffsprotokolle“ – von Marcel am 17.11.2026 so angewiesen; die Server-Einstellung muss dazu passen und so bleiben), Angaben im Play-Formular „Datensicherheit“.
-- Kennzeichnung „KI-generierte Stimme“ steht in den Einstellungen.
+## E. Vorlesen (erledigt am 24.11.2026)
+- Bis 20.11.2026 gab es eine KI-Stimme über einen fremden Dienst; **Marcel hat am 20.11. entschieden, dass die Verbindung überall entfällt** („wir haben unsere eigenen Stimmen“). Aus Raumlicht ist sie mit 2.18.39 vollständig entfernt (Code, App-Texte, Lizenzen, Store-Texte, Datenschutz-Abschnitt, Tests).
+- Vorlesen bleibt aus. Kommt es mit fertigen Dateien aus dem eigenen Tonstudio zurück: Kennzeichnung „KI-generierte Stimme“, Lizenzliste und Datenschutz-Wortlaut nach der Vorgabe von „Recht“ (V13); die Angaben im Play-Formular „Datensicherheit“ dann neu prüfen.
+

@@ -10,14 +10,14 @@ import de.raumlicht.core.model.Speech
 import java.util.Locale
 
 /**
- * Die Stimme des Geräts – stille Notlösung, wenn „Nova“ einen Satz nicht liefern kann (offline): Die Sprachausgabe liest die Sprechblasen vor – höher und etwas flotter gestellt, damit es nach kleiner Drohne klingt.
+ * Die Stimme des Geräts – Zwischenlösung, solange es keine fertigen Sprachdateien gibt: Die Sprachausgabe liest die Sprechblasen vor – höher und etwas flotter gestellt, damit es nach kleiner Drohne klingt.
  * Bevorzugt wird eine deutsche Stimme, die ohne Internet auskommt. Gibt es auf dem Gerät keine deutsche Stimme, bleibt Lux stumm ([available] = false).
  * [onSpeaking] meldet Anfang und Ende, damit die Musik so lange leiser wird.
  */
 class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {}) : Speaker {
     @Volatile var enabled = true
     @Volatile var volume = 1f
-    /** Sprechtempo: 1 = normal – dieselbe Einstellung wie für Nova */
+    /** Sprechtempo: 1 = normal – Stufen aus Vorlesen.TEMPOS */
     var rate = 1f; set(v) { field = v; if (ready) apply() }
     /** Gibt es eine deutsche Stimme? Steht erst kurz nach dem Start fest – deshalb beobachtbar. */
     var available by androidx.compose.runtime.mutableStateOf(false)

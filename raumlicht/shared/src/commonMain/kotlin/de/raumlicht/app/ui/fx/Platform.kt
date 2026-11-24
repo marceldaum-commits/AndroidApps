@@ -34,16 +34,16 @@ fun interface Speaker {
 val LocalSpeaker = staticCompositionLocalOf<Speaker?> { null }
 
 /**
- * Was die Stimme „Nova“ gerade tut – für zwei dezente Hinweise in der Oberfläche:
- * [loading] = ein Satz wird geholt (dauert es länger, erscheint „Nova lädt …“), [note] = eine Meldung, höchstens einmal je Sitzung („Nova gerade nicht erreichbar“).
+ * Was die Stimme gerade tut – für zwei dezente Hinweise in der Oberfläche:
+ * [loading] = ein Satz wird geholt (dauert es länger, erscheint „Stimme lädt …“), [note] = eine Meldung, höchstens einmal je Sitzung („Stimme gerade nicht erreichbar“).
  */
 class VoiceStatus {
     var loading by androidx.compose.runtime.mutableStateOf(false)
     var note by androidx.compose.runtime.mutableStateOf<String?>(null)
     private var told = false
-    /** Einmal je Sitzung sagen, dass Nova gerade nicht zu erreichen ist */
+    /** Einmal je Sitzung sagen, dass die Stimme gerade nicht zu erreichen ist */
     fun unreachable() { if (!told) { told = true; note = UNREACHABLE } }
-    companion object { const val UNREACHABLE = "Nova ist gerade nicht erreichbar." }
+    companion object { const val UNREACHABLE = "Die Stimme ist gerade nicht erreichbar." }
 }
 val LocalVoiceStatus = staticCompositionLocalOf<VoiceStatus?> { null }
 
@@ -55,7 +55,7 @@ fun VoiceHints(modifier: androidx.compose.ui.Modifier = androidx.compose.ui.Modi
     var slow by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     androidx.compose.runtime.LaunchedEffect(status.loading) { slow = false; if (status.loading) { kotlinx.coroutines.delay(800); slow = true } }
     androidx.compose.runtime.LaunchedEffect(status.note) { if (status.note != null) { kotlinx.coroutines.delay(5000); status.note = null } }
-    val text = status.note ?: if (status.loading && slow) "🔊 Nova lädt …" else null
+    val text = status.note ?: if (status.loading && slow) "🔊 Stimme lädt …" else null
     androidx.compose.animation.AnimatedVisibility(text != null, modifier, enter = androidx.compose.animation.fadeIn(), exit = androidx.compose.animation.fadeOut()) {
         var last by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf("") }; if (text != null) last = text
         androidx.compose.material3.Text(last, androidx.compose.ui.Modifier.padding(top = 6.dp).testTag("stimme-hinweis")

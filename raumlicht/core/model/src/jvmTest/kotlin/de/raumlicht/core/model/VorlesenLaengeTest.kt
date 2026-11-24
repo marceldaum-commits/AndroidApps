@@ -16,8 +16,8 @@ class VorlesenLaengeTest {
         ProGen.Kind.entries.forEach { k -> for (s in 1L..40L) collect(ProGen.level(k, s)) }
         Gen.Kind.entries.forEach { k -> for (s in 1L..40L) runCatching { collect(Gen.level(k, s)) } }
         val spoken = all.map(Vorlesen::spoken).filter { it.isNotEmpty() }.toSet()
-        val long = spoken.filter { it.length > Vorlesen.LIVE_MAX_CHARS }
-        println("LAENGE: ${spoken.size} Texte, längster ${spoken.maxOf { it.length }}, über ${Vorlesen.LIVE_MAX_CHARS}: ${long.size}")
+        val long = spoken.filter { it.length > Vorlesen.PREDICTABLE_MAX_CHARS }
+        println("LAENGE: ${spoken.size} Texte, längster ${spoken.maxOf { it.length }}, über ${Vorlesen.PREDICTABLE_MAX_CHARS}: ${long.size}")
         long.take(3).forEach { println("LANG: ${it.length} $it") }
         // Stichprobe von Texten, die NICHT in der festen Liste stehen – zum Nachmessen der Laufzeit-Vertonung am Server (build/laufzeit-stichprobe.txt)
         val fixed = Vorlesen.texts().toSet(); val sample = spoken.filter { it !in fixed }.shuffled(Random(5)).take(40)

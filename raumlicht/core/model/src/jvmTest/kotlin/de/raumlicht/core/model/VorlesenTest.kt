@@ -9,9 +9,9 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.text.Normalizer
 
-/** Die Liste für den Stimmen-Server: vollständig, im vereinbarten Format, jeder Text vorlesefertig. */
+/** Die Liste für das Tonstudio: vollständig, im vereinbarten Format, jeder Text vorlesefertig. */
 class VorlesenTest {
-    /** Seit 2.18.14 abgeschaltet: Die ausgelieferte Liste ist leer – der Stimmen-Server vertont dann nichts mehr für Raumlicht. Die Texte selbst bleiben im Code. */
+    /** Seit 2.18.14 abgeschaltet: Die ausgelieferte Liste ist leer – das Tonstudio vertont dann nichts für Raumlicht. Die Texte selbst bleiben im Code. */
     @Test fun abgeschaltetHeisstLeereListe() {
         assertTrue(!Vorlesen.ENABLED)
         assertEquals("""{"format":1,"app":"raumlicht","texte":[]}""", Vorlesen.json())
@@ -37,23 +37,20 @@ class VorlesenTest {
         assertTrue("Hallo, ich bin Lux!" in all); assertTrue(all.any { it.startsWith("Hi, ich bin Lux, deine Lichtdrohne.") })
     }
 
-    /** Dateiname wie auf dem Server: Prüfwert aus der Absprache, SHA-256 gegen die Java-Fassung */
-    @Test fun keyMatchesTheServer() {
-        assertEquals("cb1e6d67882767042ebaa54d163e450c", Vorlesen.key("Hallo Welt"))
-        assertEquals("https://stimmen.mathenachhilfe-online.com/nova/cb/cb1e6d67882767042ebaa54d163e450c.mp3", Vorlesen.url("Hallo Welt"))
+    /** Kennung: erste 32 Hex-Zeichen von SHA-256("de-1|de|" + Text), SHA-256 gegen die Java-Fassung */
+    @Test fun keyIsStableAndNamesNoOutsideService() {
+        val k = Vorlesen.key("Hallo Welt")
+        assertEquals(java.security.MessageDigest.getInstance("SHA-256").digest("de-1|de|Hallo Welt".toByteArray()).joinToString("") { "%02x".format(it) }.take(32), k)
+        assertTrue(k.matches(Regex("[0-9a-f]{32}")))
         val r = kotlin.random.Random(3)
         for (n in listOf(0, 1, 55, 56, 63, 64, 65, 119, 120, 1000)) { val b = r.nextBytes(n)
             assertEquals(java.security.MessageDigest.getInstance("SHA-256").digest(b).toList(), Sha256.digest(b).toList()) }
-        Vorlesen.texts().take(50).forEach { t -> assertEquals(java.security.MessageDigest.getInstance("SHA-256").digest("nova|de|$t".toByteArray()).joinToString("") { "%02x".format(it) }.take(32), Vorlesen.key(t)) }
+        Vorlesen.texts().take(50).forEach { t -> assertEquals(java.security.MessageDigest.getInstance("SHA-256").digest("de-1|de|$t".toByteArray()).joinToString("") { "%02x".format(it) }.take(32), Vorlesen.key(t)) }
         // vorlesefertig: derselbe Text wie in der Liste
         assertEquals("Hallo Welt", Vorlesen.spoken("  Hallo\n Welt "))
-    }
-
-    @Test fun liveRequestCarriesOnlyTextAndLanguage() {
-        assertEquals("""{"text":"Vektor a gleich 1, 2, 3","sprache":"de"}""", Vorlesen.liveBody("Vektor a gleich 1, 2, 3"))
-        assertEquals("https://stimmen.mathenachhilfe-online.com/nova/ab/abc.mp3", Vorlesen.liveUrl("""{"url":"https://stimmen.mathenachhilfe-online.com/nova/ab/abc.mp3"}"""))
-        assertEquals("https://stimmen.mathenachhilfe-online.com/nova/ab/abc.mp3", Vorlesen.liveUrl("""{"url":"/nova/ab/abc.mp3"}"""))
-        assertEquals(null, Vorlesen.liveUrl("""{"url":"https://fremd.example/x.mp3"}""")); assertEquals(null, Vorlesen.liveUrl("kein json")); assertEquals(null, Vorlesen.liveUrl("{}"))
+        // nichts in den Texten nennt einen fremden Dienst; die Kennzeichnung bleibt
+        for (t in listOf(Vorlesen.PRIVACY, Vorlesen.VOICE_LABEL)) assertTrue(t, !t.contains("OpenAI", true) && !t.contains("Nova", true))
+        assertEquals("KI-generierte Stimme", Vorlesen.VOICE_LABEL)
     }
 
     @Test fun tempoHasSixSteps() {
