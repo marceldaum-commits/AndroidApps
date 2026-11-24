@@ -2,6 +2,11 @@
 
 Neueste oben.
 
+## 24.11.2026 – 2.18.42: KI-Kennzeichnung je Antwort mit Screenreader-Hinweis (Recht V46a); Nova-Meldung (Auftrag 180)
+
+- Jede KI-Antwort bekommt ihr eigenes Element (`role="note"`, `aria-label`, `aria-description`) im versteckten Container `#ki-erzeugt`; `web-ki` prüft es. **Rechtsbezug: ja (Art. 50 KI-VO)**.
+- **Nova (a) Modul:** `rl-nova.js` (Raumlicht-Stimme über OpenAI) – seit 2.18.39 nicht mehr eingebunden, Datei, Android-Klassen, Lizenzliste und Texte entfernt. **(b)** Normaler Start ohne Datei: für die Live-Version 2.18.34 mit gesperrter Datei getestet (wasm und js, keine Fehler); die neuen Versionen kennen sie gar nicht. **(c)** Vorlesen entfällt, bis die Stimmen aus dem eigenen Tonstudio da sind (aus; Marcel wird vorher informiert).
+
 ## 24.11.2026 – Monatsprüfung (Prüfplan Block 1 + Rundum): keine Fehler gefunden
 
 - Block 1 (Kapitel 1–8, 44 Aufgaben) per Gegenrechnung aus dem Prüf-Dump und dem Dauertest `MehrdeutigTest`: Lösung angenommen, Start nie, Regler erreichbar, Rechenweg/Tipp vorhanden, mehrfach angenommene Antworten sind gleichwertig. Stichprobe der Bühne in den Kapiteln 2, 4, 6, 8 sowie 17, Dach und Ballon angesehen.

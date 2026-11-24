@@ -2,6 +2,9 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.42 – KI-Kennzeichnung für jede Antwort einzeln und für Vorlese-Programme (24.11.2026)
+- Jede KI-Antwort des KI-Tutors trägt jetzt ihre eigene Kennzeichnung „KI-erzeugt“, die auch Vorlese-Programme für Blinde und Sehbehinderte ansagen. Am Aussehen ändert sich nichts; es werden keine Daten gesendet oder gespeichert.
+
 ## 2.18.41 – KI-Antworten sind auch maschinenlesbar gekennzeichnet (24.11.2026)
 - **KI-Tutor:** Unter jeder Antwort stand schon „Antwort einer KI – sie kann Fehler enthalten.“. Jetzt ist jede Antwort zusätzlich für Vorlese-Programme und Auswertungen als „KI-erzeugt“ gekennzeichnet (Pflicht nach der KI-Verordnung, Art. 50). Für Kinder und Eltern ändert sich am Aussehen nichts; es werden keine zusätzlichen Daten gesendet oder gespeichert.
 - Wie das genau gemacht ist und warum es kein Text-Wasserzeichen gibt, steht in `store/ki-kennzeichnung.md`.

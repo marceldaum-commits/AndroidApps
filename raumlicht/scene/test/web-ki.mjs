@@ -43,7 +43,7 @@ const spot = await page.evaluate(async (png) => {
 console.log('     Knopf gefunden bei', JSON.stringify(spot));
 if (spot) { await page.mouse.click(spot.x, spot.y); await page.waitForTimeout(3500); }
 await shot('4-ki-antwort');
-check(await page.evaluate(() => { const e = document.getElementById('ki-erzeugt'); return !!e && e.dataset.kiErzeugt === 'true' && e.dataset.kiAnbieter === 'Anthropic' && e.dataset.kiHinweis === 'KI-erzeugt' && /^KI-erzeugt: ./.test(e.textContent); }),
+check(await page.evaluate(() => { const e = document.querySelector('#ki-erzeugt [data-ki-erzeugt="true"]'); return !!e && e.getAttribute('aria-label') === 'KI-erzeugte Antwort' && !!e.getAttribute('aria-description') && e.dataset.kiErzeugt === 'true' && e.dataset.kiAnbieter === 'Anthropic' && e.dataset.kiHinweis === 'KI-erzeugt' && /^KI-erzeugt: ./.test(e.textContent); }),
   'jede KI-Antwort ist maschinenlesbar gekennzeichnet: data-ki-erzeugt="true", Anbieter, Hinweis „KI-erzeugt“ (Art. 50 Abs. 2)');
 check(seen.length === 1 && seen[0] && seen[0].app === 'raumlicht' && seen[0].art === 'erklaerung' && seen[0].aufgabe.id === '1-2' && /^[0-9a-f]{32}$/.test(seen[0].geraet) && seen[0].code === '' && seen[0].eingabe.includes(' = '),
   'die WebApp fragt den Server: Erklärung zu Aufgabe 1-2 mit Eingabe und Geräte-Kennung' + (seen.length ? '' : ' (keine Anfrage angekommen)'));
