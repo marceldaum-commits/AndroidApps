@@ -59,3 +59,8 @@ Recht kann das Repository nicht lesen. Hier stehen die Stellen, an denen die Tex
 
 **Schloss (Kinder):** „<Versuch>“ gehört zum Forscher-Pass.
 
+
+## KI-Status (Recht V45b, Frage zu Motor/Dynamo/Trafo) – Antwort: a (+ Hinweis zu c)
+
+- **a) Zur Laufzeit keine KI.** Alle Zahlen und Antworten in Motor, Dynamo und Trafo berechnet die App selbst aus Formeln (Simulation) in `core/model/.../Emag.kt`; „Modell“ meint dieses Rechenmodell, nicht ein Sprachmodell. Kein KI-Dienst, kein Netzaufruf, nichts wird zur Laufzeit erzeugt. Die Tests rechnen jedes Ergebnis nach (`EmagTest.kt`). Keine Kennzeichnung nötig; Wortlaut in Doku auf „Simulation“ geändert.
+- **c) Die festen Texte** (Erklärungen, Theorie-Karte, Aufträge) wurden mit Claude (KI-Assistent) geschrieben und fest eingebaut. Eine Prüfung durch eine namentlich benannte Person mit Datum ist bisher nicht dokumentiert; das muss Marcel oder eine von ihm benannte Person übernehmen (Eintrag hier: „geprüft von … am …“). Offen.

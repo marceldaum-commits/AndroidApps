@@ -4,7 +4,7 @@ import org.junit.Assert.*
 import org.junit.Test
 import kotlin.math.abs
 
-/** Motor, Dynamo & Trafo: Formeln gegen Buchwerte, Antworten aus dem Modell, jedes Ziel mit den Reglern erreichbar */
+/** Motor, Dynamo & Trafo: Formeln gegen Buchwerte, Antworten aus der Simulation (Formeln), jedes Ziel mit den Reglern erreichbar */
 class EmagTest {
     private fun near(a: Double, b: Double, tol: Double = 1e-9) = assertEquals(b, a, tol)
 
@@ -111,7 +111,7 @@ class EmagTest {
         assertTrue("Beispiel zu jeder Formel", card.pro.all { it.text.contains("Beispiel") })
     }
 
-    /** Alle Zahlen der Theorie-Beispiele stimmen mit dem Modell überein */
+    /** Alle Zahlen der Theorie-Beispiele stimmen mit der Simulation überein */
     @Test fun theorieBeispiele() {
         val t = Theory.of(Topic.ELEKTROMAGNETISMUS).pro.joinToString(" ") { it.text }
         assertTrue(t.contains("≈ 5,0 mT")); near(Emag.coilField(250, 1.6, false) * 1000, 5.03, 0.005)

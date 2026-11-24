@@ -13,7 +13,7 @@ So muss nie alles auf einmal neu geprüft werden, und jede Insel kommt alle 4 Mo
   - fachlich korrekt, immer mit Einheiten;
   - Formeln in der Theorie mit Bedeutung der Größen und einem Beispiel;
   - Rechenwege mit allen Schritten (in Auflösung, Begründung und Theorie);
-  - jedes Ergebnis nachgerechnet – Antworten werden aus dem Modell berechnet und in Tests gegen Buchwerte geprüft.
+  - jedes Ergebnis nachgerechnet – Antworten werden aus der Simulation (Formeln) berechnet und in Tests gegen Buchwerte geprüft.
 - Weiter Pflicht wie bisher: Ziel mit den Reglern erreichbar, drei Begründungen, Merksatz, Knobelfrage, Bildschirmfoto angesehen, Version + Datum überall.
 - **Meldung enthält:** was neu ist · wie viele Versuche/Aufgaben (neu, geändert, gesamt) · wie geprüft (Tests, Bildschirmfotos, Starttest).
 - **Wochenrhythmus** (Dauerregel Marcel 21.11.): Arbeit Di ab 15:00 bis einschließlich So, Pause Mo und Di bis 15:00 (außer Marcel sagt etwas anderes). Großes Update Di und Fr ab 15:03 ohne Frist („bis alles fertig ist“), Tagesmeldung Mi–Sa 9:43, Wochenrunde Di ab 15:07.
