@@ -170,12 +170,9 @@ class ScreenshotTest {
     @Test fun deepLink() = shot("82_direktlink_optik", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, startOpen = Topic.OPTIK, onBack = {}) }
     @Test fun subject() = shot("63_lernen_nach_fach", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, onBack = {}) }
     @Test fun subjectBio() = shot("64_fach_biologie", settle = 2500, prepare = { it.tap("Alle 8 Versuche") }) { de.experimentopia.app.ui.home.SubjectScreen(Subject.BIOLOGIE, someStars, 9, { false }, {}, {}, onBack = {}) }
-    @Test fun soundSettings() = shot("65_musik_und_vorlesen", settle = 1500, prepare = { r -> r.reveal { r.onNodeWithTag("offline_loeschen") } }) {
-        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalReader provides FakeReader) {
-            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) {
-                de.experimentopia.app.ui.settings.SoundSettings(AudioPrefs(), {}, true, {}, true, {})
-                de.experimentopia.app.ui.settings.ReadSettings(AudioPrefs(autoRead = true), {})
-            }
+    @Test fun soundSettings() = shot("65_musik_und_klaenge", settle = 1500) {
+        androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) {
+            de.experimentopia.app.ui.settings.SoundSettings(AudioPrefs(), {}, true, {}, true, {})
         }
     }
     /** Mit eingetragener Kasse: Preis, Kauf-Knopf, Code-Eingabe – und gesperrte Versuche auf der Insel */
@@ -193,7 +190,8 @@ class ScreenshotTest {
                 r.onNodeWithText(Pro.WEB_PRICE).assertDoesNotExist()
                 r.onNodeWithTag("pro-eltern").assertExists()
                 r.onNodeWithText("Frag deine Eltern", substring = true).assertDoesNotExist()
-                r.onAllNodesWithText("Deine Eltern können im Elternbereich nachsehen.", substring = true).onFirst().assertExists()
+                r.onNodeWithText("Deine Eltern können", substring = true).assertDoesNotExist()   // Recht: keine Aufforderung, auch nicht mittelbar über die Eltern
+                r.onAllNodesWithText("gehört zum Forscher-Pass.", substring = true).onFirst().assertExists()
             }) { de.experimentopia.app.ui.settings.ProScreen("Knallgas") {} }
         } finally { Pro.configure("", "") }
     }
@@ -207,20 +205,19 @@ class ScreenshotTest {
     @Test fun calibration() = shot("34_selbsteinschaetzung") { JournalScreen(entries, {}, start = JournalTab.ICH) }
     @Test fun badges() = shot("35_abzeichen") { BadgesScreen(stats) {} }
     @Test fun settings() = shot("36_einstellungen") {
-        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalReader provides FakeReader) {
-        SettingsScreen(true, {}, true, {}, 5, {}, "2.1.1", "17.11.2026", {}, {}, {})
-        }
+        // Kinderansicht: Ton, Musik, Klassenstufe – nichts Kaufbares, nichts zum Zurücksetzen; alles andere hinter dem Eltern-Tor
+        SettingsScreen(true, {}, true, {}, 5, {}, "2.14.0", "24.11.2026", {}, {}, {}, parentArea = { extra -> de.experimentopia.app.ui.settings.ParentArea(20_600, 5, extra = extra) })
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }
     @Test fun parentArea() = shot("81_elternbereich", prepare = { r -> r.onNodeWithText("Stromkreise", substring = true).performClick(); r.mainClock.advanceTimeBy(400) }) {
         androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalCounter provides FakeCounter) {
-            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) { de.experimentopia.app.ui.settings.ParentArea(20_600, 8, openAtStart = true) }
+            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) { de.experimentopia.app.ui.settings.ParentArea(20_600, 8, openAtStart = true, nickname = "Mia", nowMs = 100 * 86_400_000L, journal = struggleJournal()) }
         }
     }
     @Test fun parentsNew() = shot("78_eltern_koppeln", prepare = { r -> r.reveal { r.onNodeWithTag("eltern_koppeln") } }) {
         val sync = FakeParents(null)
         androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalParentSync provides sync) {
-            SettingsScreen(true, {}, true, {}, 5, {}, "2.8.0", "18.11.2026", {}, {}, {}, parents = { de.experimentopia.app.ui.settings.ParentCard(de.experimentopia.app.ui.settings.ParentCoupling(sync), 20_600) {} })
+            SettingsScreen(true, {}, true, {}, 5, {}, "2.8.0", "18.11.2026", {}, {}, {}, parentArea = { extra -> de.experimentopia.app.ui.settings.ParentArea(20_600, 5, openAtStart = true, extra = extra) }, parents = { de.experimentopia.app.ui.settings.ParentCard(de.experimentopia.app.ui.settings.ParentCoupling(sync), 20_600) {} })
         }
     }
     @Test fun parentsRestore() = shot("80_fortschritt_wiederherstellen", prepare = { r ->
@@ -238,6 +235,29 @@ class ScreenshotTest {
         androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalParentSync provides sync) {
             androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) { de.experimentopia.app.ui.settings.ParentCard(de.experimentopia.app.ui.settings.ParentCoupling(sync), 20_600) {} }
         }
+    }
+
+    /** Objektive Schwierigkeit für den Elternhinweis: 6 Antworten in „Strom“ über 20 Tage, 2 richtig */
+    private fun struggleJournal(): List<de.experimentopia.core.model.NoteRow> {
+        val id = Catalog.all.first { it.topic == Topic.STROM }.id; val now = 100 * 86_400_000L
+        return listOf(20, 17, 14, 9, 5, 2).mapIndexed { i, d -> de.experimentopia.core.model.NoteRow(experimentId = id, at = now - d * 86_400_000L, guess = "", result = "", right = i < 2, sure = 1, explainedFirstTry = false) }
+    }
+    /** Eltern-Tor: Malaufgabe in Worten, eigene Ziffern-Tastatur, ohne Vorlese-Knopf */
+    @Test fun parentGate() = shot("96_eltern_tor", settle = 800, prepare = { r ->
+        r.onNodeWithTag("tor_aufgabe").assertExists(); r.onNodeWithTag("tor_taste_1").performClick(); r.onNodeWithTag("tor_taste_7").performClick(); r.mainClock.advanceTimeBy(200)
+    }) {
+        de.experimentopia.app.ui.settings.ParentGate({}, memory = de.experimentopia.core.model.ParentGateMemory(kotlin.time.Duration.ZERO)) {}
+    }
+    /** Kinderansicht bei Schwierigkeiten: nur der Hilfesatz, zwei Knöpfe, kein Außenlink */
+    @Test fun kindHilfe() = shot("97_kind_hilfe", settle = 1500, prepare = { r ->
+        r.onNodeWithTag("kind_hilfe").assertExists(); r.onNodeWithTag("kind_leichter").assertExists(); r.onNodeWithTag("kind_erklaerung").assertExists()
+    }) {
+        val e = Catalog.all.first { it.topic == Topic.STROM && it.grades.first >= 5 }
+        ExperimentScreen(e, onDone = {}, onNext = null, onBack = {}, struggling = true, onEasier = {})
+    }
+    /** Klasse 9–10: sachlicher Tipp, ohne Tor, wegklickbar */
+    @Test fun oberstufeTipp() = shot("98_oberstufe_tipp", settle = 2500, prepare = { r -> r.onNodeWithTag("nachhilfe_tipp").assertExists() }) {
+        de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 9, { false }, {}, {}, tip = { s -> de.experimentopia.app.ui.home.NachhilfeTipp(s, 9, null, 1L, forceShow = true) }, onBack = {})
     }
 }
 
@@ -274,9 +294,4 @@ private object FakeReader : de.experimentopia.app.ui.fx.Reader {
     override fun say(text: String) {}
     override fun stop() {}
     override fun configure(p: AudioPrefs) {}
-    override val offline = de.experimentopia.app.ui.fx.OfflineVoice(totalBytes = 73_000_000, totalBestBytes = 218_000_000, savedBytes = 9_500_000, done = 312, count = 2301)
-    override fun refreshOffline() {}
-    override fun loadOffline(best: Boolean) {}
-    override fun cancelOffline() {}
-    override fun deleteOffline() {}
 }

@@ -2,7 +2,7 @@ package de.experimentopia.core.model
 
 /**
  * Satz-Feinheiten für die Anzeige: Zahl und Einheit bleiben zusammen („5 %“ bricht auf schmalen Handys nicht mehr als „5“ / „%“ um).
- * Dafür steht zwischen beiden ein geschütztes Leerzeichen; [Speech.clean] macht daraus wieder ein normales (Vorlesen und Nova-Dateinamen bleiben gleich).
+ * Dafür steht zwischen beiden ein geschütztes Leerzeichen; [Speech.clean] macht daraus wieder ein normales (Vorlesen und Textlisten bleiben gleich).
  */
 object Typo {
     const val NBSP = ' '

@@ -53,38 +53,16 @@ interface MusicPlayer {
 val LocalMusic = staticCompositionLocalOf<MusicPlayer?> { null }
 
 /**
- * Vorlesen mit der Stimme „Nova“ (KI-Stimme von OpenAI, vorab auf unserem Stimmen-Server vertont); ohne Internet liest die Stimme des Geräts bzw. Browsers.
- * Die Texte werden vorher mit [de.experimentopia.core.model.Speech.clean] sprechbar gemacht und in Sätze geteilt ([de.experimentopia.core.model.Nova]).
+ * Vorlesen mit den eigenen Stimmen des Tonstudios (vorab vertonte MP3-Dateien auf unserem Server; keine Gerätestimme, kein fremder Sprachdienst).
+ * Zurzeit aus ([de.experimentopia.core.model.Tonstudio.ENABLED]); die Texte werden mit [de.experimentopia.core.model.Speech.clean] sprechbar gemacht und in Sätze geteilt.
+ * Gekennzeichnet als „KI-generierte Stimme“.
  */
 interface Reader {
     val speaking: Boolean
-    /** Nova war in dieser Sitzung nicht erreichbar und die Gerätestimme ist eingesprungen (für einen einmaligen Hinweis) */
-    val novaDown: Boolean get() = false
-    /** Kurze Diagnose zum letzten Vorlesen (für „Probe hören“): „Nova ✓“ oder der Grund, warum die Gerätestimme einsprang */
-    val diag: String? get() = null
     fun say(text: String)
     fun stop()
     fun configure(p: de.experimentopia.core.model.AudioPrefs)
-    /** Alle festen Nova-Sätze für unterwegs ohne Internet */
-    val offline: OfflineVoice
-    fun refreshOffline()
-    /** [best]: Bestqualität (unkomprimiert, 128 kbit/s) statt Standard */
-    fun loadOffline(best: Boolean)
-    fun cancelOffline()
-    fun deleteOffline()
 }
-
-/** Stand der Offline-Stimme: Größe aller Sätze laut Server ([totalBytes], null = unbekannt), schon gespeichert, Fortschritt beim Laden */
-data class OfflineVoice(
-    val totalBytes: Long? = null,
-    val totalBestBytes: Long? = null,
-    val savedBytes: Long = 0,
-    val loading: Boolean = false,
-    val done: Int = 0,
-    val count: Int = 0,
-    val complete: Boolean = false,
-    val note: String? = null,
-)
 val LocalReader = staticCompositionLocalOf<Reader?> { null }
 /** Automatisch vorlesen (Einstellung) */
 val LocalAutoRead = staticCompositionLocalOf { false }

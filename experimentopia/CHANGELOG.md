@@ -1,5 +1,15 @@
 # Changelog – Experimentopia
 
+## 2.14.0 – Klarer Elternbereich, neues Eltern-Tor, neue Startanimation (24.11.2026)
+
+- 🔐 **Neues Eltern-Tor**: Eine Malaufgabe in Worten („siebzehn mal acht“) mit eigener Ziffern-Tastatur. Nach einem Fehler gibt es sofort eine neue Aufgabe, ohne Zeitdruck, Abbrechen geht jederzeit. Nach richtiger Antwort bleibt das Tor 10 Minuten offen – nur im Arbeitsspeicher, nie gespeichert.
+- 👪 **Alles für Eltern an einem Ort**: Forscher-Pass mit Preis, Eltern-Handy, Zurücksetzen, Zählung und Hinweise stehen jetzt gesammelt hinter dem Eltern-Tor. Kinder sehen in den Einstellungen nur Ton, Musik und ihre Klasse.
+- 🔒 **Schloss nur sachlich**: „… gehört zum Forscher-Pass.“ – ohne Aufforderung, ohne Preis und ohne Kaufknopf für Kinder.
+- 🙋 **Hilfe, wenn es hakt**: Klappt ein Versuch mehrmals nicht, zeigt die App einen freundlichen Hilfesatz mit „Leichter üben“ und „Erklärung ansehen“ – ohne Link nach außen.
+- 📬 **Probestunde, nur wenn es passt**: Eltern sehen hinter dem Tor einen Hinweis auf die kostenlose Probestunde, wenn ein Physik-Thema über zwei Wochen mit weniger als der Hälfte richtig gelöst wurde. Berechnet wird das nur auf dem Gerät, höchstens einmal in 4 Wochen je Thema, wegklickbar und abschaltbar. In Klasse 9–10 gibt es einen sachlichen Tipp, höchstens einmal pro Woche. Gezählt wird nur anonym, ohne Thema und ohne Lernstand.
+- 🎬 **Neue Startanimation** wie in allen Lern-Apps: schwarzer Start, das weiße Kolben-Symbol „atmet“, danach zoomt es heraus (bei „Bewegung reduzieren“ nur eine Überblendung).
+- 🧹 **Alte Stimme entfernt**: Die frühere Vorlese-Stimme eines externen Anbieters ist ganz aus der App. Vorlesen bleibt aus, bis die eigenen Stimmen auf unserem Server fertig sind.
+
 ## 2.13.2 – Sachlicher Hinweis am Schloss (19.11.2026)
 
 - 🔒 Am Schloss steht jetzt nur sachlich: „Das gehört zum Forscher-Pass. Deine Eltern können im Elternbereich nachsehen.“ Kinder werden nicht aufgefordert, ihre Eltern um einen Kauf zu bitten. Auch Blubb wirbt nicht mehr für den Forscher-Pass.

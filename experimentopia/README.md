@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.13.0 vom 19.11.2026** · WebApp (installierbar als App, auch offline) – https://lernen.mathenachhilfe-online.com/experimentopia/ (die alte Adresse experimentopia.mathenachhilfe-online.com leitet mit Lernstand dorthin um) · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.14.0 vom 24.11.2026** · WebApp (installierbar als App, auch offline) – https://lernen.mathenachhilfe-online.com/experimentopia/ (die alte Adresse experimentopia.mathenachhilfe-online.com leitet mit Lernstand dorthin um) · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -67,11 +67,8 @@ Beim Vorlesen wird die Musik leiser.
 ## Vorlesen
 
 `Speech.kt` macht Texte sprechbar (chemische Formeln, Einheiten, Rechenzeichen, Kreuzungen, Abkürzungen; Test `SpeechTest`).
-Stimme: **„Nova – KI-generierte Stimme“** (OpenAI), vertont auf dem gemeinsamen Stimmen-Server (stimmen.mathenachhilfe-online.com) – die App spricht nie mit OpenAI.
-`Nova.kt` teilt jeden Text in Sätze (≤ 300 Zeichen) und berechnet den Dateinamen (SHA-256 von „nova|de|Text“, 32 Hex-Zeichen, Test `NovaTest` mit dem Prüfwert des Servers).
-Beim Bau der WebApp entsteht `webapp/vorlesen/texte.json` mit allen festen Sätzen (Gradle-Aufgabe `novaTexte`); der Server holt die Liste alle 30 Minuten und vertont Neues vorab.
-Abspielen: erst vom Gerät/Browser-Speicher, dann `/nova/<h[0:2]>/<h>.mp3`, bei neuen Sätzen `POST /jetzt` (nur der Text); ohne Internet liest leise die Stimme des Geräts bzw. Browsers.
-Android: `AndroidReader.kt` (MediaPlayer, Dateien in `files/nova/`), Web: `nova.js` (WebAudio, Speicher „experimentopia-nova“).
+Stimme: eigene Stimmen des **Tonstudios** auf unserem Server (Deutsch: de-1), gekennzeichnet als „KI-generierte Stimme“. Die App ruft keinen fremden Sprachdienst auf; OpenAI/„Nova“ ist seit 2.14.0 vollständig entfernt (Marcel, 20.11.2026).
+`Tonstudio.kt` teilt jeden Text in Sätze (≤ 300 Zeichen) für die Textliste ans Tonstudio (Format 1, ab 25.11.2026). Vorlesen ist zurzeit aus (`Tonstudio.ENABLED = false`).
 
 ## WebApp-Updates
 
@@ -136,7 +133,7 @@ Bestandsschutz: Schon gemachte Versuche bleiben immer offen. Die Play-Fassung ha
 | Ohne Mäuse | Herz und Puls | Erholungspuls | Theorie |
 | ![](screenshots/58_ohne_maeuse.png) | ![](screenshots/59_herz_und_puls.png) | ![](screenshots/60_erholungspuls.png) | ![](screenshots/61_theorie.png) |
 | Theorie für Profis | Lernen nach Fach | Biologie, Klasse 9 | Musik und Vorlesen |
-| ![](screenshots/62_theorie_profi.png) | ![](screenshots/63_lernen_nach_fach.png) | ![](screenshots/64_fach_biologie.png) | ![](screenshots/65_musik_und_vorlesen.png) |
+| ![](screenshots/62_theorie_profi.png) | ![](screenshots/63_lernen_nach_fach.png) | ![](screenshots/64_fach_biologie.png) | ![](screenshots/65_musik_und_klaenge.png) |
 | Forscher-Pass | Insel mit Pass | Pass aktiv | |
 | ![](screenshots/66_forscher_pass_kaufen.png) | ![](screenshots/67_insel_mit_pass.png) | ![](screenshots/68_forscher_pass_aktiv.png) | ![](screenshots/69_raetsel_nochmal.png) |
 | App installieren | Schattenbühne | Spiegel-Laser | Lichtknick |

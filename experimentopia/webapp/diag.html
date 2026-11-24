@@ -32,7 +32,7 @@
     var go = function () { location.href = './?nc=' + Date.now(); };
     try { Promise.all([
       navigator.serviceWorker ? navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); }) : null,
-      window.caches ? caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k !== 'experimentopia-nova'; }).map(function (k) { return caches.delete(k); })); }) : null
+      window.caches ? caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k.indexOf('experimentopia-') === 0; }).map(function (k) { return caches.delete(k); })); }) : null
     ]).then(go, go); } catch (e) { go(); }
   }
   (async function () {

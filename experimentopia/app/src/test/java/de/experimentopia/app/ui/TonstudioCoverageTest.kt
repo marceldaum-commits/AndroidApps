@@ -1,15 +1,15 @@
 package de.experimentopia.app.ui
 
-import de.experimentopia.core.model.Nova
+import de.experimentopia.core.model.Tonstudio
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
 
 /**
- * Nova spricht nur ganze, vorab vertonte Sätze. Darum darf kein Bildschirm einen Vorlese-Text selbst zusammenbauen:
+ * Das Tonstudio vertont nur ganze, vorab erzeugte Sätze. Darum darf kein Bildschirm einen Vorlese-Text selbst zusammenbauen:
  * Alles, was BlubbSays/ReadButton/say bekommt, muss aus ReadTexts oder Say kommen (beide stehen in texte.json).
  */
-class NovaCoverageTest {
+class TonstudioCoverageTest {
     @Test fun keineEigenenVorleseTexteInDerOberflaeche() {
         val src = File("../shared/src/commonMain/kotlin").walkTopDown().filter { it.extension == "kt" }
         val bad = src.flatMap { f -> f.readLines().mapIndexedNotNull { i, l ->
@@ -21,8 +21,8 @@ class NovaCoverageTest {
     }
 
     @Test fun jederSatzHatSatzendeOderIstEinName() {
-        val pieces = Nova.catalog()
+        val pieces = Tonstudio.catalog()
         assertTrue(pieces.size > 2000)
-        assertTrue("Satz zerstückelt: ${pieces.filter { it.length > Nova.MAX }}", pieces.none { it.length > Nova.MAX })
+        assertTrue("Satz zerstückelt: ${pieces.filter { it.length > Tonstudio.MAX }}", pieces.none { it.length > Tonstudio.MAX })
     }
 }

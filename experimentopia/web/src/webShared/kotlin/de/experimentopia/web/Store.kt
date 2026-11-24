@@ -52,5 +52,7 @@ class WebPrefs : Prefs {
     override var badgesSeen: Set<String>
         get() = storeGet(P + "abzeichen").orEmpty().split(',').filter { it.isNotBlank() }.toSet()
         set(v) = storeSet(P + "abzeichen", v.joinToString(","))
+    override fun note(key: String): String? = storeGet(P + "hinweis." + key)
+    override fun setNote(key: String, value: String?) { if (value == null) storeRemove(P + "hinweis." + key) else storeSet(P + "hinweis." + key, value) }
     override fun resetProgress() { storeRemove(P + "laborlaeufe"); storeRemove(P + "abzeichen"); storeRemove(P + "verlauf"); _runs.value = 0 }
 }

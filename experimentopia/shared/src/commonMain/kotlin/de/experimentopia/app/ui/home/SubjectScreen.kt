@@ -56,7 +56,9 @@ fun SubjectCards(results: Map<String, Int>, onSubject: (Subject) -> Unit) {
  */
 @Composable
 fun SubjectScreen(start: Subject, results: Map<String, Int>, grade: Int, locked: (Experiment) -> Boolean, onOpen: (Experiment) -> Unit, onGrade: (Int) -> Unit,
-                  startOpen: Topic? = null, onBack: () -> Unit) {
+                  startOpen: Topic? = null,
+                  /** Platz unter der Klassenwahl, z. B. der Oberstufen-Tipp (Recht V15) */
+                  tip: (@Composable (Subject) -> Unit)? = null, onBack: () -> Unit) {
     var subject by remember { mutableStateOf(start) }
     var theoryTopic by remember { mutableStateOf<Topic?>(null) }
     var open by remember { mutableStateOf(startOpen) }
@@ -76,6 +78,7 @@ fun SubjectScreen(start: Subject, results: Map<String, Int>, grade: Int, locked:
                 BlubbSays(de.experimentopia.core.model.Say.subject(subject.title), Mood.HAPPY, size = 52.dp, speak = false)
                 Text("Deine Klasse", color = E.Muted, fontSize = 12.sp)
                 ChipRow(listOf(0) + (3..10).toList(), grade, { if (it == 0) "Alle" else "Kl. $it" }, onGrade, Modifier.testTag("klasse"), color = E.Sun)
+                tip?.invoke(subject)
                 if (topics.isEmpty()) Text("Für diese Klasse gibt es in ${subject.title} noch keine Versuche – probier eine andere Klasse.", color = E.Muted)
                 topics.withIndex().chunked(cols).forEach { row -> Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) { row.forEach { (i, t) ->
                     val (n, total) = Curriculum.progress(t, done)

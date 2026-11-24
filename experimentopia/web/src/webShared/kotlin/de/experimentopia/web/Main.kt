@@ -81,9 +81,8 @@ private fun WebApp() {
     val sfx = remember { WebSfx(prefs) }
     val music = remember { WebMusic(scope) }
     val installer = remember { WebInstaller() }
-    val reader = remember { if (de.experimentopia.core.model.Nova.ENABLED) WebReader() else null }
     val parentSync = remember { WebParentSync() }
-    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalInstaller provides installer, LocalReader provides reader, LocalOpenLink provides { url -> openLink(url) }, LocalParentSync provides parentSync, LocalCounter provides counter, LocalTestStage provides de.experimentopia.core.model.ParentLink.isTestHost(pageHost()), LocalAllApps provides { openSite(de.experimentopia.core.model.Angebote.alleApps(de.experimentopia.core.model.ParentLink.isTestHost(pageHost()))) },
+    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalInstaller provides installer, LocalOpenLink provides { url -> openLink(url) }, LocalParentSync provides parentSync, LocalCounter provides counter, LocalTestStage provides de.experimentopia.core.model.ParentLink.isTestHost(pageHost()), LocalAllApps provides { openSite(de.experimentopia.core.model.Angebote.alleApps(de.experimentopia.core.model.ParentLink.isTestHost(pageHost()))) },
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.BIG -> 40 }) }) {
         ExperimentopiaTheme { Surface(Modifier.fillMaxSize(), color = E.Night) {
             AppRoot(nav, state, Version.NAME, Version.DATE,
@@ -98,8 +97,7 @@ private fun WebApp() {
                 },
                 privacy = "Experimentopia speichert den Spielstand und das Forscherbuch nur in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, " +
                     "keine Daten über dich an einen Server – außer Eltern koppeln ausdrücklich ihr Handy (dann geht ein verschlüsselter Lernbericht ohne Namen an unseren Server, siehe „Eltern-Handy koppeln“). Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i). " +
-                    "Anonyme Nutzungszählung (im Elternbereich abschaltbar): nur App-Start und genutzte Elternknöpfe, ohne Kennung, ohne Namen, ohne Lernstand. " + de.experimentopia.core.model.Pro.purchaseNote + " Die App aktualisiert sich von selbst. Alle Klänge und die Musik entstehen im Browser. " +
-                    if (de.experimentopia.core.model.Nova.ENABLED) de.experimentopia.core.model.Nova.PRIVACY + " Die Sätze bleiben danach in diesem Browser." else "",
+                    "Anonyme Nutzungszählung (im Elternbereich abschaltbar): nur App-Start und genutzte Elternknöpfe, ohne Kennung, ohne Namen, ohne Thema, ohne Lernstand. Die App aktualisiert sich von selbst. Alle Klänge und die Musik entstehen im Browser.",
                 onRoute = { atHome(it == Route.Home) })
         } }
     }

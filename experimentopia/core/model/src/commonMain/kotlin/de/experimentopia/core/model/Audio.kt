@@ -2,7 +2,7 @@ package de.experimentopia.core.model
 
 /**
  * Klang- und Vorlese-Einstellungen – gleich in Android und Web.
- * [rate] = Sprechtempo (Stufen in [Nova.SPEEDS]); [voice] stammt aus Versionen vor 2.2.0 und wird nicht mehr benutzt: es spricht immer Nova.
+ * [rate] = Sprechtempo (Stufen in [Tonstudio.SPEEDS]); [voice] stammt aus Versionen vor 2.2.0 und wird nicht mehr benutzt: es spricht immer die Stimme des Tonstudios.
  */
 data class AudioPrefs(
     val music: Boolean = true,
@@ -37,7 +37,7 @@ enum class World { LABOR, PHYSIK, CHEMIE, BIOLOGIE }
 fun Island.world() = when (this) { Island.CHEMIE -> World.CHEMIE; Island.BIO -> World.BIOLOGIE; else -> World.PHYSIK }
 fun Subject.world() = when (this) { Subject.PHYSIK -> World.PHYSIK; Subject.CHEMIE -> World.CHEMIE; Subject.BIOLOGIE -> World.BIOLOGIE }
 
-/** Was vorgelesen wird – genau diese Texte stehen (in Sätze geteilt) in /vorlesen/texte.json und werden vorab mit Nova vertont. */
+/** Was vorgelesen wird – genau diese Texte stehen (in Sätze geteilt) in /vorlesen/texte.json und werden vorab im Tonstudio vertont. */
 object ReadTexts {
     fun story(e: Experiment) = e.story
     fun question(e: Experiment) = e.predict.question + " Zur Wahl: " + e.predict.choices.joinToString(", ") { it.text } + "."
@@ -59,7 +59,7 @@ object ReadTexts {
         "Hallo, ich bin Blubb! Wasser hat die Formel H₂O, und auf der Erde fällt alles mit 9,81 m/s².",
     )
 
-    /** Alle festen Texte (Liste für den Stimmen-Server, siehe [Nova.catalog]) */
+    /** Alle festen Texte (Liste für das Tonstudio, siehe [Tonstudio.catalog]) */
     fun all(): List<String> = Catalog.all.flatMap { e ->
         listOfNotNull(story(e), question(e), task(e), revealSay(e, true), revealSay(e, false), why(e), fact(e), transfer(e), safety(e.id)) + e.why
     } + Topic.entries.flatMap { listOf(theory(it, false), theory(it, true)) } + Island.entries.map { it.title } + ui + Say.all()

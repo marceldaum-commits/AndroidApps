@@ -7,8 +7,8 @@ import org.junit.Test
 class ZaehlungTest {
     @Test fun inhalt() {
         assertEquals("""{"app":"experimentopia","v":"2.11.0","ev":"start"}""", Zaehlung.inhalt("2.11.0", "start"))
-        assertEquals("""{"app":"experimentopia","v":"2.11.0","ev":"probestunde_klick","ort":"klassenarbeit","thema":"physik-optik"}""",
-            Zaehlung.inhalt("2.11.0", "probestunde_klick", "klassenarbeit", "physik-optik"))
+        assertEquals("""{"app":"experimentopia","v":"2.11.0","ev":"probestunde_klick","ort":"klassenarbeit"}""",
+            Zaehlung.inhalt("2.11.0", "probestunde_klick", "klassenarbeit", "physik-optik"))   // Thema wird bei Probestunden-Klicks nie gezählt (Recht V15)
         assertNull("unbekanntes Ereignis", Zaehlung.inhalt("1", "spion"))
         assertNull("unbekannter Ort", Zaehlung.inhalt("1", "start", "kinderzimmer"))
         assertEquals("unbekanntes Thema wird weggelassen", """{"app":"experimentopia","v":"1","ev":"start"}""", Zaehlung.inhalt("1", "start", thema = "mathe-geheim"))
@@ -22,7 +22,7 @@ class ZaehlungTest {
         assertEquals("https://staging.mathenachhilfe-online.com/lern-apps/?src=experimentopia-kopf", Angebote.alleApps(true))
     }
     @Test fun probestunde() {
-        assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=experimentopia-klassenarbeit&thema=chemie-reaktionen&klasse=8", Angebote.probestunde("chemie-reaktionen", 8))
-        assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=experimentopia-klassenarbeit", Angebote.probestunde("x", 0))
+        assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=experimentopia-klassenarbeit", Angebote.probestunde())
+        assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=experimentopia-oberstufe_tipp", Angebote.probestunde("oberstufe_tipp"))
     }
 }

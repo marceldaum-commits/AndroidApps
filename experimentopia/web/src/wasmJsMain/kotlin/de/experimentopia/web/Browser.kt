@@ -12,7 +12,7 @@ fun todayLocal(): Double = js("Math.floor((Date.now() - new Date().getTimezoneOf
 /** Beginn des heutigen Tages (Ortszeit) in Millisekunden */
 fun dayStartLocal(): Double = js("{ const d = new Date(); d.setHours(0, 0, 0, 0); return d.getTime(); }")
 /** Ladebild sanft ausblenden */
-fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s && s.dataset.fertig !== '1') { s.dataset.fertig = '1'; s.style.opacity = '0'; s.style.pointerEvents = 'none'; setTimeout(() => { s.style.display = 'none'; }, 380); } }")
+fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s && s.dataset.fertig !== '1') { s.dataset.fertig = '1'; s.classList.add('ende'); s.style.pointerEvents = 'none'; setTimeout(() => { s.style.display = 'none'; }, 1000); } }")
 /** Der Seite sagen, ob gerade die Startseite offen ist – nur dort (oder im Hintergrund) lädt sie sich nach einem Update selbst neu */
 fun atHome(on: Boolean): Unit = js("{ window.__exHome = on; if (on && window.__exTry) window.__exTry(); }")
 
@@ -51,13 +51,6 @@ fun canSpeak(): Boolean = js("('speechSynthesis' in window)")
 fun browserSpeak(text: String, voice: String, rate: Double, volume: Double, onStart: () -> Unit, onEnd: () -> Unit): Unit = js("{ try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.rate = rate; u.volume = volume; const all = speechSynthesis.getVoices(); const v = all.find((x) => x.voiceURI === voice) || all.filter((x) => x.lang && x.lang.toLowerCase().startsWith('de')).sort((a, b) => b.localService - a.localService)[0]; if (v) u.voice = v; u.onstart = () => onStart(); u.onend = () => onEnd(); u.onerror = () => onEnd(); speechSynthesis.speak(u); } catch (e) { onEnd(); } }")
 fun browserStop(): Unit = js("{ if ('speechSynthesis' in window) speechSynthesis.cancel(); }")
 
-// ── Nova (nova.js wird beim ersten Vorlesen geladen)
-fun novaScript(done: (Boolean) -> Unit): Unit = js("{ if (window.ExNova) { done(true); return; } const s = document.createElement('script'); s.src = 'nova.js'; s.onload = () => done(true); s.onerror = () => done(false); document.head.appendChild(s); }")
-fun novaSpeak(texts: String, urls: String, speed: Double, onStart: () -> Unit, onEnd: () -> Unit, onFail: (Int) -> Unit): Unit = js("window.ExNova.speak(texts, urls, speed, onStart, onEnd, onFail)")
-fun novaInfo(host: String, urls: String, done: (Double, Double, Double, Int) -> Unit): Unit = js("window.ExNova.info(host, urls, done)")
-fun novaLoadAll(urls: String, originals: String, progress: (Int, Int) -> Unit, finished: (String) -> Unit): Unit = js("window.ExNova.loadAll(urls, originals, progress, finished)")
-fun novaCancelAll(): Unit = js("{ if (window.ExNova) window.ExNova.cancelAll(); }")
-fun novaClear(done: () -> Unit): Unit = js("window.ExNova.clear(done)")
 /** Hat der Nutzer schon einmal getippt/geklickt? (vorher blockiert der Browser jeden Ton) */
 fun userActivated(): Boolean = js("{ try { return !navigator.userActivation || navigator.userActivation.hasBeenActive; } catch (e) { return true; } }")
 /** 0 = nichts anzeigen (schon installiert oder Browser kann es nicht), 1 = Installations-Dialog möglich, 2 = iPhone/iPad (Anleitung) */
@@ -71,7 +64,6 @@ fun onInstallChanged(cb: () -> Unit): Unit = js("{ window.__exInstallChanged = c
 /** Schrittprotokoll (index.html): wo der Start gerade ist – bleibt nach einem Absturz sichtbar */
 fun step(s: String): Unit = js("{ if (window.exStep) window.exStep(s); }")
 fun pageHost(): String = js("location.host")
-fun novaStop(): Unit = js("{ if (window.ExNova) window.ExNova.stop(); }")
 /** Den Speicher der alten Offline-Stimme (bis 2.1, ca. 63 MB) freigeben */
 fun dropOldVoice(): Unit = js("{ try { if (window.caches) caches.delete('experimentopia-stimme'); } catch (e) {} }")
 

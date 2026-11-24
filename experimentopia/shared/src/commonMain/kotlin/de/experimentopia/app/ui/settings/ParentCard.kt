@@ -198,9 +198,9 @@ fun ParentCard(coupling: ParentCoupling?, todayDays: Long, hasProgress: Boolean 
         }
     }
     when (gate) {
-        "koppeln" -> ParentGate(todayDays, onDismiss = { gate = null }) { gate = null; coupling.couple(nick); open = true; sfx?.play(Sound.WIN); report() }
-        "aufheben" -> ParentGate(todayDays, onDismiss = { gate = null }) { gate = null; confirmUnlink = true }
-        "wiederherstellen" -> ParentGate(todayDays, onDismiss = { gate = null }) { gate = null; restoreOpen = true }
+        "koppeln" -> ParentGate(onDismiss = { gate = null }) { gate = null; coupling.couple(nick); open = true; sfx?.play(Sound.WIN); report() }
+        "aufheben" -> ParentGate(onDismiss = { gate = null }) { gate = null; confirmUnlink = true }
+        "wiederherstellen" -> ParentGate(onDismiss = { gate = null }) { gate = null; restoreOpen = true }
     }
     // Vorhandenen Lernstand nie ohne Nachfrage überschreiben
     (found as? ParentCoupling.Found.Ok)?.takeIf { hasProgress }?.let { f ->

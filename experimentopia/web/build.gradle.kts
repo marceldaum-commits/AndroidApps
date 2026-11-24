@@ -69,24 +69,10 @@ tasks.named<Copy>("wasmJsProcessResources") {
     inputs.property("v", versionName); inputs.property("d", versionDate)
 }
 
-// Liste aller festen Vorlese-Texte für den Stimmen-Server (Nova): /vorlesen/texte.json – bei jedem Bau aus den Inhalten erzeugt,
-// so landen neue Texte von selbst darin.
-val novaOut = layout.buildDirectory.dir("generated/vorlesen")
-val novaTexte = tasks.register<JavaExec>("novaTexte") {
-    val model = project(":core:model")
-    dependsOn(":core:model:jvmJar")
-    classpath = files(model.layout.buildDirectory.file("libs/model-jvm.jar")) + model.configurations.getByName("jvmRuntimeClasspath")
-    mainClass.set("de.experimentopia.core.model.NovaExportKt")
-    val out = novaOut.get().file("texte.json").asFile
-    args(out.path)
-    inputs.files(model.fileTree("src/commonMain")); outputs.dir(novaOut)
-}
-
 /** Fertige WebApp nach experimentopia/webapp/ legen – nur reine Dateien, wie der Server sie ausliefert. */
 tasks.register<Sync>("webapp") {
     from(tasks.named("wasmJsBrowserDistribution"))
     from(tasks.named("jsBrowserDistribution")) { include("experimentopia-js.js") }   // JS-Fassung (Safari 27); nutzt dieselbe Skiko-Datei
-    from(novaTexte) { into("vorlesen") }
     into(rootProject.file("webapp"))
     exclude("**/*.LICENSE.txt")
     // Ladeplan eintragen: Größen der großen Dateien für den Fortschrittsbalken und die Namen der .wasm-Dateien für den Service Worker

@@ -41,17 +41,29 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
-  html, body { margin: 0; height: 100%; background: #160F2E; overflow: hidden; font-family: system-ui, sans-serif; color: #F3EEFF; }
+  html, body { margin: 0; height: 100%; background: #05070f; overflow: hidden; font-family: system-ui, sans-serif; color: #F3EEFF; }
   #app { position: fixed; top: 0; right: 0; bottom: 0; left: 0; }
   /* Ladebild: steht sofort da (reines HTML und CSS) – Nachtlabor, Blubb, Name und ein Balken, der den echten Download zeigt */
+  /* Startbild (gemeinsame Startanimation der Lern-Apps, Marcel 22.11.2026): schwarzer Vollbild-Splash #05070f, weißes Logo-Symbol, das beim Laden „atmet“.
+     Ist die App bereit: kurz zusammenziehen, groß herauszoomen, ausblenden (zusammen unter 1 s). Alles inline, ohne Netzabruf. */
   #start { position: fixed; top: 0; right: 0; bottom: 0; left: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 5;
-    background: #160F2E; background: radial-gradient(ellipse at 50% 38%, #2E2260 0%, #160F2E 62%); transition: opacity .35s ease; }
-  #start svg { width: 132px; height: 132px; animation: blubb 2.4s ease-in-out infinite; }
-  @keyframes blubb { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-7px) rotate(2deg); } }
-  #start b { font-size: 28px; letter-spacing: 2px; font-weight: 800; background: linear-gradient(90deg, #3DF5C8, #7CC8FF, #FF5FA2); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  #start span { color: #A99BD6; font-size: 14px; text-align: center; padding: 0 16px; }
-  #balken { width: 220px; max-width: 62vw; height: 8px; border-radius: 4px; background: #2E2260; overflow: hidden; }
-  #balken i { display: block; height: 100%; width: 3%; border-radius: 4px; background: linear-gradient(90deg, #3DF5C8, #FF5FA2); transition: width .25s ease; }
+    background: #05070f; }
+  #start.ende { animation: splashweg .9s ease-in forwards; }
+  @keyframes splashweg { 0%, 20% { opacity: 1; } 100% { opacity: 0; } }
+  #start.ende svg { animation: zoomaus .9s cubic-bezier(.5, 0, .9, .4) forwards; }
+  @keyframes zoomaus { 0% { transform: scale(1); } 18% { transform: scale(.86); } 100% { transform: scale(22); } }
+  #start.ende b, #start.ende span, #start.ende #balken { opacity: 0; transition: opacity .15s; }
+  @media (prefers-reduced-motion: reduce) {
+    #start svg { animation: none !important; }
+    #start.ende { animation: nurweg .35s ease forwards; } #start.ende svg { animation: none !important; }
+    @keyframes nurweg { to { opacity: 0; } }
+  }
+  #start svg { width: 132px; height: 132px; animation: atmen 2.6s ease-in-out infinite; }
+  @keyframes atmen { 0%, 100% { transform: scale(.94); opacity: .78; } 50% { transform: scale(1.04); opacity: 1; } }
+  #start b { font-size: 15px; letter-spacing: 6px; font-weight: 700; color: #ffffff; opacity: .9; }
+  #start span { color: #8a93a8; font-size: 14px; text-align: center; padding: 0 16px; }
+  #balken { width: 160px; max-width: 50vw; height: 3px; border-radius: 2px; background: #1a2030; overflow: hidden; }
+  #balken i { display: block; height: 100%; width: 3%; border-radius: 2px; background: #ffffff; transition: width .25s ease; }
   .bl { animation: auf 2s ease-in infinite; } .bl.b2 { animation-delay: .7s; } .bl.b3 { animation-delay: 1.3s; }
   @keyframes auf { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-8px); opacity: 0; } }
   @media (prefers-reduced-motion: reduce) { #start svg, .bl { animation: none; } }
@@ -113,14 +125,12 @@
 <body>
 <div id="start">
   <svg viewBox="16 8 76 76" aria-hidden="true">
-    <!-- dasselbe Logo wie das App-Symbol (icon-512.png, Android ic_launcher_foreground) -->
-    <defs><radialGradient id="glut"><stop offset="0" stop-color="#3DF5C8" stop-opacity=".33"/><stop offset="1" stop-color="#3DF5C8" stop-opacity="0"/></radialGradient></defs>
-    <circle cx="54" cy="66" r="34" fill="url(#glut)"/>
-    <path d="M37 66 L71 66 L77 78 Q78 82 74 82 L34 82 Q30 82 31 78 Z" fill="#3DF5C8"/>
-    <path d="M47 30 L47 50 L31 78 Q30 82 34 82 L74 82 Q78 82 77 78 L61 50 L61 30" fill="none" stroke="#F3EEFF" stroke-width="3" stroke-linejoin="round"/>
-    <path d="M43 30 L65 30" stroke="#F3EEFF" stroke-width="3" stroke-linecap="round"/>
-    <circle cx="47" cy="73" r="2.5" fill="#160F2E"/><circle cx="61" cy="73" r="2.5" fill="#160F2E"/>
-    <circle class="bl" cx="54" cy="22" r="4" fill="#FF5FA2"/><circle class="bl b2" cx="63" cy="14" r="2.5" fill="#FFD84D"/><circle class="bl b3" cx="46" cy="15" r="2" fill="#7CC8FF"/>
+    <!-- Logo-Symbol (Kolben mit Blubb) in Weiß – gemeinsame Startanimation der Lern-Apps -->
+    <path d="M37 66 L71 66 L77 78 Q78 82 74 82 L34 82 Q30 82 31 78 Z" fill="#ffffff"/>
+    <path d="M47 30 L47 50 L31 78 Q30 82 34 82 L74 82 Q78 82 77 78 L61 50 L61 30" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M43 30 L65 30" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="47" cy="73" r="2.5" fill="#05070f"/><circle cx="61" cy="73" r="2.5" fill="#05070f"/>
+    <circle class="bl" cx="54" cy="22" r="4" fill="#ffffff"/><circle class="bl b2" cx="63" cy="14" r="2.5" fill="#ffffff"/><circle class="bl b3" cx="46" cy="15" r="2" fill="#ffffff"/>
   </svg>
   <b>EXPERIMENTOPIA</b>
   <div id="balken"><i></i></div>
@@ -156,7 +166,7 @@
       try { Promise.all([
         // nur unsere eigene Registrierung und unsere eigenen Speicher – auf der gemeinsamen Adresse wohnen auch die anderen Lern-Apps
         navigator.serviceWorker ? navigator.serviceWorker.getRegistration('./').then(function (r) { return r && r.scope === new URL('./', location.href).href ? r.unregister() : null; }) : null,
-        window.caches ? caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k.indexOf('experimentopia-') === 0 && k !== 'experimentopia-nova'; }).map(function (k) { return caches.delete(k); })); }) : null
+        window.caches ? caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k.indexOf('experimentopia-') === 0; }).map(function (k) { return caches.delete(k); })); }) : null
       ]).then(done, done); } catch (e) { done(); }
     };
   }

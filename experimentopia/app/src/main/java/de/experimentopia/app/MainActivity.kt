@@ -17,7 +17,6 @@ import de.experimentopia.app.ui.fx.LocalBuzzer
 import de.experimentopia.app.ui.fx.LocalSfx
 import de.experimentopia.app.ui.fx.LocalVibration
 import de.experimentopia.app.ui.fx.LocalMusic
-import de.experimentopia.app.ui.fx.LocalReader
 import de.experimentopia.app.ui.settings.UpdateBanner
 import de.experimentopia.app.ui.theme.E
 import de.experimentopia.app.ui.theme.ExperimentopiaTheme
@@ -43,7 +42,7 @@ class MainActivity : ComponentActivity() {
             val buzzer = remember(view) { AndroidBuzzer(view) }
             ExperimentopiaTheme {
                 CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration, LocalBuzzer provides buzzer,
-                    LocalMusic provides app.music, LocalReader provides (if (de.experimentopia.core.model.Nova.ENABLED) app.reader else null),
+                    LocalMusic provides app.music,
                     de.experimentopia.app.ui.fx.LocalOpenLink provides { url -> runCatching { startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url))) } }) {
                     Surface(Modifier.fillMaxSize(), color = E.Night) {
                         BackHandler(enabled = vm.nav.canBack) { vm.nav.back() }
@@ -68,6 +67,6 @@ class MainActivity : ComponentActivity() {
         super.onStop()
         // im Hintergrund: keine Musik, kein Vorlesen
         val app = application as ExperimentopiaApp
-        app.music.pause(true); if (de.experimentopia.core.model.Nova.ENABLED) app.reader.stop()
+        app.music.pause(true)
     }
 }

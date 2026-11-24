@@ -54,4 +54,10 @@ interface Prefs {
     val freeLabRuns: StateFlow<Int>; fun countFreeLab()
     var badgesSeen: Set<String>
     fun resetProgress()
+    /**
+     * Kleine Merkzettel (Text) für Hinweise: wann ein Hinweis zuletzt gezeigt wurde, ob Hinweise ausgeblendet sind.
+     * Nur auf dem Gerät. Standard: nichts wird gemerkt (Android-Fassung, nicht ausgeliefert).
+     */
+    fun note(key: String): String? = null
+    fun setNote(key: String, value: String?) {}
 }

@@ -13,7 +13,7 @@ object Zaehlung {
 
     /** Abschließende Liste der Ereignisse, die Experimentopia sendet */
     val EREIGNISSE = setOf("start", "elternbereich", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick")
-    val ORTE = setOf("elternbereich", "gesperrt", "klassenarbeit", "einstellungen", "link", "eingabe")
+    val ORTE = setOf("elternbereich", "gesperrt", "klassenarbeit", "einstellungen", "link", "eingabe", "elternhinweis", "oberstufe_tipp", "familie")
     /** Themen-Kennungen (am Server für Experimentopia freigeschaltet, Leitstand 18.11.) */
     val THEMEN: Set<String> get() = Topic.entries.map { ParentReport.slug(it) }.toSet()
 
@@ -21,7 +21,8 @@ object Zaehlung {
     fun inhalt(version: String, ereignis: String, ort: String? = null, thema: String? = null): String? {
         if (ereignis !in EREIGNISSE) return null
         if (ort != null && ort !in ORTE) return null
-        val t = thema?.takeIf { it in THEMEN }
+        // Probestunden-Klicks zählen nur anonym: nie mit Thema (Recht V15)
+        val t = thema?.takeIf { ereignis != Nachhilfe.ZAEHL_EREIGNIS && it in THEMEN }
         val v = version.take(20).filter { it.isLetterOrDigit() || it == '.' || it == '-' }
         return buildString {
             append("{\"app\":\"").append(APP).append("\",\"v\":\"").append(v).append("\",\"ev\":\"").append(ereignis).append('"')
@@ -32,7 +33,7 @@ object Zaehlung {
     }
 }
 
-/** Links aus dem Elternbereich zur Website – mit Herkunft (src), Thema und Klasse */
+/** Links zur Website – nur mit Herkunft (src), nie mit Thema, Klasse oder Lernstand (Recht V15) */
 object Angebote {
     const val SEITE = "https://www.mathenachhilfe-online.com"
     /** Probestunden-Seite (vom Leitstand am 18.11. bestätigt: „/probestunde/“) */
@@ -42,9 +43,6 @@ object Angebote {
     /** „← Alle Apps“: zurück zur App-Auswahl auf der Website (Test-Stufe: staging) */
     fun alleApps(test: Boolean) = (if (test) "https://staging.mathenachhilfe-online.com" else SEITE) + "/lern-apps/?src=experimentopia-kopf"
 
-    fun probestunde(thema: String?, klasse: Int?): String = buildString {
-        append(SEITE).append('/').append(PROBESTUNDE_PFAD).append("/?src=").append(Zaehlung.APP).append("-klassenarbeit")
-        if (thema != null && thema in Zaehlung.THEMEN) append("&thema=").append(thema)
-        if (klasse != null && klasse in 1..13) append("&klasse=").append(klasse)
-    }
+    /** [ort]: Stelle der App, nur für die anonyme Zählung (z. B. „klassenarbeit“, „elternhinweis“, „oberstufe_tipp“) */
+    fun probestunde(ort: String = "klassenarbeit"): String = SEITE + "/" + PROBESTUNDE_PFAD + "/?src=" + Zaehlung.APP + "-" + ort.filter { it.isLetterOrDigit() || it == '_' || it == '-' }
 }

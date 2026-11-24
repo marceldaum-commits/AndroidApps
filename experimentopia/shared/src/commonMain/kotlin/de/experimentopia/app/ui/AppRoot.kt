@@ -148,7 +148,7 @@ fun AppRoot(
     de.experimentopia.app.ui.settings.ParentAutoUpload(parents, stars, journal, grade)
     fun open(e: Experiment, daily: Boolean = false) { if (!daily && state.locked(e)) nav.go(Route.ProR(e.title)) else nav.go(Route.Exp(e.id, daily)) }
 
-    CompositionLocalProvider(LocalReadOn provides (audio.read && de.experimentopia.core.model.Nova.ENABLED), LocalAutoRead provides (audio.autoRead && de.experimentopia.core.model.Nova.ENABLED)) {
+    CompositionLocalProvider(LocalReadOn provides (audio.read && de.experimentopia.core.model.Tonstudio.ENABLED), LocalAutoRead provides (audio.autoRead && de.experimentopia.core.model.Tonstudio.ENABLED)) {
     // Große Bildschirme (PC, Tablet quer): Hintergrund füllt alles. Startseite und Übersichten ordnen sich selbst in Spalten an;
     // Versuche und Einstellungen bleiben in angenehmer Lesebreite in der Mitte.
     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(E.Deep, E.Night))), contentAlignment = Alignment.TopCenter) {
@@ -175,12 +175,17 @@ fun AppRoot(
                     val e = Catalog.byId(r.id)
                     if (e == null) LaunchedEffect(Unit) { nav.back() } else {
                         val next = if (r.daily) null else Catalog.next(e.id)
-                        ExperimentScreen(e, onDone = { state.record(e, it, r.daily) },
+                        // nicht weitergekommen = die letzten 3 Versuche mit genau diesem Experiment waren alle falsch (nur auf dem Gerät berechnet)
+                        val letzte = journal.filter { it.experimentId == e.id }.sortedByDescending { it.at }.take(3)
+                        val struggling = letzte.size >= 3 && letzte.none { it.right }
+                        val easier = Catalog.all.filter { it.topic == e.topic && it.id != e.id && it.grades.first < e.grades.first && !state.locked(it) }.minByOrNull { it.grades.first }
+                        ExperimentScreen(e, onDone = { state.record(e, it, r.daily) }, struggling = struggling, onEasier = easier?.let { z -> { nav.replace(Route.Exp(z.id)) } },
                             onNext = next?.let { n -> { if (state.locked(n)) nav.replace(Route.ProR(n.title)) else nav.replace(Route.Exp(n.id)) } },
                             onBack = { nav.back() }, daily = r.daily)
                     }
                 }
-                is Route.SubjectR -> de.experimentopia.app.ui.home.SubjectScreen(r.subject, stars, grade, state::locked, { open(it) }, state.prefs::setGrade, startOpen = r.open) { nav.back() }
+                is Route.SubjectR -> de.experimentopia.app.ui.home.SubjectScreen(r.subject, stars, grade, state::locked, { open(it) }, state.prefs::setGrade, startOpen = r.open,
+                    tip = { s -> de.experimentopia.app.ui.home.NachhilfeTipp(s, grade, state.prefs, LocalParentSync.current?.now() ?: 0L) }) { nav.back() }
                 Route.Topics -> de.experimentopia.app.ui.home.TopicScreen(stars, grade, state::locked, { open(it) }, { nav.back() })
                 Route.Free -> FreeLabScreen(state::locked, { l -> if (state.locked(l)) nav.go(Route.ProR(l.title)) else { state.prefs.countFreeLab(); nav.go(Route.FreeRun(l)) } }, { nav.back() })
                 is Route.FreeRun -> FreeLabRun(r.lab) { nav.back() }
@@ -195,19 +200,12 @@ fun AppRoot(
                         onReset = state::reset, onPro = { nav.go(Route.ProR("Alles")) }, onBack = { nav.back() },
                         top = settingsTop, privacy = privacy ?: de.experimentopia.app.ui.settings.DEFAULT_PRIVACY,
                         audio = audio, onAudio = state.prefs::setAudio, pass = pass,
-                        parentArea = { de.experimentopia.app.ui.settings.ParentArea(state.todayDay(), grade) },
+                        parentArea = { extra -> de.experimentopia.app.ui.settings.ParentArea(state.todayDay(), grade, journal = journal, nickname = parents?.link?.value?.nickname, prefs = state.prefs, extra = extra) },
                         parents = { de.experimentopia.app.ui.settings.ParentCard(parents, state.todayDay(), hasProgress = stars.isNotEmpty() || journal.isNotEmpty()) { parents?.upload(stars, journal, grade) } },
                     )
                 }
             }
             } }
-        }
-        // Einmal je Sitzung ein dezenter Hinweis, wenn Nova nicht erreichbar war
-        var novaHint by remember { mutableStateOf(false) }
-        LaunchedEffect(reader?.novaDown) { if (reader?.novaDown == true) { novaHint = true; kotlinx.coroutines.delay(4500); novaHint = false } }
-        androidx.compose.animation.AnimatedVisibility(novaHint, Modifier.align(Alignment.BottomCenter).padding(16.dp)) {
-            Text("📶 Nova gerade nicht erreichbar – Blubb liest kurz mit der Stimme des Geräts.", color = E.Text, fontSize = 13.sp,
-                modifier = Modifier.clip(RoundedCornerShape(14.dp)).background(E.Panel).border(1.dp, E.Line, RoundedCornerShape(14.dp)).padding(horizontal = 14.dp, vertical = 10.dp).testTag("nova_hinweis"))
         }
         // Neue Abzeichen auf der Startseite feiern (nicht mitten im Versuch)
         if (celebrate.isNotEmpty() && nav.top == Route.Home) NewBadges(celebrate) { state.prefs.badgesSeen = state.prefs.badgesSeen + celebrate.map { it.id }; celebrate = emptyList() }

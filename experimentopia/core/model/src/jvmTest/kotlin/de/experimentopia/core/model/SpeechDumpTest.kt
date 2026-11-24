@@ -14,6 +14,6 @@ class SpeechDumpTest {
     @Test fun alteEinstellungenAus21() {
         val old = AudioPrefs.decode("musik=0;musikLaut=0.3;effektLaut=0.7;vorlesen=1;auto=1;tempo=0.8;stimme=alt")
         org.junit.Assert.assertEquals(false, old.music); org.junit.Assert.assertEquals(0.3f, old.musicVol); org.junit.Assert.assertEquals(true, old.autoRead)
-        org.junit.Assert.assertEquals(0.75f, Nova.speed(old.rate)); org.junit.Assert.assertEquals(false, old.bestQuality)
+        org.junit.Assert.assertEquals(0.8f, Tonstudio.speed(old.rate)); org.junit.Assert.assertEquals(false, old.bestQuality)
     }
 }

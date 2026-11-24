@@ -1,8 +1,10 @@
 <resources>
     <style name="Theme.Experimentopia" parent="android:Theme.Material.NoActionBar">
-        <item name="android:windowBackground">@color/night</item>
+        <item name="android:windowBackground">@color/splash</item>
         <item name="android:statusBarColor">@color/night</item>
         <item name="android:navigationBarColor">@color/night</item>
     </style>
     <color name="night">#160F2E</color>
+    <!-- Startbild-Hintergrund (gemeinsame Startanimation der Lern-Apps) -->
+    <color name="splash">#05070f</color>
 </resources>

@@ -24,7 +24,7 @@ import de.experimentopia.core.model.Catalog
 import de.experimentopia.core.model.Island
 import de.experimentopia.core.model.Pro
 
-val DEFAULT_PRIVACY get() = "Experimentopia speichert nur den Spielstand und das Forscherbuch auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Kamera, kein Mikrofon. " + Pro.purchaseNote + " Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar)" + if (de.experimentopia.core.model.Nova.ENABLED) " und – wenn Vorlesen an ist – um Sätze der Vorlese-Stimme zu laden. " + de.experimentopia.core.model.Nova.PRIVACY else "."
+val DEFAULT_PRIVACY get() = "Experimentopia speichert nur den Spielstand und das Forscherbuch auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Kamera, kein Mikrofon. " + "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar)."
 
 @Composable
 fun SettingsScreen(
@@ -44,8 +44,12 @@ fun SettingsScreen(
     pass: Boolean = false,
     /** Karte „Eltern-Handy koppeln“ (nur WebApp) */
     parents: @Composable () -> Unit = {},
-    /** Elternbereich: Klassenarbeit-Hilfe und Zählung (nach der Frage für Erwachsene) */
-    parentArea: @Composable () -> Unit = {},
+    /**
+     * Elternbereich hinter dem Eltern-Tor. Bekommt als Inhalt alles, was Kinder nicht sehen dürfen
+     * (Forscher-Pass mit Preis, Familie/Kopplung, Zurücksetzen) – Standard „Einstellungen hinter dem Tor“ (Recht, 19.11.2026).
+     * Ohne Tor bleiben nur Ton, Musik, Lautstärke, Vorlesen, Klassenstufe.
+     */
+    parentArea: @Composable (@Composable () -> Unit) -> Unit = {},
 ) {
     var confirm by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
@@ -54,22 +58,27 @@ fun SettingsScreen(
             top()
             de.experimentopia.app.ui.common.InstallCard()
             SoundSettings(audio, onAudio, sound, onSound, vibration, onVibration)
-            if (de.experimentopia.core.model.Nova.ENABLED) ReadSettings(audio, onAudio)
             Panel(Modifier.fillMaxWidth()) {
                 Text("Klassenstufe", style = MaterialTheme.typography.titleMedium, color = E.Mint)
                 Text("Passende Versuche werden hervorgehoben. Alle anderen bleiben spielbar.", color = E.Muted, fontSize = 13.sp)
                 ChipRow(listOf(0) + (3..10).toList(), grade, { if (it == 0) "alle" else "Klasse $it" }, onGrade)
             }
-            if (pass) Panel(Modifier.fillMaxWidth().testTag("pass_status"), border = E.Sun) {
-                Text("💛 Forscher-Pass aktiv", style = MaterialTheme.typography.titleMedium, color = E.Sun)
-                Text("Für Eltern: Der Forscher-Pass ist auf diesem Gerät freigeschaltet – alle Versuche und Geräte sind offen. Danke!", color = E.Text, fontSize = 13.sp)
-            } else if (Pro.ENABLED) Panel(Modifier.fillMaxWidth(), border = E.Sun) {
-                Text("💛 Forscher-Pass", style = MaterialTheme.typography.titleMedium, color = E.Sun)
-                Text("Noch nicht freigeschaltet. Einmalig ${Pro.WEB_PRICE}, kein Abo – gilt in der Web-App.", color = E.Muted, fontSize = 13.sp)
-                GlowButton(onPro, color = E.Sun) { Text("Was ist im Forscher-Pass?") }
+            parentArea {
+                if (pass) Panel(Modifier.fillMaxWidth().testTag("pass_status"), border = E.Sun) {
+                    Text("💛 Forscher-Pass aktiv", style = MaterialTheme.typography.titleMedium, color = E.Sun)
+                    Text("Für Eltern: Der Forscher-Pass ist auf diesem Gerät freigeschaltet – alle Versuche und Geräte sind offen. Danke!", color = E.Text, fontSize = 13.sp)
+                } else if (Pro.ENABLED) Panel(Modifier.fillMaxWidth(), border = E.Sun) {
+                    Text("💛 Forscher-Pass", style = MaterialTheme.typography.titleMedium, color = E.Sun)
+                    Text("Noch nicht freigeschaltet. Einmalig ${Pro.WEB_PRICE}, kein Abo – gilt in der Web-App.", color = E.Muted, fontSize = 13.sp)
+                    GlowButton(onPro, color = E.Sun) { Text("Was ist im Forscher-Pass?") }
+                }
+                Text(Pro.purchaseNote, color = E.Muted, fontSize = 12.sp)
+                parents()
+                Panel(Modifier.fillMaxWidth()) {
+                    Text("Fortschritt", style = MaterialTheme.typography.titleMedium, color = E.Mint)
+                    GlowButton({ confirm = true }, color = E.Red) { Text("🧽 Alles zurücksetzen") }
+                }
             }
-            parentArea()
-            parents()
             Panel(Modifier.fillMaxWidth()) {
                 Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = E.Mint)
                 Text(privacy, fontSize = 13.sp, color = E.Text)
@@ -80,10 +89,6 @@ fun SettingsScreen(
                     "Vererbung nach Mendel, Blutgruppen, Osmose, Nährstoffnachweise, Enzyme, Fotosynthese, Räuber-Beute-Beziehungen, Mikroskopieren, Keimung, Nahrungsketten, Herz und Puls.", fontSize = 13.sp, color = E.Muted)
                 Text("Alle Ergebnisse werden in Tests mit physikalischen Modellen nachgerechnet. Versuche mit Säuren, Laugen, Feuer und Strom bitte nur hier in der App – oder mit Erwachsenen.", fontSize = 12.sp, color = E.Muted)
                 Text("Version $installed vom $versionDate", style = MaterialTheme.typography.labelMedium, color = E.Muted, modifier = Modifier.testTag("version"))
-            }
-            Panel(Modifier.fillMaxWidth()) {
-                Text("Fortschritt", style = MaterialTheme.typography.titleMedium, color = E.Mint)
-                GlowButton({ confirm = true }, color = E.Red) { Text("🧽 Alles zurücksetzen") }
             }
         }
     }
@@ -175,24 +180,6 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, pa
             GlowButton(onBack, Modifier.fillMaxWidth()) { Text("Zurück", fontWeight = FontWeight.Bold) }
         }
     }
-    if (gate) ParentGate(state?.todayDay() ?: 0L, onDismiss = { gate = false }) { gate = false; parents = true; counter?.count("elternbereich", if (what == "Alles") "einstellungen" else "gesperrt") }
+    if (gate) ParentGate(onDismiss = { gate = false }) { gate = false; parents = true; counter?.count("elternbereich", if (what == "Alles") "einstellungen" else "gesperrt") }
 }
 
-/** Frage für Erwachsene vor jedem Kauf: Geburtsjahr eingeben, mindestens 18 Jahre (Familienrichtlinie). */
-@Composable
-fun ParentGate(todayDays: Long, onDismiss: () -> Unit, onPassed: () -> Unit) {
-    var year by remember { mutableStateOf("") }
-    var wrong by remember { mutableStateOf(false) }
-    val now = remember(todayDays) { 1970 + (todayDays / 365.2425).toInt() }
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text("Frage für Erwachsene") },
-        text = { Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("Bitte gib dein Geburtsjahr ein (vierstellig).")
-            OutlinedTextField(year, { year = it.filter { c -> c.isDigit() }.take(4); wrong = false }, singleLine = true, modifier = Modifier.testTag("geburtsjahr"))
-            if (wrong) Text("Das passt leider nicht. Den Kauf dürfen nur Erwachsene erledigen.", color = E.Pink)
-        } },
-        confirmButton = { TextButton({ val y = year.toIntOrNull(); if (y != null && y in 1900..(now - 18)) onPassed() else wrong = true }) { Text("Weiter") } },
-        dismissButton = { TextButton(onDismiss) { Text("Abbrechen") } },
-    )
-}

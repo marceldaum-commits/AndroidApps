@@ -55,6 +55,10 @@ fun ExperimentScreen(
     daily: Boolean = false,
     startPhase: Phase = Phase.STORY,
     startGuess: Int? = null,
+    /** Mehrmals hintereinander nicht geklappt → freundlicher Hilfesatz (Recht V15: kein Außenlink, kein Bezug auf Eltern-Bereich oder Probestunde) */
+    struggling: Boolean = false,
+    /** „Leichter üben“: ein leichterer Versuch zum selben Thema (null = gibt es nicht) */
+    onEasier: (() -> Unit)? = null,
 ) {
     val sfx = LocalSfx.current
     val view = LocalBuzzer.current; val vib = LocalVibration.current
@@ -101,6 +105,13 @@ fun ExperimentScreen(
                             if (daily) Pill("📅 Rätsel des Tages", E.Sun)
                             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { Text(e.emoji, fontSize = 84.sp, modifier = Modifier.popIn()) }
                             BlubbSays(e.story, Mood.THINK)
+                            if (struggling) Panel(Modifier.fillMaxWidth().testTag("kind_hilfe"), border = E.Sky) {
+                                Text(de.experimentopia.core.model.Nachhilfe.KIND_HILFE, color = E.Text, fontSize = 14.sp)
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    if (onEasier != null) GlowButton(onEasier, Modifier.weight(1f).testTag("kind_leichter"), color = E.Mint) { Text(de.experimentopia.core.model.Nachhilfe.KIND_LEICHTER, fontWeight = FontWeight.Bold, fontSize = 13.sp) }
+                                    GlowButton({ theory = true }, Modifier.weight(1f).testTag("kind_erklaerung"), color = E.Sky) { Text(de.experimentopia.core.model.Nachhilfe.KIND_ERKLAERUNG, fontWeight = FontWeight.Bold, fontSize = 13.sp) }
+                                }
+                            }
                             GlowButton({ phase = Phase.PREDICT }, Modifier.fillMaxWidth().pulse(true, 0.02f).testTag("los")) { Text("🤔 Ich vermute …", fontWeight = FontWeight.Bold, fontSize = 18.sp) }
                         }
                         Phase.PREDICT -> {
