@@ -26,6 +26,9 @@ class VorlesenListeTest {
     private val packsDir = File("src/main/assets/packs")
     private val out = File("../webApp/src/webMain/resources/vorlesen/texte.json")
     private val exported = File("../webapp/vorlesen/texte.json")
+    /** Textliste für das Tonstudio (Format 1 wie quasselquest/VERTONUNG.md) */
+    private val outListe = File("../webApp/src/webMain/resources/vorlesen/textliste.json")
+    private val exportedListe = File("../webapp/vorlesen/textliste.json")
 
     private val plusDir: File? = (System.getenv("WG_PLUS_DIR")?.let(::File)
         ?: generateSequence(File("").absoluteFile) { it.parentFile }.map { File(it, "website_backup/wissensgarten-plus") }.firstOrNull { it.isDirectory })
@@ -47,6 +50,43 @@ class VorlesenListeTest {
             // häufige Laufzeit-Sätze aus festen Paketdaten (Brummi-Radio) – hinten, damit die Reihenfolge der übrigen bleibt
             free.flatMap { Nova.packLaufzeit(it) }
         return list.distinct()
+    }
+
+    /** Woher ein Text kommt: Brummi und Laufzeit-Bausteine in zwei Tempi, Karten-Texte zunächst nur normal (Marcel/AppZentrale 20.11.) */
+    private fun quellen(): Map<Nova.Eintrag, String> {
+        val free = packs(packsDir).filter { !it.isPlus }
+        val m = LinkedHashMap<Nova.Eintrag, String>()
+        BrummiSaetze.find(listOf(File("../shared/src/commonMain/kotlin"), File("../app/src/main/java/de/wissensgarten/app/ui"))).forEach { raw ->
+            Nova.normalisiert(Nova.sprechText(raw, "de")).takeIf { t -> t.any { it.isLetterOrDigit() } }?.let { m.putIfAbsent(Nova.Eintrag(it, "de"), "brummi") }
+        }
+        Nova.festeTexte().forEach { m.putIfAbsent(it, "fest") }
+        free.flatMap { Nova.packLaufzeit(it) }.forEach { m.putIfAbsent(it, "laufzeit") }
+        free.forEach { p -> Nova.packTexte(p).forEach { m.putIfAbsent(it, p.id) } }
+        return m
+    }
+
+    private fun sha1id(sprache: String, text: String): String =
+        java.security.MessageDigest.getInstance("SHA-1").digest("$sprache|$text".toByteArray(Charsets.UTF_8)).joinToString("") { "%02x".format(it) }.take(20)
+
+    private fun textliste(texts: List<Nova.Eintrag>, quellen: Map<Nova.Eintrag, String>): String = buildString {
+        append("{\"format\": 1, \"app\": \"wissensgarten\", \"modell\": \"Kokoro-82M (hexgrad, Apache-2.0); Deutsch: Chatterbox Multilingual, Stimme de-1 (Leitstand)\",\n")
+        append(" \"stimmen\": {\"de\": {\"stimme\": null, \"hinweis\": \"Chatterbox Multilingual, Stimme de-1 (Leitstand)\"}, \"en\": {\"stimme\": \"af_heart\", \"kokoro_lang\": \"en-us\"}, ")
+        append("\"fr\": {\"stimme\": \"ff_siwis\", \"kokoro_lang\": \"fr-fr\"}, \"es\": {\"stimme\": \"ef_dora\", \"kokoro_lang\": \"es\"}},\n")
+        append(" \"mp3\": {\"kanaele\": 1, \"abtastrate\": 24000, \"bitrate\": \"48k\", \"id3_comment\": {\"de\": \"KI-generiert (synthetische Stimme, Chatterbox Multilingual)\", ")
+        append("\"en\": \"KI-generiert (synthetische Stimme, Kokoro-82M)\", \"fr\": \"KI-generiert (synthetische Stimme, Kokoro-82M)\", \"es\": \"KI-generiert (synthetische Stimme, Kokoro-82M)\"}, ")
+        append("\"stille_rand_kuerzen\": true, \"lautheit_lufs\": -18, \"vorlauf_s\": 0.12},\n")
+        append(" \"hinweis\": \"Nur freie Pakete und feste Sätze. Plus-Texte stehen nie in dieser öffentlichen Liste. Eigene Karten, Klassen-Codes und Namen stehen nicht hier (Live-Stimme, später).\",\n")
+        append(" \"eintraege\": [\n")
+        texts.forEachIndexed { i, e ->
+            val id = sha1id(e.sprache, e.text)
+            val q = quellen[e] ?: "paket"
+            val zwei = q == "brummi" || q == "fest" || q == "laufzeit"
+            append("  {\"id\": \"").append(id).append("\", \"sprache\": \"").append(e.sprache).append("\", \"sprechtext\": ").append(quote(e.text))
+            append(", \"quelle\": ").append(quote(q)).append(", \"fassungen\": [{\"art\": \"normal\", \"speed\": 1.0, \"datei\": \"audio/server/").append(e.sprache).append('/').append(id).append(".mp3\"}")
+            if (zwei) append(", {\"art\": \"langsam\", \"speed\": 0.8, \"datei\": \"audio/server/").append(e.sprache).append('/').append(id).append("-langsam.mp3\"}")
+            append("]}").append(if (i < texts.lastIndex) ",\n" else "\n")
+        }
+        append("]}\n")
     }
 
     private fun json(texts: List<Nova.Eintrag>, laufzeit: Set<Nova.Eintrag>): String = buildString {
@@ -97,6 +137,12 @@ class VorlesenListeTest {
             File(dir, "vorlesen-texte.json").writeText(json(plus, laufzeit(packs(dir))))
         }
 
+        val liste = textliste(free, quellen())
+        var neu = false
+        if (!outListe.exists() || outListe.readText() != liste) { outListe.parentFile.mkdirs(); outListe.writeText(liste); neu = true }
+        if (neu && out.exists() && out.readText() == text)
+            fail("vorlesen/textliste.json war nicht aktuell und wurde neu geschrieben – bitte committen und ./gradlew :webApp:exportWebApp laufen lassen.")
+        if (exportedListe.exists() && !neu) assertEquals("webapp/vorlesen/textliste.json ist veraltet – ./gradlew :webApp:exportWebApp laufen lassen.", liste, exportedListe.readText())
         if (!out.exists() || out.readText() != text) {
             out.parentFile.mkdirs(); out.writeText(text)
             fail("vorlesen/texte.json war nicht aktuell und wurde neu geschrieben – bitte committen und ./gradlew :webApp:exportWebApp laufen lassen.")

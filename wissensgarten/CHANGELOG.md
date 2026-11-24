@@ -3,10 +3,17 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
-## 2.3.4 – Sicherer für Kinder (20.11.2026)
-- **„← Alle Apps“ nur über die Eltern-Aufgabe:** Die Übersicht liegt auf unserer Website, und dort gibt es auch Preise. Deshalb geht es dorthin jetzt erst nach der Eltern-Aufgabe. Sobald es eine eigene Übersicht ohne Preise gibt, geht es wieder direkt.
-- Im Startbild ist „Ein Angebot von Nachhilfe – online“ jetzt nur noch Text.
-- Auf der Test-Seite zählt die anonyme Nutzungszählung nur noch auf unserem Test-Server.
+## 2.4.0 – Eigene Stimme, aufgeräumte Knöpfe, neuer Start (24.11.2026)
+- **Neuer Start:** Beim Öffnen steht kurz ein schwarzer Bildschirm mit dem atmenden Logo. Ist der Garten bereit, zieht es sich zusammen und zoomt weg. Wer am Gerät „Bewegung reduzieren“ eingestellt hat, sieht nur eine kurze Überblendung.
+- **Schönerer Vorlese-Knopf:** Statt des großen, wackelnden Knopfs gibt es einen kleinen runden Lautsprecher 🔊. Steht Vorlesen in den Einstellungen auf „Nie“, ist der Knopf ganz weg.
+- **Notrufnummern richtig vorgelesen:** „112“ wird „eins eins zwei“, „116 117“ wird „eins eins sechs, eins eins sieben“.
+- **Unsere eigene KI-Stimme:** Brummi liest mit einer KI-generierten Stimme von unserem eigenen Server vor (🤖 KI-generierte Stimme). Es gibt keine Verbindung zu anderen Anbietern mehr. Fehlt eine Vorlese-Datei, liest die Stimme des Geräts – ohne Fehlermeldung.
+- **Eltern-Tor ohne Vorlese-Knopf:** Die Rechenaufgabe steht in Worten. Vorlesen kommt später mit festen Sätzen von unserer Stimme.
+- **Einstellungen:** Ton, Musik, Vorlesen und Aussehen dürfen alle einstellen. Plus, Updates, Sync, Erinnerung, Profile und „Alle Daten löschen“ liegen hinter der Eltern-Aufgabe.
+- **„← Alle Apps“** geht wieder direkt zur Übersicht auf unserer Website (ohne Preise, ohne Kaufhinweis). Im Startbild ist „Ein Angebot von Nachhilfe – online“ ein neutraler Link zur Startseite.
+- **Hilfe für Kinder:** Klappt es bei einer Runde dreimal hintereinander nicht, sagt Brummi freundlich: „Du kommst hier gerade nicht weiter? Das ist okay …“ – mit den Knöpfen „Leichter üben“ und „Erklärung ansehen“. Kein Link nach draußen.
+- **Für Eltern (nur im Elternbericht, abschaltbar):** Fällt ein Thema zwei Wochen lang schwer (unter 50 % richtig), gibt es höchstens einmal in vier Wochen einen sachlichen Hinweis auf die kostenlose Probestunde. Gerechnet wird nur auf dem Gerät. Mit „Hinweise auf Nachhilfe ausblenden“ ist alles aus.
+- Die anonyme Nutzungszählung auf der Test-Seite zählt nur noch auf dem Test-Server. Im Brummi-Radio steht ohne Spracherkennung „Spracherkennung ist hier aus.“
 - Dein Lernstand bleibt vollständig erhalten.
 
 ## 2.3.3 – Mikrofon nur auf dem Gerät (19.11.2026)

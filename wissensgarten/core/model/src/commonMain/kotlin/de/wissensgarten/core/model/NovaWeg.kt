@@ -361,7 +361,7 @@ class NovaAblauf(
         /** Höchstens so lange, wenn der Server den Satz gerade neu vertont (`/jetzt`) */
         const val JETZT_WARTEN_MS = 6_000L
         const val HINWEIS_MS = 400L
-        const val MELDUNG = "Nova ist gerade nicht erreichbar – Brummi liest kurz mit der Stimme des Geräts."
+        const val MELDUNG = "Die KI-Stimme ist gerade nicht erreichbar – Brummi liest kurz mit der Stimme des Geräts."
     }
 }
 

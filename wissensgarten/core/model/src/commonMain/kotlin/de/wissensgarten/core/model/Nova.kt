@@ -4,7 +4,7 @@ package de.wissensgarten.core.model
 expect fun nfc(s: String): String
 
 /**
- * Brummis Stimme „Nova“ (KI-Stimme von OpenAI, vertont von unserem Server – die App selbst spricht nie mit OpenAI).
+ * Brummis KI-generierte Stimme (vertont auf unserem eigenen Server; `/jetzt` und OpenAI gibt es nicht mehr).
  *
  * Jeder Vorlese-Text hat einen festen Namen: h = die ersten 32 Hex-Zeichen von SHA-256 über „nova|sprache|text“ (Text normalisiert:
  * NFC, jeder Leerraum ein Leerzeichen, vorne/hinten getrimmt). Die Audiodatei liegt unter [BASE]/nova/h[0:2]/h.mp3.
@@ -68,6 +68,19 @@ object Nova {
     private val SUB_RUN = Regex("[₀₁₂₃₄₅₆₇₈₉]+")
     private val ABS = Regex("\\|([^|]{1,30})\\|")
     private val BLANK = Regex("_{2,}")
+    /** Bekannte Notruf- und Hilfenummern (110, 112, 116 117 …): werden Ziffer für Ziffer gesprochen, nie als Zahl */
+    private val NOTRUF = Regex("(?<![\\d.,/:\\-])(110|112|911|999|19222|116[ ]?117|116[ ]?116|0800[ ]?\\d{3}[ ]?\\d{4})(?![\\d%:/\\-]|[.,]\\d|[ ]?(?:Euro|€|km|m\\b|cm|kg|g\\b|Jahre|Uhr|Mal))")
+    private val ZIFFERN_DE = listOf("null", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun")
+    private val ZIFFERN_EN = listOf("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
+    /** „112“ → „eins eins zwei“, „116 117“ → „eins eins sechs, eins eins sieben“ (Deutsch und Englisch; andere Sprachen unverändert) */
+    internal fun notrufNummern(text: String, sprache: String): String {
+        val z = when (sprache) { "de" -> ZIFFERN_DE; "en" -> ZIFFERN_EN; else -> return text }
+        return NOTRUF.replace(text) { m ->
+            val gruppen = m.value.split(' ').filter { it.isNotEmpty() }
+            val g = if (gruppen.size == 1 && gruppen[0].length == 6) listOf(gruppen[0].take(3), gruppen[0].drop(3)) else gruppen
+            " " + g.joinToString(", ") { grp -> grp.map { z[it - '0'] }.joinToString(" ") } + " "
+        }
+    }
     private val NEG = Regex("(^|[ (\\[])[-−](?=[\\p{Nd}])")
     private val ASCII_MINUS = Regex("(?<=[\\p{Nd}) ]) - (?=[\\p{Nd}(])")
     private val SPACE_BEFORE = Regex(" +([.,!?:;)“”])")
@@ -84,6 +97,7 @@ object Nova {
         // Grad zuerst – ° ist ein „Symbol“ und fiele sonst mit den Emojis weg
         s = s.replace("°C", " ${w.celsius}").replace("°", " ${w.grad}")
         s = ohneSymbole(s)
+        s = notrufNummern(s, sprache)
         if (sprache == "de") UNITS.forEach { (r, word) -> s = r.replace(s, " $word") }
         // Hochzahlen: „Na⁺“ → „Na plus“ (Ladung), „a²“ → „a hoch 2“, „sin⁻¹“ → „sin hoch minus 1“; tiefgestellt: „H₂O“ → „H2O“
         s = SUP_RUN.replace(s) { m ->

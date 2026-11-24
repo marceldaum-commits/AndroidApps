@@ -64,6 +64,9 @@ fun SettingsScreen(
     parentExtras: @Composable ColumnScope.() -> Unit = {},
 ) {
     var editing by remember { mutableStateOf(false) }
+    // Schnell-Schalter (Ton, Musik, Vorlesen, Aussehen) sind frei; alles Übrige liegt hinter dem Eltern-Tor (ELTERN-TOR.md, 19.11.2026)
+    var unlocked by remember { mutableStateOf(de.wissensgarten.app.ui.common.ParentGate.isOpen()) }
+    val gate = de.wissensgarten.app.ui.common.LocalParentGate.current
     var wipeStep by remember { mutableIntStateOf(0) }
     var confirmDelete by remember { mutableStateOf(false) }
 
@@ -75,15 +78,23 @@ fun SettingsScreen(
 
         // Ganz oben, damit man es findet
         val host = de.wissensgarten.app.ui.fx.LocalHost.current
-        if (host?.features?.selfUpdate == true) key(update?.version) {
+        if (unlocked && host?.features?.selfUpdate == true) key(update?.version) {
             host.UpdateSection(version, update, autoUpdate, onAutoUpdate)
         }
         // WebApp: „App installieren“ (erscheint nur, wenn der Browser es kann und die App noch nicht installiert ist)
         if (host != null) InstallAppCard(host, inGarden = false)
 
-        syncCard()
+        if (unlocked) syncCard()
 
-        Section("Profil") {
+        if (!unlocked) Section("🔒 Für Eltern") {
+            Text("Hier liegen Plus, Updates, Sync, Erinnerung, Profile und „Alle Daten löschen“. Ton, Musik, Vorlesen und Aussehen darf jeder einstellen.",
+                style = MaterialTheme.typography.bodySmall)
+            Button(onClick = { gate("Der Elternbereich der Einstellungen: Plus, Updates, Sync, Daten löschen.") { unlocked = true } }, modifier = Modifier.fillMaxWidth()) {
+                Text("👨‍👩‍👧 Elternbereich öffnen")
+            }
+        }
+
+        if (unlocked) Section("Profil") {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(profile.avatar, style = MaterialTheme.typography.headlineMedium)
                 Spacer(Modifier.width(12.dp))
@@ -105,7 +116,7 @@ fun SettingsScreen(
             )
         }
 
-        Section("Für Eltern") {
+        if (unlocked) Section("Für Eltern") {
             de.wissensgarten.app.ui.plus.PlusBadge(de.wissensgarten.app.ui.plus.LocalPlusStatus.current, onClick = onPlus)
             if (onPlus != null) Button(onClick = onPlus, modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = androidx.compose.ui.graphics.Color(0xFFB8860B))) {
@@ -143,7 +154,7 @@ fun SettingsScreen(
             }
         }
 
-        if (host?.features?.packUpdates == true) Section("Neue Wissenspakete") {
+        if (unlocked && host?.features?.packUpdates == true) Section("Neue Wissenspakete") {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
                     Text("Automatisch nachladen")
@@ -155,7 +166,7 @@ fun SettingsScreen(
             OutlinedButton(onClick = onCheckPacks, modifier = Modifier.fillMaxWidth()) { Text("🐝 Jetzt nach neuen Paketen schauen") }
         }
 
-        if (host?.features?.reminders == true) Section("Erinnerung") {
+        if (unlocked && host?.features?.reminders == true) Section("Erinnerung") {
             var denied by remember { mutableStateOf(false) }
             var pendingHour by remember { mutableIntStateOf(reminderHour) }
             val ask = host.rememberNotificationPermission { ok ->
@@ -186,7 +197,7 @@ fun SettingsScreen(
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 de.wissensgarten.core.data.ReadAloud.entries.forEach { r -> FilterChip(selected = r == readAloud, onClick = { onReadAloud(r) }, label = { Text(r.label) }) }
             }
-            Text("Automatisch: für Grundschulkinder an. Mit dem großen Knopf „🔊 Vorlesen“ an jeder Karte geht's immer. Englisch, Französisch und Spanisch werden in der richtigen Sprache gesprochen.",
+            Text("Automatisch: für Grundschulkinder an. Mit dem kleinen Lautsprecher-Knopf 🔊 an jeder Karte geht's immer. Bei „Nie“ gibt es den Knopf nicht. Englisch, Französisch und Spanisch werden in der richtigen Sprache gesprochen.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             voiceExtras()
         }
@@ -234,14 +245,14 @@ fun SettingsScreen(
             )
         }
 
-        Section("Für Eltern") { parentExtras() }
+        if (unlocked) Section("Für Eltern") { parentExtras() }
 
-        Section("Datenschutz & Daten") {
+        if (unlocked) Section("Datenschutz & Daten") {
             Text("Keine Werbung, kein Konto nötig, keine Kennung. Ohne Sync bleibt der Lernstand auf diesem Gerät.", style = MaterialTheme.typography.bodySmall)
             OutlinedButton(onClick = onPrivacy, modifier = Modifier.fillMaxWidth()) { Text("🔒 Datenschutzerklärung") }
             OutlinedButton(onClick = { wipeStep = 1 }, modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text("🗑️ Alle Daten löschen") }
-            TextButton(onClick = { de.wissensgarten.app.ui.common.ParentGate.close() }) { Text("Eltern-Bereich wieder sperren") }
+            TextButton(onClick = { de.wissensgarten.app.ui.common.ParentGate.close(); unlocked = false }) { Text("Eltern-Bereich wieder sperren") }
         }
 
         Section("Über") {
@@ -250,7 +261,7 @@ fun SettingsScreen(
             LegalLinks()
         }
 
-        if (canDeleteProfile) TextButton(onClick = { confirmDelete = true }) {
+        if (unlocked && canDeleteProfile) TextButton(onClick = { confirmDelete = true }) {
             Text("Profil „${profile.name}“ löschen", color = MaterialTheme.colorScheme.error)
         }
     }

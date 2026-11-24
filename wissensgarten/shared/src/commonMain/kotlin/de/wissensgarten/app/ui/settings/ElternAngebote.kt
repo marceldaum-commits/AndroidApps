@@ -51,11 +51,11 @@ fun ElternAngeboteContent(
     }
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) {
-            Text("Hinweise auf unsere Nachhilfe zeigen")
-            Text("Nur im Wochenbericht: Wenn ein Thema länger schwerfällt oder eine Klassenarbeit ansteht. Höchstens alle zwei Wochen, jederzeit ausblendbar.",
+            Text("Hinweise auf Nachhilfe ausblenden")
+            Text("Nur im Elternbericht, nie in der Kinderansicht: Wenn ein Thema länger schwerfällt oder eine Klassenarbeit ansteht. Höchstens einmal in vier Wochen je Thema. Berechnet nur auf diesem Gerät.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-        Switch(checked = tutorHints, onCheckedChange = onTutorHints)
+        Switch(checked = !tutorHints, onCheckedChange = { onTutorHints(!it) })
     }
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) {

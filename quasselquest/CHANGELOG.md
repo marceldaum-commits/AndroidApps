@@ -1,5 +1,20 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.5.1 – Neue KI-Stimmen, Offline-Download je Sprache (24.11.2026)
+**Neue Stimmen**
+- Englisch, Französisch und Spanisch sprechen jetzt mit neuen, natürlicheren KI-Stimmen (Kokoro). Alle Sätze sind neu vertont, jeweils normal und langsam 🐢. Deutsch und Latein haben weiter keine Stimme.
+- Die Stimmen sind als „🤖 KI-generierte Stimme“ gekennzeichnet; „KI-Stimmen & Lizenzen“ nennt Modell, Stimmen und Lizenzen.
+- Die bisherigen Computer-Stimmen und die nie eingeschaltete „Nova“-Auswahl sind entfernt. Die App hat keine Verbindung mehr zu fremden Stimm-Diensten.
+
+**Offline lernen (im Elternbereich)**
+- Pro Sprache gibt es „Für offline laden“ mit Größe, Fortschrittsanzeige und dem Hinweis „am besten im WLAN“. „Wieder löschen“ gibt den Platz frei. Geladene Sprachen aktualisieren sich bei neuen Vertonungen von selbst. Englisch bleibt immer offline.
+
+**Sonst**
+- Neue Startanimation: schwarzer Bildschirm mit atmendem Logo, das beim Start herauszoomt (höchstens 4 Sekunden; bei „Bewegung reduzieren“ nur eine Überblendung).
+- Vorbereitet, aber noch ausgeschaltet: die Aussprache-Auswertung über unseren Server (nur wenn die Eltern es später wählen).
+- Das Eltern-Tor hat keinen Vorlese-Knopf mehr (keine Gerätestimme).
+- Die Einstellungen nennen unten nur noch die tatsächlich genutzten Stimmen.
+
 ## 0.5.0 – Viel neues Material für Französisch, Spanisch und Latein, mehr Abwechslung (19.11.2026)
 **Mehr Abwechslung**
 - In den Spielen mit Runden (Hör-Detektiv, „Ruby says“) kommt jetzt nie dieselbe Aufgabe zweimal hintereinander und erst dann wieder, wenn alle anderen dran waren.

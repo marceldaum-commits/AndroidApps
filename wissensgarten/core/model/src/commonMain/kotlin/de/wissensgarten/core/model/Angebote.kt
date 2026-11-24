@@ -59,8 +59,8 @@ object Angebote {
         if (klasse != null && klasse in 1..13) append("&klasse=").append(klasse)
     }
 
-    /** Kostenlose Probestunde anfragen */
-    fun probestunde(ort: String, thema: String?, klasse: Int?) = link("probestunde", ort, thema, klasse)
+    /** Probestunde anfragen (V15): nur Herkunft (src), nie Thema oder Klasse – die Zählung bleibt ohne Lernstand */
+    fun probestunde(ort: String, @Suppress("UNUSED_PARAMETER") thema: String? = null, @Suppress("UNUSED_PARAMETER") klasse: Int? = null) = link("probestunde", ort)
     /** Neukundenpaket (Einzelnachhilfe) */
     fun neukundenpaket(ort: String, thema: String?, klasse: Int?) = link("produkt/einzelnachhilfe-neukundenpaket", ort, thema, klasse)
     /** Easy-Learning-Crashkurs vor Klassenarbeiten – nur Mittel- und Oberstufe (Klasse ≥ 5) */
@@ -112,18 +112,30 @@ object Angebote {
 }
 
 /**
- * Nachhilfe-Hinweis im Elternbericht (C1): Ein Thema „hakt“, wenn es in den letzten 14 Tagen mindestens 10 Antworten
- * mit weniger als 60 % richtig gab. Höchstens ein Hinweis gleichzeitig, je Thema höchstens alle 14 Tage, „Ausblenden“ gilt dauerhaft.
+ * Weg zur Probestunde im Elternbericht (Recht V15, 19.11.2026): Ein Thema „hakt“, wenn es in den letzten 14 Tagen mindestens 10 Antworten
+ * mit weniger als 50 % richtig gab. Berechnung nur auf dem Gerät. Höchstens ein Hinweis gleichzeitig, je Thema höchstens alle 28 Tage (4 Wochen),
+ * wegklickbar, dazu der Schalter „Hinweise auf Nachhilfe ausblenden“. Nie in der Kinderansicht.
  * Ein einmal gezeigter Hinweis bleibt einen Tag lang stehen (damit er beim erneuten Öffnen nicht springt).
  */
 object NachhilfeHinweis {
     const val TAGE = 14
     const val MIN_ANTWORTEN = 10
-    const val GRENZE_PROZENT = 60
+    const val GRENZE_PROZENT = 50
+    /** Je Thema höchstens ein Hinweis in 4 Wochen */
+    const val SPERRE_TAGE = 28
     private const val DAY = 24L * 60 * 60 * 1000
 
     data class Antwort(val thema: String, val zeit: Long, val richtig: Boolean)
     data class Hinweis(val thema: String, val prozent: Int, val anzahl: Int, val neu: Boolean)
+
+    /** Wortlaut von Recht (V15), unverändert. [name] = Spitzname des Kindes. */
+    fun text(thema: String, name: String): String =
+        "Hinweis: ${inThema(thema)} hat $name in den letzten Wochen öfter Schwierigkeiten. Das ist normal und lässt sich üben – die App zeigt dazu passende Übungen. " +
+            "Wenn ihr persönliche Unterstützung möchtet: Unser Angebot – eine kostenlose, unverbindliche Probestunde Online-Nachhilfe."
+    const val KNOPF = "Probestunde anfragen"
+    const val AUSBLENDEN = "Solche Hinweise ausblenden"
+    /** „In Bruchrechnung“, aber „Im Einmaleins“ */
+    fun inThema(thema: String): String = Angebote.themaName(thema).let { if (it.startsWith("das ")) "Im " + it.removePrefix("das ").replaceFirstChar { c -> c.uppercase() } else "In $it" }
 
     fun pruefe(antworten: List<Antwort>, jetzt: Long, zuletztGezeigt: Map<String, Long>, ausgeblendet: Set<String>): Hinweis? {
         val kandidaten = antworten.filter { jetzt - it.zeit in 0 until TAGE * DAY }
@@ -136,7 +148,7 @@ object NachhilfeHinweis {
         // Schon heute gezeigt? Dann genau diesen weiter zeigen (kein neues Zählen)
         kandidaten.firstOrNull { (t) -> zuletztGezeigt[t]?.let { jetzt - it in 0 until DAY } == true }
             ?.let { (t, p, n) -> return Hinweis(t, p, n, neu = false) }
-        return kandidaten.filter { (t) -> zuletztGezeigt[t]?.let { jetzt - it < TAGE * DAY } != true }
+        return kandidaten.filter { (t) -> zuletztGezeigt[t]?.let { jetzt - it < SPERRE_TAGE * DAY } != true }
             .minByOrNull { it.second }
             ?.let { (t, p, n) -> Hinweis(t, p, n, neu = true) }
     }

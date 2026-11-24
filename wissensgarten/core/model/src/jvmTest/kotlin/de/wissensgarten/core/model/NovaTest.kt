@@ -40,6 +40,18 @@ class NovaTest {
         assertEquals("de", Nova.sprache(null, "dog"))
     }
 
+    @Test fun notrufnummernZiffernFuerZiffer() {
+        assertEquals("Die Nummer ist eins eins zwei.", Nova.sprechText("Die Nummer ist 112."))
+        assertEquals("eins eins sechs, eins eins sieben", Nova.sprechText("116 117"))
+        assertEquals("eins eins sechs, eins eins sieben", Nova.sprechText("116117"))
+        assertEquals("neun eins eins", Nova.sprechText("911"))
+        assertEquals("Notruf eins eins zwei oder Giftnotruf anrufen.", Nova.sprechText("Notruf 112 oder Giftnotruf anrufen."))
+        assertEquals("one one two", Nova.sprechText("112", "en"))
+        // normale Zahlen bleiben Zahlen
+        assertEquals("Er ist 112 Jahre alt.", Nova.sprechText("Er ist 112 Jahre alt."))
+        assertEquals("Das sind 1112 Schritte.", Nova.sprechText("Das sind 1112 Schritte."))
+    }
+
     @Test fun sprechTextOhneEmojisMitWoertern() {
         assertEquals("Du bist on fire!", Nova.sprechText("🔥 Du bist on fire!"))
         assertEquals("Super!", Nova.sprechText("Super! 🌟"))

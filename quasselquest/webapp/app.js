@@ -41,8 +41,19 @@
   const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const pickOthers = (all, not, n) => shuffle(all.filter((x) => x !== not)).slice(0, n);
   let token = 0; // wechselt bei jedem Bildschirmwechsel – laufende Abläufe brechen dann ab
-  function screen(html) { token++; A.stop(); A.verwerfen(); $app.innerHTML = ''; const el = typeof html === 'string' ? h(html) : html; $app.appendChild(el); window.scrollTo(0, 0); return el; }
+  function screen(html) { token++; A.stop(); A.verwerfen(); $app.innerHTML = ''; const el = typeof html === 'string' ? h(html) : html; $app.appendChild(el); window.scrollTo(0, 0); if (window.splashEnde) { const e = window.splashEnde; window.splashEnde = null; requestAnimationFrame(() => e()); } return el; }
   const alive = (t) => t === token;
+  /**
+   * Weg 2 (Server-Auswertung, nur wenn die Eltern es gewählt haben und das Feature-Flag an ist; sonst null und KEIN Aufruf).
+   * Zeigt „Ruby hört genau hin“ und liefert { status:'ok', sterne, text } oder { status:'nicht_moeglich' } – Aufnahme (Blob) wird danach verworfen.
+   */
+  async function serverAuswerten(lang, ziel, res, hinweisEl) {
+    if (!window.AUSWERTUNG || !window.AUSWERTUNG.serverFuer(lang) || !res || !res.blob) return null;
+    if (hinweisEl) hinweisEl.textContent = '⏳ Ruby hört genau hin …';
+    const r = await window.AUSWERTUNG.pruefen(lang, ziel, res.blob); res.blob = null;
+    return r.status === 'nicht_gefragt' ? null : r;
+  }
+  const NICHT_MOEGLICH = 'Die Aussprache-Auswertung ist auf diesem Gerät gerade nicht möglich.';
   // Test-Stufe am Hostnamen (Standard UMZUG-LERNEN): „lernen-test.“, Übergang „quasselquest-test.“, lokal.
   const isTest = () => /(^|[.-])(test|staging)([.-]|$)|localhost|127\.0\.0\.1/.test(location.hostname) || location.protocol === 'file:';
 
@@ -548,6 +559,14 @@
         const r = recording; recording = null; mic.classList.remove('on'); mic.textContent = '🎤';
         const res = await r.stop(); if (!alive(tk)) return;
         lastUrl = res.url;
+        const sv = await serverAuswerten('en', line().en, res, ml); if (!alive(tk)) return;
+        if (sv) {
+          el.querySelector('[data-cmp]').hidden = !res.url;
+          if (sv.status === 'ok' && sv.sterne > 0) { ml.textContent = 'Hör dir selbst zu: erst Ruby, dann du!'; done(sv.sterne, `Ich habe dich verstanden: „${esc(sv.text)}“ ⭐`); }
+          else if (sv.status === 'ok') { ml.textContent = 'Hör noch einmal zu und versuch es noch einmal!'; A.sfx('soft'); rubySay(el, 'Probier es noch einmal! Hör dir Ruby an und sprich mir nach. 🦜', 'talk'); }
+          else { ml.textContent = NICHT_MOEGLICH; done(0, 'Gut gemacht! Hör mal, wie es im Vergleich klingt. 👂'); }
+          return;
+        }
         const spoke = res.loudFrames > 6 && res.ms > 500;
         ml.textContent = spoke ? 'Hör dir selbst zu: erst Ruby, dann du!' : 'Ich habe fast nichts gehört. Sprich ruhig lauter!';
         if (spoke) {
@@ -748,11 +767,18 @@
           if (recH) { // Aufnahme ohne Erkennung beenden
             const r = recH; recH = null; mic.classList.remove('on'); mic.textContent = '🎤';
             const res = await r.stop(); if (res.url) URL.revokeObjectURL(res.url);
+            const sv = await serverAuswerten('en', text, res, heard);
+            if (sv) {
+              tries++;
+              if (sv.status === 'ok' && sv.sterne > 0) { finish(`Ich habe dich verstanden: „${esc(sv.text)}“ ⭐`, true); return; }
+              if (sv.status !== 'ok' || tries >= 2) { finish(sv.status === 'ok' ? 'Du hast es versucht – weiter geht\'s! 👍' : NICHT_MOEGLICH); return; }
+              heard.textContent = 'Hör dir den Satz noch mal an und versuch es noch einmal!'; A.sfx('soft'); return;
+            }
             if (res.loudFrames > 6) finish('Gut gemacht – du hast es laut gesagt! 👍'); else { heard.textContent = 'Ich habe fast nichts gehört – noch mal, ruhig lauter!'; A.sfx('soft'); }
             return;
           }
           if (busy) return; busy = true; A.stop(); A.sfx('pop');
-          const mode = A.recognitionMode();
+          const mode = window.AUSWERTUNG && window.AUSWERTUNG.serverFuer('en') ? 'none' : A.recognitionMode();   // Server gewählt: nur aufnehmen
           if (mode !== 'none') {
             mic.classList.add('on'); heard.textContent = 'Ich höre zu …';
             const alts = await A.listen(); mic.classList.remove('on'); busy = false;
@@ -827,8 +853,7 @@
         <div class="set"><span>🙂 Name</span><span class="row"><b>${esc(state.name || '–')}</b><button class="btn small white" data-name>Ändern</button></span></div>
       </div>
       <div class="card" style="margin-top:14px"><h3 style="margin-bottom:4px">🎙️ Welche Stimme?</h3>
-        <label class="radio"><input type="radio" name="stimme" value="frei" ${A.voiceMode() === 'frei' ? 'checked' : ''}><span><b>Freie Stimmen (Standard)</b><br><span class="muted">Vorab aufgenommen, funktionieren auch ohne Internet. Computer-Stimmen (Piper).</span></span></label>
-        <label class="radio" style="opacity:${window.NOVA_FREIGEGEBEN ? 1 : .45}"><input type="radio" name="stimme" value="nova" ${window.NOVA_FREIGEGEBEN ? '' : 'disabled'} ${A.voiceMode() === 'nova' ? 'checked' : ''}><span><b>Nova – KI-Stimme ${window.NOVA_FREIGEGEBEN ? '' : '(kommt bald)'}</b><br><span class="muted">Besonders natürliche Stimme, mit KI erzeugt (OpenAI) und von unserem Stimm-Server geladen.</span></span></label>
+        <label class="radio"><input type="radio" name="stimme" value="frei" ${A.voiceMode() === 'frei' ? 'checked' : ''}><span><b>Unsere KI-Stimmen (Standard)</b><br><span class="muted">Vorab aufgenommen, mit KI erzeugt, funktionieren auch ohne Internet.</span></span></label>
         <label class="radio"><input type="radio" name="stimme" value="geraet" ${A.voiceMode() === 'geraet' ? 'checked' : ''}><span><b>Stimme des Geräts</b><br><span class="muted">${A.canSpeak() ? 'Die englische Stimme deines Geräts.' : 'Auf diesem Gerät gibt es keine englische Stimme.'}</span></span></label>
       </div>
       <div class="card" style="margin-top:14px">
@@ -836,7 +861,7 @@
         <div class="set"><span>🔒 Deine Daten – kurz erklärt</span><button class="btn small white" data-kids>Ansehen</button></div>
         <div class="set"><span>📄 Datenschutz für Erwachsene</span><a class="btn small white" href="datenschutz.html">Lesen</a></div>
       </div>
-      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}<br>Freie Stimmen (Piper): cori (CC BY 4.0), thorsten, siwis (CC BY 4.0), davefx – Angaben unter <a href="lizenzen.txt">Lizenzen</a></div>
+      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}<br>🤖 KI-generierte Stimmen – Angaben unter <a href="lizenzen.txt">KI-Stimmen &amp; Lizenzen</a></div>
     </div>`);
     el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); home(); };
     el.querySelectorAll('[data-sw]').forEach((b) => b.onclick = () => { s[b.dataset.sw] = !s[b.dataset.sw]; save(); A.sfx('tap'); settings(); });
@@ -877,7 +902,7 @@
     const bg = h(`<div class="modal-bg"><div class="modal card tor" role="dialog" aria-labelledby="tor-t">
       <h2 id="tor-t" style="font-size:20px">👪 Eltern-Tor</h2>
       ${grund ? `<p style="font-weight:800;margin:4px 0">${esc(grund)}</p>` : ''}<p class="muted">Dieser Bereich ist für Erwachsene. Bitte rechne:</p>
-      <div class="tor-aufgabe"><b data-aufgabe aria-live="polite"></b>${A.canSpeak('de') ? '<button class="slowbtn" data-vorlesen aria-label="Aufgabe vorlesen">🔊</button>' : ''}</div>
+      <div class="tor-aufgabe"><b data-aufgabe aria-live="polite"></b></div>
       <div class="tor-eingabe" data-eingabe aria-label="Deine Eingabe">&nbsp;</div><div class="err" data-err></div>
       <div class="tor-tasten">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((z) => `<button class="tor-taste" data-z="${z}" aria-label="${z}">${z}</button>`).join('')}
         <button class="tor-taste" data-weg aria-label="Löschen">⌫</button><button class="tor-taste" data-z="0" aria-label="0">0</button><button class="tor-taste ok" data-ok aria-label="Bestätigen">OK</button></div>
@@ -893,7 +918,6 @@
     const zeig = () => { bg.querySelector('[data-eingabe]').textContent = eingabe || ' '; };
     bg.querySelectorAll('[data-z]').forEach((t) => t.onclick = () => { if (eingabe.length < 4) { eingabe += t.dataset.z; zeig(); A.sfx('tap'); } });
     bg.querySelector('[data-weg]').onclick = () => { eingabe = eingabe.slice(0, -1); zeig(); A.sfx('tap'); };
-    if (bg.querySelector('[data-vorlesen]')) bg.querySelector('[data-vorlesen]').onclick = () => { A.sfx('tap'); A.geraetSagen(`${ZAHLWORT[a]} mal ${ZAHLWORT[b]}`, 'de'); };
     bg.querySelector('[data-x]').onclick = () => { A.sfx('tap'); bg.remove(); };
     bg.querySelector('[data-ok]').onclick = () => {
       if (!eingabe) return;
@@ -945,6 +969,35 @@
     return rows.length ? rows.join('') : '<p class="muted">Sobald euer Kind übt, steht hier in Worten, was es schon kann – für jede Sprache.</p>';
   }
 
+  /** Offline-Download je Sprache (offline.js): Größe, Fortschritt, Löschen. */
+  async function offlineKarte(box) {
+    const O = window.OFFLINE; if (!box) return;
+    if (!O || !O.unterstuetzt()) { box.innerHTML = '<p class="muted">Dieser Browser kann keine Sprachen zum Offline-Lernen speichern.</p>'; return; }
+    const mb = (b) => b < 1e6 ? 'unter 1 MB' : 'ca. ' + Math.round(b / 1e5) / 10 + ' MB';
+    const zeilen = [];
+    for (const l of ['en', 'fr', 'es', 'la', 'de']) {
+      const L = PK.LANGS[l]; const b = await O.groesse(l);
+      if (l === 'en') { zeilen.push(`<div class="set"><span>${L.emoji} ${esc(L.name)}<br><small class="muted" style="font-weight:600">Immer offline (${mb(b)})</small></span><span>✅</span></div>`); continue; }
+      const ton = ['fr', 'es'].includes(l) ? '' : ' – nur Texte, ohne Ton';
+      zeilen.push(`<div class="set" data-ol="${l}"><span>${L.emoji} ${esc(L.name)}<br><small class="muted" style="font-weight:600" data-st>${O.geladen(l) ? 'Auf diesem Gerät gespeichert' : 'Zum Laden: ' + mb(b) + ton}</small><span class="progress" hidden style="display:block;margin-top:6px"><i style="width:0%"></i></span></span>
+        <span class="row"><button class="btn small ${O.geladen(l) ? 'white' : 'blue'}" data-act>${O.geladen(l) ? 'Wieder löschen' : 'Für offline laden'}</button></span></div>`);
+    }
+    box.innerHTML = zeilen.join('');
+    box.querySelectorAll('[data-ol]').forEach((row) => {
+      const l = row.dataset.ol; const btn = row.querySelector('[data-act]'); const st = row.querySelector('[data-st]'); const bar = row.querySelector('.progress'); let laeuft = false;
+      btn.onclick = async () => {
+        A.sfx('tap');
+        if (laeuft) { O.abbrechen = true; return; }
+        if (O.geladen(l)) { await O.loeschen(l); offlineKarte(box); return; }
+        laeuft = true; btn.textContent = 'Abbrechen'; bar.hidden = false; const fill = bar.querySelector('i');
+        try {
+          await O.laden(l, (f, g) => { fill.style.width = Math.round(100 * f / Math.max(1, g)) + '%'; st.textContent = `Lädt … ${f} von ${g} Dateien`; });
+          A.sfx('right');
+        } catch (e) { st.textContent = 'Das Laden hat nicht geklappt (Internet?). Bitte später noch einmal versuchen.'; laeuft = false; btn.textContent = 'Für offline laden'; return; }
+        offlineKarte(box);
+      };
+    });
+  }
   function parents() {
     const s = state.settings;
     const hin = nachhilfeHinweis();
@@ -968,6 +1021,14 @@
         ${r('browser', 'Auch Online-Erkennung des Browsers erlauben', 'Nur mit eurer Zustimmung: Je nach Browser wird die Aufnahme des gesprochenen Satzes an den Sprachdienst des Browser-Herstellers gesendet (z. B. Google bei Chrome, Apple bei Safari). Wir selbst erhalten nichts.')}
         <p class="muted" style="font-size:14px">Jetzt aktiv: <b data-mode></b></p>
         <p class="muted" style="font-size:14px" data-hint></p></div>
+      ${window.AUSWERTUNG && window.AUSWERTUNG.aktiv() ? `<div class="card" style="margin-top:14px" data-auswertung><h3>🎯 Aussprache-Auswertung</h3>
+        <p class="muted">Beim Nachsprechen kann die App prüfen, ob der Satz verstanden wurde, und Sterne geben. Ihr entscheidet, wie – die Wahl könnt ihr jederzeit ändern. Deutsch und Latein werden nie ausgewertet.</p>
+        <label class="radio" style="opacity:.5"><input type="radio" name="ausw" value="geraet" disabled><span><b>Im Gerät</b><br><span class="muted">Die Aufnahme bleibt auf dem Gerät. Auf diesem Gerät noch nicht verfügbar.</span></span></label>
+        <label class="radio"><input type="radio" name="ausw" value="server" ${window.AUSWERTUNG.wahl() === 'server' ? 'checked' : ''}><span><b>Über unseren Server in Deutschland</b><br><span class="muted">Kein Download. Die Aufnahme (höchstens 15 Sekunden) wird nur gesendet, wenn euer Kind nachspricht, sofort ausgewertet und gelöscht. Es wird nichts gespeichert und nichts mitgeschickt, was euer Kind erkennbar macht.</span></span></label>
+        <label class="radio"><input type="radio" name="ausw" value="aus" ${window.AUSWERTUNG.wahl() === 'aus' ? 'checked' : ''}><span><b>Aus</b><br><span class="muted">Keine Auswertung, keine Sterne fürs Nachsprechen. Aufnehmen und selbst Vergleichen bleibt möglich.</span></span></label></div>` : ''}
+      <div class="card" style="margin-top:14px"><h3>📥 Offline lernen</h3>
+        <p class="muted">Ohne Internet üben: Ihr könnt eine Sprache einmalig auf dieses Gerät laden – <b>am besten im WLAN</b>, denn es sind einige Megabyte. Englisch ist immer offline. Geladene Sprachen aktualisieren sich bei neuen Vertonungen von selbst, und ihr könnt sie jederzeit wieder löschen.</p>
+        <div data-offline></div></div>
       <div class="card" style="margin-top:14px"><h3>Einstellungen für Eltern</h3>
         ${sw('nachhilfe', 'Hinweise auf unsere Nachhilfe zeigen', 'Nur hier im Elternbereich, wenn eine Sprache länger schwerfällt – höchstens alle 14 Tage, ausblendbar.')}
         ${sw('zaehlung', 'Anonyme Nutzungszählung', 'Hilft uns, die App zu verbessern: Gezählt wird nur, dass die App oder der Elternbereich geöffnet bzw. ein Link angetippt wurde – ohne Namen, Kennung, Cookies oder Lernstand.')}</div>
@@ -995,6 +1056,8 @@
       }
       s.recognition = x.value; save(); el.querySelector('[data-mode]').textContent = modeTxt();
     });
+    offlineKarte(el.querySelector('[data-offline]'));
+    el.querySelectorAll('input[name=ausw]').forEach((x) => x.onchange = () => { s.auswertung = x.value; save(); A.sfx('tap'); });
     el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); settings(); };
     el.querySelector('[data-reset]').onclick = () => {
       if (!confirm('Wirklich alle Daten (Fortschritt, Name, Einstellungen) aus diesem Browser löschen?')) return;
@@ -1546,11 +1609,18 @@
         if (rec) {
           const r = rec; rec = null; mic.classList.remove('on'); mic.textContent = '🎤';
           const res = await r.stop(); if (res.url) URL.revokeObjectURL(res.url); if (!alive(tk)) return;
+          const sv = await serverAuswerten(pack.lang, text, res, ml); if (!alive(tk)) return;
+          if (sv) {
+            tries++;
+            if (sv.status === 'ok' && sv.sterne > 0) { finish(`Ich habe dich verstanden: „${esc(sv.text)}“ ⭐`, true); return; }
+            if (sv.status !== 'ok' || tries >= 2) { finish(sv.status === 'ok' ? 'Du hast es versucht – weiter geht\'s! 👍' : NICHT_MOEGLICH, false); return; }
+            ml.textContent = 'Hör noch einmal zu und versuch es wieder!'; A.sfx('soft'); play(true); return;
+          }
           if (res.loudFrames > 6) finish('Gut gemacht – du hast laut mitgesprochen! 👍', false); else { ml.textContent = 'Ich habe fast nichts gehört – noch mal, ruhig lauter!'; A.sfx('soft'); }
           return;
         }
         if (busy) return; busy = true; A.stop(); A.sfx('pop');
-        if (A.recognitionMode() !== 'none') {
+        if (!(window.AUSWERTUNG && window.AUSWERTUNG.serverFuer(pack.lang)) && A.recognitionMode() !== 'none') {
           mic.classList.add('on'); ml.textContent = 'Ich höre zu …';
           const alts = await A.listen(pack.lang); mic.classList.remove('on'); busy = false;
           if (!alive(tk)) return;
@@ -1788,6 +1858,7 @@
         const mark = () => { if (reg.waiting && navigator.serviceWorker.controller) { updateReady = true; if (!$app.querySelector('.stage')) maybeApplyUpdate(); } };
         reg.addEventListener('updatefound', () => { const w = reg.installing; if (w) w.addEventListener('statechange', mark); });
         mark();
+        setTimeout(() => { if (window.OFFLINE) window.OFFLINE.abgleichen(); }, 8000);   // geladene Sprachen nach einem Update aktualisieren
         // Beim Öffnen und alle 30 Minuten nach einer neuen Version fragen
         setInterval(() => reg.update().catch(() => {}), 30 * 60 * 1000);
       }).catch(() => {});

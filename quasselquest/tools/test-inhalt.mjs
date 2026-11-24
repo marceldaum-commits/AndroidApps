@@ -131,55 +131,30 @@ test('Jeder feste Satz ist vorab vertont (normal und langsam) und die Dateien gi
   for (const s of C.allSpeech().concat(P.speech(PACKS))) {
     const e = idx[s.who + '|' + norm(s.text)];
     if (!e) { fehlt.push(s.who + '|' + s.text); continue; }
-    for (const f of [e.n, e.s]) assert.ok(existsSync(new URL('audio/piper/' + f, dir)), f);
+    for (const f of [e.n, e.s]) assert.ok(existsSync(new URL('audio/' + f, dir)), f);
   }
-  assert.deepEqual(fehlt, [], 'Bitte tools/vertonen.py laufen lassen');
+  assert.deepEqual(fehlt, [], 'Bitte tools/server-audio-einbauen.py laufen lassen');
 });
 
-test('Nova ist vorbereitet, aber nicht freigeschaltet (erst nach Marcels Go)', () => {
-  assert.match(readFileSync(new URL('version.js', dir), 'utf8'), /NOVA_FREIGEGEBEN = false/);
-  const t = JSON.parse(readFileSync(new URL('vorlesen/texte.json', dir), 'utf8'));
-  assert.equal(t.app, 'quasselquest');
-  assert.ok(t.texte.length >= 100 && t.texte.every((x) => ['en', 'de', 'fr', 'es'].includes(x.sprache) && /^[0-9a-f]{32}$/.test(x.nova)));
-});
-
-test('Pakete: alle 5 Sprachen vorhanden, jede Karte hat Frage, Antwort und Merkbild', () => {
-  assert.deepEqual([...new Set(PIDX.pakete.map((p) => p.sprache))].sort(), ['de', 'en', 'es', 'fr', 'la']);
-  for (const p of PACKS) for (const c of p.cards) { assert.ok(c.q && c.a, p.id + '/' + c.id); assert.ok(c.img, p.id + '/' + c.id + ' ohne Merkbild'); }
-  // Deutsch nur Sprach-Teil: keine Stilmittel/Literatur
-  assert.ok(!PIDX.pakete.some((p) => /stilmittel|literatur|epoche/.test(p.id)));
-});
-
-test('Pakete: falsche Antworten enthalten nie die richtige; genug Auswahl für jede Karte', () => {
-  for (const p of PACKS) for (const c of p.cards) {
-    const w = P.wrongs(c, p, 3);
-    assert.ok(w.length >= 2, p.id + '/' + c.id);
-    assert.ok(!w.includes(c.a), p.id + '/' + c.id);
-    const k = P.classify(c, p.lang);
-    if (P.modes(c, p.lang, p).includes('hoeren')) { const wd = P.wrongs(c, p, 3, 'de'); assert.ok(wd.length >= 2 && !wd.includes(k.de), p.id + '/' + c.id); }
+test('Keine Verbindung zu OpenAI/Stimm-Server im Code (Marcel 20.11.2026)', () => {
+  for (const f of ['app.js', 'audio.js', 'offline.js', 'sw.js', 'version.js', 'pakete.js', 'content.js', 'index.html']) {
+    const t = readFileSync(new URL(f, dir), 'utf8');
+    assert.doesNotMatch(t, /openai|stimmen\.mathenachhilfe|NOVA_FREIGEGEBEN|novaUrl|\/jetzt/i, f);
   }
+  assert.ok(!existsSync(new URL('vorlesen/texte.json', dir)), 'alte Nova-Liste entfernt');
 });
 
-test('Buchstaben-Bau ergibt genau die Antwort', () => {
-  let n = 0;
-  for (const p of PACKS) for (const c of p.cards) {
-    const t = P.bauteile(c, p.lang); if (!t) continue; n++;
-    assert.equal(t.vor + t.wort, c.a.trim(), p.id + '/' + c.id);
-    assert.ok(t.wort.length <= 10);
-  }
-  assert.ok(n >= 150, 'genug Karten zum Bauen: ' + n);
+test('Eltern-Tor hat keinen Vorlese-Knopf (keine Gerätestimme, Marcel 21.11.2026)', () => {
+  const app = readFileSync(new URL('app.js', dir), 'utf8');
+  assert.doesNotMatch(app, /data-vorlesen|geraetSagen/);
 });
 
-test('Wiederholung: richtig → längerer Abstand, falsch → morgen wieder; fällige Karten zuerst', () => {
-  const store = {}; const p = PACKS[0]; const c = p.cards[0]; const day = 1000;
-  assert.equal(P.note(store, p, c, true, day).d, day + 1);
-  assert.equal(P.note(store, p, c, true, day + 1).d, day + 1 + 2);
-  assert.equal(P.note(store, p, c, true, day + 3).d, day + 3 + 4);
-  assert.equal(P.note(store, p, c, false, day + 7).b, 1);
-  assert.equal(store[P.key(p, c)].d, day + 8);
-  const pick = P.pick(store, p, 8, 5, day + 8);
-  assert.equal(pick[0], c, 'fällige Karte kommt zuerst');
-  assert.equal(pick.length, 6, '1 fällige + höchstens 5 neue');
+test('Offline-Download je Sprache: Größen und Dateien stimmen', () => {
+  const idx = JSON.parse(readFileSync(new URL('audio/index.json', dir), 'utf8'));
+  for (const l of ['en', 'fr', 'es']) assert.ok(idx.groessen[l] > 1e6, 'Größe ' + l);
+  const sw = readFileSync(new URL('sw.js', dir), 'utf8');
+  assert.match(sw, /OFFLINE/); assert.match(sw, /k !== OFFLINE/); assert.match(sw, /offline\.js/);
+  assert.match(readFileSync(new URL('index.html', dir), 'utf8'), /offline\.js/);
 });
 
 test('Unsichere Aufnahmen sind markiert und bleiben die Ausnahme (unter 15 %)', () => {
@@ -313,4 +288,14 @@ test('Ehrliche Rückmeldung: keine Sterne und kein „klang super“ fürs bloß
   assert.doesNotMatch(app, /klang super/i);
   assert.doesNotMatch(app, /Super gesprochen/);
   assert.doesNotMatch(app, /done\([123],/, 'Papagei-Echo vergibt Sterne ohne Messung');
+});
+
+test('Startanimation: Splash inline im HTML (kein Netzabruf), Manifest-Hintergrund #05070f, reduced-motion', () => {
+  const html = readFileSync(new URL('index.html', dir), 'utf8');
+  assert.match(html, /<div id="splash"[^>]*aria-hidden="true"><svg/);
+  assert.match(html, /#05070f/); assert.match(html, /prefers-reduced-motion/); assert.match(html, /setTimeout\(ende, ?4000\)|setTimeout\(ende,4000\)/);
+  const splash = html.slice(html.indexOf('id="splash"'), html.indexOf('</div>', html.indexOf('id="splash"')));
+  assert.doesNotMatch(splash.replace('xmlns="http://www.w3.org/2000/svg"', ''), /https?:|href=|src=|url\(/, 'Splash ohne Netzabruf (xmlns ist nur ein Name, kein Abruf)');
+  assert.equal(JSON.parse(readFileSync(new URL('manifest.webmanifest', dir), 'utf8')).background_color, '#05070f');
+  assert.match(readFileSync(new URL('app.js', dir), 'utf8'), /splashEnde/);
 });

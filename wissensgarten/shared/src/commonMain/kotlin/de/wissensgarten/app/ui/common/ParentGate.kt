@@ -60,7 +60,7 @@ fun ParentGateHost(content: @Composable () -> Unit) {
 }
 
 /**
- * Eltern-Aufgabe in Worten mit Vorlese-Knopf, Eingabe über eine eigene Ziffern-Tastatur (keine Auswahlknöpfe, kein Raten).
+ * Eltern-Aufgabe in Worten (ohne Vorlese-Knopf, bis feste Tonstudio-Sätze da sind – keine Gerätestimme), Eingabe über eine eigene Ziffern-Tastatur (keine Auswahlknöpfe, kein Raten).
  * Nach EINEM Fehler kommt sofort eine neue Aufgabe. Kein Zeitdruck, Abbrechen jederzeit.
  */
 @Composable
@@ -83,8 +83,6 @@ fun ParentGateDialog(reason: String, onPass: () -> Unit, onCancel: () -> Unit, r
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                     Text(task.words, fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f)
                         .semantics { contentDescription = "Aufgabe: ${task.words}" })
-                    if (voice != null) IconButton(onClick = { voice.speak(task.words, de.wissensgarten.app.ui.fx.Locale.GERMAN) },
-                        modifier = Modifier.semantics { contentDescription = "Aufgabe vorlesen" }) { Text("🔊", fontSize = 22.sp) }
                 }
                 Surface(shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.surface,
                     border = androidx.compose.foundation.BorderStroke(2.dp, MaterialTheme.colorScheme.primary), modifier = Modifier.fillMaxWidth()) {

@@ -83,8 +83,7 @@
   A.canSpeak = (lang) => 'speechSynthesis' in window && !!A.deviceVoice(lang || 'en');
   A.langOf = (who) => LANG_OF[who] || 'en';
   // ------------------------------------------------------------------ Vorab vertonte Sätze
-  // Standard: freie Piper-Stimmen (audio/index.json + audio/piper/*.mp3, mit der App offline gespeichert).
-  // Nova (KI-Stimme vom Stimm-Server) ist vorbereitet, aber erst nach Marcels Go eingeschaltet (window.NOVA_FREIGEGEBEN).
+  // Standard: KI-Stimmen aus dem Tonstudio (Kokoro-82M), vorab vertont: audio/index.json + audio/server/<sprache>/*.mp3.
   // Gespielt wird über Web Audio: Nach der ersten Berührung darf das auch iOS jederzeit, ohne neue Geste.
   const norm = (t) => String(t).normalize('NFC').replace(/\s+/g, ' ').trim();
   const sprechtext = (t) => norm(String(t).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, ''));
@@ -95,12 +94,11 @@
     if (!index) return null;
     const e = index[(who || 'ruby') + '|' + norm(text)] || index['ruby|' + norm(text)];
     // Unsichere Aufnahmen (Hörprüfung nicht bestanden) nicht abspielen – lieber die Gerätestimme als eine falsche Aussprache
-    return e && !e.unsicher ? 'audio/piper/' + (slow ? e.s : e.n) : null;
+    return e && !e.unsicher ? 'audio/' + (slow ? e.s : e.n) : null;
   };
   A.hasRecording = (text, who) => !!fileFor(text, who, false);
   A.voiceMode = () => {
-    const m = S().stimme || 'frei';
-    return m === 'nova' && !window.NOVA_FREIGEGEBEN ? 'frei' : m;   // Nova erst nach Freigabe
+    return S().stimme === 'geraet' ? 'geraet' : 'frei';
   };
   const buffers = new Map();
   function decode(c, ab) {
@@ -116,16 +114,6 @@
     buffers.set(url, b);
     return b;
   }
-  // Nova (vorbereitet): gleiche Kennung wie im Wissensgarten – sha256("nova|en|<text>"), die ersten 32 Zeichen
-  const NOVA = 'https://stimmen.mathenachhilfe-online.com/nova/';
-  async function novaUrl(text) {
-    if (!(window.crypto && crypto.subtle)) return null;
-    const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('nova|en|' + sprechtext(text)));
-    const h = Array.from(new Uint8Array(d)).map((x) => x.toString(16).padStart(2, '0')).join('').slice(0, 32);
-    return NOVA + h.slice(0, 2) + '/' + h + '.mp3';
-  }
-  A.novaUrl = novaUrl;
-
   let speakDone = null; let current = null;
   A.stop = () => {
     try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) {}
@@ -162,7 +150,7 @@
   }
   /**
    * Englisch sprechen: opts.who = Figur (ruby, mia, sam, ted), opts.slow = langsam (🐢).
-   * Reihenfolge: (Nova, wenn freigegeben und gewählt) → vorab vertonte Datei → Stimme des Geräts.
+   * Reihenfolge: vorab vertonte Datei → Stimme des Geräts.
    * Erfüllt sich mit true, wenn etwas zu hören war, sonst false.
    */
   // Deutsch hat vorübergehend keine Stimme (Marcel 19.11.2026: Thorsten raus, neue Frauenstimme wird gewählt) – nur Text.
@@ -174,10 +162,6 @@
     A.stop();
     const slow = !!opts.slow || !!S().slow;
     try {
-      if (A.voiceMode() === 'nova' && navigator.onLine !== false) {
-        const b = await bufferFor(await novaUrl(text)).catch(() => null);
-        if (b) return playBuffer(b);
-      }
       if (A.voiceMode() !== 'geraet') {
         const f = fileFor(text, opts.who, slow);
         if (f) { const b = await bufferFor(f); if (b) return playBuffer(b); }
@@ -186,8 +170,6 @@
     return deviceSay(text, Object.assign({}, opts, { slow }));
   };
   /** Kann dieser Satz hörbar gemacht werden (Datei oder Gerätestimme)? */
-  /** Gerätestimme direkt (z. B. Vorlese-Knopf am Eltern-Tor – Pflicht laut Eltern-Tor-Standard, auch solange Deutsch keine eigene Stimme hat). */
-  A.geraetSagen = (text, who) => deviceSay(text, { who: who || 'de' });
   A.canHear = (text, who) => !A.OHNE_TON.has(A.langOf(who)) && S().voice !== false && (A.hasRecording(text, who) || A.canSpeak(A.langOf(who)));
 
   // ------------------------------------------------------------------ Mikrofon (nur auf Knopfdruck)
@@ -238,7 +220,7 @@
           stream.getTracks().forEach((t) => t.stop());
           const blob = new Blob(chunks, { type: mr.mimeType || 'audio/webm' });
           const url = chunks.length ? URL.createObjectURL(blob) : null; chunks.length = 0; if (url) urls.add(url);
-          ok({ url, peak, loudFrames: loud, ms: Date.now() - t0 });
+          ok({ url, blob: url ? blob : null, peak, loudFrames: loud, ms: Date.now() - t0 });   // blob nur im Arbeitsspeicher; nur für die Server-Auswertung, wenn die Eltern sie gewählt haben
         };
         try { mr.stop(); } catch (e) { stream.getTracks().forEach((t) => t.stop()); ok({ url: null, peak, loudFrames: loud, ms: Date.now() - t0 }); }
       }),
