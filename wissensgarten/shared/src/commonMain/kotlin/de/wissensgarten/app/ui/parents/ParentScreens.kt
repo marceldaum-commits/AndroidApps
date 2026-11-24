@@ -121,10 +121,8 @@ fun NachhilfeKarte(text: String, button: String, onOpen: () -> Unit, onHide: () 
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text("Für Eltern", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
             Text(text, style = MaterialTheme.typography.bodyMedium)
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                FilledTonalButton(onClick = onOpen, modifier = Modifier.weight(1f)) { Text(button, textAlign = TextAlign.Center) }
-                TextButton(onClick = onHide) { Text(de.wissensgarten.core.model.NachhilfeHinweis.AUSBLENDEN, textAlign = TextAlign.Center) }
-            }
+            FilledTonalButton(onClick = onOpen, modifier = Modifier.fillMaxWidth()) { Text(button, textAlign = TextAlign.Center) }
+            TextButton(onClick = onHide, modifier = Modifier.fillMaxWidth()) { Text(de.wissensgarten.core.model.NachhilfeHinweis.AUSBLENDEN, textAlign = TextAlign.Center) }
             if (second != null) OutlinedButton(onClick = onSecond, modifier = Modifier.fillMaxWidth()) { Text(second, textAlign = TextAlign.Center) }
         }
     }
