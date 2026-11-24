@@ -1,4 +1,4 @@
-# Texte-Abgleich für Recht (Stand 2.16.2 vom 24.11.2026)
+# Texte-Abgleich für Recht (Stand 2.16.3 vom 24.11.2026)
 
 Recht kann das Repository nicht lesen. Hier stehen die Stellen, an denen die Texte und Regeln stehen (Repo `marceldaum-commits/AndroidApps`, Ordner `experimentopia/`, Branch `ccr-2ccbaa44-nkkmyu`). Wortlaute: `docs/RECHT-VORGABEN.md`.
 

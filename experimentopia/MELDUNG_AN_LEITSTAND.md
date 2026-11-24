@@ -775,3 +775,8 @@ Freischalt-Link `?pro=<Code>`, Vorbild `kurvenflug/pro/`. Sperren erst, wenn ihr
 - Manifest mit fester `id`. Texte-Abgleich mit Fundstellen: `experimentopia/docs/TEXTE-ABGLEICH.md`.
 - Fremde Anbieter-Namen aus README/Quelltext-Kommentaren entfernt. Keine KI-Inhalte in der App.
 - Rechtsbezug: ja (V45, V15, V8/A6, V36). Rückweg: 2.16.1 / 62a35f94, live bleibt 2.13.2 / 6c69e270.
+
+## 2.16.3 vom 24.11.2026 – anonymes Ereignis „umzug“ (Recht V45a, nur Test)
+- Nach dem Umzug (Lernstand übernommen) sendet die App beim nächsten Start einmal `{"app":"experimentopia","v":"…","ev":"umzug"}` – nur bei eingeschalteter Zählung, ohne Kennung/Thema/Ort, ein Mal je Gerät (Merker wird sofort gelöscht, auch bei ausgeschalteter Zählung).
+- Der Server muss „umzug“ für Experimentopia im Zähler freischalten (sonst wird es dort ignoriert). Entfällt mit der 301-Umleitung.
+- Rechtsbezug: ja (V45a, V31, V46). Rückweg: 2.16.2 (2c38962e).

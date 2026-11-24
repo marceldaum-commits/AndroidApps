@@ -1,5 +1,9 @@
 # Changelog – Experimentopia
 
+## 2.16.3 – Zählt, wie viele schon umgezogen sind (24.11.2026)
+
+- 🚚 Kommt ein Gerät an der neuen Adresse an, wird – nur bei eingeschalteter Zählung – anonym „umzug“ gezählt. Es wird nur dieser eine Name gesendet, ohne Kennung, ohne Thema, höchstens einmal je Gerät. Das Zählen ist im Elternbereich abschaltbar. Es endet, sobald die alte Adresse umleitet.
+
 ## 2.16.2 – Startbild zum Überspringen (24.11.2026)
 
 - 🎬 Das Ausblenden des Startbilds lässt sich mit einem Tipp sofort beenden. Es blinkt nichts schnell: Das „Atmen“ des Logos dauert gut 2 Sekunden, das Ausblenden einmalig weniger als 1 Sekunde.

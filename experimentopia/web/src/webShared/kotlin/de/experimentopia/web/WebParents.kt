@@ -43,11 +43,16 @@ class WebCounter : de.experimentopia.app.ui.fx.Counter {
     override val enabled: kotlinx.coroutines.flow.StateFlow<Boolean> = _on
     override fun setEnabled(on: Boolean) { storeSet(KEY, if (on) "1" else "0"); _on.value = on }
     override fun count(ev: String, ort: String?, thema: String?) {
+        // Umzug angekommen (Recht V45a): Merker immer löschen; gesendet wird nur bei eingeschalteter Zählung, nur der Ereignisname, ein Mal je Gerät
+        val umzug = ev == "start" && storeGet(MERKER) == "1"
+        if (umzug) storeRemove(MERKER)
         if (!_on.value) return
-        val body = de.experimentopia.core.model.Zaehlung.inhalt(Version.NAME, ev, ort, thema) ?: return
-        zaehlenSenden(de.experimentopia.core.model.Zaehlung.url(test), body)
+        val z = de.experimentopia.core.model.Zaehlung
+        val body = z.inhalt(Version.NAME, ev, ort, thema) ?: return
+        zaehlenSenden(z.url(test), body)
+        if (umzug) z.inhalt(Version.NAME, z.UMZUG)?.let { zaehlenSenden(z.url(test), it) }
     }
-    private companion object { const val KEY = "experimentopia.zaehlung" }
+    private companion object { const val KEY = "experimentopia.zaehlung"; const val MERKER = "experimentopia.umzugneu" }
 }
 
 /** Familien-Speicher im Browser: Aufrufe an familie.js (unverändert) über familie-bruecke.js; Merkzettel im Speicher „experimentopia.<name>“ */

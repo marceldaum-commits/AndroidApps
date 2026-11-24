@@ -53,3 +53,11 @@ class NachhilfeTest {
         assertEquals("""{"app":"experimentopia","v":"2.14.0","ev":"probestunde_klick","ort":"oberstufe_tipp"}""", Zaehlung.inhalt("2.14.0", Nachhilfe.ZAEHL_EREIGNIS, "oberstufe_tipp", null))
     }
 }
+
+class UmzugZaehlungTest {
+    @Test fun umzugNurEreignisname() {
+        val j = Zaehlung.inhalt("2.16.3", Zaehlung.UMZUG, ort = "link", thema = "optik")
+        assertEquals("{\"app\":\"experimentopia\",\"v\":\"2.16.3\",\"ev\":\"umzug\",\"ort\":\"link\"}", j)
+        assertEquals("{\"app\":\"experimentopia\",\"v\":\"2.16.3\",\"ev\":\"umzug\"}", Zaehlung.inhalt("2.16.3", Zaehlung.UMZUG))
+    }
+}

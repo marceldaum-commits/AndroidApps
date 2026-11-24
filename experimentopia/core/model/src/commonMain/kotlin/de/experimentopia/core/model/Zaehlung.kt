@@ -12,7 +12,9 @@ object Zaehlung {
     fun url(test: Boolean) = (if (test) "https://trainer-test.mathenachhilfe-online.com" else "https://trainer.mathenachhilfe-online.com") + "/zaehler/v1/e"
 
     /** Abschließende Liste der Ereignisse, die Experimentopia sendet */
-    val EREIGNISSE = setOf("start", "elternbereich", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick")
+    val EREIGNISSE = setOf("start", "elternbereich", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "umzug")
+    /** „umzug“ (Recht V45a): nur der Ereignisname, nur bei eingeschalteter Zählung, höchstens einmal je Gerät und Tag; entfällt mit der 301-Umleitung */
+    const val UMZUG = "umzug"
     val ORTE = setOf("elternbereich", "gesperrt", "klassenarbeit", "einstellungen", "link", "eingabe", "elternhinweis", "oberstufe_tipp", "familie")
     /** Themen-Kennungen (am Server für Experimentopia freigeschaltet, Leitstand 18.11.) */
     val THEMEN: Set<String> get() = Topic.entries.map { ParentReport.slug(it) }.toSet()

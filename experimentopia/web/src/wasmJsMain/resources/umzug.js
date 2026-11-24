@@ -12,7 +12,7 @@
   'use strict';
   var P = 'experimentopia.';
   /** Diese Schlüssel sind Ladeprotokoll/Technik, kein Lernstand (zählen nicht für „hier ist schon etwas“ und ziehen nicht mit) */
-  function technisch(k) { return k === P + 'schritte' || k.indexOf(P + 'modus') === 0 || k === P + 'umzug' || k === P + 'diag'; }
+  function technisch(k) { return k === P + 'schritte' || k.indexOf(P + 'modus') === 0 || k === P + 'umzug' || k === P + 'umzugneu' || k === P + 'diag'; }
   var U = {
     ALT: /^experimentopia(-test)?\.mathenachhilfe-online\.com$/,
     /** Ziel zur alten Adresse (null = wir sind nicht am alten Ort) */
@@ -82,7 +82,7 @@
         return r.text().then(function (t) { return U.entschluesseln(t, U.unb64u(u.key)); }).then(function (text) {
           var j = JSON.parse(text), sp = (j && j.daten && (j.daten.speicher || j.daten)) || {}, ergebnis = 'schon da';
           if (j.app !== 'experimentopia') throw new Error('fremde Daten');
-          if (U.leer(ls)) { for (var k in sp) if (k.indexOf(P) === 0 && !technisch(k) && typeof sp[k] === 'string') ls.setItem(k, sp[k]); ergebnis = 'übernommen'; }
+          if (U.leer(ls)) { for (var k in sp) if (k.indexOf(P) === 0 && !technisch(k) && typeof sp[k] === 'string') ls.setItem(k, sp[k]); ergebnis = 'übernommen'; try { ls.setItem(P + 'umzugneu', '1'); } catch (e) {} }
           return fetchFn(url, { method: 'DELETE', headers: { 'X-Schreib': u.schreib || j.schreib || '' }, cache: 'no-store' }).then(function () { return ergebnis; }, function () { return ergebnis; });
         });
       });
