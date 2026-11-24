@@ -39,3 +39,10 @@ Vorlese-Knopf im Tor (Marcel 21.11.): „erst ohne, dann Tonstudio“ – zunäc
 
 ## D) Familien-Speicher
 Pflichttexte A6/V8 und Lösch-Regel: siehe `web/familie/README.md`.
+
+## E) Zählwert „umzug“ (Recht + Leitstand 24.11., freigegeben mit Auflagen)
+- Senden einmal pro Gerät, nur im Schritt, in dem die Übernahme abgeschlossen wird: `kf.js umzugHolen()`, Zweig `res === 'ok'`.
+- Einmal-Merker = das vorhandene Flag `kurvenflug.umzug.angekommen` (Umzugsfunktion selbst, kein eigenes Zähl-Merkmal speichern).
+- Nur senden, wenn der Zähl-Schalter NICHT „aus“ ist (nach der Übernahme `kurvenflug.anonCount`). Inhalt `{"app":"kurvenflug","ev":"umzug","v":"<Version>"}`, same-origin `/zaehler/v1/e`, keine Kennung, keine Uhrzeit.
+- Datenschutzerklärung nur ergänzen, wenn sie Ereignisse einzeln auflistet (Meldung an AppZentrale).
+- Zählung: alle Sendungen (auch `kf.js leave()`) von trainer.… auf same-origin `/zaehler/v1/e` umstellen.
