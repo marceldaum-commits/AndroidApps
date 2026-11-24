@@ -2,6 +2,10 @@
 
 Neueste oben.
 
+## 24.11.2026 – Version 2.16.1 vom 24.11.2026: familie.js @ af01c5c – fertig für den Betriebstest
+
+- familie.js auf die neueste Fassung (Mathe-Trainer af01c5c, sha256 87afb56a…0ad945, Hash geprüft, 54 Prüfungen mit unserer Kopie grün); sonst wie 2.16.0. Echttest gegen lernen-test grün (16), Tests, Lint, Webapp, Starttest grün. Rechtsbezug: ja (V8, KI-Kennzeichnung V36: keine Audiodateien bei uns). Rückweg: 2.16.0 (2b59d6d8).
+
 ## 24.11.2026 – Version 2.16.0 vom 24.11.2026 (großer Di-Lauf: Recht-Pflichtpunkte, Familien-Speicher, Motor/Dynamo/Trafo) – fertig für den Betriebstest
 
 Gesamtbericht des Dienstag-Laufs (ab 15:05 gearbeitet). Zwischenstände waren 2.14.0 (ac1197af) und 2.15.0 (18fef541).

@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.16.0 vom 24.11.2026** · WebApp (installierbar als App, auch offline) – https://lernen.mathenachhilfe-online.com/experimentopia/ (die alte Adresse experimentopia.mathenachhilfe-online.com leitet mit Lernstand dorthin um) · 224 Versuche in 21 Fachbereichen (Physik, Chemie, Biologie) · 42 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.16.1 vom 24.11.2026** · WebApp (installierbar als App, auch offline) – https://lernen.mathenachhilfe-online.com/experimentopia/ (die alte Adresse experimentopia.mathenachhilfe-online.com leitet mit Lernstand dorthin um) · 224 Versuche in 21 Fachbereichen (Physik, Chemie, Biologie) · 42 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -179,7 +179,7 @@ Neues Thema auf der Blitzinsel mit 13 Versuchen und vier Laboren; alle Formeln s
 |---|---|---|---|
 | ![](screenshots/100_familie.png) | ![](screenshots/101_familie_einwilligung.png) | ![](screenshots/99_startbild.png) | ![](screenshots/120_pc_start_1920.png) |
 
-Eltern-Tor, Einstellungen, Probestunde-Hinweise: `docs/RECHT-VORGABEN.md`. Familien-Speicher: `familie.js` (unverändert aus dem Mathe-Trainer, Prüfsumme in `WOCHENRUNDE.md`), Brücke `familie-bruecke.js`, Test gegen den echten Test-Server: `tools/web-familie-echt.mjs`.
+Eltern-Tor, Einstellungen, Probestunde-Hinweise: `docs/RECHT-VORGABEN.md`. Familien-Speicher: `familie.js` (@ af01c5c, unverändert aus dem Mathe-Trainer, Prüfsumme in `WOCHENRUNDE.md`), Brücke `familie-bruecke.js`, Test gegen den echten Test-Server: `tools/web-familie-echt.mjs`.
 
 ## Anonyme Zählung und Elternbereich (seit 2.11.0)
 

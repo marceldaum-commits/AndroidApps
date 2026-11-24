@@ -1,5 +1,9 @@
 # Changelog – Experimentopia
 
+## 2.16.1 – Kleine Pflege (24.11.2026)
+
+- 🔧 Die gemeinsame Bibliothek für den Familien-Speicher ist auf die neueste Fassung aktualisiert (Codes anderer Lern-Apps werden richtig erkannt). Für Experimentopia ändert sich im Spielablauf nichts.
+
 ## 2.16.0 – Motor, Dynamo & Trafo (24.11.2026)
 
 - 🔌 **Neues Thema „Motor, Dynamo & Trafo“** auf der Blitzinsel, 13 neue Versuche für Klasse 5–10 – damit gibt es jetzt **224 Versuche**. Zum Selbermachen: Strom macht einen Elektromagneten, ein Eisenkern verstärkt ihn, eine Leiterschaukel schlägt aus, ein Motor dreht sich, ein Magnet erzeugt in der Spule Spannung, ein Generator liefert Wechselspannung, ein Trafo spannt um – und man sieht, warum Fernleitungen Hochspannung brauchen.
