@@ -1,5 +1,13 @@
 # Changelog – Experimentopia
 
+## 2.15.0 – Familien-Speicher (24.11.2026)
+
+- 👨‍👩‍👧 **Lernstand sicher aufbewahren**: Im Elternbereich (hinter dem Eltern-Tor) können Eltern eine **Familie** anlegen oder einer Familie beitreten. Der Lernstand wird dann verschlüsselt auf unserem Server in Deutschland gesichert; der Schlüssel liegt nur auf den Geräten der Familie. Auf einem neuen Gerät ist der Fortschritt sofort wieder da – und Kinder können auf mehreren Geräten lernen.
+- ✅ **Mit Einwilligung**: Vor dem Anlegen oder Beitreten steht der Hinweistext zur Verschlüsselung und zur Notfall-Kopie, mit Link zur Datenschutzerklärung. Es ist nichts vorausgewählt; wer abbricht, lädt nichts hoch.
+- 🔄 **Nie etwas verlieren**: Die Sicherung läuft automatisch beim Start und nach Änderungen. Haben zwei Geräte gleichzeitig gelernt, werden die Stände sicher zusammengeführt (meiste Sterne, alle Forscherbuch-Einträge, alle Abzeichen) – nie wird etwas überschrieben.
+- 🧾 **Notfall-Blatt, QR-Code und Löschen**: Link und Familien-Nummer lassen sich als Notfall-Blatt zeigen, mit Sicherheitshinweis. Die Familie lässt sich nur mit der eingetippten Familien-Nummer löschen; der Lernstand auf dem Gerät bleibt immer erhalten.
+- 🔒 Kleiner Fehler behoben: Die App merkt sich nur noch ihre eigenen Dateien, nie Antworten anderer Dienste auf der gemeinsamen Adresse.
+
 ## 2.14.0 – Klarer Elternbereich, neues Eltern-Tor, neue Startanimation (24.11.2026)
 
 - 🔐 **Neues Eltern-Tor**: Eine Malaufgabe in Worten („siebzehn mal acht“) mit eigener Ziffern-Tastatur. Nach einem Fehler gibt es sofort eine neue Aufgabe, ohne Zeitdruck, Abbrechen geht jederzeit. Nach richtiger Antwort bleibt das Tor 10 Minuten offen – nur im Arbeitsspeicher, nie gespeichert.

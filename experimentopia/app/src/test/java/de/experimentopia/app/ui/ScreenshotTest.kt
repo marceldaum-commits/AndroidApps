@@ -259,6 +259,19 @@ class ScreenshotTest {
     @Test fun oberstufeTipp() = shot("98_oberstufe_tipp", settle = 2500, prepare = { r -> r.onNodeWithTag("nachhilfe_tipp").assertExists() }) {
         de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 9, { false }, {}, {}, tip = { s -> de.experimentopia.app.ui.home.NachhilfeTipp(s, 9, null, 1L, forceShow = true) }, onBack = {})
     }
+
+    /** Familien-Speicher: Karte im Elternbereich (verbunden) – mit Sicherheitshinweis und Notfall-Blatt */
+    @Test fun familieKarte() = shot("100_familie", settle = 1200, prepare = { r -> r.onNodeWithTag("familie_zeigen").performClick(); r.mainClock.advanceTimeBy(600); r.reveal { r.onNodeWithTag("familie_notfallblatt") } }) {
+        val fp = FakeFamily(); fp.write("familie", FamilieJson.Fam("A".repeat(22), "B".repeat(43), "C".repeat(22)).encode()); fp.write("familienummer", "K7QX-2MFA"); fp.write("kind", "k"); fp.write("familiezeit", "1795535000000")
+        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalFamily provides fp) {
+            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) { de.experimentopia.app.ui.settings.FamilyCard(de.experimentopia.app.ui.settings.FamilyCoupling(fp)) }
+        }
+    }
+    /** Einwilligung: genau der Pflichttext, Link zur Datenschutzerklärung, Knopf nicht vorausgewählt */
+    @Test fun familieEinwilligung() = shot("101_familie_einwilligung", settle = 800, prepare = { r -> r.onNodeWithTag("familie_anlegen").performClick(); r.mainClock.advanceTimeBy(400); r.onNodeWithTag("familie_pflichttext").assertExists(); r.onNodeWithTag("familie_einverstanden").assertExists() }) {
+        val fp = FakeFamily()
+        androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) { de.experimentopia.app.ui.settings.FamilyCard(de.experimentopia.app.ui.settings.FamilyCoupling(fp)) }
+    }
 }
 
 private object FakeCounter : de.experimentopia.app.ui.fx.Counter {
@@ -294,4 +307,15 @@ private object FakeReader : de.experimentopia.app.ui.fx.Reader {
     override fun say(text: String) {}
     override fun stop() {}
     override fun configure(p: AudioPrefs) {}
+}
+
+/** Familien-Attrappe für Bildschirmfotos: Aufrufe antworten mit festen Texten, Merkzettel im Speicher */
+private class FakeFamily : de.experimentopia.app.ui.fx.FamilyPlatform {
+    private val m = mutableMapOf<String, String>()
+    override fun call(op: String, args: String, done: (String) -> Unit) = done(if (op == "blatt") """{"ok":true,"link":"https://lernen.mathenachhilfe-online.com/experimentopia/#familie=AAAAAAAAAAAAAAAAAAAAAA.BBBB.CCCC","nummer":"K7QX-2MFA","blatt":"Familien-Zugang für die Lern-Apps von Mathenachhilfe Online.\nFamilien-Nummer: K7QX-2MFA\nLink: https://lernen.mathenachhilfe-online.com/experimentopia/#familie=…"}""" else """{"ok":false,"grund":"netz"}""")
+    override val test = true
+    override fun now() = 1_795_536_000_000
+    override fun read(key: String) = m[key]
+    override fun write(key: String, value: String?) { if (value == null) m.remove(key) else m[key] = value }
+    override fun reload() {}
 }

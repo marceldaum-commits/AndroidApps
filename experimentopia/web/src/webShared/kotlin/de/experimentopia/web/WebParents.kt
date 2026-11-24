@@ -17,7 +17,8 @@ class WebParentSync : ParentSync {
     override fun get(url: String, done: (Int, String) -> Unit) = httpGet(url, done)
     /** Alles, was mit „experimentopia.“ beginnt: Ergebnisse, Forscherbuch, Einstellungen, Monatssummen, Pass-Code */
     /** Kopplung (gehört zum Gerät) und Technik (Ladeprotokoll, Fassung, Umzug) gehören nicht in die Sicherung */
-    private fun learning(k: String) = k.startsWith(PREFIX) && k != KEY && k != PREFIX + "schritte" && k != PREFIX + "umzug" && !k.startsWith(PREFIX + "modus")
+    private fun learning(k: String) = k.startsWith(PREFIX) && k != KEY && k != PREFIX + "schritte" && k != PREFIX + "umzug" && !k.startsWith(PREFIX + "modus") &&
+        !k.startsWith(PREFIX + "hinweis.") && k !in FAMILIE.map { PREFIX + it }
     private fun keys() = storeKeys(PREFIX).split('\n').filter { it.isNotEmpty() && learning(it) }
     override fun snapshot(): Map<String, String> = keys().mapNotNull { k -> storeGet(k)?.let { k to it } }.toMap()
     override fun restore(data: Map<String, String>) {
@@ -30,7 +31,9 @@ class WebParentSync : ParentSync {
         set(v) { if (v == null) storeRemove(PREFIX + "verlauf") else storeSet(PREFIX + "verlauf", v) }
     override val version: String get() = Version.NAME
     override val journalKey: String = PREFIX + "forscherbuch"
-    private companion object { const val KEY = "experimentopia.eltern"; const val OLD = "exEltern"; const val PREFIX = "experimentopia." }
+    private companion object { const val KEY = "experimentopia.eltern"; const val OLD = "exEltern"; const val PREFIX = "experimentopia."
+        /** Schlüssel und Merkzettel des Familien-Speichers gehören zu diesem Gerät, nicht in eine Sicherung */
+        val FAMILIE = listOf("familie", "familienummer", "kind", "familierev", "familiezeit", "familielink") }
 }
 
 /** Anonyme Zählung im Browser – Standard an, Schalter im Elternbereich (Speicher „experimentopia.zaehlung“) */
@@ -45,4 +48,14 @@ class WebCounter : de.experimentopia.app.ui.fx.Counter {
         zaehlenSenden(de.experimentopia.core.model.Zaehlung.url(test), body)
     }
     private companion object { const val KEY = "experimentopia.zaehlung" }
+}
+
+/** Familien-Speicher im Browser: Aufrufe an familie.js (unverändert) über familie-bruecke.js; Merkzettel im Speicher „experimentopia.<name>“ */
+class WebFamily : de.experimentopia.app.ui.fx.FamilyPlatform {
+    override fun call(op: String, args: String, done: (String) -> Unit) = familieCall(op, args, done)
+    override val test: Boolean = ParentLink.isTestHost(pageHost())
+    override fun now(): Long = nowMs().toLong()
+    override fun read(key: String): String? = storeGet("experimentopia.$key")
+    override fun write(key: String, value: String?) { if (value == null) storeRemove("experimentopia.$key") else storeSet("experimentopia.$key", value) }
+    override fun reload() = reloadPage()
 }

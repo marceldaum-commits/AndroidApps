@@ -1,15 +1,17 @@
 // Service Worker: macht Experimentopia offline nutzbar und hält es aktuell. Jede Version hat ihren eigenen Speicher: Ändert sich diese Datei
 // (neue Versionsnummer), lädt der Browser alles frisch, räumt den alten Speicher weg und übernimmt sofort – die Seite lädt sich dann selbst neu.
-const CACHE = 'experimentopia-2.14.0';
+const CACHE = 'experimentopia-2.15.0';
 // Der App-Kern (.wasm): Der Dateiname ändert sich mit dem Inhalt, darum darf er aus dem Zwischenspeicher des Browsers kommen.
-const WASM = ['911991812551fbbb3f26.wasm', 'bccfa839aa4b38489c76.wasm'];
-self.addEventListener('install', (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then((c) => Promise.all([c.addAll(WASM), c.addAll(['./', 'index.html', 'experimentopia.js', 'manifest.webmanifest', 'icon-192.png', 'version.json', 'umzug.js', 'fonts/dejavu_sans.ttf', 'fonts/noto_color_emoji.ttf'].map((u) => new Request(u, { cache: 'reload' })))]))); });
+const WASM = ['294f617a9129276f91c9.wasm', 'bccfa839aa4b38489c76.wasm'];
+self.addEventListener('install', (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then((c) => Promise.all([c.addAll(WASM), c.addAll(['./', 'index.html', 'experimentopia.js', 'manifest.webmanifest', 'icon-192.png', 'version.json', 'umzug.js', 'familie.js', 'familie-bruecke.js', 'fonts/dejavu_sans.ttf', 'fonts/noto_color_emoji.ttf'].map((u) => new Request(u, { cache: 'reload' })))]))); });
 // Aufräumen nur mit der Vorsilbe „experimentopia-“: Auf der gemeinsamen Adresse liegen auch die Speicher der anderen Lern-Apps
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k.startsWith('experimentopia-') && k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', (e) => {
   const u = new URL(e.request.url);
   if (e.request.method !== 'GET' || u.origin !== location.origin) return;
+  // nur Dateien dieser App (Ordner dieses Service Workers). Auf der gemeinsamen Adresse gehören /familie/v1/ und andere Dienste nie in den Speicher – sie müssen immer frisch aus dem Netz kommen.
+  if (!u.pathname.startsWith(new URL('./', self.location.href).pathname)) return;
   if (u.pathname.endsWith('version.json') || u.pathname.endsWith('diag.html') || u.searchParams.has('nc')) return;   // Versionsabgleich immer frisch aus dem Netz, nie gespeichert       // Fremdes (Impressum, Datenschutz) geht normal ins Netz
   // nur in den eigenen Speichern suchen (gemeinsame Adresse: nie Dateien einer anderen Lern-App ausliefern)
-  e.respondWith(caches.open(CACHE).then((c) => c.match(e.request)).then((hit) => hit).then((hit) => hit || fetch(e.request).then((r) => { if (r.ok) { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); } return r; })));
+  e.respondWith(caches.open(CACHE).then((c) => c.match(e.request)).then((hit) => hit || fetch(e.request).then((r) => { if (r.ok) { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); } return r; })));
 });

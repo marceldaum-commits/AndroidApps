@@ -60,7 +60,9 @@ private fun WebApp() {
         // Direkt-Link „…/#thema=<name>“ (z. B. aus KurvenFlug, Mathe-Trainer, Wissensgarten): Fach mit aufgeklapptem Thema öffnen; unbekannt → Startseite
         de.experimentopia.core.model.Links.target(addr)?.let { t -> nav.go(Route.SubjectR(t.subject, t.topic)) }
         // Code bzw. Link sofort aus der Adresszeile entfernen (auch wenn er nicht passt)
-        if (addr.contains("pro=", ignoreCase = true) || addr.contains("thema=", ignoreCase = true)) clearSearch()
+        // Familien-Link „…/#familie=<id>.<schlüssel>.<schreib>“: nur merken (nichts wird hochgeladen) und die Einstellungen öffnen – dort fragt der Elternbereich nach dem Tor und der Einwilligung
+        if (addr.contains("familie=")) { storeSet("experimentopia.familielink", addr); nav.go(Route.Settings) }
+        if (addr.contains("pro=", ignoreCase = true) || addr.contains("thema=", ignoreCase = true) || addr.contains("familie=")) clearSearch()
         true
     }
     val vibration by prefs.vibration.collectAsState()
@@ -82,7 +84,8 @@ private fun WebApp() {
     val music = remember { WebMusic(scope) }
     val installer = remember { WebInstaller() }
     val parentSync = remember { WebParentSync() }
-    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalInstaller provides installer, LocalOpenLink provides { url -> openLink(url) }, LocalParentSync provides parentSync, LocalCounter provides counter, LocalTestStage provides de.experimentopia.core.model.ParentLink.isTestHost(pageHost()), LocalAllApps provides { openSite(de.experimentopia.core.model.Angebote.alleApps(de.experimentopia.core.model.ParentLink.isTestHost(pageHost()))) },
+    val family = remember { WebFamily() }
+    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalInstaller provides installer, LocalOpenLink provides { url -> openLink(url) }, LocalParentSync provides parentSync, de.experimentopia.app.ui.fx.LocalFamily provides family, LocalCounter provides counter, LocalTestStage provides de.experimentopia.core.model.ParentLink.isTestHost(pageHost()), LocalAllApps provides { openSite(de.experimentopia.core.model.Angebote.alleApps(de.experimentopia.core.model.ParentLink.isTestHost(pageHost()))) },
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.BIG -> 40 }) }) {
         ExperimentopiaTheme { Surface(Modifier.fillMaxSize(), color = E.Night) {
             AppRoot(nav, state, Version.NAME, Version.DATE,

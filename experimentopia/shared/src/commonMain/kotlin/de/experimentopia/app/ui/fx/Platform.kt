@@ -127,3 +127,22 @@ val LocalAllApps = staticCompositionLocalOf<(() -> Unit)?> { null }
 
 /** App läuft auf der Test-Stufe (experimentopia-test…/lokal) → Querverweise zeigen auf die Test-Seiten der anderen Apps */
 val LocalTestStage = staticCompositionLocalOf { false }
+
+/**
+ * Familien-Speicher (Plattform-Teil): Aufrufe an familie.js (im Browser über familie-bruecke.js), Merkzettel dieses Geräts, Neustart.
+ * Alles Übrige steht in [de.experimentopia.app.ui.settings.FamilyCoupling] und [de.experimentopia.core.model.Familie].
+ */
+interface FamilyPlatform {
+    /** op und Argumente als JSON (siehe [de.experimentopia.core.model.FamilieJson]); [done] bekommt die Antwort als JSON-Text */
+    fun call(op: String, args: String, done: (String) -> Unit)
+    /** App läuft auf der Test-Stufe → Test-Server */
+    val test: Boolean
+    fun now(): Long
+    /** Merkzettel dieses Geräts (Browser: Speicher „experimentopia.<key>“) */
+    fun read(key: String): String?
+    fun write(key: String, value: String?)
+    /** App neu starten (nach Übernahme eines neuen Stands) */
+    fun reload()
+}
+val LocalFamily = staticCompositionLocalOf<FamilyPlatform?> { null }
+

@@ -12,6 +12,8 @@ fun todayLocal(): Double = js("Math.floor((Date.now() - new Date().getTimezoneOf
 /** Beginn des heutigen Tages (Ortszeit) in Millisekunden */
 fun dayStartLocal(): Double = js("(function () { var d = new Date(); d.setHours(0, 0, 0, 0); return d.getTime(); })()")
 /** Ladebild sanft ausblenden */
+/** Familien-Speicher: Aufruf an familie.js über familie-bruecke.js (JSON rein, JSON raus) */
+fun familieCall(op: String, args: String, done: (String) -> Unit): Unit = js("(function () { try { window.ExFamilie.call(op, args).then(function (r) { return done(r); }); } catch (e) { done('{\\\"ok\\\":false,\\\"grund\\\":\\\"fehler\\\"}'); } })()")
 fun hideStartScreen(): Unit = js("(function () { var s = document.getElementById('start'); if (s && s.dataset.fertig !== '1') { s.dataset.fertig = '1'; s.classList.add('ende'); s.style.pointerEvents = 'none'; setTimeout(function () { s.style.display = 'none'; }, 1000); } })()")
 /** Der Seite sagen, ob gerade die Startseite offen ist – nur dort (oder im Hintergrund) lädt sie sich nach einem Update selbst neu */
 fun atHome(on: Boolean): Unit = js("(function () { window.__exHome = on; if (on && window.__exTry) window.__exTry(); })()")

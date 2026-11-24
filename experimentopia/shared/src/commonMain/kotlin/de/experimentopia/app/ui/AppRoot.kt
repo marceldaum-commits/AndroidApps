@@ -146,6 +146,10 @@ fun AppRoot(
     val parentSync = LocalParentSync.current
     val parents = remember(parentSync) { parentSync?.let { de.experimentopia.app.ui.settings.ParentCoupling(it) } }
     de.experimentopia.app.ui.settings.ParentAutoUpload(parents, stars, journal, grade)
+    // Familien-Speicher (nur, wo die Plattform ihn anbietet und eine Familie verbunden ist)
+    val familyPlatform = LocalFamily.current
+    val family = remember(familyPlatform) { familyPlatform?.let { de.experimentopia.app.ui.settings.FamilyCoupling(it) } }
+    de.experimentopia.app.ui.settings.FamilyAutoSync(family, stars, journal)
     fun open(e: Experiment, daily: Boolean = false) { if (!daily && state.locked(e)) nav.go(Route.ProR(e.title)) else nav.go(Route.Exp(e.id, daily)) }
 
     CompositionLocalProvider(LocalReadOn provides (audio.read && de.experimentopia.core.model.Tonstudio.ENABLED), LocalAutoRead provides (audio.autoRead && de.experimentopia.core.model.Tonstudio.ENABLED)) {
@@ -201,7 +205,10 @@ fun AppRoot(
                         top = settingsTop, privacy = privacy ?: de.experimentopia.app.ui.settings.DEFAULT_PRIVACY,
                         audio = audio, onAudio = state.prefs::setAudio, pass = pass,
                         parentArea = { extra -> de.experimentopia.app.ui.settings.ParentArea(state.todayDay(), grade, journal = journal, nickname = parents?.link?.value?.nickname, prefs = state.prefs, extra = extra) },
-                        parents = { de.experimentopia.app.ui.settings.ParentCard(parents, state.todayDay(), hasProgress = stars.isNotEmpty() || journal.isNotEmpty()) { parents?.upload(stars, journal, grade) } },
+                        parents = {
+                            de.experimentopia.app.ui.settings.ParentCard(parents, state.todayDay(), hasProgress = stars.isNotEmpty() || journal.isNotEmpty()) { parents?.upload(stars, journal, grade) }
+                            de.experimentopia.app.ui.settings.FamilyCard(family, nickname = parents?.link?.value?.nickname ?: "", incoming = familyPlatform?.read("familielink"), onIncomingUsed = { familyPlatform?.write("familielink", null) })
+                        },
                     )
                 }
             }
