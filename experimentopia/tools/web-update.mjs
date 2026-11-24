@@ -44,7 +44,7 @@ try {
   ok(hint.includes(vB), `Hinweis: „${hint}“`);
   ok(await p.evaluate(() => localStorage.getItem('experimentopia.testmarke')) === 'bleibt', 'Spielstand/Einstellungen (localStorage) erhalten');
   const ks = await p.evaluate(() => caches.keys());
-  ok(ks.includes('experimentopia-nova') && ks.includes('experimentopia-' + vB) && !ks.includes('experimentopia-' + vA), `Speicher aufgeräumt, Nova-Offline-Dateien bleiben: ${ks.join(', ')}`);
+  ok(!ks.includes('experimentopia-nova') && ks.includes('experimentopia-' + vB) && !ks.includes('experimentopia-' + vA), `Speicher aufgeräumt, alter Stimmen-Speicher (nova) gelöscht: ${ks.join(', ')}`);
   // Neuer Tab mit alter offener Version: nie hängen bleiben – beim nächsten Öffnen gilt die neue
   const p2 = await b.newPage(); await p2.goto(url); await p2.waitForFunction(() => document.getElementById('start').dataset.fertig === '1', null, { timeout: 90000 });
   ok(await p2.evaluate((v) => document.documentElement.innerHTML.includes('const CACHE') || document.getElementById('start-text').textContent.includes(v) || fetch('version.json?nc=1', { cache: 'no-store' }).then((r) => r.json()).then((j) => j.version === v), vB), `neuer Tab startet mit ${vB}`);
