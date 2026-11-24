@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 24.11.2026 – Version 0.5.1 vom 24.11.2026 (KI-Stimmen Kokoro, Offline je Sprache, Startanimation, Nova raus, Weg 2 vorbereitet)
+(Meldungen an den Leitstand gehen nur noch über die AppZentrale.)
+- **Stimmen:** EN af_heart, FR ff_siwis, ES ef_dora (Kokoro-82M, Tonstudio, Branch qq-audio-1) – 2393 Texte eingebaut, 91 mit schlechter Hörprüfung (< 0,5) werden nicht abgespielt. Deutsch/Latein ohne Ton. Piper-Dateien entfernt. Lizenztext wörtlich nach Recht V13 in lizenzen.txt („KI-Stimmen & Lizenzen“), sichtbar „🤖 KI-generierte Stimme“.
+- **Nova/OpenAI** komplett aus dem Code (Auswahl, Abspielweg, Liste); Test sichert „keine OpenAI-/Stimm-Server-Adresse“.
+- **Offline-Download je Sprache** im Elternbereich (offline.js): Größe, Fortschritt, „am besten im WLAN“, Löschen, automatische Aktualisierung; Englisch immer offline.
+- **Startanimation** (schwarzer Splash #05070f, atmendes Logo, max. 4 s, reduced-motion, inline, Manifest-Farbe).
+- **Eltern-Tor** ohne Vorlese-Knopf.
+- **Weg 2** (auswertung.js) fertig und AUS (Flag), Mock-Server, Netzwerk-Test L1/L6 grün (SPRACHE-API.md).
+- Rückweg: 0.5.0 = 2ed0c138.
+
 ## 19.11.2026 – Version 0.4.0 vom 19.11.2026: Lernpfad mit neuen Spielen, jede Karte geprüft, PC-Ansicht, Eltern-Tor-Standard – fertig für den Test
 
 - **Lernpfad „Neu lernen“** (Englisch, Französisch, Spanisch): 2 Abschnitte × 8 Einheiten × 5 Lektionen. Neue Spielarten: Wimmelbild (statt Karten umdrehen), „Mach, was ich sage!“ (Dinge zu Figuren ziehen, 360 Befehle), „Ruby lernt von dir“ (Fehler an der Tafel finden, 192 Sätze – alle auf Eindeutigkeit geprüft), Regel entdecken, Satz-Zug, Nachsprechen (Erkennung nur im Gerät, jetzt auch fr/es), Geschichte. „Meine Insel“ mit allen gelernten Wörtern. Recherche in docs/RECHERCHE.md, Plan in LERNPFAD.md.
