@@ -875,7 +875,9 @@
   /** Datenschutz in Kindersprache (Pflicht 8): kurz, ehrlich, mit Ruby. */
   function kidsPrivacy(zurueck) {
     const punkte = [
-      ['🏠', 'Deine Antworten, dein Name und dein Lernstand bleiben auf <b>diesem Gerät</b>.'],
+      ['🏠', window.FAMILIE_AKTIV && window.FAMILIE && window.FAMILIE.gekoppelt()
+        ? 'Dein Lernstand bleibt auf deinen Geräten. Wenn deine Eltern es einschalten, wird er verschlüsselt auf unserem Server in Deutschland gesichert, damit du auf mehreren Geräten weiterüben kannst. Wir schauen ihn uns nicht an und geben ihn nicht weiter. Deine Antworten und dein Name werden dabei nicht an uns gesendet.'   // Recht V40, Fassung A
+        : 'Deine Antworten, dein Name und dein Lernstand bleiben auf <b>diesem Gerät</b>.'],
       ['🙈', 'Du brauchst <b>kein Konto</b> und keine E-Mail. Deinen Namen musst du nicht verraten – ein Spitzname reicht.'],
       ['🎤', 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme bleibt auf dem Gerät und wird nach dem Anhören gelöscht. Nur wenn deine Eltern es erlauben, darf die Spracherkennung deines Browsers übers Internet mithelfen.'],
       ['🚫', 'Hier gibt es <b>keine Werbung</b>. Wir zählen nur anonym, wie oft etwas in der App benutzt wird – ohne deinen Namen und ohne deine Antworten. Deine Eltern können das Zählen ausschalten.'],
@@ -1062,8 +1064,8 @@
         zone.querySelector('[data-ok]').onclick = async () => {
           const v = await F.beitretenVorbereiten(zone.querySelector('[data-flink]').value); if (!v.ok) { meld(famFehler(v)); return; }
           const kinder = v.kinder || [];
-          zone.innerHTML = `<div class="card" style="margin-top:10px"><h3>Wer übt hier?</h3>${kinder.map((k, i) => `<label class="radio"><input type="radio" name="fkind" value="${esc(k.kindId)}" ${i === 0 ? 'checked' : ''}><span><b>${esc(k.name || 'Kind ' + (i + 1))}</b>${k.klasse ? ' · Klasse ' + esc(k.klasse) : ''}</span></label>`).join('')}
-            <label class="radio"><input type="radio" name="fkind" value="" ${kinder.length ? '' : 'checked'}><span><b>Neues Kind in dieser Familie</b></span></label><div class="row"><button class="btn small blue" data-weiter>Weiter</button></div></div>`;
+          zone.innerHTML = `<div class="card" style="margin-top:10px"><h3>Wer übt hier?</h3>${kinder.map((k, i) => `<label class="radio"><input type="radio" name="fkind" value="${esc(k.kindId)}" ${i === 0 ? 'checked' : ''}><span><b>${esc(k.name || 'Profil ' + (i + 1))} ${esc(k.farbe || '')}</b></span></label>`).join('')}
+            <label class="radio"><input type="radio" name="fkind" value="" ${kinder.length ? '' : 'checked'}><span><b>Neues Profil in dieser Familie</b></span></label><div class="row"><button class="btn small blue" data-weiter>Weiter</button></div></div>`;
           zone.querySelector('[data-weiter]').onclick = async () => {
             const w = zone.querySelector('input[name=fkind]:checked'); meld('Stand wird geladen …', true);
             const r = await F.beitreten(v, w && w.value ? w.value : null, state); if (!r.ok) { meld(famFehler(r)); return; }

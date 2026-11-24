@@ -62,15 +62,19 @@ const stA1 = B.status(); ok(stA1.gekoppelt && /^[0-9A-Z]{4}-[0-9A-Z]{4}$/.test(s
 const link = B.link(); ok(/\/quasselquest\/#familie=[\w-]{22}\.[\w-]{43}\.[\w-]{22}$/.test(link), 'Link: ' + link.slice(0, 60) + '…');
 const blobs = [...[...S.fam.values()][0].blobs.values()].map((b) => b.d).join('|');
 ok(!/Lena|karten|fr-1-1/.test(blobs) && !blobs.includes(B.link().split('.')[1]), 'Beim Server liegt kein Klartext (nur verschlüsselt)');
+// V40 Option A: Index und Stand enthalten weder Spitzname noch Klasse – wir entschlüsseln beides mit dem Familien-Schlüssel und sehen nach
+const famA = JSON.parse(localStorage.getItem('quasselquest-familie')).fam; const faA = F.familie(famA, { basis: 'https://lernen-test.mathenachhilfe-online.com', f: S.f });
+const idx = (await faA.indexLaden()).daten; ok(JSON.stringify(idx.kinder.map((k) => [k.name, k.klasse, !!k.farbe])) === JSON.stringify([['Profil 1', '', true]]) && !/Lena/.test(JSON.stringify(idx)), 'Index: nur „Profil 1“ und Symbol, kein Spitzname, keine Klasse: ' + JSON.stringify(idx.kinder));
+const kid = (await faA.standLaden('quasselquest', JSON.parse(localStorage.getItem('quasselquest-familie')).kindId)).daten; ok(kid.name === '' && !/Lena/.test(JSON.stringify(kid)), 'Gesicherter Stand enthält den Namen nicht');
 ok(/PUT \/$/.test(S.log[0]) && S.log.some((l) => l.includes('/s/quasselquest/')), 'Server bekam: Anlegen, Index, Stand');
 
 // Gerät B tritt per Link bei, wählt das Kind und führt zusammen
 const linkA = B.link(); const kennA = B.status().nummer;
 globalThis.localStorage = geraetB;
 ok(!B.gekoppelt(), 'Gerät B ist vor dem Beitritt nicht gekoppelt');
-const v = await B.beitretenVorbereiten(linkA, S.f); ok(v.ok && v.kinder.length === 1 && v.kinder[0].name === 'Lena', 'Beitritt: Kind „Lena“ zur Auswahl');
+const v = await B.beitretenVorbereiten(linkA, S.f); ok(v.ok && v.kinder.length === 1 && v.kinder[0].name === 'Profil 1', 'Beitritt: „Profil 1“ zur Auswahl (kein Spitzname)');
 r = await B.beitreten(v, v.kinder[0].kindId, stB, S.f);
-ok(r.ok && r.stand.karten.a.b === 3 && r.stand.karten.c && r.stand.lp['fr-1-1'] === 3 && r.stand.lp['es-1-1'] === 2 && r.stand.tage.en[1][0] === 4 && r.stand.progress.w1e1.stars === 3 && r.stand.week.n === 3, 'Zusammenführen beim Beitritt (höherer Kasten, Maximum je Einheit/Tag, Sterne)');
+ok(r.stand.name === 'Lena', 'Der Name bleibt der des Geräts'); ok(r.ok && r.stand.karten.a.b === 3 && r.stand.karten.c && r.stand.lp['fr-1-1'] === 3 && r.stand.lp['es-1-1'] === 2 && r.stand.tage.en[1][0] === 4 && r.stand.progress.w1e1.stars === 3 && r.stand.week.n === 3, 'Zusammenführen beim Beitritt (höherer Kasten, Maximum je Einheit/Tag, Sterne)');
 ok(r.abweichungen.includes('einstellungen') && r.stand.settings.sound === false, 'Einstellungen unterscheiden sich → Gerätestand bleibt, Hinweis ' + JSON.stringify(r.abweichungen));
 ok(B.status().nummer === kennA, 'Gleiche Familien-Nummer auf beiden Geräten');
 r = await B.sichern(r.stand, S.f); ok(r.ok, 'Gerät B sichert');

@@ -10,6 +10,11 @@ const lesen = () => { try { return JSON.parse(localStorage.getItem(KEY) || 'null
 const schreiben = (o) => { try { if (o) localStorage.setItem(KEY, JSON.stringify(o)); else localStorage.removeItem(KEY); } catch (e) {} };
 const zugang = (z, f) => F.familie(z.fam, { basis: basis(), f: f || undefined });
 
+// Datensparsamkeit (Recht V40, Option A): Im Familien-Index stehen nur „Profil N“ und ein Symbol – kein Spitzname, keine Klasse.
+// Der Name bleibt auf dem Gerät und wird auch im verschlüsselten Stand NICHT mitgesichert. Der Stand enthält nur Zähler, Kästen je Karte, Tagessummen und Sterne.
+const SYMBOLE = ['🦊', '🐼', '🦁', '🐸', '🐙', '🦉', '🐧', '🦄'];
+const profil = (n) => ({ name: 'Profil ' + (n + 1), klasse: '', farbe: SYMBOLE[n % SYMBOLE.length] });
+const ohneName = (state) => ({ ...state, name: '' });
 const B = {};
 B.APP = APP;
 B.gekoppelt = () => !!(lesen() && lesen().fam && lesen().kindId);
@@ -22,9 +27,9 @@ B.linkLesen = (text) => F.familieLesen(text);
 B.anlegen = async (state, f) => {
   const fam = F.neueFamilie(); const fa = F.familie(fam, { basis: basis(), f });
   const r = await fa.anlegen(); if (!r.ok) return r;
-  const { index, kind } = F.kindHinzu(F.neuerIndex(), { name: state.name || '', klasse: String(state.klasse || '') });
+  const { index, kind } = F.kindHinzu(F.neuerIndex(), profil(0));
   const ri = await fa.indexSichern(F.appMerken(index, APP), 0); if (!ri.ok) return ri;
-  schreiben({ fam, kindId: kind.kindId, kindName: kind.name, rev: 0, einverstanden: new Date().toISOString() });
+  schreiben({ fam, kindId: kind.kindId, kindName: kind.name + ' ' + kind.farbe, rev: 0, einverstanden: new Date().toISOString() });
   return B.sichern(state, f);
 };
 /** Beitreten per Link: liefert die Kinder der Familie (zur Auswahl). */
@@ -37,10 +42,10 @@ B.beitretenVorbereiten = async (linkText, f) => {
 B.beitreten = async (vorb, kindId, state, f) => {
   const fa = F.familie(vorb.fam, { basis: basis(), f }); let kind = (vorb.kinder || []).find((k) => k.kindId === kindId);
   if (!kind) {
-    const n = F.kindHinzu(vorb.index || F.neuerIndex(), { name: state.name || '', klasse: String(state.klasse || '') }); kind = n.kind;
+    const n = F.kindHinzu(vorb.index || F.neuerIndex(), profil((vorb.kinder || []).length)); kind = n.kind;
     const ri = await fa.indexSichern(F.appMerken(n.index, APP), vorb.rev); if (!ri.ok) return ri;
   } else if (!(vorb.index.apps || []).includes(APP)) { await fa.indexSichern(F.appMerken(vorb.index, APP), vorb.rev); }
-  schreiben({ fam: vorb.fam, kindId: kind.kindId, kindName: kind.name, rev: 0, einverstanden: new Date().toISOString() });
+  schreiben({ fam: vorb.fam, kindId: kind.kindId, kindName: kind.name + (kind.farbe ? ' ' + kind.farbe : ''), rev: 0, einverstanden: new Date().toISOString() });
   return B.laden(state, f);
 };
 /** Stand vom Server holen und mit dem Gerätestand zusammenführen → { ok, stand, abweichungen } (die App übernimmt `stand`). */
@@ -48,16 +53,16 @@ B.laden = async (state, f) => {
   const z = lesen(); if (!z) return { ok: false, grund: 'nicht-gekoppelt' };
   const r = await zugang(z, f).standLaden(APP, z.kindId);
   if (!r.ok) { if (r.grund === 'keine') return B.sichern(state, f); return r; }
-  const m = window.SPEICHER.zusammenfuehren(state, r.daten); z.rev = r.rev; schreiben(z);
+  const m = window.SPEICHER.zusammenfuehren(state, r.daten); m.stand.name = state.name || ''; z.rev = r.rev; schreiben(z);   // der Name bleibt der des Geräts
   return { ok: true, stand: m.stand, abweichungen: m.abweichungen, geladen: true };
 };
 /** Stand sichern; bei Konflikt (anderes Gerät war schneller) zusammenführen und noch einmal sichern. */
 B.sichern = async (state, f) => {
   const z = lesen(); if (!z) return { ok: false, grund: 'nicht-gekoppelt' };
-  const fa = zugang(z, f); let r = await fa.standSichern(APP, z.kindId, state, z.rev || 0); let stand = state; let abw = [];
+  const fa = zugang(z, f); let r = await fa.standSichern(APP, z.kindId, ohneName(state), z.rev || 0); let stand = state; let abw = [];
   if (!r.ok && r.grund === 'konflikt' && r.daten) {
-    const m = window.SPEICHER.zusammenfuehren(state, r.daten); stand = m.stand; abw = m.abweichungen;
-    r = await fa.standSichern(APP, z.kindId, stand, r.rev);
+    const m = window.SPEICHER.zusammenfuehren(state, r.daten); stand = m.stand; stand.name = state.name || ''; abw = m.abweichungen;
+    r = await fa.standSichern(APP, z.kindId, ohneName(stand), r.rev);
   }
   if (r.ok) { z.rev = r.rev; z.letzte = new Date().toISOString(); schreiben(z); return { ok: true, stand, abweichungen: abw }; }
   if (r.grund === 'familie-weg') { schreiben(null); }
