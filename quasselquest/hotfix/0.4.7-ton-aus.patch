@@ -11,6 +11,19 @@ index c9450f4d..486f31b9 100644
    };
    A.hasRecording = (text, who) => !!fileFor(text, who, false);
    A.voiceMode = () => {
+diff --git a/quasselquest/webapp/datenschutz.html b/quasselquest/webapp/datenschutz.html
+index 4c23079d..e91c752a 100644
+--- a/quasselquest/webapp/datenschutz.html
++++ b/quasselquest/webapp/datenschutz.html
+@@ -18,7 +18,7 @@
+ <p><b>Sprech-Mission:</b> Eine Spracherkennung kann prüfen, ob der gesprochene Satz verstanden wurde. <b>Standard ist „Nur auf dem Gerät“:</b> Die Erkennung läuft nur, wenn der Browser sie auf dem Gerät selbst kann (z. B. Chrome ab Version 139); sonst prüft die App nur, ob laut genug gesprochen wurde. Die Stimme eures Kindes verlässt das Gerät dann nicht.</p>
+ <p>Nur wenn ihr im Elternbereich ausdrücklich „Auch Online-Erkennung des Browsers erlauben“ wählt, kann der Browser die Aufnahme des gesprochenen Satzes an den Sprachdienst seines Herstellers senden (z. B. Google bei Chrome, Apple bei Safari). Wir selbst erhalten dabei nichts. Ihr könnt das jederzeit wieder ausschalten. Die App speichert keine Aufnahmen.</p>
+ <h2>Vorlesen</h2>
+-<p>Die Sätze und Wörter (Englisch, Deutsch, Französisch, Spanisch) sind vorab mit freien Computer-Stimmen (Piper) aufgenommen und werden mit der App auf dem Gerät gespeichert – auch ohne Internet. Fehlt ein Satz (zum Beispiel mit dem Namen eures Kindes), liest die Stimme eures Geräts (nur Stimmen, die auf dem Gerät selbst sprechen). Später kann die KI-Stimme „Nova“ dazukommen; sie wird in der App gekennzeichnet, die Dateien kommen dann von unserem Server stimmen.mathenachhilfe-online.com, ohne Angaben über euch.</p>
++<p>Zurzeit gibt es keine vorab aufgenommenen Stimmen in der App. Wörter und Sätze liest, falls ihr Gerät das kann, die Stimme eures Geräts (nur Stimmen, die auf dem Gerät selbst sprechen). Es werden keine Stimmen von Servern oder Diensten Dritter abgerufen.</p>
+ <h2>Anonyme Nutzungszählung (abschaltbar)</h2>
+ <p>Damit wir sehen, ob die App gebraucht wird, meldet sie einzelne Ereignisse an unseren Server trainer.mathenachhilfe-online.com: dass die App oder der Elternbereich geöffnet wurde und ob dort ein Link (zum Beispiel zur Probestunde) angetippt wurde. Übertragen werden nur App-Name, Versionsnummer, Ereignis und gegebenenfalls Ort und Fach (zum Beispiel „englisch“) – keine Namen, keine Kennung, keine Gerätedaten, kein Lernstand, keine Cookies. Der Server zählt nur Tagessummen. Ausschalten: Einstellungen → Für Eltern → „Anonyme Nutzungszählung“.</p>
+ <h2>Hinweise auf unsere Nachhilfe</h2>
 diff --git a/quasselquest/webapp/sw.js b/quasselquest/webapp/sw.js
 index 8d390567..ecc36ae2 100644
 --- a/quasselquest/webapp/sw.js

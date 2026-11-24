@@ -8,3 +8,4 @@ Marcel (24.11.2026): Fällt 0.5.x bis 01.12. aus, werden die Piper-Audios in der
 - Die Gerätestimme (Browser, keine KI) bleibt. Soll auch sie aus, `A.canSpeak` auf false setzen (zusätzliche Änderung).
 - Anwenden (Leitstand, Abend 01.12.): auf Stand ae7a4273 `git apply hotfix/0.4.7-ton-aus.patch`, deployen. Danach auf dem Server `webapp/audio/piper/` löschen.
 - Wirkt erst, wenn ein Gerät die neue Version lädt (Prüfung bei jedem Öffnen und alle 30 min); offline-Geräte behalten bis dahin ihren Speicher.
+- Der Patch ändert auch den Stimmen-Absatz in `datenschutz.html` (Wortlaut zur Prüfung durch Recht): „Zurzeit gibt es keine vorab aufgenommenen Stimmen in der App. Wörter und Sätze liest, falls ihr Gerät das kann, die Stimme eures Geräts (nur Stimmen, die auf dem Gerät selbst sprechen). Es werden keine Stimmen von Servern oder Diensten Dritter abgerufen.“
