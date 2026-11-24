@@ -18,8 +18,8 @@ class ParentGateTest {
     @get:Rule val rule = createComposeRule()
 
     private fun taskAnswer(): Int {
-        val node = rule.onNode(hasContentDescription("Rechenaufgabe", substring = true)).fetchSemantics()
-        val words = node.config.getOrNull(androidx.compose.ui.semantics.SemanticsProperties.ContentDescription)!!.first().removePrefix("Rechenaufgabe: ")
+        val node = rule.onNode(hasContentDescription("Rechenaufgabe", substring = true)).fetchSemanticsNode()
+        val words = node.config[androidx.compose.ui.semantics.SemanticsProperties.ContentDescription].first().removePrefix("Rechenaufgabe: ")
         val (a, b) = words.split(" mal ")
         val all = (13..19).associateBy { de.kurvenflug.core.model.ParentGateTask.word(it) }
         val small = (6..9).associateBy { de.kurvenflug.core.model.ParentGateTask.word(it) }

@@ -44,6 +44,8 @@ data class Level(
     val quiz: List<String>? = null,
     /** eigener Rechenweg (sonst automatisch je Bahnart) */
     val walk: List<Step>? = null,
+    /** feste Hilfskurven (gestrichelt), z. B. beide Seiten einer Gleichung – die Lösung „sehen“ */
+    val curves: List<Curve> = emptyList(),
 ) {
     /** Startwerte + feste Werte + aktuelle Einstellung */
     fun values(v: Map<String, Double>): Map<String, Double> = params.associate { it.key to it.start } + fixed + v
@@ -104,6 +106,16 @@ object Feedback {
         return when (level.kind) {
             Kind.POINT -> {
                 val dx = t.x - v.getValue("x"); val dy = t.y - v.getValue("y")
+                // Gleichung als Schnittpunkt: zwei Hilfskurven – die gesuchte Stelle liegt auf beiden
+                if (level.curves.size >= 2 && level.params.any { it.key == "y" }) {
+                    val x = v.getValue("x"); val y = v.getValue("y")
+                    val onAll = level.curves.map { c -> c.y(x).let { !it.isNaN() && abs(it - y) < 0.3 } }
+                    return when {
+                        onAll.all { it } -> "Das ist ein Schnittpunkt, aber nicht der gesuchte."
+                        onAll.any { it } -> "Dein Punkt liegt nur auf einem der beiden Graphen. Die Lösung liegt auf beiden!"
+                        else -> "Dein Punkt liegt auf keinem der beiden Graphen. Such die Stelle, an der sie sich schneiden."
+                    }
+                }
                 // Zahlenstrahl (nur x einstellbar)
                 if (level.params.none { it.key == "y" })
                     return "Gelandet bei ${num(v.getValue("x"))}. Die Station liegt weiter ${if (dx > 0) "rechts ➡️" else "links ⬅️"}."
@@ -150,9 +162,10 @@ object Feedback {
                 "Deine Säule P(X $sym $k) war ${Stochastik.percent(y / 10)}, die Station liegt bei ${Stochastik.percent(t.y / 10)}. " +
                     if (y < t.y) "Die Säule muss höher werden." else "Die Säule muss niedriger werden."
             }
-            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE -> {
+            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE, Kind.FORM -> {
                 val y = Flight.f(level, values, t.x)
-                if (abs(y) > Flight.R) "Bei x = ${num(t.x)} ist deine Kurve ganz aus dem Bild (y = ${num(y)}). Ziel: y = ${num(t.y)}."
+                if (y.isNaN()) "Bei x = ${num(t.x)} gibt es deine Kurve gar nicht – schieb sie nach links oder rechts (c)."
+                else if (abs(y) > Flight.R) "Bei x = ${num(t.x)} ist deine Kurve ganz aus dem Bild (y = ${num(y)}). Ziel: y = ${num(t.y)}."
                 else "Bei x = ${num(t.x)} war die Sonde bei y = ${num(y)} – das Ziel liegt bei y = ${num(t.y)}. " +
                     (if (y < t.y) "Etwas höher! ⬆️" else "Etwas tiefer! ⬇️")
             }
@@ -871,8 +884,8 @@ object Levels {
     /** Reihenfolge nach Klassenstufe (Kapitelnummern bleiben fest – daran hängt der Spielstand).
      *  Profil seit 2.6.0: Funktionen und Physik Klasse 5–10. Die Oberstufe (19–22, 28, 30) ist im Mathe-Trainer und in Raumlicht
      *  (Entscheidung Marcel 18.11.) – ihre Kapitel stehen nicht mehr in der App, siehe [UpperSchool]. */
-    private val order = listOf(1, 15, 16, 29, 8, 13, 11, 2, 23, 7, 9, 3, 18, 12, 17, 4, 24, 14, 5, 25, 27, 26, 10, 6)
-    val chapters: List<Chapter> = (baseChapters + extraChapters + newChapters + More.chapters)
+    private val order = listOf(1, 15, 16, 29, 8, 13, 11, 2, 31, 23, 7, 9, 3, 18, 32, 12, 17, 4, 24, 14, 5, 25, 27, 26, 10, 6)
+    val chapters: List<Chapter> = (baseChapters + extraChapters + newChapters + More.chapters + Terms.chapters)
         .filter { it.number in order }.sortedBy { order.indexOf(it.number) }
 
     val all: List<Level> = chapters.flatMap { it.levels }

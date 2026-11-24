@@ -483,7 +483,20 @@ private fun Formula(level: Level, values: Map<String, Double>) {
             Kind.POINT -> if (level.params.none { it.key == "y" }) {
                 // Zahlenstrahl: Kommazahl und – bei Vierteln – auch als Bruch
                 append("x = "); n("x"); frac(v.getValue("x"))?.let { withStyle(SpanStyle(color = Q.Muted)) { append("  = $it") } }
-            } else { append("Ziel  ( "); n("x"); append(" | "); n("y"); append(" )") }
+                level.given?.let { append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) { append("gegeben: $it") } }
+            } else {
+                append("Ziel  ( "); n("x"); append(" | "); n("y"); append(" )")
+                if (level.curves.size >= 2) level.given?.let { append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) { append("Gleichung: $it   (blau = links, orange = rechts)") } }
+            }
+            Kind.FORM -> {
+                val base = v.getValue("base").toInt()
+                val showA = "a" in colorOf || v.getValue("a") != 1.0; val showB = "b" in colorOf || v.getValue("b") != 1.0
+                val showC = "c" in colorOf || v.getValue("c") != 0.0
+                append("y = "); if (showA) { factor("a"); append(" · ") }
+                append(Forms.open(base)); if (showB) { factor("b"); append(" · ") }
+                if (showB) { append("(x"); if (showC) term("c", -1); append(")") } else { append("x"); if (showC) term("c", -1) }
+                append(Forms.close(base)); if ("d" in colorOf || v.getValue("d") != 0.0) term("d")
+            }
             Kind.LINE -> { append("y = "); factor("m"); append(" · x"); term("b") }
             Kind.PARABOLA -> {
                 append("y = "); factor("a"); append(" · (x"); term("d", -1); append(")²"); term("e")

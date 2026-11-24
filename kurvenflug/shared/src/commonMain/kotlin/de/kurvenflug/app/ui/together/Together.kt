@@ -256,9 +256,9 @@ class ParentArea(
     val onExam: (Boolean) -> Unit,
     val onHideHint: () -> Unit,
     val onHintSeen: (String) -> Unit,
+    val onCounting: (Boolean) -> Unit,
     /** Schalter „Hinweise auf Nachhilfe ausblenden“ */
     val onHintOff: (Boolean) -> Unit = {},
-    val onCounting: (Boolean) -> Unit,
     /** Anonyme Nutzungszählung: Klicks und Hinweise (nur gesendet, wenn die Zählung an ist) */
     val onCount: (String) -> Unit = {},
     /** Ereignis mit Ort/Thema – sofort einzeln */

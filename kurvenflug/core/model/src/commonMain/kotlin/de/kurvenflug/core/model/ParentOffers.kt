@@ -28,7 +28,7 @@ object ParentOffers {
         6 to "physik-mechanik", 7 to "gleichungssysteme", 8 to "zuordnungen", 9 to "pythagoras", 10 to "exponential-log",
         11 to "physik-optik", 12 to "physik-energie", 13 to "physik-mechanik", 14 to "trigonometrie", 15 to "brueche",
         16 to "geometrie", 17 to "physik-optik", 18 to "quadratische-funktionen", 23 to "prozent", 24 to "physik-mechanik",
-        25 to "potenzen-wurzeln", 26 to "trigonometrie", 27 to "physik-mechanik", 29 to "zuordnungen",
+        25 to "potenzen-wurzeln", 26 to "trigonometrie", 27 to "physik-mechanik", 29 to "zuordnungen", 31 to "terme-gleichungen", 32 to "quadratische-funktionen",
     )
     /** Die erlaubte gemeinsame Liste (zur Prüfung im Test) */
     val ALLOWED_TOPICS = setOf("grundrechenarten", "einmaleins", "brueche", "dezimalzahlen", "prozent", "zuordnungen", "terme-gleichungen",

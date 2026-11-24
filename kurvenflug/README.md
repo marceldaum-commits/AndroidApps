@@ -145,7 +145,7 @@ Nachweis per Test: `DifficultyTest` (jede Stufe strikt schwerer) und `ChapterExt
 | ![](screenshots/91_extrem_pruefung_kachel.png) | ![](screenshots/92_extrem_pruefung_geraden.png) | ![](screenshots/93_sturm_extrem.png) |
 
 ## Kurvenflug Pro (`core/model/Pro.kt`, `License.kt`, `shared/ProShop.kt`, `pro/`)
-Alle 24 Kapitel / 140 Level frei; Pro: Extrem-Prüfungen, Sturm Profi/Extrem, Andromeda ab Planet 7, > 2 Spieler, Pro-Werkstatt.
+Alle 26 Kapitel / 162 Level frei; Pro: Extrem-Prüfungen, Sturm Profi/Extrem, Andromeda ab Planet 7, > 2 Spieler, Pro-Werkstatt.
 Gesperrt wird nur, wenn ein Kaufweg angeboten wird; Bestandsschutz für Begonnenes. Play-Fassung: Google Play Billing
 (Produkt `kurvenflug_pro`). Web/GitHub: Website-Kasse → signierter Code (Ed25519, offline geprüft) per E-Mail/Link.
 Schlüssel und Kasse in `pro/pro.properties` (nur der öffentliche Schlüssel!), Codes erzeugt `pro/pro_code.py`.

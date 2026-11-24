@@ -12,9 +12,9 @@ class ProTest {
     }
 
     @Test fun freeKeepsAllSchoolContentUpToGrade10() {
-        // Seit 2.6.0: KurvenFlug = Klasse 5–10, alle 24 Kapitel und 140 Level frei (Pro = Extras, nicht Schulstoff)
-        assertEquals(24, Levels.chapters.size)
-        assertEquals(140, Levels.all.size)
+        // Seit 2.6.0: KurvenFlug = Klasse 5–10, alle 26 Kapitel und 162 Level frei (Pro = Extras, nicht Schulstoff)
+        assertEquals(26, Levels.chapters.size)
+        assertEquals(162, Levels.all.size)
         for (c in Levels.chapters) { assertFalse(Pro.isProChapter(c.number)); for (l in c.levels) assertTrue(Pro.open(l.id, false, true, none), l.id) }
     }
 
