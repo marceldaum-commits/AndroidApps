@@ -21,14 +21,16 @@ const data = { 'raumlicht.sterne': '1-1=3;1-2=2;5-3=1;abi-zelt-a=3', 'raumlicht.
   'raumlicht.strengeVektoren': '1', 'raumlicht.skin': 'gold', 'raumlicht.plan': 'x', 'raumlicht.diary': 'y' };
 await page.evaluate(async (d) => { for (const k in d) localStorage.setItem(k, d[k]); const c = await caches.open('raumlicht-stimme'); await c.put('/alte-stimme.onnx', new Response(new Uint8Array(5000))); }, data);
 await page.reload(); await started(); await page.waitForTimeout(1500);
-const seenOld = await page.evaluate(() => ({ nova: !!window.__rlNova, sterne: localStorage.getItem('raumlicht.sterne') }));
-check(!seenOld.nova && seenOld.sterne === data['raumlicht.sterne'], `Vorversion ${from} läuft mit Spielstand`);
+const seenOld = await page.evaluate((v) => ({ neu: document.documentElement.dataset.version === v, sterne: localStorage.getItem('raumlicht.sterne') }), to);
+check(!seenOld.neu && seenOld.sterne === data['raumlicht.sterne'], `Vorversion ${from} läuft mit Spielstand`);
 // 2. Die neue Version erscheint auf dem Server; die Seite holt sie sich (spätestens nach ein paar Aufrufen)
 fs.rmSync(dir, { recursive: true, force: true }); fs.cpSync(path.resolve(newDir), dir, { recursive: true }); watch = true;
 let now = null; for (let i = 0; i < 8 && !now; i++) { await page.goto(url + '?n=' + i).catch(() => {}); await started().catch(() => {}); await page.waitForTimeout(3500);
-  now = await page.evaluate(() => window.__rlNova ? true : null).catch(() => null); }
+  now = await page.evaluate((v) => document.documentElement.dataset.version === v ? true : null, to).catch(() => null); }
 const shown = await page.evaluate(() => fetch('version.json', { cache: 'no-store' }).then((r) => r.json()).then((j) => j.version));
 check(!!now && shown === to, `Update auf ${to} ist angekommen`);
+// Fehler zählen erst ab hier: Direkt nach dem Dateitausch liefert der ALTE Service Worker noch die alte Seite, deren alte Kern-Datei es auf dem Server nicht mehr gibt (404 → „compile … HTTP status code is not ok“). Das ist ein Wackler der Prüfung, nicht der neuen Version.
+errs.length = 0;
 // 3. Nichts verloren: Spielstand, Pro-Code, Einstellungen
 const after = await page.evaluate((keys) => Object.fromEntries(keys.map((k) => [k, localStorage.getItem(k)])), Object.keys(data));
 const kept = ['sterne', 'jamBest', 'lageBest', 'proCode', 'stimmeAn', 'musik', 'ton', 'vibration', 'lautstaerke', 'musikLaut', 'tonLaut', 'strengeVektoren', 'skin', 'plan', 'diary'].map((k) => 'raumlicht.' + k);

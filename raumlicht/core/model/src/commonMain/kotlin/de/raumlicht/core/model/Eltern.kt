@@ -27,7 +27,7 @@ object Eltern {
     const val DAYS = 14
     const val MAX_NAME = 20
     const val NOTE = "Du entscheidest, ob deine Eltern mitlesen. Der Bericht wird auf deinem Gerät verschlüsselt; unser Server kann ihn nicht lesen. " +
-        "Lesen kann ihn, wer den Link oder QR-Code hat – gib ihn nur an deine Eltern. „Kopplung aufheben“ löscht alles wieder. Ohne neuen Bericht löscht der Server ihn nach 90 Tagen."
+        "Lesen kann ihn, wer den Link oder QR-Code hat – gib ihn nur an deine Eltern. „Kopplung aufheben“ löscht alles wieder – löst du als Jugendliche oder Jugendlicher ab 16 selbst, bleibt für deine Eltern nur der Hinweis „vom Kind gelöst“ (ohne Lerndaten) 14 Tage sichtbar. Ohne neuen Bericht löscht der Server ihn nach 90 Tagen."
     const val CONTENT = "Im Bericht stehen: Lernzeit und aktive Tage der letzten zwei Wochen, wie viele Aufgaben du gelöst hast und wie viele davon beim ersten Versuch, " +
         "dein Fortschritt je Gebiet, was gut sitzt und was noch hakt, die Summen der letzten Monate – und dein Klausurtermin, falls du einen eingetragen hast. Sonst nichts."
 

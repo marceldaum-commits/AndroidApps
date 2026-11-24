@@ -13,7 +13,6 @@
 | Kotlin, kotlinx (Coroutines, Serialization, Datetime) | Sprache und Grundbibliotheken | Apache 2.0 | Bibliotheken |
 | Jetpack / AndroidX (Compose, Room, Lifecycle, Core u. a.) | Oberfläche und Speicher der Android-App | Apache 2.0 | Bibliotheken |
 | Ed25519-Prüfung nach TweetNaCl | prüft Freischalt-Codes für den Abi-Pass | gemeinfrei (Public Domain) | eigener Kotlin-Code in `core/model` |
-| Stimme „Nova“ | Lux liest vor | KI-generierte Stimme von OpenAI; die Audiodateien erzeugt unser Server (stimmen.mathenachhilfe-online.com) | **nicht** in der App enthalten – fertige MP3-Dateien werden bei Bedarf geladen; in der App als „KI-generierte Stimme“ gekennzeichnet |
 
 **Musik und Klänge** sind keine fremden Bestandteile: Sie sind für Raumlicht komponiert und werden vollständig im Programmcode errechnet
 (`core/model/…/SpaceMusic.kt`, `MusicSynth.kt`, `Klang.kt`) – ohne Aufnahmen, ohne fremde Samples, ohne Klang-Bibliotheken.
@@ -25,5 +24,4 @@ WebApp: derselbe Eintrag öffnet `lizenzen.txt`). Bis 2.12.0 fehlten diese Texte
 
 Von 2.4.0 bis 2.5.1 enthielt die Android-App über eine Sprach-Bibliothek auch **espeak-ng (GPL-3.0)**. Von 2.6.0 bis 2.16.4 war espeak-ng nicht mehr enthalten
 (neuere Fassung der Bibliothek, Lautschrift als mitgelieferte Daten). Seit **2.17.0** gibt es in der App gar keine Sprachsynthese mehr: Die Sprach-Bibliothek, ONNX Runtime,
-die Lautschrift-Daten und die frühere ladbare Stimme sind entfernt. Vorgelesen wird mit fertigen Audiodateien der Stimme „Nova“ von unserem Server;
-kommt eine Datei nicht an, liest die Sprachausgabe des Geräts. Der GitHub-Lauf prüft weiter, dass das Store-Paket keine espeak-ng-Daten enthält. Das ist keine Rechtsberatung.
+die Lautschrift-Daten und die frühere ladbare Stimme sind entfernt. Das Vorlesen ist abgeschaltet; wenn es mit fertigen Sprachdateien aus unserem Tonstudio zurückkommt (KI-generierte Stimme, eigener Server), steht hier der Eintrag zur Stimme samt Lizenzangaben in dem Wortlaut, den der Raum „Recht“ vorgibt. Der GitHub-Lauf prüft weiter, dass das Store-Paket keine espeak-ng-Daten enthält. Das ist keine Rechtsberatung.

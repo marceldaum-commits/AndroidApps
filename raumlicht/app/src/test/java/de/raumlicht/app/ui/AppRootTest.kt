@@ -415,6 +415,7 @@ class AppRootTest {
         koppeln()
         // Altersfrage: wörtlich, beide Antworten gleich gestaltet; „Nein“ → nur die Eltern, „Zurück“ ändert nichts
         aufheben(); rule.onNodeWithTag("eltern-alter-frage").assertTextEquals("Verbindung zu deinen Eltern lösen? Bist du 16 oder älter?")
+        rule.onNodeWithTag("eltern-alter-ja").performScrollTo(); rule.onRoot().captureRoboImage("../screenshots/96_kopplung_loesen.png")
         rule.onNodeWithTag("eltern-alter-ja").assertTextEquals("Ja, ich bin 16 oder älter"); rule.onNodeWithTag("eltern-alter-nein").assertTextEquals("Nein")
         rule.onNodeWithTag("eltern-alter-nein").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-nur-eltern").assertTextEquals("Dann können nur deine Eltern die Verbindung lösen – im Elternbereich.")
         rule.onNodeWithTag("eltern-zurueck").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-aufheben").assertExists(); assertTrue(deleted.isEmpty() && released.isEmpty()); assertNotEquals("", prefs.parentLink.value)
@@ -512,7 +513,7 @@ class AppRootTest {
         // Prüfungsmodus (Musik aus): nur Prüfungen auf Zeit und der Pflichtteil
         assertTrue(Routes.isExam("abi/zelt/1")); assertTrue(Routes.isExam(Routes.QUICK)); assertFalse(Routes.isExam("abi/zelt/0")); assertFalse(Routes.isExam(Routes.EXAMS)); assertFalse(Routes.isExam("level/1-1"))
         // Vorlesen: Stimme ist als KI-Stimme gekennzeichnet, Hörprobe vorhanden
-        rule.onNodeWithTag("stimme-name").performScrollTo().assertTextEquals("Stimme: Nova – KI-generierte Stimme"); rule.onNodeWithTag("hoerprobe").assertExists()
+        rule.onNodeWithTag("stimme-name").performScrollTo().assertTextEquals("Stimme: KI-generierte Stimme"); rule.onNodeWithTag("hoerprobe").assertExists()
         // Sprechtempo in sechs Stufen, gemerkt; krumme Werte rasten auf die nächste Stufe
         rule.onNodeWithTag("sprechtempo-text").performScrollTo().assertTextEquals("🐢🐇 Sprechtempo: 1,0×")
         rule.runOnUiThread { prefs.setSpeechRate(118) }; settle(); rule.onNodeWithTag("sprechtempo-text").assertTextEquals("🐢🐇 Sprechtempo: 1,15×")

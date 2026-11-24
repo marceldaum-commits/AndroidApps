@@ -146,7 +146,7 @@ fun vibrate(ms: Int): Unit = js("{ if (navigator.vibrate) navigator.vibrate(ms);
 // ── Stimme: Sprachausgabe des Browsers (rechnet auf dem Gerät bzw. im Browser, je nach System)
 /** Vorgelesen wird nur mit einer deutschen Stimme, die auf dem Gerät eingebaut ist – Stimmen, die den Text an einen Server schicken, benutzt die App nicht
  *  (sonst stimmte „keine Daten an einen Server“ nicht). Solange der Browser seine Stimmen noch lädt, gilt: möglich. */
-/** Stille Notlösung, wenn „Nova“ einen Satz nicht liefern kann: eine deutsche Stimme, die auf dem Gerät eingebaut ist (kein Versand an den Browser-Hersteller) */
+/** Zwischenlösung, solange es keine fertigen Sprachdateien gibt: eine deutsche Stimme, die auf dem Gerät eingebaut ist (kein Versand an den Browser-Hersteller) */
 fun speak(text: String, volume: Double, rate: Double = 1.0, voice: String = ""): Unit = js(
     "{ try { const u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.volume = volume; u.rate = 0.96 * rate; const v = speechSynthesis.getVoices().filter((x) => x.localService && x.lang && x.lang.startsWith('de')); const pick = v.find((x) => x.name === voice) || v[0]; if (!pick) return; u.voice = pick; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }")
 fun speaking(): Boolean = js("('speechSynthesis' in window) && speechSynthesis.speaking")

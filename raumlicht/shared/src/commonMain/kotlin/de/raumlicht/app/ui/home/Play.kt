@@ -202,27 +202,28 @@ fun GaltonScreen(onBack: () -> Unit, controller: StageController = remember { St
 
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
         Bar("Galton-Brett", onBack) { Text(count(total, "Kugel", "Kugeln"), color = Q.Yellow, fontWeight = FontWeight.Bold) }
-        Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) { Stage(controller, Modifier.fillMaxSize()); StageFrame(Q.Pink) }
-        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            Dial("Reihen n", "${board.rows}", "", Q.Text, Modifier.weight(0.7f))
-            Dial("Erwartungswert μ", Geo.num(board.mean(p)), "n · p", Q.Yellow, Modifier.weight(1f).testTag("galton-mu"))
-            Dial("Streuung σ", Geo.num(board.sigma(p)), "√(n·p·(1−p))", Q.Cyan, Modifier.weight(1f))
-        }
-        Text(if (total == 0) "Stell p ein – die Wahrscheinlichkeit, dass eine Kugel am Nagel nach rechts fällt. Dann lass Kugeln regnen."
-            else "Blau: was gefallen ist. Gelb: was die Binomialverteilung vorhersagt. Je mehr Kugeln, desto besser passt es.",
-            Modifier.padding(horizontal = 14.dp), color = Q.Muted, fontSize = 12.sp)
-        Row(Modifier.padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("n", color = Q.Text, fontWeight = FontWeight.Black, fontSize = 18.sp)
-            Stepper("Reihen", rows, "$rows", Q.Text, "n", Modifier.weight(0.8f), canDown = rows > Galton.ROWS.first && !running, canUp = rows < Galton.ROWS.last && !running) { d -> rows += d }
-            Text("p", color = Q.Pink, fontWeight = FontWeight.Black, fontSize = 18.sp)
-            Stepper("nach rechts", tenths, "${tenths * 10} %", Q.Pink, "p", Modifier.weight(1f), canDown = tenths > 1 && !running, canUp = tenths < 9 && !running) { d ->
-                tenths += d; counts = List(board.rows + 1) { 0 }       // neue Wahrscheinlichkeit, neues Experiment
+        StageSplit({ m -> Box(m.padding(horizontal = 8.dp)) { Stage(controller, Modifier.fillMaxSize()); StageFrame(Q.Pink) } }) {
+            Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                Dial("Reihen n", "${board.rows}", "", Q.Text, Modifier.weight(0.7f))
+                Dial("Erwartungswert μ", Geo.num(board.mean(p)), "n · p", Q.Yellow, Modifier.weight(1f).testTag("galton-mu"))
+                Dial("Streuung σ", Geo.num(board.sigma(p)), "√(n·p·(1−p))", Q.Cyan, Modifier.weight(1f))
             }
-        }
-        Row(Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp, bottom = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            NeonButton({ counts = List(board.rows + 1) { 0 } }, color = Q.Muted, enabled = !running && total > 0) { Text("Leeren") }
-            NeonButton({ run(10) }, Modifier.testTag("galton-10"), color = Q.Cyan, enabled = !running) { Text("10", fontWeight = FontWeight.Bold) }
-            NeonButton({ run(100) }, Modifier.weight(1f).testTag("galton-100"), color = Q.Green, enabled = !running) { Text(if (running) "es regnet …" else "▶ 100 Kugeln", fontWeight = FontWeight.Black) }
+            Text(if (total == 0) "Stell p ein – die Wahrscheinlichkeit, dass eine Kugel am Nagel nach rechts fällt. Dann lass Kugeln regnen."
+                else "Blau: was gefallen ist. Gelb: was die Binomialverteilung vorhersagt. Je mehr Kugeln, desto besser passt es.",
+                Modifier.padding(horizontal = 14.dp), color = Q.Muted, fontSize = 12.sp)
+            Row(Modifier.padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text("n", color = Q.Text, fontWeight = FontWeight.Black, fontSize = 18.sp)
+                Stepper("Reihen", rows, "$rows", Q.Text, "n", Modifier.weight(0.8f), canDown = rows > Galton.ROWS.first && !running, canUp = rows < Galton.ROWS.last && !running) { d -> rows += d }
+                Text("p", color = Q.Pink, fontWeight = FontWeight.Black, fontSize = 18.sp)
+                Stepper("nach rechts", tenths, "${tenths * 10} %", Q.Pink, "p", Modifier.weight(1f), canDown = tenths > 1 && !running, canUp = tenths < 9 && !running) { d ->
+                    tenths += d; counts = List(board.rows + 1) { 0 }       // neue Wahrscheinlichkeit, neues Experiment
+                }
+            }
+            Row(Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp, bottom = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                NeonButton({ counts = List(board.rows + 1) { 0 } }, color = Q.Muted, enabled = !running && total > 0) { Text("Leeren") }
+                NeonButton({ run(10) }, Modifier.testTag("galton-10"), color = Q.Cyan, enabled = !running) { Text("10", fontWeight = FontWeight.Bold) }
+                NeonButton({ run(100) }, Modifier.weight(1f).testTag("galton-100"), color = Q.Green, enabled = !running) { Text(if (running) "es regnet …" else "▶ 100 Kugeln", fontWeight = FontWeight.Black) }
+            }
         }
     }
 }

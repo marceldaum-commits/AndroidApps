@@ -6,9 +6,10 @@ import { createRequire } from 'module'; const require = createRequire(import.met
 import http from 'http'; import fs from 'fs'; import path from 'path';
 const [,, dir, out] = process.argv; fs.mkdirSync(out, { recursive: true });
 const TYPE = (f) => f.endsWith('.wasm') ? 'application/wasm' : f.endsWith('.js') || f.endsWith('.mjs') ? 'text/javascript' : f.endsWith('.html') ? 'text/html' : f.endsWith('.json') || f.endsWith('.webmanifest') ? 'application/json' : 'application/octet-stream';
-const files = (prefix) => http.createServer((q, r) => { if (neuWeg && prefix !== '/') { r.writeHead(503); return r.end('noch nicht da'); } let p = decodeURIComponent(q.url.split('?')[0]); if (!p.startsWith(prefix)) { r.writeHead(404); return r.end(); } p = '/' + p.slice(prefix.length); if (p === '/') p = '/index.html';
+const files = (prefix) => http.createServer((q, r) => { if (q.method === 'POST' && q.url.split('?')[0] === '/zaehler/v1/e') { let b = ''; q.on('data', (d) => b += d); q.on('end', () => { zaehl.push({ prefix, body: b, type: q.headers['content-type'], cookie: q.headers.cookie }); r.writeHead(204); r.end(); }); return; }
+  if (neuWeg && prefix !== '/') { r.writeHead(503); return r.end('noch nicht da'); } let p = decodeURIComponent(q.url.split('?')[0]); if (!p.startsWith(prefix)) { r.writeHead(404); return r.end(); } p = '/' + p.slice(prefix.length); if (p === '/') p = '/index.html';
   const f = path.join(dir, p); fs.readFile(f, (e, d) => { if (e) { r.writeHead(404); r.end(); } else { r.writeHead(200, { 'Content-Type': TYPE(f) }); r.end(d); } }); });
-const store = {}; const seen = []; let kaputt = false, neuWeg = false;
+const store = {}; const seen = []; const zaehl = []; let kaputt = false, neuWeg = false;
 const sicherung = http.createServer((q, r) => { const cors = { 'Access-Control-Allow-Origin': q.headers.origin || '*', 'Access-Control-Allow-Methods': 'GET, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type, X-Schreib' };
   const m = /^\/eltern\/v1\/s\/([A-Za-z0-9_-]{22})$/.exec(q.url.split('?')[0]); let body = ''; q.on('data', (d) => body += d); q.on('end', () => {
     if (q.method === 'OPTIONS') { r.writeHead(204, cors); return r.end(); }
@@ -24,7 +25,7 @@ const ALT = `http://localhost:${sA.address().port}/`, NEU = `http://localhost:${
 const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 let fail = 0; const check = (ok, text) => { console.log((ok ? 'ok   ' : 'FAIL ') + text); if (!ok) fail++; };
 const neu = async (sw = 'block') => { const ctx = await b.newContext({ viewport: { width: 400, height: 860 }, serviceWorkers: sw }); const page = await ctx.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message));
-  await ctx.addInitScript(([altPort, ziel, server]) => { window.__rlUmzugTest = { alt: location.port === altPort, ziel, server }; }, [String(sA.address().port), NEU, SRV]); return { ctx, page, errs }; };
+  await ctx.addInitScript(([altPort, ziel, server]) => { window.__rlUmzugTest = { alt: location.port === altPort, ziel, server, zaehle: true }; }, [String(sA.address().port), NEU, SRV]); return { ctx, page, errs }; };
 const gestartet = (page) => page.waitForFunction(() => document.getElementById('start') && document.getElementById('start').style.display === 'none', null, { timeout: 120000 });
 const stand = (page) => page.evaluate(() => { const o = {}; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith('raumlicht.')) o[k] = localStorage.getItem(k); } return o; });
 const fuellen = async (page, wo, daten) => { await page.goto(wo + 'diagnose.html'); await page.evaluate((d) => { for (const k in d) localStorage.setItem(k, d[k]); }, daten); };
@@ -32,7 +33,7 @@ const DATEN = { 'raumlicht.sterne': '1-1=3;1-2=2;18-3=3', 'raumlicht.proCode': '
 
 for (const modus of ['wasm', 'js']) {
   // ── 1 · Umzug gelingt: Lernstand kommt an, Ziel und Raute-Teile bleiben erhalten, die Sicherung ist danach gelöscht ──
-  seen.length = 0; for (const k in store) delete store[k]; kaputt = false;
+  seen.length = 0; zaehl.length = 0; for (const k in store) delete store[k]; kaputt = false;
   { const { ctx, page, errs } = await neu(); await fuellen(page, ALT, DATEN);
     await page.goto(ALT + `?modus=${modus}&ziel=einstellungen#anker=1`); await page.waitForURL((u) => u.href.startsWith(NEU), { timeout: 30000 }).catch(() => {}); await gestartet(page).catch(() => {}); await page.waitForTimeout(2500);
     await page.screenshot({ path: `${out}/umzug-${modus}-1-angekommen.png` });
@@ -51,6 +52,10 @@ for (const modus of ['wasm', 'js']) {
     await page.goto(ALT + `?modus=${modus}`); await page.waitForURL((u) => u.href.startsWith(NEU), { timeout: 30000 }).catch(() => {}); await gestartet(page).catch(() => {}); await page.waitForTimeout(2000);
     const da2 = await stand(page);
     check(da2['raumlicht.sterne'] === '1-1=3;1-2=3;1-3=3;18-3=3' && Object.keys(store).length === 0 && page.url() === NEU + `?modus=${modus}`, `${modus}: Ziel hat schon einen Lernstand → nichts überschrieben, Sicherung trotzdem gelöscht`);
+    // Zählpunkt „umzug“: genau einmal, anonym, an die Zähl-Adresse der neuen Herkunft – und nicht beim zweiten Besuch, wo nichts übernommen wurde
+    { const o = zaehl.length === 1 ? JSON.parse(zaehl[0].body) : null;
+      check(!!o && zaehl[0].prefix === '/raumlicht/' && Object.keys(o).sort().join() === 'app,ev,v' && o.app === 'raumlicht' && o.ev === 'umzug' && /^\d+\.\d+\.\d+$/.test(o.v) && /^text\/plain/.test(zaehl[0].type || '') && !zaehl[0].cookie && !zaehl[0].body.includes('PRUEFCODE') && !zaehl[0].body.includes('sterne'),
+        `${modus}: Zählpunkt „umzug“ – einmal, nur App, Ereignis und Version, ohne Kennung und Lernstand, an die neue Herkunft` + (zaehl.length !== 1 ? ` (${zaehl.length} Aufrufe)` : '')); }
     await ctx.close(); }
 
   // ── 2 · Server nicht erreichbar: nicht weiterleiten, Raumlicht läuft unter der alten Adresse; beim nächsten Start klappt es ──
@@ -72,6 +77,11 @@ for (const modus of ['wasm', 'js']) {
     check(errs.length === 0, errs.length ? `${modus}: Fehler: ` + errs[0] : `${modus}: keine Fehler, solange die neue Adresse fehlt`);
     await ctx.close(); } neuWeg = false;
 
+  // ── 2b · Zähl-Schalter aus: Der Umzug klappt, „umzug“ wird NICHT gesendet ──
+  seen.length = 0; zaehl.length = 0; for (const k in store) delete store[k]; kaputt = false;
+  { const { ctx, page, errs } = await neu(); await fuellen(page, ALT, { ...DATEN, 'raumlicht.zaehlen': '0' });
+    await page.goto(ALT + `?modus=${modus}`); await page.waitForURL((u) => u.href.startsWith(NEU), { timeout: 30000 }).catch(() => {}); await gestartet(page).catch(() => {}); await page.waitForTimeout(2500);
+    check(zaehl.length === 0 && (await stand(page))['raumlicht.sterne'] === DATEN['raumlicht.sterne'], `${modus}: Zähl-Schalter aus → Umzug klappt, „umzug“ wird nicht gesendet`); await ctx.close(); }
   // ── 3 · Nichts mitzunehmen: gleich hinüber, ohne Sicherung; und die neue Adresse allein fragt den Server nie ──
   seen.length = 0; for (const k in store) delete store[k];
   { const { ctx, page } = await neu(); await page.goto(ALT + `?modus=${modus}&ziel=galton`); await page.waitForURL((u) => u.href.startsWith(NEU), { timeout: 30000 }).catch(() => {}); await gestartet(page).catch(() => {}); await page.waitForTimeout(1500);

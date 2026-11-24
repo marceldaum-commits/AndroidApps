@@ -90,23 +90,24 @@ fun CoasterBuildScreen(onBack: () -> Unit, controller: StageController = remembe
             Pick("✏️ Freies Bauen", goalIdx < 0, Q.Yellow, "auftrag-frei") { goalIdx = -1 }
             BuiltTrack.goals.forEachIndexed { i, g -> Pick((if (i in done) "✓ " else "") + g.title, goalIdx == i, Q.Cyan, "auftrag-$i") { goalIdx = i } }
         }
-        Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) { Stage(controller, Modifier.fillMaxSize()); StageFrame(Q.Cyan) }
-        Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 12.dp, top = 6.dp), verticalAlignment = Alignment.CenterVertically) {
-            Lux(if (finishedShow && r!!.finished) LuxMood.HAPPY else if (finishedShow) LuxMood.SAD else LuxMood.IDLE, size = 46.dp)
-            Text(message, Modifier.padding(start = 8.dp).testTag("bau-meldung"), color = Q.Text, fontSize = 13.sp)
-        }
-        // Stützpunkte auch per Knopf: Höhe 1 bis 6
-        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-            heights.forEachIndexed { i, h -> Column(Modifier.weight(1f).background(Q.Deep, RoundedCornerShape(12.dp)).border(1.dp, Q.Yellow.copy(alpha = 0.5f), RoundedCornerShape(12.dp)).padding(vertical = 3.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Pick("▲", false, Q.Yellow, "hoch-$i") { set(i, h + 1) }
-                Text("$h", Modifier.testTag("hoehe-$i"), color = Q.Yellow, fontWeight = FontWeight.Black, fontSize = 18.sp)
-                Pick("▼", false, Q.Yellow, "runter-$i") { set(i, h - 1) }
-            } }
-        }
-        Row(Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp, bottom = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            NeonButton({ inside = !inside }, Modifier.testTag("bau-sicht"), color = Q.Violet) { Text(if (inside) "👁 von außen" else "🎢 einsteigen", fontWeight = FontWeight.Bold) }
-            NeonButton({ run = track.run(goal); frame = 0; playing = true; sfx?.play(Sound.LAUNCH) }, Modifier.weight(1f).testTag("probefahrt"), color = Q.Green, enabled = !playing) {
-                Text(if (playing) "fährt …" else "▶ Probefahrt", fontWeight = FontWeight.Black) }
+        StageSplit({ m -> Box(m.padding(horizontal = 8.dp)) { Stage(controller, Modifier.fillMaxSize()); StageFrame(Q.Cyan) } }) {
+            Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 12.dp, top = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                Lux(if (finishedShow && r!!.finished) LuxMood.HAPPY else if (finishedShow) LuxMood.SAD else LuxMood.IDLE, size = 46.dp)
+                Text(message, Modifier.padding(start = 8.dp).testTag("bau-meldung"), color = Q.Text, fontSize = 13.sp)
+            }
+            // Stützpunkte auch per Knopf: Höhe 1 bis 6
+            Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+                heights.forEachIndexed { i, h -> Column(Modifier.weight(1f).background(Q.Deep, RoundedCornerShape(12.dp)).border(1.dp, Q.Yellow.copy(alpha = 0.5f), RoundedCornerShape(12.dp)).padding(vertical = 3.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Pick("▲", false, Q.Yellow, "hoch-$i") { set(i, h + 1) }
+                    Text("$h", Modifier.testTag("hoehe-$i"), color = Q.Yellow, fontWeight = FontWeight.Black, fontSize = 18.sp)
+                    Pick("▼", false, Q.Yellow, "runter-$i") { set(i, h - 1) }
+                } }
+            }
+            Row(Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp, bottom = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                NeonButton({ inside = !inside }, Modifier.testTag("bau-sicht"), color = Q.Violet) { Text(if (inside) "👁 von außen" else "🎢 einsteigen", fontWeight = FontWeight.Bold) }
+                NeonButton({ run = track.run(goal); frame = 0; playing = true; sfx?.play(Sound.LAUNCH) }, Modifier.weight(1f).testTag("probefahrt"), color = Q.Green, enabled = !playing) {
+                    Text(if (playing) "fährt …" else "▶ Probefahrt", fontWeight = FontWeight.Black) }
+            }
         }
     }
 }
@@ -225,21 +226,22 @@ fun RingScreen(onBack: () -> Unit, controller: StageController = remember { Stag
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
         Bar("Ringflug", onBack) { Text(if (streak >= 2) "Serie $streak" else "Runde ${round + 1}", Modifier.testTag("ring-runde"), color = Q.Yellow, fontWeight = FontWeight.Bold) }
         Text("A${run.a.fmt()}   →   R₁${run.rings[0].fmt()}  R₂${run.rings[1].fmt()}  R₃${run.rings[2].fmt()}", Modifier.padding(horizontal = 14.dp, vertical = 2.dp).testTag("ring-daten"), color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
-        Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) { Stage(controller, Modifier.fillMaxSize()); StageFrame(Q.Cyan) }
-        Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 12.dp, top = 6.dp), verticalAlignment = Alignment.CenterVertically) {
-            Lux(if (flown && hits == 3) LuxMood.HAPPY else if (flown) LuxMood.SAD else LuxMood.IDLE, size = 46.dp)
-            Text(if (flown) run.verdict(guess) else "Stell meine Flugrichtung ein, damit ich durch alle drei Ringe komme. g: x⃗ = A + t · (${d.joinToString("|") { Geo.num(it) }})",
-                Modifier.padding(start = 8.dp).testTag("ring-meldung"), color = if (flown && hits == 3) Q.Green else Q.Text, fontSize = 13.sp, fontWeight = FontWeight.Bold)
-        }
-        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            listOf(Q.Pink, Q.Green, Q.Cyan).forEachIndexed { i, c ->
-                Stepper(null, d[i], Geo.num(d[i]), c, "d$i", Modifier.weight(1f), canDown = d[i] > -3 && !flying, canUp = d[i] < 3 && !flying) { s -> d = d.toMutableList().also { it[i] += s }; u = 0f; flown = false } }
-        }
-        Row(Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp, bottom = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            NeonButton({ inside = !inside }, color = Q.Violet) { Text(if (inside) "👁 außen" else "🚀 innen", fontWeight = FontWeight.Bold) }
-            if (flown && hits == 3) NeonButton({ round++ }, Modifier.weight(1f).testTag("ring-weiter"), color = Q.Yellow) { Text("Nächste Runde ▶", fontWeight = FontWeight.Black) }
-            else NeonButton({ u = 0f; flown = false; flying = true; sfx?.play(Sound.LAUNCH) }, Modifier.weight(1f).testTag("ring-flug"), color = Q.Green, enabled = !flying && !guess.isZero) {
-                Text(if (flying) "fliegt …" else "▶ Losfliegen", fontWeight = FontWeight.Black) }
+        StageSplit({ m -> Box(m.padding(horizontal = 8.dp)) { Stage(controller, Modifier.fillMaxSize()); StageFrame(Q.Cyan) } }) {
+            Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 12.dp, top = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                Lux(if (flown && hits == 3) LuxMood.HAPPY else if (flown) LuxMood.SAD else LuxMood.IDLE, size = 46.dp)
+                Text(if (flown) run.verdict(guess) else "Stell meine Flugrichtung ein, damit ich durch alle drei Ringe komme. g: x⃗ = A + t · (${d.joinToString("|") { Geo.num(it) }})",
+                    Modifier.padding(start = 8.dp).testTag("ring-meldung"), color = if (flown && hits == 3) Q.Green else Q.Text, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+            }
+            Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                listOf(Q.Pink, Q.Green, Q.Cyan).forEachIndexed { i, c ->
+                    Stepper(null, d[i], Geo.num(d[i]), c, "d$i", Modifier.weight(1f), canDown = d[i] > -3 && !flying, canUp = d[i] < 3 && !flying) { s -> d = d.toMutableList().also { it[i] += s }; u = 0f; flown = false } }
+            }
+            Row(Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp, bottom = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                NeonButton({ inside = !inside }, color = Q.Violet) { Text(if (inside) "👁 außen" else "🚀 innen", fontWeight = FontWeight.Bold) }
+                if (flown && hits == 3) NeonButton({ round++ }, Modifier.weight(1f).testTag("ring-weiter"), color = Q.Yellow) { Text("Nächste Runde ▶", fontWeight = FontWeight.Black) }
+                else NeonButton({ u = 0f; flown = false; flying = true; sfx?.play(Sound.LAUNCH) }, Modifier.weight(1f).testTag("ring-flug"), color = Q.Green, enabled = !flying && !guess.isZero) {
+                    Text(if (flying) "fliegt …" else "▶ Losfliegen", fontWeight = FontWeight.Black) }
+            }
         }
     }
 }

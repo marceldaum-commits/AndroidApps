@@ -7,7 +7,7 @@ import kotlinx.serialization.json.put
 
 /**
  * Die festen Vorlese-Texte der App – alles, was Lux wörtlich gleich vorliest (ohne Zufallszahlen und ohne Eingaben des Nutzers).
- * Daraus entsteht beim Bauen `webapp/vorlesen/texte.json`; unser Stimmen-Server holt die Liste und vertont jeden neuen Text einmal vorab.
+ * Daraus entsteht beim Bauen `webapp/vorlesen/texte.json`; das Tonstudio vertont jeden Text einmal vorab.
  * Texte, die erst in der Aufgabe entstehen (Rückmeldungen auf Eingaben, endloses Üben, Tagesaufgabe), stehen hier nicht.
  */
 object Vorlesen {
@@ -80,11 +80,11 @@ object Vorlesen {
     /** Vorlesefertig (Vektoren und Formeln ausgeschrieben, siehe [Speech.clean]), ohne Leerraum-Reste, jeder Text nur einmal */
     fun fixedTexts(): List<String> = raw().map { normalize(Speech.clean(it)) }.filter { it.isNotEmpty() }.distinct()
     /** Vorhersehbare Rückmeldungen, vorlesefertig – ohne die, die schon bei den festen Texten stehen */
-    fun predictableTexts(): List<String> = fixedTexts().toSet().let { fixed -> predictableRaw().map { normalize(Speech.clean(it)) }.filter { it.isNotEmpty() && it !in fixed && it.length <= LIVE_MAX_CHARS }.distinct() }
-    /** Alles, was vorab vertont wird (feste Texte, dann vorhersehbare Rückmeldungen) – diese Liste lädt auch „Alle Nova-Texte offline laden“ */
+    fun predictableTexts(): List<String> = fixedTexts().toSet().let { fixed -> predictableRaw().map { normalize(Speech.clean(it)) }.filter { it.isNotEmpty() && it !in fixed && it.length <= PREDICTABLE_MAX_CHARS }.distinct() }
+    /** Alles, was vorab vertont wird (feste Texte, dann vorhersehbare Rückmeldungen) */
     /**
      * Vorlesen ist seit 2.18.14 abgeschaltet (Auftrag vom 18.11.2026: „erstmal rausnehmen, später evtl. wieder einfügen“) – der Code bleibt.
-     * Solange false: kein Schalter „Lux spricht“, kein Sprechtempo, kein Offline-Laden, keine Abrufe am Stimmen-Server, keine Gerätestimme, und die ausgelieferte Textliste ist leer.
+     * Solange false: kein Schalter „Lux spricht“, kein Sprechtempo, kein Offline-Laden, keine Abrufe an einen Stimmen-Server, keine Gerätestimme, und die ausgelieferte Textliste ist leer.
      * Zum Wiedereinschalten genügt true (und eine neue Version).
      */
     const val ENABLED = false
@@ -92,61 +92,30 @@ object Vorlesen {
     val privacyNote get() = if (ENABLED) " – und zum Vorlesen, wenn du „Lux spricht“ einschaltest. $PRIVACY" else "."
     fun texts(): List<String> = fixedTexts() + predictableTexts()
 
-    /** Jeder Leerraum wird zu einem Leerzeichen, vorne und hinten abgeschnitten – so rechnet auch der Stimmen-Server */
+    /** Jeder Leerraum wird zu einem Leerzeichen, vorne und hinten abgeschnitten – so rechnet auch das Tonstudio */
     fun normalize(text: String) = text.replace(Regex("\\s+"), " ").trim()
 
-    // ---- Stimme „Nova“: vorab vertonte Dateien auf unserem Server
-    /** So heißt die Stimme in der App – die Kennzeichnung „KI-generiert“ ist Pflicht */
-    const val VOICE_LABEL = "Nova – KI-generierte Stimme"
-    /** Sprechtempo in Prozent – die Stufen des Reglers. 100 = so, wie der Server die Stimme aufnimmt; schneller oder langsamer spielt die App dieselbe Datei bei gleicher Tonhöhe ab. */
+    // ---- Stimme: fertige Sprachdateien aus dem Tonstudio (eigener Server, KI-generiert)
+    /** So wird die Stimme in der App genannt – die Kennzeichnung „KI-generiert“ ist Pflicht */
+    const val VOICE_LABEL = "KI-generierte Stimme"
+    /** Sprechtempo in Prozent – die Stufen des Reglers. 100 = so, wie die Aufnahme klingt; schneller oder langsamer spielt die App dieselbe Datei bei gleicher Tonhöhe ab. */
     val TEMPOS = listOf(75, 90, 100, 115, 130, 150)
     /** Die nächste erlaubte Stufe zu einem gemerkten Wert */
     fun tempo(percent: Int) = TEMPOS.minBy { kotlin.math.abs(it - percent) }
     /** Anzeige: 115 → „1,15×“ */
     fun tempoLabel(percent: Int) = "${percent / 100},${(percent % 100).toString().padStart(2, '0').trimEnd('0').ifEmpty { "0" }}×"
     /** Was beim Vorlesen mit Daten passiert (steht in den Einstellungen von Android und WebApp) */
-    const val PRIVACY = "Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. " +
-        "Texte, die erst in der Aufgabe entstehen, schickt die App ohne Angaben zu dir an unseren Server stimmen.mathenachhilfe-online.com; " +
-        "dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Es werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle."
-    /** Unser Stimmen-Server. Dort liegen die MP3-Dateien; nur er spricht mit dem Dienst, der die Stimme erzeugt – die App nie. */
-    const val SERVER = "https://stimmen.mathenachhilfe-online.com"
-    const val VOICE = "nova"
-    /** Längste Texte, die der Server zur Laufzeit noch vertont ([LIVE]) */
-    const val LIVE_MAX_CHARS = 300
-    /** Hier lässt die App einen Text vertonen, den es noch nicht als Datei gibt (entsteht erst in der Aufgabe): POST {"text","sprache"} → 200 {"url"} oder 204 */
-    const val LIVE = "$SERVER/jetzt"
+    const val PRIVACY = "Vorgelesen wird mit einer KI-generierten Stimme. Die Sprachdateien sind fertig vorbereitet und liegen auf unserem eigenen Server in Deutschland; " +
+        "die App lädt nur diese Dateien. Es werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle."
+    /** Kennung der Tonstudio-Stimme im Namen einer Datei (Deutsch: „de-1“) */
+    const val VOICE = "de-1"
+    /** Längste vorhersehbare Rückmeldung, die noch mit vorab vertont wird */
+    const val PREDICTABLE_MAX_CHARS = 300
 
     /** Der Text, wie er gesprochen und für den Dateinamen gerechnet wird: vorlesefertig ([Speech.clean]) und ohne Leerraum-Reste. Leer = nichts zu sagen. */
     fun spoken(text: String) = normalize(Speech.clean(text))
-    /**
-     * Name der Datei zu einem vorlesefertigen Text: die ersten 32 Hex-Zeichen von SHA-256("nova|de|" + Text).
-     * (Der Server normalisiert zusätzlich nach Unicode-NFC; unsere Texte sind es schon – das prüft ein Test für alle festen Texte.)
-     */
+    /** Feste Kennung eines vorlesefertigen Textes (die ersten 32 Hex-Zeichen von SHA-256("de-1|de|" + Text)) – die Textliste für das Tonstudio führt sie als ID */
     fun key(spoken: String, language: String = LANGUAGE) = Sha256.hex("$VOICE|$language|$spoken").take(32)
-    /** Adresse der fertigen Datei zu einem vorlesefertigen Text */
-    fun url(spoken: String) = key(spoken).let { "$SERVER/$VOICE/${it.take(2)}/$it.mp3" }
-    // ---- Offline laden: alle festen Texte auf einmal, wahlweise in Bestqualität
-    /** Adresse einer Datei zu ihrem Namen ([key]); Bestqualität liegt im Ordner „original“ */
-    fun fileUrl(key: String, best: Boolean = false) = "$SERVER/$VOICE/${if (best) "original/" else ""}${key.take(2)}/$key.mp3"
-    /** Unter diesen Adressen läuft die WebApp – danach heißt der Zählstand des Servers (Android fragt [APP_HOST], bis es ihn gibt [TEST_HOST]) */
-    const val APP_HOST = "raumlicht.mathenachhilfe-online.com"
-    const val TEST_HOST = "raumlicht-test.mathenachhilfe-online.com"
-    /** Herkunft, mit der sich die Android-App beim Stimmen-Server meldet: Er nimmt Laufzeit-Texte nur von unseren Apps an und erkennt sie an der Adresse der WebApp. (Der Browser schickt sie von selbst mit.) */
-    const val APP_ORIGIN = "https://$APP_HOST"
-    fun standUrl(host: String) = "$SERVER/$VOICE/stand-$host.json"
-    /** Gesamtgröße aller festen Dateien aus dem Zählstand: Standard ("bytes") und Bestqualität ("bytes_original", null = noch nicht gemeldet) */
-    fun stand(json: String): Pair<Long, Long?>? = runCatching { kotlinx.serialization.json.Json.parseToJsonElement(json) as kotlinx.serialization.json.JsonObject }.getOrNull()?.let { o ->
-        val bytes = (o["bytes"] as? JsonPrimitive)?.content?.toLongOrNull() ?: return null
-        bytes to (o["bytes_original"] as? JsonPrimitive)?.content?.toLongOrNull() }
-    /** Größe für die Knöpfe: auf ganze MB gerundet, mindestens 1 */
-    fun megabytes(bytes: Long) = maxOf(1, ((bytes + 524_288) / 1_048_576).toInt())
-
-    /** Anfrage an [LIVE] für einen Text, der erst in der Aufgabe entstanden ist – enthält nur Text und Sprache, nichts über den Nutzer */
-    fun liveBody(spoken: String): String = buildJsonObject { put("text", spoken); put("sprache", LANGUAGE) }.toString()
-    /** Adresse aus der Antwort von [LIVE] ({"url": …}); null, wenn sie fehlt oder nicht auf unseren Server zeigt */
-    fun liveUrl(answer: String): String? = runCatching { kotlinx.serialization.json.Json.parseToJsonElement(answer) }.getOrNull()
-        ?.let { (it as? kotlinx.serialization.json.JsonObject)?.get("url") as? JsonPrimitive }?.content
-        ?.let { if (it.startsWith("/")) SERVER + it else it }?.takeIf { it.startsWith("$SERVER/") }
 
     /** Inhalt von `vorlesen/texte.json` */
     fun json(enabled: Boolean = ENABLED): String = buildJsonObject {

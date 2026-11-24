@@ -10,8 +10,8 @@ import kotlinx.serialization.json.put
 object Zaehler {
     const val URL = "https://trainer.mathenachhilfe-online.com/zaehler/v1/e"
     const val APP = "raumlicht"
-    /** Ereignisse, die es in Raumlicht gibt (aus der gemeinsamen, abschließenden Liste) */
-    val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "elternbereich", "nachhilfe_hinweis", "geschenk_klick")
+    /** Ereignisse, die es in Raumlicht gibt (aus der gemeinsamen, abschließenden Liste); „umzug“ sendet der Umzugs-Block in index.html, nicht die App */
+    val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "elternbereich", "nachhilfe_hinweis", "geschenk_klick", "umzug")
     val PLACES = setOf("gesperrt", "einstellungen", "link", "eingabe", "lernstand", "klassenarbeit", "geschenk", "fusszeile")
     val TOPICS = setOf("vektoren", "analysis", "stochastik")
     const val SWITCH = "Anonyme Nutzungszählung"

@@ -51,42 +51,6 @@ val LocalMix = staticCompositionLocalOf { MixChoice(100, {}, 100, {}) }
 class SpeechChoice(val rate: Int, val setRate: (Int) -> Unit)
 val LocalSpeech = staticCompositionLocalOf { SpeechChoice(100) {} }
 
-/**
- * „Alle Nova-Texte offline laden“ – was die Einstellungen dafür wissen müssen (Android und WebApp füllen es auf ihre Art).
- * @param standardBytes Gesamtgröße aller festen Dateien laut Server (null = unbekannt), [bestBytes] dasselbe in Bestqualität
- * @param best zuletzt gewählte Qualität (gemerkt)
- */
-class OfflineVoice(val loading: Boolean, val done: Int, val total: Int, val standardDone: Int, val bestDone: Int, val standardStored: Long, val bestStored: Long,
-                   val standardBytes: Long?, val bestBytes: Long?, val best: Boolean, val start: (best: Boolean) -> Unit, val cancel: () -> Unit, val delete: () -> Unit)
-
-/** Die Knöpfe zum Offline-Laden der Stimme Nova (unter „Lux spricht“) */
-@Composable
-fun OfflineVoiceCard(o: OfflineVoice) {
-    val mb = de.raumlicht.core.model.Vorlesen::megabytes
-    Column(Modifier.fillMaxWidth().padding(top = 8.dp).testTag("offline"), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Text("📥 Nova ohne Internet", style = MaterialTheme.typography.bodyLarge)
-        Text("Lade alle festen Texte auf einmal – am besten im WLAN. Dann spricht Lux auch ohne Internet mit Nova. Texte, die erst in der Aufgabe entstehen, brauchen weiter Internet.",
-            style = MaterialTheme.typography.bodySmall, color = Q.Muted)
-        if (o.loading) {
-            Text("Lädt … ${o.done} von ${o.total}", Modifier.testTag("offline-stand"), style = MaterialTheme.typography.bodySmall, color = Q.Cyan)
-            androidx.compose.material3.LinearProgressIndicator({ if (o.total > 0) o.done / o.total.toFloat() else 0f }, Modifier.fillMaxWidth())
-            androidx.compose.material3.OutlinedButton(o.cancel, Modifier.testTag("offline-abbrechen")) { Text("Abbrechen") }
-        } else {
-            @Composable fun choice(best: Boolean, have: Int, stored: Long, size: Long?) {
-                val name = if (best) "Bestqualität" else "Standard"
-                if (o.total > 0 && have >= o.total) Text("✓ $name ist vollständig geladen", Modifier.testTag(if (best) "offline-best-fertig" else "offline-standard-fertig"), style = MaterialTheme.typography.bodySmall, color = Q.Green)
-                else androidx.compose.material3.OutlinedButton({ o.start(best) }, Modifier.fillMaxWidth().testTag(if (best) "offline-best" else "offline-standard")) {
-                    Text((if (have > 0) "Weiter laden" else "Offline laden") + " – $name" + (size?.let { " (ca. ${mb((it - stored).coerceAtLeast(0))} MB)" } ?: "") +
-                        (if (best == o.best && have > 0) " · $have von ${o.total}" else "")) }
-            }
-            choice(false, o.standardDone, o.standardStored, o.standardBytes)
-            choice(true, o.bestDone, o.bestStored, o.bestBytes)
-            val stored = o.standardStored + o.bestStored
-            if (stored > 0) androidx.compose.material3.OutlinedButton(o.delete, Modifier.testTag("offline-loeschen")) { Text("Offline-Stimme löschen (${mb(stored)} MB)") }
-        }
-    }
-}
-
 /** Raumlicht Pro in den Einstellungen: Ziel des Eintrags (null = kein Eintrag, solange Raumlicht Pro nicht erhältlich ist) und ob er freigeschaltet ist */
 val LocalProEntry = staticCompositionLocalOf<(() -> Unit)?> { null }
 val LocalProActive = staticCompositionLocalOf { false }

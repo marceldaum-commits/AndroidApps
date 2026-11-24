@@ -173,6 +173,14 @@ Freiwilliger, Ende-zu-Ende verschlüsselter Eltern-Bericht (`core/model/…/Elte
 
 ![](screenshots/94_eltern_tor.png)
 
+**Verbindung zu den Eltern lösen (seit 2.18.39):** erst die Altersfrage – ab 16 selbst, darunter nur über das Eltern-Tor.
+
+![](screenshots/96_kopplung_loesen.png)
+
+**PC-Ansicht (seit 2.18.39):** Bühne links, Bedienung rechts; das Begrüßungsfenster einer Aufgabe ist eine schmale Karte rechts.
+
+![](screenshots/97_pc_breit.png)
+
 **Familien-Speicher (für Eltern, vorerst nur Teststufe):** Familie anlegen oder mit dem Familien-Link beitreten – der Lernstand liegt verschlüsselt im gemeinsamen Speicher aller Lern-Apps.
 
 ![](screenshots/95_familie.png)
@@ -195,13 +203,11 @@ Safari 26/27 zeigt mit der Kotlin/Wasm-Fassung eine weiße Seite. Darum baut `./
 Die Startseite wählt (`modus=auto`): WebKit/Safari, Browser ohne WebAssembly-GC und Geräte, auf denen die Wasm-Fassung nicht startet, bekommen die JavaScript-Fassung. Von Hand: `?modus=js`, `?modus=wasm`; Schritte des Starts: `?diag=1`.
 Die JS-Quelltexte erzeugt `tools/webjs/gen.py` beim Bau aus `src/wasmJsMain` (nur die eingebetteten `js("…")`-Schnipsel werden umgesetzt). Prüfung: `node scene/test/web-modus.mjs webapp <Bilder>`.
 
-## Vorlesen mit „Nova“ (seit 2.17.0)
+## Vorlesen (abgeschaltet)
 
-> **Seit 2.18.14 abgeschaltet** (`Vorlesen.ENABLED = false`): kein Schalter in den Einstellungen, keine Abrufe am Stimmen-Server, `texte.json` wird leer ausgeliefert. Der Code bleibt; das Folgende gilt wieder, sobald der Schalter auf `true` steht.
+> **Seit 2.18.14 abgeschaltet** (`Vorlesen.ENABLED = false`): kein Schalter in den Einstellungen, keine Abrufe, `texte.json` wird leer ausgeliefert. Die frühere Anbindung an einen Sprachdienst eines Dritten ist seit 2.18.39 vollständig entfernt.
 
-Lux liest mit der KI-generierten Stimme „Nova“ vor. Die App rechnet nichts: Zu jedem vorlesefertigen Text liegt auf unserem Server eine MP3-Datei.
-`./gradlew :web:webapp` erzeugt dafür `webapp/vorlesen/texte.json` (alle festen Texte, Quelle `core/model/…/Vorlesen.kt`); der Server holt die Liste und vertont Neues vorab.
-Texte, die erst in der Aufgabe entstehen, lässt die App über den Server erzeugen. Einzelheiten: `VORLESEN_FUER_ANDERE_APPS.md`.
+Kommt das Vorlesen zurück, dann mit fertigen Sprachdateien aus dem eigenen Tonstudio (KI-generierte Stimme, eigener Server, nur Deutsch, Tempo normal). Grundlage ist die Textliste aus `core/model/…/Vorlesen.kt` (alle festen Texte, vorlesefertig, mit fester Kennung); `./gradlew :web:webapp` erzeugt daraus `webapp/vorlesen/texte.json`. Einzelheiten: `VORLESEN_FUER_ANDERE_APPS.md`.
 
 ## Zwei Fassungen: GitHub und Play Store
 

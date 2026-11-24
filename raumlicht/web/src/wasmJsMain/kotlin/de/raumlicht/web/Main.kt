@@ -84,7 +84,7 @@ private fun WebApp() {
     val musicLevel by prefs.musicLevel.collectAsState(); val voiceOn by prefs.voice.collectAsState()
     var exam by remember { mutableStateOf(false) }; var talking by remember { mutableStateOf(false) }
     // unter der Stimme wird die Musik leiser
-    LaunchedEffect(voiceOn) { while (voiceOn) { talking = speaking() || novaSpeaking(); kotlinx.coroutines.delay(250) }; talking = false }
+    LaunchedEffect(voiceOn) { while (voiceOn) { talking = speaking(); kotlinx.coroutines.delay(250) }; talking = false }
     // Musik: aus im Prüfungsmodus, eigene Lautstärke, leiser unter der Stimme
     LaunchedEffect(musicOn, loud, mood, musicLevel, exam, talking) { musicWant(if (musicOn && !exam) mood.name else null, 0.75 * loud / 100.0 * musicLevel / 100.0 * (if (talking) 0.35 else 1.0)) }
     // Zurück-Taste des Browsers schließt eine Ebene
@@ -93,26 +93,16 @@ private fun WebApp() {
     val sfx = remember { WebSfx(prefs) }
     val voiceStatus = remember { de.raumlicht.app.ui.fx.VoiceStatus() }
     val speaker = remember { object : Speaker {
-        // „Nova“ (KI-generierte Stimme): fertige Datei von unserem Server; kommt sie nicht (offline), liest diesen Satz still die Stimme des Geräts
+        // Vorlesen ist aus (Vorlesen.ENABLED). Kommt es mit den fertigen Tonstudio-Dateien wieder, wird der Sprecher hier angeschlossen; bis dahin nur die Stimme des Geräts.
         override fun say(text: String) { if (Vorlesen.ENABLED && prefs.voice.value && prefs.volume.value > 0) Vorlesen.spoken(text).takeIf { it.isNotEmpty() }?.let { spoken ->
-            stopSpeaking(); val volume = prefs.volume.value / 100.0
-            val rate = prefs.speechRate.value / 100.0
-            val mine = ++novaTurn; voiceStatus.loading = true
-            novaSay(Vorlesen.SERVER, Vorlesen.url(spoken), if (spoken.length <= Vorlesen.LIVE_MAX_CHARS) Vorlesen.LIVE else "", Vorlesen.liveBody(spoken), volume, rate)
-                .then { r -> if (mine == novaTurn) voiceStatus.loading = false
-                    when (r.toString()) {
-                        // die Stimme des Geräts nur, wenn wirklich kein Netz da ist (und nichts gespeichert war) …
-                        "offline" -> { voiceStatus.unreachable(); if (prefs.voice.value && mine == novaTurn) speak(spoken, volume, rate) }
-                        // … sonst bleibt dieser eine Satz stumm
-                        "fehlt" -> voiceStatus.unreachable()
-                    }; null } } }
-        override fun sayIfQuiet(text: String) { if (!speaking() && !novaSpeaking()) say(text) }
+            stopSpeaking(); speak(spoken, prefs.volume.value / 100.0, prefs.speechRate.value / 100.0) } }
+        override fun sayIfQuiet(text: String) { if (!speaking()) say(text) }
     } }
     CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides (if (Vorlesen.ENABLED) speaker else null), de.raumlicht.app.ui.fx.LocalVoiceStatus provides voiceStatus,
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.CRASH -> 40 }) },
         LocalShareText provides { text -> shareText(text) }) {
         RaumlichtTheme { Surface(Modifier.fillMaxSize(), color = Q.Space) {
-            AppRoot(nav, prefs, stars.all, stars::record, { todayLocal().toLong() },
+            de.raumlicht.app.ui.home.BigScreenScale { AppRoot(nav, prefs, stars.all, stars::record, { todayLocal().toLong() },
                 eltern = remember { val test = isTestSite() || elternServer() != null
                     if (!de.raumlicht.core.model.Eltern.ENABLED && !test) null else de.raumlicht.app.ui.settings.ElternPlatform(elternServer() ?: if (test) de.raumlicht.core.model.Eltern.TEST_SERVER else de.raumlicht.core.model.Eltern.SERVER,
                         if (test) de.raumlicht.core.model.Eltern.TEST_PAGE else de.raumlicht.core.model.Eltern.PAGE, ::elternNeu, ::elternSenden, ::elternLoeschen, ::elternHolen, ::snapshot, ::restoreSnapshot, ::elternGeloest) },
@@ -136,44 +126,18 @@ private fun WebApp() {
                             } }
                         },
                         onReset = { stars.clear(); prefs.resetProgress() }, volume = volume, onVolume = prefs::setVolume,
-                        voice = voice, onVoice = { prefs.setVoice(it); if (!it) { stopSpeaking(); novaStop() } },
-                        offline = if (!Vorlesen.ENABLED) null else run {
-                            // Stand aus dem Browser übernehmen, solange die Einstellungen offen sind
-                            var tick by remember { mutableStateOf(0) }; var best by remember { mutableStateOf(prefs.voiceBest) }
-                            // Größe nur erfragen, wenn Vorlesen eingeschaltet ist – sonst geht die App nicht ins Netz
-                            LaunchedEffect(voice) { if (voice) offRefresh(Vorlesen.SERVER); while (true) { kotlinx.coroutines.delay(400); tick++ } }
-                            tick.let { de.raumlicht.app.ui.settings.OfflineVoice(offFlag("loading"), offNum("done").toInt(), offNum("total").toInt(), offNum("standardDone").toInt(), offNum("bestDone").toInt(),
-                                offNum("standardStored").toLong(), offNum("bestStored").toLong(), offNum("standardBytes").toLong().takeIf { it >= 0 }, offNum("bestBytes").toLong().takeIf { it >= 0 }, best,
-                                start = { b -> prefs.voiceBest = b; best = b; offStart(Vorlesen.SERVER, b) }, cancel = { offCancel() }, delete = { offRemove(Vorlesen.SERVER) }) }
-                        }.takeIf { offAvailable() },
+                        voice = voice, onVoice = { prefs.setVoice(it); if (!it) stopSpeaking() },
                         onLicenses = { openLink("lizenzen.txt") },
                         soundNote = if (appleTouch()) "Kein Ton? Auf iPhone und iPad bleibt Raumlicht still, solange das Gerät stumm geschaltet ist (Schalter an der Seite oder Glocke im Kontrollzentrum)." else null,
                         privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine fremde Werbung, keine Käufe. " +
                             "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. " + (if (Vorlesen.ENABLED) "Ins Internet geht sie sonst nur zum Vorlesen, wenn du „Lux spricht“ einschaltest. " + Vorlesen.PRIVACY else "Sonst geht sie nicht ins Internet."))
-                })
+                }) }
         } }
     }
 }
 
 /** iPhone oder iPad (auch iPadOS, das sich als Mac ausgibt)? Dort schaltet der Stumm-Schalter auch den Ton von Webseiten ab. */
 private fun appleTouch(): Boolean = js("/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)")
-
-// ---- Stimme „Nova“ (siehe resources/rl-nova.js)
-private fun novaSay(server: String, url: String, live: String, body: String, volume: Double, rate: Double): kotlin.js.Promise<JsString> =
-    js("(window.__rlNova ? window.__rlNova.say(server, url, live, body, volume, rate) : Promise.resolve('fehlt'))")
-private fun novaStop(): Unit = js("{ if (window.__rlNova) window.__rlNova.stop(); }")
-private fun novaSpeaking(): Boolean = js("!!(window.__rlNova && window.__rlNova.speaking)")
-// ---- „Alle Nova-Texte offline laden“ (siehe rl-nova.js)
-private fun offAvailable(): Boolean = js("!!(window.__rlNova && window.__rlNova.offline && 'caches' in window && window.crypto && window.crypto.subtle)")
-private fun offNum(name: String): Double = js("(window.__rlNova && window.__rlNova.offline ? Number(window.__rlNova.offline[name]) || 0 : 0)")
-private fun offFlag(name: String): Boolean = js("!!(window.__rlNova && window.__rlNova.offline && window.__rlNova.offline[name])")
-private fun offRefresh(server: String): Unit = js("{ if (window.__rlNova && window.__rlNova.offline) window.__rlNova.offline.refresh(server); }")
-private fun offStart(server: String, best: Boolean): Unit = js("{ window.__rlNova.offline.start(server, best); }")
-private fun offCancel(): Unit = js("{ window.__rlNova.offline.cancel(); }")
-private fun offRemove(server: String): Unit = js("{ window.__rlNova.offline.remove(server); }")
-
-/** laufende Nummer des letzten Satzes – ein älterer darf den Ladehinweis nicht mehr ändern */
-private var novaTurn = 0
 
 /**
  * „App installieren“ in den Einstellungen: nur sichtbar, solange Raumlicht noch nicht als App installiert ist.

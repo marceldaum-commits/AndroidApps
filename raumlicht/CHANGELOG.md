@@ -2,6 +2,17 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.39 – Neue Startanimation, bessere PC-Ansicht, Verbindung zu den Eltern lösen mit Altersfrage (24.11.2026)
+- **Neue Startanimation** (für alle unsere Lern-Apps gleich): Beim Start erscheint ein schwarzer Bildschirm mit einem weißen Logo, das ruhig „atmet“. Ist Raumlicht bereit, zieht sich das Logo kurz zusammen, wächst groß heraus und der Bildschirm blendet aus – höchstens 4 Sekunden. Wer weniger Bewegung eingestellt hat, sieht nur ein kurzes Ausblenden. Hängt der Start oder gibt es eine Störung, bleibt die bekannte Anzeige mit Fortschritt und „Neu laden“ sichtbar.
+- **PC-Ansicht:** Das Begrüßungsfenster einer Aufgabe ist jetzt eine schmale Karte rechts, die Bühne links bleibt frei. Galton-Brett, Achterbahn-Baumeister und Ringflug zeigen am PC die Bühne links und die Bedienung rechts, statt alles in die Breite zu ziehen. Auf großen Fenstern (ab etwa 1500 Pixeln Breite) ist die ganze Oberfläche etwas größer.
+- **Nur für Erwachsene sichtbar:** Der Familien-Speicher ist weiter nur auf der Teststufe.
+- **Verbindung zu den Eltern lösen:** Vor dem Lösen fragt Raumlicht „Bist du 16 oder älter?“. Ab 16 löst man selbst – die Eltern sehen dann auf ihrer Seite „Die Verbindung wurde von deinem Kind gelöst“ (ohne Lerndaten und ohne Namen, der Hinweis verschwindet nach 14 Tagen). Wer unter 16 ist, kann die Verbindung nur gemeinsam mit den Eltern über das Eltern-Tor lösen. Die Antwort auf die Altersfrage wird nicht gespeichert.
+- **Fortschritt zurücksetzen** fragt klarer nach und löscht jetzt auch den Lernverlauf – bei gekoppeltem Eltern-Handy beginnt damit auch der Bericht für die Eltern neu. Das steht so auch im Text.
+- **Zählung:** neuer, klarerer Text am Schalter („Wir zählen anonym … Du oder deine Eltern können das Zählen hier ausschalten.“).
+- **Familie anlegen** (nur Teststufe): Der Datenschutz-Link führt jetzt zum Abschnitt „Familien-Speicher“, und es steht da: „Unter 16? Dann legen bitte deine Eltern die Familie an.“
+- **Zählung „Gerät umgezogen“:** Beim Umzug zur neuen Adresse zählt Raumlicht anonym einmal „ein Gerät ist umgezogen“ – ohne Kennung, ohne Lernstand, nur wenn die Zählung nicht ausgeschaltet ist.
+- **Aufgeräumt:** Alles, was zu einem früheren Sprachdienst gehörte, ist entfernt (Code, Lizenzliste, Texte). Vorlesen bleibt aus, bis die fertigen Stimmen aus unserem eigenen Tonstudio da sind. Gespeicherte alte Sprachdateien auf dem Gerät werden gelöscht.
+
 ## 2.18.38 – KI-Antworten sind als KI gekennzeichnet; Familien-Einwilligung nach Vorgabe (19.11.2026)
 - **KI-Tutor:** Unter jeder Antwort steht jetzt klein „Antwort einer KI – sie kann Fehler enthalten.“ So ist immer klar, dass hier eine KI antwortet.
 - **Familien-Speicher (nur Teststufe):** Es gibt nur noch einen Einwilligungstext. Darunter stehen der Link „Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)“ und die Knöpfe „Einverstanden – Familie anlegen“ bzw. „Einverstanden – Familie beitreten“. Wer nicht tippt, lädt nichts hoch.

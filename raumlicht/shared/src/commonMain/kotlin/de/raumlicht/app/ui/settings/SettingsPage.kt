@@ -30,8 +30,6 @@ fun SettingsPage(
     voice: Boolean = true, onVoice: (Boolean) -> Unit = {},
     /** Gibt es das Vorlesen überhaupt? (seit 2.18.14 abgeschaltet – Tests schalten es ein) */
     voiceOffered: Boolean = de.raumlicht.core.model.Vorlesen.ENABLED,
-    /** „Alle Nova-Texte offline laden“ (null = wird nicht angeboten) */
-    offline: OfflineVoice? = null,
     /** Warum gerade nichts zu hören ist oder sein könnte (z. B. Handy stumm geschaltet) – steht gut sichtbar über den Ton-Schaltern; null = kein Hinweis */
     soundNote: String? = null,
     /** Bericht über den letzten unerwarteten Abbruch (null = keiner) */
@@ -74,9 +72,9 @@ fun SettingsPage(
                     if (voiceOffered) Toggle("🗣️ Lux spricht", "Aus, bis du es einschaltest: Lux liest ihre Sprechblasen laut vor.", voice) {
                         onVoice(it); if (it) speaker?.say("Hallo, ich bin Lux!") }
                     if (voiceOffered && voice) {
-                        // Stimmenwahl: Nova oder Vorlesen aus. Die Kennzeichnung als KI-Stimme ist Pflicht.
+                        // Die Kennzeichnung als KI-Stimme ist Pflicht.
                         Text("Stimme: ${de.raumlicht.core.model.Vorlesen.VOICE_LABEL}", Modifier.padding(top = 2.dp).testTag("stimme-name"), style = MaterialTheme.typography.bodyLarge)
-                        Text("Nova braucht Internet. Schon gehörte Sätze bleiben auf dem Gerät gespeichert. Ohne Netz springt still die Stimme des Geräts ein.",
+                        Text("Die Stimme ist KI-generiert. Die fertigen Sprachdateien kommen von unserem eigenen Server.",
                             style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                         // Sprechtempo in sechs Stufen: dieselbe Aufnahme schneller oder langsamer, bei gleicher Tonhöhe
                         val speech = LocalSpeech.current; val tempos = de.raumlicht.core.model.Vorlesen.TEMPOS
@@ -84,7 +82,6 @@ fun SettingsPage(
                         Slider(tempos.indexOf(speech.rate).coerceAtLeast(0) / (tempos.size - 1f), { speech.setRate(tempos[(it * (tempos.size - 1)).roundToInt().coerceIn(0, tempos.size - 1)]) },
                             Modifier.testTag("sprechtempo"), steps = tempos.size - 2)
                         OutlinedButton({ speaker?.say("Hallo, ich bin Lux. So klinge ich jetzt.") }, Modifier.testTag("hoerprobe")) { Text("▶ So klingt es") }
-                        offline?.let { OfflineVoiceCard(it) }
                     }
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
                     Text("🔉 Lautstärke: $volume %", Modifier.padding(top = 8.dp).testTag("lautstaerke-text"), style = MaterialTheme.typography.bodyLarge)
