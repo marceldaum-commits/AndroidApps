@@ -1,5 +1,8 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.5.4 – Datenschutz-Seite aktualisiert (24.11.2026)
+- Die Datenschutz-Seite in der App nennt jetzt die tatsächlichen KI-Stimmen (Kokoro-82M, gekennzeichnet) und erwähnt die entfernte Stimme „Nova“ nicht mehr. Die App ruft keine Stimmen von fremden Servern ab.
+
 ## 0.5.3 – Texte von Recht eingebaut (24.11.2026)
 - Die Elterntexte zur Aussprache-Auswertung und die Kinder-Datenschutzseite („Deine Daten“) haben jetzt den endgültigen Wortlaut. Sichtbar werden sie erst, wenn die Auswertung bzw. der Familien-Speicher eingeschaltet wird; bis dahin ändert sich für euch nichts.
 - „Im Gerät“ steht nicht zur Auswahl, solange es das noch nicht gibt. „Aus“ ist vorgewählt, „Über unseren Server“ nie.
