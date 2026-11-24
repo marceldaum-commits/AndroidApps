@@ -39,13 +39,15 @@ import de.raumlicht.core.model.Qr
  * @param load holt die Sicherung von [url] und entschlüsselt sie; [done] bekommt Status (200, 404, 0 = keine Verbindung, -1 = Schlüssel passt nicht) und Klartext
  * @param snapshot der Speicherstand der App für die Sicherung
  * @param apply setzt den Speicherstand aus einer Sicherung samt Kopplung und startet die App neu
+ * @param release schickt den Vermerk „vom Kind gelöst“ (statt zu löschen); null = nur Löschen
  */
 class ElternPlatform(val server: String, val page: String, val create: () -> String,
                      val send: (url: String, write: String, key: String, json: String, done: (Int) -> Unit) -> Unit,
                      val remove: (url: String, write: String, done: (Int) -> Unit) -> Unit,
                      val load: ((url: String, key: String, done: (Int, String) -> Unit) -> Unit)? = null,
                      val snapshot: (() -> Map<String, String>)? = null,
-                     val apply: ((data: Map<String, String>, pairing: String) -> Unit)? = null)
+                     val apply: ((data: Map<String, String>, pairing: String) -> Unit)? = null,
+                     val release: ((url: String, write: String, key: String, json: String, done: (Int) -> Unit) -> Unit)? = null)
 
 /** Eintrag in den Einstellungen: Ziel und ob gerade gekoppelt ist (null = gibt es hier nicht) */
 class ElternEntryState(val open: () -> Unit, val paired: Boolean)
@@ -70,11 +72,13 @@ fun QrImage(text: String, modifier: Modifier = Modifier) {
  * @param onRestore „Fortschritt wiederherstellen“ mit dem eingefügten Link (null = gibt es hier nicht)
  */
 @Composable
-fun ElternScreen(pairing: Eltern.Pairing?, page: String, status: String?, onPair: (name: String) -> Unit, onUnpair: () -> Unit, onSendNow: () -> Unit, onBack: () -> Unit,
+fun ElternScreen(pairing: Eltern.Pairing?, page: String, status: String?, onPair: (name: String) -> Unit, onUnpair: (byChild: Boolean) -> Unit, onSendNow: () -> Unit, onBack: () -> Unit,
                  backup: String? = null, restoreStatus: String? = null, restoreAsk: String? = null, onRestore: ((link: String) -> Unit)? = null, onRestoreYes: () -> Unit = {}, onRestoreNo: () -> Unit = {}) {
     val share = LocalShareText.current; val sfx = LocalSfx.current
     var name by rememberSaveable { mutableStateOf("") }
-    var sure by rememberSaveable { mutableStateOf(false) }
+    // Lösen: 0 nichts · 1 Altersfrage · 2 selbst lösen (ab 16) · 3 „Nein“: nur die Eltern · 4 Eltern bestätigen (nach dem Eltern-Tor)
+    var step by rememberSaveable { mutableStateOf(0) }
+    val gate = LocalElternTor.current
     var link by rememberSaveable { mutableStateOf("") }
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
         Bar("Eltern-Handy koppeln", onBack)
@@ -117,12 +121,37 @@ fun ElternScreen(pairing: Eltern.Pairing?, page: String, status: String?, onPair
                 if (!backup.isNullOrEmpty()) Text(backup, Modifier.testTag("eltern-sicherung-status"), color = Q.Muted, fontSize = 13.sp)
                 Text("Der Bericht aktualisiert sich nach dem Lernen von selbst, höchstens alle 10 Minuten.", color = Q.Muted, fontSize = 12.sp)
                 NeonButton(onSendNow, Modifier.fillMaxWidth().testTag("eltern-senden"), color = Q.Muted) { Text("Bericht jetzt aktualisieren") }
-                if (!sure) Text("Kopplung aufheben", Modifier.testTag("eltern-aufheben").clickable { sure = true }.padding(vertical = 10.dp), color = Q.Orange, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                if (step == 0) Text("Kopplung aufheben", Modifier.testTag("eltern-aufheben").clickable { step = 1 }.padding(vertical = 10.dp), color = Q.Orange, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 else Column(Modifier.fillMaxWidth().background(Q.Deep, RoundedCornerShape(18.dp)).border(1.dp, Q.Orange.copy(alpha = 0.7f), RoundedCornerShape(18.dp)).padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("Wirklich aufheben? Bericht und Sicherung werden gelöscht; der Link deiner Eltern zeigt dann nichts mehr. Dein Lernstand auf diesem Gerät bleibt.", color = Q.Text, fontSize = 14.sp)
-                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        NeonButton({ sure = false; onUnpair() }, Modifier.weight(1f).testTag("eltern-aufheben-ja"), color = Q.Orange) { Text("Ja, aufheben") }
-                        NeonButton({ sure = false }, Modifier.weight(1f), color = Q.Muted) { Text("Abbrechen") }
+                    when (step) {
+                        1 -> {   // Altersfrage (Selbstauskunft, wird nicht gespeichert); beide Knöpfe gleich gestaltet, keine Vorauswahl
+                            Text(Eltern.RELEASE_ASK, Modifier.testTag("eltern-alter-frage"), color = Q.Text, fontSize = 14.sp)
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                NeonButton({ step = 2 }, Modifier.weight(1f).testTag("eltern-alter-ja"), color = Q.Cyan) { Text(Eltern.RELEASE_YES) }
+                                NeonButton({ step = 3 }, Modifier.weight(1f).testTag("eltern-alter-nein"), color = Q.Cyan) { Text(Eltern.RELEASE_NO) }
+                            }
+                        }
+                        2 -> {   // ab 16: selbst lösen – die Eltern-Seite zeigt danach „vom Kind gelöst“
+                            Text(Eltern.RELEASE_SELF, Modifier.testTag("eltern-loesen-text"), color = Q.Text, fontSize = 14.sp)
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                NeonButton({ step = 0 }, Modifier.weight(1f).testTag("eltern-loesen-abbrechen"), color = Q.Muted) { Text("Abbrechen") }
+                                NeonButton({ step = 0; onUnpair(true) }, Modifier.weight(1f).testTag("eltern-loesen-ja"), color = Q.Orange) { Text("Verbindung lösen") }
+                            }
+                        }
+                        3 -> {   // unter 16: nur die Eltern – über das Eltern-Tor
+                            Text(Eltern.RELEASE_PARENTS, Modifier.testTag("eltern-nur-eltern"), color = Q.Text, fontSize = 14.sp)
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                NeonButton({ gate { step = 4 } }, Modifier.weight(1f).testTag("eltern-zum-bereich"), color = Q.Cyan) { Text("Zum Elternbereich") }
+                                NeonButton({ step = 0 }, Modifier.weight(1f).testTag("eltern-zurueck"), color = Q.Muted) { Text("Zurück") }
+                            }
+                        }
+                        else -> {   // Eltern haben das Tor geöffnet: löschen wie bisher, ohne Vermerk
+                            Text("Wirklich aufheben? Bericht und Sicherung werden gelöscht; der Link deiner Eltern zeigt dann nichts mehr. Dein Lernstand auf diesem Gerät bleibt.", color = Q.Text, fontSize = 14.sp)
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                NeonButton({ step = 0; onUnpair(false) }, Modifier.weight(1f).testTag("eltern-aufheben-ja"), color = Q.Orange) { Text("Ja, aufheben") }
+                                NeonButton({ step = 0 }, Modifier.weight(1f), color = Q.Muted) { Text("Abbrechen") }
+                            }
+                        }
                     }
                 }
             }

@@ -42,6 +42,19 @@ object Eltern {
             fun fresh(values: String, name: String) = decode(values + "." + name.trim().replace('.', ' ').take(MAX_NAME))
         }
     }
+    // Wortlaute von „Recht“ (V26) für das Lösen der Verbindung
+    const val RELEASE_ASK = "Verbindung zu deinen Eltern lösen? Bist du 16 oder älter?"
+    const val RELEASE_YES = "Ja, ich bin 16 oder älter"
+    const val RELEASE_NO = "Nein"
+    const val RELEASE_SELF = "Wenn du die Verbindung löst, sehen deine Eltern deinen Lernbericht nicht mehr. Wirklich lösen?"
+    const val RELEASE_PARENTS = "Dann können nur deine Eltern die Verbindung lösen – im Elternbereich."
+    /** Höchstens so viele Zeichen darf der verschlüsselte Vermerk „vom Kind gelöst“ haben (Vorgabe des Leitstands) */
+    const val MAX_RELEASE = 2000
+    /** Vermerk „vom Kind gelöst“ (Klartext, ohne Lerndaten und ohne Namen): Die Eltern-Seite zeigt dann, dass das Kind die Verbindung selbst gelöst hat */
+    fun releaseNote(nowMs: Long): String = buildJsonObject { put("v", 1); put("status", "geloest"); put("app", Zaehler.APP); put("appName", "Raumlicht"); put("stand", iso(nowMs)) }.toString()
+    /** Merker „Vermerk noch zu senden“: „id.schreib.schluessel“ – nur bis zum nächsten erfolgreichen Senden (oder dem Ersatz-Löschen) */
+    fun pending(p: Pairing) = "${p.id}.${p.write}.${p.key}"
+    fun parsePending(s: String): Triple<String, String, String>? { val x = s.split('.'); return if (x.size == 3 && x.all { it.isNotEmpty() }) Triple(x[0], x[1], x[2]) else null }
     /** Der Link für die Eltern: Kennung und Schlüssel stehen hinter dem „#“ */
     fun link(p: Pairing, page: String = PAGE) = "$page#${p.id}.${p.key}"
     fun uploadUrl(p: Pairing, server: String = SERVER) = server + p.id
@@ -52,7 +65,7 @@ object Eltern {
     const val BACKUP_NOTE = "Solange gekoppelt ist, sichert Raumlicht deinen Lernstand zusätzlich verschlüsselt. Geht das Handy verloren oder werden die Browser-Daten gelöscht, " +
         "holst du ihn auf dem neuen Gerät mit dem Kopplungs-Link zurück. In der Sicherung stecken Sterne, Rekorde, Lernverlauf, Einstellungen und deine Freischalt-Codes."
     /** Was nicht in die Sicherung gehört: Geräte-Kennungen, die Kopplung selbst (kommt aus dem Link) und Merker dieses einen Browsers */
-    private val NOT_SAVED = setOf("kiDevice", "elternKopplung", "elternGesendet", "elternSicherung", "familie", "sparsam", "modus", "mitschrift", "startfehler", "test")
+    private val NOT_SAVED = setOf("kiDevice", "elternKopplung", "elternGesendet", "elternSicherung", "elternLoesen", "familie", "sparsam", "modus", "mitschrift", "startfehler", "test")
     fun saved(key: String) = key !in NOT_SAVED
     /** Zuerst weglassen, wenn die Sicherung zu groß würde – das braucht niemand zum Weiterlernen */
     private val DROP_FIRST = listOf("diary", "show", "ride", "flight")

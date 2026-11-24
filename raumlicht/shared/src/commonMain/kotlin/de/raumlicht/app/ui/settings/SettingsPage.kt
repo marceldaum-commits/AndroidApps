@@ -162,9 +162,11 @@ fun SettingsPage(
     )
     if (ask) AlertDialog(
         onDismissRequest = { ask = false },
-        title = { Text("Wirklich alles zurücksetzen?") },
-        text = { Text("Alle Sterne, Rekorde, Abi-Punkte, das Fehler-Tagebuch, der Kalender und das freigespielte Aussehen von Lux werden gelöscht. Das lässt sich nicht rückgängig machen.\n\nTon-Einstellungen und dein Klausur-Plan bleiben.") },
-        confirmButton = { TextButton({ ask = false; done = true; onReset() }, Modifier.testTag("zuruecksetzen-ja")) { Text("Ja, zurücksetzen", color = Q.Orange) } },
+        title = { Text("Fortschritt wirklich zurücksetzen?") },
+        text = { Text("Dein ganzer Lernstand in Raumlicht wird auf diesem Gerät gelöscht. Das lässt sich nicht rückgängig machen." +
+            (if (LocalElternEntry.current?.paired == true) "\n\nAuch der Bericht für deine Eltern beginnt dann neu." else "") +
+            "\n\nTon-Einstellungen und dein Klausur-Plan bleiben.", Modifier.testTag("zuruecksetzen-text")) },
+        confirmButton = { TextButton({ ask = false; done = true; onReset() }, Modifier.testTag("zuruecksetzen-ja")) { Text("Zurücksetzen", color = Q.Orange) } },
         dismissButton = { TextButton({ ask = false }, Modifier.testTag("zuruecksetzen-nein")) { Text("Abbrechen") } },
     )
 }

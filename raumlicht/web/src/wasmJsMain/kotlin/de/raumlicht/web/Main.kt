@@ -115,7 +115,7 @@ private fun WebApp() {
             AppRoot(nav, prefs, stars.all, stars::record, { todayLocal().toLong() },
                 eltern = remember { val test = isTestSite() || elternServer() != null
                     if (!de.raumlicht.core.model.Eltern.ENABLED && !test) null else de.raumlicht.app.ui.settings.ElternPlatform(elternServer() ?: if (test) de.raumlicht.core.model.Eltern.TEST_SERVER else de.raumlicht.core.model.Eltern.SERVER,
-                        if (test) de.raumlicht.core.model.Eltern.TEST_PAGE else de.raumlicht.core.model.Eltern.PAGE, ::elternNeu, ::elternSenden, ::elternLoeschen, ::elternHolen, ::snapshot, ::restoreSnapshot) },
+                        if (test) de.raumlicht.core.model.Eltern.TEST_PAGE else de.raumlicht.core.model.Eltern.PAGE, ::elternNeu, ::elternSenden, ::elternLoeschen, ::elternHolen, ::snapshot, ::restoreSnapshot, ::elternGeloest) },
                 familie = remember { val test = isTestSite() || familieServer() != null
                     if (!de.raumlicht.core.model.Familie.ENABLED && !test) null else de.raumlicht.app.ui.settings.FamiliePlatform(familieServer() ?: if (test) de.raumlicht.core.model.Familie.TEST_SERVER else de.raumlicht.core.model.Familie.SERVER,
                         if (test) de.raumlicht.core.model.Familie.TEST_SERVER else de.raumlicht.core.model.Familie.SERVER, test, ::familieRuf, ::snapshot, ::restoreFamily) },

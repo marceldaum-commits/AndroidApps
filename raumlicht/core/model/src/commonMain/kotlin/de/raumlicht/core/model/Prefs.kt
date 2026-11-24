@@ -74,6 +74,8 @@ interface Prefs {
     var learnMonths: String
     /** Prüfwert der zuletzt hochgeladenen Sicherung (leer = noch keine) */
     var backupMark: String
+    /** Vermerk „vom Kind gelöst“ ist noch nicht angekommen (z. B. offline): „id.schreib.schluessel“, leer = nichts offen */
+    var pendingRelease: String
     /** Familien-Speicher: was dieses Gerät über seine Familie weiß ([Familie.State], leer = keine) – bleibt auf dem Gerät */
     var family: String
     /** Zuletzt gewählte Schwierigkeit im endlosen Üben (leer = alle Stufen) */

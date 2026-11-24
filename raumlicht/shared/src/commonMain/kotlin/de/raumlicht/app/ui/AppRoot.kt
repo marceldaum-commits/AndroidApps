@@ -259,6 +259,11 @@ fun AppRoot(
     var gatePending by remember { mutableStateOf<(() -> Unit)?>(null) }
     val gate: (() -> Unit) -> Unit = { action -> if (gateFree || de.raumlicht.core.model.ElternTor.open(gateOpenedAt, de.raumlicht.app.ui.fx.nowMillis())) action() else gatePending = action }
     LaunchedEffect(nav.top, famState?.fam) { val st = famState; if (nav.top == Routes.FAMILY && st != null && familie != null) familie.call(familie.server, "protokoll", st.fam, "", "", "") { r, x, _ -> if (r == "ok") famLog = de.raumlicht.core.model.Familie.protocol(x) else if (r == "weg") { famGone(); famText = ""; famOther = null; famStatus = de.raumlicht.core.model.Familie.GONE } } }
+    // Vermerk „vom Kind gelöst“ ist beim Lösen nicht angekommen (offline): einmal beim Start nachholen, sonst das alte Löschen
+    LaunchedEffect(Unit) { val e = eltern; val rel = e?.release; val (id, write, key) = de.raumlicht.core.model.Eltern.parsePending(prefs.pendingRelease) ?: return@LaunchedEffect
+        if (e == null || rel == null) { prefs.pendingRelease = ""; return@LaunchedEffect }
+        val url = e.server + id; prefs.pendingRelease = ""
+        rel(url, write, key, de.raumlicht.core.model.Eltern.releaseNote(de.raumlicht.app.ui.fx.nowMillis())) { status -> if (status !in 200..299 && status != 409) e.remove(url, write) { } } }
     LaunchedEffect(familieLink) { if (familieLink != null && familie != null) gate { nav.go(Routes.FAMILY) } }
     CompositionLocalProvider(LocalLuxSkin provides skin, LocalLuxLook provides look,
         de.raumlicht.app.ui.settings.LocalMix provides de.raumlicht.app.ui.settings.MixChoice(prefs.musicLevel.collectAsState().value, prefs::setMusicLevel, prefs.soundLevel.collectAsState().value, prefs::setSoundLevel),
@@ -428,7 +433,13 @@ fun AppRoot(
                     backup = if (eltern.snapshot != null) backupStatus ?: "" else null, restoreStatus = restoreStatus, restoreAsk = restoreFound?.let { de.raumlicht.core.model.Eltern.germanDay(it.stand) },
                     onRestore = if (eltern.load != null) ({ link -> restore(link) }) else null, onRestoreYes = { restoreFound?.let { applyRestore(it) } }, onRestoreNo = { restoreFound = null; restoreStatus = "Nichts geändert." },
                     onPair = { name -> de.raumlicht.core.model.Eltern.Pairing.fresh(eltern.create(), name)?.let { p -> prefs.setParentLink(p.encode()); parentStatus = null; sendReport(true) } },
-                    onUnpair = { pairing?.let { p -> eltern.remove(de.raumlicht.core.model.Eltern.uploadUrl(p, eltern.server), p.write) { } }; prefs.setParentLink(""); prefs.parentSent = 0; prefs.backupMark = ""; parentStatus = null; backupStatus = null },
+                    onUnpair = { byChild -> pairing?.let { p -> val url = de.raumlicht.core.model.Eltern.uploadUrl(p, eltern.server)
+                        // Kind ab 16 löst selbst: Vermerk „vom Kind gelöst“ statt Löschen (offline: einmal beim nächsten Start nachholen); über den Elternbereich: Löschen wie bisher
+                        if (byChild && eltern.release != null) { prefs.pendingRelease = de.raumlicht.core.model.Eltern.pending(p)
+                            eltern.release.invoke(url, p.write, p.key, de.raumlicht.core.model.Eltern.releaseNote(de.raumlicht.app.ui.fx.nowMillis())) { status ->
+                                if (status in 200..299 || status == 409) prefs.pendingRelease = "" else if (status != 0) { eltern.remove(url, p.write) { }; prefs.pendingRelease = "" } }
+                        } else eltern.remove(url, p.write) { } }
+                        prefs.setParentLink(""); prefs.parentSent = 0; prefs.backupMark = ""; parentStatus = null; backupStatus = null },
                     onSendNow = { sendReport(true) }, onBack = back)
                 Routes.FAMILY -> if (familie == null) LaunchedEffect(Unit) { nav.back() }
                     // direkt angesteuert (z. B. „?ziel=familie“): erst durchs Eltern-Tor

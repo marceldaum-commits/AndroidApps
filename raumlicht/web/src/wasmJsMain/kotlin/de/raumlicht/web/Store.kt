@@ -79,6 +79,7 @@ class WebPrefs : Prefs {
     override var parentSent: Long get() = storeGet(P + "elternGesendet")?.toLongOrNull() ?: 0L; set(v) = storeSet(P + "elternGesendet", v.toString())
     override var learnLog: String get() = storeGet(P + "lernProtokoll") ?: ""; set(v) = storeSet(P + "lernProtokoll", v)
     override var learnMonths: String get() = storeGet(P + "lernMonate") ?: ""; set(v) = storeSet(P + "lernMonate", v)
+    override var pendingRelease: String get() = storeGet(P + "elternLoesen") ?: ""; set(v) = storeSet(P + "elternLoesen", v)
     override var family: String get() = storeGet(P + "familie") ?: ""; set(v) = storeSet(P + "familie", v)
     override var backupMark: String get() = storeGet(P + "elternSicherung") ?: ""; set(v) = storeSet(P + "elternSicherung", v)
     private val _countUsage = flag("zaehlen", true)
@@ -90,7 +91,7 @@ class WebPrefs : Prefs {
 
     override fun resetProgress() {
         (storeKeys(P + "intro_") + "\n" + storeKeys(P + "exam_")).split('\n').filter { it.isNotBlank() }.forEach { storeRemove(it) }
-        listOf("jamBest", "lageBest", "balloonBest", "diary", "skin", "trail", "hat").forEach { storeRemove(P + it) }
+        listOf("jamBest", "lageBest", "balloonBest", "diary", "skin", "trail", "hat", "lernProtokoll", "lernMonate").forEach { storeRemove(P + it) }   // auch der Lernverlauf: der Bericht für die Eltern beginnt neu
         _jam.value = 0; _lage.value = 0; _balloon.value = 0; _exams.value = emptyMap(); _diary.value = ""; _skin.value = "pink"; _look.value = "none" to "none"
     }
 }

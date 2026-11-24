@@ -47,6 +47,18 @@ fun elternSenden(url: String, schreib: String, key: String, json: String, done: 
             .then(function (r) { done(r.status); }, function () { done(0); });
     } catch (e) { done(0); }
 }""")
+/** Wie [elternSenden], aber als Vermerk „vom Kind gelöst“ (Header X-Geloest: 1): Der Server löscht dabei sofort die Sicherung, markiert den Eintrag und lässt ihn nach 14 Tagen verfallen */
+fun elternGeloest(url: String, schreib: String, key: String, json: String, done: (Int) -> Unit): Unit = js("""{
+    try {
+        var b64 = function (u8) { var s = ''; for (var i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i]); return btoa(s).split('+').join('-').split('/').join('_').split('=').join(''); };
+        var bin = atob(key.split('-').join('+').split('_').join('/')), raw = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) raw[i] = bin.charCodeAt(i);
+        var iv = crypto.getRandomValues(new Uint8Array(12));
+        crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['encrypt'])
+            .then(function (k) { return crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, new TextEncoder().encode(json)); })
+            .then(function (ct) { return fetch(url, { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Schreib': schreib, 'X-Geloest': '1' }, body: b64(iv) + '.' + b64(new Uint8Array(ct)), credentials: 'omit', referrerPolicy: 'no-referrer' }); })
+            .then(function (r) { done(r.status); }, function () { done(0); });
+    } catch (e) { done(0); }
+}""")
 fun elternLoeschen(url: String, schreib: String, done: (Int) -> Unit): Unit = js("{ try { fetch(url, { method: 'DELETE', headers: { 'X-Schreib': schreib }, credentials: 'omit', referrerPolicy: 'no-referrer' }).then(function (r) { done(r.status); }, function () { done(0); }); } catch (e) { done(0); } }")
 /** Holt die Sicherung und entschlüsselt sie mit [key]; [done] bekommt den Status (200 = gelesen, 404 = keine Sicherung, 0 = keine Verbindung, -1 = Schlüssel passt nicht) und den Klartext */
 fun elternHolen(url: String, key: String, done: (Int, String) -> Unit): Unit = js("""{
