@@ -1,5 +1,11 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.5.2 – Familien-Speicher und Pro-Codes vorbereitet (24.11.2026)
+- Neu im Elternbereich (noch ausgeschaltet, bis der Server und die Datenschutz-Texte freigegeben sind): **Familie anlegen oder beitreten**. Der Lernstand eures Kindes wird dann verschlüsselt gesichert und ist auf mehreren Geräten gleich – ohne Konto fürs Kind. Vorher steht der Einwilligungstext; ohne „Einverstanden“ wird nichts hochgeladen.
+- Läuft ein Gerät mit altem Stand, werden die Stände zusammengeführt statt überschrieben (höherer Kasten, jeweils der beste Wert, eigene Listen vereint).
+- Die Familie lässt sich mit Familien-Nummer wieder löschen; der Lernstand auf dem Gerät bleibt.
+- Vorbereitet, aber ausgeschaltet: Code-Prüfung für „Quasselquest Pro“ (ohne Internet, mit Schutz gegen gefälschte und gesperrte Codes) und die Sperre je Sprache. Im Kinderbereich steht an gesperrten Dingen nur „Das gehört zu Quasselquest Pro.“ – ohne Preis und ohne Kaufknopf. Pro selbst kommt als Version 1.5.0.
+
 ## 0.5.1 – Neue KI-Stimmen, Offline-Download je Sprache (24.11.2026)
 **Neue Stimmen**
 - Englisch, Französisch und Spanisch sprechen jetzt mit neuen, natürlicheren KI-Stimmen (Kokoro). Alle Sätze sind neu vertont, jeweils normal und langsam 🐢. Deutsch und Latein haben weiter keine Stimme.

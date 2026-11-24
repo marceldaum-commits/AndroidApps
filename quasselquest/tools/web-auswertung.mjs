@@ -30,7 +30,7 @@ async function neueSeite({ flag, wahl }) {
   const page = await ctx.newPage(); const anfragen = [];
   page.on('request', (r) => { if (r.url().includes('/sprache/')) anfragen.push({ methode: r.method(), url: r.url() }); });
   await page.addInitScript((f) => { window.__flag = f; }, flag);
-  await page.route('**/version.js', async (route) => { const r = await route.fetch(); let t = await r.text(); t = t.replace('window.AUSWERTUNG_AKTIV = false;', 'window.AUSWERTUNG_AKTIV = ' + (flag ? 'true' : 'false') + ';'); await route.fulfill({ response: r, body: t }); });
+  await page.route('**/version.js', async (route) => { const r = await route.fetch(); let t = await r.text(); t = t.replace('window.AUSWERTUNG_AKTIV = false;', 'window.AUSWERTUNG_AKTIV = ' + (flag ? 'true' : 'false') + ';').replace('window.FAMILIE_AKTIV = false;', 'window.FAMILIE_AKTIV = ' + (flag === 'familie' ? 'true' : 'false') + ';').replace('window.PRO_AKTIV = false;', 'window.PRO_AKTIV = ' + (flag === 'pro' ? 'true' : 'false') + ';'); await route.fulfill({ response: r, body: t }); });
   await page.goto(base + '?diag=1'); await page.waitForSelector('[data-k]');
   await page.fill('[data-name]', 'Lena'); await page.click('[data-k="3"]'); await page.click('[data-go]'); await page.waitForSelector('.world');
   if (wahl) await page.evaluate((w) => { const s = window.quasselTest.state(); s.settings.auswertung = w; window.APP_SETTINGS = s.settings; }, wahl);
@@ -103,6 +103,39 @@ console.log('\nL6: Deutsch und Latein werden nie gesendet');
     return out;
   });
   ok(Object.values(r).every((s) => s === 'nicht_gefragt') && anfragen.length === 0, 'de/la (und it/uk, noch nicht freigegeben): nicht_gefragt, 0 Anfragen ' + JSON.stringify(r));
+  await ctx.close();
+}
+console.log('\nFamilien-Speicher (Oberfläche, Server nicht live): Karte nur mit Flag, Einwilligung vor dem Hochladen, freundliche Meldung');
+{
+  for (const flag of [false, 'familie']) {
+    const { page, ctx } = await neueSeite({ flag, wahl: null }); const fam = [];
+    page.on('request', (r) => { if (r.url().includes('/familie/v1/')) fam.push(r.method()); });
+    await page.route('**/familie/v1/**', (route) => route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ fehler: 'noch_nicht_live' }) }));
+    const tor = async () => { if (await page.$('.tor')) { const z = await page.getAttribute('.tor', 'data-loesung'); for (const c of String(z)) await page.click(`.tor-taste[data-z="${c}"]`); await page.click('.tor-taste[data-ok]'); } };
+    await page.click('[data-settings]'); await tor(); await page.waitForSelector('[data-parents]'); await page.click('[data-parents]'); await tor();
+    await page.waitForSelector('[data-offline]', { timeout: 8000 });
+    const gefunden = !!(await page.$('[data-familie-karte]'));
+    if (flag === false) { ok(!gefunden && fam.length === 0, 'Flag aus: keine Familien-Karte, 0 Aufrufe'); await ctx.close(); continue; }
+    ok(gefunden, 'Flag an: Karte „Familie“ im Elternbereich');
+    await page.click('[data-neu]'); const t = await page.textContent('[data-fpflicht]');
+    ok(/verschlüsselt auf unserem Server in Deutschland/.test(t) && fam.length === 0, 'Pflichttext sichtbar, vor „Einverstanden“ 0 Aufrufe');
+    await page.click('[data-fbereich] [data-ok]'); await wait(1200);
+    ok(/noch nicht freigeschaltet/.test(await page.textContent('[data-fmeld]')) && fam.length >= 1, 'Server nicht live: freundliche Meldung, Stand bleibt auf dem Gerät');
+    await ctx.close();
+  }
+}
+console.log('\nPro (Sperre je Sprache, Schloss-Text): nur mit Flag');
+for (const flag of [false, 'pro']) {
+  const { page, ctx } = await neueSeite({ flag, wahl: null });
+  await page.click('[data-lang="fr"]'); await page.waitForSelector('[data-lp-e="fr-1-1"]'); await wait(400);
+  const zu = async (id) => page.$eval(`[data-lp-e="${id}"]`, (e) => e.classList.contains('pro-zu'));
+  if (!flag) { ok(!(await zu('fr-2-2')), 'Flag aus: nichts gesperrt (fr-2-2 offen)'); await ctx.close(); continue; }
+  ok(!(await zu('fr-1-3')) && !(await zu('fr-2-1')) && (await zu('fr-2-2')) && (await zu('fr-3-1') === false), 'Flag an: Abschnitt 1 frei, ab Abschnitt 2 nur die erste Einheit frei, fr-2-2 gesperrt');
+  await page.click('[data-lp-e="fr-2-2"]', { force: true }); await page.waitForSelector('.modal-bg [data-ok]');
+  const t = await page.textContent('.modal-bg');
+  ok(t.replace('🔒', '').replace('OK', '').trim() === 'Das gehört zu Quasselquest Pro.' && !/€|Preis|Eltern|kaufen|Shop/i.test(t), 'Schloss-Text in der Kinderansicht genau: „' + t.replace('OK', '').trim() + '“ (kein Preis, kein Kaufknopf, kein Hinweis auf Eltern)');
+  await page.click('.modal-bg [data-ok]');
+  ok(!(await page.$('[data-lp-e="fr-2-2"].gewaehlt')) && !(await page.$('.lp-lektionen')), 'Gesperrte Einheit öffnet sich nicht');
   await ctx.close();
 }
 await browser.close(); server.close();
