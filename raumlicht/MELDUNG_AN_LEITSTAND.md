@@ -2,6 +2,12 @@
 
 Neueste oben.
 
+## 24.11.2026 – 2.18.41: KI-Kennzeichnung maschinenlesbar (Recht V36 K4)
+
+- Jede KI-Antwort des KI-Tutors steht zusätzlich als verstecktes Element `#ki-erzeugt` im Seitenmodell (`data-ki-erzeugt="true"`, `data-ki-anbieter="Anthropic"`, `data-ki-hinweis="KI-erzeugt"`, Text „KI-erzeugt: …“); die sichtbare Zeile unter der Antwort bleibt. Kein Export/Kopieren in der App, daher kein Export-Vermerk nötig; kein Text-Wasserzeichen (Begründung in `store/ki-kennzeichnung.md`).
+- Test: `web-ki` (Prüfung der Attribute nach einer Antwort), `AppRootTest.kiTutor`. Keine neuen Daten, keine Änderung am Server.
+- **Rechtsbezug: ja (Art. 50 Abs. 2 KI-VO, V36 K4)**. Pflicht: live bis 01.12.2026.
+
 ## 24.11.2026 – 2.18.40: Inhalt – Kapitel „Gleichungssysteme & Gauß“ und vier neue Abi-Prüfungen
 
 - **Neues Kapitel** (angezeigt 17, intern 27, `TourTen.kt`): lineare Gleichungssysteme als drei Ebenen im Raum, 7 Aufgaben (Treppe, einmal eliminieren, Gauß, Rechenschritt, unendlich viele Lösungen, „gibt es einen Treffer?“, Abi-Check) mit neuer Theorie-Karte `lgs` samt Formelkasten. Frei sind wie bei allen Kapiteln ab 7 die ersten 2 Aufgaben. Kachel „Lineare Gleichungssysteme“ aus „Kommt bald“ entfernt.

@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.41 – KI-Antworten sind auch maschinenlesbar gekennzeichnet (24.11.2026)
+- **KI-Tutor:** Unter jeder Antwort stand schon „Antwort einer KI – sie kann Fehler enthalten.“. Jetzt ist jede Antwort zusätzlich für Vorlese-Programme und Auswertungen als „KI-erzeugt“ gekennzeichnet (Pflicht nach der KI-Verordnung, Art. 50). Für Kinder und Eltern ändert sich am Aussehen nichts; es werden keine zusätzlichen Daten gesendet oder gespeichert.
+- Wie das genau gemacht ist und warum es kein Text-Wasserzeichen gibt, steht in `store/ki-kennzeichnung.md`.
+
 ## 2.18.40 – Gleichungssysteme als drei Scheiben & vier neue Abi-Aufgaben (24.11.2026)
 - **Neues Kapitel 17 „Gleichungssysteme & Gauß“:** Jede Gleichung ist eine Scheibe im Raum, die Lösung der Punkt, in dem sich alle drei treffen. 7 Aufgaben vom einfachen „Treppen“-System bis zum vollen Gauß-Verfahren – mit Rechenschritt-Aufgabe, „Unendlich viele Treffer“ (die Scheiben treffen sich in einer Geraden), „Gibt es einen Treffer?“ (parallele Scheiben = keine Lösung) und einem Abi-Check. Dazu eine neue Theorie-Karte mit Formelkasten. Die ersten 2 Aufgaben sind frei, der Rest gehört zu Raumlicht Pro (wie bei den anderen Kapiteln).
 - **Vier neue Abi-Prüfungsaufgaben** mit je vier Teilen und 12 Punkten: **Dachfläche** (Ebene aus drei Punkten, Abstand, Regentropfen, Spiegelbild), **Baukran** (Schnittpunkt, Winkel, Abstand windschiefer Geraden, Seilmitte), **Heißluftballon** (Kugel: Mittelpunkt, Radius, Berührebene, Abstand zur Hülle) und **Wasserrutsche** (Landepunkt, Neigung, paralleler Handlauf, Punkt in 1 m Höhe). Damit gibt es jetzt 8 Prüfungsaufgaben; die erste ist frei.
