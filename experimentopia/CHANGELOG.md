@@ -1,5 +1,9 @@
 # Changelog – Experimentopia
 
+## 2.16.4 – Zählen ohne eigenen Merker (24.11.2026)
+
+- 🔒 Das anonyme Ereignis „umzug“ wird jetzt genau einmal im Umzugsschritt gesendet, ohne dass dafür ein eigener Merker auf dem Gerät angelegt wird. Weiter gilt: nur bei eingeschalteter Zählung, nur der Ereignisname, keine Kennung.
+
 ## 2.16.3 – Zählt, wie viele schon umgezogen sind (24.11.2026)
 
 - 🚚 Kommt ein Gerät an der neuen Adresse an, wird – nur bei eingeschalteter Zählung – anonym „umzug“ gezählt. Es wird nur dieser eine Name gesendet, ohne Kennung, ohne Thema, höchstens einmal je Gerät. Das Zählen ist im Elternbereich abschaltbar. Es endet, sobald die alte Adresse umleitet.

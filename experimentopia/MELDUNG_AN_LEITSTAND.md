@@ -780,3 +780,7 @@ Freischalt-Link `?pro=<Code>`, Vorbild `kurvenflug/pro/`. Sperren erst, wenn ihr
 - Nach dem Umzug (Lernstand übernommen) sendet die App beim nächsten Start einmal `{"app":"experimentopia","v":"…","ev":"umzug"}` – nur bei eingeschalteter Zählung, ohne Kennung/Thema/Ort, ein Mal je Gerät (Merker wird sofort gelöscht, auch bei ausgeschalteter Zählung).
 - Der Server muss „umzug“ für Experimentopia im Zähler freischalten (sonst wird es dort ignoriert). Entfällt mit der 301-Umleitung.
 - Rechtsbezug: ja (V45a, V31, V46). Rückweg: 2.16.2 (2c38962e).
+
+## 2.16.4 vom 24.11.2026 – „umzug“ ohne eigenen Merker (Recht V45c, nur Test)
+- Das Ereignis „umzug“ wird genau einmal im Umzugsschritt (umzug.js) gesendet; es gibt keinen eigenen Speicher-Schlüssel für die Zählung mehr (2.16.3 hatte `experimentopia.umzugneu`, entfernt). Nutzlast `{app, v, ev:"umzug"}`, nur bei eingeschalteter Zählung.
+- Rechtsbezug: ja (V45c, V31 Nr. 2, § 25 TDDDG). Rückweg: 2.16.3 (c735c1da) nur mit Vorbehalt, besser 2.16.2 (2c38962e).

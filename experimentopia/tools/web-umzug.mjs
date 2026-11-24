@@ -60,6 +60,7 @@ try {
     ok(st.url.startsWith(NEU), `weitergeleitet nach ${st.url}`);
     ok(!st.url.includes('umzug='), 'Schlüssel nicht mehr in der Adresse');
     ok(lernstand(st.ls), 'Lernstand am neuen Ort vollständig');
+    ok(!Object.keys(st.ls).some((k) => /umzugneu|zaehl/.test(k)), 'kein eigener Zähl-Schlüssel auf dem Gerät (Recht V45c)');
     ok(st.ls['experimentopia.eltern'] === ELTERN && !('exEltern' in st.ls), 'Eltern-Kopplung unter neuem Namen experimentopia.eltern');
     ok(!Object.keys(st.ls).some((k) => /^ex[A-Z]/.test(k)), `keine Namen ohne Vorsilbe (${Object.keys(st.ls).join(', ')})`);
     ok(log.put.length === 1 && log.put[0].status < 300 && log.put[0].origin === ALT.slice(0, -1), `Einmal-Sicherung hochgeladen (${log.put.map((x) => x.status)}) von ${log.put[0]?.origin}`);
