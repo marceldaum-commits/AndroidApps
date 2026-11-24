@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 24.11.2026 – 2.18.40: Inhalt – Kapitel „Gleichungssysteme & Gauß“ und vier neue Abi-Prüfungen
+
+- **Neues Kapitel** (angezeigt 17, intern 27, `TourTen.kt`): lineare Gleichungssysteme als drei Ebenen im Raum, 7 Aufgaben (Treppe, einmal eliminieren, Gauß, Rechenschritt, unendlich viele Lösungen, „gibt es einen Treffer?“, Abi-Check) mit neuer Theorie-Karte `lgs` samt Formelkasten. Frei sind wie bei allen Kapiteln ab 7 die ersten 2 Aufgaben. Kachel „Lineare Gleichungssysteme“ aus „Kommt bald“ entfernt.
+- **Vier neue Abi-Prüfungen** (`ExamsTen.kt`): Dachfläche, Baukran, Heißluftballon, Wasserrutsche – je 4 Teile à 12 BE; damit 8 Prüfungen (1 frei). Ziel 12–20 ist noch nicht erreicht; weitere folgen in den nächsten Wochen.
+- **Rechenprüfung:** `TourTenTest`/`ExamsTenTest` rechnen jede Lösung unabhängig nach (Cramersche Regel, Rang, Abstände, Winkel, Spiegelbilder). Die Aufgaben-/Kapitelzahlen in Tests und Texten laufen von 92/16 auf 99/17 (Pro-Aufzählung rechnet sich selbst).
+- **Geprüft:** Logik- und Oberflächen-Tests, Lint, Web-Build, Browser-Prüfungen (Splash, Modus, Diagnose, Störung, Update, Installation, Zählung, still, breit, Pro, KI, Eltern, Familie) grün; Bildschirmfotos 98/99 angesehen. Der Splash-Test misst jetzt mit Toleranz (er maß mitten in der Atem-Animation).
+- **Rechtsbezug: nein** – reiner Lerninhalt, keine neuen Daten, keine neuen Texte zu Datenschutz/Einwilligung. Preis/Ankündigung in der App: keine.
+
 ## 24.11.2026 – 2.18.39 auf test: Startanimation, PC-Ansicht, Tor-Regeln V26, Zählpunkt „umzug“, Aufräumen „Nova“/OpenAI, Datenschutz-Link
 
 - **Kopplung lösen mit Altersfrage (V26, Marcel 20.11. „Altersfrage“):** Wortlaute von Recht wörtlich (`Eltern.RELEASE_*`). „Ja, ich bin 16 oder älter“ → Bestätigung → **Vermerk statt Löschen:** `PUT /eltern/v1/b/<id>` mit `X-Schreib` und `X-Geloest: 1`, Body `<iv>.<ct>` (AES-GCM, gleicher Schlüssel), Klartext `{"v":1,"status":"geloest","app":"raumlicht","appName":"Raumlicht","stand":"<ISO>"}` (kein Name, keine Lerndaten, < 2000 Zeichen). Am Test-Server vorab geprüft: 204; weiterer PUT → 409 `geloest`; DELETE aufräumt. Offline: Merker (`elternLoesen`, nicht in Sicherungen), ein Versuch beim nächsten Start, sonst altes DELETE; andere Fehler → sofort DELETE. „Nein“ → „Dann können nur deine Eltern …“ → [Zum Elternbereich] öffnet das Eltern-Tor, danach Bestätigung mit DELETE ohne Vermerk. Altersantwort wird nicht gespeichert.

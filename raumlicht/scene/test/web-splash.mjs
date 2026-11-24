@@ -17,7 +17,7 @@ for (const modus of ['wasm', 'js']) {
   { const ctx = await b.newContext({ viewport: { width: 400, height: 860 }, serviceWorkers: 'block' }); const page = await ctx.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message));
     const first = await (async () => { await page.goto(url + `?modus=${modus}`, { waitUntil: 'commit' }); await page.waitForSelector('#splash', { timeout: 10000 });
       return page.evaluate(() => { const s = document.getElementById('splash'), v = s.querySelector('svg'), cs = getComputedStyle(s), r = v.getBoundingClientRect(); return { bg: cs.backgroundColor, w: Math.round(r.width), h: Math.round(r.height), anim: getComputedStyle(v).animationName, hidden: s.getAttribute('aria-hidden'), z: cs.zIndex, fill: getComputedStyle(v.querySelector('path')).fill, mitte: Math.abs(r.left + r.width / 2 - innerWidth / 2) < 1 && Math.abs(r.top + r.height / 2 - innerHeight / 2) < 1 }; }); })();
-    check(first.bg === 'rgb(5, 7, 15)' && first.w === 96 && first.h === 96 && first.hidden === 'true' && first.mitte, `${modus}: sofort schwarz (#05070f), Logo 96 px mittig, aria-hidden`);
+    check(first.bg === 'rgb(5, 7, 15)' && Math.abs(first.w - 96) <= 12 && Math.abs(first.h - 96) <= 12 && first.hidden === 'true' && first.mitte, `${modus}: sofort schwarz (#05070f), Logo 96 px mittig, aria-hidden`);
     check(first.anim === 'atmen' && first.fill === 'rgb(255, 255, 255)', `${modus}: Logo ist weiß und atmet („atmen“, 1,1 s)`);
     await page.screenshot({ path: `${out}/${modus}-1-splash.png` });
     const t0 = Date.now(); await page.waitForFunction(() => document.getElementById('start') && document.getElementById('start').dataset.fertig === '1', null, { timeout: 180000 }); const bereit = Date.now() - t0;

@@ -64,6 +64,8 @@ object TheoryFormulas {
             m = "P(p₁|p₂|p₃) ist der Punkt; n₁, n₂, n₃ und c stammen aus E: n₁x₁ + n₂x₂ + n₃x₃ = c. Das ist die Hessesche Normalform, mit P eingesetzt."),
         "abstand-parallel" to f("Gerade ∥ Ebene: d = |n⃗ · A − c| : |n⃗|", "Ebene ∥ Ebene (gleiches n⃗): d = |c₂ − c₁| : |n⃗|",
             m = "A ist irgendein Punkt der Geraden (z. B. der Stützpunkt) – bei Parallelen ist der Abstand überall gleich. c₁ und c₂ sind die rechten Seiten der beiden Ebenengleichungen."),
+        "lgs" to f("II − k · I  (k so, dass x₁ wegfällt)", "0 = 0: unendlich viele Lösungen,  0 = c (c ≠ 0): keine Lösung",
+            m = "I, II und III sind die drei Gleichungen. Du ziehst ein Vielfaches einer Zeile von einer anderen ab – die rechte Seite rechnet mit."),
         "abstand-parallele-geraden" to f("d = |(B − A) × u⃗| : |u⃗|",
             m = "A und B sind die Stützpunkte der beiden Geraden, u⃗ ist ihre gemeinsame Richtung. Dasselbe wie der Abstand des Punktes B von der Geraden durch A."),
         "winkel" to f("cos α = (a⃗ · b⃗) : (|a⃗| · |b⃗|)", "|a⃗| = √(a₁² + a₂² + a₃²)",
