@@ -879,10 +879,16 @@
         ? 'Dein Lernstand bleibt auf deinen Geräten. Wenn deine Eltern es einschalten, wird er verschlüsselt auf unserem Server in Deutschland gesichert, damit du auf mehreren Geräten weiterüben kannst. Wir schauen ihn uns nicht an und geben ihn nicht weiter. Deine eigenen Wörterlisten werden dabei auch verschlüsselt gesichert. Deine Antworten und dein Name werden dabei nicht an uns gesendet.'   // Recht V40 Fassung A + V42 (Wörterlisten)
         : 'Deine Antworten, dein Name und dein Lernstand bleiben auf <b>diesem Gerät</b>.'],
       ['🙈', 'Du brauchst <b>kein Konto</b> und keine E-Mail. Deinen Namen musst du nicht verraten – ein Spitzname reicht.'],
-      ['🎤', 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme bleibt auf dem Gerät und wird nach dem Anhören gelöscht. Nur wenn deine Eltern es erlauben, darf die Spracherkennung deines Browsers übers Internet mithelfen.'],
+      ['🎤', window.AUSWERTUNG_AKTIV
+        ? 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme bleibt auf dem Gerät und wird nach dem Anhören gelöscht. Nur wenn deine Eltern es erlauben, wird sie zum Auswerten an unseren Server geschickt und dort sofort gelöscht.'   // Recht V39
+        : 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme bleibt auf dem Gerät und wird nach dem Anhören gelöscht. Nur wenn deine Eltern es erlauben, darf die Spracherkennung deines Browsers übers Internet mithelfen.'],
       ['🚫', 'Hier gibt es <b>keine Werbung</b>. Wir zählen nur anonym, wie oft etwas in der App benutzt wird – ohne deinen Namen und ohne deine Antworten. Deine Eltern können das Zählen ausschalten.'],
-      ['📒', 'Deine eigenen Wortlisten bleiben auch nur hier auf dem Gerät.'],
-      ['👪', 'Manche Dinge, zum Beispiel die Spracherkennung übers Internet, können nur Erwachsene einschalten.'],
+      ['📒', window.FAMILIE_AKTIV && window.FAMILIE && window.FAMILIE.gekoppelt()
+        ? 'Deine eigenen Wortlisten werden nur gesichert, wenn deine Eltern den Familien-Speicher eingeschaltet haben – verschlüsselt.'
+        : 'Deine eigenen Wortlisten bleiben auch nur hier auf dem Gerät.'],
+      ['👪', window.AUSWERTUNG_AKTIV || window.FAMILIE_AKTIV
+        ? 'Manche Dinge, zum Beispiel die Spracherkennung übers Internet' + (window.FAMILIE_AKTIV ? ' oder der Familien-Speicher' : '') + ', können nur Erwachsene einschalten.'   // Recht V39/V40
+        : 'Manche Dinge, zum Beispiel die Spracherkennung übers Internet, können nur Erwachsene einschalten.'],
     ];
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">🔒 Deine Daten</div></div>
@@ -1145,10 +1151,11 @@
         <p class="muted" style="font-size:14px">Jetzt aktiv: <b data-mode></b></p>
         <p class="muted" style="font-size:14px" data-hint></p></div>
       ${window.AUSWERTUNG && window.AUSWERTUNG.aktiv() ? `<div class="card" style="margin-top:14px" data-auswertung><h3>🎯 Aussprache-Auswertung</h3>
-        <p class="muted">Beim Nachsprechen kann die App prüfen, ob der Satz verstanden wurde, und Sterne geben. Ihr entscheidet, wie – die Wahl könnt ihr jederzeit ändern. Deutsch und Latein werden nie ausgewertet.</p>
-        <label class="radio" style="opacity:.5"><input type="radio" name="ausw" value="geraet" disabled><span><b>Im Gerät</b><br><span class="muted">Die Aufnahme bleibt auf dem Gerät. Auf diesem Gerät noch nicht verfügbar.</span></span></label>
-        <label class="radio"><input type="radio" name="ausw" value="server" ${window.AUSWERTUNG.wahl() === 'server' ? 'checked' : ''}><span><b>Über unseren Server in Deutschland</b><br><span class="muted">Kein Download. Die Aufnahme (höchstens 15 Sekunden) wird nur gesendet, wenn euer Kind nachspricht, sofort ausgewertet und gelöscht. Es wird nichts gespeichert und nichts mitgeschickt, was euer Kind erkennbar macht.</span></span></label>
-        <label class="radio"><input type="radio" name="ausw" value="aus" ${window.AUSWERTUNG.wahl() === 'aus' ? 'checked' : ''}><span><b>Aus</b><br><span class="muted">Keine Auswertung, keine Sterne fürs Nachsprechen. Aufnehmen und selbst Vergleichen bleibt möglich.</span></span></label></div>` : ''}
+        <p class="muted">Beim Nachsprechen kann Quasselquest bewerten, wie gut ein Satz getroffen wurde, und dafür Sterne geben. Ihr entscheidet, wie das geschieht. Ihr könnt die Auswahl jederzeit ändern.</p>
+        <!-- „Im Gerät“ (Recht V39) erst, wenn es das gibt (Weg 1, Modellgröße X MB einsetzen); bis dahin Block weglassen und „Aus“ voreinstellen. -->
+        <label class="radio"><input type="radio" name="ausw" value="server" ${window.AUSWERTUNG.wahl() === 'server' ? 'checked' : ''}><span><b>Über unseren Server in Deutschland</b><br><span class="muted">Jede Sprechaufnahme wird verschlüsselt an unseren eigenen Server in Deutschland geschickt, dort sofort ausgewertet und gleich danach gelöscht. Wir speichern die Aufnahmen nicht, geben sie nicht weiter und verwenden sie nicht zum Trainieren. Mitgeschickt werden nur die Aufnahme, der Übungssatz und die Sprache – kein Name und keine Kennung. Mit dieser Auswahl erklärt ihr als Eltern bzw. Sorgeberechtigte euer Einverständnis; ihr könnt es jederzeit widerrufen, indem ihr eine andere Möglichkeit wählt.</span></span></label>
+        <label class="radio"><input type="radio" name="ausw" value="aus" ${window.AUSWERTUNG.wahl() === 'aus' ? 'checked' : ''}><span><b>Aus</b><br><span class="muted">Keine Auswertung, keine Sterne fürs Nachsprechen. Anhören und Nachsprechen funktionieren weiter.</span></span></label>
+        <p class="muted" style="font-size:14px">Mehr dazu in der <a href="datenschutz.html#10n">Datenschutzerklärung</a> (Abschnitt 10n).</p></div>` : ''}
       ${window.PRO_AKTIV ? '<div class="card" style="margin-top:14px" data-pro-karte><h3>⭐ Quasselquest Pro</h3><div data-pro></div></div>' : ''}
       ${window.FAMILIE_AKTIV ? '<div class="card" style="margin-top:14px" data-familie-karte><h3>👪 Familie – Lernstand sichern</h3><div data-fam></div></div>' : ''}
       <div class="card" style="margin-top:14px"><h3>📥 Offline lernen</h3>
