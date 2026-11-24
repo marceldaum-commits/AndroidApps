@@ -319,3 +319,10 @@ Wortlaut (AppZentrale 19.11., aus PROBESTUNDE.md @ d672374):
 - Arbeit jede Woche Di ab 15:00 bis einschließlich So; Pause Mo und Di bis 15:00 (außer Marcel ordnet anderes an).
 - Wochenrunde Di ab 15:07, Abschluss Di 19:23. Tagesmeldungen nur Mi–Sa.
 - Regel 21.11. (Marcel): Alles für den Leitstand und alle wichtigen Infos NUR an die AppZentrale (auch jede MELDUNG_AN_LEITSTAND.md zusätzlich ihr melden).
+
+## Beitrag Wochenrunde Di 24.11. (Wissensgarten)
+- **Stand:** live 2.3.3 (19.11.). In Arbeit 2.4.0 (24.11.): Vorlese-Knöpfe klein und nur wenn Vorlesen an ist, Notrufnummern Ziffer für Ziffer, Tor ohne 🔊, `/jetzt` und Nova/OpenAI raus, Einstellungen Schnell-Schalter frei und Rest hinter dem Tor, „Alle Apps“ ohne Tor, Weg zur Probestunde V15, Kinderhilfe, Startanimation, Textliste (17.893 Texte, Format 1).
+- **Vorschlag Di-Update:** 2.4.0 wie oben (Technik und Recht, keine neuen Karten). **Fr-Update:** Familien-Speicher (familie.js mit Patch vom Mathe-Trainer), Plus-Produkt 2 (365 Tage ab Einlösen), Tonstudio-Dateien einbauen, sobald der Leitstand liefert; danach Merkwissen-Ausbau (Grundschule, Sachkunde, Klasse 5–8).
+- **Ideen für andere Apps:** gemeinsame Tor-Sätze und gemeinsamer Hilfesatz im Tonstudio; die Startanimation als kleines gemeinsames Stück (SVG + 20 Zeilen JS), damit alle Apps gleich starten.
+- **Überschneidungen:** Mathe-Trainer übt, Wissensgarten erklärt/merkt – bei Gleichungen und Kopfrechnen bitte verlinken statt doppeln (Querverweise sind drin). Sprachen liegen bei Quasselquest (im Wissensgarten ausgeblendet).
+- **Abgabe/Übernahme:** nichts abzugeben. Übernommen: Sprachpakete → Quasselquest (seit 2.2.19).
