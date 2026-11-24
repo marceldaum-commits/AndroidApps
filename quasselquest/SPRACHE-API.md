@@ -17,7 +17,6 @@ gibt es **keinen einzigen** Aufruf (eigener Test in der App). Eine andere Wahl g
 |---|---|---|---|---|
 | `sprache` | Text | ja | `en` | `en`, `fr`, `es`, `de` (später `it`, `uk`); **nie** `la` |
 | `ziel` | Text | ja | `My name is Ruby.` | der bekannte Zielsatz (öffentlicher App-Inhalt, max. 300 Zeichen) |
-| `ziel_id` | Text | nein | `w1e1-echo-2` | Inhalts-ID des Satzes (nur zur Fehlersuche, kein Personenbezug) |
 | `audio` | Datei | ja | `aufnahme.wav` | WAV mono 16 kHz 16 bit **oder** WebM/Opus (`audio/webm;codecs=opus`) |
 
 Grenzen: Aufnahme **höchstens 15 s** und **höchstens 1 MB**. Die App schneidet vorher ab bzw. schickt nichts Größeres.
@@ -58,5 +57,11 @@ Modell nach Nachmessung mit echten Aufnahmen (Marcel: „turbo für alles“): W
 - Erkenner: Whisper (MIT-Lizenz), Sprache fest aus `sprache`, Abgleich gegen den Zielsatz.
 
 ## Testen
-`tools/sprache-mock.mjs` (Mock-Server, kommt mit dem Bau auf dem Arbeits-Branch): antwortet wie oben, mit Schaltern für 413/429/500
-und Verzögerung > 5 s, damit Rückfall und Fehlertexte auf Knopfdruck prüfbar sind.
+`tools/sprache-mock.mjs` (Mock-Server): antwortet wie oben, mit Modi 413/415/429/503/500, `langsam` (9,5 s) und `schlecht`.
+`node tools/web-auswertung.mjs` prüft im Browser mit Netzwerkmitschnitt die Auflagen L1/L6 (Stand 24.11.2026: alle grün):
+ohne Wahl „Server“ (keine Auswahl, „Im Gerät“, „Aus“, Flag aus) 0 Anfragen; bei „Server“ genau 1 POST mit den Feldern `sprache`, `ziel`, `audio`,
+ohne Cookie, Autorisierung und Referrer, unter 1 MB; bei Fehlern keine Sterne und ein neutraler Hinweis; de/la werden nie gesendet.
+
+## Stand der App (0.5.1)
+Client fertig, hinter dem Feature-Flag `AUSWERTUNG_AKTIV = false` (webapp/version.js). Die Auswahl der Eltern („Im Gerät“ – noch nicht verfügbar, „Über unseren Server“, „Aus“) erscheint erst mit dem Flag.
+Texte: die endgültige Fassung von Recht (V12 – Auswahl) liegt mir noch nicht wörtlich vor; bis dahin Platzhalter, die nicht sichtbar sind.
