@@ -121,14 +121,14 @@ Live-Rechnung beim Schieben, Rechen-Stern nach dem Treffer, danach der Lösungsw
 > **Zurzeit abgeschaltet** (Marcel 18.11.: Vorlesen nur im Wissensgarten). Schalter `Nova.ENABLED` in `core/model/Nova.kt`;
 > bei `false` keine Vorlese-Knöpfe/-Einstellungen, keine Abrufe an den Stimmen-Server, keine Gerätestimme, `vorlesen/texte.json` leer.
 Volt liest Sprechblasen, Aufgaben, Rechen-Stern-Fragen und Erklärungen vor (abschaltbar, Probe-Taste). Stimme ist immer
-**„Nova – KI-generierte Stimme“** (OpenAI, Vorgabe Marcel; Tempo 1,25 legt der Server fest). Formeln und Einheiten werden in Worte
+**„KI-generierte Stimme“** (Tonstudio, Vorgabe Marcel; Tempo 1,25 legt der Server fest). Formeln und Einheiten werden in Worte
 übersetzt (`Speech.clean`: „x² − 2x“ → „x hoch 2 minus 2x“, „3 m/s“ → „3 Meter pro Sekunde“).
 - **Feste Texte:** `:core:model:vorlesenTexte` schreibt beim WebApp-Bau `vorlesen/texte.json` (gesprochene Form, je ≤ 1 500 Zeichen,
   NFC). Unser Stimmen-Werk vertont sie vorab nach `https://stimmen.mathenachhilfe-online.com/nova/<h[0:2]>/<h>.mp3`,
   h = SHA-256("nova|de|" + Text) → 32 Hex-Zeichen (`Nova.hash`, eigenes SHA-256 für Android und Web).
 - **Laufzeit-Texte** (Zahlen): erst die /nova/-Adresse, sonst `POST /jetzt` (≤ 300 Zeichen, nie mit Spielernamen – `Nova.maySend`).
 - **Notlösung** (offline, 204): still eine deutsche Stimme des Geräts/Browsers, die ohne Internet spricht.
-- Ansagen werden zwischengespeichert (Android: Cache ≤ 40 MB, Web: Cache „kf-nova“). Die App spricht nie selbst mit OpenAI.
+- Ansagen werden zwischengespeichert (Android: Cache ≤ 40 MB, Web: Cache „kf-nova“). Die App spricht nie selbst mit einem KI-Anbieter.
 - Bis 2.3 gab es eine andere Offline-Stimme – seit 2.4.0 entfernt, Reste werden beim Start aufgeräumt.
 
 | Einstellungen | Theorie mit 🔊 |

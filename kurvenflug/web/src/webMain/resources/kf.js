@@ -339,7 +339,16 @@
     }).then(function (res) {
       if (res !== 'weg') fetch(SICHERUNG_API + id, { method: 'DELETE', headers: { 'X-Schreib': w }, credentials: 'omit', keepalive: true }).catch(function () {});
       lsSet('kurvenflug.umzug.offen', null);
-      if (res === 'ok') { lsSet('kurvenflug.umzug.angekommen', new Date().toISOString()); setTimeout(function () { toast('📦 Dein Lernstand ist mit umgezogen – willkommen an der neuen Adresse!'); }, 3500); }
+      if (res === 'ok') {
+        lsSet('kurvenflug.umzug.angekommen', new Date().toISOString());
+        // Zählung „umzug“ (Recht 24.11.): einmal pro Gerät, nur wenn der Zähl-Schalter nicht „aus“ ist; ohne Kennung und Uhrzeit, gleiche Adresse
+        try {
+          if (lsGet('kurvenflug.anonCount') !== 'false') {
+            var mv = document.querySelector('meta[name="kurvenflug-version"]'), v = String((mv && mv.content) || '').replace(/[^A-Za-z0-9.]/g, '');
+            fetch('/zaehler/v1/e', { method: 'POST', credentials: 'omit', keepalive: true, headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ app: 'kurvenflug', ev: 'umzug', v: v }) }).catch(function () {});
+          }
+        } catch (e) {}
+        setTimeout(function () { toast('📦 Dein Lernstand ist mit umgezogen – willkommen an der neuen Adresse!'); }, 3500); }
       loaderNote('Lade …');
     }).catch(function () { loaderNote('Lade …'); });   // offline: beim nächsten Start erneut (umzug.offen bleibt)
   }
@@ -373,7 +382,7 @@
     if (!leaveFn) return;
     try {
       var b = leaveFn();
-      if (b) fetch('https://trainer.mathenachhilfe-online.com/zaehler/v1/e', { method: 'POST', credentials: 'omit', keepalive: true, headers: { 'Content-Type': 'text/plain' }, body: b }).catch(function () {});
+      if (b) fetch('/zaehler/v1/e', { method: 'POST', credentials: 'omit', keepalive: true, headers: { 'Content-Type': 'text/plain' }, body: b }).catch(function () {});
     } catch (e) {}
   }
   window.addEventListener('pagehide', leave);
@@ -434,7 +443,7 @@
   };
   // ------------------------------------------------------------ Vorlesen mit der KI-Stimme Nova
   // Fertige Ansagen (MP3) von unserem Server stimmen.mathenachhilfe-online.com, zwischengespeichert im Browser (Cache „kf-nova“).
-  // Texte mit Zahlen zur Laufzeit vertont unser Server auf Anfrage (/jetzt) – ohne Angaben zum Kind. Die App spricht nie mit OpenAI.
+  // Texte mit Zahlen zur Laufzeit vertont unser Server auf Anfrage (/jetzt) – ohne Angaben zum Kind. Die App spricht nie mit einem KI-Anbieter.
   // Notlösung (offline): eine deutsche Stimme des Browsers, die auf dem Gerät rechnet.
   var synth = window.speechSynthesis || null, speakCb = null, novaTurn = 0, novaEl = null, novaSpeed = 1;
   KF.novaSpeed = function (v) { novaSpeed = v; if (novaEl) novaEl.playbackRate = v; };

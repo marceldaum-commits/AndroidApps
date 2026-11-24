@@ -10,8 +10,11 @@ object ParentOffers {
     const val GIFT = "$SITE/geschenke/?src=kurvenflug-geschenk"
     const val FOOTER = "$SITE/?src=kurvenflug-fusszeile"
     const val FOOTER_TEXT = "Ein Angebot von Nachhilfe – online"
-    /** Nachhilfe-Hinweis höchstens an einem Tag pro Woche (danach 6 Tage Pause) */
-    const val HINT_PAUSE_DAYS = 7L
+    /** Nachhilfe-Hinweis höchstens einmal in 4 Wochen je Thema (Recht V15) */
+    const val HINT_PAUSE_DAYS = 28L
+    /** Kinder-Tipp (Kl. 9–10, ohne Tor) höchstens einmal pro Woche */
+    const val KID_TIP_PAUSE_DAYS = 7L
+    const val PROBESTUNDE = "$SITE/probestunde/"
     /** „Klassenarbeit bald“ gilt so lange, nachdem die Eltern es angetippt haben */
     const val EXAM_DAYS = 21L
 
@@ -33,10 +36,21 @@ object ParentOffers {
         "geometrie", "vektoren", "analysis", "stochastik", "physik-mechanik", "physik-optik", "physik-energie", "sachkunde", "deutsch", "englisch",
         "allgemeinwissen")
 
-    /** Kostenlose Probestunde zum Thema und zur Klasse; [reason] bestimmt die Quelle (elternbericht bzw. klassenarbeit) */
-    fun trialLesson(chapter: Int?, grade: Int?, reason: Reason = Reason.STUCK): String =
-        "$SITE/probestunde/?src=kurvenflug-" + (if (reason == Reason.EXAM) "klassenarbeit" else "elternbericht") +
-            (chapter?.let { TOPICS[it] }?.let { "&thema=$it" } ?: "") + (grade?.let { "&klasse=$it" } ?: "")
+    /** Probestunde anfragen (Recht V15: nur die Seite und die Quelle – kein Thema, keine Klasse) */
+    fun trialLesson(reason: Reason = Reason.STUCK): String =
+        "$PROBESTUNDE?src=kurvenflug-" + (if (reason == Reason.EXAM) "klassenarbeit" else "elternbericht")
+    /** Link des Tipps für Kl. 9–10 (ohne Tor) */
+    const val KID_TIP_LINK = "$PROBESTUNDE?src=kurvenflug-tipp"
+
+    /** Kinder-Tipp nur in Klasse 9–10, höchstens 1× pro Woche, wegklickbar */
+    fun kidTip(grade: Int?, today: Long, lastShown: Long, dismissedToday: Boolean = false): Boolean =
+        grade != null && grade in 9..10 && !dismissedToday && (lastShown == 0L || lastShown == today || today - lastShown >= KID_TIP_PAUSE_DAYS)
+    const val KID_TIP_TEXT = "Tipp: Wenn ein Thema länger hakt, kann eine persönliche Erklärung helfen. Mit deinen Eltern könnt ihr bei uns eine kostenlose, unverbindliche Probestunde anfragen."
+    const val KID_HELP_TEXT = "Du kommst hier gerade nicht weiter? Das ist okay. Probier eine leichtere Stufe oder schau dir die Erklärung noch einmal an. Und du kannst jederzeit deine Eltern oder deine Lehrkraft fragen."
+    /** Hinweis für Eltern (Recht V15, Wortlaut genau so) */
+    fun parentHintText(topic: String, nick: String) =
+        "Hinweis: In $topic hat $nick in den letzten Wochen öfter Schwierigkeiten. Das ist normal und lässt sich üben – die App zeigt dazu passende Übungen. " +
+            "Wenn ihr persönliche Unterstützung möchtet: Unser Angebot – eine kostenlose, unverbindliche Probestunde Online-Nachhilfe."
 
     /** Warum der Hinweis kommt */
     enum class Reason { STUCK, EXAM }
@@ -58,18 +72,20 @@ object ParentOffers {
  * einmal als Text an den Zähler geschickt – ohne Cookies, ohne Kennung, ohne Spielstand oder Namen.
  */
 object UsageCount {
-    const val URL = "https://trainer.mathenachhilfe-online.com/zaehler/v1/e"
+    const val URL = "/zaehler/v1/e"
     /** Erlaubte Ereignisse – nichts anderes wird je gezählt */
     /** In der Sammelsendung (ohne Ort): Anzahl je Sitzung */
     val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "elternbereich")
     /** Mit Ort: sofort einzeln beim Antippen (Leitstand 18.11.) */
     val SINGLE = setOf("pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "nachhilfe_hinweis", "geschenk_klick")
-    val PLACES = setOf("elternbericht", "elternbereich", "gesperrt", "klassenarbeit", "geschenk", "einstellungen", "link", "eingabe", "lernstand", "fusszeile")
+    /** Recht V15: bei Probestunden-Klick und Hinweis nie ein Thema mitsenden */
+    val NO_TOPIC = setOf("probestunde_klick", "nachhilfe_hinweis")
+    val PLACES = setOf("elternbericht", "elternbereich", "gesperrt", "klassenarbeit", "kindertipp", "geschenk", "einstellungen", "link", "eingabe", "lernstand", "fusszeile")
 
     /** Einzelaufruf: {"app":"kurvenflug","v":"…","ev":"probestunde_klick","ort":"klassenarbeit","thema":"lineare-funktionen"} – null bei unbekannten Werten */
     fun single(version: String, event: String, place: String, topic: String? = null): String? {
         if (event !in SINGLE || place !in PLACES) return null
-        val t = topic?.takeIf { it in ParentOffers.ALLOWED_TOPICS }
+        val t = topic?.takeIf { it in ParentOffers.ALLOWED_TOPICS && event !in NO_TOPIC }
         return "{\"app\":\"kurvenflug\",\"v\":\"${version.filter { it.isLetterOrDigit() || it == '.' }}\",\"ev\":\"$event\",\"ort\":\"$place\"" +
             (t?.let { ",\"thema\":\"$it\"" } ?: "") + "}"
     }

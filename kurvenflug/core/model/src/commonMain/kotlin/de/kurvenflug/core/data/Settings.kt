@@ -49,10 +49,17 @@ class Settings(private val prefs: Prefs) {
     /** Nachhilfe-Hinweis im Elternbereich ausgeblendet */
     val tutorHintOff: StateFlow<Boolean> = _tutorHintOff.asStateFlow()
     fun setTutorHintOff(v: Boolean) { prefs.edit().putBoolean("tutorHintOff", v).apply(); _tutorHintOff.value = v }
-    /** Tag (epochDay), an dem der Nachhilfe-Hinweis zuletzt zu sehen war (Häufigkeitsgrenze) */
-    var tutorHintShown: Long
-        get() = prefs.getLong("tutorHintShown", 0)
-        set(v) = prefs.edit().putLong("tutorHintShown", v).apply()
+    /** Tag (epochDay), an dem der Nachhilfe-Hinweis zu einem Thema zuletzt zu sehen war (1× in 4 Wochen je Thema) */
+    fun tutorHintShown(topic: String): Long =
+        (prefs.getString("tutorHintTopics", "") ?: "").split(';').firstOrNull { it.startsWith("$topic:") }?.substringAfter(':')?.toLongOrNull() ?: 0L
+    fun setTutorHintShown(topic: String, day: Long) {
+        val rest = (prefs.getString("tutorHintTopics", "") ?: "").split(';').filter { it.isNotEmpty() && !it.startsWith("$topic:") }
+        prefs.edit().putString("tutorHintTopics", (rest + "$topic:$day").joinToString(";")).apply()
+    }
+    /** Tag, an dem der Kinder-Tipp (Kl. 9–10) zuletzt zu sehen war */
+    var kidTipShown: Long
+        get() = prefs.getLong("kidTipShown", 0)
+        set(v) = prefs.edit().putLong("kidTipShown", v).apply()
     private val _examUntil = MutableStateFlow(prefs.getLong("examUntil", 0))
     /** „Klassenarbeit bald“ gilt bis zu diesem Tag (epochDay), 0 = nicht gesetzt */
     val examUntil: StateFlow<Long> = _examUntil.asStateFlow()

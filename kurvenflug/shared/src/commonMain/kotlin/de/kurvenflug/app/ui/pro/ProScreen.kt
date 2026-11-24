@@ -22,6 +22,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.kurvenflug.app.ProShop
@@ -164,26 +168,61 @@ fun ProLockedNotice(onBack: () -> Unit, onParents: () -> Unit) {
     }
 }
 
-/** Frage für Erwachsene vor jedem Kauf: Geburtsjahr eingeben, mindestens 18 Jahre. */
+/** Gemeinsamer 10-Minuten-Speicher des Eltern-Tors (nur Arbeitsspeicher, nie gespeichert). Root stellt eine Instanz bereit. */
+val LocalGateMemory = androidx.compose.runtime.staticCompositionLocalOf { de.kurvenflug.core.model.GateMemory() }
+
+/**
+ * Eltern-Tor nach ELTERN-TOR.md: Malaufgabe IN WORTEN („siebzehn mal acht“), eigene Ziffern-Tastatur, nach einem Fehler sofort
+ * eine neue Aufgabe, kein Zeitdruck, jederzeit abbrechen. Einmal gelöst, bleibt es 10 Minuten offen (nur Arbeitsspeicher).
+ * Der Grund [why] ist sachlich („Hier geht es zur Website.“). Kein Vorlese-Knopf, keine Gerätestimme.
+ */
 @Composable
 fun ParentGate(onDismiss: () -> Unit, why: String = "Käufe dürfen nur Erwachsene auslösen.", onPassed: () -> Unit) {
-    var year by remember { mutableStateOf("") }
+    val memory = LocalGateMemory.current
+    // schon offen (10 Minuten nach dem Lösen): gar nicht erst fragen
+    if (memory.isOpen(de.kurvenflug.core.model.nowMillis())) {
+        LaunchedEffect(Unit) { onPassed() }
+        return
+    }
+    var task by remember { mutableStateOf(de.kurvenflug.core.model.ParentGateTask.next(de.kurvenflug.core.model.nowMillis().toInt())) }
+    var input by remember { mutableStateOf("") }
     var wrong by remember { mutableStateOf(false) }
-    val now = remember { CalDate.today().year }
+    fun submit() {
+        if (task.isRight(input)) { memory.open(de.kurvenflug.core.model.nowMillis()); onPassed() }
+        else { wrong = true; input = ""; task = de.kurvenflug.core.model.ParentGateTask.next(de.kurvenflug.core.model.nowMillis().toInt(), task) }
+    }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Frage für Erwachsene") },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Bitte gib dein Geburtsjahr ein. $why")
-                OutlinedTextField(year, { year = it.filter(Char::isDigit).take(4); wrong = false }, singleLine = true, placeholder = { Text("z. B. 1985") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), isError = wrong)
-                if (wrong) Text("Das hat nicht gepasst.", color = MaterialTheme.colorScheme.error)
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp), horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                Text(why, textAlign = TextAlign.Center)
+                Text("Was ist ${task.words}?", fontWeight = FontWeight.Bold, fontSize = 20.sp, textAlign = TextAlign.Center,
+                    modifier = Modifier.semantics { contentDescription = "Rechenaufgabe: ${task.words}" })
+                Text(input.ifEmpty { "…" }, fontSize = 28.sp, fontWeight = FontWeight.Black, color = if (wrong) MaterialTheme.colorScheme.error else Q.Cyan,
+                    modifier = Modifier.semantics { contentDescription = if (input.isEmpty()) "noch keine Eingabe" else "Eingabe $input" })
+                if (wrong) Text("Das hat nicht gepasst – hier ist eine neue Aufgabe.", color = MaterialTheme.colorScheme.error, textAlign = TextAlign.Center,
+                    modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite })
+                listOf(listOf("1", "2", "3"), listOf("4", "5", "6"), listOf("7", "8", "9"), listOf("⌫", "0", "OK")).forEach { row ->
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        row.forEach { k ->
+                            Button(onClick = {
+                                when (k) {
+                                    "⌫" -> input = input.dropLast(1)
+                                    "OK" -> submit()
+                                    else -> if (input.length < 3) { input += k; wrong = false }
+                                }
+                            }, modifier = Modifier.size(width = 64.dp, height = 48.dp), contentPadding = PaddingValues(0.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = if (k == "OK") Q.Green else Q.Panel, contentColor = if (k == "OK") Q.Space else Q.Text)) {
+                                Text(k, fontSize = 20.sp, fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.semantics { contentDescription = when (k) { "⌫" -> "Löschen"; "OK" -> "Antwort abschicken"; else -> k } })
+                            }
+                        }
+                    }
+                }
             }
         },
-        confirmButton = {
-            TextButton(onClick = { val y = year.toIntOrNull(); if (y != null && y in 1920..(now - 18)) onPassed() else wrong = true }) { Text("Weiter") }
-        },
+        confirmButton = {},
         dismissButton = { TextButton(onClick = onDismiss) { Text("Abbrechen") } },
     )
 }

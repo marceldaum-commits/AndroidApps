@@ -21,5 +21,5 @@ Ermittelt aus `./gradlew :app:dependencies --configuration playReleaseRuntimeCla
 | **Web:** DejaVu Sans (zugeschnitten) | Bitstream Vera / DejaVu (frei) | Lizenztext beilegen | `fonts-lizenzen.txt` |
 
 Eigene Inhalte (Level, Texte, Grafiken, im Code erzeugte Töne und Musik): eigene Werke, keine fremden Assets.
-Vorlese-Stimme **Nova**: Audiodateien, die unser Server mit OpenAI erzeugt (nicht Teil des App-Pakets). OpenAI verlangt den
-Hinweis, dass die Stimme KI-generiert ist – steht in der App („Nova – KI-generierte Stimme“) und im Store-Text.
+Vorlese-Stimme: KI-generierte (synthetische) Audiodateien, die unser Server liefert (nicht Teil des App-Pakets). Früher nötiger Hinweis
+Hinweis, dass die Stimme KI-generiert ist – steht in der App („KI-generierte Stimme“) und im Store-Text.

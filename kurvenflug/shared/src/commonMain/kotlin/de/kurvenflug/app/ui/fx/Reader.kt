@@ -3,14 +3,14 @@ package de.kurvenflug.app.ui.fx
 import androidx.compose.runtime.staticCompositionLocalOf
 
 /**
- * Volt liest vor – mit der Stimme **Nova** (KI-generiert, OpenAI; Vorgabe Marcel 17.11.: „zukünftig nur Nova“).
+ * Volt liest vor – mit einer KI-generierten (synthetischen) Stimme aus unserem Tonstudio (Vorlesen ist derzeit ausgeschaltet, siehe [de.kurvenflug.core.model.Nova.ENABLED]).
  * Ablauf (gleich auf Android und im Browser):
  *  1. Text vorlesefertig machen ([de.kurvenflug.core.model.Speech.clean]) → fertige Ansage unter [de.kurvenflug.core.model.Nova.url]
  *     laden (feste Texte vertont unser Stimmen-Werk vorab) und zwischenspeichern.
  *  2. Fehlt sie (Text mit Zahlen zur Laufzeit), den Text ohne Angaben zum Kind an unseren Server schicken ([de.kurvenflug.core.model.Nova.LIVE]),
  *     nur wenn er kurz genug ist und keinen Spielernamen enthält ([de.kurvenflug.core.model.Nova.maySend]).
  *  3. Klappt beides nicht (offline, Server sagt nein): still die Stimme des Geräts als Notlösung.
- * Die App schickt nie etwas an OpenAI.
+ * Die App spricht nie mit einem KI-Anbieter, sie lädt nur fertige Dateien von unserem Server.
  */
 interface Reader {
     /** Spricht gerade (dann wird die Musik leiser) – beobachtbar */

@@ -134,12 +134,16 @@ fun KurvenflugRoot(
     val talking = reader?.speaking == true
     LaunchedEffect(musicVol, talking) { platform.setMusicVolume(musicVol / 100f * (if (talking) 0.35f else 1f)) }
     val proState = rememberProState(vm, platform.proShop)
+    // Teilen nur hinter dem Eltern-Tor: LocalPlatform ist eine Hülle, die vor dem Teilen das Tor zeigt
+    var shareGate by remember { mutableStateOf<(() -> Unit)?>(null) }
+    val gatedPlatform = remember(platform) { GatedPlatform(platform) { action -> shareGate = action } }
     KurvenflugTheme {
         val look by vm.settings.look.collectAsStateWithLifecycle()
         val voltVoice by vm.settings.voltVoice.collectAsStateWithLifecycle()
-        CompositionLocalProvider(de.kurvenflug.app.LocalPlatform provides platform, LocalSfx provides platform.sfx, LocalVibration provides vibration,
+        CompositionLocalProvider(de.kurvenflug.app.LocalPlatform provides gatedPlatform, LocalSfx provides platform.sfx, LocalVibration provides vibration,
             de.kurvenflug.app.ui.flight.LocalLook provides look, de.kurvenflug.app.ui.volt.LocalVoltHat provides look.third,
             de.kurvenflug.app.ui.volt.LocalVoltVoice provides voltVoice, LocalPro provides proState,
+            de.kurvenflug.app.ui.pro.LocalGateMemory provides remember { de.kurvenflug.core.model.GateMemory() },
             de.kurvenflug.app.ui.fx.LocalReader provides reader, de.kurvenflug.app.ui.fx.LocalReadAloud provides (readAloud && reader != null)) {
             Surface(Modifier.fillMaxSize().pointerInput(Unit) {
                 awaitPointerEventScope {
@@ -152,6 +156,7 @@ fun KurvenflugRoot(
                 // Volle Breite überall (PC: Startseite mit Seitenleiste, Level mit Spielfeld links und Reglern rechts);
                 // reine Lese-Seiten begrenzt Nav auf eine angenehme Lesebreite in der Mitte.
                 Nav(vm, platform, incomingDuel, widgetLevel)
+                shareGate?.let { act -> de.kurvenflug.app.ui.pro.ParentGate(onDismiss = { shareGate = null }, why = "Teilen ist für Erwachsene.") { shareGate = null; act() } }
                 // Einmal je Sitzung, dezent: Nova war nicht erreichbar – dann liest die Stimme des Geräts
                 NovaNotice(reader?.unreachable == true && readAloud)
             }
@@ -288,6 +293,13 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 onBuild = { nav.goOnce(Routes.BUILD_HOME) }, onDetective = { nav.goOnce(Routes.DETECTIVE) },
                 onCodex = { nav.goOnce(Routes.CODEX) }, onWorkshop = { nav.goOnce(Routes.WORKSHOP) },
                 banner = upd?.let { u -> { UpdateBanner(u.version) { nav.goOnce(Routes.SETTINGS) } } },
+                tip = run {
+                    val todayDay = remember { de.kurvenflug.core.model.CalDate.today().toEpochDay() }
+                    var closed by remember { mutableStateOf(false) }
+                    if (de.kurvenflug.core.model.ParentOffers.kidTip(grade, todayDay, vm.settings.kidTipShown, closed)) ({
+                        de.kurvenflug.app.ui.home.KidTip(onSeen = { if (vm.settings.kidTipShown != todayDay) vm.settings.kidTipShown = todayDay }, onClose = { closed = true })
+                    }) else null
+                },
                 grade = grade, onGrade = vm.settings::setGrade, askGrade = !gradeAsked,
                 continueLevel = remember(progress, grade) { de.kurvenflug.core.model.Plan.next(Levels.chapters, grade, vm.played(progress)) },
                 onLearn = { nav.goOnce(Routes.LEARN) },
@@ -392,6 +404,9 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 onWalkthrough = { vm.settings.markWalkthrough(level.kind.name) },
                 onReward = { s -> vm.rollSticker(s) },
                 onCheckStar = { s -> vm.upgradeStars(level.id, s) },
+                onEasier = Levels.previous(level.id)?.takeIf { it.chapter == level.chapter && !Daily.isDaily(id) }?.let { pl -> {
+                    nav.navigate(Routes.level(pl.id)) { popUpTo(Routes.LEVEL) { inclusive = true } }
+                } } ?: { nav.popSafe() },
             )
         }
         composable(Routes.BOSS, arguments = listOf(navArgument("chapter") { type = NavType.IntType })) { e ->
@@ -428,11 +443,11 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
             val grade by vm.settings.grade.collectAsStateWithLifecycle()
             val day = today.toEpochDay()
             de.kurvenflug.app.ui.together.ParentScreen(ps.first { it.id == cur }, week, labels, onBack = { nav.popSafe() },
-                parent = de.kurvenflug.app.ui.together.ParentArea(grade, day, examUntil, hintOff, remember { vm.settings.tutorHintShown }, counting,
+                parent = de.kurvenflug.app.ui.together.ParentArea(grade, day, examUntil, hintOff, { t -> vm.settings.tutorHintShown(t) }, counting,
                     onOpen = platform::openUrl,
                     onExam = { vm.settings.setExamUntil(if (it) day + de.kurvenflug.core.model.ParentOffers.EXAM_DAYS else 0L) },
-                    onHideHint = { vm.settings.setTutorHintOff(true) },
-                    onHintSeen = { if (vm.settings.tutorHintShown != day) vm.settings.tutorHintShown = day },
+                    onHideHint = { vm.settings.setTutorHintOff(true) }, onHintOff = vm.settings::setTutorHintOff,
+                    onHintSeen = { t -> if (vm.settings.tutorHintShown(t) != day) vm.settings.setTutorHintShown(t, day) },
                     onCounting = vm.settings::setAnonCount, onCount = platform::count, onCountAt = { e, o, t -> platform.countAt(e, o, t) },
                     pairLink = parentLink, pairNick = remember(parentLink) { platform.parentNick() },
                     onPair = { nick -> parentLink = platform.parentPair(nick) },

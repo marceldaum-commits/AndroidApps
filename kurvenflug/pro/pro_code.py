@@ -17,7 +17,7 @@ from cryptography.hazmat.primitives import serialization
 APP_KURVENFLUG = 1
 ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
 DAY0 = datetime.date(2020, 1, 1)
-LINK = "https://kurvenflug.mathenachhilfe-online.com/?pro="
+LINK = "https://lernen.mathenachhilfe-online.com/kurvenflug/?pro="
 
 
 def b32(data: bytes) -> str:

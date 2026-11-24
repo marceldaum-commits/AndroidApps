@@ -80,6 +80,8 @@ fun LevelScreen(
     onReward: ((stars: Int) -> StickerDrop?)? = null,
     /** Rechen-Stern verdient: Sterne nachträglich erhöhen */
     onCheckStar: (stars: Int) -> Unit = {},
+    /** „Leichter üben“ (Recht V15, Kinderansicht): eine leichtere Stufe – null = nicht anbieten */
+    onEasier: (() -> Unit)? = null,
 ) {
     val sfx = LocalSfx.current
     val view = rememberBuzzer()
@@ -324,6 +326,18 @@ fun LevelScreen(
         val controls: @Composable (Modifier) -> Unit = { m ->
             // Steuerung
             Column(m.verticalScroll(rememberScrollState()).padding(horizontal = 14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                // Ab dem 3. Fehlversuch: Hilfe-Karte (Recht V15: nur dieser Wortlaut, kein Außenlink) – nicht in Duell, Sturm, Boss
+                AnimatedVisibility(allowRetry && attempt >= 3 && phase == Phase.AIM,
+                    enter = fadeIn() + expandVertically() + scaleIn(initialScale = 0.9f)) {
+                    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(Q.Panel).padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text("🐝 " + de.kurvenflug.core.model.ParentOffers.KID_HELP_TEXT, color = Q.Text, style = MaterialTheme.typography.bodySmall)
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            if (onEasier != null) OutlinedButton(onClick = { sfx?.play(Sound.TAP); onEasier() }, modifier = Modifier.weight(1f)) { Text("Leichter üben") }
+                            if (theoryText != null) OutlinedButton(onClick = { sfx?.play(Sound.TAP); theory = true }, modifier = Modifier.weight(1f)) { Text("Erklärung ansehen") }
+                        }
+                    }
+                }
                 // Ab dem 3. Fehlversuch: Rechenweg zum Mitrechnen (nicht in Duell, Sturm, Boss)
                 AnimatedVisibility(steps != null && allowRetry && attempt >= 3 && phase == Phase.AIM,
                     enter = fadeIn() + expandVertically() + scaleIn(initialScale = 0.8f)) {

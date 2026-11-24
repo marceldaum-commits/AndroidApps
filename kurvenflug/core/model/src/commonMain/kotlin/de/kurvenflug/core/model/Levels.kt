@@ -877,5 +877,6 @@ object Levels {
 
     val all: List<Level> = chapters.flatMap { it.levels }
     fun byId(id: String) = all.firstOrNull { it.id == id }
+    fun previous(id: String): Level? = all.indexOfFirst { it.id == id }.let { all.getOrNull(it - 1) }
     fun next(id: String): Level? = all.indexOfFirst { it.id == id }.let { all.getOrNull(it + 1) }
 }
