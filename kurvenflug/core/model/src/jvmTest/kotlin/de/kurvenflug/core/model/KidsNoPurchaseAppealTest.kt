@@ -12,7 +12,7 @@ class KidsNoPurchaseAppealTest {
     private val sources = File("../../shared/src/commonMain/kotlin").walkTopDown().filter { it.extension == "kt" }.toList()
 
     @Test fun noPurchaseAppealToChildren() {
-        val bad = Regex("(?i)frag\\s+deine\\s+eltern|kauf\\s+dir|jetzt\\s+kaufen|bitte\\s+deine\\s+eltern|sag\\s+deinen\\s+eltern")
+        val bad = Regex("(?i)frag\\s+deine\\s+eltern|kauf\\s+dir|jetzt\\s+kaufen|bitte\\s+deine\\s+eltern|sag\\s+deinen\\s+eltern|deine\\s+eltern\\s+können")
         val hits = sources.flatMap { f -> f.readLines().mapIndexedNotNull { i, l -> if (bad.containsMatchIn(l)) "${f.name}:${i + 1}" else null } }
         assertTrue(hits.isEmpty(), "Kaufaufforderung an Kinder: $hits")
     }
@@ -22,6 +22,6 @@ class KidsNoPurchaseAppealTest {
         assertTrue("ProLockedNotice(" in root)
         assertTrue("locked = true" !in root, "gesperrtes Level darf nicht die Pro-Seite mit Preis zeigen")
         val pro = sources.first { it.name == "ProScreen.kt" }.readText()
-        assertTrue("\"Das gehört zu KurvenFlug Pro. Deine Eltern können im Elternbereich nachsehen.\"" in pro)
+        assertTrue("const val PRO_LOCKED_TEXT = \"Das gehört zu KurvenFlug Pro.\"" in pro)
     }
 }

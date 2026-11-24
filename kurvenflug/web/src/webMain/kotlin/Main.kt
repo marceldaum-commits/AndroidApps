@@ -25,7 +25,7 @@ private fun stage(s: String): Unit = js("(function () { if (window.kfStage) wind
 /** Kurzer Hinweis nach dem Start (Bestätigung des Einlöse-Links) */
 private fun confirm(msg: String): Unit = js("(function () { setTimeout(function () { if (window.KF && window.KF.toast) window.KF.toast(msg); }, 3500); })()")
 
-private fun hideLoader(): Unit = js("(function () { var l = document.getElementById('kf-loader'); if (l) { l.classList.add('weg'); setTimeout(function () { l.remove(); }, 400); } if (window.kfReady) window.kfReady(); })()")
+private fun hideLoader(): Unit = js("(function () { var l = document.getElementById('kf-loader'); if (l) { l.classList.add('weg'); setTimeout(function () { l.remove(); }, 600); } if (window.kfReady) window.kfReady(); })()")
 
 /** Kurvenflug im Browser: dieselbe Oberfläche wie auf Android, Spielstand im lokalen Speicher des Browsers. */
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalResourceApi::class)

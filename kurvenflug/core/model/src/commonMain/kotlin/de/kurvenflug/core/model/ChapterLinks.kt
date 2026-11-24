@@ -8,7 +8,7 @@ package de.kurvenflug.core.model
 object ChapterLinks {
     /** Kapitel-Nummer (intern) → fester Name. Neue Kapitel hier ergänzen; Namen nie umbenennen. */
     val NAMES: Map<Int, String> = mapOf(
-        1 to "koordinaten", 15 to "brueche", 16 to "winkel", 29 to "massstab", 8 to "zuordnungen",
+        1 to "koordinaten", 15 to "brueche", 16 to "winkel", 29 to "massstab", 31 to "terme", 32 to "funktionen-formen", 8 to "zuordnungen",
         2 to "geraden", 23 to "prozent", 7 to "rendezvous", 9 to "pythagoras", 3 to "parabeln",
         18 to "nullstellen", 14 to "trigonometrie", 5 to "wellen", 26 to "verschobene-wellen", 25 to "potenzfunktionen",
         10 to "logarithmus", 13 to "weg-zeit", 24 to "beschleunigung", 4 to "wurf", 27 to "waagerechter-wurf",

@@ -1,5 +1,22 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+> **Ablauf seit 19.11. (AppZentrale):** Jede Live-Meldung enthält die Zeile **„Rechtsbezug: ja/nein (was)“**. Alles mit Rechtsbezug
+> (Preise/Kauf, Codes, Texte für Eltern/Kinder, Datenschutz, Werbung, Bewertungen, KI, Mikrofon) prüft der Raum „Recht“ vor dem Live-Gang.
+
+## ✅ 2.8.0 – Eltern-Tor, Einstellungen geteilt, Probestunden-Weg V15, zwei neue Planeten (kurvenflug-test)
+Rechtsbezug: ja (V8/V10/V10b Eltern-Tor und Aufteilung der Einstellungen, V15 Probestunde, UWG Anh. Nr. 28, Datenschutz: Zählung same-origin + Ereignis „umzug“, KI-Kennzeichnung der Stimme)
+- **Eltern-Tor neu**: Malaufgabe 13–19 × 6–9 in Worten, eigene Ziffern-Tastatur, nach Fehler neue Aufgabe, 10 Min. offen (nur Arbeitsspeicher), ohne Vorlese-Knopf.
+  Teilen ist ebenfalls hinter dem Tor. „← Alle Apps“, Impressum, Datenschutz bleiben ohne Tor.
+- **Einstellungen geteilt**: ohne Tor Ton, Musik, Lautstärke, Schriftgröße, Hell/Dunkel; hinter dem Tor Pro, Update, Zurücksetzen, Datenschutz-/Zähl-Schalter, Eltern & Lehrkräfte.
+- **Probestunde V15**: Hinweis im Elternbereich genau im Wortlaut, höchstens 1× in 4 Wochen je Thema, Schalter „Hinweise auf Nachhilfe ausblenden“, Link nur `/probestunde/?src=…`,
+  Zählung ohne Thema. Kinderansicht bei Schwierigkeiten: nur Hilfe-Karte mit [Leichter üben] [Erklärung ansehen], kein Außenlink. Kl. 9–10: Tipp ohne Tor (1× pro Woche, wegklickbar, kein Preis).
+- **Zählung** auf same-origin `/zaehler/v1/e`; Ereignis `umzug` einmal pro Gerät im Zweig „ok“ von `umzugHolen()`, nur wenn Zähl-Schalter nicht aus; Inhalt `{"app","ev":"umzug","v"}`.
+- **OpenAI/Nova-Texte entfernt** (Vorlesen bleibt aus; Schiff „Nova“ bleibt). pro_code.py-Link → `lernen.mathenachhilfe-online.com/kurvenflug/?pro=`.
+- **Startbild**: #05070f, atmendes Logo, Zoom-out.
+- **Neu: „Terme & Gleichungen“ (Kl. 7–8, 10 Level) und „Funktionen formen“ (Kl. 9–10, 12 Level, davon 3 „sehen“-Level mit Scheinlösung)** – 26 Kapitel, 162 Level. Direktlinks `#kapitel=terme`, `#kapitel=funktionen-formen`.
+- **Noch offen**: familie.js-Patch/Familien-Speicher-Anbindung, Pro-Klassenarbeits-Trainer, Vorlesen über Tonstudio (ab Mi).
+- versionCode 85 / 2.8.0, Modul-Tests grün, Web-Build (Skiko 937/0), Browser Chromium 4 Größen ohne Fehler. Rückweg: 2.7.1 = c6070a4.
+
 ## ✅ 2.7.1 – Korrektur Pro-Schloss ohne Kaufaufforderung an Kinder (UWG Anh. Nr. 28), Basis 2.7.0
 - Gesperrtes Level: nur „Das gehört zu KurvenFlug Pro. Deine Eltern können im Elternbereich nachsehen.“ + „← Zurück“ + „Elternbereich (für Erwachsene)“ → Eltern-Tor.
   Vorher: Pro-Seite mit Preis, Kaufknopf und „Frag deine Eltern!“.

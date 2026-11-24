@@ -50,7 +50,7 @@ class ParityTest {
     }
 
     companion object {
-        const val EXPECTED = "462dace0/266569"   // 2.6.0: ohne Oberstufen-Kapitel (24 Kapitel, 140 Level)
+        const val EXPECTED = "-542d4d76/277746"   // 2.8.0: + Terme & Gleichungen, Funktionen formen (26 Kapitel, 162 Level)
         const val ANDROID_CODE = "KFC1:q1YqySzJSVWyUvJILC1OLE1LT0xKVdJRKkpNK1ayilYy0jUD8ox1DZVidZTyi1JSi0CiRQYgJUCxWgA"
         const val CHECK = "2523"
     }

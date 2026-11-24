@@ -92,6 +92,10 @@ object TheoryFormulas {
             "Verdopplung nach x = 5: e^(5k) = 2 → k = ln(2) : 5 ≈ 0,693 : 5 ≈ 0,139.")),
         29 to mapOf(null to e("Kästchen = echte Länge : Maßstab. Osten/Norden plus, Westen/Süden minus.",
             "1 Kästchen = 50 km, Ziel 150 km östlich und 100 km südlich: x = 150 : 50 = 3, y = −(100 : 50) = −2.")),
+        31 to mapOf(null to e("Waage: Was du links machst, machst du rechts. Erst + und − wegräumen, dann durch die Zahl vor x teilen.",
+            "2x + 5 = 17: beide Seiten − 5 → 2x = 12; beide Seiten : 2 → x = 6. Probe: 2 · 6 + 5 = 17 ✓.")),
+        32 to mapOf(null to e("y = a · f(b · (x − c)) + d: d hoch/runter, c rechts (x − c) / links (x + c), a streckt (minus = auf den Kopf), b zur Seite (minus = links/rechts gespiegelt).",
+            "y = −2 · (x − 1)² + 5: Gipfel bei (1 | 5), nach unten geöffnet, doppelt so steil. Probe: x = 2 → −2 · 1 + 5 = 3.")),
         30 to mapOf(null to e("P(X = k) = (n über k) · pᵏ · (1 − p)ⁿ⁻ᵏ; kumuliert P(X ≤ k) = Summe von P(X = 0) bis P(X = k).",
             "n = 4, p = 0,5: P(X = 2) = 6 · 0,5² · 0,5² = 6 : 16 = 0,375 – also 37,5 %.")),
     )

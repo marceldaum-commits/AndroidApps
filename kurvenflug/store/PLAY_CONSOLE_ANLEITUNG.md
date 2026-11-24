@@ -138,9 +138,9 @@ Play Developer API) sofort beim Start.
 > **App „Kurvenflug – Mathe im All“.** Die App erhebt, speichert und übermittelt keine personenbezogenen Daten. Der Spielstand,
 > Einstellungen und frei gewählte Spitznamen für mehrere Spieler werden ausschließlich lokal auf dem Gerät gespeichert und beim
 > Deinstallieren gelöscht. Die App enthält keine Werbung, keine Analyse- oder Tracking-Werkzeuge.
-> **Vorlesen (abschaltbar):** Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen
+> **Vorlesen (abschaltbar):** Vorgelesen wird mit einer KI-generierten (synthetischen) Stimme. Feste Texte vertonen
 > wir vorab. Texte, die erst in der Aufgabe entstehen (z. B. Rechenaufgaben), schickt die App ohne Angaben zum Kind an unseren
-> Server stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Es
+> Server stimmen.mathenachhilfe-online.com; dieser vertont sie einmalig und speichert die Audiodatei. Es
 > werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle (die
 > IP-Adresse wird technisch bedingt nur für die Verbindung genutzt). Sonst geht die Play-Version nicht ins Internet;
 > Updates werden über Google Play bereitgestellt. Die Version aus GitHub

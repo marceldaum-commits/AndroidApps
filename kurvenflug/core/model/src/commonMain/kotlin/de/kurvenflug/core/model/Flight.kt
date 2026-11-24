@@ -34,10 +34,34 @@ data class Body(val x: Double, val y: Double, val r: Double) {
  * - [MOTION]: gleichförmige Bewegung im s-t-Diagramm s = v·t + s₀ (Physik Kl. 7)
  * - [TANGENT], [PEAK], [AREA], [VECTOR]: Oberstufe (Ableitung, Extrempunkte, Integral, Vektoren), siehe [Upper]
  */
-enum class Kind { POINT, LINE, PARABOLA, THROW, SINE, EXP, ORBIT, RENDEZVOUS, PROP, ANTI, LOG, RADIUS, LASER, RAMP, MOTION, TANGENT, PEAK, AREA, VECTOR, ACCEL, POWER, EXPE, BINOM }
+enum class Kind { POINT, LINE, PARABOLA, THROW, SINE, EXP, ORBIT, RENDEZVOUS, PROP, ANTI, LOG, RADIUS, LASER, RAMP, MOTION, TANGENT, PEAK, AREA, VECTOR, ACCEL, POWER, EXPE, BINOM, FORM }
+
+/**
+ * Funktionen formen (Kl. 9–10): y = a · f(b · (x − c)) + d. [base]: 1 = x², 2 = |x|, 3 = x³, 4 = √x, 5 = x (Gerade, nur als Hilfskurve).
+ * a streckt senkrecht (minus spiegelt an der x-Achse), b streckt/staucht waagerecht (minus spiegelt an der y-Achse),
+ * c schiebt nach rechts, d nach oben.
+ */
+object Forms {
+    fun base(code: Int, u: Double): Double = when (code) {
+        1 -> u * u
+        2 -> abs(u)
+        3 -> u * u * u
+        4 -> if (u < 0) Double.NaN else kotlin.math.sqrt(u)
+        5 -> u
+        else -> Double.NaN
+    }
+    /** Bausteine der Anzeige: Anfang und Ende um den Ausdruck u = b · (x − c) */
+    fun open(code: Int) = when (code) { 2 -> "|"; 4 -> "√("; else -> "(" }
+    fun close(code: Int) = when (code) { 1 -> ")²"; 2 -> "|"; 3 -> ")³"; else -> ")" }
+}
+
+/** Feste Hilfskurve y = a · f(b · (x − c)) + d (gestrichelt im Spielfeld) – z. B. um Gleichungen als Schnittpunkte zu „sehen“. */
+data class Curve(val base: Int, val a: Double = 1.0, val b: Double = 1.0, val c: Double = 0.0, val d: Double = 0.0, val label: String = "") {
+    fun y(x: Double) = a * Forms.base(base, b * (x - c)) + d
+}
 
 /** Hat diese Spielart eine Funktionsgleichung y = f(x)? */
-val Kind.isFunction get() = this in setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE, Kind.BINOM)
+val Kind.isFunction get() = this in setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE, Kind.BINOM, Kind.FORM)
 
 /** Funktionen, die erst rechts von x = 0 definiert/sinnvoll sind (Zeit, Logarithmus, k : x). */
 val Kind.startsAtZero get() = this == Kind.ANTI || this == Kind.LOG || this == Kind.MOTION || this == Kind.ACCEL
@@ -101,6 +125,8 @@ object Flight {
             Kind.EXPE -> p.getValue("a") * kotlin.math.exp(p.getValue("k") * x) + (p["d"] ?: 0.0)
             // Histogramm: Säule k steht bei x = k − 9 (Breite 1), Höhe 10 = 100 %
             Kind.BINOM -> Stochastik.height(p, x)
+            // Funktionen formen: y = a · f(b · (x − c)) + d, f nach Kennzahl base (siehe [Forms])
+            Kind.FORM -> p.getValue("a") * Forms.base(p.getValue("base").toInt(), p.getValue("b") * (x - p.getValue("c"))) + p.getValue("d")
             else -> error("keine Funktion")
         }
     }
@@ -114,7 +140,7 @@ object Flight {
                 val x = v.getValue("x"); val y = v.getValue("y")
                 line(Vec(0.0, 0.0), Vec(x, 0.0)) + line(Vec(x, 0.0), Vec(x, y)).drop(1)
             }
-            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE, Kind.BINOM -> {
+            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE, Kind.BINOM, Kind.FORM -> {
                 // Sichtbarer Teil des Graphen von links nach rechts – die Sonde „springt“ am Rand ins Bild
                 val out = ArrayList<Vec>()
                 var x = if (level.kind.startsAtZero) STEP else -R
@@ -328,8 +354,15 @@ object Flight {
         return path
     }
 
+    /** Hilfskurven eines Levels als sichtbare Teilstücke (Lücken: Definitionsbereich oder außerhalb des Bildes) */
+    fun guides(level: Level): List<List<Vec>> = level.curves.map { c ->
+        val out = ArrayList<Vec>(); var x = -R
+        while (x <= R + 1e-9) { val y = c.y(x); if (!y.isNaN() && abs(y) <= R) out += Vec(x, y); x += STEP }
+        out
+    }
+
     /** Bahnen der Form y = f(x) */
-    val functionKinds = setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE, Kind.BINOM)
+    val functionKinds = setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE, Kind.BINOM, Kind.FORM)
 
     /** Fliegt die Bahn ab: Ziele, Energiezellen, Asteroiden. */
     fun fly(level: Level, values: Map<String, Double>): FlightResult {

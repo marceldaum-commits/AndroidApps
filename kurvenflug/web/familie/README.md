@@ -1,0 +1,31 @@
+# Familien-Speicher (gemeinsame Bibliothek)
+
+`familie.js` ist eine **unveränderte Kopie** der gemeinsamen Client-Bibliothek aller Lern-Apps (Quelle: Mathe-Trainer,
+Stand `e9993ec`, sha256 der Originaldatei `3f7ec567…`). Neue Versionen kommen über die AppZentrale; dann Datei ersetzen,
+erste Zeile (Versionskommentar) anpassen und die Tests laufen lassen:
+
+```
+node web/familie/tests/familie.mjs      # erwartet: „familie: 51 Prüfungen bestanden“
+```
+
+Die Tests enthalten einen nachgebauten Server (nur zum Testen; den echten `/familie/v1/` betreibt der Leitstand).
+Noch nicht in der WebApp eingebunden – die Anbindung (Spieler 0–5 → Kinder, automatisches Sichern, Elternbereich) folgt.
+Zusammenführen bei Konflikten: `core/model/FamilyMerge.kt`.
+
+Öffentlicher Wiederherstellungs-Schlüssel (X25519, Marcel 19.11., privater Teil nur in Bitwarden): `REC_PUB = vMrORj9yObM3Ijd9sGStjUB9I3f6ot9E8M-70yGeQ0M` – gilt auch für lernen-test. Seit 1f4b377 fest in familie.js (REC_PUB).
+
+## Pflichttexte für die Familien-Oberfläche (FAMILIEN-SPEICHER.md v1.5, AppZentrale 19.11.)
+**Hinweis** (beim ersten Koppeln und im Bereich „Familie“, darunter Link Datenschutzerklärung + „Einverstanden“):
+„Eure Lernstände werden verschlüsselt auf unserem Server in Deutschland gespeichert. Der Schlüssel liegt auf euren Geräten. Damit wir euch helfen können, falls ihr den Familien-Zugang verliert, hinterlegen wir zusätzlich eine verschlüsselte Notfall-Kopie. Sie lässt sich nur mit einem getrennt und offline aufbewahrten Schlüssel von Mathenachhilfe Online öffnen. Technisch könnten wir damit eure Lernstände lesen; wir tun das nicht und nutzen ihn nur, wenn ihr uns um Wiederherstellung bittet. Jede Wiederherstellung seht ihr hier im Protokoll.“
+
+**Löschen** (nur hinter dem Tor): Warnung „Das löscht die Familie in ALLEN Lern-Apps: alle Lernstände aller Kinder auf unserem Server, die Notfall-Kopie und das Protokoll. Gekaufte Codes werden wieder frei und lassen sich in einer neuen Familie erneut einlösen. Die Lernstände auf diesem Gerät bleiben erhalten.“ → Familien-Nummer eintippen → `fa.loeschen()` → lokal nur die Familien-Schlüssel entfernen.
+Bei 404 auf anderen Geräten: „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“ Einzelnes Kind entfernen: noch nicht anbieten.
+
+**Auflage A6 (Recht, v1.6):** genau EIN Einwilligungstext = der Pflichttext; darunter Link „Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)“ und Knopf „Einverstanden – Familie anlegen“; nichts vorausgewählt. Anlegen/Beitreten nur hinter dem Eltern-Tor. Einzelnes Kind löschen: Roadmap, noch nicht bauen.
+
+**V8 (Recht, v1.7):** Beitreten per Familien-Link/QR: derselbe Pflichttext hinter dem Eltern-Tor, Knopf „Einverstanden – Familie beitreten“ (nicht vorausgewählt); Abbrechen lädt nichts hoch.
+Sicherheitshinweis (NICHT im Pflichttext; dauerhaft auf der Familien-Seite und direkt bei „Link teilen“, QR-Code und Notfall-Blatt):
+„Wer den Familien-Link oder den QR-Code hat, kann die Lernstände eurer Familie öffnen, ändern und löschen. Teilt ihn nur mit Personen, denen ihr vertraut, und bewahrt das Notfall-Blatt sicher auf.“
+Meldung bei Umsetzung: Commit + „Rechtsbezug: ja (V8)“.
+
+Hinweis 21.11.: `codeNummer()` in e9993ec lehnt App-Nummern > 7 ab (Hörlehrer = App 8). Patch vom Mathe-Trainer kommt am Di 24.11. – dann übernehmen (betrifft KurvenFlug = App 1 nicht direkt, aber die Sperrlisten-Prüfung fremder Codes).

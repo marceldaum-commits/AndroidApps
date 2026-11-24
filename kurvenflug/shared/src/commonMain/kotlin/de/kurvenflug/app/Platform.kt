@@ -60,6 +60,15 @@ interface Platform {
     fun parentRestore(link: String, force: Boolean, done: (String) -> Unit) { done("fehler") }
 }
 
+/**
+ * Teilen (Text, Foto, Duell-/Level-Codes) ist hinter dem Eltern-Tor (Recht/AppZentrale 19.11.: „Teilen“ gehört dahinter).
+ * Diese Hülle reicht alles an die echte Plattform weiter, fragt aber vor dem Teilen über [ask] nach dem Tor.
+ */
+class GatedPlatform(private val base: Platform, private val ask: (() -> Unit) -> Unit) : Platform by base {
+    override fun shareText(text: String, title: String) = ask { base.shareText(text, title) }
+    override fun sharePhoto(level: Level, path: List<Vec>, stars: Int, values: Map<String, Double>) = ask { base.sharePhoto(level, path, stars, values) }
+}
+
 const val ALL_APPS_URL = "https://www.mathenachhilfe-online.com/lern-apps/?src=kurvenflug-kopf"
 
 /** Geräte-Dienste; ohne Bereitstellung (z. B. in Bildschirmfoto-Tests) die Standard-Umsetzung der Plattform. */

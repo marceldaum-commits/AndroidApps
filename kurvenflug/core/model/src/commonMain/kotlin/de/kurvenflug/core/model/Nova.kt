@@ -2,7 +2,7 @@ package de.kurvenflug.core.model
 
 /**
  * KI-Stimme „Nova“ (Vorgabe Marcel 17.11.): Unser Stimmen-Werk vertont die festen Texte der App vorab (vorlesen/texte.json)
- * und legt sie als MP3 auf stimmen.mathenachhilfe-online.com ab. Die App schickt nie etwas an OpenAI – sie lädt nur fertige Dateien.
+ * und legt sie als MP3 auf stimmen.mathenachhilfe-online.com ab. Die App lädt nur fertige Dateien (KI-generierte, synthetische Stimme).
  * Dateiname: SHA-256 von "nova|" + Sprache + "|" + Text (normalisiert), Hex, erste 32 Zeichen; Ordner = die ersten 2 Zeichen.
  */
 object Nova {
@@ -14,7 +14,7 @@ object Nova {
     const val ENABLED = false
     const val HOST = "stimmen.mathenachhilfe-online.com"
     const val BASE = "https://$HOST/nova/"
-    const val LABEL = "Nova – KI-generierte Stimme"
+    const val LABEL = "KI-generierte Stimme"
     /** Laufzeit-Texte vertonen lassen: POST {"text", "sprache"} → 200 {"url"} oder 204 (dann Gerätestimme) */
     const val LIVE = "https://$HOST/jetzt"
     const val MAX_LIVE = 300

@@ -289,7 +289,7 @@ class ScreenshotTest {
             de.kurvenflug.core.model.PlayRecord("15-2", 3, 1, 90, today), de.kurvenflug.core.model.PlayRecord("2-5", 3, 1, 260, today))
         de.kurvenflug.app.ui.together.ParentScreen(de.kurvenflug.core.data.Profile(0, "Lena", "🦊"),
             de.kurvenflug.core.model.Weekly.summary(plays, today + 3_600_000L, today), listOf("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"), onBack = {},
-            parent = de.kurvenflug.app.ui.together.ParentArea(7, 20_400L, 20_410L, false, 0L, true, {}, {}, {}, {}, {}))
+            parent = de.kurvenflug.app.ui.together.ParentArea(7, 20_400L, 20_410L, false, { 0L }, true, {}, {}, {}, {}, {}))
     }
 
     @Test fun parentPairing() = shot("105_eltern_handy", settle = 2000, prepare = { it.onNodeWithText("Fortschritt wiederherstellen", substring = true).performScrollTo() }) {
@@ -302,7 +302,7 @@ class ScreenshotTest {
             de.kurvenflug.core.model.PlayRecord("15-2", 3, 1, 90, today), de.kurvenflug.core.model.PlayRecord("2-5", 3, 1, 260, today))
         de.kurvenflug.app.ui.together.ParentScreen(de.kurvenflug.core.data.Profile(0, "Lena", "🦊"),
             de.kurvenflug.core.model.Weekly.summary(plays, today + 3_600_000L, today), listOf("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"), onBack = {},
-            parent = de.kurvenflug.app.ui.together.ParentArea(7, 20_400L, 20_410L, false, 0L, true, {}, {}, {}, {}, {},
+            parent = de.kurvenflug.app.ui.together.ParentArea(7, 20_400L, 20_410L, false, { 0L }, true, {}, {}, {}, {}, {},
                 pairLink = "https://www.mathenachhilfe-online.com/eltern-bericht/#AAAAAAAAAAAAAAAAAAAAAA.BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB", pairNick = "Lena"))
     }
 
@@ -402,6 +402,13 @@ class ScreenshotTest {
     @Test fun moreWave() = level("26-3", name = "86_verschobene_welle", values = mapOf("c" to 1.0, "d" to 0.5))
     @Test fun moreHorizontal() = level("27-3", name = "87_waagerechter_wurf", values = mapOf("v" to 3.0), settle = 7000,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    // Inhaltspaket 2.8: Terme & Gleichungen, Funktionen formen (inkl. „sehen“)
+    @Test fun termsEquation() = level("31-3", name = "110_terme_gleichungen", values = mapOf("x" to 6.0))
+    @Test fun termsBalance() = level("31-7", name = "111_terme_beide_seiten", values = mapOf("x" to 4.0))
+    @Test fun formsHill() = level("32-6", name = "112_funktionen_formen", values = mapOf("a" to -2.0, "c" to 1.0, "d" to 5.0))
+    @Test fun formsSqrt() = level("32-7", name = "113_wurzel_formen", values = mapOf("c" to 2.0, "d" to 1.0))
+    @Test fun formsSeeApparent() = level("32-12", name = "114_scheinloesung", values = mapOf("x" to 2.0, "y" to 2.0))
 
     // ------------------------------------------------------------ Schwierigkeit: Extrem-Prüfung und Sturm-Stufen
     @Test fun extremeTile() = shot("91_extrem_pruefung_kachel") {

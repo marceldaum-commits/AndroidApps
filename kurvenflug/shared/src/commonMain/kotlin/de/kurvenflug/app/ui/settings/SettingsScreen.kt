@@ -52,12 +52,12 @@ fun SettingsScreen(
         }
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             val platform = de.kurvenflug.app.LocalPlatform.current
+            // Schnell-Schalter für Kinder OHNE Tor (Recht/AppZentrale 19.11.): Ton, Musik, Lautstärke, Vorlesen, Schrift, Hell/Dunkel.
+            // Alles andere (Pro, Update, Daten zurücksetzen, Datenschutz-/Zähl-Schalter, Familie …) steht hinter dem Eltern-Tor.
+            var parentUnlocked by remember { mutableStateOf(false) }
+            var askGate by remember { mutableStateOf(false) }
+            if (askGate) de.kurvenflug.app.ui.pro.ParentGate(onDismiss = { askGate = false }, why = "Diese Einstellungen sind für Erwachsene.") { askGate = false; parentUnlocked = true }
             de.kurvenflug.app.ui.home.InstallOffer(onHome = false)
-            if (platform.selfUpdate) PlatformUpdateSection(installed, update, autoUpdate, onAutoUpdate)
-            // Welche Version läuft? (WebApp und Play: kein Update-Knopf, aber die Nummer soll sichtbar sein)
-            else if (installed.isNotBlank()) Text("Kurvenflug Version $installed" + if (platform.isWeb) " · aktualisiert sich von selbst" else " · Updates über Google Play",
-                style = MaterialTheme.typography.bodySmall, color = Q.Muted)
-            if (onPro != null) ProCard(de.kurvenflug.app.LocalPro.current, onPro)
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
                     Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
@@ -70,6 +70,12 @@ fun SettingsScreen(
                 }
             }
             if (readAloudAvailable) ReadAloudCard(readAloud, onReadAloud, readSpeed, onReadSpeed, offlineBest, onOfflineBest)
+            if (!parentUnlocked) OutlinedButton(onClick = { askGate = true }, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp)) {
+                Text("🔒 Weitere Einstellungen (für Erwachsene)")
+            }
+            if (parentUnlocked) {
+            if (platform.selfUpdate) PlatformUpdateSection(installed, update, autoUpdate, onAutoUpdate)
+            if (onPro != null) ProCard(de.kurvenflug.app.LocalPro.current, onPro)
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
@@ -78,30 +84,33 @@ fun SettingsScreen(
                         "(Extrem-Stufen, Andromeda, mehr Spieler). Kaufen kann man nur nach einer Frage für Erwachsene.", style = MaterialTheme.typography.bodySmall)
                     val nova = readAloudAvailable
                     Text(if (platform.isWeb) "Kurvenflug speichert den Spielstand nur hier in diesem Browser. Keine Anmeldung, keine Werbung, " +
-                        "keine Spieldaten an einen Server." + (if (nova) " Nur das Vorlesen (Nova, abschaltbar) lädt Audiodateien von unserem Server." else "") +
+                        "keine Spieldaten an einen Server." + (if (nova) " Nur das Vorlesen (abschaltbar) lädt Audiodateien von unserem Server." else "") +
                         " Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i)." +
                         " Neue Versionen lädt die Seite von selbst."
                         else if (!platform.selfUpdate) "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung. " +
-                        (if (nova) "Ins Internet geht die App nur für die Vorlese-Stimme Nova (abschaltbar). " else "Es gehen keine Spieldaten ins Internet. ") +
+                        (if (nova) "Ins Internet geht die App nur für die Vorlese-Stimme (abschaltbar). " else "Es gehen keine Spieldaten ins Internet. ") +
                         "Neue Versionen kommen über Google Play."
                         else "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung. " +
-                        (if (nova) "Ins Internet geht die App nur, um nach Updates zu schauen und für die Vorlese-Stimme Nova (beides abschaltbar)."
+                        (if (nova) "Ins Internet geht die App nur, um nach Updates zu schauen und für die Vorlese-Stimme (beides abschaltbar)."
                         else "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar)."), style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Koordinaten, Brüche und Kommazahlen, Winkel, Maßstab (Kl. 5/6), Zuordnungen, Prozent und Zinseszins (Kl. 6–8), " +
                         "lineare Funktionen und Gleichungssysteme (Kl. 7/8), Pythagoras (Kl. 8/9), quadratische Funktionen und Nullstellen (Kl. 9), " +
                         "Trigonometrie, Potenzfunktionen, Sinus, Exponential- und Logarithmusfunktionen (Kl. 9/10). " +
                         "Oberstufe: im Mathe-Trainer und in Raumlicht (siehe „Wie geht's weiter?“ in der Galaxie). Physik: gleichförmige und beschleunigte Bewegung, Reflexion, " +
                         "Lichtbrechung, Energieerhaltung, schräger und waagerechter Wurf, Gravitation.", style = MaterialTheme.typography.bodySmall)
-                    Text("Version $installed" + if (platform.isWeb) " · WebApp" else "", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
-                    if (platform.isWeb) Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        TextButton(onClick = { platform.openUrl(IMPRESSUM) }) { Text("Impressum") }
-                        TextButton(onClick = { platform.openUrl(DATENSCHUTZ) }) { Text("Datenschutz") }
-                    }
                 }
+            }
+            if (onReset != null) ResetCard(onReset)
+            }
+            // Immer sichtbar, ohne Tor: Version, Impressum und Datenschutz (rechtlich erlaubt), Lizenzen, Website-Hinweis
+            if (installed.isNotBlank()) Text("Kurvenflug Version $installed" + if (platform.isWeb) " · WebApp, aktualisiert sich von selbst" else if (!platform.selfUpdate) " · Updates über Google Play" else "",
+                style = MaterialTheme.typography.labelSmall, color = Q.Muted)
+            if (platform.isWeb) Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                TextButton(onClick = { platform.openUrl(IMPRESSUM) }) { Text("Impressum") }
+                TextButton(onClick = { platform.openUrl(DATENSCHUTZ) }) { Text("Datenschutz") }
             }
             LicenseCard(platform.isWeb)
             de.kurvenflug.app.ui.together.Footer(platform::openUrl)
-            if (onReset != null) ResetCard(onReset)
         }
     }
 }
@@ -202,9 +211,9 @@ private fun OfflineBox(reader: de.kurvenflug.app.ui.fx.Reader, best: Boolean, on
 }
 
 /** Datenschutz-Text zur Stimme Nova (Wortlaut Leitstand 17.11.) */
-const val NOVA_PRIVACY = "Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. " +
+const val NOVA_PRIVACY = "Vorgelesen wird mit einer KI-generierten (synthetischen) Stimme. Feste Texte vertonen wir vorab. " +
     "Texte, die erst in der Aufgabe entstehen (z. B. Rechenaufgaben), schickt die App ohne Angaben zu dir an unseren Server " +
-    "stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Es werden keine " +
+    "stimmen.mathenachhilfe-online.com; dieser vertont sie einmalig und speichert die Audiodatei. Es werden keine " +
     "Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle."
 
 /** Open-Source-Lizenzen (Apache 2.0 verlangt den Hinweis) – aufklappbar, damit es Kinder nicht stört. */
@@ -227,7 +236,7 @@ private val LICENSES = "Kurvenflug nutzt freie Software. Danke an alle, die sie 
     "Fragment, SavedState, Startup, DataStore), Guava, JSpecify, JetBrains Annotations.\n\n" +
     "Nur in der Google-Play-Version: Play In-App Updates und Play Billing (Nutzungsbedingungen von Google), " +
     "Google Data Transport, Firebase Encoders und javax.inject (Apache License 2.0)." +
-    (if (de.kurvenflug.core.model.Nova.ENABLED) "\n\nVorlese-Stimme Nova: KI-generierte Audiodateien (OpenAI), erzeugt auf unserem Server." else "")
+    (if (de.kurvenflug.core.model.Nova.ENABLED) "\n\nVorlese-Stimme: KI-generierte (synthetische) Audiodateien, erzeugt auf unserem Server." else "")
 
 private const val LICENSES_WEB = "\n\nIm Browser zusätzlich: Skia/Skiko (BSD-3-Clause), Noto Color Emoji (SIL Open Font License 1.1), " +
     "DejaVu Sans (freie Bitstream-Vera-Lizenz). Volltexte in fonts-lizenzen.txt."

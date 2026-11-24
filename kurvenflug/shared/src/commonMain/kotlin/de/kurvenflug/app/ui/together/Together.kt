@@ -83,7 +83,7 @@ fun ProfileScreen(
                 val ps = de.kurvenflug.app.LocalPro.current
                 val maxP = minOf(Settings.MAX_PROFILES, de.kurvenflug.core.model.Pro.maxProfiles(ps.pro, ps.locking))
                 if (profiles.size >= maxP && maxP < Settings.MAX_PROFILES)
-                    Text("⭐ Mehr als ${de.kurvenflug.core.model.Pro.FREE_PROFILES} Spieler gehören zu KurvenFlug Pro. Deine Eltern können im Elternbereich nachsehen.", color = Q.Yellow)
+                    Text("⭐ Mehr als ${de.kurvenflug.core.model.Pro.FREE_PROFILES} Spieler gehören zu KurvenFlug Pro.", color = Q.Yellow)
                 if (profiles.size < maxP) NeonButton(onClick = { editing = -1; name = ""; avatar = Settings.AVATARS[profiles.size % Settings.AVATARS.size] },
                     color = Q.Green, modifier = Modifier.fillMaxWidth()) { Text("➕ Neuer Spieler", fontWeight = FontWeight.Bold) }
                 editing?.let { id ->
@@ -173,7 +173,7 @@ fun ParentScreen(player: Profile, w: WeekSummary, dayLabels: List<String>, onBac
                         "laut erklären hilft oft schon. Nach 3 Versuchen bietet Volt einen Rechenweg an." }, Q.Orange)
                 Section("🌟 Läuft richtig gut", if (w.strong.isEmpty()) listOf("Noch zu wenig gespielt für eine Aussage.")
                     else w.strong.map { "${it.emoji} ${it.title} – meist beim ersten Versuch richtig gerechnet" }, Q.Green)
-                parent?.let { ParentExtras(it, w) }
+                parent?.let { ParentExtras(it, w, player.name) }
                 Text("Hinweis: Die Übersicht bleibt auf diesem Gerät. Kurvenflug zählt nur Level, Versuche und Dauer – keine Standorte. " +
                     "Pausen sind völlig in Ordnung; es gibt keine Serien, die verfallen.",
                     color = Q.Muted, style = MaterialTheme.typography.bodySmall)
@@ -250,13 +250,15 @@ class ParentArea(
     val today: Long,
     val examUntil: Long,
     val hintHidden: Boolean,
-    val hintShown: Long,
+    val hintShownFor: (String) -> Long,
     val counting: Boolean,
     val onOpen: (String) -> Unit,
     val onExam: (Boolean) -> Unit,
     val onHideHint: () -> Unit,
-    val onHintSeen: () -> Unit,
+    val onHintSeen: (String) -> Unit,
     val onCounting: (Boolean) -> Unit,
+    /** Schalter „Hinweise auf Nachhilfe ausblenden“ */
+    val onHintOff: (Boolean) -> Unit = {},
     /** Anonyme Nutzungszählung: Klicks und Hinweise (nur gesendet, wenn die Zählung an ist) */
     val onCount: (String) -> Unit = {},
     /** Ereignis mit Ort/Thema – sofort einzeln */
@@ -274,31 +276,30 @@ class ParentArea(
 )
 
 @Composable
-private fun ParentExtras(p: ParentArea, w: WeekSummary) {
+private fun ParentExtras(p: ParentArea, w: WeekSummary, nick: String) {
     val sfx = LocalSfx.current
-    val reason = de.kurvenflug.core.model.ParentOffers.hint(p.today, w.needsHelp.isNotEmpty(), p.examUntil, p.hintHidden, p.hintShown)
-    val hintTopic = (w.needsHelp.firstOrNull() ?: w.topics.firstOrNull()?.first)?.let { de.kurvenflug.core.model.ParentOffers.TOPICS[it.number] }
+    val topicCh = w.needsHelp.firstOrNull() ?: w.topics.firstOrNull()?.first
+    val hintTopic = topicCh?.let { de.kurvenflug.core.model.ParentOffers.TOPICS[it.number] }
+    val reason = de.kurvenflug.core.model.ParentOffers.hint(p.today, w.needsHelp.isNotEmpty(), p.examUntil, p.hintHidden, p.hintShownFor(hintTopic ?: ""))
     val hintPlace = if (reason == de.kurvenflug.core.model.ParentOffers.Reason.EXAM) "klassenarbeit" else "elternbericht"
-    LaunchedEffect(reason) { if (reason != null) { p.onHintSeen(); p.onCountAt("nachhilfe_hinweis", hintPlace, hintTopic) } }
-    // Nachhilfe-Hinweis – themenbezogen, höchstens an einem Tag pro Woche, ausblendbar
+    // Zählung anonym, ohne Thema (Recht V15)
+    LaunchedEffect(reason) { if (reason != null) { p.onHintSeen(hintTopic ?: ""); p.onCountAt("nachhilfe_hinweis", hintPlace, null) } }
+    // Nachhilfe-Hinweis (Recht V15) – nur hinter dem Tor, objektiver Auslöser, 1× in 4 Wochen je Thema, wegklickbar
     if (reason != null) {
-        val topic = w.needsHelp.firstOrNull() ?: w.topics.firstOrNull()?.first
         val enter = remember { Animatable(0f) }
         LaunchedEffect(Unit) { enter.animateTo(1f, spring(dampingRatio = 0.6f)) }
         Column(Modifier.fillMaxWidth().graphicsLayer { alpha = enter.value; translationY = (1 - enter.value) * 40f }
             .clip(RoundedCornerShape(16.dp)).background(Q.Panel).border(1.5.dp, Q.Cyan.copy(alpha = 0.5f), RoundedCornerShape(16.dp)).padding(14.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("💡 Für dich als Elternteil", fontWeight = FontWeight.Bold, color = Q.Cyan)
             Text(when (reason) {
-                de.kurvenflug.core.model.ParentOffers.Reason.EXAM -> "Bald steht eine Klassenarbeit an" + (topic?.let { " – zum Beispiel zu „${it.title}“" } ?: "") +
-                    ". Eine kostenlose Probestunde kann vor der Arbeit helfen – bei Nachhilfe – online, mit einer Lehrkraft, passend zum Thema."
-                else -> "Bei „${topic?.title}“ hakt es gerade. Das ist normal und meist schnell geklärt. Wenn du dir Unterstützung wünschst: " +
-                    "Bei Nachhilfe – online gibt es eine kostenlose Probestunde mit einer Lehrkraft, genau zu diesem Thema."
+                de.kurvenflug.core.model.ParentOffers.Reason.EXAM -> "Hinweis: Bei euch steht eine Klassenarbeit an. Wenn ihr persönliche Unterstützung möchtet: " +
+                    "Unser Angebot – eine kostenlose, unverbindliche Probestunde Online-Nachhilfe."
+                else -> de.kurvenflug.core.model.ParentOffers.parentHintText("„${topicCh?.title}“", nick)
             }, color = Q.Text, style = MaterialTheme.typography.bodySmall)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                Button(onClick = { sfx?.play(Sound.TAP); p.onCountAt("probestunde_klick", hintPlace, hintTopic); p.onOpen(de.kurvenflug.core.model.ParentOffers.trialLesson(topic?.number, p.grade, reason)) },
-                    colors = ButtonDefaults.buttonColors(containerColor = Q.Cyan, contentColor = Q.Space)) { Text("Probestunde ansehen", fontWeight = FontWeight.Bold) }
-                TextButton(onClick = { sfx?.play(Sound.TICK); p.onHideHint() }) { Text("Nicht mehr zeigen", color = Q.Muted) }
+                Button(onClick = { sfx?.play(Sound.TAP); p.onCountAt("probestunde_klick", hintPlace, null); p.onOpen(de.kurvenflug.core.model.ParentOffers.trialLesson(reason)) },
+                    colors = ButtonDefaults.buttonColors(containerColor = Q.Cyan, contentColor = Q.Space)) { Text("Probestunde anfragen", fontWeight = FontWeight.Bold) }
+                TextButton(onClick = { sfx?.play(Sound.TICK); p.onHideHint() }) { Text("Solche Hinweise ausblenden", color = Q.Muted) }
             }
         }
     }
@@ -312,6 +313,15 @@ private fun ParentExtras(p: ParentArea, w: WeekSummary) {
             Text(if (exam) "Gemerkt für die nächsten Wochen" else "Antippen, wenn eine Klassenarbeit ansteht", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
         }
         Switch(exam, { sfx?.play(Sound.TICK); p.onExam(it) })
+    }
+    // Schalter: Hinweise auf Nachhilfe ausblenden (Recht V15)
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable { sfx?.play(Sound.TICK); p.onHintOff(!p.hintHidden) }.padding(14.dp),
+        verticalAlignment = Alignment.CenterVertically) {
+        Column(Modifier.weight(1f)) {
+            Text("Hinweise auf Nachhilfe ausblenden", fontWeight = FontWeight.Bold, color = Q.Text)
+            Text("Dann erscheint hier kein Hinweis auf eine Probestunde mehr", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+        }
+        Switch(p.hintHidden, { sfx?.play(Sound.TICK); p.onHintOff(it) })
     }
     // Pro-Code von Hand (z. B. iPhone-App vom Home-Bildschirm, wo der Link aus der Mail nicht wirkt)
     p.onPro?.let { open ->

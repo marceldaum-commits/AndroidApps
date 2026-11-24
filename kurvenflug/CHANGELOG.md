@@ -3,6 +3,18 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.8.0 – Zwei neue Planeten und mehr Ruhe für Eltern
+- **Neuer Planet „Terme & Gleichungen“ (Klasse 7–8)**: Gleichungen lösen wie mit einer Waage ⚖️ – 10 Level, von „x + 3 = 8“ bis zur
+  Gleichung mit Klammern und x auf beiden Seiten. Zu jedem Level gibt es den kompletten Rechenweg Schritt für Schritt.
+- **Neuer Planet „Funktionen formen“ (Klasse 9–10)**: Kurven schieben, strecken und spiegeln – y = a · f(b · (x − c)) + d.
+  Am Ende „siehst“ du Gleichungen als Schnittpunkte zweier Graphen – und entdeckst, warum manche errechnete Lösung gar nicht stimmt.
+- **Elternbereich hinter einer Rechenaufgabe für Erwachsene** (zum Beispiel „siebzehn mal acht“). Ton, Musik, Lautstärke, Schriftgröße
+  und Hell/Dunkel bleiben für Kinder frei einstellbar; Update, Löschen, Datenschutz-Schalter, Teilen und Elternbereich liegen hinter der Aufgabe.
+- Wenn ein Kind nicht weiterkommt, gibt es eine freundliche Hilfe: „Leichter üben“ oder „Erklärung ansehen“.
+- Neues Startbild mit atmendem Logo.
+- Hinweis auf eine kostenlose, unverbindliche Probestunde erscheint für Eltern höchstens einmal in vier Wochen je Thema und lässt sich ausschalten.
+- Das Vorlesen ist weiterhin ausgeschaltet; die Texte dazu nennen jetzt nur noch „KI-generierte Stimme“.
+
 ## 2.7.1 – Pro-Hinweis für Kinder
 - Tippt ein Kind auf etwas, das zu KurvenFlug Pro gehört, steht dort nur noch sachlich: „Das gehört zu KurvenFlug Pro. Deine
   Eltern können im Elternbereich nachsehen.“ – ohne Preis und ohne Kaufknopf. Die Pro-Seite gibt es nur nach der Frage für Erwachsene.

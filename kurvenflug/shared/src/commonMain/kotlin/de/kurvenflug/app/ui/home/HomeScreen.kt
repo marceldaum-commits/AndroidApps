@@ -67,6 +67,8 @@ fun HomeScreen(
     onCodex: (() -> Unit)? = null,
     onWorkshop: (() -> Unit)? = null,
     banner: (@Composable () -> Unit)? = null,
+    /** Tipp für Kl. 9–10 (Recht V15, ohne Tor) */
+    tip: (@Composable () -> Unit)? = null,
     /** Lernstand-Karte (mit Auffrisch-Hinweis) */
     learning: (@Composable () -> Unit)? = null,
     /** Klassenstufe (null = nicht gewählt → alle Kapitel) */
@@ -151,6 +153,7 @@ fun HomeScreen(
                                 IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Einstellungen", tint = Q.Muted) }
                             }
                             banner?.invoke()
+                            tip?.invoke()
                             InstallOffer(onHome = true)
                             Volt(greeting?.first ?: if (stars == 0) VoltMood.IDLE else VoltMood.HAPPY, size = if (wide) 84.dp else 64.dp,
                                 speech = greeting?.second ?: if (stars == 0) "Hey! Ich bin Volt. Bereit für deine erste Mission? 🚀" else "Schon $stars ⭐ gesammelt. Weiter so, Commander!")

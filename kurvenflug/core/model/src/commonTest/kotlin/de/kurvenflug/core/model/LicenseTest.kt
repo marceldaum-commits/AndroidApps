@@ -26,7 +26,7 @@ class LicenseTest {
     @Test fun codeFoundInsideEmailOrLink() {
         val mail = "Hallo! Dein Code lautet:\n$pro\nViel Spaß!"
         assertNotNull(License.check(License.extract(mail), pk, today))
-        val link = "https://kurvenflug.mathenachhilfe-online.com/?pro=" + pro.replace("-", "")
+        val link = "https://lernen.mathenachhilfe-online.com/kurvenflug/?pro=" + pro.replace("-", "")
         assertNotNull(License.check(License.extract(link), pk, today))
         // Kleinbuchstaben und Verwechsler O/0, I/1 beim Abtippen
         assertNotNull(License.check(pro.lowercase(), pk, today))

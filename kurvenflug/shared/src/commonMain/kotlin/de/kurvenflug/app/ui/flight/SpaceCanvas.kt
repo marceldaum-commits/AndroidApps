@@ -128,6 +128,10 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
             drawCircle(Q.Yellow.copy(alpha = 0.25f * glow), unit * 0.7f, o)
             drawBolt(o, unit * 0.5f)
         }
+        // Hilfskurven (Gleichung als zwei Graphen): erste blau, zweite orange
+        Flight.guides(l).forEachIndexed { i, g ->
+            if (g.size > 1) drawPathLine(g, ::px, (if (i == 0) Q.Cyan else Q.Orange).copy(alpha = 0.9f), unit * 0.09f, dashed = false)
+        }
         // Stationen
         l.targets.forEachIndexed { i, t ->
             if (l.hidden && !v.revealHidden && i !in v.hitTargets) return@forEachIndexed

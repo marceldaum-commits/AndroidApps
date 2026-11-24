@@ -3,7 +3,7 @@
 Noch nicht eingebaut – Wortlaut und Zählung werden am Mo 23.11. mit dem Leitstand abgestimmt.
 
 ## KurvenFlug-Direktlink (zugesagt bis Fr 20.11.) – mit NAMEN, nicht Nummer
-`https://kurvenflug.mathenachhilfe-online.com/#kapitel=<name>` (Test: `kurvenflug-test.`). Zahlen (#kapitel=7) gehen zusätzlich, unbekannt → Startseite.
+`https://lernen.mathenachhilfe-online.com/kurvenflug/#kapitel=<name>` (Test: `kurvenflug-test.`). Zahlen (#kapitel=7) gehen zusätzlich, unbekannt → Startseite.
 
 | Name | Kap. intern |
 |---|---|

@@ -14,9 +14,7 @@ object Curriculum {
         // Mathematik – nur Funktionen/Zahlengerade/Koordinaten (Profil Kl. 5–10 „sehen und fliegen“, Abgleich 18./19.11.;
         // Flächen, Körper, Daten, Wahrscheinlichkeit, Potenzen → Mathe-Trainer/Rechenblitz, Oberstufe → Mathe-Trainer/Raumlicht)
         Upcoming("➖", "Negative Zahlen", Subject.MATH, 6..7, "Am Zahlenstrahl fliegen: Plus und Minus, Rechengesetze"),
-        Upcoming("🧮", "Terme & Gleichungen", Subject.MATH, 7..8, "Terme vereinfachen, lineare Gleichungen umformen und lösen"),
         Upcoming("🪞", "Spiegeln & Verschieben", Subject.MATH, 6..7, "Achsen- und Punktsymmetrie, Spiegeln, Drehen, Verschieben im Koordinatensystem"),
-        Upcoming("🎛️", "Funktionen formen", Subject.MATH, 9..10, "Graphen strecken, spiegeln, verschieben: a · f(b · (x − c)) + d"),
         // Physik – Nachrechnen mit Formeln und Einheiten (Ausprobieren: Experimentopia)
         Upcoming("⚙️", "Kräfte & Hebel", Subject.PHYSICS, 7..8, "Kraft, Hebelgesetz, Flaschenzug, Reibung"),
         Upcoming("💧", "Druck & Auftrieb", Subject.PHYSICS, 8..9, "Druck in Flüssigkeiten und Gasen, Archimedes"),
