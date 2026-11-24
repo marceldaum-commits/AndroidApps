@@ -1,5 +1,5 @@
 // Prüft die anonyme Nutzungszählung der WebApp (Playwright, Wasm und JS):
-// - beim Öffnen genau ein Aufruf „start“ an trainer.mathenachhilfe-online.com/zaehler/v1/e, text/plain, ohne Cookies
+// - beim Öffnen genau ein Aufruf „start“ an trainer.mathenachhilfe-online.com/zaehler/v1/e (auf der Test-Stufe trainer-test.…), text/plain, ohne Cookies
 // - der Inhalt hat nur app, v, ev (ort, thema) – keine Kennung, kein Name, kein Lernstand
 // - ist der Schalter „Anonyme Nutzungszählung“ aus (Einstellungen), wird nichts gesendet
 // - der Freischalt-Link ?pro=<ungültig> zählt nichts
@@ -13,7 +13,7 @@ async function open(modus, prep) {
   const b = await chromium.launch();
   const ctx = await b.newContext();
   const calls = [];
-  await ctx.route('https://trainer.mathenachhilfe-online.com/**', async (r) => {
+  await ctx.route('https://trainer*.mathenachhilfe-online.com/**', async (r) => {
     const q = r.request();
     calls.push({ url: q.url(), method: q.method(), type: q.headers()['content-type'], cookie: q.headers()['cookie'] || null, body: q.postData() });
     await r.fulfill({ status: 204, body: '' });
@@ -33,7 +33,7 @@ async function open(modus, prep) {
     check(start.length === 1, `${modus}: ein Aufruf „start“`, calls.map((c) => c.body));
     if (start[0]) {
       const c = start[0];
-      check(c.url === 'https://trainer.mathenachhilfe-online.com/zaehler/v1/e' && c.method === 'POST', `${modus}: richtiger Endpunkt`, c.url);
+      check(c.url === (/127\.0\.0\.1|localhost/.test(BASE) ? 'https://trainer-test.mathenachhilfe-online.com/zaehler/v1/e' : 'https://trainer.mathenachhilfe-online.com/zaehler/v1/e') && c.method === 'POST', `${modus}: richtiger Endpunkt (Test-Stufe → trainer-test)`, c.url);
       check(/^text\/plain/.test(c.type || ''), `${modus}: text/plain`, c.type);
       check(!c.cookie, `${modus}: keine Cookies`);
       const j = JSON.parse(c.body);
