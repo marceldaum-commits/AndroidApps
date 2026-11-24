@@ -2,6 +2,21 @@
 
 Neueste oben. Vorschläge; verbindlich wird erst der Plan des Leitstands.
 
+## 24.11.2026 (Wochenrunde, Beitrag bis 17 Uhr)
+
+**Stand:** Live (Leitstand) 2.18.34. Auf test: 2.18.39 (24.11.) – neue Startanimation mit dem gemeinsamen Logo, PC-Ansicht, Kopplung lösen mit Altersfrage und Vermerk (V26), Zählpunkt „umzug“, alles zu „Nova“/OpenAI entfernt, Datenschutz-Link; Recht hat mit Auflagen freigegeben (V46). 2.18.40 (24.11.) wird gerade auf test gebracht: neues Kapitel „Gleichungssysteme & Gauß“ (7 Aufgaben, drei Ebenen im Raum) und 4 neue Abi-Prüfungen (Dachfläche, Baukran, Heißluftballon, Wasserrutsche; jetzt 8). Alle Ergebnisse unabhängig nachgerechnet getestet. Vorlesen bleibt AUS bis die Stimmen aus dem eigenen Tonstudio da sind.
+
+**Vorschlag Fr 27.11.:** nach Marcels Regel nur Prüfen und Korrigieren: Monatsprüfung (Block 1 aus dem Prüfplan), KI-Kennzeichnung K4 (maschinenlesbar, Pflicht bis 01.12.) und die Art.-6-Beschreibung für den KI-Lehrer (bis 04.12.), Rückmeldungen vom Geräte-Test.
+**Vorschlag Di 01.12.:** weitere Abi-Prüfungen (Ziel 12, davon bisher 8), danach Kapitel „Lage Gerade–Ebene und Ebene–Ebene“ und „Körper im Raum“. Vorlesen erst, wenn alles fertig ist und Marcel informiert ist.
+
+**Ideen:** Schattenwurf (Licht, Körper, Wand) als Spielart; „Treffer-Ticker“ beim Gauß (Zeile für Zeile zusehen, wie eine Unbekannte verschwindet).
+
+**Überschneidungen:** LGS gibt es auch im Mathe-Trainer (Mittelstufe, 2×2). Raumlicht nimmt nur die räumliche 3×3-Fassung ab Klasse 10/Oberstufe. Verweis möglich auf `level/27-1` (Aufgabe „Die Treppe“, frei zugänglich); jüngere Kinder (unter Kl. 9) nur auf Galton, Zufall, Rotation, Raumflug. Die Namen der Verweise ändern wir nicht.
+
+**Abgeben/übernehmen:** Abgeben: nichts. Übernehmen: Textliste fürs Tonstudio (Format 1, nur Deutsch, Zahlen und Formeln ausgeschrieben) – ab Mi 25.11.; gemeinsame Startanimation ist umgesetzt.
+
+**Pflichten aus dieser Woche (Recht V34a/V36/V46):** K4 (KI-Antworten maschinenlesbar kennzeichnen, bis 01.12.), K1 trifft Raumlicht nicht (keine ausgelieferten Audiodateien), K5 trifft Raumlicht nicht (keine Website-KI), Nova-Dateien auf dem Server nach Live-Gang der 2.18.39 sperren und bis 01.12. löschen.
+
 ## 18.11.2026 (vorgezogene Runde)
 
 **Rolle:** Oberstufe und Abitur. Mathe zum Anfassen: analytische Geometrie in 3D (Punkte, Geraden, Ebenen, Kugeln, Abstände, Winkel), dazu Analysis und Stochastik zum Erleben (Kurve abfahren, Achterbahn-Baumeister, Galton-Brett, Binomial-Labor). 144 Aufgaben in 26 Kapiteln, jede Theorie-Karte mit Formel-Kasten. Kein Stoff unter Klasse 10/11.
