@@ -32,7 +32,8 @@ class AngeboteTest {
     }
 
     @Test fun linksTragenHerkunft() {
-        assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=wissensgarten-elternbericht&thema=brueche&klasse=6",
+        // V15: nur Herkunft, nie Thema oder Klasse
+        assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=wissensgarten-elternbericht",
             Angebote.probestunde("elternbericht", "brueche", 6))
         assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=wissensgarten-klassenarbeit",
             Angebote.probestunde("klassenarbeit", null, 14))
@@ -60,9 +61,11 @@ class AngeboteTest {
     @Test fun hinweisNurWennEsHakt() {
         assertNull(NachhilfeHinweis.pruefe(antworten("brueche", 3, 5), now, emptyMap(), emptySet()), "weniger als 10 Antworten")
         assertNull(NachhilfeHinweis.pruefe(antworten("brueche", 7, 3), now, emptyMap(), emptySet()), "70 % richtig")
+        assertNull(NachhilfeHinweis.pruefe(antworten("brueche", 5, 5), now, emptyMap(), emptySet()), "genau 50 % ist nicht darunter")
         assertNull(NachhilfeHinweis.pruefe(antworten("brueche", 2, 10, vorTagen = 20), now, emptyMap(), emptySet()), "zu alt")
         val h = NachhilfeHinweis.pruefe(antworten("brueche", 5, 6), now, emptyMap(), emptySet())
         assertNotNull(h); assertEquals("brueche", h.thema); assertEquals(45, h.prozent); assertTrue(h.neu)
+        assertNull(NachhilfeHinweis.pruefe(antworten("brueche", 6, 5), now, emptyMap(), emptySet()), "54 % richtig – nicht unter 50 %")
     }
 
     @Test fun hoechstensEinHinweisDerSchwaechste() {
@@ -76,10 +79,21 @@ class AngeboteTest {
         assertEquals(false, NachhilfeHinweis.pruefe(a, now, mapOf("brueche" to now - 3_600_000), emptySet())!!.neu)
         // vor 5 Tagen gezeigt → Pause
         assertNull(NachhilfeHinweis.pruefe(a, now, mapOf("brueche" to now - 5 * day), emptySet()))
-        // vor 15 Tagen gezeigt → wieder erlaubt
-        assertTrue(NachhilfeHinweis.pruefe(a, now, mapOf("brueche" to now - 15 * day), emptySet())!!.neu)
+        // vor 15 und vor 27 Tagen gezeigt → noch Pause (höchstens 1× in 4 Wochen je Thema)
+        assertNull(NachhilfeHinweis.pruefe(a, now, mapOf("brueche" to now - 15 * day), emptySet()))
+        assertNull(NachhilfeHinweis.pruefe(a, now, mapOf("brueche" to now - 27 * day), emptySet()))
+        // vor 29 Tagen gezeigt → wieder erlaubt
+        assertTrue(NachhilfeHinweis.pruefe(a, now, mapOf("brueche" to now - 29 * day), emptySet())!!.neu)
         // ausgeblendet → nie wieder
         assertNull(NachhilfeHinweis.pruefe(a, now, emptyMap(), setOf("brueche")))
+    }
+
+    @Test fun wortlautVonRechtV15() {
+        assertEquals("Hinweis: In Bruchrechnung hat Mia in den letzten Wochen öfter Schwierigkeiten. Das ist normal und lässt sich üben – die App zeigt dazu passende Übungen. " +
+            "Wenn ihr persönliche Unterstützung möchtet: Unser Angebot – eine kostenlose, unverbindliche Probestunde Online-Nachhilfe.", NachhilfeHinweis.text("brueche", "Mia"))
+        assertTrue(NachhilfeHinweis.text("einmaleins", "Ben").startsWith("Hinweis: Im Einmaleins hat Ben"))
+        assertEquals("Probestunde anfragen", NachhilfeHinweis.KNOPF)
+        assertEquals("Solche Hinweise ausblenden", NachhilfeHinweis.AUSBLENDEN)
     }
 
     @Test fun klassenarbeitDreiBisVierzehnTage() {

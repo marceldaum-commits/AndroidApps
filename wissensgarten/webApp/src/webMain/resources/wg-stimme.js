@@ -1,5 +1,5 @@
-// Wissensgarten WebApp – Brummis Stimme „Nova“ (KI-Stimme von OpenAI, vertont von unserem Stimm-Server).
-// Die WebApp spricht nie mit OpenAI. Sie lädt fertige MP3-Dateien von stimmen.mathenachhilfe-online.com
+// Wissensgarten WebApp – Brummis KI-generierte Stimme (vertont auf unserem eigenen Server).
+// Die WebApp lädt fertige MP3-Dateien von stimmen.mathenachhilfe-online.com
 // (ohne Cookies, ohne Referrer) und legt sie im Browser-Speicher ab (Cache Storage „wissensgarten-nova“).
 // Ohne Internet liest still eine Stimme des Browsers, die auf dem Gerät spricht.
 (function () {

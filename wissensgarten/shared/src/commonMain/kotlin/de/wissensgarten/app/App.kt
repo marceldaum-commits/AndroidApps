@@ -165,6 +165,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
               de.wissensgarten.app.ui.fx.LocalVoice provides host.voice,
                   de.wissensgarten.app.ui.fx.LocalHost provides host,
               de.wissensgarten.app.ui.fx.LocalReadAloud provides readAloud,
+              de.wissensgarten.app.ui.fx.LocalVorleseKnopf provides (readMode != de.wissensgarten.core.data.ReadAloud.OFF),
               de.wissensgarten.app.ui.fx.LocalSyllables provides syllablesOn,
               de.wissensgarten.app.ui.fx.LocalVibration provides vm.settings.vibration.collectAsStateWithLifecycle().value,
               de.wissensgarten.app.ui.plus.LocalPlusStatus provides vm.plusStatus.collectAsStateWithLifecycle().value,
@@ -316,7 +317,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         Box(Modifier.fillMaxSize()) {
         Scaffold(
             // „← Alle Apps“: zurück zur App-Auswahl auf unserer Website – nur in den Hauptansichten, nie mitten in einer Runde
-            topBar = { host.appsPageUrl?.let { if (showBar) de.wissensgarten.app.ui.common.AlleAppsLeiste { gate("Hier geht es zur Website.") { host.openAppsPage() } } } },
+            topBar = { host.appsPageUrl?.let { if (showBar) de.wissensgarten.app.ui.common.AlleAppsLeiste { host.openAppsPage() } } },  // Alle Apps: ohne Eltern-Tor, neutral (V10 neu)
             bottomBar = {
                 if (showBar) NavigationBar {
                     TABS.forEach { t ->
@@ -324,9 +325,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             selected = route == t.route,
                             onClick = {
                                 sfx?.play(de.wissensgarten.app.ui.fx.Sound.TAP, volume = 0.5f)
-                                // „Mehr“ enthält Konto, Updates, Löschen → nur für Eltern
-                                if (t.route == Routes.SETTINGS) gate(if (host.features.sync) "Die Einstellungen sind für Eltern: Sync mit Google, Updates, Daten löschen." else "Die Einstellungen sind für Eltern: Ton, Vorlesen, Lernzeit, Daten löschen.") { goTab(t.route) }
-                                else goTab(t.route)
+                                // Einstellungen: Schnell-Schalter frei, Eltern-Teil (Plus, Updates, Sync, Löschen …) hinter dem Tor – siehe SettingsScreen
+                                goTab(t.route)
                             },
                             icon = { Icon(t.icon, null) },
                             label = { Text(t.label) },
@@ -855,12 +855,13 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                         if (exam != null) {
                             val thema = bedThema[exam.bedId]
                             val tag = de.wissensgarten.app.ui.common.Clock.weekdayName(exam.day)
-                            LaunchedEffect(exam.id) { vm.zaehle("nachhilfe_hinweis", "klassenarbeit", thema) }
+                            LaunchedEffect(exam.id) { vm.zaehle("nachhilfe_hinweis", "klassenarbeit") }
                             de.wissensgarten.app.ui.parents.NachhilfeKarte(
-                                "Am $tag ist die Klassenarbeit „${exam.title}“. Eine kostenlose Probestunde kann vor der Arbeit helfen.",
-                                "Kostenlose Probestunde anfragen",
-                                onOpen = { vm.zaehle("probestunde_klick", "klassenarbeit", thema); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.probestunde("klassenarbeit", thema, klasse)) } },
-                                onHide = { vm.settings.hideHint(p.id, "ka:" + exam.id); hintRev++ },
+                                "Hinweis: Am $tag ist die Klassenarbeit „${exam.title}“. Das lässt sich üben – die App zeigt dazu passende Übungen. " +
+                                    "Wenn ihr persönliche Unterstützung möchtet: Unser Angebot – eine kostenlose, unverbindliche Probestunde Online-Nachhilfe.",
+                                de.wissensgarten.core.model.NachhilfeHinweis.KNOPF,
+                                onOpen = { vm.zaehle("probestunde_klick", "klassenarbeit"); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.probestunde("klassenarbeit", thema, klasse)) } },
+                                onHide = { vm.settings.setTutorHints(false) },
                             )
                             return@WeekReportScreen
                         }
@@ -869,15 +870,12 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             cardThema[l.cardId]?.let { de.wissensgarten.core.model.NachhilfeHinweis.Antwort(it, l.time, l.rating != de.wissensgarten.core.model.Rating.AGAIN.ordinal) }
                         }
                         val h = remember(p.id, hintRev, antworten.size) { m.pruefe(antworten, now, vm.settings.hintShown(p.id), hidden) } ?: return@WeekReportScreen
-                        LaunchedEffect(p.id, h.thema) { if (h.neu) { vm.settings.setHintShown(p.id, h.thema, now); vm.zaehle("nachhilfe_hinweis", "elternbericht", h.thema) } }
+                        LaunchedEffect(p.id, h.thema) { if (h.neu) { vm.settings.setHintShown(p.id, h.thema, now); vm.zaehle("nachhilfe_hinweis", "elternbericht") } }
                         de.wissensgarten.app.ui.parents.NachhilfeKarte(
-                            "${de.wissensgarten.core.model.Angebote.themaName(h.thema).replaceFirstChar { it.uppercase() }} fällt ${p.name} gerade schwer (${h.prozent} % richtig in den letzten zwei Wochen). " +
-                                "Üben in der App hilft – manchmal braucht es aber eine Erklärung von einem Menschen. Wenn ihr mögt: Wir bieten Online-Nachhilfe an.",
-                            "Kostenlose Probestunde anfragen",
-                            onOpen = { vm.zaehle("probestunde_klick", "elternbericht", h.thema); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.probestunde("elternbericht", h.thema, klasse)) } },
-                            onHide = { vm.settings.hideHint(p.id, h.thema); hintRev++ },
-                            second = "Neukundenpaket ansehen",
-                            onSecond = { vm.zaehle("neukunde_klick", "elternbericht", h.thema); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.neukundenpaket("elternbericht", h.thema, klasse)) } },
+                            de.wissensgarten.core.model.NachhilfeHinweis.text(h.thema, p.name),
+                            de.wissensgarten.core.model.NachhilfeHinweis.KNOPF,
+                            onOpen = { vm.zaehle("probestunde_klick", "elternbericht"); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.probestunde("elternbericht", h.thema, klasse)) } },
+                            onHide = { vm.settings.setTutorHints(false) },
                         )
                     }, report = { pid ->
                         val subj = packs.associate { it.id to it.subject }

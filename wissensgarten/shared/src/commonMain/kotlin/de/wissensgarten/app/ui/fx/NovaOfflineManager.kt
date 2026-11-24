@@ -42,7 +42,7 @@ interface NovaOfflineSteuerung {
  * „Alle Nova-Texte offline laden“ – gleich für Android und Web.
  * Liste: die Vorlese-Liste der WebApp (`vorlesen/texte.json`, dieselben Texte und Namen wie der Server); Plus-Texte aus den
  * geladenen Plus-Paketen ([Nova.packTexte]). Größe: Server-Stand `stand-<host>.json` (+ `stand-lokal-packs.json` bei Plus),
- * abzüglich dessen, was schon auf dem Gerät liegt. Laufzeit-Texte (`/jetzt`) gehören nicht dazu.
+ * abzüglich dessen, was schon auf dem Gerät liegt. Laufzeit-Texte gehören nicht dazu (`/jetzt` ist abgeschaltet).
  *
  * @param listeUrl Web: `vorlesen/texte.json` (eigener Host); Android: die Liste des Live-Hosts
  * @param host Name für den Server-Stand (Web: der eigene Host; Android: [NovaOffline.LIVE_HOST])
@@ -114,7 +114,7 @@ class NovaOfflineManager(
                 r.offline -> "Keine Verbindung. Tipp nochmal – dann geht es dort weiter."
                 r.netzfehler > 0 -> "${r.netzfehler} Sätze haben nicht geklappt. Tipp nochmal – dann lädt Brummi nur noch die fehlenden."
                 r.gibtEsNicht > 0 -> "✅ Fertig! ${r.gibtEsNicht} Sätze gibt es noch nicht – die liest die Stimme des Geräts."
-                else -> "✅ Fertig! Brummi liest jetzt auch ohne Internet mit Nova vor."
+                else -> "✅ Fertig! Brummi liest jetzt auch ohne Internet mit der KI-Stimme vor."
             }
             zustand.value = rechne(text)
         }

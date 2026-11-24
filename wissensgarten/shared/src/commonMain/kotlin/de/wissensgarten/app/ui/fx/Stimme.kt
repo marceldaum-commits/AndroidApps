@@ -27,7 +27,7 @@ object Stimme {
     /** Kurzer Satz für die Probe-Taste */
     const val PROBE = "Hallo, ich bin Brummi! So klinge ich, wenn ich dir vorlese."
     /** Pflichtkennzeichnung der KI-Stimme */
-    const val NAME = "Nova – KI-generierte Stimme"
+    const val NAME = "🤖 KI-generierte Stimme"
 }
 
 /**
@@ -53,8 +53,8 @@ interface NovaGeraet : NovaQuelle {
 
 /**
  * Brummis Stimme „Nova“ – für Android und Web derselbe Ablauf ([NovaAblauf], [NovaWeg], [NovaKatalog]):
- * Gerätespeicher → vorab vertonte Datei vom Stimm-Server → (öffentliche Texte) `/jetzt` → nur im Notfall die Gerätestimme.
- * Bis ≈ 3 s wird auf Nova gewartet ([laedt] zeigt ab ≈ 0,4 s „🎧 …“).
+ * Gerätespeicher → vorab vertonte Datei vom Stimm-Server → (`/jetzt` ist seit 20.11.2026 abgeschaltet, nie mehr anfragen) → sonst die Gerätestimme.
+ * Bis ≈ 3 s wird auf die KI-Stimme gewartet ([laedt] zeigt ab ≈ 0,4 s „🎧 …“).
  */
 class NovaVoice(
     private val g: NovaGeraet,

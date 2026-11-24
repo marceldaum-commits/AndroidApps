@@ -28,7 +28,7 @@ import de.wissensgarten.core.model.NovaQualitaet
 import de.wissensgarten.core.model.Pack
 import de.wissensgarten.app.ui.fx.NovaOfflineSteuerung
 
-/** Stimme „Nova“ (Kennzeichnung), Sprechtempo in Stufen, Probe-Taste und „Offline laden“ – unter „Brummi liest vor“. */
+/** KI-Stimme (Kennzeichnung), Sprechtempo in Stufen, Probe-Taste und „Offline laden“ – unter „Brummi liest vor“. */
 @Composable
 fun VoiceSettings(settings: Settings, host: AppHost, packs: List<Pack> = emptyList(), plusActive: Boolean = false) {
     val voice = host.voice ?: return
@@ -49,7 +49,7 @@ fun VoiceSettingsPanel(settings: Settings, voice: Voice, offline: NovaOfflineSte
         Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text("🎙️ Stimme: ${Stimme.NAME}", fontWeight = FontWeight.Bold, color = Color(0xFF4E3B00))
             Text(
-                "Brummi liest mit Nova vor, einer mit KI (OpenAI) erzeugten Stimme. Ohne Internet liest die Stimme des Geräts.",
+                "Brummi liest mit einer KI-generierten Stimme vor (🤖 synthetische Stimme von unserem eigenen Server). Ohne Internet liest die Stimme des Geräts.",
                 style = MaterialTheme.typography.bodySmall, color = Color(0xFF4E3B00),
             )
         }
@@ -76,13 +76,13 @@ fun VoiceSettingsPanel(settings: Settings, voice: Voice, offline: NovaOfflineSte
         Text("🔊 Probe hören", style = MaterialTheme.typography.titleSmall)
     }
     Text(
-        "Englisch, Französisch und Spanisch spricht Nova in der passenden Sprache.",
+        "Englisch, Französisch und Spanisch spricht die KI-Stimme in der passenden Sprache.",
         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
     if (offline != null) OfflineCard(settings, offline)
 }
 
-/** „Alle Nova-Texte offline laden“: Größe, Hinweis aufs WLAN, Fortschritt „x von n“, Abbrechen, Löschen */
+/** „Alle Vorlese-Texte offline laden“: Größe, Hinweis aufs WLAN, Fortschritt „x von n“, Abbrechen, Löschen */
 @Composable
 private fun OfflineCard(settings: Settings, offline: NovaOfflineSteuerung) {
     val z by offline.zustand.collectAsState()
@@ -93,14 +93,14 @@ private fun OfflineCard(settings: Settings, offline: NovaOfflineSteuerung) {
     Spacer(Modifier.height(12.dp))
     Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(14.dp).animateContentSize(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("📦 Alle Nova-Texte offline laden", fontWeight = FontWeight.Bold)
-            Text("Dann liest Brummi auch ohne Internet mit Nova vor.", style = MaterialTheme.typography.bodySmall)
+            Text("📦 Alle Vorlese-Texte offline laden", fontWeight = FontWeight.Bold)
+            Text("Dann liest Brummi auch ohne Internet mit der KI-Stimme vor.", style = MaterialTheme.typography.bodySmall)
             val laedt = z.laedt
             when {
                 !z.geprueft -> Text("Brummi schaut nach, was schon da ist …", style = MaterialTheme.typography.bodySmall)
                 laedt != null -> {
                     val p by animateFloatAsState(if (z.ziel > 0) z.fertig.toFloat() / z.ziel else 0f, label = "offline")
-                    Text("Brummi lädt Nova-Sätze (${laedt.label}) … ${z.fertig} von ${z.ziel}", style = MaterialTheme.typography.bodyMedium)
+                    Text("Brummi lädt Vorlese-Sätze (${laedt.label}) … ${z.fertig} von ${z.ziel}", style = MaterialTheme.typography.bodyMedium)
                     LinearProgressIndicator(progress = { p }, modifier = Modifier.fillMaxWidth().height(10.dp))
                     TextButton(onClick = { offline.abbrechen() }) { Text("Abbrechen") }
                 }
@@ -117,7 +117,7 @@ private fun OfflineCard(settings: Settings, offline: NovaOfflineSteuerung) {
                 }
                 else -> {
                     val std = z.fehlend[NovaQualitaet.STANDARD] ?: 0
-                    if (std == 0 && z.gesamt > 0) Text("✅ Alle ${z.gesamt} Nova-Sätze sind offline da" +
+                    if (std == 0 && z.gesamt > 0) Text("✅ Alle ${z.gesamt} Vorlese-Sätze sind offline da" +
                         (if ((z.fehlend[NovaQualitaet.BEST] ?: 0) == 0) " – in Bestqualität." else "."), style = MaterialTheme.typography.bodyMedium)
                     if (z.fehlend.values.any { it > 0 }) Text("📶 Am besten im WLAN laden.", style = MaterialTheme.typography.bodySmall)
                     NovaQualitaet.entries.forEach { q ->

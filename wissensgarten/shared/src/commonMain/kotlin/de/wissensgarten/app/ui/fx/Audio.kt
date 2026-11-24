@@ -41,20 +41,20 @@ interface Music {
 }
 
 /**
- * Brummis Stimme: „Nova“, eine KI-Stimme (OpenAI), vertont von unserem Stimm-Server – siehe [NovaVoice].
+ * Brummis Stimme: eine KI-generierte Stimme, vertont auf unserem eigenen Server – siehe [NovaVoice].
  * Ohne Internet oder wenn ein Text (noch) nicht vertont ist, liest still die Stimme des Geräts.
- * Fremdsprachige Texte (Englisch, Französisch, Spanisch) spricht Nova in der passenden Sprache.
+ * Fremdsprachige Texte (Englisch, Französisch, Spanisch) spricht die KI-Stimme in der passenden Sprache.
  */
 interface Voice {
     /** Wird aufgerufen, wenn Brummi anfängt / aufhört zu sprechen (Musik leiser stellen). */
     var onSpeaking: (Boolean) -> Unit
     val isReady: Boolean
     /**
-     * Fester Text (Pakete, Brummis Sätze, Karten): kommt vorab vertont vom Server. Fehlt die Datei, darf er nur an `/jetzt`,
+     * Fester Text (Pakete, Brummis Sätze, Karten): kommt vorab vertont vom Server. Fehlt die Datei, liest die Gerätestimme (`/jetzt` ist abgeschaltet),
      * wenn er öffentlich ist (Vorlese-Liste, freie Pakete) – Plus-Texte und alles Private (eigene Karten) nie.
      */
     fun speak(text: String, locale: Locale = Locale.GERMAN)
-    /** Laufzeit-Text: darf, wenn nicht vorab vertont, einmalig an `/jetzt` (siehe [LaufzeitText]) */
+    /** Laufzeit-Text: ohne vorab vertonte Datei liest die Gerätestimme (siehe [LaufzeitText]) */
     fun speak(text: LaufzeitText, locale: Locale = Locale.GERMAN) = speak(text.text, locale)
     fun stop()
     /** Sprechen und warten, bis Brummi fertig ist (für Brummi-Radio). */
@@ -62,11 +62,11 @@ interface Voice {
     suspend fun speakAndWait(text: LaufzeitText, locale: Locale = Locale.GERMAN) = speakAndWait(text.text, locale)
     /** Sprechtempo als Stufe in Prozent ([Sprechtempo.STUFEN], 100 = Tempo des Servers) */
     fun setRate(percent: Int) {}
-    /** „Alle Nova-Texte offline laden“ (null = gibt es hier nicht) */
+    /** „Alle Vorlese-Texte offline laden“ (null = gibt es hier nicht) */
     val offline: NovaOfflineSteuerung? get() = null
-    /** Nova wird gerade geholt (länger als einen Augenblick) – dezenter Ladehinweis „🎧 …“ */
+    /** Die KI-Stimme wird gerade geholt (länger als einen Augenblick) – dezenter Ladehinweis „🎧 …“ */
     val laedt: StateFlow<Boolean> get() = AUS
-    /** Einmal je Sitzung: Nova war nicht erreichbar, die Gerätestimme ist eingesprungen */
+    /** Einmal je Sitzung: Die KI-Stimme war nicht erreichbar, die Gerätestimme ist eingesprungen */
     val hinweis: StateFlow<String?> get() = KEIN_HINWEIS
     /** Pakete auf dem Gerät – damit die Stimme weiß, was öffentlich (frei), Plus oder privat (eigene Karten) ist */
     fun pakete(packs: List<de.wissensgarten.core.model.Pack>) {}
@@ -75,7 +75,7 @@ interface Voice {
         private val AUS: StateFlow<Boolean> = kotlinx.coroutines.flow.MutableStateFlow(false)
         private val KEIN_HINWEIS: StateFlow<String?> = kotlinx.coroutines.flow.MutableStateFlow(null)
 
-        /** Sprache für einen Text: bei Sprach-Fächern Fremdsprache, außer der Text ist erkennbar deutsch (dieselbe Regel wie die Nova-Liste). */
+        /** Sprache für einen Text: bei Sprach-Fächern Fremdsprache, außer der Text ist erkennbar deutsch (dieselbe Regel wie die Vorlese-Liste). */
         fun localeFor(subject: String?, text: String): Locale = when (de.wissensgarten.core.model.Nova.sprache(subject, text)) {
             "en" -> Locale.ENGLISH
             "fr" -> Locale.FRENCH
@@ -105,6 +105,8 @@ val LocalSfx = staticCompositionLocalOf<Sfx?> { null }
 val LocalVoice = staticCompositionLocalOf<Voice?> { null }
 /** Liest Brummi automatisch vor? (aus Einstellung + Klassenstufe) */
 val LocalReadAloud = staticCompositionLocalOf { false }
+/** Zeigt die Vorlese-Knöpfe? Nur wenn Vorlesen in den Einstellungen nicht auf „Nie“ steht. */
+val LocalVorleseKnopf = staticCompositionLocalOf { true }
 /** Fach der aktuellen Karte – bestimmt die Vorlese-Sprache. */
 val LocalSubject = staticCompositionLocalOf<String?> { null }
 /** Plattform-Brücke für tiefer liegende Bildschirme (Teilen, Spracherkennung …). */

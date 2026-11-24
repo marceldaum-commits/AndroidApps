@@ -1,8 +1,8 @@
 WISSENSGARTEN – VORLESE-STIMME
 
-Brummi liest mit der Stimme „Nova“ vor, einer mit KI erzeugten Stimme (OpenAI).
-Die Audiodateien erzeugt und liefert unser Server stimmen.mathenachhilfe-online.com.
-Die App selbst spricht nie mit OpenAI und enthält keinen fremden Programm-Baustein für die Stimme.
+Brummi liest mit einer KI-generierten (synthetischen) Stimme vor.
+Die Audiodateien erzeugt und liefert unser eigener Server stimmen.mathenachhilfe-online.com.
+Die App enthält keinen fremden Programm-Baustein für die Stimme.
 Ohne Internet liest die Sprachausgabe des Geräts (Android bzw. Browser).
 
 Die frühere Offline-Stimme und ihre Rechen-Bausteine sind entfernt.

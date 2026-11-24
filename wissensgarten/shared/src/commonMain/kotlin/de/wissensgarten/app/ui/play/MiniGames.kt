@@ -62,22 +62,19 @@ fun QuestionText(text: String, modifier: Modifier = Modifier, autoRead: Boolean 
 }
 
 /**
- * Großer, gut sichtbarer Vorlese-Knopf (Daumengröße, mindestens 56 dp hoch) – an jeder Karte gleich.
- * Wackelt beim Erscheinen kurz, damit Kinder ihn entdecken.
+ * Kleiner, runder Vorlese-Knopf (48 dp, Daumengröße) – an jeder Karte gleich. Poppt beim Erscheinen sanft auf.
+ * Gibt es nur, wenn Vorlesen in den Einstellungen nicht auf „Nie“ steht.
  */
 @Composable
 fun SpeakButton(label: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    val wiggle = remember { androidx.compose.animation.core.Animatable(0f) }
-    LaunchedEffect(Unit) { delay(400); repeat(2) { wiggle.animateTo(8f, tween(90)); wiggle.animateTo(-8f, tween(90)) }; wiggle.animateTo(0f, tween(90)) }
-    FilledTonalButton(
+    if (!de.wissensgarten.app.ui.fx.LocalVorleseKnopf.current) return
+    val pop = remember { androidx.compose.animation.core.Animatable(0.6f) }
+    LaunchedEffect(Unit) { delay(150); pop.animateTo(1f, androidx.compose.animation.core.spring(dampingRatio = 0.45f, stiffness = 380f)) }
+    FilledTonalIconButton(
         onClick = onClick,
-        modifier = modifier.heightIn(min = 56.dp).graphicsLayer { rotationZ = wiggle.value }.semantics { contentDescription = label },
-        shape = androidx.compose.foundation.shape.RoundedCornerShape(28.dp),
-        contentPadding = PaddingValues(horizontal = 22.dp, vertical = 10.dp),
+        modifier = modifier.size(48.dp).graphicsLayer { scaleX = pop.value; scaleY = pop.value }.semantics { contentDescription = label },
     ) {
-        Text("🔊", fontSize = 26.sp)
-        Spacer(Modifier.width(10.dp))
-        Text("Vorlesen", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+        Text("🔊", fontSize = 22.sp)
     }
 }
 

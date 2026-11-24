@@ -123,7 +123,7 @@ fun NachhilfeKarte(text: String, button: String, onOpen: () -> Unit, onHide: () 
             Text(text, style = MaterialTheme.typography.bodyMedium)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 FilledTonalButton(onClick = onOpen, modifier = Modifier.weight(1f)) { Text(button, textAlign = TextAlign.Center) }
-                TextButton(onClick = onHide) { Text("Ausblenden") }
+                TextButton(onClick = onHide) { Text(de.wissensgarten.core.model.NachhilfeHinweis.AUSBLENDEN, textAlign = TextAlign.Center) }
             }
             if (second != null) OutlinedButton(onClick = onSecond, modifier = Modifier.fillMaxWidth()) { Text(second, textAlign = TextAlign.Center) }
         }

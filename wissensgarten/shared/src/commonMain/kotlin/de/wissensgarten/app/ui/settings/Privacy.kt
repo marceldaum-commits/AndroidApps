@@ -39,10 +39,10 @@ object PrivacyText {
             "Nur wenn ihr im Elternbereich „Online-Spracherkennung erlauben“ einschaltet (voreingestellt aus), schickt der Browser die gesprochenen Antworten " +
             "an den Sprachdienst seines Herstellers (z. B. Google bei Chrome, Apple bei Safari). Der Wissensgarten speichert keine Aufnahmen und sendet sie nirgendwohin.",
         "Vorlesen" to
-            "Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. " +
-            "Texte, die erst in der Aufgabe entstehen (z. B. Hör-noch-mal-Sätze im Brummi-Radio), schickt die App ohne Angaben zu dir " +
-            "an unseren Server stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. " +
-            "Es werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle.",
+            "Vorgelesen wird mit einer KI-generierten (synthetischen) Stimme. Wir erzeugen die Sprachdateien vorab auf unserem eigenen Server " +
+            "(stimmen.mathenachhilfe-online.com) und liefern sie fertig aus; es wird dafür nichts an Dritte geschickt. " +
+            "Die App überträgt dabei keine Namen, Konten oder Geräte-Kennungen, und unser Server speichert keine Zugriffsprotokolle. " +
+            "Fehlt eine Datei oder gibt es kein Internet, liest die Sprachausgabe des Geräts.",
         "Anonyme Nutzungszählung (abschaltbar)" to
             "Damit wir sehen, ob die App gebraucht wird und was wir verbessern sollten, meldet sie einzelne Ereignisse an unseren Server " +
             "trainer.mathenachhilfe-online.com: dass die App geöffnet wurde, dass der Elternbereich geöffnet wurde und ob dort ein Link (z. B. Plus, Probestunde, Lern-Geschenk) angetippt wurde. " +

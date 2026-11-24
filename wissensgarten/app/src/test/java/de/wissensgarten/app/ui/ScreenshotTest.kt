@@ -717,7 +717,7 @@ open class ScreenshotTest {
         geprueft = true, gesamt = 7802, fehlend = mapOf(std to 7650, best to 7802), laedt = std, fertig = 3120, ziel = 7802))
     @Test fun offlineDone() = offlineShot("75_offline_fertig", de.wissensgarten.app.ui.fx.OfflineZustand(
         geprueft = true, gesamt = 7802, fehlend = mapOf(std to 0, best to 7802), rest = mapOf(std to 0L, best to 429_110_000L), belegt = 355_090_000L,
-        hinweis = "✅ Fertig! Brummi liest jetzt auch ohne Internet mit Nova vor."))
+        hinweis = "✅ Fertig! Brummi liest jetzt auch ohne Internet mit der KI-Stimme vor."))
 
     @Test fun voice() = shot("67_stimme") {
         val settings = de.wissensgarten.core.data.Settings(de.wissensgarten.core.data.MemoryKeyValueStore()).apply { setVoiceRate(115) }

@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
+import de.wissensgarten.app.ui.common.LocalTheory
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -86,6 +87,12 @@ fun ReviewScreen(
     var correct by rememberSaveable { mutableIntStateOf(0) }
     var streak by rememberSaveable { mutableIntStateOf(0) }
     var bestStreak by rememberSaveable { mutableIntStateOf(0) }
+    // Hilfe für Kinder (Recht V15): nach 3 falschen Antworten in Folge einmal je Runde der freundliche Hilfesatz – nur dieser Satz, kein Außenlink
+    var wrongRow by rememberSaveable { mutableIntStateOf(0) }
+    var helpShown by rememberSaveable { mutableStateOf(false) }
+    var helpOpen by remember { mutableStateOf(false) }
+    var easy by rememberSaveable { mutableStateOf(false) }
+    var theoryOpen by remember { mutableStateOf(false) }
     var bonusAt by rememberSaveable { mutableIntStateOf(-1) }
     var bonusCards by remember { mutableStateOf<List<StudyCard>>(emptyList()) }
     var clapList by remember { mutableStateOf<List<String>>(emptyList()) }
@@ -105,6 +112,16 @@ fun ReviewScreen(
     val gainAnim = remember { Animatable(0f) }
 
     BackHandler { onClose() }
+    if (helpOpen) {
+        val theory = LocalTheory.current(items.getOrNull(index)?.bedId ?: "")?.takeIf { it.scenes.isNotEmpty() }
+        AlertDialog(
+            onDismissRequest = { helpOpen = false },
+            text = { Text("Du kommst hier gerade nicht weiter? Das ist okay. Probier eine leichtere Stufe oder schau dir die Erklärung noch einmal an. Und du kannst jederzeit deine Eltern oder deine Lehrkraft fragen.") },
+            confirmButton = { TextButton(onClick = { easy = true; helpOpen = false }) { Text("Leichter üben") } },
+            dismissButton = if (theory != null) ({ TextButton(onClick = { helpOpen = false; theoryOpen = true }) { Text("Erklärung ansehen") } }) else null,
+        )
+    }
+    if (theoryOpen) LocalTheory.current(items.getOrNull(index)?.bedId ?: "")?.let { th -> de.wissensgarten.app.ui.common.TheorySheet(th) { theoryOpen = false } }
     DisposableEffect(Unit) { onDispose { voice?.stop() } }
     // Nach dem Wiederherstellen fehlen die Bonus-Karten → einfach mit der nächsten Karte weitermachen
     LaunchedEffect(Unit) { if (phase == Phase.BONUS && bonusCards.isEmpty() && clapList.isEmpty()) phase = Phase.PLAY }
@@ -119,7 +136,7 @@ fun ReviewScreen(
     val now = remember(index) { de.wissensgarten.core.model.Platform.nowMs() }
     val cardPeers = peers[card.bedId].orEmpty()
     // Deutsch (Rechtschreibung, Grammatik): Sprechen kann Schreibweise nicht prüfen → dort kein Sprech-Spiel
-    val mode = remember(card.id) { Games.choose(card, cardPeers, simpleRating, canSpeak && subjects[card.bedId] != "deutsch", calm, canType) }
+    val mode = remember(card.id, easy) { Games.choose(card, cardPeers, simpleRating, canSpeak && subjects[card.bedId] != "deutsch", calm || easy, canType) }
     val subject = subjects[card.bedId]
     val options = remember(card.id) { Games.options(card, cardPeers) }
     val shownMemory = if (phase == Phase.REVEAL) grownMemory ?: card.memory else card.memory
@@ -196,7 +213,8 @@ fun ReviewScreen(
         if (right && vibrationOn) haptics.performHapticFeedback(HapticFeedbackType.Confirm)
         lastRight = right
         if (up) grown++
-        if (right) { correct++; streak++; bestStreak = maxOf(bestStreak, streak) } else streak = 0
+        if (right) { correct++; streak++; bestStreak = maxOf(bestStreak, streak); wrongRow = 0 } else { streak = 0; wrongRow++ }
+        if (!right && wrongRow >= 3 && !helpShown && !calm) { helpShown = true; scope.launch { delay(1400); helpOpen = true } }
         val mult = if (right) GardenRepository.comboMultiplier(streak) else 1
         val gain = GardenRepository.baseDew(r) * mult
         dew += gain
