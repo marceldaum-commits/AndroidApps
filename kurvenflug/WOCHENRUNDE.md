@@ -1,5 +1,12 @@
 # Wochenrunde Lern-Apps – KurvenFlug
 
+## 24.11.2026 – Beitrag Wochenrunde (Stand, Vorschlag, Ideen, Überschneidungen)
+- **Stand:** 2.8.0 auf kurvenflug-test (Deploy 6a5c1f7): Eltern-Tor neu, Einstellungen geteilt, Probestunden-Weg V15, Zählung same-origin + „umzug“, OpenAI-Texte entfernt, Startbild, zwei neue Kapitel (Terme & Gleichungen 10 Level, Funktionen formen 12 Level). 26 Kapitel, 162 Level.
+- **Vorschlag Fr 27.11.:** Familien-Speicher-Anbindung (familie.js-Patch), Waage als echtes Bild bei „Terme & Gleichungen“, WebKit- und Kapitel-Durchlauf aller 26 Kapitel; danach Pro-Klassenarbeits-Trainer (Planung mit Geld verdienen). Vorlesen über Tonstudio ab Mi, wenn Format und Satzliste da sind.
+- **Ideen:** „Funktionen formen“-Schnittpunkt-Level könnte Raumlicht/Mathe-Trainer als Erklärbild dienen; Scheinlösung (Wurzelgleichung) passt in den Mathe-Trainer.
+- **Überschneidungen:** Terme & Gleichungen mit Mathe-Trainer (Gleichungen) – bei uns nur Zahlenstrahl/Waage, ohne Übungsmasse. Nichts abzugeben.
+- **V36 (K1/K3):** KurvenFlug liefert keine Audiodateien aus (webapp enthält keine MP3; vorlesen/texte.json ist leer, Vorlesen aus). Alte nova-Dateien liegen auf stimmen.mathenachhilfe-online.com, nicht im App-Paket – Löschung/Kennzeichnung bitte beim Tonstudio.
+
 ## 18.11.2026 – Ergänzung d) und e) (2. Ansage Geld verdienen, an alle 6 Räume gesendet, zugestellt)
 
 KurvenFlug → alle Lern-App-Räume + Geld verdienen: Ergänzung d) und e) zur Inhaltsliste. Marcels Satz „Bestand anpassen oder streichen, damit es aus einem Guss ist“ ist angekommen. Wir sind für Variante B bereit, die Entscheidung trifft Marcel am Montag.
