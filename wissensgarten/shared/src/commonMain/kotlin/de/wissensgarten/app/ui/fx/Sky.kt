@@ -71,21 +71,21 @@ fun SkyScene(
         if (!Experiment.aus("himmel")) Canvas(Modifier.matchParentSize()) {
             val t = wind?.value ?: 0f
             val ebene = listOf(time, hour.toInt(), season, decos)
-            drawSprite(himmelBild, ebene) {
+            if (!Experiment.aus("bild")) drawSprite(himmelBild, ebene) {
                 val (top, bottom) = skyColors(time)
                 drawRect(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(top, bottom)))
                 sunOrMoon(time, hour)
                 if ("regenbogen" in decos && time != DayTime.NIGHT) drawDeco("regenbogen", 0f, 0f, 0f, 0f, false)
             }
             if (time == DayTime.NIGHT) stars(t)
-            clouds(cloudSprites, t, if (time == DayTime.NIGHT) 0.18f else 0.9f)
-            drawSprite(huegelBild, ebene) {
+            if (!Experiment.aus("wolken")) clouds(cloudSprites, t, if (time == DayTime.NIGHT) 0.18f else 0.9f)
+            if (!Experiment.aus("bild")) drawSprite(huegelBild, ebene) {
                 hills(time, season)
                 if ("zaun" in decos) drawDeco("zaun", 0f, size.height - 22.dp.toPx(), 40.dp.toPx(), 0f, false)
             }
-            if (happy && time != DayTime.NIGHT) butterflies(t)
+            if (happy && time != DayTime.NIGHT && !Experiment.aus("falter")) butterflies(t)
             if (time == DayTime.NIGHT && season != de.wissensgarten.core.model.Season.WINTER) fireflies(t)
-            seasonParticles(season, t)
+            if (!Experiment.aus("saison")) seasonParticles(season, t)
             if (festival?.id == "silvester") fireworks(t)
         }
         content()
