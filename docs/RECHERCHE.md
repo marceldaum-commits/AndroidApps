@@ -282,3 +282,11 @@ Quellen: [ISB Bayern – Fachlehrplan Englisch 3/4](https://www.isb.bayern.de/fi
 3. **„Ruby lernt von dir“:** Ruby baut Sätze mit typischen Fehlern, das Kind ist Lehrer und korrigiert.
 4. **Meine Insel:** jedes gelernte Wort wird ein Ding auf der eigenen Insel – frei anordnen, antippen, hören. Der Wortschatz ist die Spielwelt.
 5. Raten verhindern: weniger Auswahl, mehr Bauen, Ziehen, Sprechen, Korrigieren.
+
+## Quasselquest, 25.11.2026 – Ukrainisch (Lernsprache und Deutsch für ukrainische Kinder), Auftrag Marcel: „Bau auch ukrainisch ein ab Mittwoch“ (beides)
+- **Warum gerade jetzt:** Ukrainische Kinder sind eine große Gruppe an deutschen Schulen. Sie brauchen Deutsch als Zweitsprache (DaZ) ab dem ersten Tag, und Mitschüler und Eltern wollen oft ein paar Wörter Ukrainisch können. Beides in einer App: Ruby kann beide Richtungen.
+- **Aufbau (eigene Entscheidung, nicht aus fremden Lehrwerken):** Lernpfad Abschnitt 1 wie bei FR/ES in vier Einheiten: Привіт! (Begrüßen, ти/ви), Як тебе звати? (Vorstellen, „Мене звати …“), Букви (kyrillische Buchstaben über Wörter, die man fast lesen kann: мама, тато, кіт) und Моя родина (мій/моя). Kyrillisch lernen über bekannte Wörter und „falsche Freunde“ (р = r, н = n, в = w), nicht über Buchstabenlisten.
+- **Besonderheiten Ukrainisch:** Vokativ beim Ansprechen (Оксано!), Dativ in den Aktionsaufgaben (Дай Тарасу м'яч), kein „bin“ im Präsens, Apostroph in п'є/м'яч, Verwechslung mit Russisch vermeiden (echte ukrainische Wörter: дякую, будь ласка, до побачення, привіт).
+- **Qualität:** Der Text ist von uns selbst geschrieben und muss vor der Freigabe von einer Muttersprachlerin bzw. einem Muttersprachler gelesen werden. Bis dahin bleibt Ukrainisch hinter `UK_AKTIV=false`.
+- **Stimme:** Piper `uk_UA-ukrainian_tts-medium`, Sprecherin 2 „tetiana“ (Recht und Marcel freigegeben). Quellenangabe und KI-Kennzeichnung wie bei den anderen Stimmen; Vertonung über das Tonstudio (Textliste „uk“).
+- **Quellen für Didaktik:** Allgemeine Befunde zu DaZ und Erstsprache als Brücke (Muttersprachliche Wörter als Anker verbessern den Erwerb der Zweitsprache), kurze Einheiten, viel Hören und Sprechen. Eine eigene, ausführlichere Recherche für DaZ folgt mit dem DaZ-Lernpfad (Do/Fr).
