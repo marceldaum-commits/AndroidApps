@@ -113,7 +113,25 @@ object Vorlesen {
     const val PREDICTABLE_MAX_CHARS = 300
 
     /** Der Text, wie er gesprochen und für den Dateinamen gerechnet wird: vorlesefertig ([Speech.clean]) und ohne Leerraum-Reste. Leer = nichts zu sagen. */
-    fun spoken(text: String) = normalize(Speech.clean(text))
+    fun spoken(text: String) = normalize(digitsToWords(normalize(Speech.clean(text))))
+
+    private val ONES = listOf("null", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf", "dreizehn", "vierzehn", "fünfzehn", "sechzehn", "siebzehn", "achtzehn", "neunzehn")
+    private val TENS = listOf("", "", "zwanzig", "dreißig", "vierzig", "fünfzig", "sechzig", "siebzig", "achtzig", "neunzig")
+    /** Ganze Zahl 0 bis 999 999 als Zahlwort („eins“ am Ende, „ein“ vor Tausend/Hundert-Resten wird hier nicht gebraucht: Zahlen stehen allein oder vor „Komma“) */
+    fun words(n: Int): String = when {
+        n < 20 -> ONES[n]
+        n < 100 -> (if (n % 10 == 0) "" else (if (n % 10 == 1) "ein" else ONES[n % 10]) + "und") + TENS[n / 10]
+        n < 1000 -> (if (n / 100 == 1) "einhundert" else ONES[n / 100] + "hundert") + (if (n % 100 == 0) "" else words(n % 100))
+        n < 1_000_000 -> (if (n / 1000 == 1) "eintausend" else words(n / 1000) + "tausend") + (if (n % 1000 == 0) "" else words(n % 1000))
+        else -> n.toString().map { ONES[it - '0'] }.joinToString(" ")
+    }
+    /** Alle Ziffern als Wörter: „x1“ → „x eins“, „3,5“ → „drei Komma fünf“, „007“ ziffernweise. Für das Tonstudio, damit nichts Ungesprochenes bleibt. */
+    fun digitsToWords(text: String): String = Regex("([0-9]+),([0-9]+)|([0-9]+)").replace(text) { m ->
+        fun int(s: String) = if (s.length > 1 && s.startsWith("0") || s.length > 6) s.map { ONES[it - '0'] }.joinToString(" ") else words(s.toInt())
+        val r = if (m.groups[3] != null) int(m.groupValues[3]) else int(m.groupValues[1]) + " Komma " + m.groupValues[2].map { ONES[it - '0'] }.joinToString(" ")
+        // Buchstabe direkt davor („x1“): Leerzeichen, damit die Stimme „x eins“ spricht
+        (if (m.range.first > 0 && text[m.range.first - 1].isLetter()) " " else "") + r + (if (m.range.last + 1 < text.length && text[m.range.last + 1].isLetter()) " " else "")
+    }
     /** Feste Kennung eines vorlesefertigen Textes (die ersten 32 Hex-Zeichen von SHA-256("de-1|de|" + Text)) – die Textliste für das Tonstudio führt sie als ID */
     fun key(spoken: String, language: String = LANGUAGE) = Sha256.hex("$VOICE|$language|$spoken").take(32)
 

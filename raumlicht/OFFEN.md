@@ -6,7 +6,6 @@ Regel (Marcel, 25.11.2026): Liste führen, der Reihe nach selbständig abarbeite
 
 | # | Was | Ziel/Frist | Nächster Schritt | Abhängigkeit | Status |
 |---|---|---|---|---|---|
-| 1 | Tonstudio-Textliste (Format 1 wie `quasselquest/VERTONUNG.md`, nur Deutsch, Tempo normal, Formeln/Zahlen in Worten), Zeilenzahl melden | Mi 25.11. | Textquellen sammeln (Theorie-Karten, Aufgabentexte, Lux-Sätze), Datei `vertonung/TEXTLISTE.md` erzeugen | Dateiname-Schema vom Tonstudio bestätigen lassen (AppZentrale) | in Arbeit |
 | 2 | DSE-Entwurf 10e KI-Tutor (gesendete Daten, Anthropic als Auftragsverarbeiter, Speicherdauer, Zähler mit Fristen, ohne OpenAI) | Do 26.11., Meldung an AppZentrale; Recht bis 04.12. | Abschnitt in `store/datenschutz-abschnitt.md` ergänzen | Fristen für Adresse/Tag, Geräte-Kennung, Pass-Nummer: Leitstand (Server) | offen |
 | 3 | Server-Fristen/Freitext-Filter KI (Adresse/Tag ≤48 h gehasht, Zähler kurz befristen) | 04.12. | Anfrage ist gestellt (24.11.) | Leitstand/Server-Raum | wartet |
 | 4 | Live-Gang 2.18.42 (K4 Pflicht) | 01.12. | – | Geräte-Test Marcel, Leitstand | wartet |
@@ -24,6 +23,7 @@ Regel (Marcel, 25.11.2026): Liste führen, der Reihe nach selbständig abarbeite
 
 | Datum | Was |
 |---|---|
+| 25.11.2026 | Tonstudio-Textliste Format 1 (nur Deutsch, Tempo normal): `vorlesen/textliste.json`, 963 Texte, 82 584 Zeichen; Dateinamen-Schema `<id>.mp3` noch vom Tonstudio zu bestätigen |
 | 24.11.2026 | 2.18.39: Startanimation, PC-Ansicht, Kopplung lösen mit Altersfrage, Zählpunkt „umzug“, Nova/OpenAI entfernt, DSE-Link |
 | 24.11.2026 | 2.18.40: Kapitel „Gleichungssysteme & Gauß“ (7 Aufgaben), 4 neue Abi-Prüfungen |
 | 24.11.2026 | 2.18.41/.42: KI-Antworten maschinenlesbar und für Screenreader gekennzeichnet (K4) |
