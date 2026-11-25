@@ -67,25 +67,25 @@ fun SkyScene(
         // nicht in jedem Bild. Nur Wolken, Sterne, Schmetterlinge und Partikel werden pro Bild bewegt.
         val himmelBild = remember { Sprite() }
         val huegelBild = remember { Sprite() }
-        val cloudSprites = remember { List(3) { Sprite() } }
-        Canvas(Modifier.matchParentSize()) {
+        val wolkenFormen = remember { List(3) { WolkenForm() } }
+        if (!Experiment.aus("himmel")) Canvas(Modifier.matchParentSize()) {
             val t = wind?.value ?: 0f
             val ebene = listOf(time, hour.toInt(), season, decos)
-            drawSprite(himmelBild, ebene) {
+            if (!Experiment.aus("bild")) drawSprite(himmelBild, ebene) {
                 val (top, bottom) = skyColors(time)
                 drawRect(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(top, bottom)))
                 sunOrMoon(time, hour)
                 if ("regenbogen" in decos && time != DayTime.NIGHT) drawDeco("regenbogen", 0f, 0f, 0f, 0f, false)
             }
             if (time == DayTime.NIGHT) stars(t)
-            clouds(cloudSprites, t, if (time == DayTime.NIGHT) 0.18f else 0.9f)
-            drawSprite(huegelBild, ebene) {
+            if (!Experiment.aus("wolken")) clouds(wolkenFormen, t, if (time == DayTime.NIGHT) 0.18f else 0.9f)
+            if (!Experiment.aus("bild")) drawSprite(huegelBild, ebene) {
                 hills(time, season)
                 if ("zaun" in decos) drawDeco("zaun", 0f, size.height - 22.dp.toPx(), 40.dp.toPx(), 0f, false)
             }
-            if (happy && time != DayTime.NIGHT) butterflies(t)
+            if (happy && time != DayTime.NIGHT && !Experiment.aus("falter")) butterflies(t)
             if (time == DayTime.NIGHT && season != de.wissensgarten.core.model.Season.WINTER) fireflies(t)
-            seasonParticles(season, t)
+            if (!Experiment.aus("saison")) seasonParticles(season, t)
             if (festival?.id == "silvester") fireworks(t)
         }
         content()
@@ -105,7 +105,7 @@ fun SkyScene(
         }
         // Vordergrund-Deko zwischen den Pflanzen
         val front = decos.filter { it in DecoSlots.front }
-        if (front.isNotEmpty()) Canvas(Modifier.matchParentSize()) {
+        if (front.isNotEmpty() && !Experiment.aus("deko")) Canvas(Modifier.matchParentSize()) {
             val t = wind?.value ?: 0f
             val ground = size.height - 12.dp.toPx()
             for (id in front) {
@@ -148,27 +148,30 @@ private fun DrawScope.sunOrMoon(time: DayTime, hour: Float) {
     }
 }
 
-/** Wolken: jede Form wird einmal als Bild gemalt (die Vereinigung der Ovale ist teuer) und dann nur noch verschoben. */
-private fun DrawScope.clouds(sprites: List<Sprite>, t: Float, alpha: Float) {
+/** Wolkenform (Vereinigung der Ovale ist teuer): wird nur bei neuer Größe berechnet und dann nur noch verschoben gezeichnet. */
+class WolkenForm {
+    private var r = -1f
+    private var path: Path? = null
+    fun get(radius: Float): Path {
+        path?.let { if (r == radius) return it }
+        val cloud = Path().apply {
+            addOval(androidx.compose.ui.geometry.Rect(Offset(radius * 1.2f, -radius * 0.2f), radius * 1.15f))
+            addOval(androidx.compose.ui.geometry.Rect(Offset(radius * 0.3f, radius * 0.3f), radius * 0.8f))
+            addOval(androidx.compose.ui.geometry.Rect(Offset(radius * 2.2f, radius * 0.35f), radius * 0.75f))
+            addOval(androidx.compose.ui.geometry.Rect(-radius * 0.5f, radius * 0.1f, radius * 3.0f, radius * 1.1f))
+        }
+        return Path.combine(androidx.compose.ui.graphics.PathOperation.Union, cloud, Path()).also { path = it; r = radius }
+    }
+}
+
+private fun DrawScope.clouds(formen: List<WolkenForm>, t: Float, alpha: Float) {
     val w = size.width; val h = size.height
     listOf(Triple(0.1f, 0.18f, 1f), Triple(0.55f, 0.1f, 0.7f), Triple(0.85f, 0.3f, 0.85f)).forEachIndexed { i, (x0, y, s) ->
         val speed = 0.006f + i * 0.003f
         val x = (((x0 + t * speed) % 1.3f) - 0.15f) * w
         val r = h * 0.06f * s
         val cy = y * h + h * 0.12f
-        // Bild: links oben bei (x - 0,6 r, cy - 1,5 r)
-        val bw = (r * 3.8f).toInt() + 2; val bh = (r * 2.8f).toInt() + 2
-        val img = sprites[i].get(this, bw, bh, r) {
-            val ox = r * 0.6f; val oy = r * 1.5f
-            val cloud = Path().apply {
-                addOval(androidx.compose.ui.geometry.Rect(Offset(ox + r * 1.2f, oy - r * 0.2f), r * 1.15f))
-                addOval(androidx.compose.ui.geometry.Rect(Offset(ox + r * 0.3f, oy + r * 0.3f), r * 0.8f))
-                addOval(androidx.compose.ui.geometry.Rect(Offset(ox + r * 2.2f, oy + r * 0.35f), r * 0.75f))
-                addOval(androidx.compose.ui.geometry.Rect(ox - r * 0.5f, oy + r * 0.1f, ox + r * 3.0f, oy + r * 1.1f))
-            }
-            drawPath(Path.combine(androidx.compose.ui.graphics.PathOperation.Union, cloud, Path()), Color.White)
-        }
-        if (img != null) drawImage(img, Offset(x - r * 0.6f, cy - r * 1.5f), alpha = alpha)
+        androidx.compose.ui.graphics.drawscope.translate(x, cy) { drawPath(formen[i].get(r), Color.White.copy(alpha = alpha)) }
     }
 }
 

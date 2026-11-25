@@ -78,8 +78,11 @@ private fun setElternErgebnis(s: String): Unit = js("window.wgElternErgebnis = s
 private fun onVisibility(cb: (Boolean) -> Unit): Unit = js("document.addEventListener('visibilitychange', function () { cb(document.visibilityState === 'visible'); })")
 private fun onBeforeUnload(cb: () -> Unit): Unit = js("window.addEventListener('pagehide', function () { cb(); })")
 
+private fun ausParam(): JsString? = js("(function () { var m = /[?&]aus=([^&#]*)/.exec(location.search); return m ? decodeURIComponent(m[1]) : null; })()")
+
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalResourceApi::class)
 fun main() {
+    ausParam()?.toString()?.let { v -> de.wissensgarten.app.ui.fx.Experiment.aus = v.split(',').filter { it.isNotBlank() }.toSet() }
     diag("App: main() läuft")
     // Lernstand aus dem Browser-Speicher laden (nur auf diesem Gerät, kein Server)
     val raw = runCatching { localStorage.getItem(STORE_KEY) }.getOrNull()

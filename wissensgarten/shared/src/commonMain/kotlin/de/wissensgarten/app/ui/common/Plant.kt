@@ -42,6 +42,7 @@ fun Plant(
 ) {
     val wind = LocalWind.current
     val sprite = remember { Sprite() }
+    if (de.wissensgarten.app.ui.fx.Experiment.aus("pflanzen")) return
     Canvas(modifier) {
         // Wind nur in der Zeichenphase lesen – kein Neuaufbau der Oberfläche pro Bild
         val t = wind?.value ?: 0f
@@ -49,7 +50,7 @@ fun Plant(
         val sway = (sin(t * 1.6f + variant * 0.7f) + 0.4f * sin(t * 3.1f + variant)) * strength
         // Ausgewachsene Pflanzen werden einmal als Bild gemalt und nur noch gedreht (siehe Sprite.kt) – das spart pro Bild
         // viele Pfade. Wachsende Pflanzen und Arten mit eigener Zeitanimation werden weiter direkt gezeichnet.
-        if (grow >= 0.999f && species != "zauberblume" && !species.startsWith("kreuzung:")) {
+        if (grow >= 0.999f && !de.wissensgarten.app.ui.fx.Experiment.aus("sprite") && species != "zauberblume" && !species.startsWith("kreuzung:")) {
             val q = (wilt * 20f).roundToInt()
             val img = sprite.get(this, size.width.toInt(), size.height.toInt(), listOf(stage, q, hue, variant, species)) {
                 drawPlant(stage, q / 20f, hue, variant, 1f, 0f, species, 0f)

@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -60,10 +61,13 @@ fun PlusBadge(status: PlusStatus?, modifier: Modifier = Modifier, compact: Boole
             overflow = if (compact) androidx.compose.ui.text.style.TextOverflow.Clip else androidx.compose.ui.text.style.TextOverflow.Ellipsis,
             autoSize = if (compact) androidx.compose.foundation.text.TextAutoSize.StepBased(minFontSize = 8.sp, maxFontSize = style.fontSize) else null,
         )
-        // Glanz-Streifen, der ab und zu über das Abzeichen huscht
-        Box(Modifier.matchParentSize().background(de.wissensgarten.app.ui.fx.SafeBrush.linearGradient(
-            0f to Color.Transparent, 0.45f to Color.Transparent, 0.5f to Color.White.copy(alpha = 0.55f), 0.55f to Color.Transparent, 1f to Color.Transparent,
-            start = Offset(shine * 600f - 300f, 0f), end = Offset(shine * 600f, 120f),
-        )))
+        // Glanz-Streifen, der ab und zu über das Abzeichen huscht (die Zeit wird nur beim Zeichnen gelesen – kein Neuaufbau pro Bild)
+        Box(Modifier.matchParentSize().drawBehind {
+            val s = shine
+            drawRect(de.wissensgarten.app.ui.fx.SafeBrush.linearGradient(
+                0f to Color.Transparent, 0.45f to Color.Transparent, 0.5f to Color.White.copy(alpha = 0.55f), 0.55f to Color.Transparent, 1f to Color.Transparent,
+                start = Offset(s * 600f - 300f, 0f), end = Offset(s * 600f, 120f),
+            ))
+        })
     }
 }

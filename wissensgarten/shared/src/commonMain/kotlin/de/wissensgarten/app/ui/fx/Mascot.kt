@@ -53,9 +53,13 @@ fun Brummi(
     /** Sprechblase als Laufzeit-Satz (aus Zahlen zusammengesetzt) – nur dann darf der Text vertont werden, falls er neu ist */
     speechRuntime: de.wissensgarten.core.model.LaufzeitText? = null,
 ) {
-    val t by rememberInfiniteTransition(label = "brummi").animateFloat(
+    // Gemeinsame 15-Hz-Uhr (siehe rememberWind) statt eigener 60-Hz-Uhr: Jede Uhr, die jedes Bild ändert, lässt den ganzen Bildschirm
+    // 60-mal pro Sekunde neu zeichnen. Nur ohne gemeinsame Uhr (z. B. in Vorschauen) läuft eine eigene.
+    val gemeinsam = LocalWind.current
+    val eigen = if (gemeinsam == null) rememberInfiniteTransition(label = "brummi").animateFloat(
         0f, 1000f, infiniteRepeatable(tween(1_000_000, easing = LinearEasing)), label = "t",
-    )
+    ) else null
+    val tState = gemeinsam ?: eigen!!
     // Freudensprung bei jedem Stimmungswechsel zu HAPPY/CHEER
     val jump = remember { Animatable(0f) }
     LaunchedEffect(mood) {
@@ -72,7 +76,7 @@ fun Brummi(
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
         if (bubbleOnLeft) Bubble(speech, Modifier.weight(1f, fill = false), readBubble)
         Canvas(Modifier.size(size).then(tapMod).graphicsLayer { translationY = -jump.value * size.toPx() * 0.25f }) {
-            drawBrummi(mood, t)
+            drawBrummi(mood, tState.value)
         }
         if (!bubbleOnLeft) Bubble(speech, Modifier.weight(1f, fill = false), readBubble)
     }

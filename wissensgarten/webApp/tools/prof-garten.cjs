@@ -13,16 +13,24 @@ const store = { profiles: [{ id: 'p1', name: 'Lena', avatar: '🦊', level: 3, c
   const p = await ctx.newPage();
   await p.addInitScript((s) => { if (sessionStorage.getItem('v')) return; sessionStorage.setItem('v', '1'); localStorage.setItem('wg.garten', JSON.stringify(s));
     localStorage.setItem('wg.prefs.einstellungen', JSON.stringify({ aktives_profil: { t: 's', v: 'p1' }, einrichtung_fertig: { t: 'b', v: true } })); }, store);
-  await p.goto(BASE + '?modus=wasm&leicht=aus&bremse=aus');
+  await p.goto(BASE + '?modus=js&leicht=aus&bremse=aus');
   await p.waitForFunction(() => window.wgReady, null, { timeout: 180000 });
-  await p.waitForTimeout(8000);
+  await p.waitForTimeout(Number(process.env.WARTE || 8000));
   const c = await ctx.newCDPSession(p);
   await c.send('Profiler.enable'); await c.send('Profiler.setSamplingInterval', { interval: 500 }); await c.send('Profiler.start');
   await p.waitForTimeout(6000);
   const { profile } = await c.send('Profiler.stop');
   const dt = profile.timeDeltas; const self = new Map(); const byId = new Map(profile.nodes.map((n) => [n.id, n]));
   profile.samples.forEach((id, i) => { const n = byId.get(id); const k = (n.callFrame.functionName || '(anonym)') + ' ' + (n.callFrame.url || '').split('/').pop() + ':' + n.callFrame.lineNumber; self.set(k, (self.get(k) || 0) + (dt[i] || 0)); });
+  // Inklusivzeit: Zeit eines Knotens + aller Kinder, je Funktionsname
+  const kids = new Map(); profile.nodes.forEach((n) => (n.children || []).forEach((c) => kids.set(c, n.id)));
+  const own = new Map(); profile.samples.forEach((id, i) => own.set(id, (own.get(id) || 0) + (dt[i] || 0)));
+  const incl = new Map();
+  profile.nodes.forEach((n) => { let id = n.id; const seen = new Set(); const t = own.get(n.id) || 0; if (!t) return; while (id !== undefined) { const nn = byId.get(id); const k = (nn.callFrame.functionName || '(anonym)'); if (!seen.has(k)) { seen.add(k); incl.set(k, (incl.get(k) || 0) + t); } id = kids.get(id); } });
   const tot = [...self.values()].reduce((a, b) => a + b, 0);
+  console.log('--- Inklusivzeit (Anteil an 6 s) ---');
+  [...incl.entries()].sort((a, b) => b[1] - a[1]).slice(0, 45).forEach(([k, v]) => console.log(String((100 * v / tot).toFixed(0)).padStart(4) + ' %  ' + k.slice(0, 110)));
+  console.log('--- Eigenzeit ---');
   console.log('Gesamt', (tot / 1000).toFixed(0), 'ms Stichproben in 6 s');
   [...self.entries()].sort((a, b) => b[1] - a[1]).slice(0, 25).forEach(([k, v]) => console.log(String((100 * v / tot).toFixed(1)).padStart(5) + ' %  ' + k.slice(0, 120)));
   await b.close();
