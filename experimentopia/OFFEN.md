@@ -1,48 +1,32 @@
-# Experimentopia – Stand und offene Punkte (18.11.2026)
+# Experimentopia – Offene Punkte und Plan (Stand 25.11.2026)
 
-**Stand:** Version 2.12.0 vom 19.11.2026 (Direkt-Links + Querverweise; 2.11.2 Probestunde nur Physik; 2.11.1 „Alle Apps“ live; 2.11.0 Elternbereich + Zählung; 2.10.0 PC-Ansicht live; 2.9.1 #pro=-Link; 2.9.0 Sicherung + Wiederherstellen; 2.8.0 Eltern-Handy koppeln, live; 2.7.0 Optik + „Kommt bald“; davor 2.6.2 Theorie mit Formeln; iPad/Safari 27.2 läuft – bestätigt) liegt auf `experimentopia-test`; live ist 2.8.0 (Leitstand, 18.11.), Freigabe durch den Leitstand.
+**Version:** 2.16.4 vom 24.11.2026 (nur Test, `lernen-test.mathenachhilfe-online.com/experimentopia/`). **Live:** 2.13.2 (`6c69e270`). Rückweg: 2.16.2 (`2c38962e`) / live-Stand 2.13.2.
+Arbeitsregel (Marcel, 25.11.): Liste führen, selbständig der Reihe nach abarbeiten, Erledigtes mit Datum nach „Erledigt“ (nie löschen). Wartet etwas auf andere: einmal über die AppZentrale mit Frist anfragen, dann weiter; nach Fristablauf selbst nachhaken. Fragen an Marcel nur über die AppZentrale, als Auswahl mit Empfehlung.
+Alter Stand (bis 24.11.) vollständig in `docs/OFFEN-ARCHIV-bis-24-11.md`.
 
-## Nova
-- **Seit 2.4.8 ist das Vorlesen ausgeschaltet** (Schalter `Nova.ENABLED` in `core/model/.../Nova.kt`). Zum Wiedereinschalten: auf `true` setzen, bauen – dann gilt alles Folgende wieder.
-- Experimentopia nutzt **nur bereits eingesprochene Nova-Dateien**: alle 2579 Sätze aus `/vorlesen/texte.json` sind vertont (Abdeckung 100 %, geprüft 17.11. abends).
-- Die App braucht `/jetzt` derzeit **nicht** (keine Sätze, die erst zur Laufzeit entstehen). Die Sperre von `/jetzt` (Kontingent, seit ca. 23:45) betrifft Experimentopia also nicht.
-- Erst wenn sich Texte wieder ändern, müssen neue Sätze vertont werden. Bis dahin gilt: neue Texte nur ändern, wenn das Stimmen-Werk wieder vertont – sonst liest dort die Gerätestimme.
+## Offen (der Reihe nach)
 
-## Noch nicht erledigt (wird fortgesetzt)
-1. **Handytest durch Marcel**: Musik startet sofort beim Öffnen. (Nova-Test entfällt, solange Vorlesen aus ist.)
-2. **Neue Musik** (seit 2.4.0) ist noch nicht von Marcel angehört – Rückmeldung abwarten (Tempo, Stil).
-3. ~~Live schalten~~ – erledigt am 18.11.2026 (2.4.2). Der Leitstand sollte das wissen (diese Sitzung kann ihm nicht direkt schreiben).
-4. **Website/Produktseite**: Gratis-Umfang ist seit 2.3.3 **74 von 200** Versuchen (Wasserinsel + erste 5 je Insel + erste 2 je Thema) – Texte dort ggf. anpassen.
-5. **Nur WebApp** (seit 2.5.0, für 1–2 Monate): keine APK, kein Play. Android-Code bleibt im Repo; Release-Workflow nur von Hand. Live gibt der Leitstand frei.
-6. Betriebstest (eine Woche): nur Fehlerbehebungen, Rückmeldungen aus dem Betrieb abarbeiten.
-7. **Lehrplan-Lücken** (`docs/LEHRPLAN-ABGLEICH.md`): Marcel hat am 18.11. Bauen + „Kommt bald“ freigegeben. Erledigt: Optik (2.7.0). Als Nächstes: Motor/Dynamo/Trafo, Energie, Bio Kl. 5/6, Atombau/PSE – jeweils Kachel aus `Coming` in `Upcoming.kt` entfernen, wenn gebaut.
-8. **Eltern-Koppeln** (2.8.0): echter Handytest auf der Test-Seite + Eltern-Seite (Leitstand). Vor Live: CORS des Live-Servers für experimentopia.mathenachhilfe-online.com.
-9. **Rhythmus** (`PRUEFPLAN.md`): großes Inhaltsupdate Di + Fr bis 16 Uhr auf test (erstes: Fr 20.11.), Monatsprüfung Dezember = Block A (Wasser + Kraft).
-10. **Sicherung** (2.9.0): Zwei-Browser-Test auf der Test-Seite (koppeln → privates Fenster → Link einfügen → gleicher Stand). Leitstand gibt live frei; Marcel möchte Bescheid, wenn alles live ist.
-11. ~~Probestunden-Adresse~~ – erledigt: `/probestunde/` ist laut Leitstand richtig (18.11.).
+| # | Was | Ziel / Frist | Nächster Schritt | Hängt ab von | Status |
+|---|---|---|---|---|---|
+| 1 | Energie-Achterbahn (Kl. 7–10), neues Thema | Fr 27.11. (Update 15:03) | Modell `Energie.kt` + Tests, Katalog, Labor, Theorie, Bilder, Bildschirmfotos prüfen, 2.17.0 | – | offen, Plan steht |
+| 2 | Weitere Lehrplan-Lücken: Druck & Luftdruck, Atombau/PSE, Radioaktivität, Bio Kl. 5/6 | nach #1, je Update Di/Fr | Reihenfolge laut `docs/LEHRPLAN-ABGLEICH.md` | – | offen |
+| 3 | Wochenrunde Fr 27.11. 17–19 Uhr (Abstimmung), Beitrag vorbereiten | Fr 27.11. | `WOCHENRUNDE.md` ergänzen | AppZentrale | offen |
+| 4 | Satz „Gekaufte Codes werden wieder frei“ (`LOESCHEN_WARNUNG`) gegen V38 (ein Gerät pro Code) prüfen; nie „Ende-zu-Ende“/„können nicht lesen“ | vor Live-Gang | Wortlaut mit V38 abgleichen, bei Abweichung Text über AppZentrale/Recht klären | Recht (V38-Text) | wartet; Anfrage 25.11., Nachhaken Fr 27.11. |
+| 5 | Live-Gang 2.16.x | durch Leitstand | Bedingungen unten abhaken | Leitstand, Recht, Marcel (Geräte-Test) | wartet |
+| 6 | Zähl-Ereignis „umzug“ am Server freischalten | vor Live-Gang | Leitstand schaltet frei | Leitstand | wartet; gemeldet 24.11., Nachhaken Fr 27.11. |
+| 7 | Tonstudio: vertonte Dateien einbinden, `ENABLED=true` | nach Lieferung | Liste liegt in `vertonung/` (25.11.); Einbau nur nach Dateien + Freigabe V36 (Kennzeichnung „KI-generierte Stimme“, Frist 02.12.) | Tonstudio/Leitstand, Recht | wartet; Format von Tonstudio prüfen lassen |
+| 8 | Eltern-Tor: Vorlese-Sätze sobald Tonstudio-Stimme läuft | nach #7 | Sätze in Liste aufnehmen | #7 | wartet |
+| 9 | Familien-Speicher einschalten (aus bis Freigabe) | nach Leitstand | Test mit zweiter echter App, Geräte-Test iPhone/iPad | andere App, Marcel, Leitstand | wartet |
+| 10 | Geräte-Test iPhone/iPad (Start ohne nova, Startbild, Umzug, Tor) | vor Live-Gang | Test-Adresse durch Marcel öffnen lassen | Marcel | wartet |
+| 11 | Monatsprüfung Dezember (Block A: Wasser + Kraft) | Dezember | Prüfplan `PRUEFPLAN.md` | – | offen |
+| 12 | Tägliche Meldung Mi–Sa 9:43 an AppZentrale; Wochenrhythmus (Arbeit Di 15:00 bis So, Pause Mo/Di bis 15:00) | laufend | Routine | – | läuft |
+| 13 | 301-Umleitung alte Adresse: nicht vor 1.3.2027 und nur wenn „umzug“-Zählung fast alle zeigt | ab 1.3.2027 | Zählung auswerten | Leitstand | später |
 
-- **Vorlesen (Nova, derzeit aus)**: Beim Wiedereinschalten den Zählstand-Pfad für die gemeinsame Adresse klären (`Audio.kt` nimmt den Seiten-Host, an der neuen Adresse wäre das `stand-lernen.….json`). Der Stimmen-Server erlaubt lernen(-test).… schon (CORS geprüft am 19.11.).
+**Live-Bedingungen (alle nötig):** Bestätigung V45c ✔ (24.11.); nova-Dateien auf dem Server weg bis 01.12. (Leitstand sperrt erst nach Live-Update); Test Familien-Speicher mit zweiter App (nur nötig, wenn er an ist; er bleibt zunächst aus); Geräte-Test; Freigabe Leitstand.
 
-- **Fr 20.11. mit dem großen Update (Pflicht, Marcel auf Empfehlung von Recht, 19.11.)**: Schloss-Text in der Kinderansicht NUR „„<Versuch>“ gehört zum Forscher-Pass.“ – Zusatz „Deine Eltern können im Elternbereich nachsehen.“ entfällt (auch in `Say.PRO_ALL`). „🔐 Für Eltern“ zum Tor bleibt. `KinderTextTest` um „Deine Eltern können“ ergänzen, `proKind` anpassen. Live-Meldung mit „Rechtsbezug: ja (Kindertext am Schloss)“.
-
-- **Fr 20.11. Pflicht-Korrektur Recht V10 (Marcel: „Erst Tor, dann Übersicht“)**:
-  (a) „← Alle Apps“ (…/lern-apps/ auf der Website, dort Preise/Shop) HINTER das Eltern-Tor, Grund im Tor: „Hier geht es zur Website.“ Ab Di 24.11. neue Übersicht ohne Preise auf lernen.… (Adresse kommt von der AppZentrale) → dann wieder ohne Tor.
-  (b) Querverweise: ohne Tor ok, wenn die Ziel-App dem Tor-Standard folgt. Mathe-Trainer (und Raumlicht) zeigen in der Oberstufe Preise ohne Tor → unsere 3 Mathe-Trainer-Ziele (k9-aehnlich, k7-zuordnung, k8-zufall) prüfen: zeigt die Zielseite Preise? Wenn ja oder unklar: über das Eltern-Tor führen (bzw. nur ab Kl. 9 direkt, wenn die Zielseite keine Preise zeigt). Meldung: „Rechtsbezug: ja (V10)“.
-  Ergänzung AppZentrale 19.11. abends: Mathe-Trainer-Links ab Fr OHNE Tor ok (Mathe-Trainer bekommt selbst ein Tor vor Preisen) → bei uns nichts zu ändern. Raumlicht für Kinder unter Kl. 9 nur preisfreie Einstiege (galton, zufall, rotation, raumflug, level/3-1, level/5-1, level/5-6), NICHT „erleben“, Startseite oder Pro-Seiten → geplanter Energie-Verweis (bisher ?ziel=erleben) muss auf einen dieser Einstiege oder entfällt.
-  **ÄNDERUNG 19.11. abends (Marcel: „Ohne Tor, neutral“)**: V10 (a) ENTFÄLLT – „← Alle Apps“ bleibt OHNE Eltern-Tor (neutral: keine Kaufsprache, keine Preise/Countdowns in der Kinderansicht, kein Link direkt in Warenkorb/Kasse). Kauf-/Shop-Knöpfe, Elternbereich, Einstellungen bleiben hinter dem Tor. ELTERN-TOR.md (appzentrale, 0d1c53b).
-
-- **Ab Di 24.11. (Recht V15, Marcel „Ja, alles so umsetzen“): Weg zur Probestunde** – Wortlaut verbindlich in docs/plattform/appzentrale/PROBESTUNDE.md (website_backup, appzentrale, d672374; ggf. über die AppZentrale anfordern).
-  (1) Elternbereich/Elternbericht hinter dem Tor: Hinweis bei objektiven Schwierigkeiten, Berechnung nur auf dem Gerät, höchstens 1× in 4 Wochen je Thema, wegklickbar, Schalter „Hinweise auf Nachhilfe ausblenden“. Bei uns: nur Physik-Themen (Nachhilfe nur Physik).
-  (2) Kinderansicht nur: „Du kommst hier gerade nicht weiter? Das ist okay. Probier eine leichtere Stufe oder schau dir die Erklärung noch einmal an. Und du kannst jederzeit deine Eltern oder deine Lehrkraft fragen.“ Knöpfe [Leichter üben] [Erklärung ansehen], kein Außenlink.
-  (3) Kl. 9–10 (wenn Klasse bekannt), ohne Tor: „Tipp: Wenn ein Thema länger hakt, kann eine persönliche Erklärung helfen. Mit deinen Eltern könnt ihr bei uns eine kostenlose, unverbindliche Probestunde anfragen. [Mehr erfahren]“ höchstens 1×/Woche, wegklickbar. Kl. 5–8 nur hinter dem Tor. Zählung nur anonym. Meldung „Rechtsbezug: ja (V15)“.
-- Vollständiger Wortlaut Recht V15/V10-neu/Eltern-Tor: docs/RECHT-VORGABEN.md
-
-- **Ab Di 24.11.: OpenAI/„Nova“ ganz entfernen** (Marcel 20.11.: „Die OpenAI-Verbindung kommt überall raus, wir haben unsere eigenen Stimmen.“). Stellen: Nova.kt, nova.js (/jetzt, /nova/stand), Browser.kt novaScript, Audio.kt WebReader, Main.kt:84/102, AndroidReader.kt, MainActivity.kt:46/71, AudioSettings.kt („Nova“), sw.js/index.html Cache „experimentopia-nova“. Umstellen auf eigene Stimme de-1 (Tonstudio, Dateien vom Leitstand auf einem Branch); Kennzeichnung „KI-generiert (synthetische Stimme)“; DSE 10g. Sofort-Fix war nicht nötig (ENABLED=false → keine Aufrufe). „Rechtsbezug: ja (10g)“.
-
-- **Di 24.11. FRÜHER PUNKT (ab 15:00, Meldung an die AppZentrale bis 18:00): Alte Subdomains → 301** (Leitstand, Marcel „Prüfen + aufräumen“). Nur prüfen und melden, nichts umleiten.
-  (1) Ruft die App die alte Subdomain auf? Stellen suchen: Links.kt nicht mehr (lernen.…), Nova.kt ORIGIN/APP_HOST (Nova aus, kommt raus), umzug.js ALT-Regex (gewollt), README/Docs, Android/TWA (nicht ausgeliefert), Zähl-URL (trainer.…, unabhängig).
-  (2) WICHTIG: Unsere Umzugs-Version (umzug.js, seit 2.13.0 live) trägt den Lernstand nur mit, wenn die ALTE Adresse die App ausliefert. Eine 301 auf Server-Ebene schneidet Kinder ab, die seit dem 19.11. die alte Adresse noch nicht geöffnet haben – ihr Lernstand bleibt dann unerreichbar im Browser der alten Adresse. Vorschlag: 301 frühestens nach 30 Tagen (≈ 19.12.2026), wie vereinbart; bis dahin liefert die alte Adresse die Umzugs-Version. Alternativ: 301 nur für alles außer index.html/umzug.js/sw.js/version.json – NICHT empfohlen (Service Worker).
-  (3) Familien-Speicher löst das nicht rückwirkend (noch nicht angebunden). Export/Import extra nicht nötig, solange die Umzugs-Version läuft.
-
-- [ ] Recht V45d: Satz „Gekaufte Codes werden wieder frei“ (LOESCHEN_WARNUNG) bei der V38-Umstellung (ein Gerät pro Code) gegenprüfen. In Texten nie „Ende-zu-Ende“ oder „können nicht lesen“ schreiben.
-- [ ] Live-Gang erst nach: Bestätigung V45c (Umzugsvermerk), nova-Dateien auf dem Server weg bis 01.12., Test des Familien-Speichers mit zweiter App, Geräte-Test, Leitstand.
+## Erledigt (mit Datum)
+- 24.11.: 2.14.0 Recht-Pflichtpunkte (Eltern-Tor, Schloss-Text, Probestunde V15, nova/OpenAI entfernt, Startbild), 2.15.0 Familien-Speicher angebunden (aus), 2.16.0 Motor/Dynamo/Trafo (13 Versuche), 2.16.1 Dienst-Speicher-Fehler `/familie/` behoben, PC-Ansicht geprüft.
+- 24.11.: 2.16.2 Startbild überspringbar, Manifest-`id`, `docs/TEXTE-ABGLEICH.md`; Recht V45d freigegeben mit Auflagen (KI-Status a: Simulation).
+- 24.11.: 2.16.3/2.16.4 anonymes Ereignis „umzug“ (ohne eigenen Merker), Recht V45c erledigt.
+- 24.11.: Antwort nova-Auftrag (Experimentopia lädt nova nicht mehr); 25.11.: Profil an Leitstand gemeldet.
+- 25.11.: Textliste Tonstudio (`vertonung/`, 2 998 Stücke / 559 langsam), Commit `76b108c8`.
