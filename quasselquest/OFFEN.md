@@ -1,3 +1,35 @@
+# Quasselquest – OFFEN (Arbeitsliste, Stand 25.11.2026, Version 0.5.5)
+
+Regel (Marcel/Leitstand 25.11.): Liste selbständig der Reihe nach abarbeiten, Erledigtes mit Datum nach „Erledigt“, nie löschen. Wartet ein Punkt auf andere: einmal über die AppZentrale mit Frist fragen, dann weitermachen, nach Fristablauf nachhaken. Live: 0.4.6 · lernen-test: 0.5.5 (nach Deploy).
+
+## Offen (Reihenfolge = Arbeitsreihenfolge)
+| # | Was | Frist | Nächster Schritt | Abhängigkeit | Status |
+|---|---|---|---|---|---|
+| 1 | Ukrainisch-Lektorat umsetzen (4 Einheiten `lernpfad/uk.json`) | Mi 25.11. | Funde des Lektorats einarbeiten, testen, pushen | Sub-Agent läuft | in Arbeit |
+| 2 | Ukrainisch: Deutsch für ukrainische Kinder (DaZ): Ruby erklärt auf Ukrainisch, Lernpfad „Deutsch von Anfang an“, Umschalter „Meine Sprache: Українська“ | Do/Fr 26./27.11. | Konzept + 4 Einheiten + UI-Umschalter hinter `UK_AKTIV` | Lektorat Muttersprache (Marcel entscheidet) | offen |
+| 3 | Ukrainisch: Textliste „uk“ für das Tonstudio (Piper tetiana, 1.0/0.8, ID3, Lizenztext, Wasserzeichen-Pflicht klären) | Fr 27.11. | `tools/textliste.py` um „uk“ erweitern, Commit melden | Tonstudio (über AppZentrale) | offen |
+| 4 | Kokoro-Dateien mit Perth-Wasserzeichen einbauen (en → fr → es) | Einbau je Sprache ≤ 3 h nach Meldung, Release Mo 30.11., hart 01.12. | `tools/server-audio-einbauen.py`, Hörprüfung, ID3-/Perth-Check, Browser-Test, DSE-Zusatz „unhörbares digitales Wasserzeichen“ | Tonstudio (Übergabe Sa/So 28./29.11.) | wartet |
+| 5 | Notbremse 0.4.7 „Ton aus“ (fertig als Patch `hotfix/`) | Entscheidung Mo 30.11., ausliefern bis 01.12. 12:00 | nur bei Verzug von 4 anwenden lassen | Leitstand/Marcel (Termin) | bereit |
+| 6 | Pro-Umstellung 1.5.0 (6 Monate ab Einlösen, ein Gerät pro Code, Kauftext/AGB) | Stichtag offen | neue Texte hinter Flag, Server-Weg (signierte Einlösung) | Leitstand/Marcel (Stichtag), Server | wartet |
+| 7 | Aussprache-Auswertung live (Weg 2) | offen | Flag `AUSWERTUNG_AKTIV` erst mit DSE 10g/10n/10k + Live-Server | Leitstand (Server), Recht | wartet |
+| 8 | Weg 1 (Whisper im Gerät), „Im Gerät“-Option mit Modellgröße X | Dezember | Modell wählen, messen, Messtabelle | – | offen |
+| 9 | Familien-Speicher live (`FAMILIE_AKTIV`) | offen | Tor-Hinweis, DSE 10m, Live-Server | Leitstand, Recht | wartet |
+| 10 | familie.js `codeNummer()` Sprach-Byte 5 und 9 | offen | Bitte an Mathe-Trainer-Raum, dann familie.js neu übernehmen | Mathe-Trainer (über AppZentrale) | angefragt 24.11. |
+| 11 | DSE-Anker `10n`/`aussprache` | offen | setzen, sobald Website-Raum Nummer+Name bestätigt | Website-Raum (über Marcel) | wartet |
+| 12 | Probestunden-Weg V15 (Kinderhilfe-Satz, Eltern-Hinweis, Kl. 9–10-Tipp) | Mi/Do | nach `PROBESTUNDE.md` umsetzen, melden mit „Rechtsbezug: ja (V15)“ | – | offen |
+| 13 | Tonstudio-Tor-Sätze (Eltern-Tor spricht wieder) | offen | Sätze vom Tonstudio/Rechenblitz einbauen | Tonstudio | wartet |
+| 14 | „Heute dran“-Knopf, tägliche gemischte Wiederholung, Lernpfad EN Abschnitt 3, Latein Abschnitt 2, FR/ES je 2 weitere Pakete | Dezember | nach UEBERARBEITUNG.md/INHALTSPLAN.md | – | offen |
+| 15 | Browser-Test 4 Geräte für 0.5.3–0.5.5 neu laufen lassen | Do 26.11. | `node tools/web-start.mjs` | – | offen |
+| 16 | Ukrainisch im Browser bei `UK_AKTIV=true` prüfen (Sprachwahl, Lernpfad, Bildschirmfotos) | Do 26.11. | web-start mit Flag, Fotos ansehen | – | offen |
+
+## Erledigt
+- 24.11.2026: 0.5.2 (Familien-Speicher, Pro-Codes, familie.js af01c5c, schnellere Installation, Zoom), 0.5.3 (Recht-Wortlaute V39/V40/V42/V47), 0.5.4 (App-DSE Stimmen-Absatz, kein /nova/), Notbremse 0.4.7 mit Recht V47c, Format der Prüfliste ans Tonstudio.
+- 25.11.2026: 0.5.5 Ukrainisch-Inhalt (4 Einheiten) hinter Flag, Recherche in docs/RECHERCHE.md, Tagesmeldung gesendet.
+
+---
+
+# Archiv: Stand 19.11.2026 (ursprüngliche OFFEN.md, unverändert)
+
 # Quasselquest – Stand und offene Punkte
 
 **Stand:** Version 0.2.1 vom 19.11.2026 auf `quasselquest-test` (Commit a183ccf). Live-Meldung ist beim Leitstand (über die AppZentrale); live geht es über `lernen.mathenachhilfe-online.com/quasselquest/`.
