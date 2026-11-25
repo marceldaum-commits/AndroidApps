@@ -123,7 +123,7 @@
   </script>
   <script>
     // Bild-Bremse für langsame Rechner (z. B. PC ohne Grafik-Beschleunigung): Kostet das Zeichnen eines Bildes im Schnitt
-    // mehr als ~22 ms, zeichnet der Garten höchstens 20 Bilder pro Sekunde. So bleibt Zeit für Tippen, Wischen und Klicken,
+    // mehr als ~22 ms, zeichnet der Garten bei Eingaben höchstens ~30, sonst 10 Bilder pro Sekunde. So bleibt Zeit für Tippen, Wischen und Klicken,
     // statt dass die Seite „hängt“. Läuft es wieder flüssig, wird die Bremse von selbst gelöst. Abschalten: ?bremse=aus
     (function () {
       try {
@@ -140,8 +140,12 @@
         var tick = function (t) {
           // Ruhe: 20 s ohne Berührung, Maus oder Taste → Hintergrund-Animationen (Wind, Sonne, Schmetterlinge) nur noch 4 Bilder/s.
           // Die erste Eingabe weckt sofort auf. So zeichnet der Garten nicht dauernd das ganze Bild neu, wenn niemand hinsieht.
-          var ruhe = performance.now() - letzteEingabe > 20000;
-          var abstand = Math.max(ruhe ? 250 : 0, slow ? Math.min(250, Math.max(45, cost * 2.5)) : 0);
+          var seit = performance.now() - letzteEingabe;
+          var ruhe = seit > 20000;
+          // Wer gerade tippt, wischt oder auf einen Effekt wartet (letzte Eingabe < 2,5 s), bekommt so viele Bilder wie möglich (höchstens ~30/s,
+          // wenn der Rechner langsam ist). Nur wenn niemand etwas tut, laufen Wind und Wolken auf Sparflamme (10 Bilder/s, nach 20 s: 4).
+          var aktiv = seit < 2500;
+          var abstand = Math.max(ruhe ? 250 : 0, slow ? (aktiv ? Math.min(33, cost * 1.1) : 100) : 0);
           if (abstand && t - last < abstand) { orig(tick); return; }
           pending = false; last = t;
           var q = queue; queue = [];
