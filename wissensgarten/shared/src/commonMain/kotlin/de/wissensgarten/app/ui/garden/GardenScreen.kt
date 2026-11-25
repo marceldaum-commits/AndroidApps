@@ -316,9 +316,11 @@ private fun BedCard(b: BedWithCards, now: Long, onClick: () -> Unit) {
 private fun GardenFriends(friends: List<de.wissensgarten.core.model.Friend>, modifier: Modifier) {
     if (friends.isEmpty()) return
     // Die Zeit wird nur in graphicsLayer/offset-Lambdas gelesen (Zeichenphase), nie beim Aufbau – sonst würde der ganze Block 60-mal pro Sekunde neu zusammengesetzt
-    val tState = androidx.compose.animation.core.rememberInfiniteTransition(label = "freunde").animateFloat(
+    val gemeinsam = de.wissensgarten.app.ui.fx.LocalWind.current
+    val eigen = if (gemeinsam == null) androidx.compose.animation.core.rememberInfiniteTransition(label = "freunde").animateFloat(
         0f, 1000f, androidx.compose.animation.core.infiniteRepeatable(androidx.compose.animation.core.tween(1_000_000, easing = androidx.compose.animation.core.LinearEasing)), label = "t",
-    )
+    ) else null
+    val tState = gemeinsam ?: eigen!!
     val sfx = LocalSfx.current
     BoxWithConstraints(modifier) {
         val maxW = maxWidth; val maxH = maxHeight

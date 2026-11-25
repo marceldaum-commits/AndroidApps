@@ -38,7 +38,7 @@ if (process.env.DSF) dev.deviceScaleFactor = Number(process.env.DSF);   // Bildp
     localStorage.setItem('wg.prefs.einstellungen', JSON.stringify({ aktives_profil: { t: 's', v: 'p1' }, einrichtung_fertig: { t: 'b', v: true } }));
   }, store);
   const t0 = Date.now();
-  await p.goto(BASE + `?modus=${MODUS}&leicht=aus` + (OHNE_BREMSE ? '&bremse=aus' : ''));
+  await p.goto(BASE + `?modus=${MODUS}&leicht=aus` + (OHNE_BREMSE ? '&bremse=aus' : '') + (process.env.AUS ? '&aus=' + process.env.AUS : ''));
   await p.waitForFunction(() => window.wgReady, null, { timeout: 180000 });
   console.log(`Start bis „bereit“: ${((Date.now() - t0) / 1000).toFixed(1)} s (${MODUS}, ${PROFIL}, Bremse ${OHNE_BREMSE ? 'aus' : 'an'})`);
   await p.waitForTimeout(Number(process.env.WARTE || 8000));   // Messfenster beginnt erst nach dem Start
@@ -49,7 +49,7 @@ if (process.env.DSF) dev.deviceScaleFactor = Number(process.env.DSF);   // Bildp
   const wisch = (async () => { for (let i = 0; i < 12; i++) { await p.mouse.move(vp.width / 2, vp.height * 0.7); await p.mouse.down(); await p.mouse.move(vp.width / 2, vp.height * 0.3, { steps: 8 }); await p.mouse.up(); await p.waitForTimeout(150); await p.mouse.move(vp.width / 2, vp.height * 0.3); await p.mouse.down(); await p.mouse.move(vp.width / 2, vp.height * 0.7, { steps: 8 }); await p.mouse.up(); await p.waitForTimeout(150); } })();
   szenen.push(['Garten, wischen', await messen(p, 6000)]); await wisch;
   const tabs = ['Garten', 'Samen', 'Laden', 'Mehr'];
-  if (process.env.NUR_GARTEN) { for (const [n, r] of szenen) console.log(`${n.padEnd(28)} ${String(r.fps).padStart(5)} B/s  p50 ${r.p50} ms`); await b.close(); return; }
+  if (process.env.NUR_GARTEN) { for (const [n, r] of szenen) console.log(`${n.padEnd(28)} ${String(r.fps).padStart(5)} B/s  p50 ${r.p50} ms  lange Aufgaben ${r.langProzent} %`); await b.close(); return; }
   const nav = [[0.12, 0.96], [0.37, 0.96], [0.62, 0.96], [0.87, 0.96]];
   for (let i = 1; i < 4 && PROFIL === 'handy'; i++) {
     await p.mouse.click(vp.width * nav[i][0], vp.height * nav[i][1]); await p.waitForTimeout(2500);
