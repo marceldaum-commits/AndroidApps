@@ -41,7 +41,7 @@ if (process.env.DSF) dev.deviceScaleFactor = Number(process.env.DSF);   // Bildp
   await p.goto(BASE + `?modus=${MODUS}&leicht=aus` + (OHNE_BREMSE ? '&bremse=aus' : ''));
   await p.waitForFunction(() => window.wgReady, null, { timeout: 180000 });
   console.log(`Start bis „bereit“: ${((Date.now() - t0) / 1000).toFixed(1)} s (${MODUS}, ${PROFIL}, Bremse ${OHNE_BREMSE ? 'aus' : 'an'})`);
-  await p.waitForTimeout(8000);   // Messfenster beginnt erst nach dem Start
+  await p.waitForTimeout(Number(process.env.WARTE || 8000));   // Messfenster beginnt erst nach dem Start
   const vp = p.viewportSize();
   const szenen = [];
   szenen.push(['Garten, nichts angefasst', await messen(p, 6000)]);

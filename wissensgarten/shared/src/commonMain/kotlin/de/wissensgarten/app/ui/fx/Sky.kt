@@ -68,7 +68,7 @@ fun SkyScene(
         val himmelBild = remember { Sprite() }
         val huegelBild = remember { Sprite() }
         val cloudSprites = remember { List(3) { Sprite() } }
-        Canvas(Modifier.matchParentSize()) {
+        if (!Experiment.aus("himmel")) Canvas(Modifier.matchParentSize()) {
             val t = wind?.value ?: 0f
             val ebene = listOf(time, hour.toInt(), season, decos)
             drawSprite(himmelBild, ebene) {
@@ -105,7 +105,7 @@ fun SkyScene(
         }
         // Vordergrund-Deko zwischen den Pflanzen
         val front = decos.filter { it in DecoSlots.front }
-        if (front.isNotEmpty()) Canvas(Modifier.matchParentSize()) {
+        if (front.isNotEmpty() && !Experiment.aus("deko")) Canvas(Modifier.matchParentSize()) {
             val t = wind?.value ?: 0f
             val ground = size.height - 12.dp.toPx()
             for (id in front) {

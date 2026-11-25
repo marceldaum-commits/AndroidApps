@@ -161,7 +161,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
               de.wissensgarten.core.data.ReadAloud.AUTO -> (prof?.level ?: 0) in 1..4
           }
           CompositionLocalProvider(
-              LocalWind provides rememberWind(), LocalSfx provides sfx,
+              LocalWind provides rememberWind().let { w -> if (de.wissensgarten.app.ui.fx.Experiment.aus("wind")) null else w }, LocalSfx provides sfx,
               de.wissensgarten.app.ui.fx.LocalVoice provides host.voice,
                   de.wissensgarten.app.ui.fx.LocalHost provides host,
               de.wissensgarten.app.ui.fx.LocalReadAloud provides readAloud,

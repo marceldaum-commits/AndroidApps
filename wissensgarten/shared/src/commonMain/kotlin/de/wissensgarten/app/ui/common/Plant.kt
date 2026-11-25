@@ -42,6 +42,7 @@ fun Plant(
 ) {
     val wind = LocalWind.current
     val sprite = remember { Sprite() }
+    if (de.wissensgarten.app.ui.fx.Experiment.aus("pflanzen")) return
     Canvas(modifier) {
         // Wind nur in der Zeichenphase lesen – kein Neuaufbau der Oberfläche pro Bild
         val t = wind?.value ?: 0f

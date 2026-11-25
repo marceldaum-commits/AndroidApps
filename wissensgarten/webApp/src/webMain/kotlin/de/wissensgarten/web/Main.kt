@@ -79,7 +79,10 @@ private fun onVisibility(cb: (Boolean) -> Unit): Unit = js("document.addEventLis
 private fun onBeforeUnload(cb: () -> Unit): Unit = js("window.addEventListener('pagehide', function () { cb(); })")
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalResourceApi::class)
+private fun ausParam(): JsString? = js("(function () { var m = /[?&]aus=([^&#]*)/.exec(location.search); return m ? decodeURIComponent(m[1]) : null; })()")
+
 fun main() {
+    ausParam()?.toString()?.let { v -> de.wissensgarten.app.ui.fx.Experiment.aus = v.split(',').filter { it.isNotBlank() }.toSet() }
     diag("App: main() läuft")
     // Lernstand aus dem Browser-Speicher laden (nur auf diesem Gerät, kein Server)
     val raw = runCatching { localStorage.getItem(STORE_KEY) }.getOrNull()

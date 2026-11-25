@@ -122,12 +122,12 @@ fun GardenScreen(
                     cards.none { !it.memory.isSeed } -> Mood.HAPPY to "Hallo! Ich bin Brummi 🐝"
                     else -> Mood.HAPPY to "Dein Garten blüht! 🌸"
                 }
-                Brummi(
+                if (!de.wissensgarten.app.ui.fx.Experiment.aus("brummi")) Brummi(
                     mood, Modifier.align(Alignment.CenterEnd).padding(end = 8.dp, bottom = 40.dp).widthIn(max = 260.dp),
                     size = 72.dp, speech = line, bubbleOnLeft = true,
                     onTap = { sfx?.play(Sound.PLOP, pitch = 1.4f); tip++ },
                 )
-                GardenFriends(friends, Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(150.dp))
+                if (!de.wissensgarten.app.ui.fx.Experiment.aus("freunde")) GardenFriends(friends, Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(150.dp))
                 Row(
                     Modifier.align(Alignment.BottomCenter).fillMaxWidth().padding(horizontal = 8.dp).height(120.dp),
                     verticalAlignment = Alignment.Bottom,
@@ -150,7 +150,7 @@ fun GardenScreen(
         }
         if (installCard != null) item { Box(Modifier.padding(horizontal = 16.dp)) { installCard() } }
         // Das Wichtigste zuerst: Gießen direkt unter dem Garten
-        item { Box(Modifier.padding(horizontal = 16.dp)) { WaterHero(thirsty, seedsAvailable, nextAt?.let { (it - now).toDouble() / Scheduler.DAY_MS }, onWater) } }
+        if (!de.wissensgarten.app.ui.fx.Experiment.aus("hero")) item { Box(Modifier.padding(horizontal = 16.dp)) { WaterHero(thirsty, seedsAvailable, nextAt?.let { (it - now).toDouble() / Scheduler.DAY_MS }, onWater) } }
         if (onGoodNight != null && cards.any { !it.memory.isSeed } && de.wissensgarten.app.ui.common.Clock.hourOf(now) >= 18f) item {
             Card(
                 onClick = onGoodNight, modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
@@ -166,7 +166,7 @@ fun GardenScreen(
                 }
             }
         }
-        item { extraCards() }
+        if (!de.wissensgarten.app.ui.fx.Experiment.aus("extra")) item { extraCards() }
         if (chestsWaiting > 0) item {
             Card(
                 onClick = onChest, modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth().pulse(true, 0.03f),
@@ -190,7 +190,7 @@ fun GardenScreen(
         if (onDuel != null && beds.isNotEmpty()) item {
             Box(Modifier.padding(horizontal = 16.dp)) { de.wissensgarten.app.ui.duel.DuelEntryCard(onDuel) }
         }
-        items(beds, key = { it.bed.id }) { b -> Box(Modifier.padding(horizontal = 16.dp)) { BedCard(b, now) { onOpenBed(b.bed.id) } } }
+        if (!de.wissensgarten.app.ui.fx.Experiment.aus("beete")) items(beds, key = { it.bed.id }) { b -> Box(Modifier.padding(horizontal = 16.dp)) { BedCard(b, now) { onOpenBed(b.bed.id) } } }
         if (beds.isNotEmpty()) item {
             OutlinedButton(onClick = onShop, modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth().height(52.dp)) {
                 Icon(Icons.Filled.Add, null); Spacer(Modifier.width(6.dp)); Text("Weiteres Beet anlegen")
