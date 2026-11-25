@@ -1,6 +1,6 @@
 // Eine Quelle für Version und Datum (auch version.json und sw.js müssen passen – prüft tools/test-inhalt.mjs).
-window.APP_VERSION = '0.5.4';
-window.APP_VERSION_DATE = '24.11.2026';
+window.APP_VERSION = '0.5.5';
+window.APP_VERSION_DATE = '25.11.2026';
 // Kennung für Links und Zählung (Name entschieden von Marcel am 19.11.2026).
 window.APP_ID = 'quasselquest';
 window.APP_NAME = 'Quasselquest';
@@ -12,3 +12,5 @@ window.FAMILIE_AKTIV = false;
 // Quasselquest Pro (Version 1.5.0, PRO.md): Code-Prüfung und Sperre je Sprache sind fertig und AUS. Erst mit Test-Codes vom Leitstand, Recht-Freigabe
 // und Shop auf true setzen (dann gilt: kostenlos bleibt Grundwortschatz, erste Episode, Lernpfad Abschnitt 1 + je erste Einheit ab Abschnitt 2).
 window.PRO_AKTIV = false;
+// Ukrainisch (Lernsprache, Marcel 19.11.2026): Inhalt liegt bereit, aber AUS bis Lektorat durch Muttersprachler, Vertonung und Freigabe.
+window.UK_AKTIV = false;

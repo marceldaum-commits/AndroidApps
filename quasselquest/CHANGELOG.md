@@ -1,5 +1,9 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.5.5 – Ukrainisch vorbereitet (25.11.2026)
+- Ukrainisch als Lernsprache ist in Arbeit: vier Einheiten (Hallo sagen, sich vorstellen, kyrillische Buchstaben lesen, meine Familie) mit Geschichte, Aktionen und Fehler-Suche. **Noch nicht sichtbar**, bis ein Muttersprachler den Text geprüft hat und die Stimme fertig ist.
+- Für euch ändert sich in der App bis dahin nichts.
+
 ## 0.5.4 – Datenschutz-Seite aktualisiert (24.11.2026)
 - Die Datenschutz-Seite in der App nennt jetzt die tatsächlichen KI-Stimmen (Kokoro-82M, gekennzeichnet) und erwähnt die entfernte Stimme „Nova“ nicht mehr. Die App ruft keine Stimmen von fremden Servern ab.
 

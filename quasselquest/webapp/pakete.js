@@ -12,10 +12,13 @@
     fr: { name: 'Französisch', emoji: '🥐', who: 'fr', thema: 'franzoesisch', hallo: 'Bonjour !' },
     es: { name: 'Spanisch', emoji: '💃', who: 'es', thema: 'spanisch', hallo: '¡Hola!' },
     la: { name: 'Latein', emoji: '🏛️', who: null, thema: 'latein', hallo: 'Salve!' },
+    // Ukrainisch: Inhalt fertig, aber erst nach Lektorat, Vertonung (Piper „tetiana“) und Freigabe sichtbar (window.UK_AKTIV in version.js).
+    uk: { name: 'Ukrainisch', emoji: '🌻', who: null, thema: 'ukrainisch', hallo: 'Привіт!' },
   };
-  P.ORDER = ['en', 'de', 'fr', 'es', 'la'];
+  P.UK_AKTIV = root.UK_AKTIV === true;
+  P.ORDER = ['en', 'de', 'fr', 'es', 'la'].concat(P.UK_AKTIV ? ['uk'] : []);
 
-  const ZIELSPRACHE = '(?:Englisch|Französisch|Spanisch|Latein)';
+  const ZIELSPRACHE = '(?:Englisch|Französisch|Spanisch|Latein|Ukrainisch)';
   const RE_ZU = new RegExp('^Was heißt „(.+?)“(?: \\((.+?)\\))? auf ' + ZIELSPRACHE + '\\?$');
   const RE_SAGT = /^Wie (?:sagt|fragt) man[^:„]*:\s*„(.+?)“\??$/;
   const RE_BEDEUTET = /^Was bedeutet „(.+?)“\??$/;
@@ -241,7 +244,7 @@
   };
 
   // ------------------------------------------------------------------ Lernpfad „Neu lernen“ (siehe LERNPFAD.md)
-  P.LERNPFAD = ['en', 'fr', 'es', 'la'];
+  P.LERNPFAD = ['en', 'fr', 'es', 'la'].concat(P.UK_AKTIV ? ['uk'] : []);
   P.LEKTIONEN = [
     { t: 'Entdecken', e: '🔍', sub: 'Wimmelbild: Wörter finden und hören' },
     { t: 'Mach, was ich sage!', e: '🖐️', sub: 'Befehle verstehen, Wörter bauen' },
