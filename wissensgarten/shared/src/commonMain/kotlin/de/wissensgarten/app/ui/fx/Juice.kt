@@ -18,7 +18,10 @@ val LocalWind = staticCompositionLocalOf<State<Float>?> { null }
 @Composable
 fun rememberWind(): State<Float> {
     val t = rememberInfiniteTransition(label = "wind")
-    return t.animateFloat(0f, 3600f, infiniteRepeatable(tween(3_600_000, easing = LinearEasing)), label = "w")
+    val roh = t.animateFloat(0f, 3600f, infiniteRepeatable(tween(3_600_000, easing = LinearEasing)), label = "w")
+    // Der Wind ändert sich nur 24-mal pro Sekunde: Wolken, Pflanzen und Schmetterlinge sind langsam genug, und der Garten
+    // wird dadurch nur bei einem neuen Wert neu gezeichnet statt bei jedem Bildschirmbild.
+    return remember { derivedStateOf { (roh.value * 24f).toInt() / 24f } }
 }
 
 /** Federt beim Drücken leicht ein. */

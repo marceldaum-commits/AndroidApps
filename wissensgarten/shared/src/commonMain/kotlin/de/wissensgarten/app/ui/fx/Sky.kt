@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -62,16 +63,26 @@ fun SkyScene(
     val festival = de.wissensgarten.core.model.Seasons.festival(date)
     val wind = LocalWind.current
     Box(modifier.clip(androidx.compose.foundation.shape.RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))) {
+        // Vorbereitete Ebenen (siehe Sprite.kt): Himmel + Sonne/Mond und Hügel ändern sich nur mit Tageszeit/Jahreszeit,
+        // nicht in jedem Bild. Nur Wolken, Sterne, Schmetterlinge und Partikel werden pro Bild bewegt.
+        val himmelBild = remember { Sprite() }
+        val huegelBild = remember { Sprite() }
+        val cloudSprites = remember { List(3) { Sprite() } }
         Canvas(Modifier.matchParentSize()) {
             val t = wind?.value ?: 0f
-            val (top, bottom) = skyColors(time)
-            drawRect(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(top, bottom)))
+            val ebene = listOf(time, hour.toInt(), season, decos)
+            drawSprite(himmelBild, ebene) {
+                val (top, bottom) = skyColors(time)
+                drawRect(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(top, bottom)))
+                sunOrMoon(time, hour)
+                if ("regenbogen" in decos && time != DayTime.NIGHT) drawDeco("regenbogen", 0f, 0f, 0f, 0f, false)
+            }
             if (time == DayTime.NIGHT) stars(t)
-            sunOrMoon(time, hour)
-            if ("regenbogen" in decos && time != DayTime.NIGHT) drawDeco("regenbogen", 0f, 0f, 0f, t, false)
-            clouds(t, if (time == DayTime.NIGHT) 0.18f else 0.9f)
-            hills(time, season)
-            if ("zaun" in decos) drawDeco("zaun", 0f, size.height - 22.dp.toPx(), 40.dp.toPx(), t, false)
+            clouds(cloudSprites, t, if (time == DayTime.NIGHT) 0.18f else 0.9f)
+            drawSprite(huegelBild, ebene) {
+                hills(time, season)
+                if ("zaun" in decos) drawDeco("zaun", 0f, size.height - 22.dp.toPx(), 40.dp.toPx(), 0f, false)
+            }
             if (happy && time != DayTime.NIGHT) butterflies(t)
             if (time == DayTime.NIGHT && season != de.wissensgarten.core.model.Season.WINTER) fireflies(t)
             seasonParticles(season, t)
@@ -137,22 +148,27 @@ private fun DrawScope.sunOrMoon(time: DayTime, hour: Float) {
     }
 }
 
-private fun DrawScope.clouds(t: Float, alpha: Float) {
+/** Wolken: jede Form wird einmal als Bild gemalt (die Vereinigung der Ovale ist teuer) und dann nur noch verschoben. */
+private fun DrawScope.clouds(sprites: List<Sprite>, t: Float, alpha: Float) {
     val w = size.width; val h = size.height
     listOf(Triple(0.1f, 0.18f, 1f), Triple(0.55f, 0.1f, 0.7f), Triple(0.85f, 0.3f, 0.85f)).forEachIndexed { i, (x0, y, s) ->
         val speed = 0.006f + i * 0.003f
         val x = (((x0 + t * speed) % 1.3f) - 0.15f) * w
         val r = h * 0.06f * s
         val cy = y * h + h * 0.12f
-        // eine zusammenhängende Form, damit sich durchsichtige Teile nicht überlagern
-        val cloud = Path().apply {
-            addOval(androidx.compose.ui.geometry.Rect(Offset(x + r * 1.2f, cy - r * 0.2f), r * 1.15f))
-            addOval(androidx.compose.ui.geometry.Rect(Offset(x + r * 0.3f, cy + r * 0.3f), r * 0.8f))
-            addOval(androidx.compose.ui.geometry.Rect(Offset(x + r * 2.2f, cy + r * 0.35f), r * 0.75f))
-            addOval(androidx.compose.ui.geometry.Rect(x - r * 0.5f, cy + r * 0.1f, x + r * 3.0f, cy + r * 1.1f))
+        // Bild: links oben bei (x - 0,6 r, cy - 1,5 r)
+        val bw = (r * 3.8f).toInt() + 2; val bh = (r * 2.8f).toInt() + 2
+        val img = sprites[i].get(this, bw, bh, r) {
+            val ox = r * 0.6f; val oy = r * 1.5f
+            val cloud = Path().apply {
+                addOval(androidx.compose.ui.geometry.Rect(Offset(ox + r * 1.2f, oy - r * 0.2f), r * 1.15f))
+                addOval(androidx.compose.ui.geometry.Rect(Offset(ox + r * 0.3f, oy + r * 0.3f), r * 0.8f))
+                addOval(androidx.compose.ui.geometry.Rect(Offset(ox + r * 2.2f, oy + r * 0.35f), r * 0.75f))
+                addOval(androidx.compose.ui.geometry.Rect(ox - r * 0.5f, oy + r * 0.1f, ox + r * 3.0f, oy + r * 1.1f))
+            }
+            drawPath(Path.combine(androidx.compose.ui.graphics.PathOperation.Union, cloud, Path()), Color.White)
         }
-        val merged = Path.combine(androidx.compose.ui.graphics.PathOperation.Union, cloud, Path())
-        drawPath(merged, Color.White.copy(alpha = alpha))
+        if (img != null) drawImage(img, Offset(x - r * 0.6f, cy - r * 1.5f), alpha = alpha)
     }
 }
 

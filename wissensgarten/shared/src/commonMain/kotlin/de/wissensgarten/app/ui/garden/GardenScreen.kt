@@ -315,27 +315,30 @@ private fun BedCard(b: BedWithCards, now: Long, onClick: () -> Unit) {
 @Composable
 private fun GardenFriends(friends: List<de.wissensgarten.core.model.Friend>, modifier: Modifier) {
     if (friends.isEmpty()) return
-    val t by androidx.compose.animation.core.rememberInfiniteTransition(label = "freunde").animateFloat(
+    // Die Zeit wird nur in graphicsLayer/offset-Lambdas gelesen (Zeichenphase), nie beim Aufbau – sonst würde der ganze Block 60-mal pro Sekunde neu zusammengesetzt
+    val tState = androidx.compose.animation.core.rememberInfiniteTransition(label = "freunde").animateFloat(
         0f, 1000f, androidx.compose.animation.core.infiniteRepeatable(androidx.compose.animation.core.tween(1_000_000, easing = androidx.compose.animation.core.LinearEasing)), label = "t",
     )
     val sfx = LocalSfx.current
     BoxWithConstraints(modifier) {
+        val maxW = maxWidth; val maxH = maxHeight
         friends.forEachIndexed { i, f ->
             val jump = remember { androidx.compose.animation.core.Animatable(0f) }
             val scope = rememberCoroutineScope()
             // hin und her laufen (Ping-Pong), jeder in eigenem Tempo
             val speed = 0.012f + (i % 3) * 0.004f
-            val raw = (t * speed + i * 0.37f) % 2f
-            val pos = if (raw < 1f) raw else 2f - raw
-            val facingRight = raw < 1f
-            val hop = kotlin.math.abs(kotlin.math.sin(t * 6f + i)) * 6f
             Text(
                 f.emoji, fontSize = 28.sp,
                 modifier = Modifier
-                    .offset(x = maxWidth * (0.04f + pos * 0.88f), y = maxHeight * 0.18f + 14.dp * (i % 2))
+                    .offset(x = 0.dp, y = maxH * 0.18f + 14.dp * (i % 2))
                     .graphicsLayer {
+                        val t = tState.value
+                        val raw = (t * speed + i * 0.37f) % 2f
+                        val pos = if (raw < 1f) raw else 2f - raw
+                        val hop = kotlin.math.abs(kotlin.math.sin(t * 6f + i)) * 6f
+                        translationX = maxW.toPx() * (0.04f + pos * 0.88f)
                         translationY = -(hop + jump.value * 60f) * density
-                        scaleX = if (facingRight) -1f else 1f
+                        scaleX = if (raw < 1f) -1f else 1f
                     }
                     .clickable(androidx.compose.runtime.remember { androidx.compose.foundation.interaction.MutableInteractionSource() }, null) {
                         sfx?.play(Sound.PLOP, pitch = 1.5f)
