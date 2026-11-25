@@ -5,7 +5,6 @@ Regel (Marcel/Leitstand 25.11.): Liste selbständig der Reihe nach abarbeiten, E
 ## Offen (Reihenfolge = Arbeitsreihenfolge)
 | # | Was | Frist | Nächster Schritt | Abhängigkeit | Status |
 |---|---|---|---|---|---|
-| 1 | Ukrainisch-Lektorat umsetzen (4 Einheiten `lernpfad/uk.json`) | Mi 25.11. | Funde des Lektorats einarbeiten, testen, pushen | Sub-Agent läuft | in Arbeit |
 | 2 | Ukrainisch: Deutsch für ukrainische Kinder (DaZ): Ruby erklärt auf Ukrainisch, Lernpfad „Deutsch von Anfang an“, Umschalter „Meine Sprache: Українська“ | Do/Fr 26./27.11. | Konzept + 4 Einheiten + UI-Umschalter hinter `UK_AKTIV` | Lektorat Muttersprache (Marcel entscheidet) | offen |
 | 3 | Ukrainisch: Textliste „uk“ für das Tonstudio (Piper tetiana, 1.0/0.8, ID3, Lizenztext, Wasserzeichen-Pflicht klären) | Fr 27.11. | `tools/textliste.py` um „uk“ erweitern, Commit melden | Tonstudio (über AppZentrale) | offen |
 | 4 | Kokoro-Dateien mit Perth-Wasserzeichen einbauen (en → fr → es) | Einbau je Sprache ≤ 3 h nach Meldung, Release Mo 30.11., hart 01.12. | `tools/server-audio-einbauen.py`, Hörprüfung, ID3-/Perth-Check, Browser-Test, DSE-Zusatz „unhörbares digitales Wasserzeichen“ | Tonstudio (Übergabe Sa/So 28./29.11.) | wartet |
@@ -24,6 +23,7 @@ Regel (Marcel/Leitstand 25.11.): Liste selbständig der Reihe nach abarbeiten, E
 
 ## Erledigt
 - 24.11.2026: 0.5.2 (Familien-Speicher, Pro-Codes, familie.js af01c5c, schnellere Installation, Zoom), 0.5.3 (Recht-Wortlaute V39/V40/V42/V47), 0.5.4 (App-DSE Stimmen-Absatz, kein /nova/), Notbremse 0.4.7 mit Recht V47c, Format der Prüfliste ans Tonstudio.
+- 25.11.2026: Ukrainisch-Lektorat (unabhängiger Durchlauf, 15 Funde) umgesetzt; Muttersprachler-Prüfung vor Freigabe bleibt offen (Punkt 2).
 - 25.11.2026: 0.5.5 Ukrainisch-Inhalt (4 Einheiten) hinter Flag, Recherche in docs/RECHERCHE.md, Tagesmeldung gesendet.
 
 ---

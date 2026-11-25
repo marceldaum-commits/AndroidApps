@@ -132,8 +132,8 @@
         "Hallo, Oksana!"
        ],
        [
-        "Добрий день, Марія Іванівна!",
-        "Guten Tag, Frau Iwanowna!"
+        "Добрий день, Маріє Іванівно!",
+        "Guten Tag, Maria Iwaniwna! (Vor- und Vatersname: So sprichst du Lehrerinnen an.)"
        ]
       ]
      },
@@ -192,39 +192,39 @@
      },
      "aktionen": [
       {
-       "sag": "Скажи привіт Тарасу.",
+       "sag": "Скажи Тарасові «привіт».",
        "de": "Sag Taras hallo.",
        "ding": "👋",
        "anzahl": 1,
        "an": "taras"
       },
       {
-       "sag": "Скажи дякую Оксані.",
+       "sag": "Скажи Оксані «дякую».",
        "de": "Sag Oksana danke.",
        "ding": "💐",
        "anzahl": 1,
        "an": "oksana"
       },
       {
-       "sag": "Скажи до побачення Оксані.",
+       "sag": "Скажи Оксані «до побачення».",
        "de": "Sag Oksana auf Wiedersehen.",
        "ding": "🚶",
        "anzahl": 1,
        "an": "oksana"
       },
       {
-       "sag": "Скажи на добраніч Рубі.",
-       "de": "Sag Ruby gute Nacht.",
+       "sag": "Побажай Рубі «на добраніч».",
+       "de": "Wünsch Ruby gute Nacht.",
        "ding": "🌙",
        "anzahl": 1,
        "an": "ruby"
       },
       {
-       "sag": "Скажи добрий день Тарасу.",
-       "de": "Sag Taras guten Tag.",
+       "sag": "Скажи бабусі «добрий день».",
+       "de": "Sag der Oma guten Tag.",
        "ding": "☀️",
        "anzahl": 1,
-       "an": "taras"
+       "an": "babusia"
       }
      ],
      "fehler": [
@@ -237,7 +237,7 @@
         "справів",
         "справу"
        ],
-       "tipp": "Wie geht’s heißt Як справи? – справи steht immer in der Mehrzahl."
+       "tipp": "„Wie geht’s?“ heißt Як справи? – in dieser Frage steht справи immer in der Mehrzahl."
       },
       {
        "falsch": "До побачення, Оксана!",
@@ -257,7 +257,7 @@
        "korrektur": "Добрий",
        "choices": [
         "Добре",
-        "Доброго"
+        "Добрим"
        ],
        "tipp": "день ist männlich, darum добрий день."
       },
@@ -270,7 +270,7 @@
         "дякує",
         "дякуй"
        ],
-       "tipp": "Ich danke dir heißt дякую."
+       "tipp": "дякую heißt wörtlich „ich danke“ – die Endung -ю gehört zu „ich“."
       }
      ]
     },
@@ -419,7 +419,7 @@
       },
       {
        "sag": "Дай Рубі насіння.",
-       "de": "Gib Ruby Samen.",
+       "de": "Gib Ruby Sonnenblumenkerne.",
        "ding": "🌻",
        "anzahl": 1,
        "an": "ruby"
@@ -497,7 +497,7 @@
        "кіт",
        "Kater",
        "🐱",
-       "к = k, і = i, т = t"
+       "к = k, і = i, т = t. In anderen Formen kommt das о zurück: коту = dem Kater."
       ],
       [
        "сік",
@@ -554,7 +554,7 @@
      ],
      "regel": {
       "titel": "Das ukrainische Alphabet",
-      "text": "Das Alphabet hat 33 Buchstaben. Manche sehen aus wie lateinische, klingen aber anders: р = r (nicht p), н = n, в = w, у = u, с = s, х = ch. Dazu kommen: і = i, и = ein kurzes y (zwischen i und e), ї = ji, є = je, ю = ju, я = ja. Und ь macht den Buchstaben davor weich.",
+      "text": "Das Alphabet hat 33 Buchstaben. Manche sehen aus wie lateinische, klingen aber anders: р = r (nicht p), н = n, в = w, у = u, с = s, х = ch. Dazu kommen: і = i, и = ein kurzes i wie in „bitte“ (zwischen i und e), ї = ji, є = je, ю = ju, я = ja. Und ь macht den Buchstaben davor weich.",
       "beispiele": [
        [
         "рак",
@@ -659,14 +659,14 @@
        "korrektur": "кіт",
        "choices": [
         "кіть",
-        "кат"
+        "кет"
        ],
        "tipp": "In кіт steht der Buchstabe і (wie i), nicht о."
       },
       {
-       "falsch": "Мама пю сік.",
+       "falsch": "Мама пє сік.",
        "richtig": "Мама п'є сік.",
-       "wort": "пю",
+       "wort": "пє",
        "korrektur": "п'є",
        "choices": [
         "п'ю",
@@ -711,7 +711,7 @@
        "собака",
        "Hund",
        "🐶",
-       "Eine Katze ist кішка, ein Kater кіт."
+       "Achtung: собака ist männlich – мій собака! Eine Katze ist кішка, ein Kater кіт."
       ],
       [
        "мій / моя / моє",
@@ -732,13 +732,13 @@
        "👪"
       ],
       [
-       "Це мій брат Тарас.",
-       "Das ist mein Bruder Taras.",
+       "Це мій брат Андрій.",
+       "Das ist mein Bruder Andrij.",
        "👦"
       ],
       [
-       "Це моя сестра Оксана.",
-       "Das ist meine Schwester Oksana.",
+       "Це моя сестра Марійка.",
+       "Das ist meine Schwester Marijka.",
        "👧"
       ],
       [
