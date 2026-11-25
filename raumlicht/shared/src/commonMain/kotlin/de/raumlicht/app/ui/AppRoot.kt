@@ -108,6 +108,8 @@ fun AppRoot(
     proKey: String = Pro.PUBLIC_KEY,
     /** Schickt eine Anfrage (JSON) an den KI-Tutor und liefert Status (0 = keine Verbindung) und Antworttext; null = hier gibt es keinen KI-Tutor (Play-Fassung) */
     kiSend: (suspend (String) -> Pair<Int, String>)? = null,
+    /** Meldet jede ausgelieferte KI-Antwort der Plattform, die sie maschinenlesbar als „KI-erzeugt“ kennzeichnet (Web: verstecktes Element im Seitenmodell) */
+    kiMark: (String) -> Unit = {},
     /** KI-Tutor für alle sichtbar? Sonst nur mit eingetragenem KI-Code (siehe [de.raumlicht.core.model.Ki.ENABLED]) */
     kiEnabled: Boolean = de.raumlicht.core.model.Ki.ENABLED,
     /** Versionsname, geht mit jeder KI-Anfrage mit */
@@ -229,10 +231,10 @@ fun AppRoot(
         if (ki != null) { prefs.setKiCode(ki); nav.go(Routes.KI); true } else Pro.active(code, proKey).also { if (it) { prefs.setProCode(code); count("code_eingeloest", "eingabe", null) } } }
     val enterKi: (String) -> Boolean = { text -> val ki = de.raumlicht.core.model.Ki.fromText(text, proKey); val pro = de.raumlicht.core.model.License.extract(text) ?: text.trim()
         if (ki != null) { prefs.setKiCode(ki); true } else if (Pro.active(pro, proKey)) { prefs.setProCode(pro); nav.go(Routes.PRO); true } else false }
-    val kiTutor = remember(kiShown, kiCode, kiLast) { if (!kiShown) null else de.raumlicht.app.ui.level.KiTutor(kiLast != null && today() <= kiLast,
+    val kiTutor = remember(kiShown, kiCode, kiLast, kiMark) { if (!kiShown) null else de.raumlicht.app.ui.level.KiTutor(kiLast != null && today() <= kiLast,
         { level, values, feedback, kind, question, history ->
             val (status, body) = kiSend!!(de.raumlicht.core.model.Ki.request(level, values, feedback, kind, question, history, kiCode, prefs.kiDevice(), version))
-            de.raumlicht.core.model.Ki.answer(status, body) }, { nav.go(Routes.KI) }) }
+            de.raumlicht.core.model.Ki.answer(status, body).also { if (it.status == 200 && it.text.isNotEmpty()) kiMark(it.text) } }, { nav.go(Routes.KI) }) }
     val starMap by stars.collectAsState()
     val skin by prefs.skin.collectAsState(); val look by prefs.look.collectAsState()
     val exams by prefs.exams.collectAsState(); val lageBest by prefs.lageBest.collectAsState(); val jamBest by prefs.jamBest.collectAsState()

@@ -112,6 +112,7 @@ private fun WebApp() {
                 familieLink = familyLink, gateFree = remember { familieTorFrei() },
                 onApps = { openApps(if (isTestSite()) de.raumlicht.core.model.Nachhilfe.APPS_TEST_URL else de.raumlicht.core.model.Nachhilfe.APPS_URL) },
                 countSend = { body -> beacon(de.raumlicht.core.model.Zaehler.URL, body) },
+                kiMark = { kiKennzeichnen(it) },
                 kiSend = { body -> kotlinx.coroutines.suspendCancellableCoroutine { c -> kiPost(kiUrl, body) { status, text -> if (c.isActive) c.resumeWith(Result.success(status to text)) } } },
                 kiEnabled = de.raumlicht.core.model.Ki.ENABLED || kiTest, version = Version.NAME,
                 onRoute = { atHome(it == Routes.HOME); exam = Routes.isExam(it); mood = if (Routes.isAction(it)) MusicMood.FLIGHT else MusicMood.MENU },

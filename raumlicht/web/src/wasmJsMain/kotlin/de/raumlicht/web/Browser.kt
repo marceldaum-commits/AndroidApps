@@ -19,6 +19,15 @@ fun kiPost(url: String, body: String, done: (Int, String) -> Unit): Unit = js(""
     fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, signal: c.signal })
         .then((r) => r.text().then((x) => done(r.status, x)), () => done(0, '')).finally(() => clearTimeout(t));
 }""")
+/**
+ * Kennzeichnung jeder KI-Antwort als maschinenlesbares „KI-erzeugt“ (KI-Verordnung Art. 50 Abs. 2): Die App zeichnet auf einer Fläche, der Text steht nicht im Seitenmodell –
+ * darum steht die letzte Antwort zusätzlich in einem versteckten Element (für Vorlese-Programme und Auswertungen lesbar).
+ */
+fun kiKennzeichnen(text: String): Unit = js("""{ var l = document.getElementById('ki-erzeugt'); if (!l) { l = document.createElement('div'); l.id = 'ki-erzeugt'; l.setAttribute('lang', 'de');
+  l.style.cssText = 'position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap'; document.body.appendChild(l); }
+  var e = document.createElement('div'); e.setAttribute('role', 'note'); e.setAttribute('aria-label', 'KI-erzeugte Antwort'); e.setAttribute('aria-description', 'Diese Antwort wurde von einer KI erzeugt und kann Fehler enthalten.');
+  e.setAttribute('data-ki-erzeugt', 'true'); e.setAttribute('data-ki-anbieter', 'Anthropic'); e.setAttribute('data-ki-hinweis', 'KI-erzeugt');
+  e.textContent = 'KI-erzeugt: ' + text; l.appendChild(e); while (l.children.length > 20) l.removeChild(l.firstChild); }""")
 /** Kann die WebApp installiert werden? „installiert“ (läuft schon als App), „knopf“ (der Browser bietet es an), „ios“ (iPhone/iPad: von Hand über „Teilen“), sonst „nichts“ */
 fun installState(): String = js("""(function () {
     var I = window.__rlInstall || {};

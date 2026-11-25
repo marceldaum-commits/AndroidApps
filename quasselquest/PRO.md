@@ -29,3 +29,9 @@ Sicherung/Kopplung immer; Nachhilfe-Hinweis für alle Sprachen. Mein Schulbuch g
 - Schloss-Text in der Kinderansicht NUR: „Das gehört zu Quasselquest Pro.“ (ohne Zusatz zu den Eltern). Der Weg zum Freischalten liegt im Elternbereich hinter dem Tor.
 - Kaufschutz wie geplant. AGB § 13 und Information der Plus-Käufer erledigen Leitstand/Marcel; Shop bleibt bis dahin privat.
 - **Bestätigt von Marcel (ELTERN-TOR.md aktualisiert, gilt für alle Apps):** Schloss nur „Das gehört zu Quasselquest Pro.“; der Weg ins Tor über einen neutralen Knopf „Für Eltern“.
+
+## Stand 24.11.2026 (Version 0.5.2, alles hinter dem Flag `PRO_AKTIV = false` in webapp/version.js)
+- **Fertig:** `webapp/pro.js` – Ed25519-Prüfung mit BigInt (RFC-8032-Testvektoren + Gegenprobe mit Node-Krypto, 15 Prüfungen in `tools/test-pro.mjs`), Crockford-Base32, Sprach-Byte 1/2/3/4/5/9, Kaufschutz Wissensgarten Plus (App 3, Produkt 1/3 → Englisch + Deutsch), Rechte nur auf dem Gerät.
+- **Fertig:** Elternbereich „⭐ Quasselquest Pro“ (Code einlösen, Link `#pro=` / `?pro=` wird gemerkt), Sperrliste über `familie-bruecke.js` (`sperrlisteLaden`, `codeGesperrt`), Schloss in der Kinderansicht (nur „Das gehört zu Quasselquest Pro.“), Browser-Test in `tools/web-auswertung.mjs`.
+- **Frei bleibt:** Grundwortschatz (je Sprache das erste Paket und alle „Grundwortschatz“-Pakete), erste Episode jeder Welt, Lernpfad Abschnitt 1 vollständig, ab Abschnitt 2 je erste Einheit, alle Spielarten, Mein Schulbuch, Kopplung/Sicherung, Nachhilfe-Hinweis.
+- **Offen vor dem Einschalten:** (1) Test-Codes vom Leitstand (nur der öffentliche Schlüssel liegt vor; die Tests nutzen eigene Schlüssel). (2) Patch für `codeNummer()` in familie.js (Mathe-Trainer): lehnt Sprach-Byte 5 und 9 (und App > 7) ab, deshalb kann die Sperrliste Spanisch- und Alle-Sprachen-Codes noch nicht prüfen. (3) Recht-Freigabe des Shops/der Sperre, Preise nur hinter dem Tor. (4) Dann Version 1.5.0 und `PRO_AKTIV = true`.

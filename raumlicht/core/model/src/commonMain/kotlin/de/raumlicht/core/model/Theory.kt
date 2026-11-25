@@ -490,6 +490,16 @@ object Theory {
                 "d⃗(t) · (1|2|2) = 0: −27 + 9t = 0 → t = 3",
                 "d⃗(3) = (4|−4|2) → Abstand √(16 + 16 + 4) = 6"),
             "Der Abstand der Flugbahnen ist etwas anderes – hier zählt, wo beide zur selben Zeit sind."),
+        c("lgs", "🧩", "Gleichungssysteme und Gauß", null,
+            "Jede Gleichung ist eine Scheibe im Raum, die Lösung der Punkt, in dem sich alle treffen. Gauß räumt Schritt für Schritt auf.",
+            listOf("Eine Unbekannte soll verschwinden (meist x₁): Zeile II − k · Zeile I, k passend gewählt. Dann Zeile III.",
+                "Aus den unteren zwei Zeilen x₂ eliminieren – übrig bleibt eine Zeile mit nur x₃.",
+                "Von unten nach oben einsetzen: erst x₃, dann x₂, dann x₁.",
+                "0 = 0: unendlich viele Lösungen. 0 = 5: keine Lösung. Immer Probe in allen drei Gleichungen."),
+            listOf("I: x₁ + x₂ = 5, II: x₁ − x₂ = 1, III: x₃ = 2",
+                "I + II: 2x₁ = 6, also x₁ = 3; dann x₂ = 2",
+                "P(3|2|2) – Probe in I: 3 + 2 = 5 ✓"),
+            "Das Minus beim Abziehen gilt für die ganze Zeile – auch für die rechte Seite!"),
     )
 
     private val analysis = listOf(
@@ -860,6 +870,11 @@ object Theory {
         "binomial-genau" to "16-2 24-1",
         "binomial-kumuliert" to "23-2 24-2 24-4 24-5",
         "hypothesentest" to "23-5",
+        "koordinatenform" to "abi-dach-a", "abstand-punkt-ebene" to "abi-dach-b", "durchstoss" to "abi-dach-c abi-rutsche-a", "spiegeln-ebene" to "abi-dach-d",
+        "schnittpunkt-geraden" to "abi-kran-a", "winkel-geraden" to "abi-kran-b", "abstand-windschief" to "abi-kran-c", "mittelpunkt" to "abi-kran-d abi-ballon-a",
+        "kugel" to "abi-ballon-b abi-ballon-d", "tangentialebene" to "abi-ballon-c", "winkel-gerade-ebene" to "abi-rutsche-b",
+        "abstand-parallele-geraden" to "abi-rutsche-c", "parameter" to "abi-rutsche-d",
+        "lgs" to "27-1 27-2 27-3 27-4 27-5 27-6 27-7",
     ).flatMap { (key, ids) -> ids.split(' ').map { it to key } }.toMap()
 
     /** Stufe 2: fester Titel je Übungsart (erzeugte Aufgaben „jam-“, „mehr-“, „profi-“ und Tagesaufgaben „tag-“) */
@@ -903,7 +918,7 @@ object Theory {
         6 to "skalarprodukt", 7 to "winkel", 8 to "lot-gerade", 9 to "kugel", 10 to "flaeche-kreuzprodukt",
         11 to "bewegung", 12 to "rotation", 13 to "pfadregeln", 14 to "extrempunkte", 15 to "scheitelform",
         16 to "vierfeldertafel", 17 to "ableitung", 18 to "koordinatenform", 19 to "schnittgerade", 20 to "spiegeln-ebene",
-        21 to "schnittkreis", 26 to "hesse", 22 to "integral-flaeche", 23 to "erwartungswert", 24 to "binomial-kumuliert", 25 to "produktregel",
+        21 to "schnittkreis", 26 to "hesse", 27 to "lgs", 22 to "integral-flaeche", 23 to "erwartungswert", 24 to "binomial-kumuliert", 25 to "produktregel",
     )
 
     /** Über welche Stufe die Karte gefunden wird: 1 = Aufgaben-ID, 2 = Titel, 3 = Kapitel, 4 = allgemeine Karte */

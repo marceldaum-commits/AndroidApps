@@ -2,6 +2,32 @@
 
 Neueste oben.
 
+## 24.11.2026 – 2.18.42: KI-Kennzeichnung je Antwort mit Screenreader-Hinweis (Recht V46a); Nova-Meldung (Auftrag 180)
+
+- Jede KI-Antwort bekommt ihr eigenes Element (`role="note"`, `aria-label`, `aria-description`) im versteckten Container `#ki-erzeugt`; `web-ki` prüft es. **Rechtsbezug: ja (Art. 50 KI-VO)**.
+- **Nova (a) Modul:** `rl-nova.js` (Raumlicht-Stimme über OpenAI) – seit 2.18.39 nicht mehr eingebunden, Datei, Android-Klassen, Lizenzliste und Texte entfernt. **(b)** Normaler Start ohne Datei: für die Live-Version 2.18.34 mit gesperrter Datei getestet (wasm und js, keine Fehler); die neuen Versionen kennen sie gar nicht. **(c)** Vorlesen entfällt, bis die Stimmen aus dem eigenen Tonstudio da sind (aus; Marcel wird vorher informiert).
+
+## 24.11.2026 – Monatsprüfung (Prüfplan Block 1 + Rundum): keine Fehler gefunden
+
+- Block 1 (Kapitel 1–8, 44 Aufgaben) per Gegenrechnung aus dem Prüf-Dump und dem Dauertest `MehrdeutigTest`: Lösung angenommen, Start nie, Regler erreichbar, Rechenweg/Tipp vorhanden, mehrfach angenommene Antworten sind gleichwertig. Stichprobe der Bühne in den Kapiteln 2, 4, 6, 8 sowie 17, Dach und Ballon angesehen.
+- Rundum: Start beide Fassungen, Diagnose, Störung, Update, Vorversion→neu, Installation, Zählung, „nichts spricht“, KI-Tutor, Pro; alle Außen-Links 200.
+- Offen, kein App-Fehler: Der Anker `#familien-speicher` fehlt auf der Live-Datenschutzseite (Entwurf: `store/datenschutz-abschnitt.md`, Punkt 9) – nötig vor einem Live-Gang des Familien-Speichers.
+- Ergebnis steht im Prüfplan-Protokoll. **Rechtsbezug: nein** (nur die Anker-Feststellung betrifft Recht).
+
+## 24.11.2026 – 2.18.41: KI-Kennzeichnung maschinenlesbar (Recht V36 K4)
+
+- Jede KI-Antwort des KI-Tutors steht zusätzlich als verstecktes Element `#ki-erzeugt` im Seitenmodell (`data-ki-erzeugt="true"`, `data-ki-anbieter="Anthropic"`, `data-ki-hinweis="KI-erzeugt"`, Text „KI-erzeugt: …“); die sichtbare Zeile unter der Antwort bleibt. Kein Export/Kopieren in der App, daher kein Export-Vermerk nötig; kein Text-Wasserzeichen (Begründung in `store/ki-kennzeichnung.md`).
+- Test: `web-ki` (Prüfung der Attribute nach einer Antwort), `AppRootTest.kiTutor`. Keine neuen Daten, keine Änderung am Server.
+- **Rechtsbezug: ja (Art. 50 Abs. 2 KI-VO, V36 K4)**. Pflicht: live bis 01.12.2026.
+
+## 24.11.2026 – 2.18.40: Inhalt – Kapitel „Gleichungssysteme & Gauß“ und vier neue Abi-Prüfungen
+
+- **Neues Kapitel** (angezeigt 17, intern 27, `TourTen.kt`): lineare Gleichungssysteme als drei Ebenen im Raum, 7 Aufgaben (Treppe, einmal eliminieren, Gauß, Rechenschritt, unendlich viele Lösungen, „gibt es einen Treffer?“, Abi-Check) mit neuer Theorie-Karte `lgs` samt Formelkasten. Frei sind wie bei allen Kapiteln ab 7 die ersten 2 Aufgaben. Kachel „Lineare Gleichungssysteme“ aus „Kommt bald“ entfernt.
+- **Vier neue Abi-Prüfungen** (`ExamsTen.kt`): Dachfläche, Baukran, Heißluftballon, Wasserrutsche – je 4 Teile à 12 BE; damit 8 Prüfungen (1 frei). Ziel 12–20 ist noch nicht erreicht; weitere folgen in den nächsten Wochen.
+- **Rechenprüfung:** `TourTenTest`/`ExamsTenTest` rechnen jede Lösung unabhängig nach (Cramersche Regel, Rang, Abstände, Winkel, Spiegelbilder). Die Aufgaben-/Kapitelzahlen in Tests und Texten laufen von 92/16 auf 99/17 (Pro-Aufzählung rechnet sich selbst).
+- **Geprüft:** Logik- und Oberflächen-Tests, Lint, Web-Build, Browser-Prüfungen (Splash, Modus, Diagnose, Störung, Update, Installation, Zählung, still, breit, Pro, KI, Eltern, Familie) grün; Bildschirmfotos 98/99 angesehen. Der Splash-Test misst jetzt mit Toleranz (er maß mitten in der Atem-Animation).
+- **Rechtsbezug: nein** – reiner Lerninhalt, keine neuen Daten, keine neuen Texte zu Datenschutz/Einwilligung. Preis/Ankündigung in der App: keine.
+
 ## 24.11.2026 – 2.18.39 auf test: Startanimation, PC-Ansicht, Tor-Regeln V26, Zählpunkt „umzug“, Aufräumen „Nova“/OpenAI, Datenschutz-Link
 
 - **Kopplung lösen mit Altersfrage (V26, Marcel 20.11. „Altersfrage“):** Wortlaute von Recht wörtlich (`Eltern.RELEASE_*`). „Ja, ich bin 16 oder älter“ → Bestätigung → **Vermerk statt Löschen:** `PUT /eltern/v1/b/<id>` mit `X-Schreib` und `X-Geloest: 1`, Body `<iv>.<ct>` (AES-GCM, gleicher Schlüssel), Klartext `{"v":1,"status":"geloest","app":"raumlicht","appName":"Raumlicht","stand":"<ISO>"}` (kein Name, keine Lerndaten, < 2000 Zeichen). Am Test-Server vorab geprüft: 204; weiterer PUT → 409 `geloest`; DELETE aufräumt. Offline: Merker (`elternLoesen`, nicht in Sicherungen), ein Versuch beim nächsten Start, sonst altes DELETE; andere Fehler → sofort DELETE. „Nein“ → „Dann können nur deine Eltern …“ → [Zum Elternbereich] öffnet das Eltern-Tor, danach Bestätigung mit DELETE ohne Vermerk. Altersantwort wird nicht gespeichert.

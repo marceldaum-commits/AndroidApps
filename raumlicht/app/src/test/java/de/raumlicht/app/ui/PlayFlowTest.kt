@@ -124,7 +124,7 @@ class PlayFlowTest {
         // seit 2.18.32 gibt es nur noch Aufgaben zur Geometrie im Raum – die beiden anderen Balken des (pausierten) Android-Widgets bleiben leer
         val all = Levels.all.associate { it.id to 3 }; assertEquals(listOf(100, 0, 0), LearnWidget.percents(all))
         val geo = Levels.chapters.filter { it.area == Area.GEOMETRIE }.flatMap { it.levels }
-        assertEquals(listOf(50, 0, 0), LearnWidget.percents(geo.take(geo.size / 2).associate { it.id to 3 }).let { listOf(it[0], it[1], it[2]) })
+        assertEquals(listOf(geo.size / 2 * 100 / geo.size, 0, 0), LearnWidget.percents(geo.take(geo.size / 2).associate { it.id to 3 }).let { listOf(it[0], it[1], it[2]) })
         val ctx = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
         val v = LearnWidget.views(ctx, listOf(42, 10, 0)).apply(ctx, android.widget.FrameLayout(ctx))
         assertEquals("42 %", v.findViewById<android.widget.TextView>(de.raumlicht.app.R.id.learn_value_0).text.toString())

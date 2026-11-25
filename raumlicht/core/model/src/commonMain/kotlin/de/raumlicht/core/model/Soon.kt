@@ -7,7 +7,6 @@ package de.raumlicht.core.model
 object Soon {
     class Topic(val emoji: String, val title: String, val sub: String)
     val topics = listOf(
-        Topic("🧩", "Lineare Gleichungssysteme", "Gauß-Verfahren: drei Gleichungen, drei Unbekannte"),
         Topic("💡", "Schattenwurf", "Licht, Körper, Schatten – auf Boden und Wand"),
         Topic("🧊", "Körper im Raum", "Pyramide, Prisma, Zelt: Kanten, Flächen, Volumen"),
         Topic("🪟", "Lage von Gerade und Ebene", "schneidet, liegt drin oder läuft parallel?"),

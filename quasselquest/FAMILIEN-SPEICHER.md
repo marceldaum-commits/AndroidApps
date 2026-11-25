@@ -67,3 +67,7 @@ Bei 404 auf anderen Geräten: „Diese Familie gibt es nicht mehr. Lernstand ble
   Sicherheitshinweis NICHT im Pflichttext, sondern dauerhaft auf der Familien-Seite und bei „Link teilen“, QR-Code und Notfall-Blatt:
   „Wer den Familien-Link oder den QR-Code hat, kann die Lernstände eurer Familie öffnen, ändern und löschen. Teilt ihn nur mit Personen, denen ihr vertraut, und bewahrt das Notfall-Blatt sicher auf.“
   Meldung mit „Rechtsbezug: ja (V8)“.
+
+- **familie.js @ af01c5c** (Mathe-Trainer, Branch arbeit; sha256 `87afb56a9648797cd39e9c6d4a9efb007270d14b6c2202b20935be8e0a0ad945`, 24.11.2026) ersetzt e9993ec: Präfix HL, App-Nummer ohne Obergrenze, CODE_NR mit 1–3-stelliger App-Nummer.
+  Selbst geholt und den Hash geprüft, unverändert in `webapp/js/familie.js` (Kopfkommentar). **Offen:** `codeNummer()` lehnt weiter Byte 3 > 4 ab, also die Quasselquest-Sprach-Bytes 5 (Spanisch) und 9 (alle Sprachen) – die Sperrliste kann diese Codes damit nicht prüfen.
+- **Recht V40/V42 (24.11.):** Index nur „Profil N“ + Symbol, Name nicht im Stand, Wörterlisten verschlüsselt mitgesichert (Kindertext + Elterntext ergänzt), Hinweis am Eingabefeld „Bitte keine Namen oder Adressen als Wörter eintragen.“ FAMILIE_AKTIV erst mit Tor-Hinweis, DSE 10m live und Live-Server.

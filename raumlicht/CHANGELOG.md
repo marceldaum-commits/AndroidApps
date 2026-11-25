@@ -2,6 +2,19 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.42 – KI-Kennzeichnung für jede Antwort einzeln und für Vorlese-Programme (24.11.2026)
+- Jede KI-Antwort des KI-Tutors trägt jetzt ihre eigene Kennzeichnung „KI-erzeugt“, die auch Vorlese-Programme für Blinde und Sehbehinderte ansagen. Am Aussehen ändert sich nichts; es werden keine Daten gesendet oder gespeichert.
+
+## 2.18.41 – KI-Antworten sind auch maschinenlesbar gekennzeichnet (24.11.2026)
+- **KI-Tutor:** Unter jeder Antwort stand schon „Antwort einer KI – sie kann Fehler enthalten.“. Jetzt ist jede Antwort zusätzlich für Vorlese-Programme und Auswertungen als „KI-erzeugt“ gekennzeichnet (Pflicht nach der KI-Verordnung, Art. 50). Für Kinder und Eltern ändert sich am Aussehen nichts; es werden keine zusätzlichen Daten gesendet oder gespeichert.
+- Wie das genau gemacht ist und warum es kein Text-Wasserzeichen gibt, steht in `store/ki-kennzeichnung.md`.
+
+## 2.18.40 – Gleichungssysteme als drei Scheiben & vier neue Abi-Aufgaben (24.11.2026)
+- **Neues Kapitel 17 „Gleichungssysteme & Gauß“:** Jede Gleichung ist eine Scheibe im Raum, die Lösung der Punkt, in dem sich alle drei treffen. 7 Aufgaben vom einfachen „Treppen“-System bis zum vollen Gauß-Verfahren – mit Rechenschritt-Aufgabe, „Unendlich viele Treffer“ (die Scheiben treffen sich in einer Geraden), „Gibt es einen Treffer?“ (parallele Scheiben = keine Lösung) und einem Abi-Check. Dazu eine neue Theorie-Karte mit Formelkasten. Die ersten 2 Aufgaben sind frei, der Rest gehört zu Raumlicht Pro (wie bei den anderen Kapiteln).
+- **Vier neue Abi-Prüfungsaufgaben** mit je vier Teilen und 12 Punkten: **Dachfläche** (Ebene aus drei Punkten, Abstand, Regentropfen, Spiegelbild), **Baukran** (Schnittpunkt, Winkel, Abstand windschiefer Geraden, Seilmitte), **Heißluftballon** (Kugel: Mittelpunkt, Radius, Berührebene, Abstand zur Hülle) und **Wasserrutsche** (Landepunkt, Neigung, paralleler Handlauf, Punkt in 1 m Höhe). Damit gibt es jetzt 8 Prüfungsaufgaben; die erste ist frei.
+- Jede neue Aufgabe und jedes Ergebnis wurde zusätzlich unabhängig nachgerechnet (automatischer Test).
+- Die „Kommt bald“-Kachel „Lineare Gleichungssysteme“ ist damit erfüllt und verschwindet.
+
 ## 2.18.39 – Neue Startanimation, bessere PC-Ansicht, Verbindung zu den Eltern lösen mit Altersfrage (24.11.2026)
 - **Neue Startanimation** (für alle unsere Lern-Apps gleich): Beim Start erscheint ein schwarzer Bildschirm mit einem weißen Logo, das ruhig „atmet“. Ist Raumlicht bereit, zieht sich das Logo kurz zusammen, wächst groß heraus und der Bildschirm blendet aus – höchstens 4 Sekunden. Wer weniger Bewegung eingestellt hat, sieht nur ein kurzes Ausblenden. Hängt der Start oder gibt es eine Störung, bleibt die bekannte Anzeige mit Fortschritt und „Neu laden“ sichtbar.
 - **PC-Ansicht:** Das Begrüßungsfenster einer Aufgabe ist jetzt eine schmale Karte rechts, die Bühne links bleibt frei. Galton-Brett, Achterbahn-Baumeister und Ringflug zeigen am PC die Bühne links und die Bedienung rechts, statt alles in die Breite zu ziehen. Auf großen Fenstern (ab etwa 1500 Pixeln Breite) ist die ganze Oberfläche etwas größer.

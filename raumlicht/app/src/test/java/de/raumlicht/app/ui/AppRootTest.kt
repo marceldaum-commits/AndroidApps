@@ -48,11 +48,13 @@ class AppRootTest {
     private var familieLink: String? = null
     private fun fakeEltern() = de.raumlicht.app.ui.settings.ElternPlatform("https://server.test/b/", "https://seite.test/#weg/", { "A".repeat(22) + "." + "B".repeat(22) + "." + "C".repeat(43) },
         { url, write, _, json, done -> uploads += Triple(url, write, json); done(204) }, { url, _, done -> deleted += url; done(204) })
+    /** Antworten, die die App der Plattform zum Kennzeichnen als „KI-erzeugt“ gemeldet hat */
+    private val marked = ArrayList<String>()
     private fun start(pro: Boolean = false, ki: (suspend (String) -> Pair<Int, String>)? = null, kiOn: Boolean = true) {
         prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
             AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry(); de.raumlicht.app.ui.settings.KiEntry(); de.raumlicht.app.ui.settings.ElternEntry(); de.raumlicht.app.ui.settings.FamilieEntry() } },
-                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", eltern = eltern, countSend = { if (Regex("\"ev\":\"(level_|theorie)").containsMatchIn(it)) played += it else counted += it }, examUrl = crash, onApps = { appsOpened++ }, familie = familie, familieLink = familieLink)
+                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiMark = { marked += it }, kiEnabled = kiOn, version = "test", eltern = eltern, countSend = { if (Regex("\"ev\":\"(level_|theorie)").containsMatchIn(it)) played += it else counted += it }, examUrl = crash, onApps = { appsOpened++ }, familie = familie, familieLink = familieLink)
         } } } }
         rule.mainClock.advanceTimeBy(600)
     }
@@ -136,7 +138,7 @@ class AppRootTest {
         rule.onNodeWithTag("ki").assertDoesNotExist()                                                                          // vor dem ersten Versuch kein KI-Knopf
         rule.onNodeWithText("▶ Los").performClick(); rule.mainClock.advanceTimeBy(5000)
         rule.onNodeWithTag("ki").assertTextContains("Erklär’s mir anders", substring = true).performClick(); settle()
-        rule.onNodeWithTag("ki-antwort").assertTextContains("Vektor als Weg", substring = true); rule.onNodeWithTag("ki-kennzeichnung").assertTextEquals("Antwort einer KI – sie kann Fehler enthalten."); rule.onNodeWithTag("ki-rest").assertTextContains("Noch 2 Proben frei", substring = true)
+        rule.onNodeWithTag("ki-antwort").assertTextContains("Vektor als Weg", substring = true); rule.onNodeWithTag("ki-kennzeichnung").assertTextEquals("Antwort einer KI – sie kann Fehler enthalten."); assertEquals(1, marked.size); assertTrue(marked[0], marked[0].contains("Vektor als Weg")); rule.onNodeWithTag("ki-rest").assertTextContains("Noch 2 Proben frei", substring = true)
         assertTrue(asked[0], asked[0].contains("\"art\":\"erklaerung\"") && asked[0].contains("\"id\":\"1-2\"") && asked[0].contains("\"geraet\":\"${prefs.kiDevice()}\"") && asked[0].contains("\"code\":\"\""))
         // Rückfrage
         rule.onNodeWithTag("ki-frage").performTextInput("Was heißt die erste Zahl?"); rule.onNodeWithTag("ki-senden").performClick(); settle()

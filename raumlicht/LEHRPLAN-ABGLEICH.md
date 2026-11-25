@@ -23,7 +23,7 @@ Die ersten Zeilen sind in fast allen Ländern Pflicht, meist schon im Grundnivea
 
 | Nr. | Thema | Warum | Stand |
 |---|---|---|---|
-| 1 | Lineare Gleichungssysteme, Gauß-Verfahren | BW, NW, NI, HE, KMK Pflicht; Werkzeug für Steckbrief- und Schnittaufgaben | ⏳ kommt bald |
+| 1 | Lineare Gleichungssysteme, Gauß-Verfahren | BW, NW, NI, HE, KMK Pflicht; Werkzeug für Steckbrief- und Schnittaufgaben | ✅ Kapitel 17 (intern 27; seit 2.18.40: drei Ebenen im Raum, Gauß, 0=0 / 0=c) |
 | 2 | Stochastische Unabhängigkeit | BY, NW, NI, HE, KMK im Grundniveau; passt an die Vierfeldertafel | ⏳ kommt bald |
 | 3 | Zufallsgrößen allgemein: Verteilung, Erwartungswert, Varianz | überall Grundlage vor der Binomialverteilung | ⏳ kommt bald |
 | 4 | Normalverteilung | BY und BW (auch Basisfach) Pflicht; NW, NI, HE erhöhtes Niveau; KMK eA | ⏳ kommt bald |
@@ -52,7 +52,7 @@ Umgekehrt geht die App an einigen Stellen über die Pläne hinaus: Die Kugel ist
 
 | Thema | Wo im Lehrplan | In der App |
 |---|---|---|
-| Lineare Gleichungssysteme, Gauß-Verfahren | BW BF+LF; NW EF/GK/LK; NI gA und eA; HE Q2.3 GK/LK; KMK gA/eA; BY nicht ausdrücklich | nein → Nr. 1 |
+| Lineare Gleichungssysteme, Gauß-Verfahren | BW BF+LF; NW EF/GK/LK; NI gA und eA; HE Q2.3 GK/LK; KMK gA/eA; BY nicht ausdrücklich | ja (Kapitel 17) |
 | Lineare (Un-)Abhängigkeit, Linearkombination | BY 13 | teilweise (Kollinearität) → Nr. 16 |
 | Ebene in Parameterform aufstellen | BY 13; BW BF/LF; NW GK/LK; NI gA/eA; HE GK/LK; KMK | teilweise (Umwandlung in Koordinatenform: 18-1, 18-6) |
 | Lage Gerade–Ebene, Ebene–Ebene systematisch | BY 13; BW LF; NW LK; NI eA; HE GK/LK; KMK eA | teilweise (Durchstoßpunkt, parallel 19-4, Schnittgerade, Abstände) → Nr. 16 |

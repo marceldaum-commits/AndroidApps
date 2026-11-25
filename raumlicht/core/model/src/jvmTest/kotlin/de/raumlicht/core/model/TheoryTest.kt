@@ -19,7 +19,7 @@ class TheoryTest {
     private fun texts(c: TheoryCard) = listOf(c.title, c.idea, c.trap) + c.steps + c.example
 
     @Test fun festeAufgabenUeberDieId() {
-        assertEquals(92, tour.size); assertEquals(16, exams.size); assertEquals(9, guides.size)
+        assertEquals(99, tour.size); assertEquals(32, exams.size); assertEquals(9, guides.size)
         (tour + exams + guides).forEach { l ->
             assertEquals("${l.id} „${l.title}“ steht nicht in der ID-Tabelle", 1, Theory.stage(l))
             assertTrue(l.id, Theory.forLevel(l) in Theory.cards)

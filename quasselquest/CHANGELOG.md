@@ -1,5 +1,21 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.5.4 – Datenschutz-Seite aktualisiert (24.11.2026)
+- Die Datenschutz-Seite in der App nennt jetzt die tatsächlichen KI-Stimmen (Kokoro-82M, gekennzeichnet) und erwähnt die entfernte Stimme „Nova“ nicht mehr. Die App ruft keine Stimmen von fremden Servern ab.
+
+## 0.5.3 – Texte von Recht eingebaut (24.11.2026)
+- Die Elterntexte zur Aussprache-Auswertung und die Kinder-Datenschutzseite („Deine Daten“) haben jetzt den endgültigen Wortlaut. Sichtbar werden sie erst, wenn die Auswertung bzw. der Familien-Speicher eingeschaltet wird; bis dahin ändert sich für euch nichts.
+- „Im Gerät“ steht nicht zur Auswahl, solange es das noch nicht gibt. „Aus“ ist vorgewählt, „Über unseren Server“ nie.
+
+## 0.5.2 – Familien-Speicher und Pro-Codes vorbereitet (24.11.2026)
+- Neu im Elternbereich (noch ausgeschaltet, bis der Server und die Datenschutz-Texte freigegeben sind): **Familie anlegen oder beitreten**. Der Lernstand eures Kindes wird dann verschlüsselt gesichert und ist auf mehreren Geräten gleich – ohne Konto fürs Kind. Vorher steht der Einwilligungstext; ohne „Einverstanden“ wird nichts hochgeladen.
+- Läuft ein Gerät mit altem Stand, werden die Stände zusammengeführt statt überschrieben (höherer Kasten, jeweils der beste Wert, eigene Listen vereint).
+- Schneller installiert: Die App ist beim ersten Besuch viel schneller offline-bereit; die englischen Sätze werden danach im Hintergrund geladen. Zoomen ist wieder erlaubt.
+- „Mein Schulbuch“: Hinweis „Bitte keine Namen oder Adressen als Wörter eintragen.“
+- Datensparsam: In der Familie steht für jedes Kind nur „Profil 1“ mit einem Symbol – kein Spitzname, keine Klasse. Der Name bleibt auf dem Gerät und wird auch im verschlüsselten Stand nicht mitgesichert.
+- Die Familie lässt sich mit Familien-Nummer wieder löschen; der Lernstand auf dem Gerät bleibt.
+- Vorbereitet, aber ausgeschaltet: Code-Prüfung für „Quasselquest Pro“ (ohne Internet, mit Schutz gegen gefälschte und gesperrte Codes) und die Sperre je Sprache. Im Kinderbereich steht an gesperrten Dingen nur „Das gehört zu Quasselquest Pro.“ – ohne Preis und ohne Kaufknopf. Pro selbst kommt als Version 1.5.0.
+
 ## 0.5.1 – Neue KI-Stimmen, Offline-Download je Sprache (24.11.2026)
 **Neue Stimmen**
 - Englisch, Französisch und Spanisch sprechen jetzt mit neuen, natürlicheren KI-Stimmen (Kokoro). Alle Sätze sind neu vertont, jeweils normal und langsam 🐢. Deutsch und Latein haben weiter keine Stimme.

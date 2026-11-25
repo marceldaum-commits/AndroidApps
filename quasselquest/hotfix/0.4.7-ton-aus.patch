@@ -1,0 +1,109 @@
+diff --git a/quasselquest/webapp/app.js b/quasselquest/webapp/app.js
+index e10c93f9..a9aa5187 100644
+--- a/quasselquest/webapp/app.js
++++ b/quasselquest/webapp/app.js
+@@ -805,9 +805,7 @@
+         <div class="set"><span>🎒 Klasse</span><span class="row" style="justify-content:flex-end">${KLASSEN.map((k) => `<button class="btn small ${state.klasse === k ? 'blue' : 'white'}" data-k="${k}">${k}</button>`).join('')}</span></div>
+         <div class="set"><span>🙂 Name</span><span class="row"><b>${esc(state.name || '–')}</b><button class="btn small white" data-name>Ändern</button></span></div>
+       </div>
+-      <div class="card" style="margin-top:14px"><h3 style="margin-bottom:4px">🎙️ Welche Stimme?</h3>
+-        <label class="radio"><input type="radio" name="stimme" value="frei" ${A.voiceMode() === 'frei' ? 'checked' : ''}><span><b>Freie Stimmen (Standard)</b><br><span class="muted">Vorab aufgenommen, funktionieren auch ohne Internet. Computer-Stimmen (Piper).</span></span></label>
+-        <label class="radio" style="opacity:${window.NOVA_FREIGEGEBEN ? 1 : .45}"><input type="radio" name="stimme" value="nova" ${window.NOVA_FREIGEGEBEN ? '' : 'disabled'} ${A.voiceMode() === 'nova' ? 'checked' : ''}><span><b>Nova – KI-Stimme ${window.NOVA_FREIGEGEBEN ? '' : '(kommt bald)'}</b><br><span class="muted">Besonders natürliche Stimme, mit KI erzeugt (OpenAI) und von unserem Stimm-Server geladen.</span></span></label>
++      <div class="card" style="margin-top:14px"><h3 style="margin-bottom:4px">🎙️ Stimme</h3><p class="muted">Die Aussprache-Dateien werden gerade erneuert. Bis dahin liest die Stimme deines Geräts vor.</p>
+         <label class="radio"><input type="radio" name="stimme" value="geraet" ${A.voiceMode() === 'geraet' ? 'checked' : ''}><span><b>Stimme des Geräts</b><br><span class="muted">${A.canSpeak() ? 'Die englische Stimme deines Geräts.' : 'Auf diesem Gerät gibt es keine englische Stimme.'}</span></span></label>
+       </div>
+       <div class="card" style="margin-top:14px">
+@@ -815,7 +813,7 @@
+         <div class="set"><span>🔒 Deine Daten – kurz erklärt</span><button class="btn small white" data-kids>Ansehen</button></div>
+         <div class="set"><span>📄 Datenschutz für Erwachsene</span><a class="btn small white" href="datenschutz.html">Lesen</a></div>
+       </div>
+-      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}<br>Freie Stimmen (Piper): cori (CC BY 4.0), thorsten, siwis (CC BY 4.0), davefx – Angaben unter <a href="lizenzen.txt">Lizenzen</a></div>
++      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}</div>
+     </div>`);
+     el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); home(); };
+     el.querySelectorAll('[data-sw]').forEach((b) => b.onclick = () => { s[b.dataset.sw] = !s[b.dataset.sw]; save(); A.sfx('tap'); settings(); });
+diff --git a/quasselquest/webapp/audio.js b/quasselquest/webapp/audio.js
+index c9450f4d..a5f48414 100644
+--- a/quasselquest/webapp/audio.js
++++ b/quasselquest/webapp/audio.js
+@@ -95,12 +95,12 @@
+     if (!index) return null;
+     const e = index[(who || 'ruby') + '|' + norm(text)] || index['ruby|' + norm(text)];
+     // Unsichere Aufnahmen (Hörprüfung nicht bestanden) nicht abspielen – lieber die Gerätestimme als eine falsche Aussprache
+-    return e && !e.unsicher ? 'audio/piper/' + (slow ? e.s : e.n) : null;
++    return null;   // HOTFIX 0.4.7 (01.12.): vorab vertonte Piper-Dateien abgeschaltet (Recht V36a); Gerätestimme bleibt
+   };
+   A.hasRecording = (text, who) => !!fileFor(text, who, false);
+   A.voiceMode = () => {
+     const m = S().stimme || 'frei';
+-    return m === 'nova' && !window.NOVA_FREIGEGEBEN ? 'frei' : m;   // Nova erst nach Freigabe
++    return 'geraet';   // HOTFIX 0.4.7: nur Gerätestimme
+   };
+   const buffers = new Map();
+   function decode(c, ab) {
+diff --git a/quasselquest/webapp/datenschutz.html b/quasselquest/webapp/datenschutz.html
+index 4c23079d..2c77aded 100644
+--- a/quasselquest/webapp/datenschutz.html
++++ b/quasselquest/webapp/datenschutz.html
+@@ -18,7 +18,7 @@
+ <p><b>Sprech-Mission:</b> Eine Spracherkennung kann prüfen, ob der gesprochene Satz verstanden wurde. <b>Standard ist „Nur auf dem Gerät“:</b> Die Erkennung läuft nur, wenn der Browser sie auf dem Gerät selbst kann (z. B. Chrome ab Version 139); sonst prüft die App nur, ob laut genug gesprochen wurde. Die Stimme eures Kindes verlässt das Gerät dann nicht.</p>
+ <p>Nur wenn ihr im Elternbereich ausdrücklich „Auch Online-Erkennung des Browsers erlauben“ wählt, kann der Browser die Aufnahme des gesprochenen Satzes an den Sprachdienst seines Herstellers senden (z. B. Google bei Chrome, Apple bei Safari). Wir selbst erhalten dabei nichts. Ihr könnt das jederzeit wieder ausschalten. Die App speichert keine Aufnahmen.</p>
+ <h2>Vorlesen</h2>
+-<p>Die Sätze und Wörter (Englisch, Deutsch, Französisch, Spanisch) sind vorab mit freien Computer-Stimmen (Piper) aufgenommen und werden mit der App auf dem Gerät gespeichert – auch ohne Internet. Fehlt ein Satz (zum Beispiel mit dem Namen eures Kindes), liest die Stimme eures Geräts (nur Stimmen, die auf dem Gerät selbst sprechen). Später kann die KI-Stimme „Nova“ dazukommen; sie wird in der App gekennzeichnet, die Dateien kommen dann von unserem Server stimmen.mathenachhilfe-online.com, ohne Angaben über euch.</p>
++<p>Zurzeit gibt es keine vorab aufgenommenen Stimmen in der App. Wörter und Sätze liest, falls euer Gerät das kann, die Stimme eures Geräts vor (nur Stimmen, die auf dem Gerät selbst sprechen). Dabei schickt die App keine Daten an uns. Es werden keine Stimmen von Servern oder Diensten Dritter abgerufen.</p>
+ <h2>Anonyme Nutzungszählung (abschaltbar)</h2>
+ <p>Damit wir sehen, ob die App gebraucht wird, meldet sie einzelne Ereignisse an unseren Server trainer.mathenachhilfe-online.com: dass die App oder der Elternbereich geöffnet wurde und ob dort ein Link (zum Beispiel zur Probestunde) angetippt wurde. Übertragen werden nur App-Name, Versionsnummer, Ereignis und gegebenenfalls Ort und Fach (zum Beispiel „englisch“) – keine Namen, keine Kennung, keine Gerätedaten, kein Lernstand, keine Cookies. Der Server zählt nur Tagessummen. Ausschalten: Einstellungen → Für Eltern → „Anonyme Nutzungszählung“.</p>
+ <h2>Hinweise auf unsere Nachhilfe</h2>
+diff --git a/quasselquest/webapp/sw.js b/quasselquest/webapp/sw.js
+index 8d390567..ecc36ae2 100644
+--- a/quasselquest/webapp/sw.js
++++ b/quasselquest/webapp/sw.js
+@@ -1,5 +1,5 @@
+ // Offline-Speicher der WebApp. Die Versionsnummer wechselt mit jeder Auslieferung (prüft tools/test-inhalt.mjs).
+-const VERSION = '0.4.6';
++const VERSION = '0.4.7';
+ const CACHE = 'quasselquest-' + VERSION;
+ const FILES = ['./', 'index.html', 'app.css', 'version.js', 'content.js', 'pakete.js', 'audio.js', 'app.js', 'datenschutz.html', 'datenblatt-schule.html',
+   'manifest.webmanifest', 'audio/index.json', 'pakete/index.json', 'lernpfad/en.json', 'lernpfad/fr.json', 'lernpfad/es.json', 'lizenzen.txt', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
+@@ -12,7 +12,7 @@ self.addEventListener('install', (e) => {
+     const mp3 = new Set();
+     // Grundausstattung: nur Englisch (Hafen-Welt) sofort offline – andere Sprachen landen beim ersten Abspielen im Speicher
+     // (Marcel 19.11.: Download-Knopf je Sprache folgt). So bleibt der erste Besuch klein.
+-    for (const e of Object.values(idx.saetze || {})) if (String(e.stimme || '').startsWith('en_')) { mp3.add('audio/piper/' + e.n); mp3.add('audio/piper/' + e.s); }
++    for (const e of Object.values(idx.saetze || {})) if (false) { mp3.add('audio/piper/' + e.n); mp3.add('audio/piper/' + e.s); }
+     const pk = await (await c.match('pakete/index.json')).json();
+     await c.addAll((pk.pakete || []).map((p) => 'pakete/' + p.id + '.json'));
+     await c.addAll([...mp3]);
+@@ -32,7 +32,7 @@ self.addEventListener('fetch', (e) => {
+   if (req.url.endsWith('version.json')) { e.respondWith(fetch(req, { cache: 'no-store' }).catch(() => caches.open(CACHE).then((c) => c.match(req)))); return; }
+   e.respondWith(caches.open(CACHE).then((c) => c.match(req, { ignoreSearch: req.mode === 'navigate' }).then((hit) => hit || fetch(req).then((res) => {
+     // Vertonte Sätze, Pakete und Lernpfade beim ersten Laden merken – danach offline verfügbar
+-    if (res.ok && /\/(audio\/piper|pakete|lernpfad)\//.test(new URL(req.url).pathname)) c.put(req, res.clone()).catch(() => {});
++    if (res.ok && /\/(pakete|lernpfad)\//.test(new URL(req.url).pathname)) c.put(req, res.clone()).catch(() => {});
+     return res;
+   }).catch(() => (req.mode === 'navigate' ? c.match('index.html') : Response.error())))));
+ });
+diff --git a/quasselquest/webapp/version.js b/quasselquest/webapp/version.js
+index bbfc0d15..cb782ff9 100644
+--- a/quasselquest/webapp/version.js
++++ b/quasselquest/webapp/version.js
+@@ -1,6 +1,6 @@
+ // Eine Quelle für Version und Datum (auch version.json und sw.js müssen passen – prüft tools/test-inhalt.mjs).
+-window.APP_VERSION = '0.4.6';
+-window.APP_VERSION_DATE = '19.11.2026';
++window.APP_VERSION = '0.4.7';
++window.APP_VERSION_DATE = '01.12.2026';
+ // Kennung für Links und Zählung (Name entschieden von Marcel am 19.11.2026).
+ window.APP_ID = 'quasselquest';
+ window.APP_NAME = 'Quasselquest';
+diff --git a/quasselquest/webapp/version.json b/quasselquest/webapp/version.json
+index 0c9c1414..d24077e5 100644
+--- a/quasselquest/webapp/version.json
++++ b/quasselquest/webapp/version.json
+@@ -1,4 +1,4 @@
+ {
+-  "version": "0.4.6",
+-  "datum": "19.11.2026"
++  "version": "0.4.7",
++  "datum": "01.12.2026"
+ }

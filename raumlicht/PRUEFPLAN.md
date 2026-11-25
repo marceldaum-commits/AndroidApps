@@ -8,7 +8,7 @@ Angelegt am 18.11.2026 (Auftrag: „jede Woche neuer Inhalt, einmal im Monat geg
 - **Jeden Monat (ab dem 24.):** ein Block gründlich, dazu der neue Inhalt des Monats und die kurze Rundum-Prüfung.
 - Beides läuft als geplante Aufgabe in dieser Sitzung (dienstags und freitags 8:47 Uhr und am 24. um 9:41 Uhr).
 
-**Seit 2.18.32 (19.11.2026):** Raumlicht hat nur noch Aufgaben zur Geometrie im Raum (16 Kapitel, 92 Aufgaben; intern Kapitel 1–11, 18–21, 26). Die Rechenaufgaben zu Analysis und Stochastik sind herausgenommen; Block 3 und 4 prüfen stattdessen die Erlebnis-Bereiche.
+**Seit 2.18.32 (19.11.2026):** Raumlicht hat nur noch Aufgaben zur Geometrie im Raum (seit 2.18.40: 17 Kapitel, 99 Aufgaben; intern Kapitel 1–11, 18–21, 26, 27). Die Rechenaufgaben zu Analysis und Stochastik sind herausgenommen; Block 3 und 4 prüfen stattdessen die Erlebnis-Bereiche.
 
 ## Die vier Blöcke (rollierend)
 
@@ -45,11 +45,13 @@ So ist jeder Teil dreimal im Jahr gründlich dran.
 |---|---|---|
 | November 2026 | Eltern-Handy koppeln (Bericht, QR-Code), „Kommt bald“-Kacheln, Lern-Protokoll | 2.18.26 |
 | November 2026 | Umbau aufs Profil „Geometrie im Raum“: 52 Rechenaufgaben zu Analysis und Stochastik heraus, Bereich „Analysis & Zufall erleben“, Rotationskörper-Labor (neu), Kapitel lückenlos 1–16 | 2.18.32 |
+| November 2026 | Kapitel 17 (intern 27) „Gleichungssysteme & Gauß“ (7 Aufgaben, drei Ebenen im Raum, Theorie-Karte) und 4 neue Abi-Prüfungen (Dachfläche, Kran, Heißluftballon, Wasserrutsche; zusammen 8) | 2.18.40 |
 | November 2026 | Kapitel 26 „HNF, Abstände & Winkel“ (8 Aufgaben), 5 neue Theorie-Karten, Formel-Kasten in allen Karten | 2.18.25 |
 
 ## Protokoll
 
 | Datum | Block | Befunde | Behoben in |
 |---|---|---|---|
+| 24.11.2026 | Block 1 (Kapitel 1–8, 44 Aufgaben) + Kapitel 17 (intern 27) und die 4 neuen Prüfungen + Rundum | Alle Lösungen werden angenommen, der Startwert nie; alle Lösungswerte liegen im Bereich der Regler; jeder Rechenweg hat mindestens 2 Schritte, jeder Tipp ist da; mehrfach angenommene Antworten (3-1, 3-5, 4-3, 5-3, 5-4, 5-5, abi-zelt-b, abi-dach-a) sind alle mathematisch gleichwertig (Vielfache); Bühne zeigt in der Stichprobe (2-3, 4-3, 6-2, 8-4, 17-1/3/6, Dach, Ballon), was der Text sagt; alle Außen-Links antworten (200); Vorversion→neu, Start beide Fassungen, Diagnose, Störung, Update, Installation, Zählung, still, KI-Tutor grün. **Offen (kein Fehler der App):** Der Datenschutz-Anker `#familien-speicher` gibt es auf der Live-Datenschutzseite noch nicht (der Abschnitt 9 liegt als Entwurf in `store/datenschutz-abschnitt.md`) – Voraussetzung für einen Live-Gang des Familien-Speichers; bis dahin ist der Link nur auf der Teststufe sichtbar. | – (keine Änderung nötig); 2.18.40/2.18.41 enthalten den neuen Inhalt |
 | 17.–18.11.2026 (vor dem Plan) | alle Aufgaben: Klarheit und gleichwertige Antworten | rund 60 Textklärungen; 18-1 und 5-4 korrigiert; Dauertest `MehrdeutigTest` | 2.18.4, 2.18.11 |
 | 18.11.2026 (vor dem Plan) | alle Karten: Formel in der Theorie | Formel stand meist nur als Schritt; jetzt eigener Kasten; zwei Zuordnungen verbessert | 2.18.25 |

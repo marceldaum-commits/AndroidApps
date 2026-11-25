@@ -1,22 +1,18 @@
 // Offline-Speicher der WebApp. Die Versionsnummer wechselt mit jeder Auslieferung (prüft tools/test-inhalt.mjs).
-const VERSION = '0.5.1';
+const VERSION = '0.5.4';
 const CACHE = 'quasselquest-' + VERSION;
 const OFFLINE = 'quasselquest-offline';   // vom Offline-Download je Sprache (offline.js) – bleibt bei Updates erhalten
 const FILES = ['./', 'index.html', 'app.css', 'version.js', 'content.js', 'pakete.js', 'audio.js', 'app.js', 'datenschutz.html', 'datenblatt-schule.html',
-  'manifest.webmanifest', 'audio/index.json', 'offline.js', 'auswertung.js', 'pakete/index.json', 'lernpfad/en.json', 'lernpfad/fr.json', 'lernpfad/es.json', 'lernpfad/la.json', 'lizenzen.txt', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
+  'manifest.webmanifest', 'audio/index.json', 'offline.js', 'auswertung.js', 'speicher.js', 'pro.js', 'familie-bruecke.js', 'js/familie.js', 'pakete/index.json', 'lernpfad/en.json', 'lernpfad/fr.json', 'lernpfad/es.json', 'lernpfad/la.json', 'lizenzen.txt', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {
   // Programmdateien und alle vorab vertonten Sätze (audio/index.json) offline speichern
   e.waitUntil(caches.open(CACHE).then(async (c) => {
     await c.addAll(FILES.map((f) => new Request(f, { cache: 'reload' })));
-    const idx = await (await c.match('audio/index.json')).json();
-    const mp3 = new Set();
-    // Grundausstattung: nur Englisch (Hafen-Welt) sofort offline. Andere Sprachen: Offline-Download im Elternbereich
-    // (offline.js) oder beim ersten Abspielen. So bleibt der erste Besuch klein.
-    for (const e of Object.values(idx.saetze || {})) if (e.sprache === 'en' && !e.unsicher) { mp3.add('audio/' + e.n); mp3.add('audio/' + e.s); }
+    // Nur das Nötige beim Installieren (schnell aktiv, Geräte-Test 24.11.: vorher 72 s). Die englischen Sätze lädt die App danach im Hintergrund
+    // (offline.js: Grundausstattung), andere Sprachen per Offline-Download im Elternbereich oder beim ersten Abspielen.
     const pk = await (await c.match('pakete/index.json')).json();
     await c.addAll((pk.pakete || []).map((p) => 'pakete/' + p.id + '.json'));
-    await c.addAll([...mp3]);
   }));
 });
 self.addEventListener('activate', (e) => {
