@@ -31,6 +31,7 @@ class Sprite {
 
 /** Zeichnet [draw] über ein gemerktes Bild (siehe [Sprite]); ist kein Bild möglich (zu groß), wird direkt gezeichnet. */
 fun DrawScope.drawSprite(sprite: Sprite, key: Any?, draw: DrawScope.() -> Unit) {
+    if (Experiment.aus("sprite")) { draw(); return }
     val bmp = sprite.get(this, size.width.toInt(), size.height.toInt(), key, draw)
     if (bmp != null) drawImage(bmp) else draw()
 }
