@@ -1,0 +1,883 @@
+{
+ "format": 1,
+ "sprache": "uk",
+ "titel": "Ukrainisch von Anfang an",
+ "figuren": {
+  "ruby": {
+   "name": "Ruby",
+   "emoji": "🦜",
+   "who": null
+  },
+  "oksana": {
+   "name": "Oksana",
+   "emoji": "👧",
+   "who": null
+  },
+  "taras": {
+   "name": "Taras",
+   "emoji": "👦",
+   "who": null
+  },
+  "kit": {
+   "name": "Kater",
+   "emoji": "🐱",
+   "who": null
+  },
+  "mama": {
+   "name": "Mama",
+   "emoji": "👩",
+   "who": null
+  },
+  "babusia": {
+   "name": "Oma",
+   "emoji": "👵",
+   "who": null
+  },
+  "didus": {
+   "name": "Opa",
+   "emoji": "👴",
+   "who": null
+  },
+  "sobaka": {
+   "name": "Hund",
+   "emoji": "🐶",
+   "who": null
+  }
+ },
+ "abschnitte": [
+  {
+   "id": "1",
+   "stufe": "Lernjahr 1",
+   "titel": "Erste Schritte",
+   "emoji": "🌻",
+   "ziel": "Ich kann mich vorstellen, grüßen, erste Wörter lesen und meine Familie zeigen.",
+   "einheiten": [
+    {
+     "id": "uk-1-1",
+     "titel": "Привіт!",
+     "emoji": "👋",
+     "ziel": "Ich kann Hallo und Tschüss sagen, danke und bitte.",
+     "woerter": [
+      [
+       "привіт",
+       "hallo (unter Freunden)",
+       "👋",
+       "Zu Erwachsenen sagst du lieber добрий день."
+      ],
+      [
+       "добрий день",
+       "guten Tag",
+       "☀️",
+       "Wörtlich: „guter Tag“."
+      ],
+      [
+       "до побачення",
+       "auf Wiedersehen",
+       "🚶"
+      ],
+      [
+       "на добраніч",
+       "gute Nacht",
+       "🌙"
+      ],
+      [
+       "дякую",
+       "danke",
+       "💐"
+      ],
+      [
+       "будь ласка",
+       "bitte",
+       "🙏"
+      ],
+      [
+       "так",
+       "ja",
+       "✅"
+      ],
+      [
+       "ні",
+       "nein",
+       "❌"
+      ]
+     ],
+     "saetze": [
+      [
+       "Привіт, я Рубі.",
+       "Hallo, ich bin Ruby.",
+       "🦜"
+      ],
+      [
+       "Як справи?",
+       "Wie geht’s?",
+       "🙂"
+      ],
+      [
+       "Добре, дякую.",
+       "Gut, danke.",
+       "😊"
+      ],
+      [
+       "До побачення!",
+       "Auf Wiedersehen!",
+       "👋"
+      ]
+     ],
+     "regel": {
+      "titel": "ти oder ви?",
+      "text": "Zu Kindern und Freunden sagst du ти (du), zu Erwachsenen ви (Sie). Darum grüßt du Freunde mit привіт und Erwachsene mit добрий день. Und wenn du jemanden ansprichst, ändert sich der Name am Ende: Оксана wird zu Оксано!",
+      "beispiele": [
+       [
+        "Привіт, Оксано!",
+        "Hallo, Oksana!"
+       ],
+       [
+        "Добрий день, Маріє Іванівно!",
+        "Guten Tag, Maria Iwaniwna! (Vor- und Vatersname: So sprichst du Lehrerinnen an.)"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Новий друг",
+      "zeilen": [
+       [
+        "oksana",
+        "Привіт! Я Оксана.",
+        "Hallo! Ich bin Oksana."
+       ],
+       [
+        "taras",
+        "Привіт, Оксано! Я Тарас.",
+        "Hallo, Oksana! Ich bin Taras."
+       ],
+       [
+        "oksana",
+        "Як справи, Тарасе?",
+        "Wie geht’s, Taras?"
+       ],
+       [
+        "taras",
+        "Добре, дякую.",
+        "Gut, danke."
+       ],
+       [
+        "oksana",
+        "До побачення!",
+        "Auf Wiedersehen!"
+       ],
+       [
+        "taras",
+        "До побачення, Оксано!",
+        "Auf Wiedersehen, Oksana!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie heißt das Mädchen?",
+        "a": "Oksana",
+        "choices": [
+         "Taras",
+         "Ruby"
+        ]
+       },
+       {
+        "q": "Wie geht es Taras?",
+        "a": "gut",
+        "choices": [
+         "schlecht",
+         "müde"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Скажи Тарасові «привіт».",
+       "de": "Sag Taras hallo.",
+       "ding": "👋",
+       "anzahl": 1,
+       "an": "taras"
+      },
+      {
+       "sag": "Скажи Оксані «дякую».",
+       "de": "Sag Oksana danke.",
+       "ding": "💐",
+       "anzahl": 1,
+       "an": "oksana"
+      },
+      {
+       "sag": "Скажи Оксані «до побачення».",
+       "de": "Sag Oksana auf Wiedersehen.",
+       "ding": "🚶",
+       "anzahl": 1,
+       "an": "oksana"
+      },
+      {
+       "sag": "Побажай Рубі «на добраніч».",
+       "de": "Wünsch Ruby gute Nacht.",
+       "ding": "🌙",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Скажи бабусі «добрий день».",
+       "de": "Sag der Oma guten Tag.",
+       "ding": "☀️",
+       "anzahl": 1,
+       "an": "babusia"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Як справа?",
+       "richtig": "Як справи?",
+       "wort": "справа",
+       "korrektur": "справи",
+       "choices": [
+        "справів",
+        "справу"
+       ],
+       "tipp": "„Wie geht’s?“ heißt Як справи? – in dieser Frage steht справи immer in der Mehrzahl."
+      },
+      {
+       "falsch": "До побачення, Оксана!",
+       "richtig": "До побачення, Оксано!",
+       "wort": "Оксана",
+       "korrektur": "Оксано",
+       "choices": [
+        "Оксану",
+        "Оксані"
+       ],
+       "tipp": "Wenn du jemanden ansprichst, ändert sich der Name: Оксана wird zu Оксано."
+      },
+      {
+       "falsch": "Добра день.",
+       "richtig": "Добрий день.",
+       "wort": "Добра",
+       "korrektur": "Добрий",
+       "choices": [
+        "Добре",
+        "Добрим"
+       ],
+       "tipp": "день ist männlich, darum добрий день."
+      },
+      {
+       "falsch": "Добре, дякуєш.",
+       "richtig": "Добре, дякую.",
+       "wort": "дякуєш",
+       "korrektur": "дякую",
+       "choices": [
+        "дякує",
+        "дякуй"
+       ],
+       "tipp": "дякую heißt wörtlich „ich danke“ – die Endung -ю gehört zu „ich“."
+      }
+     ]
+    },
+    {
+     "id": "uk-1-2",
+     "titel": "Як тебе звати?",
+     "emoji": "🙋",
+     "ziel": "Ich kann sagen, wie ich heiße, und fragen, wie du heißt.",
+     "woerter": [
+      [
+       "я",
+       "ich",
+       "🙋",
+       "Mitten im Satz schreibt man я klein."
+      ],
+      [
+       "ти",
+       "du",
+       "👉"
+      ],
+      [
+       "хто?",
+       "wer?",
+       "❓"
+      ],
+      [
+       "друг",
+       "Freund",
+       "🤝",
+       "Die Freundin heißt подруга."
+      ],
+      [
+       "подруга",
+       "Freundin",
+       "👭"
+      ],
+      [
+       "хлопчик",
+       "Junge",
+       "👦"
+      ],
+      [
+       "дівчинка",
+       "Mädchen",
+       "👧"
+      ],
+      [
+       "це",
+       "das ist",
+       "👈"
+      ]
+     ],
+     "saetze": [
+      [
+       "Мене звати Оксана.",
+       "Ich heiße Oksana.",
+       "👧"
+      ],
+      [
+       "Як тебе звати?",
+       "Wie heißt du?",
+       "❓"
+      ],
+      [
+       "Я Тарас.",
+       "Ich bin Taras.",
+       "👦"
+      ],
+      [
+       "Це моя подруга Рубі.",
+       "Das ist meine Freundin Ruby.",
+       "🦜"
+      ]
+     ],
+     "regel": {
+      "titel": "Мене звати … – ich heiße …",
+      "text": "Auf Ukrainisch sagst du nicht „ich heiße“, sondern wörtlich „mich nennt man“: Мене звати Оксана. Und du fragst: Як тебе звати? Das Wort „bin“ lässt man im Ukrainischen meistens weg: Я Тарас = Ich (bin) Taras.",
+      "beispiele": [
+       [
+        "Мене звати Тарас.",
+        "Ich heiße Taras."
+       ],
+       [
+        "Це Оксана.",
+        "Das ist Oksana."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Знайомство",
+      "zeilen": [
+       [
+        "taras",
+        "Привіт! Як тебе звати?",
+        "Hallo! Wie heißt du?"
+       ],
+       [
+        "oksana",
+        "Мене звати Оксана. А тебе?",
+        "Ich heiße Oksana. Und du?"
+       ],
+       [
+        "taras",
+        "Мене звати Тарас. Це моя подруга Рубі.",
+        "Ich heiße Taras. Das ist meine Freundin Ruby."
+       ],
+       [
+        "ruby",
+        "Привіт! Я Рубі.",
+        "Hallo! Ich bin Ruby."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie heißt der Junge?",
+        "a": "Taras",
+        "choices": [
+         "Oksana",
+         "Ruby"
+        ]
+       },
+       {
+        "q": "Wen stellt Taras vor?",
+        "a": "Ruby",
+        "choices": [
+         "Oksana",
+         "die Oma"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Дай Тарасу м'яч.",
+       "de": "Gib Taras einen Ball.",
+       "ding": "⚽",
+       "anzahl": 1,
+       "an": "taras"
+      },
+      {
+       "sag": "Дай Оксані квітку.",
+       "de": "Gib Oksana eine Blume.",
+       "ding": "🌸",
+       "anzahl": 1,
+       "an": "oksana"
+      },
+      {
+       "sag": "Дай Рубі насіння.",
+       "de": "Gib Ruby Sonnenblumenkerne.",
+       "ding": "🌻",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Дай Тарасу книжку.",
+       "de": "Gib Taras ein Buch.",
+       "ding": "📖",
+       "anzahl": 1,
+       "an": "taras"
+      },
+      {
+       "sag": "Дай Оксані яблуко.",
+       "de": "Gib Oksana einen Apfel.",
+       "ding": "🍎",
+       "anzahl": 1,
+       "an": "oksana"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Я звати Оксана.",
+       "richtig": "Мене звати Оксана.",
+       "wort": "Я",
+       "korrektur": "Мене",
+       "choices": [
+        "Мені",
+        "Мною"
+       ],
+       "tipp": "Ich heiße = Мене звати – wörtlich „mich nennt man“."
+      },
+      {
+       "falsch": "Як ти звати?",
+       "richtig": "Як тебе звати?",
+       "wort": "ти",
+       "korrektur": "тебе",
+       "choices": [
+        "тобі",
+        "тобою"
+       ],
+       "tipp": "Wie heißt du? = Як тебе звати?"
+      },
+      {
+       "falsch": "Це мій подруга Рубі.",
+       "richtig": "Це моя подруга Рубі.",
+       "wort": "мій",
+       "korrektur": "моя",
+       "choices": [
+        "моє",
+        "мої"
+       ],
+       "tipp": "подруга ist weiblich, darum моя (meine)."
+      }
+     ]
+    },
+    {
+     "id": "uk-1-3",
+     "titel": "Букви",
+     "emoji": "🔤",
+     "ziel": "Ich kann erste Wörter in kyrillischen Buchstaben lesen.",
+     "woerter": [
+      [
+       "мама",
+       "Mama",
+       "👩",
+       "м = m, а = a – du kannst es schon fast lesen!"
+      ],
+      [
+       "тато",
+       "Papa",
+       "👨",
+       "т = t, о = o"
+      ],
+      [
+       "кіт",
+       "Kater",
+       "🐱",
+       "к = k, і = i, т = t. In anderen Formen kommt das о zurück: коту = dem Kater."
+      ],
+      [
+       "сік",
+       "Saft",
+       "🧃",
+       "с = s, і = i, к = k"
+      ],
+      [
+       "банан",
+       "Banane",
+       "🍌",
+       "б = b – sieht aus wie eine 6!"
+      ],
+      [
+       "ніч",
+       "Nacht",
+       "🌙",
+       "ч klingt wie „tsch“."
+      ],
+      [
+       "дім",
+       "Haus",
+       "🏠",
+       "д = d"
+      ],
+      [
+       "вода",
+       "Wasser",
+       "💧",
+       "в = w, д = d"
+      ]
+     ],
+     "saetze": [
+      [
+       "Це мама.",
+       "Das ist Mama.",
+       "👩"
+      ],
+      [
+       "Це тато.",
+       "Das ist Papa.",
+       "👨"
+      ],
+      [
+       "Це кіт.",
+       "Das ist ein Kater.",
+       "🐱"
+      ],
+      [
+       "Мама п'є сік.",
+       "Mama trinkt Saft.",
+       "🧃"
+      ]
+     ],
+     "regel": {
+      "titel": "Das ukrainische Alphabet",
+      "text": "Das Alphabet hat 33 Buchstaben. Manche sehen aus wie lateinische, klingen aber anders: р = r (nicht p), н = n, в = w, у = u, с = s, х = ch. Dazu kommen: і = i, и = ein kurzes i wie in „bitte“ (zwischen i und e), ї = ji, є = je, ю = ju, я = ja. Und ь macht den Buchstaben davor weich.",
+      "beispiele": [
+       [
+        "рак",
+        "Krebs – der erste Buchstabe ist ein r, kein p!"
+       ],
+       [
+        "ніс",
+        "Nase – н ist ein n, с ist ein s."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Букви вдома",
+      "zeilen": [
+       [
+        "oksana",
+        "Це мама.",
+        "Das ist Mama."
+       ],
+       [
+        "taras",
+        "А це тато.",
+        "Und das ist Papa."
+       ],
+       [
+        "oksana",
+        "Це кіт.",
+        "Das ist ein Kater."
+       ],
+       [
+        "taras",
+        "Кіт п'є сік!",
+        "Der Kater trinkt Saft!"
+       ],
+       [
+        "ruby",
+        "Ха-ха! Кіт п'є сік!",
+        "Haha! Der Kater trinkt Saft!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wer trinkt Saft?",
+        "a": "der Kater",
+        "choices": [
+         "Mama",
+         "Papa"
+        ]
+       },
+       {
+        "q": "Wer sagt „А це тато“?",
+        "a": "Taras",
+        "choices": [
+         "Oksana",
+         "Ruby"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Дай коту сік.",
+       "de": "Gib dem Kater Saft.",
+       "ding": "🧃",
+       "anzahl": 1,
+       "an": "kit"
+      },
+      {
+       "sag": "Дай мамі квітку.",
+       "de": "Gib Mama eine Blume.",
+       "ding": "🌸",
+       "anzahl": 1,
+       "an": "mama"
+      },
+      {
+       "sag": "Дай Тарасу банан.",
+       "de": "Gib Taras eine Banane.",
+       "ding": "🍌",
+       "anzahl": 1,
+       "an": "taras"
+      },
+      {
+       "sag": "Дай Оксані яблуко.",
+       "de": "Gib Oksana einen Apfel.",
+       "ding": "🍎",
+       "anzahl": 1,
+       "an": "oksana"
+      },
+      {
+       "sag": "Дай коту воду.",
+       "de": "Gib dem Kater Wasser.",
+       "ding": "💧",
+       "anzahl": 1,
+       "an": "kit"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Це кот.",
+       "richtig": "Це кіт.",
+       "wort": "кот",
+       "korrektur": "кіт",
+       "choices": [
+        "кіть",
+        "кет"
+       ],
+       "tipp": "In кіт steht der Buchstabe і (wie i), nicht о."
+      },
+      {
+       "falsch": "Мама пє сік.",
+       "richtig": "Мама п'є сік.",
+       "wort": "пє",
+       "korrektur": "п'є",
+       "choices": [
+        "п'ю",
+        "п'єш"
+       ],
+       "tipp": "Sie trinkt = п'є (mit Apostroph)."
+      }
+     ]
+    },
+    {
+     "id": "uk-1-4",
+     "titel": "Моя родина",
+     "emoji": "👪",
+     "ziel": "Ich kann meine Familie vorstellen.",
+     "woerter": [
+      [
+       "родина",
+       "Familie",
+       "👪"
+      ],
+      [
+       "брат",
+       "Bruder",
+       "👦"
+      ],
+      [
+       "сестра",
+       "Schwester",
+       "👧"
+      ],
+      [
+       "бабуся",
+       "Oma",
+       "👵"
+      ],
+      [
+       "дідусь",
+       "Opa",
+       "👴"
+      ],
+      [
+       "собака",
+       "Hund",
+       "🐶",
+       "Achtung: собака ist männlich – мій собака! Eine Katze ist кішка, ein Kater кіт."
+      ],
+      [
+       "мій / моя / моє",
+       "mein / meine / mein",
+       "👈",
+       "мій für männliche, моя für weibliche, моє für sächliche Wörter."
+      ],
+      [
+       "тут",
+       "hier",
+       "📍"
+      ]
+     ],
+     "saetze": [
+      [
+       "Це моя родина.",
+       "Das ist meine Familie.",
+       "👪"
+      ],
+      [
+       "Це мій брат Андрій.",
+       "Das ist mein Bruder Andrij.",
+       "👦"
+      ],
+      [
+       "Це моя сестра Марійка.",
+       "Das ist meine Schwester Marijka.",
+       "👧"
+      ],
+      [
+       "Мій дідусь має собаку.",
+       "Mein Opa hat einen Hund.",
+       "🐶"
+      ]
+     ],
+     "regel": {
+      "titel": "мій oder моя?",
+      "text": "Für „mein“ brauchst du die passende Form: мій bei männlichen Wörtern (брат, дідусь), моя bei weiblichen (сестра, бабуся), моє bei sächlichen. Die Endung des Wortes verrät es meistens: Endet es auf -а, ist es meist weiblich.",
+      "beispiele": [
+       [
+        "мій брат",
+        "mein Bruder"
+       ],
+       [
+        "моя сестра",
+        "meine Schwester"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Сімейне фото",
+      "zeilen": [
+       [
+        "taras",
+        "Це моя родина. Це мама і тато.",
+        "Das ist meine Familie. Das sind Mama und Papa."
+       ],
+       [
+        "oksana",
+        "А це моя бабуся.",
+        "Und das ist meine Oma."
+       ],
+       [
+        "taras",
+        "Це мій дідусь.",
+        "Das ist mein Opa."
+       ],
+       [
+        "ruby",
+        "А я ваша подруга!",
+        "Und ich bin eure Freundin!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wer stellt seine Familie vor?",
+        "a": "Taras",
+        "choices": [
+         "Oksana",
+         "Ruby"
+        ]
+       },
+       {
+        "q": "Wen zeigt Taras zuletzt?",
+        "a": "den Opa",
+        "choices": [
+         "die Oma",
+         "den Hund"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Дай бабусі квітку.",
+       "de": "Gib der Oma eine Blume.",
+       "ding": "🌸",
+       "anzahl": 1,
+       "an": "babusia"
+      },
+      {
+       "sag": "Дай дідусеві книжку.",
+       "de": "Gib dem Opa ein Buch.",
+       "ding": "📖",
+       "anzahl": 1,
+       "an": "didus"
+      },
+      {
+       "sag": "Дай мамі яблуко.",
+       "de": "Gib Mama einen Apfel.",
+       "ding": "🍎",
+       "anzahl": 1,
+       "an": "mama"
+      },
+      {
+       "sag": "Дай Тарасу м'яч.",
+       "de": "Gib Taras einen Ball.",
+       "ding": "⚽",
+       "anzahl": 1,
+       "an": "taras"
+      },
+      {
+       "sag": "Дай собаці кістку.",
+       "de": "Gib dem Hund einen Knochen.",
+       "ding": "🦴",
+       "anzahl": 1,
+       "an": "sobaka"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Це моя брат.",
+       "richtig": "Це мій брат.",
+       "wort": "моя",
+       "korrektur": "мій",
+       "choices": [
+        "моє",
+        "мої"
+       ],
+       "tipp": "брат ist männlich, darum мій."
+      },
+      {
+       "falsch": "Це мій сестра.",
+       "richtig": "Це моя сестра.",
+       "wort": "мій",
+       "korrektur": "моя",
+       "choices": [
+        "моє",
+        "мої"
+       ],
+       "tipp": "сестра ist weiblich, darum моя."
+      },
+      {
+       "falsch": "Бабуся живу тут.",
+       "richtig": "Бабуся живе тут.",
+       "wort": "живу",
+       "korrektur": "живе",
+       "choices": [
+        "живуть",
+        "живеш"
+       ],
+       "tipp": "Sie wohnt = живе."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
