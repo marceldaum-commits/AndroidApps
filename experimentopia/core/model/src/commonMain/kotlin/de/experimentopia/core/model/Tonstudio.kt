@@ -58,4 +58,13 @@ object Tonstudio {
         put("format", 1); put("app", "experimentopia")
         putJsonArray("texte") { if (ENABLED) catalog().forEach { t -> addJsonObject { put("text", t); put("sprache", LANG) } } }
     }.toString()
+
+    /** Stücke, die zusätzlich langsam (Tempo 0,8) vertont werden: Blubb-Sätze und Merksätze */
+    fun catalogSlow(): List<String> = (ReadTexts.ui + Say.all() + Catalog.all.map { ReadTexts.fact(it) }).flatMap { parts(it) }.distinct()
+
+    /** Vollständige Textliste (Format 1) für die Vertonung, unabhängig vom Schalter [ENABLED] – nur zum Ausliefern an das Tonstudio */
+    fun listJson(texts: List<String> = catalog()): String = buildJsonObject {
+        put("format", 1); put("app", "experimentopia")
+        putJsonArray("texte") { texts.forEach { t -> addJsonObject { put("text", t); put("sprache", LANG) } } }
+    }.toString()
 }

@@ -52,3 +52,19 @@ class TonstudioTempoTest {
         assertEquals(0.8f, Tonstudio.speed(0.75f)); assertEquals(1.0f, Tonstudio.speed(1.15f)); assertEquals(1.0f, Tonstudio.speed(1.0f))
     }
 }
+
+/** Textliste für die Vertonung: mit EXPORT_TONSTUDIO=<Ordner> wird sie geschrieben; sonst nur Prüfung von Umfang und Inhalt */
+class TonstudioListeTest {
+    @org.junit.Test fun liste() {
+        val all = Tonstudio.catalog(); val slow = Tonstudio.catalogSlow()
+        org.junit.Assert.assertTrue(all.isNotEmpty() && all.size == all.distinct().size)
+        org.junit.Assert.assertTrue("langsam muss Teilmenge sein", all.containsAll(slow))
+        org.junit.Assert.assertTrue(all.all { it.length in 1..Tonstudio.MAX && it == Tonstudio.normalize(it) })
+        System.getenv("EXPORT_TONSTUDIO")?.let { dir ->
+            val d = java.io.File(dir); d.mkdirs()
+            java.io.File(d, "texte.json").writeText(Tonstudio.listJson(all))
+            java.io.File(d, "texte-langsam.json").writeText(Tonstudio.listJson(slow))
+            println("TONSTUDIO ${all.size} Stücke, ${all.sumOf { it.length }} Zeichen; langsam ${slow.size} Stücke, ${slow.sumOf { it.length }} Zeichen")
+        }
+    }
+}
