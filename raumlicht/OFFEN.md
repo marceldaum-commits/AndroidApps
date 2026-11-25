@@ -6,7 +6,7 @@ Regel (Marcel, 25.11.2026): Liste führen, der Reihe nach selbständig abarbeite
 
 | # | Was | Ziel/Frist | Nächster Schritt | Abhängigkeit | Status |
 |---|---|---|---|---|---|
-| 2 | DSE-Entwurf 10e KI-Tutor (gesendete Daten, Anthropic als Auftragsverarbeiter, Speicherdauer, Zähler mit Fristen, ohne OpenAI) | Do 26.11., Meldung an AppZentrale; Recht bis 04.12. | Abschnitt in `store/datenschutz-abschnitt.md` ergänzen | Fristen für Adresse/Tag, Geräte-Kennung, Pass-Nummer: Leitstand (Server) | offen |
+| 2 | Postfach-Zugriff (website_backup): add_repo wurde abgelehnt; braucht Marcels direkte Freigabe | sofort | warten, AppZentrale informiert (25.11.) | Marcel | wartet |
 | 3 | Server-Fristen/Freitext-Filter KI (Adresse/Tag ≤48 h gehasht, Zähler kurz befristen) | 04.12. | Anfrage ist gestellt (24.11.) | Leitstand/Server-Raum | wartet |
 | 4 | Live-Gang 2.18.42 (K4 Pflicht) | 01.12. | – | Geräte-Test Marcel, Leitstand | wartet |
 | 5 | Weitere Abi-Prüfungen (jetzt 8, Ziel 12–20), je Teil durchgerechnet und im Test nachgerechnet | Di 01.12. | 4–6 Themen entwerfen (Pyramide/Volumen, Lage Gerade–Ebene, Schnitt zweier Ebenen, Abstand windschief, Bewegung/Treffpunkt, Spiegelung) | – | offen |
@@ -23,6 +23,7 @@ Regel (Marcel, 25.11.2026): Liste führen, der Reihe nach selbständig abarbeite
 
 | Datum | Was |
 |---|---|
+| 25.11.2026 | DSE-Entwurf 10e KI-Tutor (store/datenschutz-abschnitt.md, Punkt 4); Fristen warten auf Leitstand |
 | 25.11.2026 | Tonstudio-Textliste Format 1 (nur Deutsch, Tempo normal): `vorlesen/textliste.json`, 963 Texte, 82 584 Zeichen; Dateinamen-Schema `<id>.mp3` noch vom Tonstudio zu bestätigen |
 | 24.11.2026 | 2.18.39: Startanimation, PC-Ansicht, Kopplung lösen mit Altersfrage, Zählpunkt „umzug“, Nova/OpenAI entfernt, DSE-Link |
 | 24.11.2026 | 2.18.40: Kapitel „Gleichungssysteme & Gauß“ (7 Aufgaben), 4 neue Abi-Prüfungen |

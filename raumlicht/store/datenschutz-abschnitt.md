@@ -31,7 +31,15 @@ Angaben zum Browser bzw. zur App) in seinen Protokollen. *[Speicherdauer und Rec
    `trainer.mathenachhilfe-online.com`. Der Server lässt die Antwort von einem KI-Dienst (Claude von Anthropic, USA) schreiben und gibt sie an die App zurück. Mitgesendet werden der Code des
    KI-Abi-Passes, falls vorhanden, und eine zufällige Geräte-Kennung; mit beiden zählt der Server nur, wie viele Fragen heute bzw. als Probe schon gestellt wurden. Die Geräte-Kennung und der Code
    gehen nicht an den KI-Dienst. Namen, Konten und Lernstände werden nicht übertragen; Fragen und Antworten speichert unser Server nicht. Bitte keine persönlichen Angaben in Rückfragen schreiben.
-   Die Antworten stammen von einer KI und können Fehler enthalten. *[Rechtsgrundlage, Auftragsverarbeitung/Drittland-Übermittlung an Anthropic, Speicherdauer der Zähler und beim KI-Dienst eintragen.]*
+   Die Antworten stammen von einer KI und können Fehler enthalten; jede Antwort ist als „von einer KI erzeugt“ gekennzeichnet. Der KI-Tutor bewertet nichts: Er vergibt keine Punkte und keine Noten und legt kein Profil an.
+   **Entwurf 10e (25.11.2026, zur Prüfung durch Recht – Fassung 0.1):**
+   *Zweck:* Erklären einer Aufgabe auf Wunsch. *Rechtsgrundlage (Vorschlag):* Art. 6 Abs. 1 lit. b DSGVO (die Funktion wird nur auf ausdrücklichen Tipp hin genutzt; Teil des erworbenen bzw. kostenlos angebotenen Dienstes).
+   *Empfänger:* Anthropic (USA) als Auftragsverarbeiter, über unseren Server; Übermittlung in ein Drittland auf Grundlage der Standardvertragsklauseln *[Vertrag und Aufbewahrung bei Anthropic von Recht zu bestätigen]*.
+   *Was gesendet wird:* Aufgabe, eingestellte Werte, Rückmeldung der App, eigene Frage, bisheriger Wortwechsel dieser Aufgabe (höchstens 6 Beiträge). Ein Filter, der Namen und E-Mail-Adressen aus Freitext entfernt, ist empfohlen *[Server, Leitstand]*.
+   *Was gespeichert wird:* In der App nichts (der Wortwechsel verschwindet, wenn man die Aufgabe verlässt). Auf unserem Server nur Zähler: je KI-Pass-Nummer und Tag, je zufälliger Geräte-Kennung (Proben) und je Netzwerkadresse und Tag (nur gehasht, Schutz vor Missbrauch). Fragen und Antworten werden nicht gespeichert und nicht protokolliert.
+   *Fristen (Vorschlag, Umsetzung am Server durch den Leitstand):* Adress-Zähler höchstens 48 Stunden; Tageszähler je Pass nach 7 Tagen; Geräte-Kennung der Proben nach 90 Tagen löschen. *[Endgültige Fristen eintragen, sobald der Leitstand sie bestätigt.]*
+   *Alter:* Der Tutor läuft ohne Konto und ohne Namen; der Kauf des KI-Abi-Passes liegt hinter dem Eltern-Tor („Für Erwachsene“). Keine Altersabfrage (Recht V46a).
+   *Kein OpenAI:* Seit 2.18.39 gibt es in Raumlicht keine Anbindung an OpenAI mehr.
    Der KI-Abi-Pass wird wie Raumlicht Pro im Shop gekauft; die Fassung aus dem Google Play Store enthält den KI-Tutor nicht.
 5. **Anonyme Nutzungszählung (ab 2.18.22, abschaltbar in den Einstellungen).** Um zu sehen, welche Teile der App genutzt werden, meldet die WebApp unserem Server
    `trainer.mathenachhilfe-online.com` einzelne Ereignisse: dass die App geöffnet wurde, dass eine Aufgabe gestartet oder geschafft oder eine Theorie-Karte geöffnet wurde (jeweils nur mit dem Themengebiet, nicht mit der Aufgabe), dass die Seite zu Raumlicht Pro angesehen oder der Link zum Shop angetippt wurde, dass ein Code eingelöst wurde,
@@ -70,4 +78,4 @@ Angaben zum Browser bzw. zur App) in seinen Protokollen. *[Speicherdauer und Rec
 ## Noch offen (nicht Teil des Textes)
 
 - Der Lehrerzugang braucht einen eigenen Abschnitt, wenn er kommt.
-- KI-Tutor: Vertrag zur Auftragsverarbeitung mit Anthropic und dessen Aufbewahrungsfristen prüfen; klären, ob für Minderjährige eine Einwilligung der Eltern nötig ist (der Tutor läuft ohne Konto und ohne Namen).
+- KI-Tutor: Entwurf 10e steht in Punkt 4 (25.11.2026); offen sind die endgültigen Fristen (Leitstand) und die Bestätigung durch Recht. Vertrag zur Auftragsverarbeitung mit Anthropic und dessen Aufbewahrungsfristen prüfen; klären, ob für Minderjährige eine Einwilligung der Eltern nötig ist (der Tutor läuft ohne Konto und ohne Namen).
