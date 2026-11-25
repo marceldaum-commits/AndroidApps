@@ -6370,10 +6370,10 @@
    ]
   },
   {
-   "id": "2321f243daaf4840f30c",
+   "id": "76955f2174079af81fa6",
    "sprache": "de",
    "text": "Drei Scheiben treffen sich in einem Punkt. Sie sind schon wie eine Treppe sortiert: Aus Scheibe I liest du x₁ ab, dann kommt x₂, zuletzt x₃. Wo landet Lux?",
-   "sprechtext": "Drei Scheiben treffen sich in einem Punkt. Sie sind schon wie eine Treppe sortiert: Aus Scheibe I liest du x eins ab, dann kommt x zwei, zuletzt x drei. Wo landet Lux?",
+   "sprechtext": "Drei Scheiben treffen sich in einem Punkt. Sie sind schon wie eine Treppe sortiert: Aus Scheibe eins liest du x eins ab, dann kommt x zwei, zuletzt x drei. Wo landet Lux?",
    "rollen": [
     "lux"
    ],
@@ -6381,15 +6381,15 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/2321f243daaf4840f30c.mp3"
+     "datei": "audio/server/de/76955f2174079af81fa6.mp3"
     }
    ]
   },
   {
-   "id": "3edc99665e6a05f751bd",
+   "id": "2b3386c597313ca21768",
    "sprache": "de",
    "text": "I: x₁ = 2. In II einsetzen: 2 + x₂ = 5. Dann beide in III.",
-   "sprechtext": "I: x eins gleich zwei. In II einsetzen: zwei plus x zwei gleich fünf. Dann beide in III.",
+   "sprechtext": "eins: x eins gleich zwei. In zwei einsetzen: zwei plus x zwei gleich fünf. Dann beide in drei.",
    "rollen": [
     "lux"
    ],
@@ -6397,7 +6397,7 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/3edc99665e6a05f751bd.mp3"
+     "datei": "audio/server/de/2b3386c597313ca21768.mp3"
     }
    ]
   },
@@ -6418,10 +6418,10 @@
    ]
   },
   {
-   "id": "37ee64ddbc932fcb8dad",
+   "id": "cc72d7c8ef4ba8be9bc4",
    "sprache": "de",
    "text": "Die dritte Scheibe kennt nur x₁ und x₂. Mit einem Trick verschwindet x₃: I und II zusammenzählen. Wo treffen sich alle drei?",
-   "sprechtext": "Die dritte Scheibe kennt nur x eins und x zwei. Mit einem Trick verschwindet x drei: I und II zusammenzählen. Wo treffen sich alle drei?",
+   "sprechtext": "Die dritte Scheibe kennt nur x eins und x zwei. Mit einem Trick verschwindet x drei: eins und zwei zusammenzählen. Wo treffen sich alle drei?",
    "rollen": [
     "lux"
    ],
@@ -6429,15 +6429,15 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/37ee64ddbc932fcb8dad.mp3"
+     "datei": "audio/server/de/cc72d7c8ef4ba8be9bc4.mp3"
     }
    ]
   },
   {
-   "id": "1cc78d32544012feafa5",
+   "id": "112dd23b43152585b3bd",
    "sprache": "de",
    "text": "I + II: 2x₁ + 2x₂ = 12, also x₁ + x₂ = 6. Zusammen mit III (x₁ − x₂ = −2) bekommst du x₁ und x₂.",
-   "sprechtext": "I plus II: zwei x eins plus zwei x zwei gleich zwölf, also x eins plus x zwei gleich sechs. Zusammen mit III, x eins minus x zwei gleich minus zwei, bekommst du x eins und x zwei.",
+   "sprechtext": "eins plus zwei: zwei x eins plus zwei x zwei gleich zwölf, also x eins plus x zwei gleich sechs. Zusammen mit drei, x eins minus x zwei gleich minus zwei, bekommst du x eins und x zwei.",
    "rollen": [
     "lux"
    ],
@@ -6445,7 +6445,7 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/1cc78d32544012feafa5.mp3"
+     "datei": "audio/server/de/112dd23b43152585b3bd.mp3"
     }
    ]
   },
@@ -6482,10 +6482,10 @@
    ]
   },
   {
-   "id": "4fd435c86d111137fba1",
+   "id": "cfc30087a26c38b55220",
    "sprache": "de",
    "text": "II − 2·I: −3x₂ − 3x₃ = −15. III − I: −3x₂ + x₃ = −3. Diese beiden voneinander abziehen, dann hast du x₃.",
-   "sprechtext": "II minus zwei mal I: minus drei x zwei minus drei x drei gleich minus fünfzehn. III minus I: minus drei x zwei plus x drei gleich minus drei. Diese beiden voneinander abziehen, dann hast du x drei.",
+   "sprechtext": "zwei minus zwei mal eins: minus drei x zwei minus drei x drei gleich minus fünfzehn. drei minus eins: minus drei x zwei plus x drei gleich minus drei. Diese beiden voneinander abziehen, dann hast du x drei.",
    "rollen": [
     "lux"
    ],
@@ -6493,7 +6493,7 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/4fd435c86d111137fba1.mp3"
+     "datei": "audio/server/de/cfc30087a26c38b55220.mp3"
     }
    ]
   },
@@ -6514,10 +6514,10 @@
    ]
   },
   {
-   "id": "067ebd27bf3284289290",
+   "id": "99e96fda3352ce1cd5a4",
    "sprache": "de",
    "text": "Zeile II soll x₁ verlieren: Du ziehst k-mal Zeile I ab (II − k · I). Welches k brauchst du?",
-   "sprechtext": "Zeile II soll x eins verlieren: Du ziehst k-mal Zeile I ab Klammer auf II minus k mal I Klammer zu. Welches k brauchst du?",
+   "sprechtext": "Zeile zwei soll x eins verlieren: Du ziehst k-mal Zeile eins ab Klammer auf zwei minus k mal eins Klammer zu. Welches k brauchst du?",
    "rollen": [
     "lux"
    ],
@@ -6525,15 +6525,15 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/067ebd27bf3284289290.mp3"
+     "datei": "audio/server/de/99e96fda3352ce1cd5a4.mp3"
     }
    ]
   },
   {
-   "id": "f7db25494741790a6d28",
+   "id": "b3a914f07522f6d65abd",
    "sprache": "de",
    "text": "Vor x₁ steht in I eine 1 und in II eine 3. 3 − k · 1 soll 0 werden.",
-   "sprechtext": "Vor x eins steht in I eine eins und in II eine drei. drei minus k mal eins soll null werden.",
+   "sprechtext": "Vor x eins steht in eins eine eins und in zwei eine drei. drei minus k mal eins soll null werden.",
    "rollen": [
     "lux"
    ],
@@ -6541,7 +6541,7 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/f7db25494741790a6d28.mp3"
+     "datei": "audio/server/de/b3a914f07522f6d65abd.mp3"
     }
    ]
   },
@@ -6594,10 +6594,10 @@
    ]
   },
   {
-   "id": "37df2f7df4f9e5beeab3",
+   "id": "59bbadbadac340db4952",
    "sprache": "de",
    "text": "Hier ist III einfach I + II – die dritte Scheibe bringt nichts Neues, die drei treffen sich in einer ganzen Geraden. Such dir den Punkt auf dieser Geraden mit x₃ = 1.",
-   "sprechtext": "Hier ist III einfach I plus II, die dritte Scheibe bringt nichts Neues, die drei treffen sich in einer ganzen Geraden. Such dir den Punkt auf dieser Geraden mit x drei gleich eins.",
+   "sprechtext": "Hier ist drei einfach eins plus zwei, die dritte Scheibe bringt nichts Neues, die drei treffen sich in einer ganzen Geraden. Such dir den Punkt auf dieser Geraden mit x drei gleich eins.",
    "rollen": [
     "lux"
    ],
@@ -6605,15 +6605,15 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/37df2f7df4f9e5beeab3.mp3"
+     "datei": "audio/server/de/59bbadbadac340db4952.mp3"
     }
    ]
   },
   {
-   "id": "be0645f1537f19d46708",
+   "id": "419a3d0a0136496ce9c3",
    "sprache": "de",
    "text": "I − II: 2x₂ = 4, also x₂ = 2 immer. Dann bleibt x₁ + x₃ = 4 – mit x₃ = 1 ist x₁ = 3.",
-   "sprechtext": "I minus II: zwei x zwei gleich vier, also x zwei gleich zwei immer. Dann bleibt x eins plus x drei gleich vier, mit x drei gleich eins ist x eins gleich drei.",
+   "sprechtext": "eins minus zwei: zwei x zwei gleich vier, also x zwei gleich zwei immer. Dann bleibt x eins plus x drei gleich vier, mit x drei gleich eins ist x eins gleich drei.",
    "rollen": [
     "lux"
    ],
@@ -6621,7 +6621,7 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/be0645f1537f19d46708.mp3"
+     "datei": "audio/server/de/419a3d0a0136496ce9c3.mp3"
     }
    ]
   },
@@ -6658,10 +6658,10 @@
    ]
   },
   {
-   "id": "88e20df0c889ddef14bd",
+   "id": "35fac4ed6a0fdf29fcd0",
    "sprache": "de",
    "text": "Vergleiche I und II: gleiche linke Seite, aber 3 ≠ 5. Zwei parallele Scheiben berühren sich nie.",
-   "sprechtext": "Vergleiche I und II: gleiche linke Seite, aber drei ungleich fünf. Zwei parallele Scheiben berühren sich nie.",
+   "sprechtext": "Vergleiche eins und zwei: gleiche linke Seite, aber drei ungleich fünf. Zwei parallele Scheiben berühren sich nie.",
    "rollen": [
     "lux"
    ],
@@ -6669,7 +6669,7 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/88e20df0c889ddef14bd.mp3"
+     "datei": "audio/server/de/35fac4ed6a0fdf29fcd0.mp3"
     }
    ]
   },
@@ -6690,10 +6690,10 @@
    ]
   },
   {
-   "id": "913403c2430ac6c46dc6",
+   "id": "ebf038a45b1a2e64de5f",
    "sprache": "de",
    "text": "Eine Lösung gäbe es, wenn I − II etwas Brauchbares ergäbe. Es kommt aber 0 = −2 heraus.",
-   "sprechtext": "Eine Lösung gäbe es, wenn I minus II etwas Brauchbares ergäbe. Es kommt aber null gleich minus zwei heraus.",
+   "sprechtext": "Eine Lösung gäbe es, wenn eins minus zwei etwas Brauchbares ergäbe. Es kommt aber null gleich minus zwei heraus.",
    "rollen": [
     "lux"
    ],
@@ -6701,15 +6701,15 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/913403c2430ac6c46dc6.mp3"
+     "datei": "audio/server/de/ebf038a45b1a2e64de5f.mp3"
     }
    ]
   },
   {
-   "id": "95ae0fb4c25eab35714c",
+   "id": "f621ea56b99f903f5671",
    "sprache": "de",
    "text": "Eine Lösung gäbe es, wenn I − II etwas Brauchbares ergäbe. Es kommt aber 0 = −2 heraus. Tipp gefällig? 💡",
-   "sprechtext": "Eine Lösung gäbe es, wenn I minus II etwas Brauchbares ergäbe. Es kommt aber null gleich minus zwei heraus. Tipp gefällig?",
+   "sprechtext": "Eine Lösung gäbe es, wenn eins minus zwei etwas Brauchbares ergäbe. Es kommt aber null gleich minus zwei heraus. Tipp gefällig?",
    "rollen": [
     "lux"
    ],
@@ -6717,7 +6717,7 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/95ae0fb4c25eab35714c.mp3"
+     "datei": "audio/server/de/f621ea56b99f903f5671.mp3"
     }
    ]
   },
@@ -6738,10 +6738,10 @@
    ]
   },
   {
-   "id": "d23c3d5138426f1fbfcd",
+   "id": "c25cc347e9198d45e43c",
    "sprache": "de",
    "text": "Aus III folgt x₃ = 5 − x₁ − x₂. In I und II einsetzen – dann hast du ein System mit nur zwei Unbekannten.",
-   "sprechtext": "Aus III folgt x drei gleich fünf minus x eins minus x zwei. In I und II einsetzen, dann hast du ein System mit nur zwei Unbekannten.",
+   "sprechtext": "Aus drei folgt x drei gleich fünf minus x eins minus x zwei. In eins und zwei einsetzen, dann hast du ein System mit nur zwei Unbekannten.",
    "rollen": [
     "lux"
    ],
@@ -6749,7 +6749,7 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/d23c3d5138426f1fbfcd.mp3"
+     "datei": "audio/server/de/c25cc347e9198d45e43c.mp3"
     }
    ]
   },
@@ -14978,10 +14978,10 @@
    ]
   },
   {
-   "id": "70111ea2fdfe08f601e9",
+   "id": "d40734e458e8884d8400",
    "sprache": "de",
    "text": "Mit k = 1 steht in II noch 3 − 1 = 2 · x₁. Es muss 0 werden.",
-   "sprechtext": "Mit k gleich eins steht in II noch drei minus eins gleich zwei mal x eins. Es muss null werden.",
+   "sprechtext": "Mit k gleich eins steht in zwei noch drei minus eins gleich zwei mal x eins. Es muss null werden.",
    "rollen": [
     "lux"
    ],
@@ -14989,15 +14989,15 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/70111ea2fdfe08f601e9.mp3"
+     "datei": "audio/server/de/d40734e458e8884d8400.mp3"
     }
    ]
   },
   {
-   "id": "c8f1394a7cc5065de062",
+   "id": "a85bb3407b6106d86b2e",
    "sprache": "de",
    "text": "Mit k = 1 steht in II noch 3 − 1 = 2 · x₁. Es muss 0 werden. Tipp gefällig? 💡",
-   "sprechtext": "Mit k gleich eins steht in II noch drei minus eins gleich zwei mal x eins. Es muss null werden. Tipp gefällig?",
+   "sprechtext": "Mit k gleich eins steht in zwei noch drei minus eins gleich zwei mal x eins. Es muss null werden. Tipp gefällig?",
    "rollen": [
     "lux"
    ],
@@ -15005,7 +15005,7 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/c8f1394a7cc5065de062.mp3"
+     "datei": "audio/server/de/a85bb3407b6106d86b2e.mp3"
     }
    ]
   },

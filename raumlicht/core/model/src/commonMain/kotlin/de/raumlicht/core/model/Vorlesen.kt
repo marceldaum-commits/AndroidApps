@@ -113,7 +113,10 @@ object Vorlesen {
     const val PREDICTABLE_MAX_CHARS = 300
 
     /** Der Text, wie er gesprochen und für den Dateinamen gerechnet wird: vorlesefertig ([Speech.clean]) und ohne Leerraum-Reste. Leer = nichts zu sagen. */
-    fun spoken(text: String) = normalize(digitsToWords(normalize(Speech.clean(text))))
+    fun spoken(text: String) = normalize(romanToWords(digitsToWords(normalize(Speech.clean(text)))))
+
+    /** Gleichungen heißen in Kapitel 17 „I“, „II“, „III“ (römische Zahlen): gesprochen „eins“, „zwei“, „drei“ */
+    fun romanToWords(text: String): String = Regex("(?<![A-Za-zÄÖÜäöüß])(III|II|I)(?![A-Za-zÄÖÜäöüß])").replace(text) { mapOf("I" to "eins", "II" to "zwei", "III" to "drei").getValue(it.value) }
 
     private val ONES = listOf("null", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf", "dreizehn", "vierzehn", "fünfzehn", "sechzehn", "siebzehn", "achtzehn", "neunzehn")
     private val TENS = listOf("", "", "zwanzig", "dreißig", "vierzig", "fünfzig", "sechzig", "siebzig", "achtzig", "neunzig")
