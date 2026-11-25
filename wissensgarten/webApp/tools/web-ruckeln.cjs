@@ -28,6 +28,7 @@ const messen = (p, ms) => p.evaluate((ms) => new Promise((ok) => {
 (async () => {
   const b = await chromium.launch();
   const dev = PROFIL === 'pc' ? { viewport: { width: 1366, height: 768 }, deviceScaleFactor: 1 } : { ...devices['Pixel 7'] };
+if (process.env.DSF) dev.deviceScaleFactor = Number(process.env.DSF);   // Bildpunkte pro CSS-Pixel: zeigt, ob die Zeit an der Auflösung hängt
   const ctx = await b.newContext(dev);
   await ctx.route('https://trainer*.mathenachhilfe-online.com/**', (r) => r.fulfill({ status: 204, body: '' }));
   const p = await ctx.newPage();
@@ -48,6 +49,7 @@ const messen = (p, ms) => p.evaluate((ms) => new Promise((ok) => {
   const wisch = (async () => { for (let i = 0; i < 12; i++) { await p.mouse.move(vp.width / 2, vp.height * 0.7); await p.mouse.down(); await p.mouse.move(vp.width / 2, vp.height * 0.3, { steps: 8 }); await p.mouse.up(); await p.waitForTimeout(150); await p.mouse.move(vp.width / 2, vp.height * 0.3); await p.mouse.down(); await p.mouse.move(vp.width / 2, vp.height * 0.7, { steps: 8 }); await p.mouse.up(); await p.waitForTimeout(150); } })();
   szenen.push(['Garten, wischen', await messen(p, 6000)]); await wisch;
   const tabs = ['Garten', 'Samen', 'Laden', 'Mehr'];
+  if (process.env.NUR_GARTEN) { for (const [n, r] of szenen) console.log(`${n.padEnd(28)} ${String(r.fps).padStart(5)} B/s  p50 ${r.p50} ms`); await b.close(); return; }
   const nav = [[0.12, 0.96], [0.37, 0.96], [0.62, 0.96], [0.87, 0.96]];
   for (let i = 1; i < 4 && PROFIL === 'handy'; i++) {
     await p.mouse.click(vp.width * nav[i][0], vp.height * nav[i][1]); await p.waitForTimeout(2500);
