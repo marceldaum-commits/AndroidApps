@@ -278,7 +278,9 @@
         else if (!gc) { use = 'js'; why = 'kein WasmGC'; }
         // Safari/WebKit: seit 2.2.12 wieder Wasm (Abhilfe für WebKit-Fehler 329421 im Bündel); malt Wasm dort nichts, folgt automatisch JS
         else if (kaputt === v) { use = 'js'; why = 'Wasm-Start scheiterte vorher bei ' + v; }
-        else { use = 'wasm'; why = 'Standard'; }
+        // Gemessen (24./25.11.2026, gleiche App, gleicher Rechner): Die JS-Fassung läuft im Garten etwa 10-mal flüssiger als die Wasm-Fassung.
+        // Darum ist JS die Standard-Fassung; zum Vergleichen: ?modus=wasm (bleibt gemerkt), ?modus=auto hebt es auf.
+        else { use = 'js'; why = 'Standard (flüssiger gemessen)'; }
         // Ist der letzte Wasm-Start dieser Version im selben Tab abgestürzt (Tab neu geladen, ohne dass der Garten stand)? → JS
         try {
           if (use === 'wasm' && !forced && sessionStorage.getItem('wg.wasmLauf') === v) { localStorage.setItem('wg.wasmKaputt', v); use = 'js'; why = 'Wasm-Start brach vorher ab'; }
