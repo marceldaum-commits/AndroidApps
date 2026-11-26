@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.unit.dp
 import kotlin.math.PI
@@ -171,7 +172,7 @@ private fun DrawScope.clouds(formen: List<WolkenForm>, t: Float, alpha: Float) {
         val x = (((x0 + t * speed) % 1.3f) - 0.15f) * w
         val r = h * 0.06f * s
         val cy = y * h + h * 0.12f
-        androidx.compose.ui.graphics.drawscope.translate(x, cy) { drawPath(formen[i].get(r), Color.White.copy(alpha = alpha)) }
+        translate(x, cy) { drawPath(formen[i].get(r), Color.White.copy(alpha = alpha)) }
     }
 }
 
