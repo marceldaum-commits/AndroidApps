@@ -1,5 +1,5 @@
-// Wissensgarten WebApp – Brummis Stimme „Nova“ (KI-Stimme von OpenAI, vertont von unserem Stimm-Server).
-// Die WebApp spricht nie mit OpenAI. Sie lädt fertige MP3-Dateien von stimmen.mathenachhilfe-online.com
+// Wissensgarten WebApp – Brummis KI-generierte Stimme (vertont auf unserem eigenen Server).
+// Die WebApp lädt fertige MP3-Dateien von stimmen.mathenachhilfe-online.com
 // (ohne Cookies, ohne Referrer) und legt sie im Browser-Speicher ab (Cache Storage „wissensgarten-nova“).
 // Ohne Internet liest still eine Stimme des Browsers, die auf dem Gerät spricht.
 (function () {
@@ -82,20 +82,9 @@
   }
   nova.load = (url, h) => store(url, h);
 
-  /** Laufzeit-Text einmalig vertonen lassen (POST /jetzt) und die gelieferte Datei speichern */
-  nova.now = async (text, sprache, h) => {
-    if (offline()) return -1;
-    const [signal, done] = timed(15000);
-    try {
-      const r = await fetch(BASE + '/jetzt', Object.assign({}, OPTS, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: text, sprache: sprache }), signal,
-      }));
-      if (r.status !== 200) return r.status;
-      const j = await r.json();
-      if (!j || typeof j.url !== 'string' || !j.url.startsWith(BASE + '/')) return -1;   // nur vom eigenen Stimm-Server
-      return (await store(j.url, h)) === 200 ? 200 : -1;
-    } catch (e) { return -1; } finally { done(); }
-  };
+  /** Früher: Laufzeit-Text über POST /jetzt vertonen lassen. Der Dienst ist abgeschaltet (20.11.2026) – nie mehr anfragen.
+   *  404 = „gibt es nicht“: Die App liest dann still mit der Gerätestimme, ohne Fehlermeldung. */
+  nova.now = async () => 404;
 
   // Autoplay-Sperre: Vor der ersten Berührung lässt der Browser nichts abspielen. Dann springt NICHT die Gerätestimme ein –
   // die Nova-Datei wartet und startet beim ersten Antippen (innerhalb der Berührung, damit der Browser es erlaubt).
