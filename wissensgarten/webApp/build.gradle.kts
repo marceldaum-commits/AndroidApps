@@ -81,7 +81,8 @@ tasks.register<Sync>("exportWebApp") {
         // die Seite legt die Dateien ihrer Fassung selbst in den Zwischenspeicher
         fun top(d: File, ext: String) = d.listFiles()!!.filter { it.isFile && it.extension == ext }.map { it.name }
         val wasmFiles = top(wasmDist.get().asFile, "wasm") + "wissensgarten.js"
-        val jsFiles = (top(jsDist.get().asFile, "wasm") + "wissensgarten-js.js").filter { it !in wasmFiles || it == "wissensgarten-js.js" }
+        // Die Grafik-Bibliothek (skiko, .wasm mit Hash im Namen) steckt in beiden Fassungen – die JS-Fassung braucht sie genauso (sonst startet sie offline nicht)
+        val jsFiles = top(jsDist.get().asFile, "wasm") + "wissensgarten-js.js"
         val modeFiles = "{\"wasm\":" + wasmFiles.joinToString(",", "[", "]") { "\"$it\"" } + ",\"js\":" + jsFiles.joinToString(",", "[", "]") { "\"$it\"" } + "}"
         val sizes = big.joinToString(",", "{", "}") { "\"${it.name}\":${it.length()}" }
         // Service Worker: beim Installieren alles vorab speichern → zweiter Start sofort, auch offline
