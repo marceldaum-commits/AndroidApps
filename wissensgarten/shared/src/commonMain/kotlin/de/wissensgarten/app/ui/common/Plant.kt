@@ -3,7 +3,7 @@ package de.wissensgarten.app.ui.common
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import de.wissensgarten.app.ui.fx.Sprite
+import androidx.compose.ui.graphics.layer.drawLayer
 import kotlin.math.roundToInt
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -35,30 +35,35 @@ private val Bark = Color(0xFF6B4A2B)
  * @param variant Zufallswert pro Karte, damit nicht alle Pflanzen gleich aussehen
  * @param grow 0…1 Animationsfortschritt beim Wachsen
  */
+/** Merkt, für welchen Zustand die Pflanze zuletzt aufgezeichnet wurde */
+class PflanzenMerker { var schluessel: Any? = null }
+
 @Composable
 fun Plant(
     stage: Stage, wilt: Float, hue: Float, variant: Int, modifier: Modifier = Modifier, grow: Float = 1f,
     species: String = "klassik",
 ) {
     val wind = LocalWind.current
-    val sprite = remember { Sprite() }
-    if (de.wissensgarten.app.ui.fx.Experiment.aus("pflanzen")) return
+    // Ausgewachsene Pflanzen werden einmal aufgezeichnet und dann nur noch abgespielt (gleiche Pfad-Objekte in jedem Bild →
+    // der Browser muss sie nicht neu berechnen). Das Schaukeln geschieht in ganzen Grad, damit sich die Formen wiederholen und gemerkt werden.
+    val layer = androidx.compose.ui.graphics.rememberGraphicsLayer()
+    val gemerkt = remember { PflanzenMerker() }
     Canvas(modifier) {
         // Wind nur in der Zeichenphase lesen – kein Neuaufbau der Oberfläche pro Bild
         val t = wind?.value ?: 0f
         val strength = (if (stage == Stage.TREE) 1.2f else 3.5f) * (1f - wilt * 0.6f)
         val sway = (sin(t * 1.6f + variant * 0.7f) + 0.4f * sin(t * 3.1f + variant)) * strength
-        // Ausgewachsene Pflanzen werden einmal als Bild gemalt und nur noch gedreht (siehe Sprite.kt) – das spart pro Bild
-        // viele Pfade. Wachsende Pflanzen und Arten mit eigener Zeitanimation werden weiter direkt gezeichnet.
         if (grow >= 0.999f && !de.wissensgarten.app.ui.fx.Experiment.aus("sprite") && species != "zauberblume" && !species.startsWith("kreuzung:")) {
             val q = (wilt * 20f).roundToInt()
-            val img = sprite.get(this, size.width.toInt(), size.height.toInt(), listOf(stage, q, hue, variant, species)) {
-                drawPlant(stage, q / 20f, hue, variant, 1f, 0f, species, 0f)
+            val schluessel = listOf(stage, q, hue, variant, species, size.width.toInt(), size.height.toInt())
+            if (gemerkt.schluessel != schluessel) {
+                layer.record(this, layoutDirection, androidx.compose.ui.unit.IntSize(size.width.toInt().coerceAtLeast(1), size.height.toInt().coerceAtLeast(1))) {
+                    drawPlant(stage, q / 20f, hue, variant, 1f, 0f, species, 0f)
+                }
+                gemerkt.schluessel = schluessel
             }
-            if (img != null) {
-                rotate(sway, Offset(size.width / 2, size.height * 0.86f)) { drawImage(img) }
-                return@Canvas
-            }
+            rotate(sway.roundToInt().toFloat(), Offset(size.width / 2, size.height * 0.86f)) { drawLayer(layer) }
+            return@Canvas
         }
         drawPlant(stage, wilt, hue, variant, grow, sway, species, t)
     }
