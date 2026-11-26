@@ -176,6 +176,13 @@ class ScreenshotTest {
     @Test fun generator() = lab("y10", "115_generator", prepare = { it.slide("🚲 Drehfrequenz", 19f) })
     @Test fun trafoRatio() = lab("y11", "116_trafo", prepare = { it.slide("🌀 Windungen sekundär (N₂)", 3f) })
     @Test fun trafoLine() = lab("y13", "117_fernleitung", prepare = { it.onNodeWithText("50 kV").performClick(); it.mainClock.advanceTimeBy(300) })
+    // ── Energie-Achterbahn (2.17.0)
+    @Test fun coasterEnergy() = lab("z1", "130_achterbahn_lageenergie", prepare = { it.slide("⛰️ Starthöhe", 25f) })
+    @Test fun coasterSpeed() = lab("z2", "131_achterbahn_tempo", prepare = { it.slide("⛰️ Starthöhe", 19f) })
+    @Test fun coasterLoop() = lab("z4", "132_achterbahn_looping", prepare = { it.slide("⛰️ Starthöhe", 12f); it.onNodeWithText("🎢 Los geht's!").performClick(); it.mainClock.advanceTimeBy(2600) })
+    @Test fun coasterFriction() = lab("z5", "133_achterbahn_reibung", prepare = { it.slide("⛰️ Starthöhe", 15f) })
+    @Test fun coasterHill() = lab("z6", "134_achterbahn_huegel", prepare = { it.slide("⛰️ Starthöhe", 10f) })
+    @Test fun coasterSplit() = lab("z7", "135_achterbahn_energie_teilen", prepare = { it.slide("📍 Stelle auf der Strecke (Höhe)", 15f) })
     @Test fun deepLink() = shot("82_direktlink_optik", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, startOpen = Topic.OPTIK, onBack = {}) }
     @Test fun subject() = shot("63_lernen_nach_fach", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, onBack = {}) }
     @Test fun subjectBio() = shot("64_fach_biologie", settle = 2500, prepare = { it.tap("Alle 8 Versuche") }) { de.experimentopia.app.ui.home.SubjectScreen(Subject.BIOLOGIE, someStars, 9, { false }, {}, {}, onBack = {}) }

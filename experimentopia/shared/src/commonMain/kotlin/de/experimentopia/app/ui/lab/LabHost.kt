@@ -42,6 +42,7 @@ fun LabView(setup: Setup, free: Boolean, onGoal: () -> Unit, modifier: Modifier 
             is MirrorSetup -> MirrorLab(setup, free) { goal() }
             is RefractSetup -> RefractLab(setup, free) { goal() }
             is LensSetup -> LensLab(setup, free) { goal() }
+            is CoasterSetup -> CoasterLab(setup, free) { goal() }
             is CoilSetup -> CoilLab(setup, free) { goal() }
             is MotorSetup -> MotorLab(setup, free) { goal() }
             is DynamoSetup -> DynamoLab(setup, free) { goal() }

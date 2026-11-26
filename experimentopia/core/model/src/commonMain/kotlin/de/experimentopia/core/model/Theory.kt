@@ -149,6 +149,25 @@ object Theory {
             "Kühlschrankmagnete halten, weil die Tür aus Stahlblech ist.",
             listOf("Pol" to "Ende eines Magneten, wo er am stärksten zieht", "Magnetfeld" to "Raum, in dem die Magnetkraft wirkt")),
 
+        TheoryCard(Topic.ENERGIE, "Energie geht nie verloren – sie wechselt nur die Form: Je höher der Wagen, desto mehr Lageenergie, und die wird beim Fahren zu Tempo.",
+            listOf(
+                p("⛰️", "Oben auf dem Hügel hat der Wagen viel Lageenergie (Höhenenergie). Je höher und je schwerer, desto mehr."),
+                p("💨", "Beim Hinunterfahren wird die Lageenergie zu Bewegungsenergie. Unten ist der Wagen am schnellsten."),
+                p("🎢", "Der Wagen kommt nie höher als sein Start – ohne Motor reicht die Energie nicht. Darum ist der erste Hügel immer der höchste."),
+                p("🔥", "Reibung macht aus einem Teil der Energie Wärme. Die Energie ist nicht weg, aber der Wagen kann sie nicht mehr nutzen."),
+            ),
+            listOf(
+                p("⛰️", "Lageenergie: E = m · g · h (E in Joule (J), m in kg, g = 9,81 m/s², h in m). Beispiel: m = 400 kg, h = 20 m: E = 400 · 9,81 · 20 = 78 480 J ≈ 78,5 kJ."),
+                p("💨", "Bewegungsenergie: E = ½ · m · v² (v in m/s; 1 m/s = 3,6 km/h). Beispiel: m = 400 kg, v = 20 m/s: E = ½ · 400 · 20² = 80 000 J = 80 kJ."),
+                p("⚖️", "Energieerhaltung ohne Reibung: m · g · h = ½ · m · v². Die Masse kürzt sich, darum v = √(2 · g · h). Beispiel: h = 20 m: v = √(2 · 9,81 · 20) = √392,4 ≈ 19,8 m/s ≈ 71 km/h – für jede Masse gleich."),
+                p("🔄", "Looping mit Radius R: Oben (Höhe 2R) muss v² ≥ g · R sein, sonst fällt der Wagen herunter. Mit v² = 2 · g · (h − 2R) folgt h ≥ 2,5 · R. Beispiel: R = 5 m: h ≥ 12,5 m."),
+                p("🔥", "Mit Reibungsanteil r bleibt nur (1 − r) der Energie: v = √(2 · g · h · (1 − r)). Beispiel: r = 0,2, Looping R = 5 m: h ≥ 12,5 m ÷ 0,8 = 15,6 m. Ein 10-m-Hügel braucht bei r = 0,1 mindestens h = 10 m ÷ 0,9 = 11,1 m."),
+                p("📊", "Aufteilung: Bei Start in H und Position h ist der Anteil der Bewegungsenergie (H − h) ÷ H. Bei h = H ÷ 2 sind Lage- und Bewegungsenergie gleich groß (je 50 %)."),
+            ),
+            "In einer echten Achterbahn zieht eine Kette den Wagen zuerst nach oben. Danach fährt er ohne Motor: Alles Tempo kommt aus der Höhe.",
+            listOf("Lageenergie" to "Energie, die ein Körper wegen seiner Höhe hat", "Bewegungsenergie" to "Energie, die ein Körper wegen seiner Geschwindigkeit hat",
+                "Energieerhaltung" to "Energie geht nie verloren, sie wechselt nur die Form", "Joule" to "Einheit der Energie (J)")),
+
         TheoryCard(Topic.ELEKTROMAGNETISMUS, "Strom und Magnetismus gehören zusammen: Strom macht Magnetfelder – und bewegte Magnetfelder machen Strom.",
             listOf(
                 p("🧲", "Fließt Strom durch einen Draht, entsteht ein Magnetfeld. Wickelt man den Draht zu einer Spule, wird das Feld stark – und es verschwindet, wenn der Strom ausgeschaltet wird (Elektromagnet)."),

@@ -51,7 +51,7 @@ object ParentReport {
 
     /** Thema für die Eltern-Seite (Fach-Bereich) */
     fun slug(t: Topic) = when (t) {
-        Topic.AUFTRIEB, Topic.HEBEL, Topic.MASCHINEN, Topic.NEWTON, Topic.FALL, Topic.SCHWINGUNG -> "physik-mechanik"
+        Topic.AUFTRIEB, Topic.HEBEL, Topic.MASCHINEN, Topic.NEWTON, Topic.FALL, Topic.SCHWINGUNG, Topic.ENERGIE -> "physik-mechanik"
         Topic.STROM, Topic.MAGNET, Topic.ELEKTROMAGNETISMUS -> "physik-elektrizitaet"
         Topic.WAERME -> "physik-waerme"
         Topic.LICHT, Topic.OPTIK -> "physik-optik"

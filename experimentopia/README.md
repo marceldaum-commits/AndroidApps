@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.16.4 vom 24.11.2026** · WebApp (installierbar als App, auch offline) – https://lernen.mathenachhilfe-online.com/experimentopia/ (die alte Adresse experimentopia.mathenachhilfe-online.com leitet mit Lernstand dorthin um) · 224 Versuche in 21 Fachbereichen (Physik, Chemie, Biologie) · 42 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.17.0 vom 26.11.2026** · WebApp (installierbar als App, auch offline) – https://lernen.mathenachhilfe-online.com/experimentopia/ (die alte Adresse experimentopia.mathenachhilfe-online.com leitet mit Lernstand dorthin um) · 232 Versuche in 22 Fachbereichen (Physik, Chemie, Biologie) · 43 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -168,6 +168,18 @@ Neues Thema auf der Blitzinsel mit 13 Versuchen und vier Laboren; alle Formeln s
 | Induktion | Generator | Trafo | Fernleitung |
 |---|---|---|---|
 | ![](screenshots/114_induktion.png) | ![](screenshots/115_generator.png) | ![](screenshots/116_trafo.png) | ![](screenshots/117_fernleitung.png) |
+
+## Energie-Achterbahn (seit 2.17.0)
+
+Neues Thema auf der Kraftwerk-Insel mit 8 Versuchen (Kl. 7–10) und der Achterbahn-Werkstatt; alle Formeln stehen in `Energie.kt` und sind in `EnergieTest` gegen Buchwerte geprüft.
+
+| Lageenergie | Tempo unten | Looping |
+|---|---|---|
+| ![](screenshots/130_achterbahn_lageenergie.png) | ![](screenshots/131_achterbahn_tempo.png) | ![](screenshots/132_achterbahn_looping.png) |
+
+| Reibung | zweiter Hügel | Energie teilen |
+|---|---|---|
+| ![](screenshots/133_achterbahn_reibung.png) | ![](screenshots/134_achterbahn_huegel.png) | ![](screenshots/135_achterbahn_energie_teilen.png) |
 
 ## Eltern-Tor, Elternbereich, Familie, Startbild (2.14.0 / 2.15.0)
 

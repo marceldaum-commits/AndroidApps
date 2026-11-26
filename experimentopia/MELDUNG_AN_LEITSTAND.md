@@ -784,3 +784,8 @@ Freischalt-Link `?pro=<Code>`, Vorbild `kurvenflug/pro/`. Sperren erst, wenn ihr
 ## 2.16.4 vom 24.11.2026 – „umzug“ ohne eigenen Merker (Recht V45c, nur Test)
 - Das Ereignis „umzug“ wird genau einmal im Umzugsschritt (umzug.js) gesendet; es gibt keinen eigenen Speicher-Schlüssel für die Zählung mehr (2.16.3 hatte `experimentopia.umzugneu`, entfernt). Nutzlast `{app, v, ev:"umzug"}`, nur bei eingeschalteter Zählung.
 - Rechtsbezug: ja (V45c, V31 Nr. 2, § 25 TDDDG). Rückweg: 2.16.3 (c735c1da) nur mit Vorbehalt, besser 2.16.2 (2c38962e).
+
+## 2.17.0 vom 26.11.2026 – Energie-Achterbahn (nur Test)
+- Neues Thema „Energie-Achterbahn“ (Kraftwerk-Insel, Kl. 7–10): 8 Versuche (z1–z8), Achterbahn-Werkstatt, Theorie-Karte; alle Antworten aus `Energie.kt` berechnet, in `EnergieTest` nachgerechnet. 232 Versuche in 22 Fachbereichen, 43 Geräte. Direkt-Link `#thema=energie`.
+- Gratis-Umfang: 80 von 232 Versuchen (vorher 78 von 224). Keine neuen Daten, keine neuen Netzaufrufe.
+- Rechtsbezug: nein. Rückweg: 2.16.4 (ebce1aca).

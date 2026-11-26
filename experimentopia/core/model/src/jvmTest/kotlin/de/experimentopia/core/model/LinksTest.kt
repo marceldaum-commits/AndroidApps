@@ -16,7 +16,7 @@ class LinksTest {
         Topic.entries.forEach { t -> assertEquals(Links.Target(t.subject, t), Links.target("#thema=" + Links.name(t))) }
         assertEquals(Links.Target(Subject.PHYSIK, Topic.OPTIK), Links.target("https://experimentopia.mathenachhilfe-online.com/#thema=optik"))
         assertEquals(Links.Target(Subject.PHYSIK, Topic.OPTIK), Links.target("?thema=OPTIK"))
-        assertEquals(Links.Target(Subject.PHYSIK, null), Links.target("#thema=energie"))
+        assertEquals(Links.Target(Subject.PHYSIK, Topic.ENERGIE), Links.target("#thema=energie"))
         assertEquals(Subject.CHEMIE, Links.target("#thema=chemie-saeuren-laugen")!!.subject)
         assertEquals(Topic.SAEURE, Links.target("#thema=chemie-saeuren-laugen")!!.topic)
         assertEquals(Topic.STROM, Links.target("#thema=physik-elektrizitaet")!!.topic)

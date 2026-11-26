@@ -1,5 +1,12 @@
 # Changelog – Experimentopia
 
+## 2.17.0 – Energie-Achterbahn (26.11.2026)
+
+- 🎢 Neues Thema „Energie-Achterbahn“ auf der Kraftwerk-Insel (Klasse 7–10): 8 Versuche. Wie viel Energie steckt in der Höhe? Wie schnell ist der Wagen unten? Warum ist die Masse egal? Wie hoch muss der Start für einen Looping sein – und wie viel mehr, wenn die Reibung Energie wegnimmt?
+- 🛠️ Neues Gerät „Achterbahn-Werkstatt“: Starthöhe, Masse und Reibung einstellen, den Wagen losfahren lassen, Energie-Balken beobachten. Auch im Freien Labor mit eigenen Werten.
+- 📖 Neue Theorie-Karte mit Formeln, Einheiten und durchgerechneten Beispielen. Alle Antworten werden aus den Formeln berechnet und in Tests nachgerechnet.
+- 232 Versuche in 22 Fachbereichen, 43 Geräte im Freien Labor.
+
 ## 2.16.4 – Zählen ohne eigenen Merker (24.11.2026)
 
 - 🔒 Das anonyme Ereignis „umzug“ wird jetzt genau einmal im Umzugsschritt gesendet, ohne dass dafür ein eigener Merker auf dem Gerät angelegt wird. Weiter gilt: nur bei eingeschalteter Zählung, nur der Ereignisname, keine Kennung.

@@ -27,6 +27,7 @@ enum class Lab(val title: String, val emoji: String, val island: Island, val blu
     SPIEGEL("Spiegel-Laser", "🔴", Island.LICHTKLANG, "Dreh den Spiegel und triff die Sterne."),
     BRECHUNG("Lichtknick", "💧", Island.LICHTKLANG, "Licht knickt an Wasser und Glas – oder bleibt gefangen."),
     LINSE("Optische Bank", "🔍", Island.LICHTKLANG, "Kerze, Linse, Schirm: Wann wird das Bild scharf?"),
+    ACHTERBAHN("Achterbahn-Werkstatt", "🎢", Island.KRAFT, "Starthöhe wählen: Lageenergie wird Bewegungsenergie – und Reibung klaut etwas."),
     SPULE("Elektromagnet", "🧲", Island.STROM, "Spule, Strom und Eisenkern: Wie stark wird das Feld?"),
     MOTOR("Motor-Werkstatt", "⚙️", Island.STROM, "Leiterschaukel und Elektromotor: Kraft auf Strom."),
     DYNAMO("Dynamo-Werkstatt", "🚲", Island.STROM, "Magnet in der Spule – und Strom entsteht."),
@@ -118,6 +119,7 @@ object FreeLab {
         Lab.SPIEGEL -> MirrorSetup(targets = listOf(40.0, 70.0, 130.0), showAngles = true)
         Lab.BRECHUNG -> RefractSetup(Medium.LUFT, Medium.WASSER, RefractGoal.FREE)
         Lab.LINSE -> LensSetup(goal = LensGoal.FREE)
+        Lab.ACHTERBAHN -> CoasterSetup(CoasterMode.SPEED, 20.0, adjustMass = true, adjustFriction = true)
         Lab.SPULE -> CoilSetup(200, 3.0, false, adjustWindings = true, adjustVolts = true, adjustCore = true)
         Lab.MOTOR -> MotorSetup(MotorMode.FORCE)
         Lab.DYNAMO -> DynamoSetup(DynamoMode.MAGNET, 500, adjustWindings = true)

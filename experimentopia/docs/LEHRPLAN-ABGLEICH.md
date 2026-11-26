@@ -195,7 +195,7 @@ Fehlende Themen erscheinen in der App als „Kommt bald“ (ohne Datum, ohne Kau
 |---|---|---|
 | 1 | Optik: Schatten, Spiegel, Brechung, Linsen | ✅ gebaut in 2.7.0 (x1–x11) |
 | 2 | Motor, Dynamo & Trafo (Elektromagnetismus) | ✅ gebaut in 2.16.0 (24.11.2026): 13 Versuche, 4 Labore (Elektromagnet, Motor-Werkstatt, Dynamo-Werkstatt, Trafo-Station) |
-| 3 | Energie-Achterbahn (Energieformen, Erhaltung) | Kommt bald |
+| 3 | Energie-Achterbahn (Energieformen, Erhaltung) | ✅ gebaut in 2.17.0 (26.11.2026): 8 Versuche (z1–z8), Achterbahn-Werkstatt (Lageenergie, Tempo, Looping, Hügel, Reibung, Energieerhaltung); Leistung und Wirkungsgrad folgen |
 | 4 | Tier-Safari, Blüten & Bestäubung, Atmung, Skelett (Bio 5/6) | Kommt bald |
 | 5 | Atom-Werkstatt & Periodensystem, Salze & Ionen | Kommt bald |
 | 6 | Druck & Luftdruck, Wärme wandert, Ladung, Echo | Kommt bald („Bewegung & Diagramme“ → KurvenFlug weg-zeit/beschleunigung, Wochenrunde 18.11.) |

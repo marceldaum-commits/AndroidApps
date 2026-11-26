@@ -9,13 +9,13 @@ object Links {
     /** Fester Link-Name je Thema – bleibt stabil, auch wenn Titel oder Reihenfolge sich ändern */
     fun name(t: Topic) = when (t) {
         Topic.AUFTRIEB -> "schwimmen"; Topic.HEBEL -> "hebel"; Topic.MASCHINEN -> "rollen"; Topic.NEWTON -> "kraft"
-        Topic.FALL -> "fallen"; Topic.SCHWINGUNG -> "pendel"; Topic.STROM -> "strom"; Topic.MAGNET -> "magnet"; Topic.ELEKTROMAGNETISMUS -> "elektromagnetismus"
+        Topic.FALL -> "fallen"; Topic.SCHWINGUNG -> "pendel"; Topic.STROM -> "strom"; Topic.MAGNET -> "magnet"; Topic.ELEKTROMAGNETISMUS -> "elektromagnetismus"; Topic.ENERGIE -> "energie"
         Topic.WAERME -> "waerme"; Topic.LICHT -> "licht"; Topic.OPTIK -> "optik"; Topic.SCHALL -> "schall"
         Topic.TRENNEN -> "trennen"; Topic.SAEURE -> "saeure"; Topic.REAKTION -> "reaktion"
         Topic.VERERBUNG -> "vererbung"; Topic.ZELLEN -> "zellen"; Topic.ERNAEHRUNG -> "ernaehrung"; Topic.OEKOLOGIE -> "oekologie"; Topic.KOERPER -> "koerper"
     }
     /** Angekündigte Namen für Themen, die noch gebaut werden – führen bis dahin auf das Fach */
-    val PLANNED = mapOf("energie" to Subject.PHYSIK)
+    val PLANNED = emptyMap<String, Subject>()
 
     /** Ziel eines Direkt-Links: Fach und (wenn bekannt) Thema */
     data class Target(val subject: Subject, val topic: Topic?)
