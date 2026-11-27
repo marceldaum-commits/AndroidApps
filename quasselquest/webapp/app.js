@@ -17,6 +17,7 @@
   const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, eigene: {}, tage: {}, hinweis: {}, tests: {}, lp: {}, insel: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei', zaehlung: true, nachhilfe: true }, week: { key: '', n: 0 } });
   let state = load() || fresh();
   state.settings = Object.assign(fresh().settings, state.settings || {});
+  if (window.UK_AKTIV && state.settings.meineSprache === 'uk' && window.I18N) window.I18N.setze('uk');
   // Stand 1 → 2: Spracherkennung standardmäßig nur auf dem Gerät; Wochenziel statt Tagesserie
   if ((state.v || 1) < 2) {
     if (state.settings.recognition === 'browser') state.settings.recognition = 'device';
@@ -852,6 +853,9 @@
         <div class="set"><span>🎒 Klasse</span><span class="row" style="justify-content:flex-end">${KLASSEN.map((k) => `<button class="btn small ${state.klasse === k ? 'blue' : 'white'}" data-k="${k}">${k}</button>`).join('')}</span></div>
         <div class="set"><span>🙂 Name</span><span class="row"><b>${esc(state.name || '–')}</b><button class="btn small white" data-name>Ändern</button></span></div>
       </div>
+      ${window.UK_AKTIV ? `<div class="card" style="margin-top:14px"><h3 style="margin-bottom:4px">🌍 Meine Sprache</h3>
+        <label class="radio"><input type="radio" name="meine" value="de" ${state.settings.meineSprache !== 'uk' ? 'checked' : ''}><span><b>Deutsch</b></span></label>
+        <label class="radio"><input type="radio" name="meine" value="uk" ${state.settings.meineSprache === 'uk' ? 'checked' : ''}><span><b>Українська</b><br><span class="muted">Die Bedienung wird auf Ukrainisch angezeigt, soweit übersetzt.</span></span></label></div>` : ''}
       <div class="card" style="margin-top:14px"><h3 style="margin-bottom:4px">🎙️ Welche Stimme?</h3>
         <label class="radio"><input type="radio" name="stimme" value="frei" ${A.voiceMode() === 'frei' ? 'checked' : ''}><span><b>Unsere KI-Stimmen (Standard)</b><br><span class="muted">Vorab aufgenommen, mit KI erzeugt, funktionieren auch ohne Internet.</span></span></label>
         <label class="radio"><input type="radio" name="stimme" value="geraet" ${A.voiceMode() === 'geraet' ? 'checked' : ''}><span><b>Stimme des Geräts</b><br><span class="muted">${A.canSpeak() ? 'Die englische Stimme deines Geräts.' : 'Auf diesem Gerät gibt es keine englische Stimme.'}</span></span></label>
@@ -866,6 +870,7 @@
     el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); home(); };
     el.querySelectorAll('[data-sw]').forEach((b) => b.onclick = () => { s[b.dataset.sw] = !s[b.dataset.sw]; save(); A.sfx('tap'); settings(); });
     el.querySelectorAll('[data-k]').forEach((b) => b.onclick = () => { state.klasse = +b.dataset.k; save(); A.sfx('tap'); settings(); });
+    el.querySelectorAll('input[name=meine]').forEach((x) => x.onchange = () => { s.meineSprache = x.value; save(); A.sfx('tap'); if (window.I18N) window.I18N.setze(x.value); });
     el.querySelectorAll('input[name=stimme]').forEach((x) => x.onchange = () => { s.stimme = x.value; save(); A.sfx('tap'); speak("Hello! I'm Ruby.", 'ruby'); });
     el.querySelector('[data-name]').onclick = async () => { await askName(); settings(); };
     el.querySelector('[data-parents]').onclick = () => { A.sfx('tap'); parentGate(); };
