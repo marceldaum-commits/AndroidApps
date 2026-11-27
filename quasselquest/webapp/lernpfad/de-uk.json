@@ -45,13 +45,13 @@
    "who": null
   },
   "hund": {
-   "name": "Hund",
+   "name": "Rex",
    "emoji": "🐶",
    "who": null
   },
   "bruder": {
-   "name": "Bruder",
-   "emoji": "👦",
+   "name": "Andrij",
+   "emoji": "🧒",
    "who": null
   }
  },
@@ -73,7 +73,7 @@
        "Hallo",
        "привіт",
        "👋",
-       "Hallo кажуть усім – друзям і дорослим."
+       "Hallo можна казати майже всім. Учителеві чи незнайомому дорослому краще сказати «Guten Tag»."
       ],
       [
        "Guten Morgen",
@@ -110,7 +110,8 @@
       [
        "Entschuldigung",
        "вибачте",
-       "🙇"
+       "🙇",
+       "Так кажуть, коли вибачаються або хочуть щось запитати («перепрошую»)."
       ]
      ],
      "saetze": [
@@ -137,15 +138,15 @@
      ],
      "regel": {
       "titel": "du чи Sie?",
-      "text": "Німецькою є два «ви»: «du» – це «ти» (друзі, діти, родина), а «Sie» – це «Ви» (дорослі, яких ти не знаєш, учителі). Слово «Sie» завжди пишуть з великої літери. Усі іменники в німецькій теж пишуть з великої літери: der Tag, die Schule.",
+      "text": "У німецькій мові є два способи звертатися: «du» – це «ти» (друзі, діти, родина), а «Sie» – це «Ви» (учителі, незнайомі дорослі). «Sie» у значенні «Ви» завжди пишуть з великої літери. Усі іменники в німецькій теж пишуть з великої літери: der Tag, die Schule.",
       "beispiele": [
        [
         "Wie geht’s dir?",
-        "Як ти? (другу)"
+        "Як у тебе справи? (другу)"
        ],
        [
         "Wie geht es Ihnen?",
-        "Як Ви? (дорослому)"
+        "Як у Вас справи? (дорослому)"
        ]
       ]
      },
@@ -197,43 +198,43 @@
         "a": "добре",
         "choices": [
          "погано",
-         "втомлена"
+         "так собі"
         ]
        }
       ]
      },
      "aktionen": [
       {
-       "sag": "Sag Lena Hallo.",
-       "de": "Скажи Лені привіт.",
+       "sag": "Sag Lena: „Hallo!“",
+       "de": "Скажи Лені: «Привіт!»",
        "ding": "👋",
        "anzahl": 1,
        "an": "lena"
       },
       {
-       "sag": "Sag Ben Tschüss.",
-       "de": "Скажи Бену бувай.",
+       "sag": "Sag Ben: „Tschüss!“",
+       "de": "Скажи Бену: «Бувай!»",
        "ding": "🙋",
        "anzahl": 1,
        "an": "ben"
       },
       {
-       "sag": "Sag Frau Weber Guten Tag.",
-       "de": "Скажи пані Вебер добрий день.",
+       "sag": "Sag Frau Weber: „Guten Tag!“",
+       "de": "Скажи пані Вебер: «Добрий день!»",
        "ding": "☀️",
        "anzahl": 1,
        "an": "weber"
       },
       {
-       "sag": "Sag Ruby Danke.",
-       "de": "Скажи Рубі дякую.",
+       "sag": "Sag Ruby: „Danke!“",
+       "de": "Скажи Рубі: «Дякую!»",
        "ding": "💐",
        "anzahl": 1,
        "an": "ruby"
       },
       {
-       "sag": "Sag Oksana Guten Morgen.",
-       "de": "Скажи Оксані доброго ранку.",
+       "sag": "Sag Oksana: „Guten Morgen!“",
+       "de": "Скажи Оксані: «Доброго ранку!»",
        "ding": "🌅",
        "anzahl": 1,
        "an": "oksana"
@@ -249,7 +250,7 @@
         "Gute",
         "Gutem"
        ],
-       "tipp": "Після «Guten» стоїть «Tag»: Guten Morgen, Guten Tag."
+       "tipp": "Вітання завжди з -en: Guten Morgen, Guten Tag, Guten Abend."
       },
       {
        "falsch": "Hallo, ich bist Ben.",
@@ -304,7 +305,7 @@
       ],
       [
        "heißen",
-       "називатися",
+       "звати(ся)",
        "🏷️",
        "ich heiße = мене звати"
       ],
@@ -338,7 +339,7 @@
      ],
      "regel": {
       "titel": "der, die, das",
-      "text": "У німецькій, як в українській, є три роди: der (чоловічий), die (жіночий), das (середній). Слово «der/die/das» – це артикль, його вчать разом зі словом: der Freund, die Freundin, das Mädchen. Українською артиклів немає, тому завжди запам’ятовуй слово з артиклем!",
+      "text": "У німецькій, як в українській, є три роди: der (чоловічий), die (жіночий), das (середній). «der/die/das» – це артикль, його вчать разом зі словом. Увага: рід часто НЕ збігається з українським: das Buch – книжка, der Stift – ручка. Тому завжди запам’ятовуй слово з артиклем!",
       "beispiele": [
        [
         "der Junge",
@@ -347,6 +348,10 @@
        [
         "die Freundin",
         "подруга (жіночий рід)"
+       ],
+       [
+        "das Mädchen",
+        "дівчинка (середній рід!)"
        ]
       ]
      },
@@ -365,8 +370,8 @@
        ],
        [
         "ben",
-        "Ich heiße Ben. Das ist meine Freundin Ruby.",
-        "Мене звати Бен. Це моя подруга Рубі."
+        "Ich heiße Ben. Das ist Ruby, mein Papagei.",
+        "Мене звати Бен. Це Рубі, мій папуга."
        ],
        [
         "ruby",
@@ -384,11 +389,11 @@
         ]
        },
        {
-        "q": "Хто така Рубі?",
-        "a": "подруга",
+        "q": "Хто Рубі для Бена?",
+        "a": "папуга",
         "choices": [
-         "вчителька",
-         "сестра"
+         "сестра",
+         "учителька"
         ]
        }
       ]
@@ -409,8 +414,8 @@
        "an": "oksana"
       },
       {
-       "sag": "Gib Ruby Sonnenblumenkerne.",
-       "de": "Дай Рубі насіння соняшника.",
+       "sag": "Gib Ruby eine Sonnenblume.",
+       "de": "Дай Рубі соняшник.",
        "ding": "🌻",
        "anzahl": 1,
        "an": "ruby"
@@ -451,7 +456,7 @@
         "heißen",
         "heiß"
        ],
-       "tipp": "ich heiße, du heißt – з «du» закінчення -st / -t."
+       "tipp": "З du зазвичай -st (du kommst), але після ß лише -t: du heißt."
       },
       {
        "falsch": "Ich komme aus die Ukraine.",
@@ -462,7 +467,7 @@
         "den",
         "das"
        ],
-       "tipp": "Після «aus» кажуть: aus der Ukraine, aus der Schweiz."
+       "tipp": "Україна німецькою – die Ukraine (з артиклем!). Після aus: die → der: aus der Ukraine. Але: aus Deutschland (без артикля)."
       }
      ]
     },
@@ -490,7 +495,8 @@
       [
        "der Stift",
        "ручка",
-       "✏️"
+       "🖊️",
+       "Увага: der Stift – чоловічий рід, хоча «ручка» жіночого."
       ],
       [
        "die Tasche",
@@ -499,9 +505,9 @@
       ],
       [
        "die Lehrerin",
-       "вчителька",
+       "учителька",
        "👩‍🏫",
-       "Вчитель – der Lehrer."
+       "Учитель – der Lehrer."
       ],
       [
        "die Klasse",
@@ -510,7 +516,7 @@
       ],
       [
        "das Klassenzimmer",
-       "кабінет",
+       "класна кімната",
        "🚪"
       ]
      ],
@@ -526,8 +532,8 @@
        "📓"
       ],
       [
-       "Frau Weber ist die Lehrerin.",
-       "Пані Вебер – вчителька.",
+       "Frau Weber ist meine Lehrerin.",
+       "Пані Вебер – моя учителька.",
        "👩‍🏫"
       ],
       [
@@ -538,15 +544,19 @@
      ],
      "regel": {
       "titel": "ein чи eine?",
-      "text": "Коли хочеш сказати «якась річ», ставиш ein або eine: ein Heft, ein Stift – а перед жіночими словами eine: eine Tasche, eine Schule. Пам’ятай: der і das → ein, die → eine. Українською цих слів немає, тому їх треба вивчити.",
+      "text": "Коли річ не конкретна або згадуєш її вперше, ставиш ein або eine: ein Heft, eine Tasche. Для der-слів після «ich habe» і «gib» ein змінюється на einen: einen Stift, einen Ball. die → eine, das → ein – вони не змінюються. Українською цих слів немає, тому їх треба вивчити.",
       "beispiele": [
        [
-        "ein Stift",
-        "ручка (der Stift)"
+        "ein Heft",
+        "зошит (das Heft)"
        ],
        [
         "eine Tasche",
         "сумка (die Tasche)"
+       ],
+       [
+        "Ich habe einen Stift.",
+        "У мене є ручка. (der Stift)"
        ]
       ]
      },
@@ -589,11 +599,11 @@
         ]
        },
        {
-        "q": "Що шукає вчителька?",
-        "a": "зошит",
+        "q": "Про що питає вчителька?",
+        "a": "про зошит",
         "choices": [
-         "ручку",
-         "сумку"
+         "про ручку",
+         "про сумку"
         ]
        }
       ]
@@ -659,15 +669,15 @@
        "tipp": "das Heft – середній рід, тому ein."
       },
       {
-       "falsch": "Frau Weber ist der Lehrerin.",
-       "richtig": "Frau Weber ist die Lehrerin.",
-       "wort": "der",
-       "korrektur": "die",
+       "falsch": "Frau Weber ist mein Lehrerin.",
+       "richtig": "Frau Weber ist meine Lehrerin.",
+       "wort": "mein",
+       "korrektur": "meine",
        "choices": [
-        "das",
-        "den"
+        "meinen",
+        "meinem"
        ],
-       "tipp": "die Lehrerin – жіночий рід, тому die."
+       "tipp": "die Lehrerin – жіночий рід, тому meine."
       }
      ]
     },
@@ -742,7 +752,7 @@
      ],
      "regel": {
       "titel": "mein чи meine?",
-      "text": "«Мій / моя» – це mein і meine. Перед der- і das-словами: mein (mein Bruder, mein Opa). Перед die-словами: meine (meine Schwester, meine Oma). Так само, як в українській «мій брат» і «моя сестра».",
+      "text": "«Мій / моя» – це mein і meine. Дивись на артикль, а не на українське слово: der Bruder → mein Bruder, die Schwester → meine Schwester, das Buch → mein Buch (хоча «моя книжка»). Перед der- і das-словами mein, перед die-словами meine.",
       "beispiele": [
        [
         "mein Bruder",
@@ -751,6 +761,10 @@
        [
         "meine Schwester",
         "моя сестра"
+       ],
+       [
+        "mein Buch",
+        "моя книжка (das Buch)"
        ]
       ]
      },
@@ -799,36 +813,36 @@
      },
      "aktionen": [
       {
-       "sag": "Gib der Oma eine Blume.",
+       "sag": "Gib Oma eine Blume.",
        "de": "Дай бабусі квітку.",
        "ding": "🌸",
        "anzahl": 1,
        "an": "oma"
       },
       {
-       "sag": "Gib dem Opa ein Buch.",
+       "sag": "Gib Opa ein Buch.",
        "de": "Дай дідусеві книжку.",
        "ding": "📖",
        "anzahl": 1,
        "an": "opa"
       },
       {
-       "sag": "Gib dem Hund einen Knochen.",
-       "de": "Дай собаці кістку.",
+       "sag": "Gib Rex einen Knochen.",
+       "de": "Дай Рексові кістку.",
        "ding": "🦴",
        "anzahl": 1,
        "an": "hund"
       },
       {
-       "sag": "Gib der Mama einen Apfel.",
+       "sag": "Gib Mama einen Apfel.",
        "de": "Дай мамі яблуко.",
        "ding": "🍎",
        "anzahl": 1,
        "an": "mama"
       },
       {
-       "sag": "Gib dem Bruder einen Ball.",
-       "de": "Дай братові м’яч.",
+       "sag": "Gib Andrij einen Ball.",
+       "de": "Дай Андрієві м’яч.",
        "ding": "⚽",
        "anzahl": 1,
        "an": "bruder"
@@ -866,7 +880,7 @@
         "eine",
         "einem"
        ],
-       "tipp": "Після «hat» для der-слів кажуть einen: einen Hund."
+       "tipp": "der Hund → einen Hund після hat / habe / gib."
       }
      ]
     }
