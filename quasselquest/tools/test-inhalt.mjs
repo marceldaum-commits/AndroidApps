@@ -8,7 +8,6 @@ const dir = new URL('../webapp/', import.meta.url);
 const C = require(new URL('content.js', dir).pathname);
 globalThis.window = globalThis; // audio.js erwartet window
 const A = require(new URL('audio.js', dir).pathname);
-globalThis.UK_AKTIV = true;   // Ukrainisch im Test mitprüfen (in der App bis zur Freigabe AUS)
 const P = require(new URL('pakete.js', dir).pathname);
 const PIDX = JSON.parse(readFileSync(new URL('pakete/index.json', dir), 'utf8'));
 const PACKS = PIDX.pakete.map((m) => Object.assign(JSON.parse(readFileSync(new URL('pakete/' + m.id + '.json', dir), 'utf8')), { lang: m.sprache }));
@@ -212,7 +211,7 @@ test('Buchstaben-Bau nur, wenn das Wort eindeutig aus der Aufgabe folgt (keine A
   }
 });
 
-const LP = P.LERNPFAD.concat(['de-uk']).map((l) => JSON.parse(readFileSync(new URL('lernpfad/' + l + '.json', dir), 'utf8')));
+const LP = P.LERNPFAD.map((l) => JSON.parse(readFileSync(new URL('lernpfad/' + l + '.json', dir), 'utf8')));
 test('Lernpfad: jede Einheit vollständig, Bedeutungen eindeutig, Figuren vorhanden, Lektionen spielbar', () => {
   for (const lp of LP) for (const a of lp.abschnitte) for (const e of a.einheiten) {
     const wo = `${lp.sprache} ${e.id}`;
