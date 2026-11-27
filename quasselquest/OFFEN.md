@@ -1,12 +1,10 @@
-# Quasselquest – OFFEN (Arbeitsliste, Stand 25.11.2026, Version 0.5.5)
+# Quasselquest – OFFEN (Arbeitsliste, Stand 25.11.2026, Version 0.5.7)
 
 Regel (Marcel/Leitstand 25.11.): Liste selbständig der Reihe nach abarbeiten, Erledigtes mit Datum nach „Erledigt“, nie löschen. Wartet ein Punkt auf andere: einmal über die AppZentrale mit Frist fragen, dann weitermachen, nach Fristablauf nachhaken. Live: 0.4.6 · lernen-test: 0.5.5 (nach Deploy).
 
 ## Offen (Reihenfolge = Arbeitsreihenfolge)
 | # | Was | Frist | Nächster Schritt | Abhängigkeit | Status |
 |---|---|---|---|---|---|
-| 2 | Ukrainisch: Deutsch für ukrainische Kinder (DaZ): Ruby erklärt auf Ukrainisch, Lernpfad „Deutsch von Anfang an“, Umschalter „Meine Sprache: Українська“ | Do/Fr 26./27.11. | Konzept steht in `DAZ.md` (26.11.); als Nächstes `lernpfad/de-uk.json` Abschnitt 1 (4 Einheiten), dann „Meine Sprache“ + `i18n-uk.js` | Lektorat Muttersprache (Marcel entscheidet) | Konzept fertig, Umsetzung läuft |
-| 3 | Ukrainisch: Textliste „uk“ für das Tonstudio (Piper tetiana, 1.0/0.8, ID3, Lizenztext, Wasserzeichen-Pflicht klären) | Fr 27.11. | `tools/textliste.py` um „uk“ erweitern, Commit melden | Tonstudio (über AppZentrale) | offen |
 | 4 | Kokoro-Dateien mit Perth-Wasserzeichen einbauen (en → fr → es) | Einbau je Sprache ≤ 3 h nach Meldung, Release Mo 30.11., hart 01.12. | `tools/server-audio-einbauen.py`, Hörprüfung, ID3-/Perth-Check, Browser-Test, DSE-Zusatz „unhörbares digitales Wasserzeichen“ | Tonstudio (Übergabe Sa/So 28./29.11.) | wartet |
 | 5 | Notbremse 0.4.7 „Ton aus“ (fertig als Patch `hotfix/`) | Entscheidung Mo 30.11., ausliefern bis 01.12. 12:00 | nur bei Verzug von 4 anwenden lassen | Leitstand/Marcel (Termin) | bereit |
 | 6 | Pro-Umstellung 1.5.0 (6 Monate ab Einlösen, ein Gerät pro Code, Kauftext/AGB) | Stichtag offen | neue Texte hinter Flag, Server-Weg (signierte Einlösung) | Leitstand/Marcel (Stichtag), Server | wartet |
@@ -19,6 +17,11 @@ Regel (Marcel/Leitstand 25.11.): Liste selbständig der Reihe nach abarbeiten, E
 | 13 | Tonstudio-Tor-Sätze (Eltern-Tor spricht wieder) | offen | Sätze vom Tonstudio/Rechenblitz einbauen | Tonstudio | wartet |
 | 14 | „Heute dran“-Knopf, tägliche gemischte Wiederholung, Lernpfad EN Abschnitt 3, Latein Abschnitt 2, FR/ES je 2 weitere Pakete | Dezember | nach UEBERARBEITUNG.md/INHALTSPLAN.md | – | offen |
 | 15 | Browser-Test 4 Geräte für 0.5.3–0.5.5 neu laufen lassen | Do 26.11. | `node tools/web-start.mjs` | – | offen |
+
+## Gestrichen (nicht gelöscht)
+- **27.11.2026, Marcel: „wir nehmen ukrainisch komplett raus … ich habe meine Meinung geändert“.** Entfallen: Ukrainisch als Lernsprache, Deutsch für ukrainische Kinder (DaZ), „Meine Sprache“, Textliste „uk“, Muttersprachler-Prüfung. Entfernt in 0.5.7 (Commit siehe Git); der frühere Stand liegt in der Git-Historie (0.5.6 = e5a1b0d4). Gestrichene Zeilen:
+| 2 | Ukrainisch: Deutsch für ukrainische Kinder (DaZ): Ruby erklärt auf Ukrainisch, Lernpfad „Deutsch von Anfang an“, Umschalter „Meine Sprache: Українська“ | Do/Fr 26./27.11. | Konzept steht in `DAZ.md` (26.11.); als Nächstes `lernpfad/de-uk.json` Abschnitt 1 (4 Einheiten), dann „Meine Sprache“ + `i18n-uk.js` | Lektorat Muttersprache (Marcel entscheidet) | Lernpfad `de-uk.json` (4 Einheiten) geschrieben 27.11., Lektorat (25 Funde) umgesetzt 27.11.; „Meine Sprache“ + `i18n-uk.js` (≈45 Texte) in 0.5.6 gebaut, im Browser geprüft; offen: weitere Texte übersetzen, Ruby-Sprüche ukrainisch, Muttersprachler-Prüfung ab 28.11. (`PRUEFBOGEN-UKRAINISCH.md`) |
+| 3 | Ukrainisch: Textliste „uk“ für das Tonstudio (Piper tetiana, 1.0/0.8, ID3, Lizenztext, Wasserzeichen-Pflicht klären) | Fr 27.11. | `tools/textliste.py` um „uk“ erweitern, Commit melden | Tonstudio (über AppZentrale) | offen |
 | 16 | Ukrainisch im Browser bei `UK_AKTIV=true` prüfen (Sprachwahl, Lernpfad, Bildschirmfotos) | Do 26.11. | web-start mit Flag, Fotos ansehen | – | offen |
 
 ## Erledigt

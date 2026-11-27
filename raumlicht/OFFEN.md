@@ -1,4 +1,4 @@
-# OFFEN – Raumlicht (Stand 25.11.2026)
+# OFFEN – Raumlicht (Stand 27.11.2026)
 
 Regel (Marcel, 25.11.2026): Liste führen, der Reihe nach selbständig abarbeiten, Erledigtes mit Datum nach „Erledigt“ verschieben (nie löschen). Wartet etwas auf andere: einmal über die AppZentrale mit Frist anfragen, dann weitermachen.
 
@@ -9,8 +9,8 @@ Regel (Marcel, 25.11.2026): Liste führen, der Reihe nach selbständig abarbeite
 | 2 | Postfach-Zugriff (website_backup): add_repo wurde abgelehnt; braucht Marcels direkte Freigabe | sofort | warten, AppZentrale informiert (25.11.) | Marcel | wartet |
 | 3 | Server-Fristen/Freitext-Filter KI (Adresse/Tag ≤48 h gehasht, Zähler kurz befristen) | 04.12. | Anfrage ist gestellt (24.11.) | Leitstand/Server-Raum | wartet |
 | 4 | Live-Gang 2.18.42 (K4 Pflicht) | 01.12. | – | Geräte-Test Marcel, Leitstand | wartet |
-| 5 | Weitere Abi-Prüfungen (jetzt 8, Ziel 12–20), je Teil durchgerechnet und im Test nachgerechnet | Di 01.12. | 4–6 Themen entwerfen (Pyramide/Volumen, Lage Gerade–Ebene, Schnitt zweier Ebenen, Abstand windschief, Bewegung/Treffpunkt, Spiegelung) | – | offen |
-| 6 | Kapitel „Lage Gerade–Ebene, Ebene–Ebene“ und „Körper im Raum“ (Kommt-bald-Kacheln) | Di 01.12. / danach | Aufgaben entwerfen | – | offen |
+| 5 | Weitere Abi-Prüfungen (jetzt 11, Ziel 12–20), je Teil durchgerechnet und im Test nachgerechnet | Di 01.12. | 4–6 Themen entwerfen (Pyramide/Volumen, Lage Gerade–Ebene, Schnitt zweier Ebenen, Abstand windschief, Bewegung/Treffpunkt, Spiegelung) | – | offen |
+| 6 | Kapitel „Körper im Raum“ und „Geraden- und Ebenenscharen“ (Kommt-bald-Kacheln) | Di 01.12. / danach | Aufgaben entwerfen | – | offen |
 | 7 | Fr 27.11.: nur Prüfen/Korrigieren (Geräte-Test-Rückmeldungen, Fehler) | Fr 27.11. | Rückmeldungen einsammeln | Marcel/AppZentrale | offen |
 | 8 | Vorlesen einschalten erst wenn alles fertig (Stimme von Marcel gewählt, MP3 eingebaut, „KI-generierte Stimme“, ID3-Kommentar „KI-generiert …“, Lizenzliste, Marcel informiert) | offen | – | Tonstudio, Marcel | wartet |
 | 9 | Abgleich Tor/Einstellungen/Probestunden-Hinweise gegen V10/V15: nur Liste der Abweichungen vorlegen | offen | Liste erstellen und über AppZentrale vorlegen | Marcels direktes Ja nötig, bevor etwas geändert wird | offen |
@@ -25,6 +25,8 @@ Regel (Marcel, 25.11.2026): Liste führen, der Reihe nach selbständig abarbeite
 |---|---|
 | 25.11.2026 | DSE-Entwurf 10e KI-Tutor (store/datenschutz-abschnitt.md, Punkt 4); Fristen warten auf Leitstand |
 | 25.11.2026 | Tonstudio-Textliste Format 1 (nur Deutsch, Tempo normal): `vorlesen/textliste.json`, 963 Texte, 82 584 Zeichen; Dateinamen-Schema `<id>.mp3` noch vom Tonstudio zu bestätigen |
+| 27.11.2026 | 2.18.43: Kapitel „Lage von Gerade und Ebene“ (8 Aufgaben), 3 neue Abi-Prüfungen (Glaspyramide, Spiegelsaal, Zwei Schiffe) → 107 Aufgaben/18 Kapitel/11 Prüfungen |
+| 26.11.2026 | DSE 10e Fassung 0.3 nach Recht V46c; Meldung Nova/OpenAI raus |
 | 24.11.2026 | 2.18.39: Startanimation, PC-Ansicht, Kopplung lösen mit Altersfrage, Zählpunkt „umzug“, Nova/OpenAI entfernt, DSE-Link |
 | 24.11.2026 | 2.18.40: Kapitel „Gleichungssysteme & Gauß“ (7 Aufgaben), 4 neue Abi-Prüfungen |
 | 24.11.2026 | 2.18.41/.42: KI-Antworten maschinenlesbar und für Screenreader gekennzeichnet (K4) |

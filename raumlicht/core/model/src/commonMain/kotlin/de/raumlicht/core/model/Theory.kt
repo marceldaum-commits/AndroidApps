@@ -500,6 +500,16 @@ object Theory {
                 "I + II: 2x₁ = 6, also x₁ = 3; dann x₂ = 2",
                 "P(3|2|2) – Probe in I: 3 + 2 = 5 ✓"),
             "Das Minus beim Abziehen gilt für die ganze Zeile – auch für die rechte Seite!"),
+        c("lage-ebene", "🧭", "Lage von Gerade und Ebene", LAGE,
+            "Gerade und Ebene schneiden sich, laufen parallel oder die Gerade liegt ganz in der Ebene. Zwei Ebenen: parallel, identisch oder eine Schnittgerade.",
+            listOf("Gerade g: x⃗ = A + t · d⃗, Ebene E: n⃗ · x⃗ = c. Rechne n⃗ · d⃗.",
+                "n⃗ · d⃗ ≠ 0: g schneidet E (t aus n⃗ · (A + t · d⃗) = c). n⃗ · d⃗ = 0: Punktprobe mit A.",
+                "A in E: g liegt in E. A nicht in E: g ist echt parallel zu E.",
+                "Zwei Ebenen: n⃗₂ = k · n⃗₁? Nein: Schnittgerade. Ja: c₂ = k · c₁ identisch, sonst parallel."),
+            listOf("n⃗ = (1|2|0), d⃗ = (2|−1|3): n⃗ · d⃗ = 2 − 2 + 0 = 0",
+                "A(1|1|1): 1 + 2 = 3, und c = 3 → A liegt in E",
+                "g liegt in E (hätte c = 5 gestanden: echt parallel)"),
+            "Aus n⃗ · d⃗ = 0 folgt nicht „liegt in E“, sondern nur „parallel oder drin“ – die Punktprobe entscheidet."),
     )
 
     private val analysis = listOf(
@@ -874,6 +884,11 @@ object Theory {
         "schnittpunkt-geraden" to "abi-kran-a", "winkel-geraden" to "abi-kran-b", "abstand-windschief" to "abi-kran-c", "mittelpunkt" to "abi-kran-d abi-ballon-a",
         "kugel" to "abi-ballon-b abi-ballon-d", "tangentialebene" to "abi-ballon-c", "winkel-gerade-ebene" to "abi-rutsche-b",
         "abstand-parallele-geraden" to "abi-rutsche-c", "parameter" to "abi-rutsche-d",
+        "mittelpunkt" to "abi-pyramide-a", "koordinatenform" to "abi-pyramide-b", "volumen-pyramide" to "abi-pyramide-c", "abstand-punkt-ebene" to "abi-pyramide-d abi-spiegelsaal-b",
+        "lotfusspunkt" to "abi-spiegelsaal-a", "spiegeln-ebene" to "abi-spiegelsaal-c", "reflexion" to "abi-spiegelsaal-d",
+        "bewegung" to "abi-schiffe-a", "schnittpunkt-geraden" to "abi-schiffe-b", "kleinster-abstand" to "abi-schiffe-c abi-schiffe-d",
+        "lage-ebene" to "28-1 28-2 28-3 28-4 28-5 28-6 28-7",
+        "schnittgerade" to "28-8",
         "lgs" to "27-1 27-2 27-3 27-4 27-5 27-6 27-7",
     ).flatMap { (key, ids) -> ids.split(' ').map { it to key } }.toMap()
 
@@ -918,7 +933,7 @@ object Theory {
         6 to "skalarprodukt", 7 to "winkel", 8 to "lot-gerade", 9 to "kugel", 10 to "flaeche-kreuzprodukt",
         11 to "bewegung", 12 to "rotation", 13 to "pfadregeln", 14 to "extrempunkte", 15 to "scheitelform",
         16 to "vierfeldertafel", 17 to "ableitung", 18 to "koordinatenform", 19 to "schnittgerade", 20 to "spiegeln-ebene",
-        21 to "schnittkreis", 26 to "hesse", 27 to "lgs", 22 to "integral-flaeche", 23 to "erwartungswert", 24 to "binomial-kumuliert", 25 to "produktregel",
+        21 to "schnittkreis", 26 to "hesse", 27 to "lgs", 28 to "lage-ebene", 22 to "integral-flaeche", 23 to "erwartungswert", 24 to "binomial-kumuliert", 25 to "produktregel",
     )
 
     /** Über welche Stufe die Karte gefunden wird: 1 = Aufgaben-ID, 2 = Titel, 3 = Kapitel, 4 = allgemeine Karte */

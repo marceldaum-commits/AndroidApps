@@ -1,9 +1,9 @@
 // Offline-Speicher der WebApp. Die Versionsnummer wechselt mit jeder Auslieferung (prüft tools/test-inhalt.mjs).
-const VERSION = '0.5.5';
+const VERSION = '0.5.7';
 const CACHE = 'quasselquest-' + VERSION;
 const OFFLINE = 'quasselquest-offline';   // vom Offline-Download je Sprache (offline.js) – bleibt bei Updates erhalten
 const FILES = ['./', 'index.html', 'app.css', 'version.js', 'content.js', 'pakete.js', 'audio.js', 'app.js', 'datenschutz.html', 'datenblatt-schule.html',
-  'manifest.webmanifest', 'audio/index.json', 'offline.js', 'auswertung.js', 'speicher.js', 'pro.js', 'familie-bruecke.js', 'js/familie.js', 'pakete/index.json', 'lernpfad/en.json', 'lernpfad/fr.json', 'lernpfad/es.json', 'lernpfad/uk.json', 'lernpfad/la.json', 'lizenzen.txt', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
+  'manifest.webmanifest', 'audio/index.json', 'offline.js', 'auswertung.js', 'speicher.js', 'pro.js', 'familie-bruecke.js', 'js/familie.js', 'pakete/index.json', 'lernpfad/en.json', 'lernpfad/fr.json', 'lernpfad/es.json', 'lernpfad/la.json', 'lizenzen.txt', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {
   // Programmdateien und alle vorab vertonten Sätze (audio/index.json) offline speichern

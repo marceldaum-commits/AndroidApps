@@ -308,7 +308,7 @@ object Levels {
             "Die große Bühne. Hier zählt jeder Winkel.",
             "Skalarprodukt null heißt senkrecht. Damit findest du Lote, Abstände und Spiegelbilder.",
             "Das ist Abi-Niveau – und du bist bereit."), ch6),
-    ) + MoreLevels.chapters + TourThree.chapters + TourFour.chapters + TourFive.chapters + TourSix.chapters + TourSeven.chapters + TourEight.chapters + TourNine.chapters + TourTen.chapters
+    ) + MoreLevels.chapters + TourThree.chapters + TourFour.chapters + TourFive.chapters + TourSix.chapters + TourSeven.chapters + TourEight.chapters + TourNine.chapters + TourTen.chapters + TourEleven.chapters
     /**
      * Die Tour: **nur Geometrie im Raum** (seit 2.18.32). Die klassischen Aufgaben zu Analysis und Stochastik (Kapitel 12–17 und 22–25, 52 Aufgaben)
      * sind herausgenommen – der Mathe-Trainer hat sie alle als Rechentraining; Raumlicht zeigt Analysis und Zufall nur noch zum Erleben ([Erleben]).

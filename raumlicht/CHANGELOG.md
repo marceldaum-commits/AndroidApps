@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.43 – Lage von Gerade und Ebene & drei weitere Abi-Prüfungen (27.11.2026)
+- **Neues Kapitel 18 „Lage von Gerade und Ebene“:** Schneidet der Strahl die Scheibe, läuft er daneben oder liegt er mittendrin? 8 Aufgaben (Strahl und Scheibe, „Wunschrichtung“ mit Parameter, zwei Scheiben: parallel, identisch oder eine Schnittgerade, Parameter für „parallel“ und ein Abi-Check mit einer Dachkante). Dazu eine neue Theorie-Karte mit Formelkasten. Die ersten 2 Aufgaben sind frei, der Rest gehört zu Raumlicht Pro (wie bei den anderen Kapiteln).
+- **Drei neue Abi-Prüfungen** mit je vier Teilen und 12 Punkten: **Glaspyramide** (Spitze, Seitenfläche, Volumen, Abstand), **Spiegelsaal** (Lotfußpunkt, Abstand, Spiegelbild, Weg des Lichts) und **Zwei Schiffe** (Ort, Kreuzung der Kurse, engste Stelle, Mindestabstand). Damit gibt es jetzt 11 Prüfungsaufgaben; die erste ist frei.
+- Jede neue Aufgabe und jedes Ergebnis wurde zusätzlich unabhängig nachgerechnet (automatischer Test).
+- Die „Kommt bald“-Kachel „Lage von Gerade und Ebene“ ist erfüllt und verschwindet; neu steht dort „Geraden- und Ebenenscharen“.
+
 ## 2.18.42 – KI-Kennzeichnung für jede Antwort einzeln und für Vorlese-Programme (24.11.2026)
 - Jede KI-Antwort des KI-Tutors trägt jetzt ihre eigene Kennzeichnung „KI-erzeugt“, die auch Vorlese-Programme für Blinde und Sehbehinderte ansagen. Am Aussehen ändert sich nichts; es werden keine Daten gesendet oder gespeichert.
 

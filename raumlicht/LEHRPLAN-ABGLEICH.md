@@ -38,7 +38,7 @@ Die ersten Zeilen sind in fast allen Ländern Pflicht, meist schon im Grundnivea
 | 13 | Kombinatorik, Urnenmodelle, Ziehen ohne Zurücklegen | BY 12, NW, HE | geplant („Pfade zählen“ gibt es schon) |
 | 14 | Wurzelfunktion, Umkehrfunktion | BY 12, NW, HE | geplant |
 | 15 | Gebrochenrationale Funktionen, Asymptoten, Quotientenregel | BY großer Block; BW LF, HE einfach | geplant |
-| 16 | Lage Gerade–Ebene und Ebene–Ebene als Fallunterscheidung, lineare Abhängigkeit | BY 13, BW LF, NW LK, NI eA, HE LK | geplant (Bausteine vorhanden) |
+| 16 | Lage Gerade–Ebene und Ebene–Ebene als Fallunterscheidung, lineare Abhängigkeit | BY 13, BW LF, NW LK, NI eA, HE LK | ✅ Kapitel 18 (intern 28; seit 2.18.43: 8 Aufgaben mit Theorie) |
 | 17 | Symmetrie, Verhalten im Unendlichen, Verschieben und Strecken | BY, NW, NI, HE Einführung | geplant |
 | 18 | Grenzwerte, Stetigkeit anschaulich | BY 11, NI eA | geplant |
 | 19 | Projektion, Schattenwurf | HE Pflicht (GK und LK), NI eA | geplant (Schatten-Aufgaben 5-6 und Abi „Zelt“ gibt es) |

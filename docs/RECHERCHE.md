@@ -290,3 +290,5 @@ Quellen: [ISB Bayern – Fachlehrplan Englisch 3/4](https://www.isb.bayern.de/fi
 - **Qualität:** Der Text ist von uns selbst geschrieben und muss vor der Freigabe von einer Muttersprachlerin bzw. einem Muttersprachler gelesen werden. Bis dahin bleibt Ukrainisch hinter `UK_AKTIV=false`.
 - **Stimme:** Piper `uk_UA-ukrainian_tts-medium`, Sprecherin 2 „tetiana“ (Recht und Marcel freigegeben). Quellenangabe und KI-Kennzeichnung wie bei den anderen Stimmen; Vertonung über das Tonstudio (Textliste „uk“).
 - **Quellen für Didaktik:** Allgemeine Befunde zu DaZ und Erstsprache als Brücke (Muttersprachliche Wörter als Anker verbessern den Erwerb der Zweitsprache), kurze Einheiten, viel Hören und Sprechen. Eine eigene, ausführlichere Recherche für DaZ folgt mit dem DaZ-Lernpfad (Do/Fr).
+
+> **Nachtrag 27.11.2026:** Marcel hat Ukrainisch komplett gestrichen. Die Recherche oben bleibt als Verlauf stehen; der Stand vor der Entfernung liegt in der Git-Historie (Quasselquest 0.5.6 = e5a1b0d4).

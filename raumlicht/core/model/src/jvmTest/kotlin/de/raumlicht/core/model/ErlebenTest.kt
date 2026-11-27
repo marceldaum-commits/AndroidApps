@@ -8,7 +8,7 @@ import kotlin.math.abs
 /** Profil seit 2.18.32: nur Geometrie im Raum als Aufgaben; Analysis und Zufall zum Erleben – mit dem Rotationskörper-Labor. */
 class ErlebenTest {
     @Test fun nurNochGeometrieInDerTour() {
-        assertEquals(17, Levels.chapters.size); assertEquals(99, Levels.all.size); assertTrue(Levels.chapters.all { it.area == Area.GEOMETRIE })
+        assertEquals(18, Levels.chapters.size); assertEquals(107, Levels.all.size); assertTrue(Levels.chapters.all { it.area == Area.GEOMETRIE })
         assertEquals(10, Levels.removed.size); assertEquals(52, Levels.removed.sumOf { it.levels.size })
         assertEquals(setOf(12, 13, 14, 15, 16, 17, 22, 23, 24, 25), Levels.removed.map { it.number }.toSet())
         for (c in Levels.removed) for (l in c.levels) assertNull("gestrichen: ${l.id}", Levels.byId(l.id))
@@ -16,8 +16,8 @@ class ErlebenTest {
 
     /** Angezeigt wird lückenlos 1 bis 17; die internen Nummern (Sterne, Links von außen) bleiben. */
     @Test fun kapitelLueckenlosAngezeigt() {
-        assertEquals((1..17).toList(), Levels.chapters.map { Levels.shown(it.number) })
-        assertEquals(12, Levels.shown(18)); assertEquals(15, Levels.shown(21)); assertEquals(16, Levels.shown(26)); assertEquals(17, Levels.shown(27)); assertEquals(5, Levels.shown(5))
+        assertEquals((1..18).toList(), Levels.chapters.map { Levels.shown(it.number) })
+        assertEquals(12, Levels.shown(18)); assertEquals(15, Levels.shown(21)); assertEquals(16, Levels.shown(26)); assertEquals(17, Levels.shown(27)); assertEquals(18, Levels.shown(28)); assertEquals(5, Levels.shown(5))
         assertEquals("12-3", Levels.label("18-3")); assertEquals("16-8", Levels.label("26-8")); assertEquals("5-6", Levels.label("5-6")); assertEquals("tag-7", Levels.label("tag-7")); assertEquals("14-1", Levels.label("14-1"))
         // von außen verlinkte Ziele gibt es weiter
         for (id in listOf("5-6", "3-1", "5-1")) assertNotNull(id, Levels.byId(id))
@@ -25,7 +25,7 @@ class ErlebenTest {
 
     /** Nirgends taucht mehr eine gestrichene Aufgabe auf: Abi-Teil, Pflichtteil, Tagesaufgabe, endloses Üben, Formelsammlung, „Kommt bald“. */
     @Test fun nichtsGestrichenesTauchtAuf() {
-        assertEquals(listOf("zelt", "leinwand", "drohnen", "planetarium", "dach", "kran", "ballon", "rutsche"), Exams.all.map { it.id })
+        assertEquals(listOf("zelt", "leinwand", "drohnen", "planetarium", "dach", "kran", "ballon", "rutsche", "pyramide", "spiegelsaal", "schiffe"), Exams.all.map { it.id })
         val gone = Levels.removed.flatMap { it.levels }.map { it.id }.toSet()
         for (seed in 1L..40) { val q = Quick.pick(seed); assertEquals(Quick.TASKS, q.size); assertTrue(q.none { it.id in gone }); assertEquals(q.size, q.map { it.id }.toSet().size) }
         for (day in 20_770L..20_830L) assertNotEquals("Rotationskörper", Daily.forDay(day).title)
@@ -35,7 +35,7 @@ class ErlebenTest {
         for (card in Sheet.cards) for (n in card.chapters) assertTrue("${card.title} → Kapitel $n", Levels.chapters.any { it.number == n })
         for (t in Soon.topics) for (bad in listOf("Normalverteilung", "Zufall", "Sinus", "Scharen", "Unabhängig")) assertFalse(t.title, t.title.contains(bad))
         assertEquals(10, Erleben.links.size); assertTrue(Erleben.links.all { it.url.startsWith("https://trainer.mathenachhilfe-online.com/#/u/") && it.unit.matches(Regex("[a-z0-9-]+")) })
-        assertTrue(Pro.benefits.first().contains("99 Aufgaben in 17 Kapiteln"))
+        assertTrue(Pro.benefits.first().contains("107 Aufgaben in 18 Kapiteln"))
     }
 
     /** Rotationskörper-Labor: Jedes Volumen stimmt mit der Scheiben-Rechnung überein – für alle Voreinstellungen und für alle einstellbaren Werte. */

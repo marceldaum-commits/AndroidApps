@@ -9,6 +9,6 @@ object Soon {
     val topics = listOf(
         Topic("💡", "Schattenwurf", "Licht, Körper, Schatten – auf Boden und Wand"),
         Topic("🧊", "Körper im Raum", "Pyramide, Prisma, Zelt: Kanten, Flächen, Volumen"),
-        Topic("🪟", "Lage von Gerade und Ebene", "schneidet, liegt drin oder läuft parallel?"),
+        Topic("🎛️", "Geraden- und Ebenenscharen", "ein Parameter, viele Geraden: welche trifft den Punkt?"),
     )
 }
