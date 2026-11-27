@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 27.11.2026 – 2.18.43: Inhalt – Kapitel „Lage von Gerade und Ebene“ und drei neue Abi-Prüfungen
+
+- **Neues Kapitel** (angezeigt 18, intern 28, `TourEleven.kt`): 8 Aufgaben (Gerade–Ebene: parallel/schneidet/liegt in; Parameter a; zwei Ebenen: identisch/parallel; Parameter k; Abi-Check Schnittgerade) mit neuer Theorie-Karte `lage-ebene` samt Formelkasten; Kachel „Lage von Gerade und Ebene“ aus „Kommt bald“ entfernt, neu: „Geraden- und Ebenenscharen“. Ab Kapitel 7 sind die ersten 2 Aufgaben frei.
+- **Drei neue Abi-Prüfungen** (`ExamsEleven.kt`): Glaspyramide, Spiegelsaal, Zwei Schiffe – je 4 Teile à 12 BE; damit 11 Prüfungen (1 frei). Das Ziel von 12–20 ist fast erreicht; weitere folgen.
+- **Rechenprüfung:** `TourElevenTest`/`ExamsElevenTest` rechnen jede Lösung unabhängig nach (n⃗·d⃗, Punktprobe, Vielfache der Normalenvektoren, Kreuzprodukt, Volumen, Lotfußpunkt, Spiegelbild, Minimum des Abstands). Zahlen jetzt 107 Aufgaben in 18 Kapiteln. Eine Aufgabe, die sich nicht sauber nachrechnen ließ, gab es nicht.
+- **Geprüft:** Logik- und Oberflächen-Tests, Lint, Web-Build, Browser-Prüfungen (Splash, Modus, Diagnose, Störung, Installation, breit, Pro, KI, Update, Zählung, still) grün; Bildschirmfotos angesehen (Kapitel 18, Glaspyramide, Spiegelsaal); in der Pyramide Teil a ist die Spitze nicht mehr sichtbar.
+- **Rechtsbezug: nein** – reiner Lerninhalt, keine neuen Daten oder Texte zu Datenschutz/Einwilligung. Der Live-Gang von 2.18.42/.43 hängt an K4 und DSE 10e (Geräte-Test, Leitstand).
+
 ## 24.11.2026 – 2.18.42: KI-Kennzeichnung je Antwort mit Screenreader-Hinweis (Recht V46a); Nova-Meldung (Auftrag 180)
 
 - Jede KI-Antwort bekommt ihr eigenes Element (`role="note"`, `aria-label`, `aria-description`) im versteckten Container `#ki-erzeugt`; `web-ki` prüft es. **Rechtsbezug: ja (Art. 50 KI-VO)**.

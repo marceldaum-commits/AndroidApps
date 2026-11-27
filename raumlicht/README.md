@@ -5,7 +5,7 @@ Die Bühne ist echtes 3D: drehen, zoomen, Punkte und Vektoren direkt im Raum zie
 man sieht nur den Anfang eines Strahls, den Rest verrät die Rechnung (Recherche: `../docs/RECHERCHE.md`).
 
 **Profil seit 2.18.32 (19.11.2026): Geometrie im Raum – dazu Analysis und Zufall zum Erleben.**
-**99 Aufgaben in 17 Kapiteln** zur Geometrie im Raum (dazu 8 Abi-Prüfungsaufgaben), jedes Kapitel endet mit einem Abi-Check – jede Aufgabe mit Tipp und Rechenweg.
+**107 Aufgaben in 18 Kapiteln** zur Geometrie im Raum (dazu 11 Abi-Prüfungsaufgaben), jedes Kapitel endet mit einem Abi-Check – jede Aufgabe mit Tipp und Rechenweg.
 Dazu **4 Prüfungsaufgaben im Abi-Stil**, Tagesaufgabe, Endlos üben, der Bereich **„Analysis & Zufall erleben“** (Kurve abfahren, Achterbahn-Baumeister,
 Geisterfahrt gegen f′, Rotationskörper-Labor, Zufallsmaschine, Galton-Brett, Binomial-Labor) und der Bereich „Mehr“: Flug durch den Raum, Ballerbude, Ringflug, Rechenweg in Schritten, Ohne Hilfsmittel,
 Lage von Geraden erkennen, Fehler wiederholen, Fehler-Tagebuch, Lernstand, Klausur-Planer, Kalender der Tagesaufgaben, Duell per Code,
@@ -52,7 +52,7 @@ Zu zweit an einem Gerät, Klassen-Paket, 3D-Rechner & Baukasten, Formelsammlung,
 - 📅 **Tagesaufgabe** – jeden Tag eine Aufgabe (Themen wechseln reihum), für drei Jahre im Test auf Lösbarkeit geprüft; 🎟️ **Kalender der Tagesaufgaben** (`Calendar`) – verpasste Tage kosten nichts.
 - 📓 **Formelsammlung** – alle Formeln, mit Sprung zu den passenden Aufgaben. 🏅 **Erfolge** – 14 Auszeichnungen für Fortschritt. Ergebnis-Karte zum Teilen (`ShareCard`).
 
-**Aufbau für Nutzer:** die Tour „Geometrie im Raum“ mit 17 Kapiteln (lückenlos 1–17 angezeigt) und daneben „Analysis & Zufall erleben“. Kapitel heißen nach ihrem Thema.
+**Aufbau für Nutzer:** die Tour „Geometrie im Raum“ mit 18 Kapiteln (lückenlos 1–18 angezeigt) und daneben „Analysis & Zufall erleben“. Kapitel heißen nach ihrem Thema.
 Intern tragen die Kapitel weiter ihre alten Nummern (1–11, 18–21, 26), damit Sterne und Links von außen (`?ziel=level/5-6`) gültig bleiben; `Levels.shown` und `Levels.label` rechnen für die Anzeige um.
 Die früheren Kapitel 12–17 und 22–25 (52 Rechenaufgaben zu Analysis und Stochastik) sind seit 2.18.32 herausgenommen – der Mathe-Trainer hat sie alle als Rechentraining
 (Entscheidung und Abgleich: `WOCHENRUNDE.md`). Ihre Definitionen liegen noch ungenutzt im Quelltext (`Levels.removed`) und werden nach der Live-Freigabe gelöscht.
@@ -188,6 +188,14 @@ Freiwilliger, Ende-zu-Ende verschlüsselter Eltern-Bericht (`core/model/…/Elte
 **Neue Abi-Prüfungen (2.18.40):** Dachfläche, Baukran, Heißluftballon und Wasserrutsche – je vier Teile, 12 Punkte.
 
 ![](screenshots/99_abi_dachflaeche.png)
+
+**Lage von Gerade und Ebene (neu in 2.18.43, Kapitel 18):** schneidet, läuft daneben oder liegt drin?
+
+![](screenshots/100_lage_gerade_ebene.png)
+
+**Abi-Prüfung „Spiegelsaal“ (2.18.43):** Lotfußpunkt, Abstand, Spiegelbild und der Weg des Lichts.
+
+![](screenshots/101_abi_spiegelsaal.png)
 
 **Familien-Speicher (für Eltern, vorerst nur Teststufe):** Familie anlegen oder mit dem Familien-Link beitreten – der Lernstand liegt verschlüsselt im gemeinsamen Speicher aller Lern-Apps.
 

@@ -6770,6 +6770,598 @@
    ]
   },
   {
+   "id": "84f460026a96b9f26592",
+   "sprache": "de",
+   "text": "In der Prismenhalle stehen Scheiben und Strahlen. Du entscheidest: Trifft der Strahl, läuft er daneben oder liegt er mittendrin?",
+   "sprechtext": "In der Prismenhalle stehen Scheiben und Strahlen. Du entscheidest: Trifft der Strahl, läuft er daneben oder liegt er mittendrin?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/84f460026a96b9f26592.mp3"
+    }
+   ]
+  },
+  {
+   "id": "d49b042c07d8d3d69e13",
+   "sprache": "de",
+   "text": "Der Schlüssel ist n⃗ · d⃗: Ist es null, läuft der Strahl parallel zur Scheibe – ob er drin liegt, zeigt dann die Punktprobe.",
+   "sprechtext": "Der Schlüssel ist n mal d: Ist es null, läuft der Strahl parallel zur Scheibe, ob er drin liegt, zeigt dann die Punktprobe.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/d49b042c07d8d3d69e13.mp3"
+    }
+   ]
+  },
+  {
+   "id": "631632c9597251279e4c",
+   "sprache": "de",
+   "text": "Bei zwei Scheiben vergleichst du die Normalenvektoren: Vielfache heißt parallel oder identisch, sonst schneiden sie sich in einer Geraden.",
+   "sprechtext": "Bei zwei Scheiben vergleichst du die Normalenvektoren: Vielfache heißt parallel oder identisch, sonst schneiden sie sich in einer Geraden.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/631632c9597251279e4c.mp3"
+    }
+   ]
+  },
+  {
+   "id": "9fca124f119bc2fd72a5",
+   "sprache": "de",
+   "text": "Die Gerade g und die Scheibe E: Wie liegen sie zueinander? 0 = parallel, 1 = schneidet, 2 = liegt in E.",
+   "sprechtext": "Die Gerade g und die Scheibe E: Wie liegen sie zueinander? null gleich parallel, eins gleich schneidet, zwei gleich liegt in E.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/9fca124f119bc2fd72a5.mp3"
+    }
+   ]
+  },
+  {
+   "id": "3abfd4687cf8c8ddef3a",
+   "sprache": "de",
+   "text": "Erst n⃗ · d⃗ ausrechnen: Ist es null, läuft g parallel oder liegt in E. Dann den Stützpunkt A in E einsetzen.",
+   "sprechtext": "Erst n mal d ausrechnen: Ist es null, läuft g parallel oder liegt in E. Dann den Stützpunkt A in E einsetzen.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/3abfd4687cf8c8ddef3a.mp3"
+    }
+   ]
+  },
+  {
+   "id": "eafcec76587c5d9ecde1",
+   "sprache": "de",
+   "text": "0 – parallel: Der Strahl läuft nie durch die Scheibe.",
+   "sprechtext": "null, parallel: Der Strahl läuft nie durch die Scheibe.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/eafcec76587c5d9ecde1.mp3"
+    }
+   ]
+  },
+  {
+   "id": "2e9f008cadea260354f5",
+   "sprache": "de",
+   "text": "Die Zahl ist kleiner. Rechne noch einmal nach.",
+   "sprechtext": "Die Zahl ist kleiner. Rechne noch einmal nach.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/2e9f008cadea260354f5.mp3"
+    }
+   ]
+  },
+  {
+   "id": "21c769e63a89efdfd5eb",
+   "sprache": "de",
+   "text": "Die Zahl ist kleiner. Rechne noch einmal nach. Tipp gefällig? 💡",
+   "sprechtext": "Die Zahl ist kleiner. Rechne noch einmal nach. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/21c769e63a89efdfd5eb.mp3"
+    }
+   ]
+  },
+  {
+   "id": "250a8c966aa6e93f9e38",
+   "sprache": "de",
+   "text": "Wieder g und E. Diesmal ein anderer Strahl: 0 = parallel, 1 = schneidet, 2 = liegt in E.",
+   "sprechtext": "Wieder g und E. Diesmal ein anderer Strahl: null gleich parallel, eins gleich schneidet, zwei gleich liegt in E.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/250a8c966aa6e93f9e38.mp3"
+    }
+   ]
+  },
+  {
+   "id": "21468dadf00ba0d84abf",
+   "sprache": "de",
+   "text": "n⃗ · d⃗ ausrechnen, dann die Punktprobe mit A.",
+   "sprechtext": "n mal d ausrechnen, dann die Punktprobe mit A.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/21468dadf00ba0d84abf.mp3"
+    }
+   ]
+  },
+  {
+   "id": "05f5ff13e852bed85545",
+   "sprache": "de",
+   "text": "2 – g liegt ganz in der Scheibe.",
+   "sprechtext": "zwei, g liegt ganz in der Scheibe.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/05f5ff13e852bed85545.mp3"
+    }
+   ]
+  },
+  {
+   "id": "8a7dfee05b160eab69c8",
+   "sprache": "de",
+   "text": "Die Zahl ist größer. Rechne noch einmal nach.",
+   "sprechtext": "Die Zahl ist größer. Rechne noch einmal nach.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/8a7dfee05b160eab69c8.mp3"
+    }
+   ]
+  },
+  {
+   "id": "be818009daf4183358e3",
+   "sprache": "de",
+   "text": "Die Zahl ist größer. Rechne noch einmal nach. Tipp gefällig? 💡",
+   "sprechtext": "Die Zahl ist größer. Rechne noch einmal nach. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/be818009daf4183358e3.mp3"
+    }
+   ]
+  },
+  {
+   "id": "f6d065f980a84d9b9748",
+   "sprache": "de",
+   "text": "Und noch ein Strahl: 0 = parallel, 1 = schneidet, 2 = liegt in E.",
+   "sprechtext": "Und noch ein Strahl: null gleich parallel, eins gleich schneidet, zwei gleich liegt in E.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/f6d065f980a84d9b9748.mp3"
+    }
+   ]
+  },
+  {
+   "id": "336c02b1859b306680a2",
+   "sprache": "de",
+   "text": "n⃗ · d⃗ ≠ 0 heißt: g stößt durch die Scheibe.",
+   "sprechtext": "n mal d ungleich null heißt: g stößt durch die Scheibe.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/336c02b1859b306680a2.mp3"
+    }
+   ]
+  },
+  {
+   "id": "36163e1aca56c58ebd44",
+   "sprache": "de",
+   "text": "1 – schneidet, im Punkt S(3|2|1).",
+   "sprechtext": "eins, schneidet, im Punkt S drei, zwei, eins.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/36163e1aca56c58ebd44.mp3"
+    }
+   ]
+  },
+  {
+   "id": "b78fc1e6468af55ad25b",
+   "sprache": "de",
+   "text": "Parallel wäre n⃗ · d⃗ = 0. Hier ist es 2 + 1 + 0 = 3.",
+   "sprechtext": "Parallel wäre n mal d gleich null. Hier ist es zwei plus eins plus null gleich drei.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/b78fc1e6468af55ad25b.mp3"
+    }
+   ]
+  },
+  {
+   "id": "4468d0b9725e5f7195f1",
+   "sprache": "de",
+   "text": "Parallel wäre n⃗ · d⃗ = 0. Hier ist es 2 + 1 + 0 = 3. Tipp gefällig? 💡",
+   "sprechtext": "Parallel wäre n mal d gleich null. Hier ist es zwei plus eins plus null gleich drei. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/4468d0b9725e5f7195f1.mp3"
+    }
+   ]
+  },
+  {
+   "id": "d2d029574cbd08735d46",
+   "sprache": "de",
+   "text": "Der Strahl g soll ganz in der Scheibe E liegen. Der Stützpunkt A liegt schon drin. Welche Zahl a muss in der Richtung stehen?",
+   "sprechtext": "Der Strahl g soll ganz in der Scheibe E liegen. Der Stützpunkt A liegt schon drin. Welche Zahl a muss in der Richtung stehen?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/d2d029574cbd08735d46.mp3"
+    }
+   ]
+  },
+  {
+   "id": "a93d754fa04c9d3d4713",
+   "sprache": "de",
+   "text": "Liegt A in E (Punktprobe), dann liegt g genau dann in E, wenn n⃗ · d⃗ = 0 ist.",
+   "sprechtext": "Liegt A in E, Punktprobe, dann liegt g genau dann in E, wenn n mal d gleich null ist.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/a93d754fa04c9d3d4713.mp3"
+    }
+   ]
+  },
+  {
+   "id": "f663f24362ea0deb25bb",
+   "sprache": "de",
+   "text": "a = −1 – dann steht d⃗ senkrecht auf n⃗ und g bleibt in E.",
+   "sprechtext": "a gleich minus eins, dann steht d senkrecht auf n und g bleibt in E.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/f663f24362ea0deb25bb.mp3"
+    }
+   ]
+  },
+  {
+   "id": "8612540aca98da9eb49d",
+   "sprache": "de",
+   "text": "Die Zahl a ist kleiner. Rechne noch einmal nach.",
+   "sprechtext": "Die Zahl a ist kleiner. Rechne noch einmal nach.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/8612540aca98da9eb49d.mp3"
+    }
+   ]
+  },
+  {
+   "id": "ac28608d693de461d6c3",
+   "sprache": "de",
+   "text": "Die Zahl a ist kleiner. Rechne noch einmal nach. Tipp gefällig? 💡",
+   "sprechtext": "Die Zahl a ist kleiner. Rechne noch einmal nach. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/ac28608d693de461d6c3.mp3"
+    }
+   ]
+  },
+  {
+   "id": "20d4050d4656980b8abe",
+   "sprache": "de",
+   "text": "Wie liegen die beiden Scheiben zueinander? 0 = parallel, 1 = schneiden sich, 2 = identisch.",
+   "sprechtext": "Wie liegen die beiden Scheiben zueinander? null gleich parallel, eins gleich schneiden sich, zwei gleich identisch.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/20d4050d4656980b8abe.mp3"
+    }
+   ]
+  },
+  {
+   "id": "6ef4826f97c2231ada16",
+   "sprache": "de",
+   "text": "Vergleiche die Normalenvektoren: Ist einer ein Vielfaches des anderen? Dann auch die rechte Seite vergleichen.",
+   "sprechtext": "Vergleiche die Normalenvektoren: Ist einer ein Vielfaches des anderen? Dann auch die rechte Seite vergleichen.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/6ef4826f97c2231ada16.mp3"
+    }
+   ]
+  },
+  {
+   "id": "cbf867d6e9d3aab92198",
+   "sprache": "de",
+   "text": "2 – dieselbe Scheibe, nur anders aufgeschrieben.",
+   "sprechtext": "zwei, dieselbe Scheibe, nur anders aufgeschrieben.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/cbf867d6e9d3aab92198.mp3"
+    }
+   ]
+  },
+  {
+   "id": "ae5d18fedcce0b30fef5",
+   "sprache": "de",
+   "text": "Wie liegen diese beiden Scheiben zueinander? 0 = parallel, 1 = schneiden sich, 2 = identisch.",
+   "sprechtext": "Wie liegen diese beiden Scheiben zueinander? null gleich parallel, eins gleich schneiden sich, zwei gleich identisch.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/ae5d18fedcce0b30fef5.mp3"
+    }
+   ]
+  },
+  {
+   "id": "a35ef00ed599aa55105c",
+   "sprache": "de",
+   "text": "Normalenvektoren vergleichen, dann die rechte Seite mit demselben Faktor.",
+   "sprechtext": "Normalenvektoren vergleichen, dann die rechte Seite mit demselben Faktor.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/a35ef00ed599aa55105c.mp3"
+    }
+   ]
+  },
+  {
+   "id": "95229e28a7cfde6cfaa1",
+   "sprache": "de",
+   "text": "0 – parallel, aber nicht dieselbe Scheibe.",
+   "sprechtext": "null, parallel, aber nicht dieselbe Scheibe.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/95229e28a7cfde6cfaa1.mp3"
+    }
+   ]
+  },
+  {
+   "id": "eb65522ebd64c6711a18",
+   "sprache": "de",
+   "text": "Für welches k sind E₁ und E₂ parallel (und verschieden)?",
+   "sprechtext": "Für welches k sind E eins und E zwei parallel, und verschieden?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/eb65522ebd64c6711a18.mp3"
+    }
+   ]
+  },
+  {
+   "id": "294bc7facd4c24366aff",
+   "sprache": "de",
+   "text": "Parallel heißt: n⃗₂ ist ein Vielfaches von n⃗₁. Die ersten beiden Zahlen (2|2) sind das Doppelte von (1|1) – also muss k das Doppelte von 1 sein.",
+   "sprechtext": "Parallel heißt: n zwei ist ein Vielfaches von n eins. Die ersten beiden Zahlen zwei, zwei sind das Doppelte von eins, eins, also muss k das Doppelte von eins sein.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/294bc7facd4c24366aff.mp3"
+    }
+   ]
+  },
+  {
+   "id": "8b5ca3f94f8555b48be3",
+   "sprache": "de",
+   "text": "k = 2 – gleiche Richtung, verschobene Scheibe.",
+   "sprechtext": "k gleich zwei, gleiche Richtung, verschobene Scheibe.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/8b5ca3f94f8555b48be3.mp3"
+    }
+   ]
+  },
+  {
+   "id": "55867073df3fc14ab446",
+   "sprache": "de",
+   "text": "Die Zahl k ist größer. Rechne noch einmal nach.",
+   "sprechtext": "Die Zahl k ist größer. Rechne noch einmal nach.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/55867073df3fc14ab446.mp3"
+    }
+   ]
+  },
+  {
+   "id": "584a1cbcfd72edf2af26",
+   "sprache": "de",
+   "text": "Die Zahl k ist größer. Rechne noch einmal nach. Tipp gefällig? 💡",
+   "sprechtext": "Die Zahl k ist größer. Rechne noch einmal nach. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/584a1cbcfd72edf2af26.mp3"
+    }
+   ]
+  },
+  {
+   "id": "0cd29f738aa2aece9dca",
+   "sprache": "de",
+   "text": "Zwei Dachflächen treffen sich in einer Geraden (der Kante). Auf der Kante soll ein Lichtpunkt sitzen: der Punkt mit x₁ = 1. Wo ist er?",
+   "sprechtext": "Zwei Dachflächen treffen sich in einer Geraden, der Kante. Auf der Kante soll ein Lichtpunkt sitzen: der Punkt mit x eins gleich eins. Wo ist er?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/0cd29f738aa2aece9dca.mp3"
+    }
+   ]
+  },
+  {
+   "id": "43e14978d2b655bf7649",
+   "sprache": "de",
+   "text": "E₁ − E₂ verschiebt x₁ und x₃ weg: nur noch x₂ bleibt. Dann x₁ = 1 einsetzen.",
+   "sprechtext": "E eins minus E zwei verschiebt x eins und x drei weg: nur noch x zwei bleibt. Dann x eins gleich eins einsetzen.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/43e14978d2b655bf7649.mp3"
+    }
+   ]
+  },
+  {
+   "id": "99468b77f89a79a0d169",
+   "sprache": "de",
+   "text": "Punktlandung bei (1|2|4)!",
+   "sprechtext": "Punktlandung bei eins, zwei, vier!",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/99468b77f89a79a0d169.mp3"
+    }
+   ]
+  },
+  {
    "id": "f9e1add4f7261c587f1c",
    "sprache": "de",
    "text": "Ein Zelt hat die Form einer quadratischen Pyramide mit A(1|1|0), B(5|1|0), C(5|5|0), D(1|5|0). Das Zelt ist 3 Längeneinheiten hoch.",
@@ -8514,6 +9106,694 @@
    ]
   },
   {
+   "id": "95da2e4902c1907baef0",
+   "sprache": "de",
+   "text": "Eine Glaspyramide hat die quadratische Grundfläche ABCD mit A(0|0|0), B(6|0|0), C(6|6|0), D(0|6|0). Die Spitze S liegt 4 Meter senkrecht über dem Mittelpunkt der Grundfläche.",
+   "sprechtext": "Eine Glaspyramide hat die quadratische Grundfläche ABCD mit A null, null, null, B sechs, null, null, C sechs, sechs, null, D null, sechs, null. Die Spitze S liegt vier Meter senkrecht über dem Mittelpunkt der Grundfläche.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/95da2e4902c1907baef0.mp3"
+    }
+   ]
+  },
+  {
+   "id": "ceecf2c3310296fa3043",
+   "sprache": "de",
+   "text": "Wo liegt die Spitze S?",
+   "sprechtext": "Wo liegt die Spitze S?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/ceecf2c3310296fa3043.mp3"
+    }
+   ]
+  },
+  {
+   "id": "e2f37477af1bc96f33f5",
+   "sprache": "de",
+   "text": "Mittelpunkt M der Grundfläche = Mitte von A und C. Dann 4 nach oben.",
+   "sprechtext": "Mittelpunkt M der Grundfläche gleich Mitte von A und C. Dann vier nach oben.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/e2f37477af1bc96f33f5.mp3"
+    }
+   ]
+  },
+  {
+   "id": "9f8339ae5c30d02a6d19",
+   "sprache": "de",
+   "text": "Punktlandung bei (3|3|4)!",
+   "sprechtext": "Punktlandung bei drei, drei, vier!",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/9f8339ae5c30d02a6d19.mp3"
+    }
+   ]
+  },
+  {
+   "id": "c18bb4f2755ab6209b98",
+   "sprache": "de",
+   "text": "Bestimme eine Koordinatengleichung der Ebene, in der die Seitenfläche ABS liegt.",
+   "sprechtext": "Bestimme eine Koordinatengleichung der Ebene, in der die Seitenfläche ABS liegt.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/c18bb4f2755ab6209b98.mp3"
+    }
+   ]
+  },
+  {
+   "id": "91821ba0e206f452a77a",
+   "sprache": "de",
+   "text": "n⃗ = AB⃗ × AS⃗ mit AB⃗ = (6|0|0) und AS⃗ = (3|3|4). Dann c = n⃗ · A.",
+   "sprechtext": "n gleich AB Kreuz AS mit AB gleich sechs, null, null und AS gleich drei, drei, vier. Dann c gleich n mal A.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/91821ba0e206f452a77a.mp3"
+    }
+   ]
+  },
+  {
+   "id": "9d3b06682fd51312650b",
+   "sprache": "de",
+   "text": "A, B, S ✗: Setz die Punkte ein und prüfe die Gleichung.",
+   "sprechtext": "A, B, S stimmen noch nicht: Setz die Punkte ein und prüfe die Gleichung.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/9d3b06682fd51312650b.mp3"
+    }
+   ]
+  },
+  {
+   "id": "024ad3b3836100fc0537",
+   "sprache": "de",
+   "text": "A, B, S ✗: Setz die Punkte ein und prüfe die Gleichung. Tipp gefällig? 💡",
+   "sprechtext": "A, B, S stimmen noch nicht: Setz die Punkte ein und prüfe die Gleichung. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/024ad3b3836100fc0537.mp3"
+    }
+   ]
+  },
+  {
+   "id": "d9ac1385e648ad92175d",
+   "sprache": "de",
+   "text": "Wie groß ist das Volumen der Pyramide?",
+   "sprechtext": "Wie groß ist das Volumen der Pyramide?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/d9ac1385e648ad92175d.mp3"
+    }
+   ]
+  },
+  {
+   "id": "5262a84ed3dfaa847e5c",
+   "sprache": "de",
+   "text": "V = ⅓ · Grundfläche · Höhe.",
+   "sprechtext": "V gleich ein Drittel mal Grundfläche mal Höhe.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/5262a84ed3dfaa847e5c.mp3"
+    }
+   ]
+  },
+  {
+   "id": "f5101f8b26f57185654d",
+   "sprache": "de",
+   "text": "48 Kubikmeter.",
+   "sprechtext": "achtundvierzig Kubikmeter.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/f5101f8b26f57185654d.mp3"
+    }
+   ]
+  },
+  {
+   "id": "ba98ed8289e06f8cf2a3",
+   "sprache": "de",
+   "text": "Ein Strahler steht in Q(0|5|0). Wie weit ist er von der Seitenfläche ABS (4x₂ − 3x₃ = 0) entfernt?",
+   "sprechtext": "Ein Strahler steht in Q null, fünf, null. Wie weit ist er von der Seitenfläche ABS, vier x zwei minus drei x drei gleich null, entfernt?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/ba98ed8289e06f8cf2a3.mp3"
+    }
+   ]
+  },
+  {
+   "id": "8ab7b8efac353a9f14d4",
+   "sprache": "de",
+   "text": "d = |n⃗ · Q − c| : |n⃗| mit |n⃗| = √(16 + 9) = 5.",
+   "sprechtext": "d gleich Betrag von n mal Q minus c, geteilt durch Betrag von n mit Betrag von n gleich Wurzel aus sechzehn plus neun, gleich fünf.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/8ab7b8efac353a9f14d4.mp3"
+    }
+   ]
+  },
+  {
+   "id": "cb6229d71ed3f1f0ec27",
+   "sprache": "de",
+   "text": "4 Meter.",
+   "sprechtext": "vier Meter.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/cb6229d71ed3f1f0ec27.mp3"
+    }
+   ]
+  },
+  {
+   "id": "569fcaae0a027065c4ea",
+   "sprache": "de",
+   "text": "Ein ebener Spiegel liegt in der Ebene E: 2x₁ + x₂ + 2x₃ = 12. Eine Lampe L(1|1|0) leuchtet.",
+   "sprechtext": "Ein ebener Spiegel liegt in der Ebene E: zwei x eins plus x zwei plus zwei x drei gleich zwölf. Eine Lampe L eins, eins, null leuchtet.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/569fcaae0a027065c4ea.mp3"
+    }
+   ]
+  },
+  {
+   "id": "11b2cbcd3e858aa80c16",
+   "sprache": "de",
+   "text": "Wo trifft das Lot von L auf den Spiegel (Lotfußpunkt F)?",
+   "sprechtext": "Wo trifft das Lot von L auf den Spiegel, Lotfußpunkt F?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/11b2cbcd3e858aa80c16.mp3"
+    }
+   ]
+  },
+  {
+   "id": "c3387433a91638fec7f8",
+   "sprache": "de",
+   "text": "Lot: x⃗ = L + t · n⃗ mit n⃗ = (2|1|2). In E einsetzen und t bestimmen.",
+   "sprechtext": "Lot: x gleich L plus t mal n mit n gleich zwei, eins, zwei. In E einsetzen und t bestimmen.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/c3387433a91638fec7f8.mp3"
+    }
+   ]
+  },
+  {
+   "id": "d6889eb51f2c552d2cb0",
+   "sprache": "de",
+   "text": "Punktlandung bei (3|2|2)!",
+   "sprechtext": "Punktlandung bei drei, zwei, zwei!",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/d6889eb51f2c552d2cb0.mp3"
+    }
+   ]
+  },
+  {
+   "id": "e5c9d037b31a88976788",
+   "sprache": "de",
+   "text": "Wie weit ist die Lampe vom Spiegel entfernt?",
+   "sprechtext": "Wie weit ist die Lampe vom Spiegel entfernt?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/e5c9d037b31a88976788.mp3"
+    }
+   ]
+  },
+  {
+   "id": "211cfea6df4f603d5f9b",
+   "sprache": "de",
+   "text": "|LF⃗| oder d = |n⃗ · L − c| : |n⃗|.",
+   "sprechtext": "Betrag von LF oder d gleich Betrag von n mal L minus c, geteilt durch Betrag von n.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/211cfea6df4f603d5f9b.mp3"
+    }
+   ]
+  },
+  {
+   "id": "2e6adbb3da968e749b5a",
+   "sprache": "de",
+   "text": "Wo erscheint das Spiegelbild L′ der Lampe?",
+   "sprechtext": "Wo erscheint das Spiegelbild L Strich der Lampe?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/2e6adbb3da968e749b5a.mp3"
+    }
+   ]
+  },
+  {
+   "id": "17da86de101a8cfc33fe",
+   "sprache": "de",
+   "text": "L′ = 2 · F − L.",
+   "sprechtext": "L Strich gleich zwei mal F minus L.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/17da86de101a8cfc33fe.mp3"
+    }
+   ]
+  },
+  {
+   "id": "60b26a5f5ac85d438657",
+   "sprache": "de",
+   "text": "Punktlandung bei (5|3|4)!",
+   "sprechtext": "Punktlandung bei fünf, drei, vier!",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/60b26a5f5ac85d438657.mp3"
+    }
+   ]
+  },
+  {
+   "id": "b13eb6763db57caddc56",
+   "sprache": "de",
+   "text": "Das Licht geht von L über den Spiegel zum Ziel Z(5|0|0). Wie lang ist der Weg? (Tipp: Er ist so lang wie die Strecke von L′ nach Z.)",
+   "sprechtext": "Das Licht geht von L über den Spiegel zum Ziel Z fünf, null, null. Wie lang ist der Weg? Tipp: Er ist so lang wie die Strecke von L Strich nach Z.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/b13eb6763db57caddc56.mp3"
+    }
+   ]
+  },
+  {
+   "id": "592ce434c88375b0a079",
+   "sprache": "de",
+   "text": "Der Weg über den Spiegel ist so lang wie die gerade Strecke L′Z.",
+   "sprechtext": "Der Weg über den Spiegel ist so lang wie die gerade Strecke L Strich Z.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/592ce434c88375b0a079.mp3"
+    }
+   ]
+  },
+  {
+   "id": "52d4b9b4cabce844d586",
+   "sprache": "de",
+   "text": "5 Einheiten.",
+   "sprechtext": "fünf Einheiten.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/52d4b9b4cabce844d586.mp3"
+    }
+   ]
+  },
+  {
+   "id": "3d5ee8967221da4a213b",
+   "sprache": "de",
+   "text": "Der Weg ist größer. Rechne noch einmal nach.",
+   "sprechtext": "Der Weg ist größer. Rechne noch einmal nach.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/3d5ee8967221da4a213b.mp3"
+    }
+   ]
+  },
+  {
+   "id": "4cdd6ad52dfae00bf967",
+   "sprache": "de",
+   "text": "Der Weg ist größer. Rechne noch einmal nach. Tipp gefällig? 💡",
+   "sprechtext": "Der Weg ist größer. Rechne noch einmal nach. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/4cdd6ad52dfae00bf967.mp3"
+    }
+   ]
+  },
+  {
+   "id": "8993a499d96c6d252415",
+   "sprache": "de",
+   "text": "Zwei Schiffe fahren gleichzeitig los (t in Minuten, Angaben in Kilometern). Schiff 1: x⃗ = (0|2|0) + t · (1|1|0), Schiff 2: x⃗ = (6|0|0) + t · (−1|1|0).",
+   "sprechtext": "Zwei Schiffe fahren gleichzeitig los, t in Minuten, Angaben in Kilometern. Schiff eins: x gleich null, zwei, null plus t mal eins, eins, null, Schiff zwei: x gleich sechs, null, null plus t mal minus eins, eins, null.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/8993a499d96c6d252415.mp3"
+    }
+   ]
+  },
+  {
+   "id": "02455ff0c7d14e4e3b4c",
+   "sprache": "de",
+   "text": "Wo ist Schiff 1 nach 3 Minuten?",
+   "sprechtext": "Wo ist Schiff eins nach drei Minuten?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/02455ff0c7d14e4e3b4c.mp3"
+    }
+   ]
+  },
+  {
+   "id": "02f8f8bacbfff8f3cd34",
+   "sprache": "de",
+   "text": "t = 3 einsetzen.",
+   "sprechtext": "t gleich drei einsetzen.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/02f8f8bacbfff8f3cd34.mp3"
+    }
+   ]
+  },
+  {
+   "id": "72678dfbbfbfe7d92332",
+   "sprache": "de",
+   "text": "Punktlandung bei (3|5|0)!",
+   "sprechtext": "Punktlandung bei drei, fünf, null!",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/72678dfbbfbfe7d92332.mp3"
+    }
+   ]
+  },
+  {
+   "id": "74045003e0ce02f0cca6",
+   "sprache": "de",
+   "text": "In welchem Punkt kreuzen sich die beiden Kurse?",
+   "sprechtext": "In welchem Punkt kreuzen sich die beiden Kurse?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/74045003e0ce02f0cca6.mp3"
+    }
+   ]
+  },
+  {
+   "id": "1ca7b2cb98a77dde18a4",
+   "sprache": "de",
+   "text": "Gleichsetzen: s = 6 − u und 2 + s = u (zwei verschiedene Parameter!).",
+   "sprechtext": "Gleichsetzen: s gleich sechs minus u und zwei plus s gleich u, zwei verschiedene Parameter!",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/1ca7b2cb98a77dde18a4.mp3"
+    }
+   ]
+  },
+  {
+   "id": "3f28bbb7a3be99eac2ae",
+   "sprache": "de",
+   "text": "Genau dort: S(2|4|0)!",
+   "sprechtext": "Genau dort: S zwei, vier, null!",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/3f28bbb7a3be99eac2ae.mp3"
+    }
+   ]
+  },
+  {
+   "id": "8e2b508a145c024544d6",
+   "sprache": "de",
+   "text": "Zu welchem Zeitpunkt sind sich die Schiffe am nächsten?",
+   "sprechtext": "Zu welchem Zeitpunkt sind sich die Schiffe am nächsten?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/8e2b508a145c024544d6.mp3"
+    }
+   ]
+  },
+  {
+   "id": "3f1f3172da798b7cdd89",
+   "sprache": "de",
+   "text": "Abstandsvektor: (2t − 6|2|0). Seine Länge ist am kleinsten, wenn 2t − 6 = 0.",
+   "sprechtext": "Abstandsvektor: zwei t minus sechs, zwei, null. Seine Länge ist am kleinsten, wenn zwei t minus sechs gleich null.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/3f1f3172da798b7cdd89.mp3"
+    }
+   ]
+  },
+  {
+   "id": "ba98368e15b35f00c0b3",
+   "sprache": "de",
+   "text": "Nach 3 Minuten.",
+   "sprechtext": "Nach drei Minuten.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/ba98368e15b35f00c0b3.mp3"
+    }
+   ]
+  },
+  {
+   "id": "54247cd740ca5f06d616",
+   "sprache": "de",
+   "text": "Der Zeitpunkt liegt später. Rechne noch einmal nach.",
+   "sprechtext": "Der Zeitpunkt liegt später. Rechne noch einmal nach.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/54247cd740ca5f06d616.mp3"
+    }
+   ]
+  },
+  {
+   "id": "385c1457071e37f28e09",
+   "sprache": "de",
+   "text": "Der Zeitpunkt liegt später. Rechne noch einmal nach. Tipp gefällig? 💡",
+   "sprechtext": "Der Zeitpunkt liegt später. Rechne noch einmal nach. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/385c1457071e37f28e09.mp3"
+    }
+   ]
+  },
+  {
+   "id": "6cd19d5137229dec0a35",
+   "sprache": "de",
+   "text": "Wie groß ist der Abstand der Schiffe zu diesem Zeitpunkt (in Kilometern)?",
+   "sprechtext": "Wie groß ist der Abstand der Schiffe zu diesem Zeitpunkt, in Kilometern?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/6cd19d5137229dec0a35.mp3"
+    }
+   ]
+  },
+  {
+   "id": "f7502eeab715af78617c",
+   "sprache": "de",
+   "text": "Abstandsvektor bei t = 3 ausrechnen.",
+   "sprechtext": "Abstandsvektor bei t gleich drei ausrechnen.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/f7502eeab715af78617c.mp3"
+    }
+   ]
+  },
+  {
+   "id": "147295388a46bbb0ffd9",
+   "sprache": "de",
+   "text": "2 Kilometer.",
+   "sprechtext": "zwei Kilometer.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/147295388a46bbb0ffd9.mp3"
+    }
+   ]
+  },
+  {
    "id": "2eefa436d9d922a9b401",
    "sprache": "de",
    "text": "Hallo, ich bin Lux!",
@@ -9326,6 +10606,22 @@
      "art": "normal",
      "speed": 1.0,
      "datei": "audio/server/de/bd52614885327772e0a7.mp3"
+    }
+   ]
+  },
+  {
+   "id": "17fcf1f23fb7899cb19d",
+   "sprache": "de",
+   "text": "Gerade und Ebene schneiden sich, laufen parallel oder die Gerade liegt ganz in der Ebene. Zwei Ebenen: parallel, identisch oder eine Schnittgerade.",
+   "sprechtext": "Gerade und Ebene schneiden sich, laufen parallel oder die Gerade liegt ganz in der Ebene. Zwei Ebenen: parallel, identisch oder eine Schnittgerade.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/17fcf1f23fb7899cb19d.mp3"
     }
    ]
   },
@@ -15074,10 +16370,10 @@
    ]
   },
   {
-   "id": "9d3b06682fd51312650b",
+   "id": "09e90b64a958826a1afb",
    "sprache": "de",
-   "text": "A, B, S ✗: Setz die Punkte ein und prüfe die Gleichung.",
-   "sprechtext": "A, B, S stimmen noch nicht: Setz die Punkte ein und prüfe die Gleichung.",
+   "text": "Erst n⃗ · d⃗ = 0 zeigt „parallel oder drin“. Ob g drin liegt, entscheidet die Punktprobe: 3 + 1 + 0 = 4 ≠ 6.",
+   "sprechtext": "Erst n mal d gleich null zeigt parallel oder drin. Ob g drin liegt, entscheidet die Punktprobe: drei plus eins plus null gleich vier ungleich sechs.",
    "rollen": [
     "lux"
    ],
@@ -15085,15 +16381,15 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/9d3b06682fd51312650b.mp3"
+     "datei": "audio/server/de/09e90b64a958826a1afb.mp3"
     }
    ]
   },
   {
-   "id": "024ad3b3836100fc0537",
+   "id": "2741fd0bc52e17213282",
    "sprache": "de",
-   "text": "A, B, S ✗: Setz die Punkte ein und prüfe die Gleichung. Tipp gefällig? 💡",
-   "sprechtext": "A, B, S stimmen noch nicht: Setz die Punkte ein und prüfe die Gleichung. Tipp gefällig?",
+   "text": "Erst n⃗ · d⃗ = 0 zeigt „parallel oder drin“. Ob g drin liegt, entscheidet die Punktprobe: 3 + 1 + 0 = 4 ≠ 6. Tipp gefällig? 💡",
+   "sprechtext": "Erst n mal d gleich null zeigt parallel oder drin. Ob g drin liegt, entscheidet die Punktprobe: drei plus eins plus null gleich vier ungleich sechs. Tipp gefällig?",
    "rollen": [
     "lux"
    ],
@@ -15101,7 +16397,231 @@
     {
      "art": "normal",
      "speed": 1.0,
-     "datei": "audio/server/de/024ad3b3836100fc0537.mp3"
+     "datei": "audio/server/de/2741fd0bc52e17213282.mp3"
+    }
+   ]
+  },
+  {
+   "id": "e0fc76678538eecb5aa1",
+   "sprache": "de",
+   "text": "n⃗ · d⃗ = 0 gilt, aber die Punktprobe stimmt: 2 + 2 + 2 = 6. Dann liegt g in E – nicht nur parallel.",
+   "sprechtext": "n mal d gleich null gilt, aber die Punktprobe stimmt: zwei plus zwei plus zwei gleich sechs. Dann liegt g in E, nicht nur parallel.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/e0fc76678538eecb5aa1.mp3"
+    }
+   ]
+  },
+  {
+   "id": "fc13a1d4f52d66666901",
+   "sprache": "de",
+   "text": "n⃗ · d⃗ = 0 gilt, aber die Punktprobe stimmt: 2 + 2 + 2 = 6. Dann liegt g in E – nicht nur parallel. Tipp gefällig? 💡",
+   "sprechtext": "n mal d gleich null gilt, aber die Punktprobe stimmt: zwei plus zwei plus zwei gleich sechs. Dann liegt g in E, nicht nur parallel. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/fc13a1d4f52d66666901.mp3"
+    }
+   ]
+  },
+  {
+   "id": "aac3f9ea5cb20d94ec0b",
+   "sprache": "de",
+   "text": "Die Zahl a ist größer. Rechne noch einmal nach.",
+   "sprechtext": "Die Zahl a ist größer. Rechne noch einmal nach.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/aac3f9ea5cb20d94ec0b.mp3"
+    }
+   ]
+  },
+  {
+   "id": "77a8c40bbced04b2bfef",
+   "sprache": "de",
+   "text": "Die Zahl a ist größer. Rechne noch einmal nach. Tipp gefällig? 💡",
+   "sprechtext": "Die Zahl a ist größer. Rechne noch einmal nach. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/77a8c40bbced04b2bfef.mp3"
+    }
+   ]
+  },
+  {
+   "id": "d41e5164a56020eb9406",
+   "sprache": "de",
+   "text": "Mit a = 1 ist n⃗ · d⃗ = 2 ≠ 0: g steigt aus der Scheibe heraus.",
+   "sprechtext": "Mit a gleich eins ist n mal d gleich zwei ungleich null: g steigt aus der Scheibe heraus.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/d41e5164a56020eb9406.mp3"
+    }
+   ]
+  },
+  {
+   "id": "00dd56d8b89bd6f69dc7",
+   "sprache": "de",
+   "text": "Mit a = 1 ist n⃗ · d⃗ = 2 ≠ 0: g steigt aus der Scheibe heraus. Tipp gefällig? 💡",
+   "sprechtext": "Mit a gleich eins ist n mal d gleich zwei ungleich null: g steigt aus der Scheibe heraus. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/00dd56d8b89bd6f69dc7.mp3"
+    }
+   ]
+  },
+  {
+   "id": "abf87df753f7afdcd37d",
+   "sprache": "de",
+   "text": "Die Normalenvektoren sind Vielfache (Faktor 2). Auch die rechte Seite passt (6 = 2 · 3): Dann sind die Ebenen identisch, nicht nur parallel.",
+   "sprechtext": "Die Normalenvektoren sind Vielfache, Faktor zwei. Auch die rechte Seite passt, sechs gleich zwei mal drei: Dann sind die Ebenen identisch, nicht nur parallel.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/abf87df753f7afdcd37d.mp3"
+    }
+   ]
+  },
+  {
+   "id": "424c556fd2ff935619e4",
+   "sprache": "de",
+   "text": "Die Normalenvektoren sind Vielfache (Faktor 2). Auch die rechte Seite passt (6 = 2 · 3): Dann sind die Ebenen identisch, nicht nur parallel. Tipp gefällig? 💡",
+   "sprechtext": "Die Normalenvektoren sind Vielfache, Faktor zwei. Auch die rechte Seite passt, sechs gleich zwei mal drei: Dann sind die Ebenen identisch, nicht nur parallel. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/424c556fd2ff935619e4.mp3"
+    }
+   ]
+  },
+  {
+   "id": "92e6d8ee957e28e6891f",
+   "sprache": "de",
+   "text": "Mit Faktor 2 müsste rechts 2 · 4 = 8 stehen, es steht aber 10: Die Scheiben sind verschoben, nicht identisch.",
+   "sprechtext": "Mit Faktor zwei müsste rechts zwei mal vier gleich acht stehen, es steht aber zehn: Die Scheiben sind verschoben, nicht identisch.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/92e6d8ee957e28e6891f.mp3"
+    }
+   ]
+  },
+  {
+   "id": "8921eefff33f4502ab4f",
+   "sprache": "de",
+   "text": "Mit Faktor 2 müsste rechts 2 · 4 = 8 stehen, es steht aber 10: Die Scheiben sind verschoben, nicht identisch. Tipp gefällig? 💡",
+   "sprechtext": "Mit Faktor zwei müsste rechts zwei mal vier gleich acht stehen, es steht aber zehn: Die Scheiben sind verschoben, nicht identisch. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/8921eefff33f4502ab4f.mp3"
+    }
+   ]
+  },
+  {
+   "id": "4240fbc720db7a20b831",
+   "sprache": "de",
+   "text": "Mit k = 1 ist n⃗₂ = (2|2|1) kein Vielfaches von (1|1|1): Die Scheiben schneiden sich.",
+   "sprechtext": "Mit k gleich eins ist n zwei gleich zwei, zwei, eins kein Vielfaches von eins, eins, eins: Die Scheiben schneiden sich.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/4240fbc720db7a20b831.mp3"
+    }
+   ]
+  },
+  {
+   "id": "6d95bbbe46409ecaed0e",
+   "sprache": "de",
+   "text": "Mit k = 1 ist n⃗₂ = (2|2|1) kein Vielfaches von (1|1|1): Die Scheiben schneiden sich. Tipp gefällig? 💡",
+   "sprechtext": "Mit k gleich eins ist n zwei gleich zwei, zwei, eins kein Vielfaches von eins, eins, eins: Die Scheiben schneiden sich. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/6d95bbbe46409ecaed0e.mp3"
+    }
+   ]
+  },
+  {
+   "id": "18293861964545c3af83",
+   "sprache": "de",
+   "text": "Die Zahl k ist kleiner. Rechne noch einmal nach.",
+   "sprechtext": "Die Zahl k ist kleiner. Rechne noch einmal nach.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/18293861964545c3af83.mp3"
+    }
+   ]
+  },
+  {
+   "id": "5155c5a76738595d5abe",
+   "sprache": "de",
+   "text": "Die Zahl k ist kleiner. Rechne noch einmal nach. Tipp gefällig? 💡",
+   "sprechtext": "Die Zahl k ist kleiner. Rechne noch einmal nach. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/5155c5a76738595d5abe.mp3"
     }
    ]
   },
@@ -15422,6 +16942,166 @@
      "art": "normal",
      "speed": 1.0,
      "datei": "audio/server/de/0d0d223fc094c4ebeb74.mp3"
+    }
+   ]
+  },
+  {
+   "id": "97c760a1594afc1698b0",
+   "sprache": "de",
+   "text": "A ✓ – B, S ✗: Setz die Punkte ein und prüfe die Gleichung.",
+   "sprechtext": "A stimmt, B, S stimmen noch nicht: Setz die Punkte ein und prüfe die Gleichung.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/97c760a1594afc1698b0.mp3"
+    }
+   ]
+  },
+  {
+   "id": "a9e4544ba26379cfcb1a",
+   "sprache": "de",
+   "text": "A ✓ – B, S ✗: Setz die Punkte ein und prüfe die Gleichung. Tipp gefällig? 💡",
+   "sprechtext": "A stimmt, B, S stimmen noch nicht: Setz die Punkte ein und prüfe die Gleichung. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/a9e4544ba26379cfcb1a.mp3"
+    }
+   ]
+  },
+  {
+   "id": "33a9d8e47646921e3f0c",
+   "sprache": "de",
+   "text": "3 ist der Weg von L zum Spiegel. Gesucht ist der ganze Weg bis Z.",
+   "sprechtext": "drei ist der Weg von L zum Spiegel. Gesucht ist der ganze Weg bis Z.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/33a9d8e47646921e3f0c.mp3"
+    }
+   ]
+  },
+  {
+   "id": "40031ff9538d732f7696",
+   "sprache": "de",
+   "text": "3 ist der Weg von L zum Spiegel. Gesucht ist der ganze Weg bis Z. Tipp gefällig? 💡",
+   "sprechtext": "drei ist der Weg von L zum Spiegel. Gesucht ist der ganze Weg bis Z. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/40031ff9538d732f7696.mp3"
+    }
+   ]
+  },
+  {
+   "id": "1432989b721c3c449677",
+   "sprache": "de",
+   "text": "Der Weg ist kleiner. Rechne noch einmal nach.",
+   "sprechtext": "Der Weg ist kleiner. Rechne noch einmal nach.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/1432989b721c3c449677.mp3"
+    }
+   ]
+  },
+  {
+   "id": "35ae10d8118b53eeb143",
+   "sprache": "de",
+   "text": "Der Weg ist kleiner. Rechne noch einmal nach. Tipp gefällig? 💡",
+   "sprechtext": "Der Weg ist kleiner. Rechne noch einmal nach. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/35ae10d8118b53eeb143.mp3"
+    }
+   ]
+  },
+  {
+   "id": "2c0d013c9881f7b18004",
+   "sprache": "de",
+   "text": "Bei t = 2 ist der Abstand √(4 + 4) = √8 ≈ 2,83. Es geht noch näher.",
+   "sprechtext": "Bei t gleich zwei ist der Abstand Wurzel aus vier plus vier, gleich Wurzel aus acht ungefähr zwei Komma acht drei. Es geht noch näher.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/2c0d013c9881f7b18004.mp3"
+    }
+   ]
+  },
+  {
+   "id": "55d7a3ab7c5c3841e269",
+   "sprache": "de",
+   "text": "Bei t = 2 ist der Abstand √(4 + 4) = √8 ≈ 2,83. Es geht noch näher. Tipp gefällig? 💡",
+   "sprechtext": "Bei t gleich zwei ist der Abstand Wurzel aus vier plus vier, gleich Wurzel aus acht ungefähr zwei Komma acht drei. Es geht noch näher. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/55d7a3ab7c5c3841e269.mp3"
+    }
+   ]
+  },
+  {
+   "id": "647d867de683c430ea4a",
+   "sprache": "de",
+   "text": "Der Zeitpunkt liegt früher. Rechne noch einmal nach.",
+   "sprechtext": "Der Zeitpunkt liegt früher. Rechne noch einmal nach.",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/647d867de683c430ea4a.mp3"
+    }
+   ]
+  },
+  {
+   "id": "3fe1ead9207ddcb88bdc",
+   "sprache": "de",
+   "text": "Der Zeitpunkt liegt früher. Rechne noch einmal nach. Tipp gefällig? 💡",
+   "sprechtext": "Der Zeitpunkt liegt früher. Rechne noch einmal nach. Tipp gefällig?",
+   "rollen": [
+    "lux"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/de/3fe1ead9207ddcb88bdc.mp3"
     }
    ]
   }

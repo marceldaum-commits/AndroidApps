@@ -13,7 +13,7 @@ internal object ExamsTen {
     private fun lineText(name: String, a: V3, d: V3, param: String = "t") = listOf(Txt("$name: x⃗ = "), col(a), Txt(" + $param · "), col(d))
 
     /** Eine Zahl einstellen (Abstand, Radius, Winkel …) – [check] gibt die Rückmeldung */
-    private fun number(id: String, title: String, mission: String, name: String, range: IntRange, solution: Int, start: Int, tip: String, way: List<String>,
+    internal fun number(id: String, title: String, mission: String, name: String, range: IntRange, solution: Int, start: Int, tip: String, way: List<String>,
                        given: List<List<Part>>, objects: List<Obj>, ok: String, mistakes: Map<Int, String> = emptyMap(),
                        step: Int = 1, suffix: String = "", color: String = "pink", what: String = "Der Wert", beam: ((Int) -> Beam)? = null) =
         Families.scalar(id, 0, title, mission, name, range, solution, start, tip, way, color, step, suffix,

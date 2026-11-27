@@ -194,12 +194,12 @@ class ModesFlowTest {
     }
 
 
-    /** Startseite seit 2.18.32: alle 17 Kapitel der Geometrie im Raum auf einen Blick, lückenlos nummeriert – und daneben der Weg zu „Analysis & Zufall erleben“. */
+    /** Startseite seit 2.18.32: alle 18 Kapitel der Geometrie im Raum auf einen Blick, lückenlos nummeriert – und daneben der Weg zu „Analysis & Zufall erleben“. */
     @Test fun homeShowsGeometryAndTheWayToExperiences() {
         val opened = ArrayList<String>(); var experience = 0
         show { HomeScreen(Levels.chapters, mapOf("1-1" to 3), { opened += it }, {}, onExperience = { experience++ }) }
         rule.onNodeWithTag("gebiet-GEOMETRIE").assertExists(); rule.onNodeWithTag("gebiet-ANALYSIS").assertDoesNotExist(); rule.onNodeWithTag("gebiet-STOCHASTIK").assertDoesNotExist()
-        rule.onNodeWithTag("kapitel-anzahl").assertTextContains("17 Kapitel")
+        rule.onNodeWithTag("kapitel-anzahl").assertTextContains("18 Kapitel")
         rule.onNodeWithTag("kapitel-3").assertExists(); for (gone in listOf(12, 13, 14, 15, 16, 17, 22, 23, 24, 25)) rule.onNodeWithTag("kapitel-$gone").assertDoesNotExist()
         // Kapitel 18 (intern) heißt auf dem Bildschirm Kapitel 12 – keine Lücke
         rule.onNodeWithTag("kapitel-18").performScrollTo().performClick(); rule.mainClock.advanceTimeBy(600)
