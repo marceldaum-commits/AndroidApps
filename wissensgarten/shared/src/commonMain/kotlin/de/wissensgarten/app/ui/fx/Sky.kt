@@ -64,25 +64,24 @@ fun SkyScene(
     val festival = de.wissensgarten.core.model.Seasons.festival(date)
     val wind = LocalWind.current
     Box(modifier.clip(androidx.compose.foundation.shape.RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))) {
-        // Vorbereitete Ebenen (siehe Sprite.kt): Himmel + Sonne/Mond und Hügel ändern sich nur mit Tageszeit/Jahreszeit,
-        // nicht in jedem Bild. Nur Wolken, Sterne, Schmetterlinge und Partikel werden pro Bild bewegt.
-        val himmelBild = remember { Sprite() }
-        val huegelBild = remember { Sprite() }
+        // Pfade und Farbverlauf werden gemerkt statt in jedem Bild neu gebaut: Der Browser merkt sich fertig gezeichnete Formen nur,
+        // wenn es dasselbe Pfad-Objekt ist. Neue Pfad-Objekte pro Bild bedeuten, dass jede große Fläche in jedem Bild neu gerechnet wird.
+        val himmelBrush = remember(time) { skyColors(time).let { SafeBrush.verticalGradient(listOf(it.first, it.second)) } }
         val wolkenFormen = remember { List(3) { WolkenForm() } }
+        val huegelFormen = remember { HuegelFormen() }
+        val mondForm = remember { MondForm() }
         if (!Experiment.aus("himmel")) Canvas(Modifier.matchParentSize()) {
             val t = wind?.value ?: 0f
-            val ebene = listOf(time, hour.toInt(), season, decos)
-            if (!Experiment.aus("bild")) drawSprite(himmelBild, ebene) {
-                val (top, bottom) = skyColors(time)
-                drawRect(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(top, bottom)))
-                sunOrMoon(time, hour)
-                if ("regenbogen" in decos && time != DayTime.NIGHT) drawDeco("regenbogen", 0f, 0f, 0f, 0f, false)
+            if (!Experiment.aus("bild")) {
+                drawRect(himmelBrush)
+                sunOrMoon(time, hour, mondForm)
+                if ("regenbogen" in decos && time != DayTime.NIGHT) drawDeco("regenbogen", 0f, 0f, 0f, t, false)
             }
             if (time == DayTime.NIGHT) stars(t)
             if (!Experiment.aus("wolken")) clouds(wolkenFormen, t, if (time == DayTime.NIGHT) 0.18f else 0.9f)
-            if (!Experiment.aus("bild")) drawSprite(huegelBild, ebene) {
-                hills(time, season)
-                if ("zaun" in decos) drawDeco("zaun", 0f, size.height - 22.dp.toPx(), 40.dp.toPx(), 0f, false)
+            if (!Experiment.aus("bild")) {
+                hills(time, season, huegelFormen)
+                if ("zaun" in decos) drawDeco("zaun", 0f, size.height - 22.dp.toPx(), 40.dp.toPx(), t, false)
             }
             if (happy && time != DayTime.NIGHT && !Experiment.aus("falter")) butterflies(t)
             if (time == DayTime.NIGHT && season != de.wissensgarten.core.model.Season.WINTER) fireflies(t)
@@ -127,16 +126,27 @@ private fun DrawScope.stars(t: Float) {
     }
 }
 
-private fun DrawScope.sunOrMoon(time: DayTime, hour: Float) {
+/** Mondsichel (Differenz zweier Kreise ist teuer): nur bei neuer Größe berechnen */
+class MondForm {
+    private var key: Triple<Float, Float, Float>? = null
+    private var path: Path? = null
+    fun get(c: Offset, r: Float): Path {
+        val k = Triple(c.x, c.y, r)
+        path?.let { if (key == k) return it }
+        val full = Path().apply { addOval(androidx.compose.ui.geometry.Rect(c, r)) }
+        val cut = Path().apply { addOval(androidx.compose.ui.geometry.Rect(c + Offset(r * 0.5f, -r * 0.25f), r * 0.88f)) }
+        return Path.combine(androidx.compose.ui.graphics.PathOperation.Difference, full, cut).also { path = it; key = k }
+    }
+}
+
+private fun DrawScope.sunOrMoon(time: DayTime, hour: Float, mond: MondForm) {
     val w = size.width; val h = size.height
     if (time == DayTime.NIGHT) {
         val c = Offset(w * 0.8f, h * 0.4f)
         val r = h * 0.085f
         drawCircle(Color(0xFFFFF8E1).copy(alpha = 0.12f), r * 2.2f, c)
-        // echte Sichel: Kreis minus versetzter Kreis
-        val full = Path().apply { addOval(androidx.compose.ui.geometry.Rect(c, r)) }
-        val cut = Path().apply { addOval(androidx.compose.ui.geometry.Rect(c + Offset(r * 0.5f, -r * 0.25f), r * 0.88f)) }
-        drawPath(Path.combine(androidx.compose.ui.graphics.PathOperation.Difference, full, cut), Color(0xFFFFF8E1))
+        // echte Sichel: Kreis minus versetzter Kreis (gemerkt)
+        drawPath(mond.get(c, r), Color(0xFFFFF8E1))
     } else {
         // Sonne wandert von links (6 Uhr) nach rechts (21 Uhr)
         val f = ((hour - 6f) / 15f).coerceIn(0f, 1f)
@@ -176,7 +186,32 @@ private fun DrawScope.clouds(formen: List<WolkenForm>, t: Float, alpha: Float) {
     }
 }
 
-private fun DrawScope.hills(time: DayTime, season: de.wissensgarten.core.model.Season) {
+/** Hügelformen: gleiche Pfad-Objekte in jedem Bild, solange die Größe gleich bleibt */
+class HuegelFormen {
+    private var w = -1f
+    private var h = -1f
+    private var a: Path? = null
+    private var b: Path? = null
+    fun get(w: Float, h: Float): Pair<Path, Path> {
+        val x = a; val y = b
+        if (x != null && y != null && this.w == w && this.h == h) return x to y
+        val p1 = Path().apply {
+            moveTo(0f, h * 0.62f)
+            cubicTo(w * 0.25f, h * 0.48f, w * 0.45f, h * 0.7f, w * 0.7f, h * 0.56f)
+            cubicTo(w * 0.85f, h * 0.48f, w * 0.95f, h * 0.55f, w, h * 0.58f)
+            lineTo(w, h); lineTo(0f, h); close()
+        }
+        val p2 = Path().apply {
+            moveTo(0f, h * 0.78f)
+            cubicTo(w * 0.3f, h * 0.68f, w * 0.6f, h * 0.84f, w, h * 0.72f)
+            lineTo(w, h); lineTo(0f, h); close()
+        }
+        a = p1; b = p2; this.w = w; this.h = h
+        return p1 to p2
+    }
+}
+
+private fun DrawScope.hills(time: DayTime, season: de.wissensgarten.core.model.Season, formen: HuegelFormen) {
     val w = size.width; val h = size.height
     val dim = when (time) { DayTime.NIGHT -> 0.55f; DayTime.EVENING -> 0.2f; else -> 0f }
     val (b0, f0) = when (season) {
@@ -187,18 +222,8 @@ private fun DrawScope.hills(time: DayTime, season: de.wissensgarten.core.model.S
     }
     val back = lerp(b0, Color(0xFF1B2A1A), dim)
     val front = lerp(f0, Color(0xFF162414), dim)
-    val p1 = Path().apply {
-        moveTo(0f, h * 0.62f)
-        cubicTo(w * 0.25f, h * 0.48f, w * 0.45f, h * 0.7f, w * 0.7f, h * 0.56f)
-        cubicTo(w * 0.85f, h * 0.48f, w * 0.95f, h * 0.55f, w, h * 0.58f)
-        lineTo(w, h); lineTo(0f, h); close()
-    }
+    val (p1, p2) = formen.get(w, h)
     drawPath(p1, back)
-    val p2 = Path().apply {
-        moveTo(0f, h * 0.78f)
-        cubicTo(w * 0.3f, h * 0.68f, w * 0.6f, h * 0.84f, w, h * 0.72f)
-        lineTo(w, h); lineTo(0f, h); close()
-    }
     drawPath(p2, front)
 }
 

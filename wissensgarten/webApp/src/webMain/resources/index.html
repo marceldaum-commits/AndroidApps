@@ -164,7 +164,7 @@
           }
           if (!slow && cost > 22) { slow = true; window.wgDiag && window.wgDiag('Bild-Bremse an (Zeichnen ' + Math.round(cost) + ' ms) → weniger Bilder/s, Eingaben haben Vorrang'); }
           // Sehr langsam (z. B. ohne Grafik-Beschleunigung): ab dem nächsten Start mit etwas geringerer Auflösung zeichnen
-          if (cost > 40 && stat.n > 20 && !leichtGemerkt) { leichtGemerkt = true; try { if (localStorage.getItem('wg.leicht') !== 'aus') localStorage.setItem('wg.leicht', '1'); } catch (e) {} window.wgDiag && window.wgDiag('langsames Gerät → ab dem nächsten Start „leichte Darstellung“'); }
+          if (cost > 15 && stat.n > 30 && stat.sum / Math.max(1, performance.now() - stat.t0) > 0.6 && !leichtGemerkt) { leichtGemerkt = true; try { if (localStorage.getItem('wg.leicht') !== 'aus') localStorage.setItem('wg.leicht', '1'); } catch (e) {} window.wgDiag && window.wgDiag('langsames Gerät → ab dem nächsten Start „leichte Darstellung“'); }
           else if (slow && cost < 9) { slow = false; window.wgDiag && window.wgDiag('Bild-Bremse aus (Zeichnen ' + Math.round(cost) + ' ms)'); }
           if (queue.length && !pending) { pending = true; orig(tick); }
         };
@@ -278,7 +278,9 @@
         else if (!gc) { use = 'js'; why = 'kein WasmGC'; }
         // Safari/WebKit: seit 2.2.12 wieder Wasm (Abhilfe für WebKit-Fehler 329421 im Bündel); malt Wasm dort nichts, folgt automatisch JS
         else if (kaputt === v) { use = 'js'; why = 'Wasm-Start scheiterte vorher bei ' + v; }
-        else { use = 'wasm'; why = 'Standard'; }
+        // Gemessen (24./25.11.2026, gleiche App, gleicher Rechner): Die JS-Fassung läuft im Garten etwa 10-mal flüssiger als die Wasm-Fassung.
+        // Darum ist JS die Standard-Fassung; zum Vergleichen: ?modus=wasm (bleibt gemerkt), ?modus=auto hebt es auf.
+        else { use = 'js'; why = 'Standard (flüssiger gemessen)'; }
         // Ist der letzte Wasm-Start dieser Version im selben Tab abgestürzt (Tab neu geladen, ohne dass der Garten stand)? → JS
         try {
           if (use === 'wasm' && !forced && sessionStorage.getItem('wg.wasmLauf') === v) { localStorage.setItem('wg.wasmKaputt', v); use = 'js'; why = 'Wasm-Start brach vorher ab'; }
@@ -326,7 +328,10 @@
         var real = window.devicePixelRatio || 1;
         var px = Math.max(screen.width, innerWidth) * Math.max(screen.height, innerHeight);
         // höchstens doppelte Schärfe (statt 3×) und höchstens ~3,5 Mio. Bildpunkte: spart auf dem iPhone viel Grafikspeicher
-        var use = Math.max(1, Math.min(real, 2, Math.sqrt(3.5e6 / px)));
+        // Schärfe-Obergrenze: iPhone/iPad höchstens 2 (3,5 Mio. Bildpunkte); sonst höchstens 1,75 (2 Mio. Bildpunkte). Gemessen: Der Garten
+        // ist ein Vollbild aus mehreren Flächen – bei Handys mit Schärfe 2,6 kostet das Zeichnen etwa das Doppelte bis Vierfache, sieht aber kaum schärfer aus.
+        // Wer es ganz scharf will: ?schaerfe=voll (bleibt gemerkt), ?schaerfe=auto hebt es auf.
+        var use = Math.max(1, Math.min(real, ios ? 2 : 1.75, Math.sqrt((ios ? 3.5e6 : 2.0e6) / px)));
         var voll = false;
         try {
           if (/[?&]schaerfe=voll/.test(location.search)) localStorage.setItem('wg.schaerfe', 'voll');
@@ -336,13 +341,13 @@
         if (voll) window.wgStartNote('Schärfe-Begrenzung aus (?schaerfe=voll)');
         var leicht = false; try { leicht = localStorage.getItem('wg.leicht') === '1' && !/[?&]leicht=aus/.test(location.search); if (/[?&]leicht=aus/.test(location.search)) localStorage.setItem('wg.leicht', 'aus'); if (/[?&]leicht=an/.test(location.search)) { localStorage.setItem('wg.leicht', '1'); leicht = true; } } catch (e) {}
         if (leicht && !voll && !ios) {
-          var lw = Math.min(real, 0.8);
+          var lw = Math.min(real, 1.0);
           Object.defineProperty(window, 'devicePixelRatio', { get: function () { return lw; }, configurable: true });
           window.wgStartNote('leichte Darstellung (langsames Gerät): Schärfe ' + real + ' → ' + lw + ' · ausschalten mit ?leicht=aus');
         }
-        if (ios && use < real && !voll) {
+        if (use < real && !voll && !(leicht && !ios)) {
           Object.defineProperty(window, 'devicePixelRatio', { get: function () { return use; }, configurable: true });
-          window.wgStartNote('iOS-Schärfe ' + real + ' → ' + use.toFixed(2));
+          window.wgStartNote('Schärfe-Begrenzung ' + real + ' → ' + use.toFixed(2));
         }
       } catch (e) {}
       // Grafik-Kontext verloren (Speicher): Meldung statt leerer Fläche

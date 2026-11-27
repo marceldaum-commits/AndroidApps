@@ -9,6 +9,19 @@
 
 
 
+## 2.4.0 – Eigene KI-Stimme, V15, flüssiger Garten (24./25.11.2026, test)
+- **Rechtsbezug: ja** (10g, V10 neu, V13/V36 Kennzeichnung, V15 Probestunde).
+- **OpenAI/Nova raus:** `/jetzt` wird nie mehr angefragt (Web und Android liefern 404 → still die Gerätestimme); alle sichtbaren Texte, Datenschutzerklärung (web/datenschutz), Lizenzliste, Kennzeichnung heißen jetzt „🤖 KI-generierte Stimme“ (Wortlaut V13 steht noch aus). Die App lädt weiter die alten Dateien unter `/nova/`, bis das Tonstudio liefert; Umstellung am Fr 27.11. oder Abschalten der Server-Dateien am 01.12. (Leitstand einverstanden).
+- **Textliste fürs Tonstudio:** `webapp/vorlesen/textliste.json` (Format 1, 17.893 Texte, Brummi/feste Sätze/Laufzeit in 1,0 und 0,8, Karten nur 1,0, nur freie Pakete, Plus nie). Notrufnummern (110/112/116 117/911 …) werden Ziffer für Ziffer gesprochen.
+- **Eltern-Tor ohne Vorlese-Knopf** (Gerätestimme nicht erlaubt); Vorlese-Knöpfe klein und nur, wenn Vorlesen nicht auf „Nie“ steht.
+- **V10 neu:** „← Alle Apps“ ohne Tor, neutral; Fußzeile „Ein Angebot von Nachhilfe – online“ als Link auf die Startseite. Einstellungen: Ton/Musik/Vorlesen/Aussehen frei, Rest (Plus, Updates, Sync, Erinnerung, Profile, Daten löschen) hinter dem Tor.
+- **V15:** Elternbericht: Wortlaut von Recht, unter 50 % über 14 Tage, höchstens 1× in 4 Wochen je Thema, Schalter „Hinweise auf Nachhilfe ausblenden“; Link `…/probestunde/?src=wissensgarten-…` ohne Thema/Klasse, Zählung ohne Thema. Kinderansicht: nur der Hilfesatz mit [Leichter üben] [Erklärung ansehen], kein Außenlink.
+- **Startanimation** nach Vorlage des Leitstands (schwarz #05070f, atmendes Logo, höchstens 4 s, reduced-motion nur Überblendung, manifest background_color).
+- **Flüssigkeit (Marcel: „sehr ruckelig“):** Messung mit `webApp/tools/web-ruckeln.cjs`. Garten vorher 14 Bilder/s bei 98 % Auslastung, jetzt 28–30 B/s bei 0–2 % (JS-Fassung, Chromium ohne Grafikkarte). Maßnahmen: JS-Fassung ist Standard (Wasm im Garten ~10× langsamer gemessen; `?modus=wasm` zum Vergleichen), Schärfe-Obergrenze 1,75 (`?schaerfe=voll`), gemerkte Pfade/Verlauf, Pflanzen als Aufzeichnung, eine gemeinsame 15-Hz-Uhr, Bild-Bremse nur im Leerlauf, automatische „leichte Darstellung“ bei dauerhaft hoher Auslastung.
+- **Prüfung:** core:model- und Inhalts-Tests grün; Browser-Tests (Alle Apps, Paket, Sprachen, Zählung, Eltern-Koppeln, Installieren/Offline 21/21, Umzug) grün; Bildschirmfotos angesehen.
+- **Nicht in 2.4.0:** Familien-Speicher (wartet auf familie.js-Patch), Plus-Produkt 2.
+- **Rückweg:** Commit vor 2.4.0 (webapp/ der 2.3.3, Commit 3948fd42).
+
 ## 2.3.4 – Korrekturen nach der Selbstprüfung (20.11.2026, „nur Korrekturen“)
 - **V10a:** „← Alle Apps“ geht über das Eltern-Tor, Grund im Tor: „Hier geht es zur Website.“
 - **V10b:** Querverweise bleiben ohne Tor (Entscheidung AppZentrale 19.11.). Mathe-Trainer bekommt am Fr selbst ein Tor vor Preisen. Raumlicht nur auf `?ziel=galton`, ein Einstiegsziel ohne Preise. Rechenblitz, KurvenFlug, Experimentopia und Quasselquest wie bisher. Für Links, die doch ein Tor brauchen, gibt es `Querverweise.Link.mitTor` (fragt dann „Hier geht es zu einer anderen Lern-App.“).
