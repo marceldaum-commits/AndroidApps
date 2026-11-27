@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.17.0 vom 26.11.2026** · WebApp (installierbar als App, auch offline) – https://lernen.mathenachhilfe-online.com/experimentopia/ (die alte Adresse experimentopia.mathenachhilfe-online.com leitet mit Lernstand dorthin um) · 232 Versuche in 22 Fachbereichen (Physik, Chemie, Biologie) · 43 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.18.0 vom 27.11.2026** · WebApp (installierbar als App, auch offline) – https://lernen.mathenachhilfe-online.com/experimentopia/ (die alte Adresse experimentopia.mathenachhilfe-online.com leitet mit Lernstand dorthin um) · 240 Versuche in 23 Fachbereichen (Physik, Chemie, Biologie) · 44 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -168,6 +168,14 @@ Neues Thema auf der Blitzinsel mit 13 Versuchen und vier Laboren; alle Formeln s
 | Induktion | Generator | Trafo | Fernleitung |
 |---|---|---|---|
 | ![](screenshots/114_induktion.png) | ![](screenshots/115_generator.png) | ![](screenshots/116_trafo.png) | ![](screenshots/117_fernleitung.png) |
+
+## Druck & Luftdruck (seit 2.18.0)
+
+Neues Thema auf der Kraftwerk-Insel mit 8 Versuchen (Kl. 7–9) und der Druck-Werkstatt (Nagelbrett, Tauchtiefe, Hebebühne, Magdeburger Halbkugeln); alle Formeln stehen in `Druck.kt` und sind in `DruckTest` gegen Buchwerte geprüft.
+
+| Nagelbrett | Tauchen | Hebebühne | Halbkugeln |
+|---|---|---|---|
+| ![](screenshots/140_druck_nagelbrett.png) | ![](screenshots/141_druck_tauchen.png) | ![](screenshots/142_druck_hebebuehne.png) | ![](screenshots/143_druck_halbkugeln.png) |
 
 ## Energie-Achterbahn (seit 2.17.0)
 

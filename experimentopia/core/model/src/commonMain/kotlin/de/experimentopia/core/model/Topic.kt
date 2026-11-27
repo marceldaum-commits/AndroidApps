@@ -12,6 +12,7 @@ enum class Topic(val title: String, val emoji: String, val subject: Subject, val
     SCHWINGUNG("Pendel & Schwingungen", "🕰️", Subject.PHYSIK, "Mechanik Pendel Schwingung Periode Schwingungsdauer Uhr"),
     STROM("Stromkreise", "💡", Subject.PHYSIK, "Elektrizität Strom Spannung Widerstand Ohm Leiter Isolator Schalter Reihe parallel Kurzschluss"),
     MAGNET("Magnetismus", "🧲", Subject.PHYSIK, "Magnet Pole Nordpol Südpol Eisen anziehen abstoßen"),
+    DRUCK("Druck & Luftdruck", "🤿", Subject.PHYSIK, "Druck Luftdruck Pascal Bar Kraft Fläche Nagelbrett Wasserdruck Tauchen Hydraulik Hebebühne Magdeburger Halbkugeln Vakuum Atmosphäre"),
     ENERGIE("Energie-Achterbahn", "🎢", Subject.PHYSIK, "Energie Lageenergie Höhenenergie Bewegungsenergie kinetische potenzielle Energieerhaltung Achterbahn Looping Reibung Wärme Geschwindigkeit Höhe Joule"),
     ELEKTROMAGNETISMUS("Motor, Dynamo & Trafo", "🔌", Subject.PHYSIK, "Elektromagnetismus Elektromagnet Spule Windungen Eisenkern Feldstärke Tesla Leiterschaukel Lorentzkraft Motor Elektromotor Drehzahl Induktion Dynamo Generator Wechselspannung Transformator Trafo Spannung Hochspannung Fernleitung"),
     WAERME("Wärme & Teilchen", "🌡️", Subject.PHYSIK, "Wärmelehre Temperatur schmelzen sieden verdampfen Teilchenmodell Aggregatzustand Mischtemperatur Wärmekapazität"),

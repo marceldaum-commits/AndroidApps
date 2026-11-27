@@ -69,7 +69,7 @@ class OpticsTest {
     }
 
     @Test fun kommtBald() {
-        assertEquals("Gratis-Umfang", 80, Pro.freeCount)
+        assertEquals("Gratis-Umfang", 82, Pro.freeCount)
         assertTrue(Coming.all.size >= 15)
         Subject.entries.forEach { assertTrue("$it hat geplante Themen", Coming.of(it).isNotEmpty()) }
         // geplante Themen gibt es noch nicht als Fachbereich

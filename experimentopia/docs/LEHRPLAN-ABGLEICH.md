@@ -198,7 +198,8 @@ Fehlende Themen erscheinen in der App als „Kommt bald“ (ohne Datum, ohne Kau
 | 3 | Energie-Achterbahn (Energieformen, Erhaltung) | ✅ gebaut in 2.17.0 (26.11.2026): 8 Versuche (z1–z8), Achterbahn-Werkstatt (Lageenergie, Tempo, Looping, Hügel, Reibung, Energieerhaltung); Leistung und Wirkungsgrad folgen |
 | 4 | Tier-Safari, Blüten & Bestäubung, Atmung, Skelett (Bio 5/6) | Kommt bald |
 | 5 | Atom-Werkstatt & Periodensystem, Salze & Ionen | Kommt bald |
-| 6 | Druck & Luftdruck, Wärme wandert, Ladung, Echo | Kommt bald („Bewegung & Diagramme“ → KurvenFlug weg-zeit/beschleunigung, Wochenrunde 18.11.) |
+| 6a | Druck & Luftdruck | ✅ gebaut in 2.18.0 (27.11.2026): 8 Versuche (d1–d8), Druck-Werkstatt (Nagelbrett, Schweredruck, Hydraulik, Magdeburger Halbkugeln) |
+| 6 | Wärme wandert, Ladung, Echo | Kommt bald („Bewegung & Diagramme“ → KurvenFlug weg-zeit/beschleunigung, Wochenrunde 18.11.) |
 | 7 | Feuerwehr-Labor, Metalle & Redox, Zitronen-Batterie, Erdöl & Kunststoffe | Kommt bald |
 | 8 | Sinne & Nerven, Abwehr-Burg, Evolution, DNA & Zellteilung | Kommt bald |
 | 9 | Radioaktivität, Weltall & Jahreszeiten | Kommt bald |

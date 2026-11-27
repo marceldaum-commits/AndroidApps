@@ -168,6 +168,24 @@ object Theory {
             listOf("Lageenergie" to "Energie, die ein Körper wegen seiner Höhe hat", "Bewegungsenergie" to "Energie, die ein Körper wegen seiner Geschwindigkeit hat",
                 "Energieerhaltung" to "Energie geht nie verloren, sie wechselt nur die Form", "Joule" to "Einheit der Energie (J)")),
 
+        TheoryCard(Topic.DRUCK, "Druck sagt, wie stark eine Kraft auf eine Fläche drückt: Dieselbe Kraft auf kleiner Fläche drückt stark, auf großer Fläche sanft.",
+            listOf(
+                p("🛏️", "Auf einem Nagelbrett verteilt sich dein Gewicht auf viele Spitzen. Jede Spitze drückt nur schwach – du kannst liegen."),
+                p("🤿", "Beim Tauchen drückt das Gewicht des Wassers über dir. Pro 10 m Tiefe kommt etwa 1 bar dazu, zusätzlich zum Luftdruck."),
+                p("🚗", "In einer Flüssigkeit ist der Druck überall gleich. Darum wird aus einer kleinen Kraft auf einem kleinen Kolben eine große Kraft auf einem großen Kolben (Hebebühne)."),
+                p("🌬️", "Auch Luft hat Gewicht und drückt – auf alles, mit etwa 1 bar. Pumpt man zwei Halbkugeln leer, drückt die Luft von außen sie fest zusammen."),
+            ),
+            listOf(
+                p("📐", "Druck: p = F ÷ A (p in Pascal (Pa) = N/m², F in Newton, A in m²). 1 bar = 100 000 Pa = 1000 hPa. Beispiel: F = 686,7 N (70 kg) auf 900 Nägel zu je 4 mm²: A = 900 · 4·10⁻⁶ m² = 0,0036 m², p = 686,7 ÷ 0,0036 = 190 750 Pa ≈ 191 kPa."),
+                p("🌊", "Wasserdruck: p = ρ · g · h (ρ = 1000 kg/m³, g = 9,81 m/s², h Tiefe in m). Gesamtdruck = Luftdruck + ρ · g · h. Beispiel: h = 10 m: p = 1000 · 9,81 · 10 = 98 100 Pa ≈ 0,98 bar; Gesamtdruck ≈ 101 325 + 98 100 = 199 425 Pa ≈ 2,0 bar."),
+                p("🤿", "Tiefe aus dem Druck: h = (p − p_Luft) ÷ (ρ · g). Beispiel: p = 300 000 Pa: h = (300 000 − 101 325) ÷ 9 810 ≈ 20,3 m."),
+                p("🚗", "Hydraulik: F₁ ÷ A₁ = F₂ ÷ A₂, also F₂ = F₁ · A₂ ÷ A₁. Beispiel: F₁ = 200 N, A₁ = 0,002 m², A₂ = 0,10 m²: F₂ = 200 · 0,10 ÷ 0,002 = 10 000 N. Dafür muss der kleine Kolben einen entsprechend längeren Weg gehen (Goldene Regel: Kraft mal Weg bleibt gleich)."),
+                p("⚫", "Luftdruck auf eine Fläche: F = p · A. Beispiel: Halbkugel mit r = 0,10 m: A = π · r² = 0,0314 m², F = 101 325 · 0,0314 ≈ 3 183 N – das Gewicht von etwa 325 kg (3 183 ÷ 9,81)."),
+            ),
+            "Autoreifen, Hebebühnen in der Werkstatt, der Bagger-Arm und die Bremse im Auto nutzen Flüssigkeitsdruck. Das Wetter hängt vom Luftdruck ab.",
+            listOf("Druck" to "Kraft pro Fläche, gemessen in Pascal (Pa) oder bar", "Luftdruck" to "Druck der Lufthülle der Erde, etwa 1 bar", "Hydraulik" to "Kraftübertragung mit einer Flüssigkeit",
+                "Vakuum" to "Raum ohne Luft")),
+
         TheoryCard(Topic.ELEKTROMAGNETISMUS, "Strom und Magnetismus gehören zusammen: Strom macht Magnetfelder – und bewegte Magnetfelder machen Strom.",
             listOf(
                 p("🧲", "Fließt Strom durch einen Draht, entsteht ein Magnetfeld. Wickelt man den Draht zu einer Spule, wird das Feld stark – und es verschwindet, wenn der Strom ausgeschaltet wird (Elektromagnet)."),

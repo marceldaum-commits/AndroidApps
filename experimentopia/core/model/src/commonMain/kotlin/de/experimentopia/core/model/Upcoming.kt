@@ -8,7 +8,6 @@ data class Upcoming(val subject: Subject, val title: String, val emoji: String, 
 /** Geplante Themen aus dem Lehrplan-Abgleich (docs/LEHRPLAN-ABGLEICH.md), in der geplanten Reihenfolge je Fach */
 object Coming {
     val all = listOf(
-        Upcoming(Subject.PHYSIK, "Druck & Luftdruck", "🤿", 7..9, "Abtauchen, Hebebühne pumpen, Halbkugeln auseinanderziehen."),
         Upcoming(Subject.PHYSIK, "Wärme wandert", "🏠", 5..9, "Haus dämmen, Tee warm halten, Treibhauseffekt."),
         Upcoming(Subject.PHYSIK, "Ladung & Elektrostatik", "🎈", 7..8, "Luftballon-Haare und fliegende Papierschnipsel."),
         Upcoming(Subject.PHYSIK, "Echo & Lautstärke", "🦇", 5..7, "Wie die Fledermaus mit Schall sieht."),

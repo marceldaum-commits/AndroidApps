@@ -1,5 +1,12 @@
 # Changelog – Experimentopia
 
+## 2.18.0 – Druck & Luftdruck (27.11.2026)
+
+- 🤿 Neues Thema „Druck & Luftdruck“ auf der Kraftwerk-Insel (Klasse 7–9): 8 Versuche. Warum kann man auf einem Nagelbrett liegen? Wie viel drückt das Wasser beim Tauchen? Wie hebt eine kleine Kraft ein ganzes Auto? Und warum konnten 16 Pferde zwei leere Halbkugeln nicht auseinanderziehen?
+- 🛠️ Neues Gerät „Druck-Werkstatt“ mit vier Spielarten (Nägel zählen, Tiefe wählen, Kolben vergrößern, Halbkugeln wählen). Auch im Freien Labor mit eigenen Werten.
+- 📖 Neue Theorie-Karte mit Formeln, Einheiten und durchgerechneten Beispielen. Alle Antworten werden aus den Formeln berechnet und in Tests nachgerechnet.
+- 240 Versuche in 23 Fachbereichen, 44 Geräte im Freien Labor.
+
 ## 2.17.0 – Energie-Achterbahn (26.11.2026)
 
 - 🎢 Neues Thema „Energie-Achterbahn“ auf der Kraftwerk-Insel (Klasse 7–10): 8 Versuche. Wie viel Energie steckt in der Höhe? Wie schnell ist der Wagen unten? Warum ist die Masse egal? Wie hoch muss der Start für einen Looping sein – und wie viel mehr, wenn die Reibung Energie wegnimmt?

@@ -1,8 +1,8 @@
 // Service Worker: macht Experimentopia offline nutzbar und hält es aktuell. Jede Version hat ihren eigenen Speicher: Ändert sich diese Datei
 // (neue Versionsnummer), lädt der Browser alles frisch, räumt den alten Speicher weg und übernimmt sofort – die Seite lädt sich dann selbst neu.
-const CACHE = 'experimentopia-2.17.0';
+const CACHE = 'experimentopia-2.18.0';
 // Der App-Kern (.wasm): Der Dateiname ändert sich mit dem Inhalt, darum darf er aus dem Zwischenspeicher des Browsers kommen.
-const WASM = ['4fd23e8a9488dc3ddc5a.wasm', 'bccfa839aa4b38489c76.wasm'];
+const WASM = ['7bc8337774e34b774d63.wasm', 'bccfa839aa4b38489c76.wasm'];
 self.addEventListener('install', (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then((c) => Promise.all([c.addAll(WASM), c.addAll(['./', 'index.html', 'experimentopia.js', 'manifest.webmanifest', 'icon-192.png', 'version.json', 'umzug.js', 'familie.js', 'familie-bruecke.js', 'fonts/dejavu_sans.ttf', 'fonts/noto_color_emoji.ttf'].map((u) => new Request(u, { cache: 'reload' })))]))); });
 // Aufräumen nur mit der Vorsilbe „experimentopia-“: Auf der gemeinsamen Adresse liegen auch die Speicher der anderen Lern-Apps
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k.startsWith('experimentopia-') && k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });

@@ -2,6 +2,7 @@ package de.experimentopia.core.model
 
 /** Die Labore – jedes ist ein eigenes, frei bespielbares Versuchsgerät. */
 enum class Lab(val title: String, val emoji: String, val island: Island, val blurb: String) {
+    DRUCK("Druck-Werkstatt", "🤿", Island.KRAFT, "Nagelbrett, Tiefsee, Hebebühne und Halbkugeln: Druck = Kraft ÷ Fläche."),
     SCHWIMMEN("Wasserbecken", "🛁", Island.WASSER, "Schwimmt es oder sinkt es? Auch mit eigener Masse und eigenem Volumen."),
     DICHTETURM("Dichteturm", "🌈", Island.WASSER, "Flüssigkeiten schichten sich nach ihrer Dichte."),
     WIPPE("Wippe", "⚖️", Island.KRAFT, "Hebelgesetz: Masse mal Abstand."),
@@ -120,6 +121,7 @@ object FreeLab {
         Lab.BRECHUNG -> RefractSetup(Medium.LUFT, Medium.WASSER, RefractGoal.FREE)
         Lab.LINSE -> LensSetup(goal = LensGoal.FREE)
         Lab.ACHTERBAHN -> CoasterSetup(CoasterMode.SPEED, 20.0, adjustMass = true, adjustFriction = true)
+        Lab.DRUCK -> PressureSetup(PressureMode.DIVE, targetBar = null)
         Lab.SPULE -> CoilSetup(200, 3.0, false, adjustWindings = true, adjustVolts = true, adjustCore = true)
         Lab.MOTOR -> MotorSetup(MotorMode.FORCE)
         Lab.DYNAMO -> DynamoSetup(DynamoMode.MAGNET, 500, adjustWindings = true)

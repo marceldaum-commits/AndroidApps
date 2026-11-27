@@ -789,3 +789,8 @@ Freischalt-Link `?pro=<Code>`, Vorbild `kurvenflug/pro/`. Sperren erst, wenn ihr
 - Neues Thema „Energie-Achterbahn“ (Kraftwerk-Insel, Kl. 7–10): 8 Versuche (z1–z8), Achterbahn-Werkstatt, Theorie-Karte; alle Antworten aus `Energie.kt` berechnet, in `EnergieTest` nachgerechnet. 232 Versuche in 22 Fachbereichen, 43 Geräte. Direkt-Link `#thema=energie`.
 - Gratis-Umfang: 80 von 232 Versuchen (vorher 78 von 224). Keine neuen Daten, keine neuen Netzaufrufe.
 - Rechtsbezug: nein. Rückweg: 2.16.4 (ebce1aca).
+
+## 2.18.0 vom 27.11.2026 – Druck & Luftdruck (nur Test)
+- Neues Thema „Druck & Luftdruck“ (Kraftwerk-Insel, Kl. 7–9): 8 Versuche (d1–d8), Druck-Werkstatt, Theorie-Karte; alle Antworten aus `Druck.kt` berechnet, in `DruckTest` nachgerechnet. 240 Versuche in 23 Fachbereichen, 44 Geräte. Direkt-Link `#thema=druck`.
+- Gratis-Umfang: 82 von 240 Versuchen (vorher 80 von 232). Keine neuen Daten, keine neuen Netzaufrufe, keine KI.
+- Rechtsbezug: nein. Rückweg: 2.17.0 (432af4d2).
