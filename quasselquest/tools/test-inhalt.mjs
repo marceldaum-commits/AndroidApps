@@ -212,7 +212,7 @@ test('Buchstaben-Bau nur, wenn das Wort eindeutig aus der Aufgabe folgt (keine A
   }
 });
 
-const LP = P.LERNPFAD.map((l) => JSON.parse(readFileSync(new URL('lernpfad/' + l + '.json', dir), 'utf8')));
+const LP = P.LERNPFAD.concat(['de-uk']).map((l) => JSON.parse(readFileSync(new URL('lernpfad/' + l + '.json', dir), 'utf8')));
 test('Lernpfad: jede Einheit vollständig, Bedeutungen eindeutig, Figuren vorhanden, Lektionen spielbar', () => {
   for (const lp of LP) for (const a of lp.abschnitte) for (const e of a.einheiten) {
     const wo = `${lp.sprache} ${e.id}`;

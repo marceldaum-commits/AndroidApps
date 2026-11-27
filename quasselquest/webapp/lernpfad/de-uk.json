@@ -1,0 +1,876 @@
+{
+ "format": 1,
+ "sprache": "de",
+ "tuer": "uk",
+ "titel": "Німецька з нуля",
+ "figuren": {
+  "ruby": {
+   "name": "Ruby",
+   "emoji": "🦜",
+   "who": null
+  },
+  "oksana": {
+   "name": "Oksana",
+   "emoji": "👧",
+   "who": null
+  },
+  "lena": {
+   "name": "Lena",
+   "emoji": "👱‍♀️",
+   "who": null
+  },
+  "ben": {
+   "name": "Ben",
+   "emoji": "👦",
+   "who": null
+  },
+  "weber": {
+   "name": "Frau Weber",
+   "emoji": "👩‍🏫",
+   "who": null
+  },
+  "mama": {
+   "name": "Mama",
+   "emoji": "👩",
+   "who": null
+  },
+  "oma": {
+   "name": "Oma",
+   "emoji": "👵",
+   "who": null
+  },
+  "opa": {
+   "name": "Opa",
+   "emoji": "👴",
+   "who": null
+  },
+  "hund": {
+   "name": "Hund",
+   "emoji": "🐶",
+   "who": null
+  },
+  "bruder": {
+   "name": "Bruder",
+   "emoji": "👦",
+   "who": null
+  }
+ },
+ "abschnitte": [
+  {
+   "id": "1",
+   "stufe": "Ankommen",
+   "titel": "Ласкаво просимо",
+   "emoji": "🌻",
+   "ziel": "Я можу привітатися, представитися, назвати речі в школі й розповісти про родину.",
+   "einheiten": [
+    {
+     "id": "de-1-1",
+     "titel": "Hallo!",
+     "emoji": "👋",
+     "ziel": "Я можу привітатися, попрощатися, подякувати й попросити.",
+     "woerter": [
+      [
+       "Hallo",
+       "привіт",
+       "👋",
+       "Hallo кажуть усім – друзям і дорослим."
+      ],
+      [
+       "Guten Morgen",
+       "доброго ранку",
+       "🌅"
+      ],
+      [
+       "Guten Tag",
+       "добрий день",
+       "☀️",
+       "Так вітаються з дорослими."
+      ],
+      [
+       "Tschüss",
+       "бувай",
+       "🙋",
+       "Так прощаються з друзями."
+      ],
+      [
+       "Auf Wiedersehen",
+       "до побачення",
+       "🚶"
+      ],
+      [
+       "Danke",
+       "дякую",
+       "💐"
+      ],
+      [
+       "Bitte",
+       "будь ласка",
+       "🙏"
+      ],
+      [
+       "Entschuldigung",
+       "вибачте",
+       "🙇"
+      ]
+     ],
+     "saetze": [
+      [
+       "Hallo, ich bin Ruby.",
+       "Привіт, я Рубі.",
+       "🦜"
+      ],
+      [
+       "Wie geht’s?",
+       "Як справи?",
+       "🙂"
+      ],
+      [
+       "Gut, danke.",
+       "Добре, дякую.",
+       "😊"
+      ],
+      [
+       "Tschüss, bis morgen!",
+       "Бувай, до завтра!",
+       "👋"
+      ]
+     ],
+     "regel": {
+      "titel": "du чи Sie?",
+      "text": "Німецькою є два «ви»: «du» – це «ти» (друзі, діти, родина), а «Sie» – це «Ви» (дорослі, яких ти не знаєш, учителі). Слово «Sie» завжди пишуть з великої літери. Усі іменники в німецькій теж пишуть з великої літери: der Tag, die Schule.",
+      "beispiele": [
+       [
+        "Wie geht’s dir?",
+        "Як ти? (другу)"
+       ],
+       [
+        "Wie geht es Ihnen?",
+        "Як Ви? (дорослому)"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Neu in der Klasse",
+      "zeilen": [
+       [
+        "lena",
+        "Hallo! Ich bin Lena.",
+        "Привіт! Я Лена."
+       ],
+       [
+        "oksana",
+        "Hallo, Lena! Ich bin Oksana.",
+        "Привіт, Лено! Я Оксана."
+       ],
+       [
+        "lena",
+        "Wie geht’s?",
+        "Як справи?"
+       ],
+       [
+        "oksana",
+        "Gut, danke.",
+        "Добре, дякую."
+       ],
+       [
+        "lena",
+        "Tschüss, Oksana!",
+        "Бувай, Оксано!"
+       ],
+       [
+        "oksana",
+        "Tschüss, Lena!",
+        "Бувай, Лено!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Як звати німецьку дівчинку?",
+        "a": "Лена",
+        "choices": [
+         "Оксана",
+         "Рубі"
+        ]
+       },
+       {
+        "q": "Як справи в Оксани?",
+        "a": "добре",
+        "choices": [
+         "погано",
+         "втомлена"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Sag Lena Hallo.",
+       "de": "Скажи Лені привіт.",
+       "ding": "👋",
+       "anzahl": 1,
+       "an": "lena"
+      },
+      {
+       "sag": "Sag Ben Tschüss.",
+       "de": "Скажи Бену бувай.",
+       "ding": "🙋",
+       "anzahl": 1,
+       "an": "ben"
+      },
+      {
+       "sag": "Sag Frau Weber Guten Tag.",
+       "de": "Скажи пані Вебер добрий день.",
+       "ding": "☀️",
+       "anzahl": 1,
+       "an": "weber"
+      },
+      {
+       "sag": "Sag Ruby Danke.",
+       "de": "Скажи Рубі дякую.",
+       "ding": "💐",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Sag Oksana Guten Morgen.",
+       "de": "Скажи Оксані доброго ранку.",
+       "ding": "🌅",
+       "anzahl": 1,
+       "an": "oksana"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Guter Tag, Frau Weber!",
+       "richtig": "Guten Tag, Frau Weber!",
+       "wort": "Guter",
+       "korrektur": "Guten",
+       "choices": [
+        "Gute",
+        "Gutem"
+       ],
+       "tipp": "Після «Guten» стоїть «Tag»: Guten Morgen, Guten Tag."
+      },
+      {
+       "falsch": "Hallo, ich bist Ben.",
+       "richtig": "Hallo, ich bin Ben.",
+       "wort": "bist",
+       "korrektur": "bin",
+       "choices": [
+        "ist",
+        "sind"
+       ],
+       "tipp": "ich bin, du bist, er ist – з «ich» завжди «bin»."
+      }
+     ]
+    },
+    {
+     "id": "de-1-2",
+     "titel": "Ich und du",
+     "emoji": "🙋",
+     "ziel": "Я можу сказати, як мене звати, і запитати, як звати тебе.",
+     "woerter": [
+      [
+       "ich",
+       "я",
+       "🙋"
+      ],
+      [
+       "du",
+       "ти",
+       "👉"
+      ],
+      [
+       "der Junge",
+       "хлопчик",
+       "👦",
+       "der – чоловічий рід, як в українській «хлопчик»."
+      ],
+      [
+       "das Mädchen",
+       "дівчинка",
+       "👧",
+       "Увага: das Mädchen – середній рід, хоча це дівчинка!"
+      ],
+      [
+       "der Freund",
+       "друг",
+       "🤝"
+      ],
+      [
+       "die Freundin",
+       "подруга",
+       "👭"
+      ],
+      [
+       "heißen",
+       "називатися",
+       "🏷️",
+       "ich heiße = мене звати"
+      ],
+      [
+       "wer?",
+       "хто?",
+       "❓"
+      ]
+     ],
+     "saetze": [
+      [
+       "Ich heiße Oksana.",
+       "Мене звати Оксана.",
+       "👧"
+      ],
+      [
+       "Wie heißt du?",
+       "Як тебе звати?",
+       "❓"
+      ],
+      [
+       "Das ist meine Freundin Ruby.",
+       "Це моя подруга Рубі.",
+       "🦜"
+      ],
+      [
+       "Ich komme aus der Ukraine.",
+       "Я з України.",
+       "🇺🇦"
+      ]
+     ],
+     "regel": {
+      "titel": "der, die, das",
+      "text": "У німецькій, як в українській, є три роди: der (чоловічий), die (жіночий), das (середній). Слово «der/die/das» – це артикль, його вчать разом зі словом: der Freund, die Freundin, das Mädchen. Українською артиклів немає, тому завжди запам’ятовуй слово з артиклем!",
+      "beispiele": [
+       [
+        "der Junge",
+        "хлопчик (чоловічий рід)"
+       ],
+       [
+        "die Freundin",
+        "подруга (жіночий рід)"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Wie heißt du?",
+      "zeilen": [
+       [
+        "ben",
+        "Hallo! Wie heißt du?",
+        "Привіт! Як тебе звати?"
+       ],
+       [
+        "oksana",
+        "Ich heiße Oksana. Und du?",
+        "Мене звати Оксана. А тебе?"
+       ],
+       [
+        "ben",
+        "Ich heiße Ben. Das ist meine Freundin Ruby.",
+        "Мене звати Бен. Це моя подруга Рубі."
+       ],
+       [
+        "ruby",
+        "Hallo! Ich bin Ruby.",
+        "Привіт! Я Рубі."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Як звати хлопчика?",
+        "a": "Бен",
+        "choices": [
+         "Оксана",
+         "Рубі"
+        ]
+       },
+       {
+        "q": "Хто така Рубі?",
+        "a": "подруга",
+        "choices": [
+         "вчителька",
+         "сестра"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Gib Ben einen Ball.",
+       "de": "Дай Бену м’яч.",
+       "ding": "⚽",
+       "anzahl": 1,
+       "an": "ben"
+      },
+      {
+       "sag": "Gib Oksana eine Blume.",
+       "de": "Дай Оксані квітку.",
+       "ding": "🌸",
+       "anzahl": 1,
+       "an": "oksana"
+      },
+      {
+       "sag": "Gib Ruby Sonnenblumenkerne.",
+       "de": "Дай Рубі насіння соняшника.",
+       "ding": "🌻",
+       "anzahl": 1,
+       "an": "ruby"
+      },
+      {
+       "sag": "Gib Lena ein Buch.",
+       "de": "Дай Лені книжку.",
+       "ding": "📖",
+       "anzahl": 1,
+       "an": "lena"
+      },
+      {
+       "sag": "Gib Ben einen Apfel.",
+       "de": "Дай Бену яблуко.",
+       "ding": "🍎",
+       "anzahl": 1,
+       "an": "ben"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Das ist mein Freundin.",
+       "richtig": "Das ist meine Freundin.",
+       "wort": "mein",
+       "korrektur": "meine",
+       "choices": [
+        "meinen",
+        "meinem"
+       ],
+       "tipp": "die Freundin – жіночий рід, тому meine (моя)."
+      },
+      {
+       "falsch": "Wie heiße du?",
+       "richtig": "Wie heißt du?",
+       "wort": "heiße",
+       "korrektur": "heißt",
+       "choices": [
+        "heißen",
+        "heiß"
+       ],
+       "tipp": "ich heiße, du heißt – з «du» закінчення -st / -t."
+      },
+      {
+       "falsch": "Ich komme aus die Ukraine.",
+       "richtig": "Ich komme aus der Ukraine.",
+       "wort": "die",
+       "korrektur": "der",
+       "choices": [
+        "den",
+        "das"
+       ],
+       "tipp": "Після «aus» кажуть: aus der Ukraine, aus der Schweiz."
+      }
+     ]
+    },
+    {
+     "id": "de-1-3",
+     "titel": "In der Schule",
+     "emoji": "🏫",
+     "ziel": "Я можу назвати речі в школі й сказати, що в мене є.",
+     "woerter": [
+      [
+       "die Schule",
+       "школа",
+       "🏫"
+      ],
+      [
+       "das Heft",
+       "зошит",
+       "📓"
+      ],
+      [
+       "das Buch",
+       "книжка",
+       "📖"
+      ],
+      [
+       "der Stift",
+       "ручка",
+       "✏️"
+      ],
+      [
+       "die Tasche",
+       "сумка",
+       "🎒"
+      ],
+      [
+       "die Lehrerin",
+       "вчителька",
+       "👩‍🏫",
+       "Вчитель – der Lehrer."
+      ],
+      [
+       "die Klasse",
+       "клас",
+       "🧑‍🏫"
+      ],
+      [
+       "das Klassenzimmer",
+       "кабінет",
+       "🚪"
+      ]
+     ],
+     "saetze": [
+      [
+       "Das ist meine Schule.",
+       "Це моя школа.",
+       "🏫"
+      ],
+      [
+       "Ich habe ein Heft.",
+       "У мене є зошит.",
+       "📓"
+      ],
+      [
+       "Frau Weber ist die Lehrerin.",
+       "Пані Вебер – вчителька.",
+       "👩‍🏫"
+      ],
+      [
+       "Wo ist mein Stift?",
+       "Де моя ручка?",
+       "🔎"
+      ]
+     ],
+     "regel": {
+      "titel": "ein чи eine?",
+      "text": "Коли хочеш сказати «якась річ», ставиш ein або eine: ein Heft, ein Stift – а перед жіночими словами eine: eine Tasche, eine Schule. Пам’ятай: der і das → ein, die → eine. Українською цих слів немає, тому їх треба вивчити.",
+      "beispiele": [
+       [
+        "ein Stift",
+        "ручка (der Stift)"
+       ],
+       [
+        "eine Tasche",
+        "сумка (die Tasche)"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Guten Morgen, Klasse!",
+      "zeilen": [
+       [
+        "weber",
+        "Guten Morgen, Klasse!",
+        "Доброго ранку, класе!"
+       ],
+       [
+        "lena",
+        "Guten Morgen, Frau Weber!",
+        "Доброго ранку, пані Вебер!"
+       ],
+       [
+        "weber",
+        "Oksana, wo ist dein Heft?",
+        "Оксано, де твій зошит?"
+       ],
+       [
+        "oksana",
+        "Hier ist mein Heft!",
+        "Ось мій зошит!"
+       ],
+       [
+        "ruby",
+        "Und hier ist mein Stift!",
+        "А ось моя ручка!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Кого вітає вчителька?",
+        "a": "клас",
+        "choices": [
+         "Рубі",
+         "Бена"
+        ]
+       },
+       {
+        "q": "Що шукає вчителька?",
+        "a": "зошит",
+        "choices": [
+         "ручку",
+         "сумку"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Gib Oksana ein Heft.",
+       "de": "Дай Оксані зошит.",
+       "ding": "📓",
+       "anzahl": 1,
+       "an": "oksana"
+      },
+      {
+       "sag": "Gib Ben einen Stift.",
+       "de": "Дай Бену ручку.",
+       "ding": "✏️",
+       "anzahl": 1,
+       "an": "ben"
+      },
+      {
+       "sag": "Gib Lena eine Tasche.",
+       "de": "Дай Лені сумку.",
+       "ding": "🎒",
+       "anzahl": 1,
+       "an": "lena"
+      },
+      {
+       "sag": "Gib Frau Weber ein Buch.",
+       "de": "Дай пані Вебер книжку.",
+       "ding": "📖",
+       "anzahl": 1,
+       "an": "weber"
+      },
+      {
+       "sag": "Gib Ruby einen Stift.",
+       "de": "Дай Рубі ручку.",
+       "ding": "✏️",
+       "anzahl": 1,
+       "an": "ruby"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Das ist ein Tasche.",
+       "richtig": "Das ist eine Tasche.",
+       "wort": "ein",
+       "korrektur": "eine",
+       "choices": [
+        "einen",
+        "einem"
+       ],
+       "tipp": "die Tasche – жіночий рід, тому eine."
+      },
+      {
+       "falsch": "Ich habe eine Heft.",
+       "richtig": "Ich habe ein Heft.",
+       "wort": "eine",
+       "korrektur": "ein",
+       "choices": [
+        "einen",
+        "einer"
+       ],
+       "tipp": "das Heft – середній рід, тому ein."
+      },
+      {
+       "falsch": "Frau Weber ist der Lehrerin.",
+       "richtig": "Frau Weber ist die Lehrerin.",
+       "wort": "der",
+       "korrektur": "die",
+       "choices": [
+        "das",
+        "den"
+       ],
+       "tipp": "die Lehrerin – жіночий рід, тому die."
+      }
+     ]
+    },
+    {
+     "id": "de-1-4",
+     "titel": "Meine Familie",
+     "emoji": "👪",
+     "ziel": "Я можу розповісти про свою родину.",
+     "woerter": [
+      [
+       "die Familie",
+       "родина",
+       "👪"
+      ],
+      [
+       "die Mama",
+       "мама",
+       "👩"
+      ],
+      [
+       "der Papa",
+       "тато",
+       "👨"
+      ],
+      [
+       "der Bruder",
+       "брат",
+       "👦"
+      ],
+      [
+       "die Schwester",
+       "сестра",
+       "👧"
+      ],
+      [
+       "die Oma",
+       "бабуся",
+       "👵"
+      ],
+      [
+       "der Opa",
+       "дідусь",
+       "👴"
+      ],
+      [
+       "der Hund",
+       "собака",
+       "🐶"
+      ]
+     ],
+     "saetze": [
+      [
+       "Das ist meine Familie.",
+       "Це моя родина.",
+       "👪"
+      ],
+      [
+       "Mein Bruder heißt Andrij.",
+       "Мого брата звати Андрій.",
+       "👦"
+      ],
+      [
+       "Meine Schwester heißt Marijka.",
+       "Мою сестру звати Марійка.",
+       "👧"
+      ],
+      [
+       "Mein Opa hat einen Hund.",
+       "У мого дідуся є собака.",
+       "🐶"
+      ]
+     ],
+     "regel": {
+      "titel": "mein чи meine?",
+      "text": "«Мій / моя» – це mein і meine. Перед der- і das-словами: mein (mein Bruder, mein Opa). Перед die-словами: meine (meine Schwester, meine Oma). Так само, як в українській «мій брат» і «моя сестра».",
+      "beispiele": [
+       [
+        "mein Bruder",
+        "мій брат"
+       ],
+       [
+        "meine Schwester",
+        "моя сестра"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Das Familienfoto",
+      "zeilen": [
+       [
+        "oksana",
+        "Das ist meine Familie. Das ist meine Mama.",
+        "Це моя родина. Це моя мама."
+       ],
+       [
+        "oksana",
+        "Das ist mein Bruder Andrij.",
+        "Це мій брат Андрій."
+       ],
+       [
+        "ben",
+        "Und wer ist das?",
+        "А хто це?"
+       ],
+       [
+        "oksana",
+        "Das ist mein Hund. Er heißt Rex.",
+        "Це мій собака. Його звати Рекс."
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Як звати брата Оксани?",
+        "a": "Андрій",
+        "choices": [
+         "Бен",
+         "Рекс"
+        ]
+       },
+       {
+        "q": "Як звати собаку?",
+        "a": "Рекс",
+        "choices": [
+         "Бен",
+         "Андрій"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Gib der Oma eine Blume.",
+       "de": "Дай бабусі квітку.",
+       "ding": "🌸",
+       "anzahl": 1,
+       "an": "oma"
+      },
+      {
+       "sag": "Gib dem Opa ein Buch.",
+       "de": "Дай дідусеві книжку.",
+       "ding": "📖",
+       "anzahl": 1,
+       "an": "opa"
+      },
+      {
+       "sag": "Gib dem Hund einen Knochen.",
+       "de": "Дай собаці кістку.",
+       "ding": "🦴",
+       "anzahl": 1,
+       "an": "hund"
+      },
+      {
+       "sag": "Gib der Mama einen Apfel.",
+       "de": "Дай мамі яблуко.",
+       "ding": "🍎",
+       "anzahl": 1,
+       "an": "mama"
+      },
+      {
+       "sag": "Gib dem Bruder einen Ball.",
+       "de": "Дай братові м’яч.",
+       "ding": "⚽",
+       "anzahl": 1,
+       "an": "bruder"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Das ist mein Mama.",
+       "richtig": "Das ist meine Mama.",
+       "wort": "mein",
+       "korrektur": "meine",
+       "choices": [
+        "meinen",
+        "meinem"
+       ],
+       "tipp": "die Mama – жіночий рід, тому meine."
+      },
+      {
+       "falsch": "Meine Bruder heißt Andrij.",
+       "richtig": "Mein Bruder heißt Andrij.",
+       "wort": "Meine",
+       "korrektur": "Mein",
+       "choices": [
+        "Meinen",
+        "Meiner"
+       ],
+       "tipp": "der Bruder – чоловічий рід, тому mein."
+      },
+      {
+       "falsch": "Mein Opa hat ein Hund.",
+       "richtig": "Mein Opa hat einen Hund.",
+       "wort": "ein",
+       "korrektur": "einen",
+       "choices": [
+        "eine",
+        "einem"
+       ],
+       "tipp": "Після «hat» для der-слів кажуть einen: einen Hund."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

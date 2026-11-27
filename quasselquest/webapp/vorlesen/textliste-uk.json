@@ -1,0 +1,1980 @@
+{
+ "format": 1,
+ "app": "quasselquest",
+ "modell": "Piper uk_UA-ukrainian_tts-medium (Datensatz ukrainian-tts-datasets, Yehor Smoliakov, Apache-2.0)",
+ "stimmen": {
+  "uk": {
+   "stimme": "tetiana",
+   "piper_modell": "uk_UA-ukrainian_tts-medium",
+   "speaker_id": 2,
+   "hinweis": "Sprecherin 2 „tetiana“ (Recht und Marcel freigegeben)"
+  }
+ },
+ "mp3": {
+  "kanaele": 1,
+  "abtastrate": 22050,
+  "bitrate": "48k",
+  "id3_comment": {
+   "uk": "KI-generiert (synthetische Stimme, Piper uk_UA-ukrainian_tts-medium)"
+  },
+  "stille_rand_kuerzen": true,
+  "lautheit_lufs": -18,
+  "vorlauf_s": 0.12,
+  "wasserzeichen": "Perth, falls das Tonstudio es für alle Stimmen anwendet (Recht V36a) – bitte bestätigen"
+ },
+ "eintraege": [
+  {
+   "id": "0208760ba753ec27d0a3",
+   "sprache": "uk",
+   "text": "дівчинка",
+   "sprechtext": "дівчинка",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/0208760ba753ec27d0a3.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/0208760ba753ec27d0a3-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "070d068603fdba921945",
+   "sprache": "uk",
+   "text": "Це моя сестра.",
+   "sprechtext": "Це моя сестра.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/070d068603fdba921945.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/070d068603fdba921945-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "0e1387dc0dcd527ec21d",
+   "sprache": "uk",
+   "text": "Це моя родина. Це мама і тато.",
+   "sprechtext": "Це моя родина. Це мама і тато.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/0e1387dc0dcd527ec21d.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/0e1387dc0dcd527ec21d-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "1085d4c5406e864bd3a6",
+   "sprache": "uk",
+   "text": "до побачення",
+   "sprechtext": "до побачення",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/1085d4c5406e864bd3a6.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/1085d4c5406e864bd3a6-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "10db9138c8634bbb30de",
+   "sprache": "uk",
+   "text": "Як справи?",
+   "sprechtext": "Як справи?",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/10db9138c8634bbb30de.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/10db9138c8634bbb30de-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "15dfcce28aa2e444a8ac",
+   "sprache": "uk",
+   "text": "Дай Тарасу м'яч.",
+   "sprechtext": "Дай Тарасу м'яч.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/15dfcce28aa2e444a8ac.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/15dfcce28aa2e444a8ac-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "17e49b0b82762592058c",
+   "sprache": "uk",
+   "text": "дім",
+   "sprechtext": "дім",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/17e49b0b82762592058c.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/17e49b0b82762592058c-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "19f8e8f7731480c32427",
+   "sprache": "uk",
+   "text": "Я Тарас.",
+   "sprechtext": "Я Тарас.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/19f8e8f7731480c32427.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/19f8e8f7731480c32427-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "1adc448ef2c06fc399ff",
+   "sprache": "uk",
+   "text": "хто?",
+   "sprechtext": "хто?",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/1adc448ef2c06fc399ff.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/1adc448ef2c06fc399ff-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "1cc446437cf04524a7ce",
+   "sprache": "uk",
+   "text": "Мене звати Оксана. А тебе?",
+   "sprechtext": "Мене звати Оксана. А тебе?",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/1cc446437cf04524a7ce.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/1cc446437cf04524a7ce-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "1cd3102d9d526c92b228",
+   "sprache": "uk",
+   "text": "Це Оксана.",
+   "sprechtext": "Це Оксана.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/1cd3102d9d526c92b228.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/1cd3102d9d526c92b228-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "1edbd75b14414920620c",
+   "sprache": "uk",
+   "text": "на добраніч",
+   "sprechtext": "на добраніч",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/1edbd75b14414920620c.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/1edbd75b14414920620c-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "2391e3e51d2c5b1c12e9",
+   "sprache": "uk",
+   "text": "Мене звати Тарас.",
+   "sprechtext": "Мене звати Тарас.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/2391e3e51d2c5b1c12e9.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/2391e3e51d2c5b1c12e9-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "2457d46af6d9f4347745",
+   "sprache": "uk",
+   "text": "Як справи, Тарасе?",
+   "sprechtext": "Як справи, Тарасе?",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/2457d46af6d9f4347745.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/2457d46af6d9f4347745-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "25df1e1fc8b2dc51bf28",
+   "sprache": "uk",
+   "text": "Дай дідусеві книжку.",
+   "sprechtext": "Дай дідусеві книжку.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/25df1e1fc8b2dc51bf28.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/25df1e1fc8b2dc51bf28-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "29b9e116d6c47b9b98d6",
+   "sprache": "uk",
+   "text": "ніс",
+   "sprechtext": "ніс",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/29b9e116d6c47b9b98d6.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/29b9e116d6c47b9b98d6-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "2a22d30d0e02efee0fba",
+   "sprache": "uk",
+   "text": "мама",
+   "sprechtext": "мама",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/2a22d30d0e02efee0fba.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/2a22d30d0e02efee0fba-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "2a81bd7da4d5cee5a193",
+   "sprache": "uk",
+   "text": "Привіт! Я Рубі.",
+   "sprechtext": "Привіт! Я Рубі.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/2a81bd7da4d5cee5a193.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/2a81bd7da4d5cee5a193-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "31ea30291be80e224fc4",
+   "sprache": "uk",
+   "text": "Це моя родина.",
+   "sprechtext": "Це моя родина.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/31ea30291be80e224fc4.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/31ea30291be80e224fc4-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "3370d3a70cfebb86f066",
+   "sprache": "uk",
+   "text": "будь ласка",
+   "sprechtext": "будь ласка",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/3370d3a70cfebb86f066.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/3370d3a70cfebb86f066-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "339de37853c5ae2eaa01",
+   "sprache": "uk",
+   "text": "Мене звати Тарас. Це моя подруга Рубі.",
+   "sprechtext": "Мене звати Тарас. Це моя подруга Рубі.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/339de37853c5ae2eaa01.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/339de37853c5ae2eaa01-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "33e16d4245e1030cdd8f",
+   "sprache": "uk",
+   "text": "Дай мамі яблуко.",
+   "sprechtext": "Дай мамі яблуко.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/33e16d4245e1030cdd8f.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/33e16d4245e1030cdd8f-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "35f372995622e396a32f",
+   "sprache": "uk",
+   "text": "Привіт, я Рубі.",
+   "sprechtext": "Привіт, я Рубі.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/35f372995622e396a32f.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/35f372995622e396a32f-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "3647796d2652183d75eb",
+   "sprache": "uk",
+   "text": "Дай Рубі насіння.",
+   "sprechtext": "Дай Рубі насіння.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/3647796d2652183d75eb.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/3647796d2652183d75eb-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "3ad718f3aa623ddb93e4",
+   "sprache": "uk",
+   "text": "А це тато.",
+   "sprechtext": "А це тато.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/3ad718f3aa623ddb93e4.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/3ad718f3aa623ddb93e4-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "42ffddce37784aac1cb2",
+   "sprache": "uk",
+   "text": "Це мій брат Андрій.",
+   "sprechtext": "Це мій брат Андрій.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/42ffddce37784aac1cb2.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/42ffddce37784aac1cb2-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "44a69903560fca700cbc",
+   "sprache": "uk",
+   "text": "Це мама.",
+   "sprechtext": "Це мама.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/44a69903560fca700cbc.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/44a69903560fca700cbc-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "44ee0ce730b6ec96793d",
+   "sprache": "uk",
+   "text": "так",
+   "sprechtext": "так",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/44ee0ce730b6ec96793d.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/44ee0ce730b6ec96793d-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "44f7f960b431b0eb20c7",
+   "sprache": "uk",
+   "text": "моя сестра",
+   "sprechtext": "моя сестра",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/44f7f960b431b0eb20c7.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/44f7f960b431b0eb20c7-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "4727f9f20eb981e026f3",
+   "sprache": "uk",
+   "text": "бабуся",
+   "sprechtext": "бабуся",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/4727f9f20eb981e026f3.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/4727f9f20eb981e026f3-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "475da412dcfd125feb76",
+   "sprache": "uk",
+   "text": "Скажи бабусі «добрий день».",
+   "sprechtext": "Скажи бабусі «добрий день».",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/475da412dcfd125feb76.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/475da412dcfd125feb76-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "48cd0b280970f138c6ab",
+   "sprache": "uk",
+   "text": "Привіт, Оксано!",
+   "sprechtext": "Привіт, Оксано!",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/48cd0b280970f138c6ab.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/48cd0b280970f138c6ab-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "4df6b5c5d0ad79143fd3",
+   "sprache": "uk",
+   "text": "я",
+   "sprechtext": "я",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/4df6b5c5d0ad79143fd3.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/4df6b5c5d0ad79143fd3-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "5674c068e56f38d5d52c",
+   "sprache": "uk",
+   "text": "банан",
+   "sprechtext": "банан",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/5674c068e56f38d5d52c.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/5674c068e56f38d5d52c-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "588514b2e391dc460a59",
+   "sprache": "uk",
+   "text": "Дай мамі квітку.",
+   "sprechtext": "Дай мамі квітку.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/588514b2e391dc460a59.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/588514b2e391dc460a59-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "5c61bbe1a17b7a445098",
+   "sprache": "uk",
+   "text": "добрий день",
+   "sprechtext": "добрий день",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/5c61bbe1a17b7a445098.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/5c61bbe1a17b7a445098-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "62137d2d68ecbad8c643",
+   "sprache": "uk",
+   "text": "Скажи Оксані «дякую».",
+   "sprechtext": "Скажи Оксані «дякую».",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/62137d2d68ecbad8c643.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/62137d2d68ecbad8c643-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "66ed7b41d3cd3426808b",
+   "sprache": "uk",
+   "text": "Дай бабусі квітку.",
+   "sprechtext": "Дай бабусі квітку.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/66ed7b41d3cd3426808b.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/66ed7b41d3cd3426808b-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "6b8a96b2f90ca580e558",
+   "sprache": "uk",
+   "text": "Добрий день, Маріє Іванівно!",
+   "sprechtext": "Добрий день, Маріє Іванівно!",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/6b8a96b2f90ca580e558.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/6b8a96b2f90ca580e558-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "6cc9019a8de4b2c85eed",
+   "sprache": "uk",
+   "text": "ні",
+   "sprechtext": "ні",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/6cc9019a8de4b2c85eed.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/6cc9019a8de4b2c85eed-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "73642032acdf9f184592",
+   "sprache": "uk",
+   "text": "друг",
+   "sprechtext": "друг",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/73642032acdf9f184592.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/73642032acdf9f184592-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "7364a845ff9fddf74d38",
+   "sprache": "uk",
+   "text": "Добрий день.",
+   "sprechtext": "Добрий день.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/7364a845ff9fddf74d38.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/7364a845ff9fddf74d38-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "73928efdbe69eef1819c",
+   "sprache": "uk",
+   "text": "Дай собаці кістку.",
+   "sprechtext": "Дай собаці кістку.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/73928efdbe69eef1819c.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/73928efdbe69eef1819c-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "7e30f52a49a8f05cb3ac",
+   "sprache": "uk",
+   "text": "дякую",
+   "sprechtext": "дякую",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/7e30f52a49a8f05cb3ac.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/7e30f52a49a8f05cb3ac-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "7f7658b16b11959ca24a",
+   "sprache": "uk",
+   "text": "Добре, дякую.",
+   "sprechtext": "Добре, дякую.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/7f7658b16b11959ca24a.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/7f7658b16b11959ca24a-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "85a2995f2ad25192b068",
+   "sprache": "uk",
+   "text": "Побажай Рубі «на добраніч».",
+   "sprechtext": "Побажай Рубі «на добраніч».",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/85a2995f2ad25192b068.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/85a2995f2ad25192b068-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "8fa67902b5c1210518cf",
+   "sprache": "uk",
+   "text": "Привіт! Я Оксана.",
+   "sprechtext": "Привіт! Я Оксана.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/8fa67902b5c1210518cf.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/8fa67902b5c1210518cf-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "93ad882a2ae75b2701d1",
+   "sprache": "uk",
+   "text": "Це моя подруга Рубі.",
+   "sprechtext": "Це моя подруга Рубі.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/93ad882a2ae75b2701d1.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/93ad882a2ae75b2701d1-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "93c639988d905db7dfb3",
+   "sprache": "uk",
+   "text": "дідусь",
+   "sprechtext": "дідусь",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/93c639988d905db7dfb3.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/93c639988d905db7dfb3-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "94e1def5c34688fdbe0a",
+   "sprache": "uk",
+   "text": "Кіт п'є сік!",
+   "sprechtext": "Кіт п'є сік!",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/94e1def5c34688fdbe0a.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/94e1def5c34688fdbe0a-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "9a7fc42b7e6bbfc96994",
+   "sprache": "uk",
+   "text": "рак",
+   "sprechtext": "рак",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/9a7fc42b7e6bbfc96994.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/9a7fc42b7e6bbfc96994-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "9abe2c885e0bad8073ea",
+   "sprache": "uk",
+   "text": "Це мій дідусь.",
+   "sprechtext": "Це мій дідусь.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/9abe2c885e0bad8073ea.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/9abe2c885e0bad8073ea-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "9c336bfd8f0c85e431c6",
+   "sprache": "uk",
+   "text": "Бабуся живе тут.",
+   "sprechtext": "Бабуся живе тут.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/9c336bfd8f0c85e431c6.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/9c336bfd8f0c85e431c6-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "9fcf283c009d4b3d2ab2",
+   "sprache": "uk",
+   "text": "Дай Тарасу книжку.",
+   "sprechtext": "Дай Тарасу книжку.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/9fcf283c009d4b3d2ab2.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/9fcf283c009d4b3d2ab2-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "a79c0655f93586af452e",
+   "sprache": "uk",
+   "text": "тато",
+   "sprechtext": "тато",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/a79c0655f93586af452e.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/a79c0655f93586af452e-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "abb7458dd43ca47e83ea",
+   "sprache": "uk",
+   "text": "сік",
+   "sprechtext": "сік",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/abb7458dd43ca47e83ea.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/abb7458dd43ca47e83ea-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "b9c225bf4d79e8fbc06a",
+   "sprache": "uk",
+   "text": "До побачення, Оксано!",
+   "sprechtext": "До побачення, Оксано!",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/b9c225bf4d79e8fbc06a.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/b9c225bf4d79e8fbc06a-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "ba7b71c815f55ccf5057",
+   "sprache": "uk",
+   "text": "кіт",
+   "sprechtext": "кіт",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/ba7b71c815f55ccf5057.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/ba7b71c815f55ccf5057-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "bcd1bf2c4d5d1fe2120c",
+   "sprache": "uk",
+   "text": "Дай коту сік.",
+   "sprechtext": "Дай коту сік.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/bcd1bf2c4d5d1fe2120c.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/bcd1bf2c4d5d1fe2120c-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "bdd989bcb257effd3ae8",
+   "sprache": "uk",
+   "text": "подруга",
+   "sprechtext": "подруга",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/bdd989bcb257effd3ae8.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/bdd989bcb257effd3ae8-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "beda94cff007fdff455e",
+   "sprache": "uk",
+   "text": "ти",
+   "sprechtext": "ти",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/beda94cff007fdff455e.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/beda94cff007fdff455e-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "c00d182f44f8a980535b",
+   "sprache": "uk",
+   "text": "сестра",
+   "sprechtext": "сестра",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/c00d182f44f8a980535b.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/c00d182f44f8a980535b-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "c54d53d86c67ee547767",
+   "sprache": "uk",
+   "text": "мій брат",
+   "sprechtext": "мій брат",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/c54d53d86c67ee547767.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/c54d53d86c67ee547767-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "c6bbae80233017d7264f",
+   "sprache": "uk",
+   "text": "Це кіт.",
+   "sprechtext": "Це кіт.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/c6bbae80233017d7264f.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/c6bbae80233017d7264f-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "c8890e48fdda209200ac",
+   "sprache": "uk",
+   "text": "тут",
+   "sprechtext": "тут",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/c8890e48fdda209200ac.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/c8890e48fdda209200ac-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "cca89e0038f77fd6bd23",
+   "sprache": "uk",
+   "text": "Дай Тарасу банан.",
+   "sprechtext": "Дай Тарасу банан.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/cca89e0038f77fd6bd23.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/cca89e0038f77fd6bd23-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "ce298a1b558a457d908f",
+   "sprache": "uk",
+   "text": "Скажи Оксані «до побачення».",
+   "sprechtext": "Скажи Оксані «до побачення».",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/ce298a1b558a457d908f.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/ce298a1b558a457d908f-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "cf8c01021a37cb179430",
+   "sprache": "uk",
+   "text": "Привіт! Як тебе звати?",
+   "sprechtext": "Привіт! Як тебе звати?",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/cf8c01021a37cb179430.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/cf8c01021a37cb179430-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "d2d38e50967e1f52e331",
+   "sprache": "uk",
+   "text": "Це моя сестра Марійка.",
+   "sprechtext": "Це моя сестра Марійка.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/d2d38e50967e1f52e331.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/d2d38e50967e1f52e331-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "d7751d0bbf40e71bb48f",
+   "sprache": "uk",
+   "text": "Це тато.",
+   "sprechtext": "Це тато.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/d7751d0bbf40e71bb48f.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/d7751d0bbf40e71bb48f-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "d7c04498889841358ea1",
+   "sprache": "uk",
+   "text": "До побачення!",
+   "sprechtext": "До побачення!",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/d7c04498889841358ea1.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/d7c04498889841358ea1-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "d7f08cff4a2ae4a56a21",
+   "sprache": "uk",
+   "text": "А я ваша подруга!",
+   "sprechtext": "А я ваша подруга!",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/d7f08cff4a2ae4a56a21.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/d7f08cff4a2ae4a56a21-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "d9d621897421d48f5125",
+   "sprache": "uk",
+   "text": "Мій дідусь має собаку.",
+   "sprechtext": "Мій дідусь має собаку.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/d9d621897421d48f5125.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/d9d621897421d48f5125-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "d9fb5c7cbbff2c9c8432",
+   "sprache": "uk",
+   "text": "Дай Оксані яблуко.",
+   "sprechtext": "Дай Оксані яблуко.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/d9fb5c7cbbff2c9c8432.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/d9fb5c7cbbff2c9c8432-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "dae2955128ac0581902d",
+   "sprache": "uk",
+   "text": "вода",
+   "sprechtext": "вода",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/dae2955128ac0581902d.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/dae2955128ac0581902d-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "dc2116eff2c509bc9dfc",
+   "sprache": "uk",
+   "text": "Це мій брат.",
+   "sprechtext": "Це мій брат.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/dc2116eff2c509bc9dfc.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/dc2116eff2c509bc9dfc-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "e16761e3d4431caa5471",
+   "sprache": "uk",
+   "text": "це",
+   "sprechtext": "це",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/e16761e3d4431caa5471.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/e16761e3d4431caa5471-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "e42634fc6c35158cb085",
+   "sprache": "uk",
+   "text": "Мама п'є сік.",
+   "sprechtext": "Мама п'є сік.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/e42634fc6c35158cb085.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/e42634fc6c35158cb085-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "e750426e3d0bcfd8feb8",
+   "sprache": "uk",
+   "text": "Привіт, Оксано! Я Тарас.",
+   "sprechtext": "Привіт, Оксано! Я Тарас.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/e750426e3d0bcfd8feb8.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/e750426e3d0bcfd8feb8-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "e81bde673075be926747",
+   "sprache": "uk",
+   "text": "Ха-ха! Кіт п'є сік!",
+   "sprechtext": "Ха-ха! Кіт п'є сік!",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/e81bde673075be926747.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/e81bde673075be926747-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "e81cf0db1cf151708fb9",
+   "sprache": "uk",
+   "text": "ніч",
+   "sprechtext": "ніч",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/e81cf0db1cf151708fb9.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/e81cf0db1cf151708fb9-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "e9213362ed59afb82bc3",
+   "sprache": "uk",
+   "text": "Дай Оксані квітку.",
+   "sprechtext": "Дай Оксані квітку.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/e9213362ed59afb82bc3.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/e9213362ed59afb82bc3-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "e948b0b0118cef864a00",
+   "sprache": "uk",
+   "text": "мій / моя / моє",
+   "sprechtext": "мій, моя, моє",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/e948b0b0118cef864a00.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/e948b0b0118cef864a00-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "e9b444ed2fc6673b0fa3",
+   "sprache": "uk",
+   "text": "Дай коту воду.",
+   "sprechtext": "Дай коту воду.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/e9b444ed2fc6673b0fa3.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/e9b444ed2fc6673b0fa3-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "ebf06b19783457bdd737",
+   "sprache": "uk",
+   "text": "брат",
+   "sprechtext": "брат",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/ebf06b19783457bdd737.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/ebf06b19783457bdd737-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "ef3e688ece6f5a4bc29b",
+   "sprache": "uk",
+   "text": "Мене звати Оксана.",
+   "sprechtext": "Мене звати Оксана.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/ef3e688ece6f5a4bc29b.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/ef3e688ece6f5a4bc29b-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "effbe410c52f393d2875",
+   "sprache": "uk",
+   "text": "хлопчик",
+   "sprechtext": "хлопчик",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/effbe410c52f393d2875.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/effbe410c52f393d2875-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "f0a76f02fcde3e29e6a5",
+   "sprache": "uk",
+   "text": "Як тебе звати?",
+   "sprechtext": "Як тебе звати?",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/f0a76f02fcde3e29e6a5.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/f0a76f02fcde3e29e6a5-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "f17739491ed759ae922e",
+   "sprache": "uk",
+   "text": "привіт",
+   "sprechtext": "привіт",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/f17739491ed759ae922e.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/f17739491ed759ae922e-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "f3ff5766b5dfc170ea81",
+   "sprache": "uk",
+   "text": "родина",
+   "sprechtext": "родина",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/f3ff5766b5dfc170ea81.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/f3ff5766b5dfc170ea81-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "f9864bd6b67102a8a69e",
+   "sprache": "uk",
+   "text": "А це моя бабуся.",
+   "sprechtext": "А це моя бабуся.",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/f9864bd6b67102a8a69e.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/f9864bd6b67102a8a69e-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "fd1bafc9ab2b31a4d5af",
+   "sprache": "uk",
+   "text": "Скажи Тарасові «привіт».",
+   "sprechtext": "Скажи Тарасові «привіт».",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 1.0,
+     "datei": "audio/server/uk/fd1bafc9ab2b31a4d5af.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/fd1bafc9ab2b31a4d5af-langsam.mp3"
+    }
+   ]
+  },
+  {
+   "id": "fe7b9cd283519445a86f",
+   "sprache": "uk",
+   "text": "собака",
+   "sprechtext": "собака",
+   "rollen": [
+    "tetiana"
+   ],
+   "fassungen": [
+    {
+     "art": "normal",
+     "speed": 0.87,
+     "datei": "audio/server/uk/fe7b9cd283519445a86f.mp3"
+    },
+    {
+     "art": "langsam",
+     "speed": 0.8,
+     "datei": "audio/server/uk/fe7b9cd283519445a86f-langsam.mp3"
+    }
+   ]
+  }
+ ]
+}
