@@ -8,6 +8,7 @@ import kotlinx.serialization.json.put
  * Kein Cookie, keine Kennung, kein Gerät, kein Lernstand; der Server führt nur Tageszähler. Format und Listen gelten für alle unsere Apps.
  */
 object Zaehler {
+    /** Nur für die Android-App (pausiert); die WebApp zählt seit 2.18.44 am eigenen Host (Marcel 27.11.2026): `location.origin + "/zaehler/v1/e"`, siehe `zaehlUrl()` in web/Browser.kt */
     const val URL = "https://trainer.mathenachhilfe-online.com/zaehler/v1/e"
     const val APP = "raumlicht"
     /** Ereignisse, die es in Raumlicht gibt (aus der gemeinsamen, abschließenden Liste); „umzug“ sendet der Umzugs-Block in index.html, nicht die App */

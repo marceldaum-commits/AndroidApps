@@ -2,6 +2,9 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.44 – Zählung am eigenen Server (28.11.2026)
+- Die anonyme Nutzungszählung (abschaltbar in den Einstellungen) meldet jetzt an den Server, von dem die WebApp selbst geladen wurde (lernen.mathenachhilfe-online.com, beim Testen lernen-test.…), nicht mehr an den Trainer-Server. Es werden dieselben wenigen Angaben gezählt wie bisher: kein Name, keine Kennung, kein Lernstand. Für Kinder und Eltern ändert sich nichts Sichtbares.
+
 ## 2.18.43 – Lage von Gerade und Ebene & drei weitere Abi-Prüfungen (27.11.2026)
 - **Neues Kapitel 18 „Lage von Gerade und Ebene“:** Schneidet der Strahl die Scheibe, läuft er daneben oder liegt er mittendrin? 8 Aufgaben (Strahl und Scheibe, „Wunschrichtung“ mit Parameter, zwei Scheiben: parallel, identisch oder eine Schnittgerade, Parameter für „parallel“ und ein Abi-Check mit einer Dachkante). Dazu eine neue Theorie-Karte mit Formelkasten. Die ersten 2 Aufgaben sind frei, der Rest gehört zu Raumlicht Pro (wie bei den anderen Kapiteln).
 - **Drei neue Abi-Prüfungen** mit je vier Teilen und 12 Punkten: **Glaspyramide** (Spitze, Seitenfläche, Volumen, Abstand), **Spiegelsaal** (Lotfußpunkt, Abstand, Spiegelbild, Weg des Lichts) und **Zwei Schiffe** (Ort, Kreuzung der Kurse, engste Stelle, Mindestabstand). Damit gibt es jetzt 11 Prüfungsaufgaben; die erste ist frei.

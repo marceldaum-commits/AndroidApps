@@ -111,7 +111,7 @@ private fun WebApp() {
                         if (test) de.raumlicht.core.model.Familie.TEST_SERVER else de.raumlicht.core.model.Familie.SERVER, test, ::familieRuf, ::snapshot, ::restoreFamily) },
                 familieLink = familyLink, gateFree = remember { familieTorFrei() },
                 onApps = { openApps(if (isTestSite()) de.raumlicht.core.model.Nachhilfe.APPS_TEST_URL else de.raumlicht.core.model.Nachhilfe.APPS_URL) },
-                countSend = { body -> beacon(de.raumlicht.core.model.Zaehler.URL, body) },
+                countSend = { body -> beacon(zaehlUrl(), body) },
                 kiMark = { kiKennzeichnen(it) },
                 kiSend = { body -> kotlinx.coroutines.suspendCancellableCoroutine { c -> kiPost(kiUrl, body) { status, text -> if (c.isActive) c.resumeWith(Result.success(status to text)) } } },
                 kiEnabled = de.raumlicht.core.model.Ki.ENABLED || kiTest, version = Version.NAME,
@@ -165,5 +165,5 @@ private fun InstallCard() {
 
 /** Ein Ereignis zählen (anonym, abschaltbar) – für Stellen außerhalb der gemeinsamen Oberfläche: App geöffnet, Code per Link eingelöst */
 private fun zaehle(prefs: WebPrefs, event: String, place: String?) {
-    if (prefs.countUsage.value) de.raumlicht.core.model.Zaehler.body(event, place, null, Version.NAME)?.let { beacon(de.raumlicht.core.model.Zaehler.URL, it) }
+    if (prefs.countUsage.value) de.raumlicht.core.model.Zaehler.body(event, place, null, Version.NAME)?.let { beacon(zaehlUrl(), it) }
 }

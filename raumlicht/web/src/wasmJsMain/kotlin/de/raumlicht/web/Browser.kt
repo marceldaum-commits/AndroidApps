@@ -39,6 +39,8 @@ fun installState(): String = js("""(function () {
 fun installNow(): Unit = js("{ var I = window.__rlInstall; if (I && I.prompt) { var p = I.prompt; I.prompt = null; p.prompt(); if (p.userChoice) p.userChoice.then(function (c) { if (c && c.outcome === 'accepted') I.done = true; }); } }")
 /** Zählaufruf abschicken: ohne Cookies, ohne auf die Antwort zu warten; Fehler bleiben ohne Folgen. „text/plain“, damit der Browser keine Vorab-Anfrage braucht. */
 // Auf dem eigenen Rechner (automatische Prüfungen) wird nicht gezählt – sonst landeten Testläufe in der echten Statistik.
+/** Die Zähl-Adresse: der eigene Host der App (lernen.… bzw. lernen-test.…), nicht der Trainer-Server (Marcel 27.11.2026) */
+fun zaehlUrl(): String = js("location.origin + '/zaehler/v1/e'")
 fun beacon(url: String, body: String): Unit = js("{ try { if ((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && !window.__rlZaehleLokal) return; fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', mode: 'no-cors', keepalive: true, referrerPolicy: 'no-referrer' }).catch(function () {}); } catch (e) {} }")
 // ── „Eltern-Handy koppeln“: Zufallswerte, Verschlüsselung (AES-GCM 256, 12 Byte IV) und Hochladen – alles im Browser, der Schlüssel verlässt ihn nie ──
 /** Frische Zufallswerte „id.schreib.key“ (16, 16 und 32 Byte, base64url ohne Auffüllzeichen) */
