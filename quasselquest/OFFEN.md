@@ -17,6 +17,7 @@ Regel (Marcel/Leitstand 25.11.): Liste selbständig der Reihe nach abarbeiten, E
 | 13 | Tonstudio-Tor-Sätze (Eltern-Tor spricht wieder) | offen | Sätze vom Tonstudio/Rechenblitz einbauen | Tonstudio | wartet |
 | 14 | „Heute dran“-Knopf, tägliche gemischte Wiederholung, Lernpfad EN Abschnitt 3, Latein Abschnitt 2, FR/ES je 2 weitere Pakete | Dezember | nach UEBERARBEITUNG.md/INHALTSPLAN.md | – | offen |
 | 15 | Browser-Test 4 Geräte für 0.5.3–0.5.5 neu laufen lassen | Do 26.11. | `node tools/web-start.mjs` | – | offen |
+| 17 | Browser-Test: Latein-Einheit la-1-1 Lektion 1 brach 2× zufällig ab (28.11., Chromium-Handy im ersten Lauf, WebKit-iPhone im zweiten), bei Wiederholung jeweils grün | Mo 30.11. | Test gibt jetzt den Bildschirmtext aus (d55f9889); bei erneutem Auftreten Ursache suchen (Zufallsziehung/Zeit?) | – | beobachten |
 
 ## Gestrichen (nicht gelöscht)
 - **27.11.2026, Marcel: „wir nehmen ukrainisch komplett raus … ich habe meine Meinung geändert“.** Entfallen: Ukrainisch als Lernsprache, Deutsch für ukrainische Kinder (DaZ), „Meine Sprache“, Textliste „uk“, Muttersprachler-Prüfung. Entfernt in 0.5.7 (Commit siehe Git); der frühere Stand liegt in der Git-Historie (0.5.6 = e5a1b0d4). Gestrichene Zeilen:
