@@ -199,6 +199,7 @@ for (const [name, type, opts] of [
     for (let l = 0; l < 5; l++) {
       await page.click('.lp-lektion.jetzt');
       const gut = await playPackRound(page, null, FOTOS && name === 'chromium_handy' ? 'la_lp' + (l + 1) : null);
+      if (!gut) console.log('    ⚠ Lektion endete ohne Belohnung bei:', (await page.evaluate(() => document.querySelector('#app').innerText)).replace(/\s+/g, ' ').slice(0, 300));
       ok(gut, `Lernpfad la-1-1 Lektion ${l + 1} durchgespielt`);
       if (!gut) break;
       await page.click('[data-unit]'); await page.waitForSelector('.lp-lektionen');
