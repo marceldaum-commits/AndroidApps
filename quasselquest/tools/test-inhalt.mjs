@@ -8,7 +8,6 @@ const dir = new URL('../webapp/', import.meta.url);
 const C = require(new URL('content.js', dir).pathname);
 globalThis.window = globalThis; // audio.js erwartet window
 const A = require(new URL('audio.js', dir).pathname);
-globalThis.UK_AKTIV = true;   // Ukrainisch im Test mitprüfen (in der App bis zur Freigabe AUS)
 const P = require(new URL('pakete.js', dir).pathname);
 const PIDX = JSON.parse(readFileSync(new URL('pakete/index.json', dir), 'utf8'));
 const PACKS = PIDX.pakete.map((m) => Object.assign(JSON.parse(readFileSync(new URL('pakete/' + m.id + '.json', dir), 'utf8')), { lang: m.sprache }));

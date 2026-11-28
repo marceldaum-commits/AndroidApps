@@ -979,7 +979,7 @@
 
   // ================================================================== Quasselquest Pro (PRO.md) – Sperre je Sprache; alles AUS, solange window.PRO_AKTIV nicht true ist
   const SCHLOSS_TEXT = 'Das gehört zu Quasselquest Pro.';   // Recht: in der Kinderansicht NUR dieser Satz – kein Preis, kein Kaufknopf, keine Aufforderung
-  const NAME_SPRACHE = { en: 'Englisch', de: 'Deutsch', fr: 'Französisch', la: 'Latein', es: 'Spanisch', uk: 'Ukrainisch' };
+  const NAME_SPRACHE = { en: 'Englisch', de: 'Deutsch', fr: 'Französisch', la: 'Latein', es: 'Spanisch' };
   /** Ist dieses Ding gesperrt? el = Element mit data-lp-e (Lernpfad-Einheit), data-pack (Paket) oder data-ep (Episode). */
   function proGesperrt(el) {
     if (!window.PRO_AKTIV || !window.PRO) return false;

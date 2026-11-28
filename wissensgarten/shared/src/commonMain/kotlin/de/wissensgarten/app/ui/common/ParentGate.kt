@@ -89,7 +89,7 @@ fun ParentGateDialog(reason: String, onPass: () -> Unit, onCancel: () -> Unit, r
                     Text(input.ifEmpty { " " }, fontSize = 28.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(10.dp)
                         .semantics { contentDescription = if (input.isEmpty()) "Noch keine Eingabe" else "Eingabe $input" })
                 }
-                if (wrong) Text("Das war nicht richtig – hier ist eine neue Aufgabe.", color = MaterialTheme.colorScheme.error,
+                if (wrong) Text("Leider falsch – hier ist eine neue Aufgabe.", color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall)
                 // Eigene Ziffern-Tastatur: 1–9, ← (löschen), 0, OK – „⌫“ fehlt in der Web-Schrift
                 listOf(listOf("1", "2", "3"), listOf("4", "5", "6"), listOf("7", "8", "9"), listOf("←", "0", "OK")).forEach { row ->

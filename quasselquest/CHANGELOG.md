@@ -1,7 +1,15 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.5.7 – Ukrainisch wieder entfernt (27.11.2026)
+- Auf Wunsch von Marcel ist alles zu Ukrainisch aus der App entfernt (war nie sichtbar). Für euch ändert sich nichts.
+
+## 0.5.6 – „Meine Sprache“ vorbereitet (27.11.2026)
+- Neu in den Einstellungen (nur wenn Ukrainisch freigegeben ist): **Meine Sprache – Deutsch oder Українська**. Die Bedienung (Knöpfe, Einstellungen, Datenschutz-Titel) erscheint dann auf Ukrainisch, soweit übersetzt. Die Wahl bleibt auf dem Gerät.
+- Noch nicht sichtbar: Ukrainisch ist bis zur Prüfung durch eine Muttersprachlerin ausgeschaltet.
+
 ## 0.5.5 – Ukrainisch vorbereitet (25.11.2026)
 - Ukrainisch als Lernsprache ist in Arbeit: vier Einheiten (Hallo sagen, sich vorstellen, kyrillische Buchstaben lesen, meine Familie) mit Geschichte, Aktionen und Fehler-Suche. **Noch nicht sichtbar**, bis ein Muttersprachler den Text geprüft hat und die Stimme fertig ist.
+- Ebenfalls vorbereitet: „Deutsch von Anfang an“ für ukrainische Kinder (vier Einheiten, Erklärungen auf Ukrainisch). Noch nicht sichtbar.
 - Für euch ändert sich in der App bis dahin nichts.
 
 ## 0.5.4 – Datenschutz-Seite aktualisiert (24.11.2026)
